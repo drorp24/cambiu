@@ -2773,8 +2773,7 @@ a.subdued {
     background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
     color: #444; }
     .bar.bar-stable .title {
-      color: #444;
-    }
+      color: #444; }
     .bar.bar-stable.bar-footer {
       background-image: linear-gradient(180deg, #b2b2b2, #b2b2b2 50%, transparent 50%); }
   .bar.bar-positive {
@@ -7015,3 +7014,23 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.header {
+  background-color: white;
+  border-bottom: 1px solid gray; }
+  .header .location-search {
+    border: 1px solid #999999;
+    background-color: white; }
+    .header .location-search input {
+      margin: 4px 5px;
+      height: auto; }
+    .header .location-search #_dropdown {
+      z-index: 9999999; }
+
+.angular-google-map {
+  display: block;
+  height: 100%; }
+  .angular-google-map > div {
+    height: 100%; }
+    .angular-google-map > div > .angular-google-map-container {
+      height: 100%; }

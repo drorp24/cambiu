@@ -21,3 +21,31 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+.header {
+  background-color: white;
+  border-bottom: 1px solid gray;
+
+
+  .location-search {
+    border: 1px solid #999999;
+    background-color: white;
+
+    input {
+      margin: 4px 5px;
+      height: auto;
+    }
+
+    #_dropdown { z-index: 9999999; }
+  }
+}
+
+.angular-google-map {
+  display: block;
+  height: 100%;
+  &>div {
+    height: 100%;
+    &>.angular-google-map-container {
+      height: 100%;
+    }
+  }
+}
