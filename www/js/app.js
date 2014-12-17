@@ -1,8 +1,8 @@
 var dependencies = [
   'ionic',
   'ui.router',
-  'angucomplete',
-  'google-maps'
+  'google-maps',
+  'ngAutocomplete'
 ];
 
 angular.module('currency-net-mvp', dependencies)

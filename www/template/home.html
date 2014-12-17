@@ -6,21 +6,14 @@
     <div class="col-80">
       <div class="location-search row">
         <button class="button button-clear button-small ion-search"></button>
-          <angucomplete
-            placeholder="Search Addresses"
-            url="http://open.mapquestapi.com/nominatim/v1/search.php?format=json&json_callback=renderBasicSearchNarrative&q="
-            pause="500"
-            selectedobject="indexselectedAddress"
-            titlefield="display_name"
-            minlength="1"
-            inputclass="form-control form-control-small"/>
+        <input type="text"  ng-autocomplete ng-model="autocomplete" options="options" details="details"/>
       </div>
     </div>
     <div style="width: 30px; text-align: right;">
       <button class="button-clear ion-navicon" ng-click="main.toggleMapList()"></button>
     </div>
   </ion-header-bar>
-  <ion-content scroll="false">
+  <ion-content scroll="false" class="main-content">
     <ion-nav-view></ion-nav-view>
   </ion-content>
 </ion-pane>

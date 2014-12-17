@@ -7024,8 +7024,11 @@ a.button {
     .header .location-search input {
       margin: 4px 5px;
       height: auto; }
-    .header .location-search #_dropdown {
+    .header .location-search .angucomplete-dropdown {
       z-index: 9999999; }
+
+.main-content {
+  z-index: 0; }
 
 .angular-google-map {
   display: block;

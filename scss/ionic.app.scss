@@ -35,8 +35,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
       height: auto;
     }
 
-    #_dropdown { z-index: 9999999; }
+    .angucomplete-dropdown { z-index: 9999999; }
   }
+}
+
+.main-content {
+  z-index: 0;
 }
 
 .angular-google-map {
