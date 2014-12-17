@@ -6,4 +6,6 @@ function mainController($scope, $state) {
       $state.go('home.map');
     }
   };
+
+  $scope.details = '';
 }
