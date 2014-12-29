@@ -2,13 +2,14 @@ var dependencies = [
   'ionic',
   'ui.router',
   'uiGmapgoogle-maps',
-  'ngAutocomplete'
+  'ngAutocomplete',
+  'ngFlag'
 ];
 
 angular.module('currency-net-mvp', dependencies)
 
 .controller({
-  mainController: ['$scope', '$state', mainController],
+  mainController: ['$scope', '$state', 'exchanges', mainController],
   mapController: ['$scope', '$state', mapController],
   listController: ['$scope', listController],
   menuController: ['$scope', '$ionicHistory',  menuController]
@@ -16,6 +17,10 @@ angular.module('currency-net-mvp', dependencies)
 
 .directive({
   locationSearch: locationSearch
+})
+
+.factory({
+  exchange: exchangeService
 })
 
 .config(['$stateProvider', '$urlRouterProvider',
@@ -27,7 +32,12 @@ angular.module('currency-net-mvp', dependencies)
         url: '/',
         abstract: true,
         templateUrl: '/template/home.html',
-        controller: 'mainController as main'
+        controller: 'mainController as main',
+        resolve: {
+          exchanges: function(exchange) {
+            return exchange.query();
+          }
+        }
       })
         .state('home.map', {
           url: 'map',
@@ -48,6 +58,8 @@ angular.module('currency-net-mvp', dependencies)
 ])
 
 .run(function($ionicPlatform) {
+  //$httpBackend.whenGET('/exchange').respond(backend.mock.exchanges);
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)

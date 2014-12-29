@@ -3,14 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+    <title>Currency Net</title>
     <!-- vendors css -->
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="lib/ng-flags/flags32.css" />
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -20,12 +22,19 @@
     <ion-nav-view></ion-nav-view>
 
     <!-- vendors js -->
-    <script src="http://maps.googleapis.com/maps/api/js?libraries=visualization&v=3.14"></script>
+    <script src="lib/ng-flags/ng-flags.js"></script>
+
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places,visualization&v=3.14"></script>
     <script src="lib/lodash/dist/lodash.js"></script>
     <script src="lib/angular-google-maps/dist/angular-google-maps.js"></script>
     <script src="lib/ngAutocomplete/src/ngAutocomplete.js"></script>
 
+    <!-- server response mocks -->
+    <script src="backend-mock/london-exchanges.js"></script>
+
     <!-- app -->
+    <script src="js/service/exchange-service.js"></script>
+
     <script src="js/controller/main-controller.js"></script>
     <script src="js/controller/map-controller.js"></script>
     <script src="js/controller/list-controller.js"></script>
