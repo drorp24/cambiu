@@ -1,18 +1,21 @@
 <ion-pane>
   <ion-header-bar class="header bar-stable row row-center">
-    <div style="width: 30px; text-align: left;">
-      <button class="button-clear ion-navicon-round" ui-sref="menu"></button>
+    <button class="button-clear ion-navicon-round" ui-sref="menu"></button>
+    <div class="conversion-panel row row-center">
+      <flag country="{{ conversion.left.flag }}" size="32" class="col col-left"></flag>
+      <div class="col col-center" style="text-align: center;">{{ conversion.left.value | number:2 }}</div>
+      <button class="button-clear ion-arrow-swap placeholder-icon" style="font-size: 32px; margin-bottom: 10px;" ng-click="switchSides()"></button>
+      <div class="col" style="text-align: center;">{{ conversion.right.value | number:2 }}</div>
+      <flag country="{{ conversion.right.flag }}" size="32" class="col col-right" style="text-align: right;"></flag>
     </div>
-    <div class="col-80">
-      <div class="location-search row">
-        <button class="button button-clear button-small ion-search"></button>
-        <input type="text" ng-autocomplete ng-model="autocomplete" details="details"/>
-      </div>
-    </div>
-    <div style="width: 30px; text-align: right;">
-      <button class="button-clear ion-navicon" ng-click="main.toggleMapList()"></button>
-    </div>
+    <button class="button-clear" ng-click="main.toggleMapList()" ng-class="isMap ? 'ion-navicon' : 'ion-map'"></button>
   </ion-header-bar>
+    <!-- <div class="location-search row">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" ng-autocomplete ng-model="autocomplete" details="details" placeholder="Search"/>
+      </label>
+    </div> -->
   <ion-content scroll="false" class="main-content">
     <ion-nav-view></ion-nav-view>
   </ion-content>

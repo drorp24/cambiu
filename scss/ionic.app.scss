@@ -21,18 +21,22 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 .header {
   background-color: white;
   border-bottom: 1px solid gray;
 
-
   .location-search {
-    border: 1px solid #999999;
-    background-color: white;
     padding: 0;
+    margin: 5px;
+
+    label { width: 100%; }
 
     input {
-      margin: 4px 5px;
+      margin: 0;
       height: auto;
     }
 

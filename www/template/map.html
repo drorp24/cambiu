@@ -1,9 +1,21 @@
-<ui-gmap-google-map center="center" zoom="zoom"  options="options">
+<ui-gmap-google-map center="center" zoom="zoom" options="options" draggable="true">
   <ui-gmap-markers
-             models="exchanges"
-             idkey="'id'"
-             coords="'location'"
-             doCluster="false"
-             options="'details'">
-    </ui-gmap-markers>
+   models="exchanges"
+   idkey="'id'"
+   coords="'location'"
+   doCluster="false"
+   options="'details'">
+    <ui-gmap-windows
+      show="show"
+      idKey="'id'"
+      icon="'icon'"
+      coords="'self'">
+        <div ng-non-bindable>{{details.title}}</div>
+    </ui-gmap-windows>
+  </ui-gmap-markers>
 </ui-gmap-google-map>
+<!-- <ion-popover-view>
+  <ion-content>
+    Hello!
+  </ion-content>
+</ion-popover-view> -->
