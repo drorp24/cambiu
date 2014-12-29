@@ -1,7 +1,7 @@
 var dependencies = [
   'ionic',
   'ui.router',
-  'google-maps',
+  'uiGmapgoogle-maps',
   'ngAutocomplete'
 ];
 

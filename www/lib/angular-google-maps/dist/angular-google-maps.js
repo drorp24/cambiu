@@ -434,31 +434,31 @@ Nicholas McCready - https://twitter.com/nmccready
         So it is run to manage the state (cancel, skip, link) as needed.
       Purpose:
       The whole point is to check if there is existing async work going on. If so we wait on it.
-      
+
       arguments:
       - existingPiecesObj =  Queue<Promises>
       - sniffedPromise = object wrapper holding a function to a pending (function) promise (promise: fnPromise)
       with its intended type.
       - cancelCb = callback which accepts a string, this string is intended to be returned at the end of _async.each iterator
-      
+
         Where the cancelCb passed msg is 'cancel safe' _async.each will drop out and fall through. Thus canceling the promise
         gracefully without messing up state.
-      
+
       Synopsis:
-      
+
        - Promises have been broken down to 4 states create, update,delete (3 main) and init. (Helps boil down problems in ordering)
         where (init) is special to indicate that it is one of the first or to allow a create promise to work beyond being after a delete
-      
+
        - Every Promise that comes is is enqueue and linked to the last promise in the queue.
-      
+
        - A promise can be skipped or canceled to save cycles.
-      
+
       Saved Cycles:
         - Skipped - This will only happen if async work comes in out of order. Where a pending create promise (un-executed) comes in
           after a delete promise.
         - Canceled - Where an incoming promise (un-executed promise) is of type delete and the any lastPromise is not a delete type.
-      
-      
+
+
       NOTE:
       - You should not muck with existingPieces as its state is dependent on this functional loop.
       - PromiseQueueManager should not be thought of as a class that has a life expectancy (it has none). It's sole
@@ -529,10 +529,10 @@ Nicholas McCready - https://twitter.com/nmccready
         Author: Nicholas McCready & jfriend00
         _async handles things asynchronous-like :), to allow the UI to be free'd to do other things
         Code taken from http://stackoverflow.com/questions/10344498/best-way-to-iterate-over-an-array-without-blocking-the-ui
-      
+
         The design of any functionality of _async is to be like lodash/underscore and replicate it but call things
         asynchronously underneath. Each should be sufficient for most things to be derived from.
-      
+
         Optional Asynchronous Chunking via promises.
        */
       doChunk = function(array, chunkSizeOrDontChunk, pauseMilli, chunkCb, pauseCb, overallD, index) {
@@ -5345,7 +5345,7 @@ Original idea from: http://stackoverflow.com/questions/22758950/google-map-drawi
           being that we cannot tell the difference in Key String vs. a normal value string (TemplateUrl)
           we will assume that all scope values are string expressions either pointing to a key (propName) or using
           'self' to point the model as container/object of interest.
-          
+
           This may force redundant information into the model, but this appears to be the most flexible approach.
            */
           this.isIconVisibleOnClick = true;
@@ -7673,7 +7673,7 @@ InfoBox.prototype.createInfoBoxDiv_ = function () {
 
         this.eventListeners_.push(google.maps.event.addDomListener(this.div_, events[i], cancelHandler));
       }
-      
+
       // Workaround for Google bug that causes the cursor to change to a pointer
       // when the mouse moves over a marker underneath InfoBox.
       this.eventListeners_.push(google.maps.event.addDomListener(this.div_, "mouseover", function (e) {
@@ -7934,7 +7934,7 @@ InfoBox.prototype.draw = function () {
   var pixPosition = this.getProjection().fromLatLngToDivPixel(this.position_);
 
   this.div_.style.left = (pixPosition.x + this.pixelOffset_.width) + "px";
-  
+
   if (this.alignBottom_) {
     this.div_.style.bottom = -(pixPosition.y + this.pixelOffset_.height) + "px";
   } else {
@@ -8243,7 +8243,7 @@ InfoBox.prototype.close = function () {
   }
 
   if (this.eventListeners_) {
-    
+
     for (i = 0; i < this.eventListeners_.length; i++) {
 
       google.maps.event.removeListener(this.eventListeners_[i]);
@@ -8680,7 +8680,7 @@ InfoBox.prototype.close = function () {
     var control;
     var image;
     var me = this;
-    
+
     control = document.createElement("div");
     control.className = this.visualClass_;
     control.style.position = "relative";
@@ -10330,7 +10330,7 @@ MarkerClusterer.prototype.addMarkers = function (markers, opt_nodraw) {
     if (markers.hasOwnProperty(key)) {
       this.pushMarkerTo_(markers[key]);
     }
-  }  
+  }
   if (!opt_nodraw) {
     this.redraw_();
   }
@@ -11491,11 +11491,11 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      The `id` is a unique identifier for the node, and should **not** change
 	      after it's added. It will be used for adding, retrieving and deleting
 	      related edges too.
-	      
+
 	      **Note** that, internally, the ids are kept in an object. JavaScript's
 	      object hashes the id `'2'` and `2` to the same key, so please stick to a
 	      simple id data type such as number or string.
-	      
+
 	      _Returns:_ the node object. Feel free to attach additional custom properties
 	      on it for graph algorithms' needs. **Undefined if node id already exists**,
 	      as to avoid accidental overrides.
@@ -11556,7 +11556,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      `addNode()`. `weight` is optional and defaults to 1. Ignoring it effectively
 	      makes this an unweighted graph. Under the hood, `weight` is just a normal
 	      property of the edge object.
-	      
+
 	      _Returns:_ the edge object created. Feel free to attach additional custom
 	      properties on it for graph algorithms' needs. **Or undefined** if the nodes
 	      of id `fromId` or `toId` aren't found, or if an edge already exists between
@@ -11653,7 +11653,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      **Note:** not the same as concatenating `getInEdgesOf()` and
 	      `getOutEdgesOf()`. Some nodes might have an edge pointing toward itself.
 	      This method solves that duplication.
-	      
+
 	      _Returns:_ an array of edge objects linked to the node, no matter if they're
 	      outgoing or coming. Duplicate edge created by self-pointing nodes are
 	      removed. Only one copy stays. Empty array if node has no edge.
@@ -11680,7 +11680,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      /*
 	      Traverse through the graph in an arbitrary manner, visiting each node once.
 	      Pass a function of the form `fn(nodeObject, nodeId)`.
-	      
+
 	      _Returns:_ undefined.
 	      */
 
@@ -11697,7 +11697,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      /*
 	      Traverse through the graph in an arbitrary manner, visiting each edge once.
 	      Pass a function of the form `fn(edgeObject)`.
-	      
+
 	      _Returns:_ undefined.
 	      */
 
@@ -11780,7 +11780,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    Heap.prototype.add = function(value) {
 	      /*
 	      **Remember:** rejects null and undefined for mentioned reasons.
-	      
+
 	      _Returns:_ the value added.
 	      */
 
@@ -11815,7 +11815,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    Heap.prototype.peekMin = function() {
 	      /*
 	      Check the smallest item without removing it.
-	      
+
 	      _Returns:_ the smallest item (the root).
 	      */
 
@@ -11938,13 +11938,13 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    LinkedList.prototype.at = function(position) {
 	      /*
 	      Get the item at `position` (optional). Accepts negative index:
-	      
+
 	      ```js
 	      myList.at(-1); // Returns the last element.
 	      ```
 	      However, passing a negative index that surpasses the boundary will return
 	      undefined:
-	      
+
 	      ```js
 	      myList = new LinkedList([2, 6, 8, 3])
 	      myList.at(-5); // Undefined.
@@ -11983,7 +11983,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      boundary). Position specifies the place the value's going to be, and the old
 	      node will be pushed higher. `add(-2)` on list of size 7 is the same as
 	      `add(5)`.
-	      
+
 	      _Returns:_ item added.
 	      */
 
@@ -12019,7 +12019,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      /*
 	      Remove an item at index `position` (optional). Defaults to the last item.
 	      Index can be negative (within the boundary).
-	      
+
 	      _Returns:_ item removed.
 	      */
 
@@ -12058,7 +12058,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      /*
 	      Remove the item using its value instead of position. **Will remove the fist
 	      occurrence of `value`.**
-	      
+
 	      _Returns:_ the value, or undefined if value's not found.
 	      */
 
@@ -12101,9 +12101,9 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      other methods of this class, `startingPosition` (optional) can be as small
 	      as desired; a value of -999 for a list of size 5 will start searching
 	      normally, at the beginning.
-	      
+
 	      **Note:** searches forwardly, **not** backwardly, i.e:
-	      
+
 	      ```js
 	      var myList = new LinkedList([2, 3, 1, 4, 3, 5])
 	      myList.indexOf(3, -3); // Returns 4, not 1
@@ -12228,7 +12228,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      your own. The `makeHash` parameter is optional and accepts a boolean
 	      (defaults to `false`) indicating whether or not to produce a new hash (for
 	      the first use, naturally).
-	      
+
 	      _Returns:_ the hash.
 	      */
 
@@ -12268,7 +12268,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    Map.prototype.has = function(key) {
 	      /*
 	      Check whether a value exists for the key.
-	      
+
 	      _Returns:_ true or false.
 	      */
 
@@ -12278,7 +12278,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    Map.prototype["delete"] = function(key) {
 	      /*
 	      Remove the (key, value) pair.
-	      
+
 	      _Returns:_ **true or false**. Unlike most of this library, this method
 	      doesn't return the deleted value. This is so that it conforms to the future
 	      JavaScript `map.delete()`'s behavior.
@@ -12300,7 +12300,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    Map.prototype.forEach = function(operation) {
 	      /*
 	      Traverse through the map. Pass a function of the form `fn(key, value)`.
-	      
+
 	      _Returns:_ undefined.
 	      */
 
@@ -12415,7 +12415,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    Queue.prototype.peek = function() {
 	      /*
 	      Check the next item to be dequeued, without removing it.
-	      
+
 	      _Returns:_ the item.
 	      */
 
@@ -12502,7 +12502,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      /*
 	      Again, make sure to not pass a value already in the tree, or undefined, or
 	      null.
-	      
+
 	      _Returns:_ value added.
 	      */
 
@@ -12605,7 +12605,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    RedBlackTree.prototype.peekMin = function() {
 	      /*
 	      Check the minimum value without removing it.
-	      
+
 	      _Returns:_ the minimum value.
 	      */
 
@@ -12616,7 +12616,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    RedBlackTree.prototype.peekMax = function() {
 	      /*
 	      Check the maximum value without removing it.
-	      
+
 	      _Returns:_ the maximum value.
 	      */
 
@@ -12950,7 +12950,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    Trie.prototype.add = function(word) {
 	      /*
 	      Add a whole string to the trie.
-	      
+
 	      _Returns:_ the word added. Will return undefined (without adding the value)
 	      if the word passed is null or undefined.
 	      */
@@ -12999,7 +12999,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	    Trie.prototype.longestPrefixOf = function(word) {
 	      /*
 	      Find all words containing the prefix. The word itself counts as a prefix.
-	      
+
 	      ```js
 	      var trie = new Trie;
 	      trie.add('hello');
@@ -13007,7 +13007,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      trie.longestPrefixOf('hello'); // 'hello'
 	      trie.longestPrefixOf('helloha!'); // 'hello'
 	      ```
-	      
+
 	      _Returns:_ the prefix string, or empty string if no prefix found.
 	      */
 
@@ -13032,7 +13032,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      /*
 	      Find all words containing the prefix. The word itself counts as a prefix.
 	      **Watch out for edge cases.**
-	      
+
 	      ```js
 	      var trie = new Trie;
 	      trie.wordsWithPrefix(''); // []. Check later case below.
@@ -13046,7 +13046,7 @@ MarkerWithLabel.prototype.setMap = function (theMap) {
 	      trie.add('zebra');
 	      trie.wordsWithPrefix('hel'); // ['hell', 'hello']
 	      ```
-	      
+
 	      _Returns:_ an array of strings, or empty array if no word found.
 	      */
 

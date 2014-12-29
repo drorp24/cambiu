@@ -1,1 +1,9 @@
-<google-map center="center" zoom="zoom"  options="options"></google-map>
+<ui-gmap-google-map center="center" zoom="zoom"  options="options">
+  <ui-gmap-markers
+             models="exchanges"
+             idkey="'id'"
+             coords="'location'"
+             doCluster="false"
+             options="'options'">
+    </ui-gmap-markers>
+</ui-gmap-google-map>
