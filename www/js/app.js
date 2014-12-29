@@ -23,8 +23,8 @@ angular.module('currency-net-mvp', dependencies)
   exchange: exchangeService
 })
 
-.config(['$stateProvider', '$urlRouterProvider',
-  function($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
+  function($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider.otherwise('/map');
 
     $stateProvider
@@ -54,6 +54,8 @@ angular.module('currency-net-mvp', dependencies)
         controller: 'menuController as menu',
         templateUrl: '/template/menu.html'
       });
+
+    //$locationProvider.html5Mode(true).hashPrefix('!');
   }
 ])
 
