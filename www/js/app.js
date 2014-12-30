@@ -3,6 +3,8 @@ var dependencies = [
   'ui.router',
   'uiGmapgoogle-maps',
   'ngAutocomplete',
+  'ngResource',
+  'ngMockE2E',
   'ngFlag'
 ];
 
@@ -34,7 +36,8 @@ angular.module('currency-net-mvp', dependencies)
         templateUrl: '/template/home.html',
         controller: 'mainController as main',
         resolve: {
-          exchanges: function(exchange) {
+          exchanges: function(exchange, $httpBackend) {
+            $httpBackend.whenGET('/exchange').respond(backend.mock.exchanges['/exchange']);
             return exchange.query();
           }
         }
@@ -59,8 +62,8 @@ angular.module('currency-net-mvp', dependencies)
   }
 ])
 
-.run(function($ionicPlatform) {
-  //$httpBackend.whenGET('/exchange').respond(backend.mock.exchanges);
+.run(function($ionicPlatform, $httpBackend) {
+  $httpBackend.whenGET(/template\/.*/).passThrough();
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

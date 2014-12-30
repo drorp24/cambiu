@@ -1,31 +1,40 @@
 var backend = {
   mock: {
     exchanges: {
-      url: '/exchange',
-      response: [
-        {
-          id: 0,
-          name: 'London Exchange',
-          location: {
-            latitude: 51.5060,
-            longitude: 0.1260
+      '/exchange': [
+          {
+            id: 0,
+            location: {
+              latitude: 51.5060,
+              longitude: 0.1260
+            },
+            templateUrl: '/template/map-info-window.html',
+            details: {
+              title: 'London Exchange'
+            }
           },
-          options: {
-            title: 'London Exchange'
+          {
+            id: 1,
+            location: {
+              latitude: 51.5032,
+              longitude: 0.1232
+            },
+            templateUrl: '/template/map-info-window.html',
+            details: {
+              title: 'Yorkshare Exchange'
+            }
           }
-        },
-        {
-          id: 1,
-          name: 'Yorkshare Exchange',
-          location: {
-            latitude: 51.5032,
-            longitude: 0.1232
-          },
-          options: {
-            title: 'Yorkshare Exchange'
+      ],
+      '/exchange/0': {
+        id: 0,
+        details: {
+          title: 'London Exchange',
+          rates: {
+            USDGBP: 1.5625,
+            ILSGBP: 6.11
           }
         }
-      ]
+      }
     }
   }
 };
