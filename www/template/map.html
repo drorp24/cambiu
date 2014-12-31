@@ -14,8 +14,16 @@
     </ui-gmap-windows>
   </ui-gmap-markers>
 </ui-gmap-google-map>
-<!-- <ion-popover-view>
-  <ion-content>
-    Hello!
-  </ion-content>
-</ion-popover-view> -->
+<ion-footer-bar class="bar" style="background: none !important;">
+  <div class="row row-center">
+    <button class="button-clear ion-navigate col col-50 map-button" style="font-size: 20px;" ng-click="map.scrollToLocation()"></button>
+    <button class="button-clear ion-search col col-50 map-button" style="font-size: 20px;" ng-click=""></button>
+  </div>
+  <div class="location-search row row-center" keyboard-attach>
+    <label class="item item-input col">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="text" ng-autocomplete ng-model="autocomplete" details="details"
+            placeholder="Search" options="{watchEnter: true}"/>
+    </label>
+  </div>
+</ion-footer-bar>

@@ -9,20 +9,6 @@ function mainController($scope, $state, exchanges) {
     }
   };
 
-  $scope.$watch('details', function(result) {
-    if(!result) {
-      return;
-    }
-
-    var location = result.geometry.location;
-
-    $scope.center = {
-      latitude: location.k,
-      longitude: location.C
-    };
-    $scope.zoom = 14;
-  });
-
   $scope.exchanges = exchanges;
 
   $scope.currentExchange = {

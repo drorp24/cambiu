@@ -40,9 +40,13 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
       height: auto;
     }
 
-    .angucomplete-dropdown { z-index: 9999999; }
+    .angucomplete-dropdown { z-index: 9999999; top: 460px !important; }
   }
 }
+
+.button-back:before { font-size: 22px !important;}
+
+.map-button { font-size: 40px !important; color: #444444}
 
 .main-content {
   z-index: 0;

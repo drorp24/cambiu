@@ -1,13 +1,16 @@
 function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation) {
-  var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
-    $scope.center = {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
-    };
-  }, function(err) {
-    // error
-  });
+  $scope.scrollToCurrentLocation = function () {
+    var posOptions = {timeout: 10000, enableHighAccuracy: false};
+
+    $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+      $scope.center = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      };
+    }, function(err) {
+      // error
+    });
+  };
 
   angular.extend($scope, {
     zoom: 14,
@@ -21,8 +24,23 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation) {
 
   $scope.map = { };
 
+  $scope.$watch('details', function(result) {
+    if(!result) {
+      return;
+    }
 
-  uiGmapGoogleMapApi.then(function(maps) {
+    var location = result.geometry.location;
 
+    $scope.center = {
+      latitude: location.k,
+      longitude: location.C
+    };
+    $scope.zoom = 14;
   });
+
+  this.scrollToLocation = function () {
+    $scope.scrollToCurrentLocation();
+  };
+
+  $scope.scrollToCurrentLocation();
 }
