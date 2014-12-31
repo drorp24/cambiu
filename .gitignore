@@ -5,3 +5,6 @@ node_modules/
 platforms/
 plugins/
 www/css/
+
+my-release-key.keystore
+CurrencyNet.apk

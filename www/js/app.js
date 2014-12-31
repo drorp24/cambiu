@@ -61,7 +61,7 @@ angular.module('currency-net-mvp', dependencies)
       uiGmapGoogleMapApiProvider.configure({
           //    key: 'your api key',
           v: '3.17',
-          libraries: 'weather,geometry,visualization'
+          libraries: 'places,visualization'
       });
   }
 ])
