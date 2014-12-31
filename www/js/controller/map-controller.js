@@ -36,10 +36,19 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation) {
       longitude: location.C
     };
     $scope.zoom = 14;
+    $scope.hideSearchBar();
   });
+
+  $scope.hideSearchBar = function () {
+    $scope.searchLocation = false;
+    if($scope.zoom < 14) {
+      $scope.zoom = 14;
+    }
+  };
 
   this.scrollToLocation = function () {
     $scope.scrollToCurrentLocation();
+    $scope.hideSearchBar();
   };
 
   $scope.scrollToCurrentLocation();

@@ -46,7 +46,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .button-back:before { font-size: 22px !important;}
 
-.map-button { font-size: 40px !important; color: #444444}
+.map-button {
+  border: 1px solid #111111;
+  font-size: 40px !important;
+  opacity: 0.8; color: #111111;
+  background-color: #eeeeee !important;
+  border-radius: 35px;
+  width: 70px;
+  height: 70px !important;
+}
 
 .main-content {
   z-index: 0;
