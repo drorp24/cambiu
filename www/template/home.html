@@ -1,14 +1,15 @@
 <ion-view>
   <ion-header-bar class="header bar-stable row row-center">
-    <button class="button-clear ion-navicon-round" ui-sref="menu"></button>
-    <div class="conversion-panel row row-center">
-      <flag country="{{ conversion.left.flag }}" size="32" class="col col-left"></flag>
-      <div class="col col-center" style="text-align: center;">{{ conversion.left.value | number:2 }}</div>
-      <button class="button-clear ion-arrow-swap placeholder-icon" style="font-size: 32px; margin-bottom: 10px;" ng-click="switchSides()"></button>
-      <div class="col" style="text-align: center;">{{ conversion.right.value | number:2 }}</div>
-      <flag country="{{ conversion.right.flag }}" size="32" class="col col-right" style="text-align: right;"></flag>
+    <button class="col col-10 button-clear ion-navicon-round" ui-sref="menu"></button>
+    <flag country="{{ conversion.left.flag }}" size="32" class="col col-20 col-right"></flag>
+    <div class="col col-15">{{ conversion.left.value | number:2 }}</div>
+    <div class="col col-10">
+      <button class="button-clear ion-arrow-swap placeholder-icon" style="font-size: 20px;" ng-click="switchSides()"></button>
     </div>
-    <button class="button-clear" style="width: 30px;" ng-click="main.toggleMapList()" ng-class="isMap ? 'ion-navicon' : 'ion-map'"></button>
+    <div class="col col-15">{{ conversion.right.value | number:2 }}</div>
+    <flag country="{{ conversion.right.flag }}" size="32" class="col col-20"></flag>
+    <button class="col col-10 button-clear" ng-click="main.toggleMapList()"
+            ng-class="isMap ? 'ion-navicon' : 'ion-location'"></button>
   </ion-header-bar>
   <ion-content scroll="false" class="main-content">
     <ion-nav-view></ion-nav-view>

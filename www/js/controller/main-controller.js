@@ -9,12 +9,6 @@ function mainController($scope, $state, exchanges) {
     }
   };
 
-  $scope.center = {
-    latitude: 51.5072,
-    longitude: 0.1275,
-  };
-  $scope.zoom = 14;
-
   $scope.$watch('details', function(result) {
     if(!result) {
       return;
