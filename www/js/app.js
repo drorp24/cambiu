@@ -13,7 +13,7 @@ angular.module('currency-net-mvp', dependencies)
 
 .controller({
   mainController: ['$scope', '$state', 'exchanges', mainController],
-  mapController: ['$scope', 'uiGmapGoogleMapApi', '$cordovaGeolocation', mapController],
+  mapController: ['$scope', 'uiGmapGoogleMapApi', '$cordovaGeolocation', '$q', mapController],
   listController: ['$scope', listController],
   menuController: ['$scope', '$ionicHistory', menuController]
 })
