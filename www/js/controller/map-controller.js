@@ -1,4 +1,4 @@
-function mapController($scope, $ionicHistory) {
+function mapController($scope, uiGmapGoogleMapApi) {
   angular.extend($scope, {
     options: {
       zoomControl: false,
@@ -9,4 +9,9 @@ function mapController($scope, $ionicHistory) {
   });
 
   $scope.map = { };
+
+
+  uiGmapGoogleMapApi.then(function(maps) {
+
+  });
 }

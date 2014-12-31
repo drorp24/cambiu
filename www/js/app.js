@@ -12,9 +12,9 @@ angular.module('currency-net-mvp', dependencies)
 
 .controller({
   mainController: ['$scope', '$state', 'exchanges', mainController],
-  mapController: ['$scope', '$state', mapController],
+  mapController: ['$scope', 'uiGmapGoogleMapApi', mapController],
   listController: ['$scope', listController],
-  menuController: ['$scope', '$ionicHistory',  menuController]
+  menuController: ['$scope', '$ionicHistory', menuController]
 })
 
 .directive({
@@ -25,15 +25,15 @@ angular.module('currency-net-mvp', dependencies)
   exchange: exchangeService
 })
 
-.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-  function($stateProvider, $urlRouterProvider, $locationProvider) {
+.config(['$stateProvider', '$urlRouterProvider', 'uiGmapGoogleMapApiProvider',
+  function($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
     $urlRouterProvider.otherwise('/map');
 
     $stateProvider
       .state('home', {
-        url: '/',
         abstract: true,
-        templateUrl: '/template/home.html',
+        url: '/',
+        templateUrl: 'template/home.html',
         controller: 'mainController as main',
         resolve: {
           exchanges: function(exchange, $httpBackend) {
@@ -45,20 +45,24 @@ angular.module('currency-net-mvp', dependencies)
         .state('home.map', {
           url: 'map',
           controller: 'mapController as map',
-          templateUrl: '/template/map.html'
+          templateUrl: 'template/map.html'
         })
         .state('home.list', {
           url: 'list',
           controller: 'listController as list',
-          templateUrl: '/template/list.html'
+          templateUrl: 'template/list.html'
         })
       .state('menu', {
-        url: 'menu',
-        controller: 'menuController as menu',
-        templateUrl: '/template/menu.html'
+        url: '/menu',
+        templateUrl: 'template/menu.html',
+        controller: 'menuController as menu'
       });
 
-    //$locationProvider.html5Mode(true).hashPrefix('!');
+      uiGmapGoogleMapApiProvider.configure({
+          //    key: 'your api key',
+          v: '3.17',
+          libraries: 'weather,geometry,visualization'
+      });
   }
 ])
 

@@ -1,17 +1,7 @@
 {
-  "name": "currency-net-mvp-client",
+  "name": "myApp",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.0-beta.14",
-    "lodash": "~2.4.1",
-    "ngAutocomplete": "~1.0.0",
-    "angular-google-maps": "~2.0.12"
-  },
-  "resolutions": {
-    "ionic": "1.0.0-beta.14",
-    "angular": "1.3.6",
-    "angular-animate": "1.3.6",
-    "angular-sanitize": "1.3.6",
-    "angular-ui-router": "0.2.13"
+    "ionic": "driftyco/ionic-bower#1.0.0-beta.14"
   }
 }
