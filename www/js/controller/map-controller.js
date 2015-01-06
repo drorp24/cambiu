@@ -23,6 +23,17 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
     });
   };
 
+  uiGmapGoogleMapApi.then(function(maps) {
+    $scope.map = maps;
+
+    function showMarkers() {
+      var bounds = map.getBounds();
+      console.log(bounds);
+    }
+
+    $scope.map.event.addListener($scope.map, 'idle', showMarkers);
+  });
+
   angular.extend($scope, {
     zoom: 14,
     options: {
@@ -32,8 +43,6 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
       panControl: false
     }
   });
-
-  $scope.map = { };
 
   $scope.$watch('details', function(result) {
     if(!result) {
