@@ -12,7 +12,7 @@ var dependencies = [
 angular.module('currency-net-mvp', dependencies)
 
 .controller({
-  mainController: ['$scope', '$state', 'exchangeService', 'exchanges', mainController],
+  mainController: ['$scope', '$state', 'exchangeService', '$rootScope', 'exchanges', mainController],
   mapController: ['$scope', 'uiGmapGoogleMapApi', '$cordovaGeolocation', '$q', mapController],
   listController: ['$scope', listController],
   menuController: ['$scope', '$ionicHistory', menuController],
@@ -42,8 +42,9 @@ angular.module('currency-net-mvp', dependencies)
         templateUrl: 'template/home.html',
         controller: 'mainController as main',
         resolve: {
-          exchanges: function(exchangeService, $cordovaGeolocation, $httpBackend, $q) {
-            var deferred = $q.defer();
+          exchanges: function(exchangeService, $cordovaGeolocation, $q) {
+            var deferred = $q.defer(),
+                numOfTrials = 3;
 
             function getCurrentPosition() {
               $cordovaGeolocation.getCurrentPosition({
@@ -61,9 +62,10 @@ angular.module('currency-net-mvp', dependencies)
                   });
               }, function(err) {
                 // error
-                getCurrentPosition();
+                if(numOfTrials--) {
+                  getCurrentPosition();
+                }
               });
-
             }
 
             getCurrentPosition();

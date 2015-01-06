@@ -60,7 +60,33 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   z-index: 0;
 
   .exchange-banner {
+    cursor: pointer;
     background-color: rgb(248, 248, 248);
+  }
+}
+
+.exchange-title {
+  font-weight: bold;
+}
+
+.directions-button {
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid black;
+  box-shadow: 3px 3px 3px;
+  border-radius: 10px;
+  padding: 0;
+
+  .button-clear {
+    max-height: none !important;
+    width: 100% !important;
+    color: black;
+  }
+}
+
+.list-view {
+  .item {
+    cursor: pointer;
   }
 }
 

@@ -1,4 +1,4 @@
-function mainController($scope, $state, exchangeService, exchanges) {
+function mainController($scope, $state, exchangeService, $rootScope, exchanges) {
   this.toggleMapList = function() {
     $scope.isMap = $state.$current.name === 'home.map';
 
@@ -15,11 +15,9 @@ function mainController($scope, $state, exchangeService, exchanges) {
     rate: 0.64
   };
 
-  $scope.selectSelectedExchange = function(marker) {
-    var exchangeId = marker.model.id;
-
-    exchangeService.get({id: exchangeId}).$promise.then(function (exchangeDetails) {
-      $scope.currentExchange = exchangeDetails.details;
+  $scope.selectSelectedExchange = function(exchangeId) {
+    exchangeService.get({id: exchangeId}).$promise.then(function (exchange) {
+      $rootScope.currentExchange = exchange;
     });
   };
 

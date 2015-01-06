@@ -1,14 +1,45 @@
 <ion-view>
   <ion-header-bar class="header bar-stable row row-center">
-    <button class="button button-back button-clear icon icon-left ion-chevron-left" ng-click="exchange.goBack()"></button>
+    <button class="button button-back button-clear icon icon-left ion-chevron-left"
+            ng-click="exchange.goBack()" nav-direction="forward"></button>
     <h1 class="title" style="text-align: center; left: 0 !important;">Currency Exchange</h1>
-    <button class="button-clear ion-location" style="font-size: 20px; position: absolute; right: 0;" ui-sref="home.map"></button>
+    <button class="button-clear ion-location" style="font-size: 20px; position: absolute; right: 0;"
+            ui-sref="home.map" nav-direction="forward"></button>
   </ion-header-bar>
   <ion-content scroll="false" class="main-content">
-    <div class="list list-inset">
+    <div class="card">
+      <div class="item item-text-wrap">
+        <div class="row">
+          <div class="col">
+            <div class="row">
+              <div class="col exchange-title">{{ currentExchange.details.title }}</div>
+            </div>
+            <div class="row">
+              <div class="col">{{ currentExchange.details.address }}</div>
+            </div>
+            <div class="row">
+              <div class="col">open {{ currentExchange.details.openingHours }}</div>
+            </div>
+          </div>
+          <div class="col directions-button">
+            <button class="button-clear">
+              <div class="row">
+                <div class="col">3 min walk</div>
+              </div>
+              <div class="row">
+                <div class="col ion-arrow-swap" style="font-size: 30px;"></div>
+              </div>
+              <div class="row">
+                <div class="col">Directions</div>
+              </div>
+              <div class="row">
+                <div class="col">0.2 mile</div>
+              </div>
+            </button>
 
-
-
+          </div>
+        </div>
+      </div>
     </div>
   </ion-content>
 </ion-view>

@@ -1,24 +1,25 @@
 <ion-view>
   <ion-header-bar class="header bar-stable row row-center" style="border: none;">
-    <button class="col col-10 button-clear pull-left ion-navicon-round" ui-sref="menu"></button>
+    <button class="col col-10 button-clear pull-left ion-navicon-round" ui-sref="menu" nav-direction="back"></button>
     <flag country="{{ conversion.left.flag }}" size="32" class="col col-20" style="text-align: right"></flag>
     <div class="col col-15" style="text-align: center;">{{ conversion.left.value | number:2 }}</div>
     <div class="col col-10">
-      <button class="button-clear ion-arrow-swap placeholder-icon" style="font-size: 20px;" ng-click="switchSides()"></button>
+      <button class="button-clear ion-arrow-swap placeholder-icon" style="font-size: 20px;"
+              ng-click="switchSides()" nav-direction="back"></button>
     </div>
     <div class="col col-15" style="text-align: center;">{{ conversion.right.value | number:2 }}</div>
     <flag country="{{ conversion.right.flag }}" size="32" class="col col-20" style="text-align: left"></flag>
     <button class="col col-10 button-clear pull-right" style="font-size: 20px" ng-click="main.toggleMapList()"
-            ng-class="isMap ? 'ion-navicon' : 'ion-location'"></button>
+            ng-class="isMap ? 'ion-location' : 'ion-navicon'"></button>
   </ion-header-bar>
   <ion-content scroll="false" class="main-content">
-    <div class="exchange-banner bar-stable" ng-show="::currentExchange" ui-sref="exchange">
+    <div class="exchange-banner bar-stable" ng-show="::currentExchange" ui-sref="exchange" nav-direction="back">
       <div class="row row-center">
-        <div class="col">{{ currentExchange.title }}</div>
+        <div class="col">{{ currentExchange.details.title }}</div>
       </div>
       <div class="row">
         <div class="col">
-          <span>{{currentExchange.userRatings}}</span>
+          <span>{{currentExchange.details.userRatings}}</span>
         </div>
       </div>
     </div>

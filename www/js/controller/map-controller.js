@@ -66,6 +66,12 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
     setAdjacentMarkers(position);
   });
 
+  $scope.markerClick = function(marker) {
+    var exchangeId = marker.model.id;
+
+    $scope.selectSelectedExchange(exchangeId)
+  };
+
   function setAdjacentMarkers(position) {
     $scope.exchanges.$promise.then(function(exchanges) {
       angular.forEach($scope.exchanges, function(exchange) {
