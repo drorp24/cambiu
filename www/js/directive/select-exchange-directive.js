@@ -5,7 +5,6 @@ function selectExchange() {
     },
     link: function(scope, element, attrs) {
       function setSelectedExchange() {
-        console.log('3333333333');
         scope.selectAction({id: 5});
       }
 

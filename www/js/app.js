@@ -15,12 +15,14 @@ angular.module('currency-net-mvp', dependencies)
   mainController: ['$scope', '$state', 'exchangeService', 'exchanges', mainController],
   mapController: ['$scope', 'uiGmapGoogleMapApi', '$cordovaGeolocation', '$q', mapController],
   listController: ['$scope', listController],
-  menuController: ['$scope', '$ionicHistory', menuController]
+  menuController: ['$scope', '$ionicHistory', menuController],
+  exchangeController: ['$scope', '$ionicHistory', exchangeController]
 })
 
 .directive({
   locationSearch: locationSearch,
-  selectExchange: selectExchange
+  selectExchange: selectExchange,
+  userRatings: userRatings
 })
 
 .factory({
@@ -84,6 +86,11 @@ angular.module('currency-net-mvp', dependencies)
         url: '/menu',
         templateUrl: 'template/menu.html',
         controller: 'menuController as menu'
+      })
+      .state('exchange', {
+        url: '/exchange',
+        controller: 'exchangeController as exchange',
+        templateUrl: 'template/exchange.html'
       });
 
       uiGmapGoogleMapApiProvider.configure({

@@ -12,13 +12,13 @@
             ng-class="isMap ? 'ion-navicon' : 'ion-location'"></button>
   </ion-header-bar>
   <ion-content scroll="false" class="main-content">
-    <div class="exchange-banner bar-stable" ng-show="::currentExchange">
+    <div class="exchange-banner bar-stable" ng-show="::currentExchange" ui-sref="exchange">
       <div class="row row-center">
         <div class="col">{{ currentExchange.title }}</div>
       </div>
       <div class="row">
         <div class="col">
-          <span>{{ currentExchange.userRatings }}</span><span class="user-rating"></span>
+          <span>{{currentExchange.userRatings}}</span>
         </div>
       </div>
     </div>

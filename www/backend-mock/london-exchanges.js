@@ -28,6 +28,8 @@ var backend = {
         details: {
           title: 'London Exchange',
           address: '15 Appold Street, London',
+          country: 'United Kingdom',
+          openingHours: '8:30am - 5:30pm',
           userRatings: 4
         }
       },
@@ -36,6 +38,8 @@ var backend = {
         details: {
           title: 'Yorkshare Exchange',
           address: '36-42 New Inn Yard, London',
+          country: 'United Kingdom',
+          openingHours: '9:00am - 6:00pm',
           userRatings: 3.5
         }
       }
