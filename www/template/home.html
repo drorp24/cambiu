@@ -1,5 +1,5 @@
 <ion-view>
-  <ion-header-bar class="header bar-stable row row-center">
+  <ion-header-bar class="header bar-stable row row-center" style="border: none;">
     <button class="col col-10 button-clear pull-left ion-navicon-round" ui-sref="menu"></button>
     <flag country="{{ conversion.left.flag }}" size="32" class="col col-20" style="text-align: right"></flag>
     <div class="col col-15" style="text-align: center;">{{ conversion.left.value | number:2 }}</div>
@@ -12,6 +12,16 @@
             ng-class="isMap ? 'ion-navicon' : 'ion-location'"></button>
   </ion-header-bar>
   <ion-content scroll="false" class="main-content">
+    <div class="exchange-banner bar-stable" ng-show="::currentExchange">
+      <div class="row row-center">
+        <div class="col">{{ currentExchange.title }}</div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <span>{{ currentExchange.userRatings }}</span><span class="user-rating"></span>
+        </div>
+      </div>
+    </div>
     <ion-nav-view></ion-nav-view>
   </ion-content>
 </ion-view>

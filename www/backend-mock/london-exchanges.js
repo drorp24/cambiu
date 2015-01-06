@@ -8,7 +8,6 @@ var backend = {
               latitude: 51.5060,
               longitude: 0.1260
             },
-            templateUrl: '/template/map-info-window.html',
             details: {
               title: 'London Exchange'
             }
@@ -19,7 +18,6 @@ var backend = {
               latitude: 51.5032,
               longitude: 0.1232
             },
-            templateUrl: '/template/map-info-window.html',
             details: {
               title: 'Yorkshare Exchange'
             }
@@ -29,10 +27,16 @@ var backend = {
         id: 0,
         details: {
           title: 'London Exchange',
-          rates: {
-            USDGBP: 1.5625,
-            ILSGBP: 6.11
-          }
+          address: '15 Appold Street, London',
+          userRatings: 4
+        }
+      },
+      '/exchange/1': {
+        id: 1,
+        details: {
+          title: 'Yorkshare Exchange',
+          address: '36-42 New Inn Yard, London',
+          userRatings: 3.5
         }
       }
     }

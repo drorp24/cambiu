@@ -12,22 +12,25 @@ var dependencies = [
 angular.module('currency-net-mvp', dependencies)
 
 .controller({
-  mainController: ['$scope', '$state', 'exchanges', mainController],
+  mainController: ['$scope', '$state', 'exchangeService', 'exchanges', mainController],
   mapController: ['$scope', 'uiGmapGoogleMapApi', '$cordovaGeolocation', '$q', mapController],
   listController: ['$scope', listController],
   menuController: ['$scope', '$ionicHistory', menuController]
 })
 
 .directive({
-  locationSearch: locationSearch
+  locationSearch: locationSearch,
+  selectExchange: selectExchange
 })
 
 .factory({
-  exchange: exchangeService
+  exchangeService: exchangeService
 })
 
-.config(['$stateProvider', '$urlRouterProvider', 'uiGmapGoogleMapApiProvider',
-  function($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
+.config(['$stateProvider', '$urlRouterProvider', 'uiGmapGoogleMapApiProvider', '$compileProvider',
+  function($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider, $compileProvider) {
+    $compileProvider.debugInfoEnabled(false);
+
     $urlRouterProvider.otherwise('/map');
 
     $stateProvider
@@ -37,9 +40,33 @@ angular.module('currency-net-mvp', dependencies)
         templateUrl: 'template/home.html',
         controller: 'mainController as main',
         resolve: {
-          exchanges: function(exchange, $httpBackend) {
-            $httpBackend.whenGET('/exchange').respond(backend.mock.exchanges['/exchange']);
-            return exchange.query();
+          exchanges: function(exchangeService, $cordovaGeolocation, $httpBackend, $q) {
+            var deferred = $q.defer();
+
+            function getCurrentPosition() {
+              $cordovaGeolocation.getCurrentPosition({
+                  timeout: 1000,
+                  enableHighAccuracy: false
+                }).then(function(position) {
+                  exchangeService.query({
+                    location: {
+                      latitude: position.coords.latitude,
+                      longitude: position.coords.longitude
+                    },
+                    'sort-by': 'distance'
+                  }).$promise.then(function(exchanges) {
+                    deferred.resolve(exchanges);
+                  });
+              }, function(err) {
+                // error
+                getCurrentPosition();
+              });
+
+            }
+
+            getCurrentPosition();
+
+            return deferred.promise;
           }
         }
       })
@@ -69,6 +96,11 @@ angular.module('currency-net-mvp', dependencies)
 
 .run(function($ionicPlatform, $httpBackend) {
   $httpBackend.whenGET(/template\/.*/).passThrough();
+  $httpBackend.whenGET(/\/exchange(\?|\&)([^=]+)\=([^&]+)/).respond(backend.mock.exchanges['/exchange']);
+  $httpBackend.whenGET('/exchange/0').respond(backend.mock.exchanges['/exchange/0']);
+  $httpBackend.whenGET('/exchange/1').respond(backend.mock.exchanges['/exchange/1']);
+
+  //window.screen.lockOrientation('portrait');
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

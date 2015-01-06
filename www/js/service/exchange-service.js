@@ -1,3 +1,3 @@
 function exchangeService($resource) {
-  return $resource('/exchange');
+  return $resource('/exchange/:id');
 }

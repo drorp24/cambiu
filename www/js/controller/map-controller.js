@@ -1,20 +1,26 @@
 function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
-  $scope.scrollToCurrentLocation = function () {
-    var posOptions = {timeout: 10000, enableHighAccuracy: false},
-        deferred = $q.defer();
+  var posOptions = {
+        timeout: 10000,
+        enableHighAccuracy: false
+      },
+      watchOptions = {
+        frequency : 3000,
+        timeout : 3000,
+        enableHighAccuracy: false // may cause errors if true
+      };
 
-    $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+  $scope.scrollToCurrentLocation = function () {
+    return $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
       $scope.center = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       };
+      // setPositionWatch();
 
-      deferred.resolve(position.coords);
+      return position.coords;
     }, function(err) {
       // error
     });
-
-    return deferred.promise;
   };
 
   angular.extend($scope, {
@@ -61,11 +67,29 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
   });
 
   function setAdjacentMarkers(position) {
-    angular.forEach($scope.exchanges, function(exchange) {
-      exchange.location = {
-        latitude: position.latitude + Math.random() * 0.011,
-        longitude: position.longitude + Math.random() * 0.011,
-      };
+    $scope.exchanges.$promise.then(function(exchanges) {
+      angular.forEach($scope.exchanges, function(exchange) {
+        exchange.options = {disableAutoPan: true};
+        exchange.show = true;
+        exchange.location = {
+          latitude: position.latitude + Math.random() * 0.011,
+          longitude: position.longitude + Math.random() * 0.011,
+        };
+      });
+    });
+  }
+
+  function setPositionWatch() {
+    $cordovaGeolocation.watchPosition(watchOptions).then(null,
+      function(err) {
+        // error
+      },
+      function(position) {
+        console.log('location tick');
+        $scope.center = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
     });
   }
 }

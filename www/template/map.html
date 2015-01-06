@@ -4,13 +4,19 @@
    idkey="'id'"
    coords="'location'"
    doCluster="false"
+   click="selectSelectedExchange"
    options="'details'">
     <ui-gmap-windows
       show="show"
       idKey="'id'"
       icon="'icon'"
-      coords="'self'">
-        <div ng-non-bindable>{{details.title}}</div>
+      coords="'self'"
+      options="'options'">
+        <div class="echange-marker-content" select-exchange select-action="selectExchange(id)">
+          <div ng-non-bindable>
+            {{details.title}}
+          </div>
+        </div>
     </ui-gmap-windows>
   </ui-gmap-markers>
 </ui-gmap-google-map>

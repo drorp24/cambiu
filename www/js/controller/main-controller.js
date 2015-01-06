@@ -1,4 +1,4 @@
-function mainController($scope, $state, exchanges) {
+function mainController($scope, $state, exchangeService, exchanges) {
   this.toggleMapList = function() {
     $scope.isMap = $state.$current.name === 'home.map';
 
@@ -11,9 +11,22 @@ function mainController($scope, $state, exchanges) {
 
   $scope.exchanges = exchanges;
 
-  $scope.currentExchange = {
+  $scope.benchmarkExchange = {
     rate: 0.64
   };
+
+  $scope.selectSelectedExchange = function(marker) {
+    var exchangeId = marker.model.id;
+
+    exchangeService.get({id: exchangeId}).$promise.then(function (exchangeDetails) {
+      $scope.currentExchange = exchangeDetails.details;
+    });
+  };
+
+  // $scope.showInfo = function(info) {
+  //   $scope.selectedExchange = info.model;
+  //   console.log($scope.selectedExchange);
+  // };
 
   $scope.conversion = {
     inverse: false,
@@ -23,7 +36,7 @@ function mainController($scope, $state, exchanges) {
     },
     right: {
       flag: 'gb',
-      value: $scope.currentExchange.rate
+      value: $scope.benchmarkExchange.rate
     }
   };
 
@@ -34,7 +47,7 @@ function mainController($scope, $state, exchanges) {
     $scope.conversion.right = temp;
 
     $scope.conversion.left.value = 1;
-    $scope.conversion.right.value = $scope.conversion.inverse ? 1/$scope.currentExchange.rate : $scope.currentExchange.rate;
+    $scope.conversion.right.value = $scope.conversion.inverse ? 1/$scope.benchmarkExchange.rate : $scope.benchmarkExchange.rate;
     $scope.conversion.inverse = !$scope.conversion.inverse;
   };
 }
