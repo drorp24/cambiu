@@ -1,27 +1,52 @@
 function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
-  var posOptions = {
-        timeout: 10000,
-        enableHighAccuracy: false
-      },
-      watchOptions = {
-        frequency : 3000,
-        timeout : 3000,
-        enableHighAccuracy: false // may cause errors if true
-      };
+  var defaultZoom = 16;
 
-  $scope.scrollToCurrentLocation = function () {
-    return $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+  function getCurrentLocation() {
+    return $cordovaGeolocation.getCurrentPosition({
+      maximumAge: 5000,
+      timeout: 10000,
+      enableHighAccuracy: false
+    });
+  }
+
+  function scrollToCurrentLocation() {
+    return getCurrentLocation().then(function(position) {
       $scope.center = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       };
-      // setPositionWatch();
 
       return position.coords;
     }, function(err) {
       // error
     });
-  };
+  }
+
+  function setPositionWatch() {
+    var watchOptions = {
+          maximumAge: 5000,
+          timeout : 3000,
+          enableHighAccuracy: false // may cause errors if true
+        };
+
+    $cordovaGeolocation.watchPosition(watchOptions).then(null,
+      function(err) {
+        // error
+      },
+      function(position) {
+        $scope.self.position = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+    });
+  }
+
+  function hideSearchBar() {
+    $scope.searchLocation = false;
+    if($scope.zoom < defaultZoom) {
+      $scope.zoom = defaultZoom;
+    }
+  }
 
   uiGmapGoogleMapApi.then(function(maps) {
     $scope.map = maps;
@@ -35,7 +60,7 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
   });
 
   angular.extend($scope, {
-    zoom: 14,
+    zoom: defaultZoom,
     options: {
       zoomControl: false,
       streetViewControl: false,
@@ -55,56 +80,43 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
       latitude: location.k,
       longitude: location.C
     };
-    $scope.zoom = 14;
-    $scope.hideSearchBar();
+    $scope.zoom = defaultZoom;
+    hideSearchBar();
   });
 
-  $scope.hideSearchBar = function () {
-    $scope.searchLocation = false;
-    if($scope.zoom < 14) {
-      $scope.zoom = 14;
-    }
+  $scope.scrollToLocation = function () {
+    scrollToCurrentLocation();
+    hideSearchBar();
   };
-
-  this.scrollToLocation = function () {
-    $scope.scrollToCurrentLocation();
-    $scope.hideSearchBar();
-  };
-
-  $scope.scrollToCurrentLocation().then(function(position) {
-    setAdjacentMarkers(position);
-  });
 
   $scope.markerClick = function(marker) {
     var exchangeId = marker.model.id;
 
-    $scope.selectSelectedExchange(exchangeId)
+    $scope.selectSelectedExchange(exchangeId);
   };
 
   function setAdjacentMarkers(position) {
+    $scope.self.position = position;
+
     $scope.exchanges.$promise.then(function(exchanges) {
       angular.forEach($scope.exchanges, function(exchange) {
-        exchange.options = {disableAutoPan: true};
+        var amplitude = 0.003;
+
+        exchange.options = {
+          disableAutoPan: true,
+          visible: false
+        };
         exchange.show = true;
         exchange.location = {
-          latitude: position.latitude + Math.random() * 0.011,
-          longitude: position.longitude + Math.random() * 0.011,
+          latitude: position.latitude + Math.random() * amplitude,
+          longitude: position.longitude + Math.random() * amplitude,
         };
       });
     });
   }
 
-  function setPositionWatch() {
-    $cordovaGeolocation.watchPosition(watchOptions).then(null,
-      function(err) {
-        // error
-      },
-      function(position) {
-        console.log('location tick');
-        $scope.center = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        };
-    });
-  }
+  scrollToCurrentLocation().then(function(position) {
+    setAdjacentMarkers(position);
+    setPositionWatch();
+  });
 }

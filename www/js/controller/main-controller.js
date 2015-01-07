@@ -15,16 +15,19 @@ function mainController($scope, $state, exchangeService, $rootScope, exchanges) 
     rate: 0.64
   };
 
-  $scope.selectSelectedExchange = function(exchangeId) {
+  $rootScope.setSelectedExchange = function(exchangeId) {
     exchangeService.get({id: exchangeId}).$promise.then(function (exchange) {
       $rootScope.currentExchange = exchange;
     });
+
+    return 6;
   };
 
-  // $scope.showInfo = function(info) {
-  //   $scope.selectedExchange = info.model;
-  //   console.log($scope.selectedExchange);
-  // };
+  $scope.showInfo = function(info) {
+    $scope.selectedExchange = info.model;
+    console.log($scope.selectedExchange);
+    return 4;
+  };
 
   $scope.conversion = {
     inverse: false,
@@ -36,6 +39,11 @@ function mainController($scope, $state, exchangeService, $rootScope, exchanges) 
       flag: 'gb',
       value: $scope.benchmarkExchange.rate
     }
+  };
+
+  $scope.self = {
+    id: 'self',
+    iconUrl: 'http://www.google.es/mapmaker/mapfiles/sv_icon.png'
   };
 
   $scope.switchSides = function () {

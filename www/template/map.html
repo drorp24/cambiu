@@ -1,32 +1,33 @@
-<ui-gmap-google-map center="center" zoom="zoom" options="options" draggable="true" pan="true">
+<ui-gmap-google-map center="center" zoom="zoom" options="options"
+  draggable="true" pan="true">
   <ui-gmap-markers
    models="exchanges"
    idkey="'id'"
    coords="'location'"
    doCluster="false"
-   click="markerClick"
-   options="'details'">
+   options="'options'">
     <ui-gmap-windows
-      show="show"
-      idKey="'id'"
-      icon="'icon'"
-      coords="'self'"
-      options="'options'">
-        <div class="echange-marker-content" select-exchange select-action="selectExchange(id)">
+      idKey="'id'">
+        <div class="exchange-marker-content" select-exchange select-action="setSelectedExchange" ng-model="model">
           <div ng-non-bindable>
             {{details.title}}
           </div>
         </div>
     </ui-gmap-windows>
   </ui-gmap-markers>
+  <ui-gmap-marker
+        idKey='self.id'
+        coords='self.position'
+        icon='self.iconUrl'>
+  </ui-gmap-marker>
 </ui-gmap-google-map>
 <div class="bar bar-footer" style="background: none !important; display: inline-block; height: 140px;">
   <div class="row row-center hide-on-keyboard-open" style="margin-bottom: 20px; height: 70px;">
     <div class="col" style="position: relative;">
-      <button class="button-clear ion-navigate col map-button" style="padding-bottom: 60px; position: absolute; right: 50%; top: -40px;" ng-click="map.scrollToLocation()"></button>
+      <button class="button-clear ion-navigate col map-button" style="padding-bottom: 60px; position: absolute; right: 50%; top: -40px;" ng-click="scrollToLocation()"></button>
     </div>
     <div class="col" style="position: relative;">
-      <button class="button-clear ion-search col map-button" style="padding-bottom: 60px; position: absolute; left: 50%; top: -40px;" ng-click="searchLocation = true"></button>
+      <button class="button-clear ion-search col map-button" style="padding-bottom: 60px; position: absolute; left: 50%; top: -40px;" ng-click="searchLocation = !searchLocation"></button>
     </div>
   </div>
   <div class="location-search" keyboard-attach ng-show="searchLocation">

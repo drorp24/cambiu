@@ -1,7 +1,7 @@
 <ion-view scroll="true">
   <div class="list-view">
     <div class="item" ng-repeat="ex in exchanges"
-         ng-click="selectSelectedExchange(ex.id)" ng-class="{'active': (ex.id == currentExchange.id)}">
+         ng-click="setSelectedExchange(ex.id)" ng-class="{'active': (ex.id == currentExchange.id)}">
       {{ ::ex.details.title }}
     </div>
   </div>

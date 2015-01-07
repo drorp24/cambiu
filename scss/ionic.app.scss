@@ -101,5 +101,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   }
 
   .gm-style-iw + div { display: none !important; }
-  .echange-marker-content { padding: 10px; }
+  .exchange-marker-content { padding: 10px; }
+  img[src="http://maps.gstatic.com/mapfiles/api-3/images/mapcnt3.png"] {
+    display: none;
+  }
 }
+
+.pac-container { bottom: 50px !important; top: 60px !important; }

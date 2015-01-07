@@ -22,7 +22,7 @@ angular.module('currency-net-mvp', dependencies)
 
 .directive({
   locationSearch: locationSearch,
-  selectExchange: selectExchange,
+  selectExchange: ['$rootScope', selectExchange],
   userRatings: userRatings
 })
 
