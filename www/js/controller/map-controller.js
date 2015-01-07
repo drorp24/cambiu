@@ -50,13 +50,6 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
 
   uiGmapGoogleMapApi.then(function(maps) {
     $scope.maps = maps;
-
-    function showMarkers() {
-      var bounds = $scope.maps.getBounds();
-      console.log(bounds);
-    }
-
-    $scope.maps.event.addListener($scope.maps, 'idle', showMarkers);
   });
 
   angular.extend($scope, {
@@ -103,6 +96,7 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
           visible: false
         };
         exchange.show = true;
+        exchange.fit = false;
         exchange.location = {
           latitude: position.latitude + Math.random() * amplitude,
           longitude: position.longitude + Math.random() * amplitude,
@@ -126,8 +120,28 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
           };
 
       directionsService.route(request, function(response, status) {
-        $scope.directionsPath = response.routes[0].overview_path;
-        console.log('4444444444', response.routes[0].overview_path);
+        var route0 = response.routes[0],
+            bounds = route0.bounds,
+            northEast = bounds.getNorthEast(),
+            southWest = bounds.getSouthWest(),
+            center = bounds.getCenter();
+
+        $scope.directionsPath = route0.overview_path;
+        console.log('4444444444', bounds.getCenter());
+        $scope.mapBounds = {
+          northeast: {
+            latitude: northEast.lat(),
+            longitude: northEast.lng()
+          },
+          southwest: {
+            latitude: southWest.lat(),
+            longitude: southWest.lng()
+          }
+        };
+        $scope.center = {
+          latitude: center.lat(),
+          longitude: center.lng()
+        };
       });
     });
   }

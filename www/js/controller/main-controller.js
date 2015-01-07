@@ -19,14 +19,6 @@ function mainController($scope, $state, exchangeService, $rootScope, exchanges) 
     exchangeService.get({id: exchangeId}).$promise.then(function (exchange) {
       $rootScope.currentExchange = exchange;
     });
-
-    return 6;
-  };
-
-  $scope.showInfo = function(info) {
-    $scope.selectedExchange = info.model;
-    console.log($scope.selectedExchange);
-    return 4;
   };
 
   $scope.conversion = {

@@ -1,11 +1,13 @@
 <ui-gmap-google-map center="center" zoom="zoom" options="options"
-  draggable="true" pan="true">
+  draggable="true" pan="true"
+  bounds="mapBounds">
   <ui-gmap-markers
    models="exchanges"
    idkey="'id'"
    coords="'location'"
    doCluster="false"
-   options="'options'">
+   options="'options'"
+   fit="fit">
     <ui-gmap-windows
       idKey="'id'">
         <div class="exchange-marker-content" select-exchange select-action="setSelectedExchange" ng-model="model">
