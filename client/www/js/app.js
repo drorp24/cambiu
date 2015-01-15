@@ -43,9 +43,13 @@ angular.module('currency-net-mvp', dependencies)
         templateUrl: 'template/home.html',
         controller: 'mainController as main',
         resolve: {
-          exchanges: function(exchangeService, $cordovaGeolocation, $q) {
+          exchanges: function(exchangeService, $cordovaGeolocation, $q, $location) {
             var deferred = $q.defer(),
                 numOfTrials = 3;
+
+            function isOffline() {
+              return navigator && navigator.connection && navigator.connection.type === 'none';
+            }
 
             function getCurrentPosition() {
               $cordovaGeolocation.getCurrentPosition({
@@ -69,7 +73,11 @@ angular.module('currency-net-mvp', dependencies)
               });
             }
 
-            getCurrentPosition();
+            if(isOffline()) {
+              $location.path('/offline');
+            } else {
+              getCurrentPosition();
+            }
 
             return deferred.promise;
           }
@@ -99,6 +107,10 @@ angular.module('currency-net-mvp', dependencies)
         url: '/new-exchange',
         controller: 'newExchangeController as newExchange',
         templateUrl: 'template/new-exchange.html'
+      })
+      .state('offline', {
+        url: '/offline',
+        templateUrl: 'template/offline.html'
       });
 
       uiGmapGoogleMapApiProvider.configure({
