@@ -21,7 +21,7 @@ ActiveAdmin.register Exchange do
       f.input :user_ratings
       f.input :opens
       f.input :closes
-      f.input :country, :as => :string
+      f.input :country, :as => :select, collection: country_dropdown
     end
     f.actions
   end
