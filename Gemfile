@@ -32,6 +32,7 @@ gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
 gem 'activerecord-postgis-adapter'
 gem 'geocoder'
+gem 'country-select'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
