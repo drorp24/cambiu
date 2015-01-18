@@ -45,11 +45,11 @@ angular.module('currency-net-mvp', dependencies)
         resolve: {
           exchanges: function(exchangeService, $cordovaGeolocation, $q, $location) {
             var deferred = $q.defer(),
-                numOfTrials = 3;
+                numOfTrials = 3,
+                isOffline = 'onLine' in navigator && !navigator.onLine,
+                networkState = 'connection' in navigator && navigator.connection.type;
 
-            function isOffline() {
-              return navigator && navigator.connection && navigator.connection.type === 'none';
-            }
+            console.log('222222222222222222', networkState);
 
             function getCurrentPosition() {
               $cordovaGeolocation.getCurrentPosition({
@@ -73,7 +73,7 @@ angular.module('currency-net-mvp', dependencies)
               });
             }
 
-            if(isOffline()) {
+            if(networkState === 'none') {
               $location.path('/offline');
             } else {
               getCurrentPosition();
