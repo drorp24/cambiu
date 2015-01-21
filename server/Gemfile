@@ -33,6 +33,7 @@ gem 'devise'
 gem 'activerecord-postgis-adapter'
 gem 'geocoder'
 gem 'country-select'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
