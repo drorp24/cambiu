@@ -1,5 +1,5 @@
-function exchangeService($resource, serverUrl, apiUrl) {
-  return $resource(serverUrl + apiUrl + '/exchanges/:id', 
+function exchangeService($resource, serverUrl) {
+  return $resource(serverUrl + '/exchanges/:id', 
     {
       callback: "JSON_CALLBACK"
     },

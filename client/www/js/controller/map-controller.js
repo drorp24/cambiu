@@ -105,21 +105,21 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
         }
       });
 
-      var directionsService = new $scope.maps.DirectionsService(),
-          selfPosition = $scope.self.position,
-          firstExchange = $scope.exchanges[0],
-          request = {
-            origin: new $scope.maps.LatLng(
-              selfPosition.latitude,
-              selfPosition.longitude
-            ),
-            destination: new $scope.maps.LatLng(
-              firstExchange.location.latitude,
-              firstExchange.location.longitude
-            ),
-            travelMode: $scope.maps.TravelMode.WALKING,
-            optimizeWaypoints: true
-          };
+      // var directionsService = new $scope.maps.DirectionsService(),
+      //     selfPosition = $scope.self.position,
+      //     firstExchange = $scope.exchanges[0],
+      //     request = {
+      //       origin: new $scope.maps.LatLng(
+      //         selfPosition.latitude,
+      //         selfPosition.longitude
+      //       ),
+      //       destination: new $scope.maps.LatLng(
+      //         firstExchange.location.latitude,
+      //         firstExchange.location.longitude
+      //       ),
+      //       travelMode: $scope.maps.TravelMode.WALKING,
+      //       optimizeWaypoints: true
+      //     };
 
       // directionsService.route(request, function(response, status) {
       //   var route0 = response.routes[0],

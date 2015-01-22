@@ -12,8 +12,8 @@ var dependencies = [
 angular.module('currency-net-mvp', dependencies)
 
 .value({
-  'serverUrl': '//localhost:3000',
-  'apiUrl': '/api/v1'
+  hostUrl: appSettings.hostUrl,
+  apiVersion: appSettings.apiVersion
 })
 
 .controller({
@@ -32,7 +32,10 @@ angular.module('currency-net-mvp', dependencies)
 })
 
 .factory({
-  exchangeService: ['$resource', 'serverUrl', 'apiUrl', exchangeService]
+  serverUrl: ['hostUrl', 'apiVersion', function(hostUrl, apiVersion) {
+    return hostUrl + '/api/' + apiVersion;
+  }],
+  exchangeService: ['$resource', 'serverUrl', exchangeService]
 })
 
 .config(['$stateProvider', '$urlRouterProvider', 'uiGmapGoogleMapApiProvider', '$compileProvider',
