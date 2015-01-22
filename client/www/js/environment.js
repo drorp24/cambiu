@@ -1,7 +1,6 @@
 appSettings = {
-  hostUrl: 'http://localhost:3000',
-  apiVersion: 'v1',
-  debug: true
   
+  hostUrl: 'http://cambiu.herokuapp.com',
+  apiVersion: 'v1'
    
 }

@@ -56,9 +56,9 @@ gulp.task('dev', function() {
     .pipe(gulp.dest('./www/js/'));
 });
 
-gulp.task('test_env', function() {
+gulp.task('stage', function() {
   gulp.src('./environment.js')
-    .pipe(preprocess({context: { ENV: 'TEST', DEBUG: true}}))
+    .pipe(preprocess({context: { ENV: 'STAGE', DEBUG: true}}))
     .pipe(gulp.dest('./www/js/'));
 });
 
