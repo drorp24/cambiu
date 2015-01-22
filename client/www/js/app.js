@@ -11,6 +11,11 @@ var dependencies = [
 
 angular.module('currency-net-mvp', dependencies)
 
+.value({
+  'serverUrl': '//localhost:3000',
+  'apiUrl': '/api/v1'
+})
+
 .controller({
   mainController: ['$scope', '$state', 'exchangeService', '$rootScope', 'exchanges', mainController],
   mapController: ['$scope', 'uiGmapGoogleMapApi', '$cordovaGeolocation', '$q', mapController],
@@ -27,7 +32,7 @@ angular.module('currency-net-mvp', dependencies)
 })
 
 .factory({
-  exchangeService: exchangeService
+  exchangeService: ['$resource', 'serverUrl', 'apiUrl', exchangeService]
 })
 
 .config(['$stateProvider', '$urlRouterProvider', 'uiGmapGoogleMapApiProvider', '$compileProvider',
@@ -48,8 +53,6 @@ angular.module('currency-net-mvp', dependencies)
                 numOfTrials = 3,
                 isOffline = 'onLine' in navigator && !navigator.onLine,
                 networkState = 'connection' in navigator && navigator.connection.type;
-
-            console.log('222222222222222222', networkState);
 
             function getCurrentPosition() {
               $cordovaGeolocation.getCurrentPosition({
@@ -123,7 +126,7 @@ angular.module('currency-net-mvp', dependencies)
 
 .run(function($ionicPlatform, $httpBackend) {
   $httpBackend.whenGET(/template\/.*/).passThrough();
-  $httpBackend.whenGET(/\/exchange(\?|\&)([^=]+)\=([^&]+)/).respond(backend.mock.exchanges['/exchange']);
+  $httpBackend.whenJSONP(/\/api\/v1\/exchanges(\?|\&)([^=]+)\=([^&]+)/).passThrough();//.respond(backend.mock.exchanges['/exchange']);
   $httpBackend.whenGET('/exchange/0').respond(backend.mock.exchanges['/exchange/0']);
   $httpBackend.whenGET('/exchange/1').respond(backend.mock.exchanges['/exchange/1']);
 

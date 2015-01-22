@@ -88,7 +88,7 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
     $scope.self.position = position;
 
     $scope.exchanges.$promise.then(function(exchanges) {
-      angular.forEach($scope.exchanges, function(exchange) {
+      angular.forEach(exchanges, function(exchange) {
         var amplitude = 0.003;
 
         exchange.options = {
@@ -97,57 +97,58 @@ function mapController($scope, uiGmapGoogleMapApi, $cordovaGeolocation, $q) {
         };
         exchange.show = true;
         exchange.fit = false;
+        exchange.latitude = null;
+        exchange.longitude = null;
         exchange.location = {
           latitude: position.latitude + Math.random() * amplitude,
-          longitude: position.longitude + Math.random() * amplitude,
-        };
+          longitude: position.longitude + Math.random() * amplitude
+        }
       });
 
       var directionsService = new $scope.maps.DirectionsService(),
           selfPosition = $scope.self.position,
-          firstExchangePosition = $scope.exchanges[0].location,
+          firstExchange = $scope.exchanges[0],
           request = {
             origin: new $scope.maps.LatLng(
               selfPosition.latitude,
               selfPosition.longitude
             ),
             destination: new $scope.maps.LatLng(
-              firstExchangePosition.latitude,
-              firstExchangePosition.longitude
+              firstExchange.location.latitude,
+              firstExchange.location.longitude
             ),
             travelMode: $scope.maps.TravelMode.WALKING,
             optimizeWaypoints: true
           };
 
-      directionsService.route(request, function(response, status) {
-        var route0 = response.routes[0],
-            bounds = route0.bounds,
-            northEast = bounds.getNorthEast(),
-            southWest = bounds.getSouthWest(),
-            center = bounds.getCenter();
+      // directionsService.route(request, function(response, status) {
+      //   var route0 = response.routes[0],
+      //       bounds = route0.bounds,
+      //       northEast = bounds.getNorthEast(),
+      //       southWest = bounds.getSouthWest(),
+      //       center = bounds.getCenter();
 
-        $scope.directionsPath = route0.overview_path;
-        console.log('4444444444', bounds.getCenter());
-        $scope.mapBounds = {
-          northeast: {
-            latitude: northEast.lat(),
-            longitude: northEast.lng()
-          },
-          southwest: {
-            latitude: southWest.lat(),
-            longitude: southWest.lng()
-          }
-        };
-        $scope.center = {
-          latitude: center.lat(),
-          longitude: center.lng()
-        };
-      });
+      //   $scope.directionsPath = route0.overview_path;
+      //   $scope.mapBounds = {
+      //     northeast: {
+      //       latitude: northEast.lat(),
+      //       longitude: northEast.lng()
+      //     },
+      //     southwest: {
+      //       latitude: southWest.lat(),
+      //       longitude: southWest.lng()
+      //     }
+      //   };
+      //   $scope.center = {
+      //     latitude: center.lat(),
+      //     longitude: center.lng()
+      //   };
+      // });
     });
   }
 
   scrollToCurrentLocation().then(function(position) {
     setAdjacentMarkers(position);
-    setPositionWatch();
+    // setPositionWatch();
   });
 }
