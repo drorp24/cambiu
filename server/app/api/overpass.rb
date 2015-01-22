@@ -9,27 +9,19 @@ class Overpass
   DEFAULT_ENDPOINT='http://overpass-api.de/api/interpreter?data='
 
   def initialize(args={})
-    bbox = args[:bbox]
-    bbox(bbox[:min_latitude],bbox[:min_longtitude],bbox[:max_latitude],bbox[:max_longtitude])
-
-    cache_expiration_time = args[:cache_expiration_time] || 7200
-    @cache = Diskcached.new('tmp/cache',cache_expiration_time,true)
-
     @endpoint = args[:endpoint] || DEFAULT_ENDPOINT
     @json = args[:json] ? "output='json'" : ''
     @timeout = args[:timeout] ? "timeout='#{args[:timeout]}'" : ''
     @element_limit = args[:element_limit] ? "element-limit='#{args[:element_limit]}'" : ''
+    cache_expiration_time = args[:cache_expiration_time] || 7200
+    @cache = Diskcached.new('tmp/cache',cache_expiration_time,true)
+    @bbox = args[:area] == "London" ? "bbox='51.28,-0.489,51.686,0.236'" : ''
+    @query = args[:amenity] == "bdc" ? "<query type='node'><has-kv k='amenity' v='bureau_de_change'/></query>" : ''
   end
 
-  def bbox(a,b,c,d)
-    @bbox = "bbox='#{a},#{b},#{c},#{d}'"
-  end
-
-  def query(query)
-    return unless query
+  def query
     perform "<osm-script #{@bbox} #{@timeout} #{@element_limit} #{@json}>" <<
-            "#{query}<print/></osm-script>"
-            
+            "#{@query}<print/></osm-script>"            
   end
 
   def raw_query(query)
@@ -46,14 +38,16 @@ class Overpass
       begin
         HTTPI.get(request).body
       rescue => e
-        return e
+        puts e
+        return false
       end
     end
 
     begin
       return JSON.parse(data, :symbolize_names=> true)[:elements] unless @json.empty?
     rescue JSON::ParserError => e
-      return "Another request is still running"
+      puts "Another request is still running"
+      return false
     end
 
     doc = Nokogiri::XML(data) do |config|
