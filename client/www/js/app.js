@@ -129,7 +129,7 @@ angular.module('currency-net-mvp', dependencies)
 
 .run(function($ionicPlatform, $httpBackend) {
   $httpBackend.whenGET(/template\/.*/).passThrough();
-  $httpBackend.whenJSONP(/\/api\/v1\/exchanges(\?|\&)([^=]+)\=([^&]+)/).passThrough();//.respond(backend.mock.exchanges['/exchange']);
+  $httpBackend.whenJSONP(/\/api\/v1\/exchanges(\?|\&|\/)([^=]+)\=([^&]+)/).passThrough();//.respond(backend.mock.exchanges['/exchange']);
   $httpBackend.whenGET('/exchange/0').respond(backend.mock.exchanges['/exchange/0']);
   $httpBackend.whenGET('/exchange/1').respond(backend.mock.exchanges['/exchange/1']);
 

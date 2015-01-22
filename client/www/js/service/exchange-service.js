@@ -7,6 +7,10 @@ function exchangeService($resource, serverUrl) {
       query: {
         method: 'JSONP',
         isArray: true
+      },
+      get: {
+        method: 'JSONP',
+        isArray: false
       }
     });
 }
