@@ -13,7 +13,7 @@ class Overpass
     @json = args[:json] ? "output='json'" : ''
     @timeout = args[:timeout] ? "timeout='#{args[:timeout]}'" : ''
     @element_limit = args[:element_limit] ? "element-limit='#{args[:element_limit]}'" : ''
-    cache_expiration_time = args[:cache_expiration_time] || 7200
+    cache_expiration_time = args[:cache_expiration_time] || 1 # 7200
     @cache = Diskcached.new('tmp/cache',cache_expiration_time,true)
     @bbox = args[:area] == "London" ? "bbox='51.28,-0.489,51.686,0.236'" : ''
     @query = args[:amenity] == "bdc" ? "<query type='node'><has-kv k='amenity' v='bureau_de_change'/></query>" : ''
