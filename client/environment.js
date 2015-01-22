@@ -6,7 +6,7 @@ appSettings = {
   // @endif
   
   // @if ENV == 'STAGE'
-  hostUrl: 'https://test.api-example.com/',
+  hostUrl: 'http://cambiu.herokuapp.com',
   apiVersion: 'v1'
   // @endif
    
