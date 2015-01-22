@@ -34,6 +34,10 @@ gem 'activerecord-postgis-adapter'
 gem 'geocoder'
 gem 'country-select'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+gem 'delayed_job_active_record'
+gem 'httpi', "~> 1.1.0"
+gem 'nokogiri'
+gem 'diskcached'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
