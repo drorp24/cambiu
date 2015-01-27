@@ -23,18 +23,6 @@ ActiveAdmin.register Exchange do
       f.input :opens
       f.input :closes
       f.input :country, :as => :select, collection: country_dropdown
-      f.inputs "Business Hours" do
-        7.times do
-            f.object.business_hours.build
-        end 
-        f.fields_for :business_hours do |b|
-          b.inputs do         
-            b.input :day
-            b.input :open_time
-            b.input :close_time
-          end
-        end
-      end
     end
     f.actions
   end

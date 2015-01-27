@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150127080532) do
+ActiveRecord::Schema.define(version: 20150127205400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,12 +52,15 @@ ActiveRecord::Schema.define(version: 20150127080532) do
   create_table "business_hours", force: true do |t|
     t.integer  "exchange_id"
     t.integer  "day"
-    t.time     "open_time"
-    t.time     "close_time"
+    t.time     "open1"
+    t.time     "close1"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.time     "open2"
+    t.time     "close2"
   end
 
+  add_index "business_hours", ["exchange_id", "day"], :name => "index_business_hours_on_exchange_id_and_day"
   add_index "business_hours", ["exchange_id"], :name => "index_business_hours_on_exchange_id"
 
   create_table "exchanges", force: true do |t|

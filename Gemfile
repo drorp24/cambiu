@@ -39,7 +39,7 @@ gem 'httpi', "~> 1.1.0"
 gem 'nokogiri'
 gem 'diskcached'
 gem 'active_admin_importable'
-
+gem 'tod'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
