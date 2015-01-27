@@ -1,4 +1,7 @@
 class Exchange < ActiveRecord::Base
+
+  has_many :business_hours
+  accepts_nested_attributes_for :business_hours
   
   def self.list(amenity, area)
     options={amenity:       amenity,
