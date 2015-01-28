@@ -3,6 +3,21 @@ class Exchange < ActiveRecord::Base
   has_many :business_hours
   accepts_nested_attributes_for :business_hours
   
+  0.upto(6) do |day|
+    day_name = Date::DAYNAMES[day][0..2].downcase
+    ["open1", "close1", "open2", "close2"].each do |col|
+      define_method "#{day_name}_#{col}" do
+        b = BusinessHour.where(exchange_id: self.id, day: day).first
+        b.send "#{col}" if b
+       end
+      define_method "#{day_name}_#{col}=" do |tod|
+        b = BusinessHour.find_or_initialize_by(exchange_id: self.id, day: day)
+        b.send "#{col}=", TimeOfDay.parse(tod)
+        b.save  
+      end
+    end     
+  end
+
   def self.list(amenity, area)
     options={amenity:       amenity,
              area:          area,
@@ -40,5 +55,6 @@ class Exchange < ActiveRecord::Base
       end 
     end
   end
+   
 
 end
