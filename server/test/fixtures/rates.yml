@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  exchange_id_id: 
+  buy_cents: 1
+  buy_currency: MyString
+  pay_cents: 1
+  pay_currency: MyString
+  source: MyString
+
+two:
+  exchange_id_id: 
+  buy_cents: 1
+  buy_currency: MyString
+  pay_cents: 1
+  pay_currency: MyString
+  source: MyString
