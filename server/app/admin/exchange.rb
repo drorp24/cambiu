@@ -1,21 +1,23 @@
 ActiveAdmin.register Exchange do
 
+  # csv import
   active_admin_importable
-
-  ActiveAdmin.register Rate do
-    belongs_to :exchange
-    permit_params :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
-  end
   
-  sidebar "Business Info", only: [:show, :edit] do
+  # osm import
+  collection_action :import_osm, method: :post do
+    Exchange.import("bdc", "London")
+    redirect_to collection_path, notice: "OSM imported successfully!"
+  end
+  action_item only: :index do
+    link_to 'OSM Import', import_osm_admin_exchanges_path, method: :post
+  end
+
+  sidebar "Business Information", only: [:show, :edit] do
     ul do
-      li link_to "Rates",    admin_exchange_rates_path(exchange)
+      li link_to "Exchange Rates",    admin_exchange_rates_path(exchange)
     end
   end
-
-
-  permit_params :name, :address, :latitude, :longitude, :country, :user_ratings, :opens, :closes
-
+  
   index do
     id_column
     column :name
@@ -29,11 +31,8 @@ ActiveAdmin.register Exchange do
     attributes_table do
       row :name
       row :address
-      row :latitude
-      row :longitude
-      row :user_ratings
-      row :opens
-      row :closes
+      row :phone
+      row :website
     end
     panel "Rates" do
       table_for exchange.rates do
@@ -57,22 +56,53 @@ ActiveAdmin.register Exchange do
     f.inputs 'Details' do
       f.input :name
       f.input :address
-      f.input :latitude
-      f.input :longitude
-      f.input :user_ratings
-      f.input :opens
-      f.input :closes
-      f.input :country, :as => :select, collection: country_dropdown
-      f.inputs "Rates" do
-        f.has_many :rates, new_record: 'Add' do |b|
-          b.input :buy_cents
-          b.input :buy_currency
-          b.input :pay_cents
-          b.input :pay_currency
-        end
-      end
+      f.input :phone
+      f.input :website
     end
     f.actions
+  end
+  
+  permit_params :name, :address, :phone, :website
+
+
+  # rates page (nested reousrce)
+  ActiveAdmin.register Rate do
+
+    belongs_to :exchange
+
+    permit_params :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
+
+    index do
+      render partial: 'customize'
+      column :buy_cents
+      column :buy_currency
+      column :pay_cents
+      column :pay_currency
+      column :source
+      actions
+    end
+
+    controller do
+      # [eventually will not be needed] redirect to index rather than show
+      def create
+        @rate = Rate.new(permitted_params[:rate])  
+        if @rate.save
+          redirect_to admin_exchange_rates_path(params[:rate][:exchange_id]), notice: "Rate added successfully"
+        else
+          redirect_to admin_exchange_rates_path(params[:rate][:exchange_id]), notice: "Rate creation failed!"
+        end
+      end
+      def update
+        @rate = Rate.find(params[:id])  
+        if @rate.update(permitted_params[:rate])
+          redirect_to admin_exchange_rates_path(params[:rate][:exchange_id]), notice: "Rate updated successfully"
+        else
+          redirect_to admin_exchange_rates_path(params[:rate][:exchange_id]), notice: "Rate update failed!"          
+        end
+      end
+
+    end
+
   end
 
 end
