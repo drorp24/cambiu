@@ -74,10 +74,13 @@ ActiveAdmin.register Exchange do
 
     index do
       render partial: 'customize'
-      column :buy_cents
-      column :buy_currency
-      column :pay_cents
+      selectable_column
+      id_column
+      column :buy_currency, :sortable => :buy_currency do |resource|
+        editable_text_column resource, :buy_currency
+      end
       column :pay_currency
+      column :pay_cents
       column :source
       actions
     end
@@ -90,14 +93,6 @@ ActiveAdmin.register Exchange do
           redirect_to admin_exchange_rates_path(params[:rate][:exchange_id]), notice: "Rate added successfully"
         else
           redirect_to admin_exchange_rates_path(params[:rate][:exchange_id]), notice: "Rate creation failed!"
-        end
-      end
-      def update
-        @rate = Rate.find(params[:id])  
-        if @rate.update(permitted_params[:rate])
-          redirect_to admin_exchange_rates_path(params[:rate][:exchange_id]), notice: "Rate updated successfully"
-        else
-          redirect_to admin_exchange_rates_path(params[:rate][:exchange_id]), notice: "Rate update failed!"          
         end
       end
 
