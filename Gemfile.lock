@@ -52,8 +52,14 @@ GEM
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (5.0.1.20140414130214)
+    autoprefixer-rails (5.1.0)
+      execjs
+      json
     bcrypt (3.1.9)
     bcrypt (3.1.9-x86-mingw32)
+    bootstrap-sass (3.3.3)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     bourbon (3.2.4)
       sass (~> 3.2)
       thor
@@ -171,6 +177,9 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    simple_form (3.0.2)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
     spring (1.2.0)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -210,6 +219,7 @@ DEPENDENCIES
   active_admin_importable
   activeadmin!
   activerecord-postgis-adapter
+  bootstrap-sass (~> 3.3.3)
   coffee-rails (~> 4.0.0)
   country-select
   delayed_job_active_record
@@ -225,6 +235,7 @@ DEPENDENCIES
   rails_12factor
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
+  simple_form
   spring
   tod
   turbolinks

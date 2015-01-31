@@ -8,6 +8,9 @@
 // $sidebar-width: 242px;
 
 // Active Admin's got SASS!
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "bootstrap/theme";
 @import "active_admin/mixins";
 @import "active_admin/base";
 
