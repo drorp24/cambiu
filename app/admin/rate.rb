@@ -1,6 +1,6 @@
 ActiveAdmin.register Rate do
 
-  permit_params :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
+  permit_params :exchange_id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
 
   controller do
     def update

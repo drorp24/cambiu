@@ -70,11 +70,11 @@ ActiveAdmin.register Exchange do
 
     belongs_to :exchange
 
-    permit_params :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
+    permit_params :exchange_id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
 
     index do
-      render partial: 'customize'
-      selectable_column
+      render partial: 'form'
+#      selectable_column
       id_column
       column :buy_currency, :sortable => :buy_currency do |resource|
         editable_text_column resource, :buy_currency
@@ -84,15 +84,26 @@ ActiveAdmin.register Exchange do
       column :source
       actions
     end
+    
+    form do
+      
+    end
 
     controller do
       # [eventually will not be needed] redirect to index rather than show
+
+      def index
+        @rate = Rate.new
+        super
+      end
+
       def create
-        @rate = Rate.new(permitted_params[:rate])  
+        @rate = Rate.new(permitted_params[:rate])
+        @rate.exchange_id = params[:exchange_id]  
         if @rate.save
-          redirect_to admin_exchange_rates_path(params[:rate][:exchange_id]), notice: "Rate added successfully"
+          redirect_to admin_exchange_rates_path(params[:exchange_id]), notice: "Rate added successfully"
         else
-          redirect_to admin_exchange_rates_path(params[:rate][:exchange_id]), notice: "Rate creation failed!"
+          redirect_to admin_exchange_rates_path(params[:exchange_id]), notice: "Rate creation failed!"
         end
       end
 
