@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :rates
+  resources :visitors
   namespace :admin do
     resources :rates
     resources :exchanges do
