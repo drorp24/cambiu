@@ -1,0 +1,33 @@
+body {
+    /*
+    background-image: url("https://d2zc23renulrga.cloudfront.net/assets/41254/izzg1ykwb9tmf2c7932d/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg");
+*/
+}
+
+#landing nav.navbar {
+    min-height: 0;
+    opacity: 0.75;
+}
+.form-group.inline div, .form-group.inline label, .form-group.inline input {
+    display: inline;
+    line-height: 42px;
+}
+#landing #new_visitor input,  #landing #new_visitor label {
+    font-size: 24px;    
+}
+
+#new_visitor input {
+    width: 100%;
+    height: 42px;
+}
+h1.hero {
+    font-size: 52px;
+    font-weight: 600;
+}
+
+#landing_content {
+    margin-top: 110px;
+}
+.photo_background {
+    color: #FFFFFF;
+}
