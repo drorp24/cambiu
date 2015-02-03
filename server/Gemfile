@@ -45,6 +45,7 @@ gem 'bootstrap-sass', '~> 3.3.3'
 gem 'simple_form'
 gem 'backstretch-rails'
 gem 'money'
+gem 'eu_central_bank'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

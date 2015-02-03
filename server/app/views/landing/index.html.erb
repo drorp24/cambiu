@@ -20,7 +20,7 @@
 							<%= f.label 'Get' %>
 						</div>
 						<div class="col-md-6">
-							<%= f.input :buy_cents, as: :string, input_html: {class: "text-right"}, placeholder: '1,000.00', label: false %>
+							<%= f.input :buy_cents, as: :string, input_html: {class: "text-right"}, label: false %>
 						</div>
 						<div class="col-md-4">
 							<%= f.input :buy_currency, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected:"USD"  %>
@@ -32,14 +32,20 @@
 							<%= f.label 'For' %>
 						</div>
 						<div class="col-md-6">
-							<%= f.input :pay_cents, as: :string, input_html: {class: 'text-right'}, placeholder: '650.00', label: false %>
+							<%= f.input :pay_cents, as: :string, input_html: {class: 'text-right'}, label: false %>
 						</div>
 						<div class="col-md-4">
 							<%= f.input :pay_currency, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected: "GBP" %>
 						</div>
 					</div>
-					<div class="form-group inline">						
-						<%= f.button :submit, 'Get started', class: 'btn btn-success', id: 'find_rates' %>
+					<div class="form-group inline">	
+						<p id="cheaper" class="lead text-center">
+							<strong>
+							<span id="cheaper_amt">74.92</span>&nbsp;
+							<span id="cheaper_cur">GBP</span>&nbsp;  cheaper
+							</strong> than airport rate</p>
+						<p id="find_out" class="lead text-center">Want to find out more?</p>					
+						<%= f.button :submit, 'Subscribe!', class: 'btn btn-success', id: 'find_rates' %>
 					</div>
 				<% end %>
 			</div>
@@ -70,7 +76,17 @@
 $(document).ready(function() {
 	
 	$.backstretch("https://d2zc23renulrga.cloudfront.net/assets/41254/izzg1ykwb9tmf2c7932d/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg");
+
+	var rates = {}
 	
+	$.getJSON('/currencies/rates').done(function(data) {
+		$.extend(rates, data)
+	})	
+	
+	console.log(rates) 					// works
+	console.log(rates["EUR_TO_USD"])	// doesnt work
+
+
 	$('#find_rates').click(function() {
 		$('#rates').hide();
 		$('#subscribe').show();
@@ -79,6 +95,30 @@ $(document).ready(function() {
 		$('#subscribe').hide();
 		$('#thanks').show();
 	})
+	
+
+	function convert(buy_cents, buy_currency, pay_currency) {
+		$.get('/currencies/exchange', {
+			buy_cents: buy_cents,
+			buy_currency: buy_currency,
+			pay_currency: pay_currency
+		}
+		).done(function(data) {
+			$('#visitor_pay_cents').attr('placeholder', '');
+			$('#visitor_pay_cents').val(data);
+			$('#cheaper_amt').html(Math.round(data*11.3)/100);
+			$('#cheaper_cur').html(pay_currency);
+		});
+	}
+	
+
+	$('#visitor_buy_cents, #visitor_buy_currency, #visitor_pay_currency').change(function() {
+		var buy_cents =    $('#visitor_buy_cents').val().replace(',', '').replace('.', '');
+		var buy_currency = $('#visitor_buy_currency').val();
+		var pay_currency = $('#visitor_pay_currency').val().replace(',', '').replace('.', '');
+		
+		convert(buy_cents, buy_currency, pay_currency);
+	});
 	
 })
 </script>
