@@ -4,6 +4,11 @@ body {
 */
 }
 
+
+#landing select {
+    color: #888;
+}
+
 #landing .landing_form {
     margin-top: 10px;
 }
@@ -16,18 +21,26 @@ body {
     display: inline;
     line-height: 42px;
 }
-#landing #new_visitor input,  #landing #new_visitor label {
+div.inline {
+    display: block;
+}
+#landing #new_visitor input,  #landing #new_visitor label, #landing #new_visitor select {
     font-size: 24px;  
-    line-height: 24px;  
+    line-height: 24px;
+    margin-bottom: 20px;
+    width: 85%;  
+}
+#landing #new_visitor input#visitor_email {
+    font-size: 16px;
 }
 #landing #new_visitor input.btn, #landing #visitor_email {
     height: 54px;
-    width: 90%;
-    margin-left: 5%;
+    width: 89%;
+    margin-left: 4%;
     margin-top: 10px;
 }
 
-#new_visitor input {
+#new_visitor input, #new_visitor select {
     width: 100%;
     height: 42px;
 }
