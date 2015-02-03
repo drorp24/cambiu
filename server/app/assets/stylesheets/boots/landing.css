@@ -4,6 +4,10 @@ body {
 */
 }
 
+#landing .landing_form {
+    margin-top: 10px;
+}
+
 #landing nav.navbar {
     min-height: 0;
     opacity: 0.75;
@@ -13,7 +17,14 @@ body {
     line-height: 42px;
 }
 #landing #new_visitor input,  #landing #new_visitor label {
-    font-size: 24px;    
+    font-size: 24px;  
+    line-height: 24px;  
+}
+#landing #new_visitor input.btn, #landing #visitor_email {
+    height: 54px;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 10px;
 }
 
 #new_visitor input {
