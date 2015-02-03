@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+  resources :currencies do
+    collection do
+      get 'rates', 'exchange'
+    end
+  end
   resources :rates
   resources :visitors
   namespace :admin do

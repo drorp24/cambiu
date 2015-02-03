@@ -4,7 +4,10 @@ body {
 */
 }
 
-
+#find_out {
+    position: relative;
+    top: 24px;
+}
 #landing select {
     color: #888;
 }
@@ -50,7 +53,7 @@ h1.hero {
 }
 
 #landing_content {
-    margin-top: 110px;
+    margin-top: 100px;
 }
 .photo_background {
     color: #FFFFFF;
