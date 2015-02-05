@@ -16,8 +16,8 @@
 				<h2 class="text-center">Try it out for yourself</h2>
 				<%= simple_form_for @visitor, remote: true do |f| %>
 					<div class="form-group inline">
-						<div class="col-md-2">
-							<%= f.label 'Get' %>
+						<div class="col-md-2 landing_form_label">
+							<%= f.label 'Change' %>
 						</div>
 						<div class="col-md-6">
 							<%= f.input :buy_cents, as: :string, input_html: {class: "text-right"}, label: false %>
@@ -28,11 +28,11 @@
 					</div>
 					<p></p>
 					<div class="form-group inline">						
-						<div class="col-md-2">
-							<%= f.label 'For' %>
+						<div class="col-md-2 landing_form_label">
+							<%= f.label 'To' %>
 						</div>
 						<div class="col-md-6">
-							<%= f.input :pay_cents, as: :string, input_html: {class: 'text-right'}, label: false %>
+							<%= f.input :pay_cents, disabled: true, as: :string, input_html: {class: 'text-right'}, label: false %>
 						</div>
 						<div class="col-md-4">
 							<%= f.input :pay_currency, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected: "GBP" %>
@@ -44,8 +44,8 @@
 							<span id="cheaper_amt">74.92</span>&nbsp;
 							<span id="cheaper_cur">GBP</span>&nbsp;  cheaper
 							</strong> than airport rate</p>
-						<p id="find_out" class="lead text-center">Want to find out more?</p>					
-						<%= f.button :submit, 'Subscribe!', class: 'btn btn-success', id: 'find_rates' %>
+<!--						<p id="find_out" class="lead text-center">Want to find out more?</p>	-->				
+						<%= f.button :submit, 'Get it', class: 'btn btn-success', id: 'find_rates' %>
 					</div>
 				<% end %>
 			</div>
@@ -97,7 +97,11 @@ $(document).ready(function() {
 	})
 	
 
-	function convert(buy_cents, buy_currency, pay_currency) {
+	$('#visitor_buy_cents, #visitor_buy_currency, #visitor_pay_currency').change(function() {
+		var buy_cents =    $('#visitor_buy_cents').val().replace(',', '').replace('.', '');
+		var buy_currency = $('#visitor_buy_currency').val();
+		var pay_currency = $('#visitor_pay_currency').val().replace(',', '').replace('.', '');
+		
 		$.get('/currencies/exchange', {
 			buy_cents: buy_cents,
 			buy_currency: buy_currency,
@@ -109,15 +113,6 @@ $(document).ready(function() {
 			$('#cheaper_amt').html(Math.round(data*11.3)/100);
 			$('#cheaper_cur').html(pay_currency);
 		});
-	}
-	
-
-	$('#visitor_buy_cents, #visitor_buy_currency, #visitor_pay_currency').change(function() {
-		var buy_cents =    $('#visitor_buy_cents').val().replace(',', '').replace('.', '');
-		var buy_currency = $('#visitor_buy_currency').val();
-		var pay_currency = $('#visitor_pay_currency').val().replace(',', '').replace('.', '');
-		
-		convert(buy_cents, buy_currency, pay_currency);
 	});
 	
 })

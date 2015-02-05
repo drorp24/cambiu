@@ -4,6 +4,11 @@ body {
 */
 }
 
+.landing_form_label {
+    position: relative;
+    left: -7%;
+}
+
 #find_out {
     position: relative;
     top: 24px;
