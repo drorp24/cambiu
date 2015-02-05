@@ -1,0 +1,13 @@
+<%= simple_form_for @rate, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :exchange_id %>
+  <%= f.input :buy_cents %>
+  <%= f.input :buy_currency %>
+  <%= f.input :pay_cents %>
+  <%= f.input :pay_currency %>
+  <%= f.input :source %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                rates_path, :class => 'btn' %>
+  </div>
+<% end %>

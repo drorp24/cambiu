@@ -31,6 +31,9 @@ Rails.application.configure do
 
   # Generate digests for assets URLs.
   config.assets.digest = true
+  
+  # Generate two .css compiled files
+  config.assets.precompile += ['application.css', 'boots.css']
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 

@@ -1,0 +1,119 @@
+<div class="container-fluid photo_background">
+	<div id="landing_header">
+		<div class="row">
+	  		<div class="col-md-8 col-md-offset-1">
+	  			<h1>Cambiu</h1>
+			</div>
+		</div>
+	</div>
+	<div id="landing_content">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-1">
+				<h1 class="text-uppercase hero text-center">Best exchange rates wherever you are</h1>
+				<p class="lead text-center">Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah</p>
+			</div>
+			<div id="rates" class="landing_form col-md-4 col-md-offset-1">
+				<h2 class="text-center">Try it out for yourself</h2>
+				<%= simple_form_for @visitor, remote: true do |f| %>
+					<div class="form-group inline">
+						<div class="col-md-2 landing_form_label">
+							<%= f.label 'Change' %>
+						</div>
+						<div class="col-md-6">
+							<%= f.input :buy_cents, as: :string, input_html: {class: "text-right"}, label: false %>
+						</div>
+						<div class="col-md-4">
+							<%= f.input :buy_currency, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected:"USD"  %>
+						</div>						
+					</div>
+					<p></p>
+					<div class="form-group inline">						
+						<div class="col-md-2 landing_form_label">
+							<%= f.label 'To' %>
+						</div>
+						<div class="col-md-6">
+							<%= f.input :pay_cents, disabled: true, as: :string, input_html: {class: 'text-right'}, label: false %>
+						</div>
+						<div class="col-md-4">
+							<%= f.input :pay_currency, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected: "GBP" %>
+						</div>
+					</div>
+					<div class="form-group inline">	
+						<p id="cheaper" class="lead text-center">
+							<strong>
+							<span id="cheaper_amt">74.92</span>&nbsp;
+							<span id="cheaper_cur">GBP</span>&nbsp;  cheaper
+							</strong> than airport rate</p>
+<!--						<p id="find_out" class="lead text-center">Want to find out more?</p>	-->				
+						<%= f.button :submit, 'Get it', class: 'btn btn-success', id: 'find_rates' %>
+					</div>
+				<% end %>
+			</div>
+			<div id="subscribe" class="landing_form col-md-3 col-md-offset-1" style="display: none">
+				<%= simple_form_for @visitor, remote: true do |f| %>
+					<div class="text-center">
+						<h2>There's much more!</h2>
+						<p>Subscribe to our beta now and earn a free gift</p>
+					</div>
+					<div class="form-group inline">
+						<div class="col-md-8">
+							<%= f.input :email, as: :email, placeholder: 'My email', label: false %>
+						</div>
+						<div class="col-md-4">
+							<%= f.button :submit, 'Join', class: 'btn btn-success', id: 'join' %>
+						</div>
+					</div>
+				<% end %>
+			</div>
+			<div id="thanks" class="landing_form text-center col-md-offset-1" style="display: none">
+				<h1>Thank you!</h1>
+				<p>We will send you an email soon</p>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function() {
+	
+	$.backstretch("https://d2zc23renulrga.cloudfront.net/assets/41254/izzg1ykwb9tmf2c7932d/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg");
+
+	var rates = {}
+	
+	$.getJSON('/currencies/rates').done(function(data) {
+		$.extend(rates, data)
+	})	
+	
+	console.log(rates) 					// works
+	console.log(rates["EUR_TO_USD"])	// doesnt work
+
+
+	$('#find_rates').click(function() {
+		$('#rates').hide();
+		$('#subscribe').show();
+	})
+	$('#join').click(function() {
+		$('#subscribe').hide();
+		$('#thanks').show();
+	})
+	
+
+	$('#visitor_buy_cents, #visitor_buy_currency, #visitor_pay_currency').change(function() {
+		var buy_cents =    $('#visitor_buy_cents').val().replace(',', '').replace('.', '');
+		var buy_currency = $('#visitor_buy_currency').val();
+		var pay_currency = $('#visitor_pay_currency').val().replace(',', '').replace('.', '');
+		
+		$.get('/currencies/exchange', {
+			buy_cents: buy_cents,
+			buy_currency: buy_currency,
+			pay_currency: pay_currency
+		}
+		).done(function(data) {
+			$('#visitor_pay_cents').attr('placeholder', '');
+			$('#visitor_pay_cents').val(data);
+			$('#cheaper_amt').html(Math.round(data*11.3)/100);
+			$('#cheaper_cur').html(pay_currency);
+		});
+	});
+	
+})
+</script>

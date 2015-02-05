@@ -1,7 +1,7 @@
 class Exchange < ActiveRecord::Base
-
-  has_many :business_hours
-  accepts_nested_attributes_for :business_hours
+  
+  has_many :rates
+  accepts_nested_attributes_for :rates
   
   0.upto(6) do |day|
     day_name = Date::DAYNAMES[day][0..2].downcase
