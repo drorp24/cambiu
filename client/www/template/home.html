@@ -15,11 +15,11 @@
   <ion-content scroll="false" class="main-content">
     <div class="exchange-banner bar-stable" ng-show="::currentExchange" ui-sref="exchange" nav-direction="back">
       <div class="row row-center">
-        <div class="col">{{ currentExchange.details.title }}</div>
+        <div class="col">{{ currentExchange.name }}</div>
       </div>
       <div class="row">
         <div class="col">
-          <span>{{currentExchange.details.userRatings}}</span>
+          <span>{{currentExchange.user_ratings}}</span>
         </div>
       </div>
     </div>

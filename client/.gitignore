@@ -4,7 +4,7 @@
 node_modules/
 platforms/
 plugins/
+!plugins/android.json
 www/css/
 
 my-release-key.keystore
-CurrencyNet.apk

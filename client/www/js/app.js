@@ -11,6 +11,11 @@ var dependencies = [
 
 angular.module('currency-net-mvp', dependencies)
 
+.value({
+  hostUrl: appSettings.hostUrl,
+  apiVersion: appSettings.apiVersion
+})
+
 .controller({
   mainController: ['$scope', '$state', 'exchangeService', '$rootScope', 'exchanges', mainController],
   mapController: ['$scope', 'uiGmapGoogleMapApi', '$cordovaGeolocation', '$q', mapController],
@@ -27,7 +32,10 @@ angular.module('currency-net-mvp', dependencies)
 })
 
 .factory({
-  exchangeService: exchangeService
+  serverUrl: ['hostUrl', 'apiVersion', function(hostUrl, apiVersion) {
+    return hostUrl + '/api/' + apiVersion;
+  }],
+  exchangeService: ['$resource', 'serverUrl', exchangeService]
 })
 
 .config(['$stateProvider', '$urlRouterProvider', 'uiGmapGoogleMapApiProvider', '$compileProvider',
@@ -45,11 +53,9 @@ angular.module('currency-net-mvp', dependencies)
         resolve: {
           exchanges: function(exchangeService, $cordovaGeolocation, $q, $location) {
             var deferred = $q.defer(),
-                numOfTrials = 3;
-
-            function isOffline() {
-              return navigator && navigator.connection && navigator.connection.type === 'none';
-            }
+                numOfTrials = 3,
+                isOffline = 'onLine' in navigator && !navigator.onLine,
+                networkState = 'connection' in navigator && navigator.connection.type;
 
             function getCurrentPosition() {
               $cordovaGeolocation.getCurrentPosition({
@@ -73,7 +79,7 @@ angular.module('currency-net-mvp', dependencies)
               });
             }
 
-            if(isOffline()) {
+            if(networkState === 'none') {
               $location.path('/offline');
             } else {
               getCurrentPosition();
@@ -123,9 +129,7 @@ angular.module('currency-net-mvp', dependencies)
 
 .run(function($ionicPlatform, $httpBackend) {
   $httpBackend.whenGET(/template\/.*/).passThrough();
-  $httpBackend.whenGET(/\/exchange(\?|\&)([^=]+)\=([^&]+)/).respond(backend.mock.exchanges['/exchange']);
-  $httpBackend.whenGET('/exchange/0').respond(backend.mock.exchanges['/exchange/0']);
-  $httpBackend.whenGET('/exchange/1').respond(backend.mock.exchanges['/exchange/1']);
+  $httpBackend.whenJSONP(/\/api\/v1\/exchanges(\/[0-9]+)?(\?|\&)([^=]+)\=([^&]+)/).passThrough();
 
   //window.screen.lockOrientation('portrait');
 

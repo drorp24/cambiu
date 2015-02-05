@@ -1,12 +1,4 @@
 {
-  "name": "currency-net-mvp-client",
-  "app_id": "",
-  "gulpStartupTasks": [
-    "sass",
-    "watch"
-  ],
-  "watchPatterns": [
-    "www/**/*",
-    "!www/lib/**/*"
-  ]
+  "name": "currency-net-mvp",
+  "app_id": ""
 }

@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '2.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
@@ -46,6 +46,8 @@ gem 'simple_form'
 gem 'backstretch-rails'
 gem 'money'
 gem 'eu_central_bank'
+gem 'thin'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -6,7 +6,7 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
-var karma = require('karma').server;
+var preprocess = require('gulp-preprocess');
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -21,9 +21,7 @@ gulp.task('sass', function(done) {
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
-    .pipe(rename({
-      extname: '.min.css'
-    }))
+    .pipe(rename({ extname: '.min.css' }))
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
 });
@@ -44,22 +42,28 @@ gulp.task('git-check', function(done) {
     console.log(
       '  ' + gutil.colors.red('Git is not installed.'),
       '\n  Git, the version control system, is required to download Ionic.',
-      '\n  Download git here:', gutil.colors.cyan(
-        'http://git-scm.com/downloads') + '.',
-      '\n  Once git is installed, run \'' + gutil.colors.cyan(
-        'gulp install') + '\' again.'
+      '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
+      '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
     );
     process.exit(1);
   }
   done();
 });
 
-/**
- * Run test once and exit
- */
-gulp.task('test', function(done) {
-  karma.start({
-    configFile: __dirname + '/karma.conf.js',
-    singleRun: true
-  }, done);
+gulp.task('dev', function() {
+  gulp.src('./environment.js')
+    .pipe(preprocess({context: { ENV: 'DEVELOPMENT', DEBUG: true}}))
+    .pipe(gulp.dest('./www/js/'));
+});
+
+gulp.task('stage', function() {
+  gulp.src('./environment.js')
+    .pipe(preprocess({context: { ENV: 'STAGE', DEBUG: true}}))
+    .pipe(gulp.dest('./www/js/'));
+});
+
+gulp.task('prod', function() {
+  gulp.src('./environment.js')
+    .pipe(preprocess({context: { ENV: 'PRODUCTION'}}))
+    .pipe(gulp.dest('./www/js/'));
 });

@@ -12,13 +12,13 @@
         <div class="row">
           <div class="col">
             <div class="row">
-              <div class="col exchange-title">{{ currentExchange.details.title }}</div>
+              <div class="col exchange-title">{{ currentExchange.name }}</div>
             </div>
             <div class="row">
-              <div class="col">{{ currentExchange.details.address }}</div>
+              <div class="col">{{ currentExchange.address }}</div>
             </div>
             <div class="row">
-              <div class="col">open {{ currentExchange.details.openingHours }}</div>
+              <div class="col">open {{ currentExchange.opens | date:'shortTime' }} - {{ currentExchange.closes | date:'shortTime' }}</div>
             </div>
           </div>
           <div class="col directions-button">
