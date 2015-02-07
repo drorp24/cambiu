@@ -45,7 +45,7 @@
 							<span id="cheaper_cur">GBP</span>&nbsp;  cheaper
 							</strong> than airport rate</p>
 <!--						<p id="find_out" class="lead text-center">Want to find out more?</p>	-->				
-						<%= f.button :submit, 'Get it', class: 'btn btn-success', id: 'find_rates' %>
+						<%= f.button :submit, 'Get it', class: 'btn btn-success', id: 'landing_main_button' %>
 					</div>
 				<% end %>
 			</div>
@@ -87,13 +87,15 @@ $(document).ready(function() {
 	console.log(rates["EUR_TO_USD"])	// doesnt work
 
 
-	$('#find_rates').click(function() {
+	$('#landing_main_button').click(function() {
 		$('#rates').hide();
 		$('#subscribe').show();
+		ga('send', 'event', 'button', 'click', 'landing-main-button');
 	})
 	$('#join').click(function() {
 		$('#subscribe').hide();
 		$('#thanks').show();
+		ga('send', 'event', 'button', 'click', 'join');
 	})
 	
 
