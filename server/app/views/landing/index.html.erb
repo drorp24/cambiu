@@ -59,6 +59,12 @@
 						<div class="col-md-8">
 							<%= f.input :email, as: :email, placeholder: 'My email', label: false %>
 						</div>
+						<div class="hidden">
+							<%= f.input :buy_cents, as: :hidden %>
+							<%= f.input :buy_currency, as: :hidden %>
+							<%= f.input :pay_cents, as: :hidden %>
+							<%= f.input :pay_currency, as: :hidden %>
+						</div>
 						<div class="col-md-4">
 							<%= f.button :submit, 'Join', class: 'btn btn-success', id: 'join' %>
 						</div>
@@ -88,14 +94,20 @@ $(document).ready(function() {
 
 
 	$('#landing_main_button').click(function() {
+		$('#subscribe #visitor_buy_cents').val($('#rates #visitor_buy_cents').val())
+		$('#subscribe #visitor_buy_currency').val($('#rates #visitor_buy_currency').val())
+		$('#subscribe #visitor_pay_cents').val($('#rates #visitor_pay_cents').val())
+		$('#subscribe #visitor_pay_currency').val($('#rates #visitor_pay_currency').val())
 		$('#rates').hide();
 		$('#subscribe').show();
 		ga('send', 'event', 'button', 'click', 'landing-main-button');
+		mixpanel.track("Landing main button");
 	})
 	$('#join').click(function() {
 		$('#subscribe').hide();
 		$('#thanks').show();
 		ga('send', 'event', 'button', 'click', 'join');
+		mixpanel.track("Landing Join button");
 	})
 	
 
