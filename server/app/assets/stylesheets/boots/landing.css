@@ -4,9 +4,15 @@ body {
 */
 }
 
+/*
 .landing_form_label {
     position: relative;
     left: -7%;
+}
+*/
+
+#landing input[type="text"] {
+    color: #555555;
 }
 
 #find_out {
@@ -38,14 +44,19 @@ div.inline {
     margin-bottom: 20px;
     width: 85%;  
 }
-#landing #new_visitor input#visitor_email {
-    font-size: 16px;
-}
 #landing #new_visitor input.btn, #landing #visitor_email {
     height: 54px;
-    width: 89%;
-    margin-left: 4%;
-    margin-top: 10px;
+    width: 92%;
+}
+
+@media only screen and (max-width: 767px) {
+    #landing #new_visitor input.btn, #landing #visitor_email {
+        height: 54px;
+        width: 85%;
+    }   
+}
+#landing #new_visitor input#visitor_email {
+    font-size: 16px;
 }
 
 #new_visitor input, #new_visitor select {
@@ -53,7 +64,7 @@ div.inline {
     height: 42px;
 }
 h1.hero {
-    font-size: 52px;
+    font-size: 3.0em;
     font-weight: 600;
 }
 
