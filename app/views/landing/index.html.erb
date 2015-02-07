@@ -17,25 +17,25 @@
 				<%= simple_form_for @visitor, remote: true do |f| %>
 					<div class="form-group inline">
 						<div class="col-md-2 landing_form_label">
-							<%= f.label 'Change' %>
+							<%= f.label 'Get' %>
 						</div>
 						<div class="col-md-6">
 							<%= f.input :buy_cents, as: :string, input_html: {class: "text-right"}, label: false %>
 						</div>
 						<div class="col-md-4">
-							<%= f.input :buy_currency, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected:"USD"  %>
+							<%= f.input :buy_currency, input_html: {class: "text-right"}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected:"USD"  %>
 						</div>						
 					</div>
 					<p></p>
 					<div class="form-group inline">						
 						<div class="col-md-2 landing_form_label">
-							<%= f.label 'To' %>
+							<%= f.label 'For' %>
 						</div>
 						<div class="col-md-6">
 							<%= f.input :pay_cents, disabled: true, as: :string, input_html: {class: 'text-right'}, label: false %>
 						</div>
 						<div class="col-md-4">
-							<%= f.input :pay_currency, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected: "GBP" %>
+							<%= f.input :pay_currency, input_html: {class: "text-right"}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected: "GBP" %>
 						</div>
 					</div>
 					<div class="form-group inline">	
@@ -45,7 +45,7 @@
 							<span id="cheaper_cur">GBP</span>&nbsp;  cheaper
 							</strong> than airport rate</p>
 <!--						<p id="find_out" class="lead text-center">Want to find out more?</p>	-->				
-						<%= f.button :submit, 'Get it', class: 'btn btn-success', id: 'landing_main_button' %>
+						<%= f.button :submit, 'Book it', class: 'btn btn-success', id: 'landing_main_button' %>
 					</div>
 				<% end %>
 			</div>
