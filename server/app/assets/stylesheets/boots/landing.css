@@ -34,6 +34,9 @@ body {
     margin-right: auto;    
     
 }
+#landing_icon img {
+    width: 100%;
+}
 #landing input:not(.btn) {
     opacity: 1;
     border: 1px solid transparent;
