@@ -20,10 +20,10 @@
 							<%= f.label 'Get' %>
 						</div>
 						<div class="col-md-6">
-							<%= f.input :buy, as: :string, input_html: {data: {autonumeric: true}, class: "text-right"}, label: false %>
+							<%= f.input :buy, as: :string, input_html: {data: {autonumeric: true}}, label: false %>
 						</div>
 						<div class="col-md-4">
-							<%= f.input :buy_currency, input_html: {class: "text-right"}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected:"USD"  %>
+							<%= f.input :buy_currency, input_html: {}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected:"USD"  %>
 						</div>						
 					</div>
 					<p></p>
@@ -32,10 +32,10 @@
 							<%= f.label 'For' %>
 						</div>
 						<div class="col-md-6">
-							<%= f.input :pay, disabled: true, as: :string, input_html: {data: {autonumeric: true}, class: 'text-right'}, label: false %>
+							<%= f.input :pay, disabled: true, as: :string, input_html: {data: {autonumeric: true}}, label: false %>
 						</div>
 						<div class="col-md-4">
-							<%= f.input :pay_currency, input_html: {class: "text-right"}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected: "GBP" %>
+							<%= f.input :pay_currency, input_html: {}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected: "GBP" %>
 						</div>
 					</div>
 					<div class="form-group inline">	
