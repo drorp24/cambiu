@@ -15,14 +15,23 @@ body {
     font-family: "Giorgio";
     text-shadow: 0 2px 0 #333333;
 }
-img.landing_icon {
-    width: 12%;
-    
-}
 .name_and_logo {
     width: 50%;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;    
+}
+#landing_name, #landing_icon {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;    
+}
+#landing_name h1 {
+    text-align: center;
+}
+#landing_icon {
+    width: 15%;
+    margin-left: auto;
+    margin-right: auto;    
     
 }
 #landing input:not(.btn) {
@@ -90,7 +99,7 @@ h1.hero {
 }
 
 #landing_content {
-    margin-top: 100px;
+    margin-top: 45px;
 }
 .photo_background {
     color: #FFFFFF;
