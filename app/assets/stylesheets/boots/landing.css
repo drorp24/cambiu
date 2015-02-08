@@ -1,7 +1,8 @@
 body {
-    /*
-    background-image: url("https://d2zc23renulrga.cloudfront.net/assets/41254/izzg1ykwb9tmf2c7932d/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg");
-*/
+    
+    background-image: url("/assets/bg.jpg");
+    background-size: 100% auto;
+
 }
 
 /*
@@ -13,12 +14,11 @@ body {
 
 body {
     font-family: "Giorgio";
-    text-shadow: 0 2px 0 #333333;
 }
 .name_and_logo {
     width: 50%;
-    margin-left: auto;
-    margin-right: auto;    
+/*    margin-left: auto;
+    margin-right: auto;    */
 }
 #landing_name, #landing_icon {
     width: 50%;
@@ -26,7 +26,8 @@ body {
     margin-right: auto;    
 }
 #landing_name h1 {
-    text-align: center;
+    text-align: left;
+    font-size: 4em;
 }
 #landing_icon {
     width: 15%;
@@ -105,5 +106,5 @@ h1.hero {
     margin-top: 45px;
 }
 .photo_background {
-    color: #FFFFFF;
+    color: #777;
 }
