@@ -13,9 +13,15 @@ body {
 
 body {
     font-family: "Giorgio";
-    text-shadow: 0 3px 0 #333333;
+    text-shadow: 0 2px 0 #333333;
 }
-
+#landing input:not(.btn) {
+    opacity: 1;
+    border: 1px solid transparent;
+    border-top: none;
+    border-bottom: 1px solid #DDD;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
+}
 #landing input[type="text"] {
     color: #555555;
 }
