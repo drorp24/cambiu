@@ -1,10 +1,20 @@
-/*
-body {    
+
+body#landing, #landing h2 {
+/*    
     background-image: url('<%= asset_path("bg.jpg") %>');
     background-size: 100% auto;
-}
 */
+    color: #ffffff;
+    font-family: 'Helvetica';
+    text-transform: uppercase;
+}
 
+#landing_content .row {
+    
+    background-color: rgba(0, 0, 0, 0.5);
+    font-family: Helvetica;
+    text-shadow: 0 3px 0 #000000;
+}
 #landing_options_form {
     width: 50%;
     margin-left: auto;
@@ -14,22 +24,30 @@ body {
 }
 
 #para {
-    margin-top: 50px;
-    font-size: 2.5em;
+    font-size: 4em;
     text-transform: uppercase;
+    font-weight: 600;
 }
 
 .handwriting {
     font-family: 'Rock Salt', cursive;
 }
 
-body {
-    font-family: "Giorgio";
-}
 .name_and_logo {
     width: 50%;
-/*    margin-left: auto;
-    margin-right: auto;    */
+    margin-left: auto;
+    margin-right: auto;    
+}
+
+#landing_title {
+    font-size: 1.5em;
+}
+#landing_name {
+    font-family: "Giorgio";
+    text-shadow: 0 3px 0 #333333;
+    font-size: 1.5em;
+    text-transform: none;
+
 }
 #landing_name, #landing_icon {
     width: 50%;
@@ -39,6 +57,7 @@ body {
 #landing_name h1 {
     text-align: left;
     font-size: 4em;
+    font-weight: 800;
 }
 #landing_icon {
     width: 15%;
@@ -114,8 +133,4 @@ h1.hero {
 }
 
 #landing_content {
-    margin-top: 45px;
-}
-.photo_background {
-    color: #777;
 }
