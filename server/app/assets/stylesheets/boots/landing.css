@@ -11,6 +11,11 @@ body {
 }
 */
 
+body {
+        text-shadow: 0 3px 0 #333333;
+
+}
+
 #landing input[type="text"] {
     color: #555555;
 }
