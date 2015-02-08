@@ -47,6 +47,8 @@ gem 'backstretch-rails'
 gem 'money'
 gem 'eu_central_bank'
 gem 'thin'
+gem 'money-rails'
+gem 'autonumeric-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

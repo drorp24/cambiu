@@ -20,7 +20,7 @@
 							<%= f.label 'Get' %>
 						</div>
 						<div class="col-md-6">
-							<%= f.input :buy_cents, as: :string, input_html: {class: "text-right"}, label: false %>
+							<%= f.input :buy, as: :string, input_html: {data: {autonumeric: true}, class: "text-right"}, label: false %>
 						</div>
 						<div class="col-md-4">
 							<%= f.input :buy_currency, input_html: {class: "text-right"}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected:"USD"  %>
@@ -32,7 +32,7 @@
 							<%= f.label 'For' %>
 						</div>
 						<div class="col-md-6">
-							<%= f.input :pay_cents, disabled: true, as: :string, input_html: {class: 'text-right'}, label: false %>
+							<%= f.input :pay, disabled: true, as: :string, input_html: {data: {autonumeric: true}, class: 'text-right'}, label: false %>
 						</div>
 						<div class="col-md-4">
 							<%= f.input :pay_currency, input_html: {class: "text-right"}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected: "GBP" %>
@@ -60,9 +60,9 @@
 							<%= f.input :email, as: :email, placeholder: 'My email', label: false %>
 						</div>
 						<div class="hidden">
-							<%= f.input :buy_cents, as: :hidden %>
+							<%= f.input :buy, as: :hidden %>
 							<%= f.input :buy_currency, as: :hidden %>
-							<%= f.input :pay_cents, as: :hidden %>
+							<%= f.input :pay, as: :hidden %>
 							<%= f.input :pay_currency, as: :hidden %>
 						</div>
 						<div class="col-md-4">
@@ -94,9 +94,9 @@ $(document).ready(function() {
 
 
 	$('#landing_main_button').click(function() {
-		$('#subscribe #visitor_buy_cents').val($('#rates #visitor_buy_cents').val())
+		$('#subscribe #visitor_buy').val($('#rates #visitor_buy').val())
 		$('#subscribe #visitor_buy_currency').val($('#rates #visitor_buy_currency').val())
-		$('#subscribe #visitor_pay_cents').val($('#rates #visitor_pay_cents').val())
+		$('#subscribe #visitor_pay').val($('#rates #visitor_pay').val())
 		$('#subscribe #visitor_pay_currency').val($('#rates #visitor_pay_currency').val())
 		$('#rates').hide();
 		$('#subscribe').show();
@@ -111,10 +111,10 @@ $(document).ready(function() {
 	})
 	
 
-	$('#visitor_buy_cents, #visitor_buy_currency, #visitor_pay_currency').change(function() {
-		var buy_cents =    $('#visitor_buy_cents').val().replace(',', '').replace('.', '');
+	$('#visitor_buy, #visitor_buy_currency, #visitor_pay_currency').change(function() {
+		var buy_cents =    $('#visitor_buy').val().replace(',', '').replace('.', '');
 		var buy_currency = $('#visitor_buy_currency').val();
-		var pay_currency = $('#visitor_pay_currency').val().replace(',', '').replace('.', '');
+		var pay_currency = $('#visitor_pay_currency').val();
 		
 		$.get('/currencies/exchange', {
 			buy_cents: buy_cents,
@@ -122,9 +122,9 @@ $(document).ready(function() {
 			pay_currency: pay_currency
 		}
 		).done(function(data) {
-			$('#visitor_pay_cents').attr('placeholder', '');
-			$('#visitor_pay_cents').val(data);
-			$('#cheaper_amt').html(Math.round(data*11.3)/100);
+			$('#visitor_pay').attr('placeholder', '');
+			$('#visitor_pay').val((data/100).toFixed(2));
+			$('#cheaper_amt').html((Math.round(data*0.11)/100).toFixed(2));
 			$('#cheaper_cur').html(pay_currency);
 		});
 	});
