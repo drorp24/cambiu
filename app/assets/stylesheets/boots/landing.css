@@ -12,8 +12,8 @@ body {
 */
 
 body {
-        text-shadow: 0 3px 0 #333333;
-
+    font-family: "Giorgio";
+    text-shadow: 0 3px 0 #333333;
 }
 
 #landing input[type="text"] {
