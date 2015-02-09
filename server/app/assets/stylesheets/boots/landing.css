@@ -1,12 +1,12 @@
 
 body#landing, #landing h2 {
-/*    
-    background-image: url('<%= asset_path("bg.jpg") %>');
-    background-size: 100% auto;
-*/
     color: #ffffff;
     font-family: 'Helvetica';
     text-transform: uppercase;
+}
+
+#landing #new_visitor input#visitor_email {
+    color: #555555;
 }
 
 #landing #new_visitor input.btn#landing_main_button {
@@ -38,7 +38,6 @@ body#landing, #landing h2 {
 }
 
 .handwriting {
-    font-family: 'Rock Salt', cursive;
 }
 
 .name_and_logo {
