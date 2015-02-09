@@ -5,38 +5,38 @@
 		<gesmes:name>European Central Bank</gesmes:name>
 	</gesmes:Sender>
 	<Cube>
-		<Cube time='2015-02-06'>
-			<Cube currency='USD' rate='1.1447'/>
-			<Cube currency='JPY' rate='134.28'/>
+		<Cube time='2015-02-09'>
+			<Cube currency='USD' rate='1.1275'/>
+			<Cube currency='JPY' rate='133.72'/>
 			<Cube currency='BGN' rate='1.9558'/>
-			<Cube currency='CZK' rate='27.698'/>
-			<Cube currency='DKK' rate='7.4441'/>
-			<Cube currency='GBP' rate='0.74730'/>
-			<Cube currency='HUF' rate='306.27'/>
-			<Cube currency='PLN' rate='4.1650'/>
-			<Cube currency='RON' rate='4.4143'/>
-			<Cube currency='SEK' rate='9.4565'/>
-			<Cube currency='CHF' rate='1.0534'/>
-			<Cube currency='NOK' rate='8.5715'/>
-			<Cube currency='HRK' rate='7.7170'/>
-			<Cube currency='RUB' rate='76.8600'/>
-			<Cube currency='TRY' rate='2.7878'/>
-			<Cube currency='AUD' rate='1.4572'/>
-			<Cube currency='BRL' rate='3.1536'/>
-			<Cube currency='CAD' rate='1.4246'/>
-			<Cube currency='CNY' rate='7.1535'/>
-			<Cube currency='HKD' rate='8.8739'/>
-			<Cube currency='IDR' rate='14430.56'/>
-			<Cube currency='ILS' rate='4.4302'/>
-			<Cube currency='INR' rate='70.6442'/>
-			<Cube currency='KRW' rate='1244.86'/>
-			<Cube currency='MXN' rate='16.8843'/>
-			<Cube currency='MYR' rate='4.0347'/>
-			<Cube currency='NZD' rate='1.5414'/>
-			<Cube currency='PHP' rate='50.573'/>
-			<Cube currency='SGD' rate='1.5377'/>
-			<Cube currency='THB' rate='37.237'/>
-			<Cube currency='ZAR' rate='12.9486'/>
+			<Cube currency='CZK' rate='27.720'/>
+			<Cube currency='DKK' rate='7.4440'/>
+			<Cube currency='GBP' rate='0.74150'/>
+			<Cube currency='HUF' rate='307.30'/>
+			<Cube currency='PLN' rate='4.1822'/>
+			<Cube currency='RON' rate='4.4308'/>
+			<Cube currency='SEK' rate='9.4685'/>
+			<Cube currency='CHF' rate='1.0428'/>
+			<Cube currency='NOK' rate='8.6145'/>
+			<Cube currency='HRK' rate='7.7165'/>
+			<Cube currency='RUB' rate='74.7335'/>
+			<Cube currency='TRY' rate='2.8080'/>
+			<Cube currency='AUD' rate='1.4430'/>
+			<Cube currency='BRL' rate='3.1430'/>
+			<Cube currency='CAD' rate='1.4094'/>
+			<Cube currency='CNY' rate='7.0428'/>
+			<Cube currency='HKD' rate='8.7416'/>
+			<Cube currency='IDR' rate='14281.55'/>
+			<Cube currency='ILS' rate='4.3791'/>
+			<Cube currency='INR' rate='70.0515'/>
+			<Cube currency='KRW' rate='1236.75'/>
+			<Cube currency='MXN' rate='16.7073'/>
+			<Cube currency='MYR' rate='4.0142'/>
+			<Cube currency='NZD' rate='1.5203'/>
+			<Cube currency='PHP' rate='50.100'/>
+			<Cube currency='SGD' rate='1.5282'/>
+			<Cube currency='THB' rate='36.807'/>
+			<Cube currency='ZAR' rate='13.0539'/>
 		</Cube>
 	</Cube>
 </gesmes:Envelope>
