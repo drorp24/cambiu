@@ -44,7 +44,7 @@
 					<div class="form-group inline">	
 						<p id="cheaper" class="lead text-center">
 							<strong>
-							<span id="cheaper_amt">74.92</span>&nbsp;
+							<span id="cheaper_amt">&nbsp;</span>&nbsp;
 							<span id="cheaper_cur"></span>&nbsp;cheaper
 							than airport</strong> </p>
 <!--						<p id="find_out" class="lead text-center">Want to find out more?</p>	-->				
@@ -134,5 +134,16 @@ $(document).ready(function() {
 		});
 	});
 	
+	// Initial setting of "cheaper" value (ToDo: DRY...)
+	$.get('/currencies/exchange', {
+		buy_cents:    $('#visitor_buy').val().replace(',', '').replace('.', ''),
+		buy_currency: $('#visitor_buy_currency').val(),
+		pay_currency: $('#visitor_pay_currency').val()
+		}
+		).done(function(data) {
+			$('#cheaper_amt').html((Math.round(data*0.11)/100).toFixed(2));
+		});
+	
+
 })
 </script>
