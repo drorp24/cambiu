@@ -9,11 +9,19 @@ body#landing, #landing h2 {
     text-transform: uppercase;
 }
 
+#landing #new_visitor input.btn#landing_main_button {
+    font-size: 2.2em;
+    text-transform: uppercase;
+    text-shadow: 0 0px 3px #000000;
+    
+}
+
 #landing_content .row {
     
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.2);
     font-family: Helvetica;
     text-shadow: 0 3px 0 #000000;
+    margin-top: 20px;
 }
 #landing_options_form {
     width: 50%;
@@ -34,9 +42,11 @@ body#landing, #landing h2 {
 }
 
 .name_and_logo {
+    /*
     width: 50%;
     margin-left: auto;
-    margin-right: auto;    
+    margin-right: auto;
+    */    
 }
 
 #landing_title {
@@ -50,13 +60,15 @@ body#landing, #landing h2 {
 
 }
 #landing_name, #landing_icon {
+    /*
     width: 50%;
     margin-left: auto;
-    margin-right: auto;    
+    margin-right: auto;
+    */    
 }
-#landing_name h1 {
+#landing_name.h1 {
     text-align: left;
-    font-size: 4em;
+    font-size: 5.5em;
     font-weight: 800;
 }
 #landing_icon {
@@ -66,7 +78,9 @@ body#landing, #landing h2 {
     
 }
 #landing_icon img {
-    width: 100%;
+    width: 8%;
+    position: relative;
+    bottom: 8px;
 }
 #landing input:not(.btn) {
     opacity: 1;
@@ -85,6 +99,8 @@ body#landing, #landing h2 {
 }
 #landing select {
     color: #888;
+    text-align: -webkit-center;
+    text-align: center;
 }
 
 #landing .landing_form {
@@ -117,6 +133,7 @@ div.inline {
     #landing #new_visitor input.btn, #landing #visitor_email {
         height: 54px;
         width: 85%;
+        margin-left: 6%;
     }   
 }
 #landing #new_visitor input#visitor_email {
