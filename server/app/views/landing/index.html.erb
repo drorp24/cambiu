@@ -85,8 +85,6 @@
 $(document).ready(function() {
 	
 	$.backstretch("https://d2zc23renulrga.cloudfront.net/assets/41254/izzg1ykwb9tmf2c7932d/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg");
-//	$.backstretch("<%= asset_path('bg.jpg') %>");
-//	$.backstretch("http://cambiuweb.herokuapp.com/assets/bg-8cb2d0aaf1389af0d4dfcea3eef48d6e.jpg");
 
 	var rates = {}
 	
@@ -117,6 +115,8 @@ $(document).ready(function() {
 	
 
 	$('#visitor_buy, #visitor_buy_currency, #visitor_pay_currency').change(function() {
+		ga('send', 'event', 'button', 'click', 'Checking rates');
+		mixpanel.track('Checking rates');
 		var buy_cents =    $('#visitor_buy').val().replace(',', '').replace('.', '');
 		var buy_currency = $('#visitor_buy_currency').val();
 		var pay_currency = $('#visitor_pay_currency').val();
