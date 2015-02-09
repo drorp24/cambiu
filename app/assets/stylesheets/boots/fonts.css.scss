@@ -6,14 +6,3 @@
     font-family: "Giorgio-Thin";
     src: asset-url('Giorgio-Thin.ttf') format("truetype");
 }
-@font-face {
-    font-family: 'SEGOEUIL';
-    src: font-url('SEGOEUIL.eot');
-    src: font-url('SEGOEUIL'), font-url('SEGOEUIL.woff') format('woff'), font-url('SEGOEUIL.ttf') format('truetype');
-}
-/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1409">Text with this font applied</p> */
-.segoe {
-    font-family: 'SEGOEUIL' !important;
-}
-
-/* Font downloaded from FontsForWeb.com */
