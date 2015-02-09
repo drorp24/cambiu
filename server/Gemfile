@@ -49,7 +49,7 @@ gem 'eu_central_bank'
 gem 'thin'
 gem 'money-rails'
 gem 'autonumeric-rails'
-
+gem 'font_assets'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
