@@ -51,6 +51,7 @@ gem 'money-rails'
 gem 'autonumeric-rails'
 gem 'font_assets'
 gem 'newrelic_rpm'
+gem 'actionpack-page_caching'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
