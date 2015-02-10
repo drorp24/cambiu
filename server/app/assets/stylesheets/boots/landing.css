@@ -6,6 +6,7 @@ body#landing, #landing h2 {
 }
 
 #landing #new_visitor input#visitor_email {
+    color: #666666;
     color: #555555;
 }
 
