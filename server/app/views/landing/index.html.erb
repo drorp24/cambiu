@@ -11,9 +11,9 @@
 	</div>
 	<div id="landing_content">
 		<div class="row">
-			<div id="hero" class="col-md-6 col-md-offset-1">
+			<div id="hero" class="col-md-5 col-md-offset-1">
 				<h2 id="landing_title" class="text-uppercase hero text-center">How much you think your $100 are worth?</h2>
-				<p id="para" class="lead text-center">We'll find you the best foreign currency deals</p>
+				<p id="para" class="lead text-center">Find the best<br /> foreign<br /> currency deals</p>
 			</div>
 			<div id="rates" class="landing_form col-md-4 col-md-offset-1">
 				<h2 class="text-center">Try it out now</h2>
@@ -48,17 +48,19 @@
 							<span id="cheaper_cur"></span>&nbsp;cheaper
 							than airport</strong> </p>
 <!--						<p id="find_out" class="lead text-center">Want to find out more?</p>	-->				
-						<%= f.button :submit, 'Book it', class: 'btn btn-success', id: 'landing_main_button' %>
+						<%= f.button :submit, 'Find it', class: 'btn btn-success', id: 'landing_main_button' %>
 					</div>
 				<% end %>
 			</div>
-			<div id="subscribe" class="landing_form col-md-3 col-md-offset-1" style="display: none">
-				<%= simple_form_for @visitor, remote: true do |f| %>
+			<div id="subscribe" class="landing_form col-md-4 col-md-offset-1" style="display: none">
+				<%= simple_form_for @visitor, remote: true, validate: true do |f| %>
+  					<%= f.error_notification %>
 					<div class="text-center">
-						<h2>There's much more!</h2>
-						<p>Subscribe to our beta now and earn a free gift</p>
+						<h3>Why do we need your email?</h3></br>
+						<p>We will email you asking about your experience.&nbsp;You don't have to answer. Appreciate if you do!</p></br>
+						<p><strong>Your email will not be shared with anyone!</strong></p></br>
 					</div>
-					<div class="form-group inline">
+  					<div class="form-inputs">
 						<div class="col-md-8">
 							<%= f.input :email, as: :email, placeholder: 'My email', label: false %>
 						</div>
@@ -69,12 +71,13 @@
 							<%= f.input :pay_currency, as: :hidden %>
 						</div>
 						<div class="col-md-4">
-							<%= f.button :submit, 'Join', class: 'btn btn-success', id: 'join' %>
+							<%= f.button :submit, 'Offers', class: 'btn btn-success', id: 'join' %>
 						</div>
 					</div>
 				<% end %>
 			</div>
 			<div id="thanks" class="landing_form text-center col-md-offset-1" style="display: none">
+				</br></br></br></br>
 				<h1>Thank you!</h1>
 				<p>We will send you an email soon</p>
 			</div>
