@@ -35,7 +35,6 @@
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
     <%= javascript_include_tag "boots" %>
-	<link href='http://fonts.googleapis.com/css?family=Rock+Salt' rel='stylesheet' type='text/css'>	
     <!-- Google Analytics -->
 	<script async src='//www.google-analytics.com/analytics.js'></script>
 	<script>
@@ -55,7 +54,7 @@
   		<script>
 		  window.fbAsyncInit = function() {
 		    FB.init({
-		      appId      : '723500647767844',
+		      appId      : '<%= Rails.application.config.fb_app_id %>',
 		      xfbml      : true,
 		      version    : 'v2.2'
 		    });
