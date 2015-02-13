@@ -52,10 +52,27 @@
 	</head>
   	
   	<body id="landing">
+  		<script>
+		  window.fbAsyncInit = function() {
+		    FB.init({
+		      appId      : '723500647767844',
+		      xfbml      : true,
+		      version    : 'v2.2'
+		    });
+		  };
+		
+		  (function(d, s, id){
+		     var js, fjs = d.getElementsByTagName(s)[0];
+		     if (d.getElementById(id)) {return;}
+		     js = d.createElement(s); js.id = id;
+		     js.src = "//connect.facebook.net/en_US/sdk.js";
+		     fjs.parentNode.insertBefore(js, fjs);
+		   }(document, 'script', 'facebook-jssdk'));
+		</script>
 
-<!-- 
+ 
 		<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
+			<div class="container-fluid" >
 		  		<div class="navbar-header">
 	      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 	        			<span class="sr-only">Toggle navigation</span>
@@ -67,20 +84,20 @@
 		  		
 		  		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       				<ul class="nav navbar-nav">
-        				<li class="active"><a href="#">Active Link <span class="sr-only">(current)</span></a></li>
-        				<li><a href="#">Link</a></li>
     				</ul>
     				<ul class="nav navbar-nav navbar-right">
         				<li><a href="#">Who are we</a></li>
         				<li><a href="#">How does it work</a></li>
-        				<li><a href="#">Sign-up</a></li>
+        				<li><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %></li>
+        				<li>
+<div class="fb-like" data-href="https://www.cambiu.com" data-width="50px" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>        				</li>
     				</ul>
 				</div>			
 			</div>
 		</nav>
--->    
-    	<%= bootstrap_flash %>
     
+    	<%= bootstrap_flash %>
+		  
     	<%= yield %>
 
   </body>

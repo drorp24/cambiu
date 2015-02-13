@@ -81,4 +81,10 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+    
+  config.action_mailer.default_url_options = { host: 'www.cambiu.com' }
+  
+  config.fb_app_id = '723500647767844'
+  config.fb_app_secret = 'bb6127ea9108606b581b1fb288fd08e1' 
+
 end
