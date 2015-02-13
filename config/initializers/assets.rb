@@ -11,5 +11,7 @@ Rails.application.config.assets.precompile += %w( boots.css boots.js )
 Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf )
 # Add the fonts path:
 Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+# For devise on heroku
+Rails.application.config.assets.initialize_on_precompile = false
 
 

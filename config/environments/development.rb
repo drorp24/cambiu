@@ -34,4 +34,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  
+  config.fb_app_id = '1553546578234138'
+  config.fb_app_secret = '90ce76e38c01f6a7eae41c6f37a1bb9a' 
 end

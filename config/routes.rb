@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  root 'landing#index'
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_scope :user do
+    get 'sign_out', :to => 'devise/sessions#destroy', :as => :adestroy_user_session
+  end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :currencies do
@@ -14,7 +19,6 @@ Rails.application.routes.draw do
       resources :rates
     end
   end
-  root 'landing#index'
   namespace :api do
     namespace :v1 do
       resources :exchanges
