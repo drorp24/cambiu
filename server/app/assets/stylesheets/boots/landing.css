@@ -188,7 +188,7 @@ div.inline {
         margin-left: 6%;
         background-color: #ffffff;
     }
-     body#landing, #landing h2
+     body#landing, #landing h2 {
         color: #333333;
         text-shadow: none;
     }   
