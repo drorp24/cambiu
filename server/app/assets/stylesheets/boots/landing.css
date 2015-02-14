@@ -1,3 +1,35 @@
+#landing .navbar {
+    margin-bottom: 0;
+}
+
+.wrapper_grey {
+    background-color: #f2f2f2;
+    padding: 0 30px;
+}
+
+#new_visitor {
+    margin-top: 35px;
+}
+
+#landing .hero.title {
+    font-size: 1.5em;
+    text-transform: none;
+}
+
+#landing #landing_main_button {
+    margin-left: 5%;
+    width: 96%;
+}
+
+#landing_page .form-horizontal .controls {
+    margin-left: 20px;
+}
+
+
+#video_background {
+    width: 100%;
+}
+
 #landing .nav.navbar-nav li a {
     line-height: 40px;
 }
@@ -21,22 +53,24 @@
 }
 
 body#landing, #landing h2 {
-    color: #ffffff;
+
     font-family: 'Helvetica';
-    text-transform: uppercase;
 }
 
+.photo_background {
+    color: #FFFFFF;
+}
 
 #landing #new_visitor input.btn#landing_main_button {
     font-size: 2.2em;
-    text-transform: uppercase;
     text-shadow: 0 0px 3px #000000;
     
 }
 
 #landing_content .row {
-    
+/*    
     background-color: rgba(0, 0, 0, 0.2);
+*/
     font-family: Helvetica;
     text-shadow: 0 3px 0 #000000;
     margin-top: 20px;
@@ -50,7 +84,7 @@ body#landing, #landing h2 {
 }
 
 #para {
-    font-size: 4em;
+    font-size: 3.8em;
     text-transform: uppercase;
     font-weight: 600;
 }
@@ -72,7 +106,7 @@ body#landing, #landing h2 {
 #landing_name {
     font-family: "Giorgio";
     text-shadow: 0 3px 0 #333333;
-    font-size: 1.5em;
+    font-size: 3em;
     text-transform: none;
 
 }
@@ -122,10 +156,6 @@ body#landing, #landing h2 {
     text-align: center;
 }
 
-#landing .landing_form {
-    margin-top: 10px;
-}
-
 #landing nav.navbar {
     min-height: 0;
     opacity: 0.75;
@@ -141,11 +171,9 @@ div.inline {
     font-size: 24px;  
     line-height: 24px;
     margin-bottom: 20px;
-    width: 85%;  
 }
 #landing #new_visitor input.btn {
     height: 54px;
-    width: 92%;
 }
 #landing #visitor_email {
     height: 54px;
@@ -158,6 +186,11 @@ div.inline {
         height: 54px;
         width: 85%;
         margin-left: 6%;
+        background-color: #ffffff;
+    }
+     body#landing, #landing h2
+        color: #333333;
+        text-shadow: none;
     }   
 }
 #landing #new_visitor input#visitor_email {
@@ -165,7 +198,7 @@ div.inline {
 }
 
 #new_visitor input, #new_visitor select {
-    width: 100%;
+    width: 85%;
     height: 42px;
 }
 h1.hero {
