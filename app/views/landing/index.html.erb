@@ -1,85 +1,61 @@
-<div class="container-fluid photo_background">
-	<div id="landing_header">
-		<div class="row">
-	  		<div class="col-md-8">
-	  			<div class="name_and_logo">
-		  			<span id="landing_name" class="h1">cambiu</span>
-<!--					<span id="landing_icon"><%= image_tag "icon.png", class: "landing_icon" %></span> -->	
+<div id="landing_page">
+	<div class="container-fluid photo_background">
+	<video id="video_background" preload="auto" autoplay="autoplay" loop="loop" style="position: fixed; top: -303px; left: 0px; bottom: 0px; right: 0px; z-index: -100;"><source src="preview.mp4" type="video/mp4"></source>bgvideo</video>				
+		<div id="landing_header">
+			<div class="row">
+		  		<div class="col-md-5 col-md-offset-1">
+		  			<div class="name_and_logo">
+			  			<span id="landing_name">cambiu</span>
+					</div>
+				</div>
+				<div class="col-md-4 col-md-offset-2">
+					<div class="fb-like pull-right" data-href="https://www.cambiu.com" data-width="50px" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>			
 				</div>
 			</div>
 		</div>
-	</div>
-	<div id="landing_content">
-		<div class="row">
-			<div id="hero" class="col-md-5 col-md-offset-1">
-				<h2 id="landing_title" class="text-uppercase hero text-center">How much you think your $100 are worth?</h2>
-				<p id="para" class="lead text-center">Find the best<br /> foreign<br /> currency deals</p>
-			</div>
-			<div id="rates" class="landing_form col-md-4 col-md-offset-1">
-				<h2 class="text-center">Try it out now</h2>
-				<%= simple_form_for @visitor, remote: true do |f| %>
-					<div class="form-group inline">
-						<div class="col-md-2 landing_form_label">
-							<%= f.label 'Get' %>
+		<div id="landing_content">
+			<div class="row">
+				<div id="hero" class="col-md-5 col-md-offset-1">
+					<h2 class="hero title text-center">How much you think your $100 are worth?</h2>
+					<p id="para" class="lead text-center">Find the best<br /> foreign<br /> currency deals</p>
+				</div>
+				<div id="rates" class="landing_form col-md-4 col-md-offset-1">
+					<h2 class="hero title text-center">Check it out now</h2>
+					<%= simple_form_for @visitor do |f| %>
+						<div class="form-group inline">
+							<div class="col-md-2 landing_form_label">
+								<%= f.label 'Change' %>
+							</div>
+							<div class="col-md-4">
+								<%= f.input :buy_currency, input_html: {class: 'text-center'}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected:"USD"  %>
+							</div>						
+							<div class="col-md-6">
+								<%= f.input :buy, as: :string, input_html: {class: 'text-center', data: {autonumeric: true}}, label: false %>
+							</div>
 						</div>
-						<div class="col-md-4">
-							<%= f.input :buy_currency, input_html: {class: 'text-center'}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected:"USD"  %>
-						</div>						
-						<div class="col-md-6">
-							<%= f.input :buy, as: :string, input_html: {class: 'text-center', data: {autonumeric: true}}, label: false %>
+						<p></p>
+						<div class="form-group inline">						
+							<div class="col-md-2 landing_form_label">
+								<%= f.label 'To' %>
+							</div>
+							<div class="col-md-4">
+								<%= f.input :pay_currency, input_html: {class: 'text-center'}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected: "GBP" %>
+							</div>
+							<div class="col-md-6">
+								<%= f.input :pay, disabled: true, as: :string, input_html: {class: 'text-center', data: {autonumeric: true}}, label: false %>
+							</div>
 						</div>
-					</div>
-					<p></p>
-					<div class="form-group inline">						
-						<div class="col-md-2 landing_form_label">
-							<%= f.label 'For' %>
+						<div class="form-group inline">	
+							<p id="cheaper" class="lead text-center">
+								<strong>
+								<span id="cheaper_amt">&nbsp;</span>&nbsp;
+								<span id="cheaper_cur"></span>&nbsp;cheaper
+								than airport</strong> </p>
+	<!--						<p id="find_out" class="lead text-center">Want to find out more?</p>	-->				
+							<%= f.button :submit, 'Find it', class: 'btn btn-success', id: 'landing_main_button' %>
 						</div>
-						<div class="col-md-4">
-							<%= f.input :pay_currency, input_html: {class: 'text-center'}, label: false, collection: Currency.major, label_method: lambda{|c| c[:iso_code]}, value_method: lambda{|c| c[:iso_code]}, selected: "GBP" %>
-						</div>
-						<div class="col-md-6">
-							<%= f.input :pay, disabled: true, as: :string, input_html: {class: 'text-center', data: {autonumeric: true}}, label: false %>
-						</div>
-					</div>
-					<div class="form-group inline">	
-						<p id="cheaper" class="lead text-center">
-							<strong>
-							<span id="cheaper_amt">&nbsp;</span>&nbsp;
-							<span id="cheaper_cur"></span>&nbsp;cheaper
-							than airport</strong> </p>
-<!--						<p id="find_out" class="lead text-center">Want to find out more?</p>	-->				
-						<%= f.button :submit, 'Find it', class: 'btn btn-success', id: 'landing_main_button' %>
-					</div>
-				<% end %>
-			</div>
-			<div id="subscribe" class="landing_form col-md-4 col-md-offset-1" style="display: none">
-				<%= simple_form_for @visitor, remote: true, validate: true do |f| %>
-  					<%= f.error_notification %>
-					<div class="text-center">
-						<h3>Why do we need your email?</h3></br>
-						<p>We will email you asking about your experience.&nbsp;You don't have to answer. Appreciate if you do!</p></br>
-						<p><strong>Your email will not be shared with anyone!</strong></p></br>
-					</div>
-  					<div class="form-inputs">
-						<div class="col-md-8">
-							<%= f.input :email, as: :email, placeholder: 'My email', label: false %>
-						</div>
-						<div class="hidden">
-							<%= f.input :buy, as: :hidden %>
-							<%= f.input :buy_currency, as: :hidden %>
-							<%= f.input :pay, as: :hidden %>
-							<%= f.input :pay_currency, as: :hidden %>
-						</div>
-						<div class="col-md-4">
-							<%= f.button :submit, 'Offers', class: 'btn btn-success', id: 'join' %>
-						</div>
-					</div>
-				<% end %>
-			</div>
-			<div id="thanks" class="landing_form text-center col-md-offset-1" style="display: none">
-				</br></br></br></br>
-				<h1>Thank you!</h1>
-				<p>We will send you an email soon</p>
+					<% end %>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -87,8 +63,6 @@
 <script>
 $(document).ready(function() {
 	
-	$.backstretch("https://d2zc23renulrga.cloudfront.net/assets/41254/izzg1ykwb9tmf2c7932d/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg");
-
 	var rates = {}
 	
 	$.getJSON('/currencies/rates').done(function(data) {
@@ -100,18 +74,10 @@ $(document).ready(function() {
 
 
 	$('#landing_main_button').click(function() {
-		$('#subscribe #visitor_buy').val($('#rates #visitor_buy').val())
-		$('#subscribe #visitor_buy_currency').val($('#rates #visitor_buy_currency').val())
-		$('#subscribe #visitor_pay').val($('#rates #visitor_pay').val())
-		$('#subscribe #visitor_pay_currency').val($('#rates #visitor_pay_currency').val())
-		$('#rates').hide();
-		$('#subscribe').show();
 		ga('send', 'event', 'button', 'click', 'landing-main-button');
 		mixpanel.track("Landing main button");
 	})
 	$('#join').click(function() {
-		$('#subscribe').hide();
-		$('#thanks').show();
 		ga('send', 'event', 'button', 'click', 'join');
 		mixpanel.track("Landing Join button");
 	})

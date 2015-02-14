@@ -86,5 +86,6 @@ Rails.application.configure do
   
   config.fb_app_id = '723500647767844'
   config.fb_app_secret = 'bb6127ea9108606b581b1fb288fd08e1' 
+  config.bg_img = "https://d2zc23renulrga.cloudfront.net/assets/41254/izzg1ykwb9tmf2c7932d/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg"
 
 end

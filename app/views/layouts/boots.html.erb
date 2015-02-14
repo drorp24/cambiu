@@ -51,26 +51,15 @@
 	</head>
   	
   	<body id="landing">
-  		<script>
-		  window.fbAsyncInit = function() {
-		    FB.init({
-		      appId      : '<%= Rails.application.config.fb_app_id %>',
-		      xfbml      : true,
-		      version    : 'v2.2'
-		    });
-		  };
-		
-		  (function(d, s, id){
-		     var js, fjs = d.getElementsByTagName(s)[0];
-		     if (d.getElementById(id)) {return;}
-		     js = d.createElement(s); js.id = id;
-		     js.src = "//connect.facebook.net/en_US/sdk.js";
-		     fjs.parentNode.insertBefore(js, fjs);
-		   }(document, 'script', 'facebook-jssdk'));
-		</script>
-
- 
-		<nav class="navbar navbar-inverse">
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=<%= Rails.application.config.fb_app_id %>&version=v2.0";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script> 
+		<nav class="navbar">
 			<div class="container-fluid" >
 		  		<div class="navbar-header">
 	      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -85,11 +74,9 @@
       				<ul class="nav navbar-nav">
     				</ul>
     				<ul class="nav navbar-nav navbar-right">
-        				<li><a href="#">Who are we</a></li>
         				<li><a href="#">How does it work</a></li>
         				<li><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %></li>
-        				<li>
-<div class="fb-like" data-href="https://www.cambiu.com" data-width="50px" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>        				</li>
+         				<li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
     				</ul>
 				</div>			
 			</div>
