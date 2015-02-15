@@ -1,7 +1,37 @@
 ActiveAdmin.register Exchange do
 
   # csv import
-  active_admin_importable
+  active_admin_importable do |model, hash|
+#   begin
+    hash = Hash[ hash.map { |key, value| [key, value ? value.force_encoding('iso-8859-1').encode('utf-8') : nil] } ]
+    hash = Hash[ hash.map { |key, value| [key, value == "00:00-24:00" ? "00:00-23:59" : value] } ]
+    puts hash
+    e = Exchange.where(name: (hash[:change]), address: (hash[:address])).first_or_initialize
+    e.name =            hash[:change]
+    e.exchange!
+    e.chain_id =        Chain.where(name: hash[:chain_name]).first_or_create.id if hash[:chain_name]
+    e.country =         hash[:country]
+    e.city =            hash[:metropolis]
+    e.region =          hash[:districtregion] || hash[:region]
+    e.address =         hash[:address]
+    e.latitude =        hash[:latitude]
+    e.longitude =       hash[:longitude]
+    e.phone =           hash[:telephone]
+    e.nearest_station = hash[:nearest_station]
+    e.airport =         hash[:airport]
+    e.save!
+    e.update_csv_business_hours(hash[:sunday_openning_hours], 0) 
+    e.update_csv_business_hours(hash[:monday_openning_hours], 1) 
+    e.update_csv_business_hours(hash[:tuesday_openning_hours], 2) 
+    e.update_csv_business_hours(hash[:wednesday_openning_hours], 3) 
+    e.update_csv_business_hours(hash[:thursday_openning_hours], 4) 
+    e.update_csv_business_hours(hash[:friday_openning_hours], 5) 
+    e.update_csv_business_hours(hash[:saturday_openning_hours], 6) 
+
+#    rescue => e
+#       error = e  
+#    end     
+  end
   
   # osm import
   collection_action :import_osm, method: :post do
@@ -49,6 +79,15 @@ ActiveAdmin.register Exchange do
           rate.pay_currency
         end
       end
+    end
+    active_admin_comments
+  end
+  
+  sidebar "Opening hours", only: [:show, :edit] do
+    table_for exchange.business_hours.order("day") do |b|
+      b.column("Day")    { |bh| status_tag (Date::DAYNAMES[bh.day]), (bh.open1.present? ? :ok : :error) }
+      b.column("Open")     { |bh| bh.open1.to_s[0..4]}
+      b.column("Close")    { |bh| bh.close1.to_s[0..4] }
     end
   end
 

@@ -7,7 +7,7 @@ class LandingController < ApplicationController
     expires_in 3.hours, :public => true if Rails.env.production?
 #    if stale?(etag: @visitor, last_modified: Date.new(2015, 1, 1)) 
       respond_to do |format| 
-        format. html {render layout: 'boots'}
+        format. html 
       end
 #    end
   end

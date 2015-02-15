@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212234455) do
+ActiveRecord::Schema.define(version: 20150215195311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,17 @@ ActiveRecord::Schema.define(version: 20150212234455) do
   add_index "business_hours", ["exchange_id", "day"], :name => "index_business_hours_on_exchange_id_and_day"
   add_index "business_hours", ["exchange_id"], :name => "index_business_hours_on_exchange_id"
 
+  create_table "chains", force: true do |t|
+    t.text     "name"
+    t.string   "email"
+    t.string   "url"
+    t.integer  "plan"
+    t.string   "phone"
+    t.string   "prices_published"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "exchanges", force: true do |t|
     t.string   "name"
     t.string   "address"
@@ -71,14 +82,11 @@ ActiveRecord::Schema.define(version: 20150212234455) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "country"
-    t.float    "user_ratings"
     t.time     "opens"
     t.time     "closes"
     t.string   "website"
-    t.boolean  "wheelchair"
     t.string   "email"
     t.text     "note"
-    t.text     "opening_hours"
     t.string   "phone"
     t.string   "addr_country"
     t.string   "addr_city"
@@ -90,7 +98,21 @@ ActiveRecord::Schema.define(version: 20150212234455) do
     t.string   "osm_id"
     t.boolean  "atm"
     t.string   "source"
+    t.integer  "business_type"
+    t.integer  "chain_id"
+    t.string   "city"
+    t.string   "region"
+    t.float    "rating"
+    t.string   "nearest_station"
+    t.boolean  "airport"
+    t.string   "directory"
+    t.boolean  "accessible"
+    t.integer  "upload_id"
+    t.integer  "admin_user_id"
   end
+
+  add_index "exchanges", ["chain_id"], :name => "index_exchanges_on_chain_id"
+  add_index "exchanges", ["name", "address"], :name => "index_exchanges_on_name_and_address"
 
   create_table "rates", force: true do |t|
     t.integer  "exchange_id"
@@ -104,6 +126,22 @@ ActiveRecord::Schema.define(version: 20150212234455) do
   end
 
   add_index "rates", ["exchange_id"], :name => "index_rates_on_exchange_id"
+
+  create_table "uploads", force: true do |t|
+    t.integer  "source_type"
+    t.string   "file_location"
+    t.string   "file_name"
+    t.integer  "records_created"
+    t.integer  "records_updated"
+    t.integer  "admin_user_id"
+    t.datetime "upload_start"
+    t.datetime "upload_finished"
+    t.integer  "upload_status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "uploads", ["admin_user_id"], :name => "index_uploads_on_admin_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

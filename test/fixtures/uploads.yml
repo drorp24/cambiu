@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  source_type: 1
+  file_location: MyString
+  file_name: MyString
+  records_created: 1
+  records_updated: 1
+  admin_user_id: 
+  upload_start: 2015-02-14 22:42:50
+  upload_finished: 2015-02-14 22:42:50
+  upload_status: 1
+
+two:
+  source_type: 1
+  file_location: MyString
+  file_name: MyString
+  records_created: 1
+  records_updated: 1
+  admin_user_id: 
+  upload_start: 2015-02-14 22:42:50
+  upload_finished: 2015-02-14 22:42:50
+  upload_status: 1

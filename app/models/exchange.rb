@@ -1,8 +1,39 @@
 class Exchange < ActiveRecord::Base
   
-  has_many :rates
+  belongs_to  :chain
+  has_many    :business_hours
+  has_many    :rates
+  belongs_to  :upload
+  belongs_to  :admin_user
   accepts_nested_attributes_for :rates
+  enum business_type: [ :exchange, :post_office, :supermarket, :other ]
   
+
+  def update_csv_business_hours(csv_busines_hours, day)
+
+    bh = self.business_hours.where(day: day).first_or_initialize
+    bh.exchange_id = self.id
+
+    if csv_busines_hours.nil? or csv_busines_hours == "Closed"
+      bh.open1 = bh.close1 = bh.open2 = bh.close2 = nil
+    else
+      hours = csv_busines_hours.gsub(/\s+/, "").partition(",")
+      if !hours[0].blank?
+        hours1 = hours[0].partition("-")
+        bh.open1 =  TimeOfDay(hours1[0])
+        bh.close1 = TimeOfDay(hours1[2])
+      end
+      if !hours[2].blank?
+        hours2 = hours[2].partition("-")
+        bh.open2 =  TimeOfDay(hours2[0])
+        bh.close2 = TimeOfDay(hours2[2])
+      end      
+    end
+
+    bh.save
+
+  end
+
   0.upto(6) do |day|
     day_name = Date::DAYNAMES[day][0..2].downcase
     ["open1", "close1", "open2", "close2"].each do |col|
