@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150215195311) do
+ActiveRecord::Schema.define(version: 20150215223055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,9 @@ ActiveRecord::Schema.define(version: 20150215195311) do
     t.string   "source"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category"
+    t.integer  "up_to_cents"
+    t.string   "up_to_currency"
   end
 
   add_index "rates", ["exchange_id"], :name => "index_rates_on_exchange_id"
