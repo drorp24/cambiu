@@ -1,3 +1,4 @@
+=begin
 module ActiveAdmin
   module Views
     class IndexAsTable < ActiveAdmin::Component
@@ -27,3 +28,4 @@ module ActiveAdmin
     end
   end
 end
+=end
