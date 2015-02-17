@@ -119,6 +119,21 @@ ActiveAdmin.register Exchange do
 
     permit_params :id, :exchange_id, :category, :up_to_cents, :up_to_currency, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
   
+
+    index do
+      id_column
+      column :source
+      column :category
+      column :buy 
+      column :buy_currency
+      column :pay 
+      column :pay_currency
+      actions
+    end
+
+    filter :buy_currency
+    filter :pay_currency
+
     form do |f|
       f.inputs 'Rates' do
         f.input :category
@@ -131,25 +146,8 @@ ActiveAdmin.register Exchange do
       end
       f.actions
     end
-
-    index do
-      render partial: 'form'
-      selectable_column
-      id_column
-      column :buy do |resource|
-        editable_text_column resource, :buy
-      end
-      column :pay_currency do |resource|
-        editable_text_column resource, :pay_currency
-      end
-      column :pay_cents
-      actions
-    end
     
-    form do
-      
-    end
-
+=begin
     controller do
       # [eventually will not be needed] redirect to index rather than show
 
@@ -179,7 +177,7 @@ ActiveAdmin.register Exchange do
       end
 
     end
+=end
 
   end
-
 end
