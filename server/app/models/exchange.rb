@@ -2,10 +2,11 @@ class Exchange < ActiveRecord::Base
   
   belongs_to  :chain
   has_many    :business_hours
+  accepts_nested_attributes_for :business_hours
   has_many    :rates
+  accepts_nested_attributes_for :rates
   belongs_to  :upload
   belongs_to  :admin_user
-  accepts_nested_attributes_for :rates
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
   
 

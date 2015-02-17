@@ -1,4 +1,6 @@
 ActiveAdmin.register Exchange do
+  
+  includes :chain
 
   # csv import
   active_admin_importable do |model, hash|
@@ -42,43 +44,28 @@ ActiveAdmin.register Exchange do
     link_to 'OSM Import', import_osm_admin_exchanges_path, method: :post
   end
 
-  sidebar "Business Information", only: [:show, :edit] do
-    ul do
-      li link_to "Exchange Rates",    admin_exchange_rates_path(exchange)
-    end
-  end
-  
+  filter :chain
+  filter :name
+  filter :address
+  filter :region
+
   index do
     id_column
-    column :name
+    column :name do |exchange|
+      link_to exchange.name, admin_exchange_path(exchange)
+    end
+    column :chain 
     column :address
     column :phone
-    column :website
     actions
   end
   
   show do
     attributes_table do
       row :name
+      row :chain
       row :address
       row :phone
-      row :website
-    end
-    panel "Rates" do
-      table_for exchange.rates do
-        column "buy_cents" do |rate|
-          rate.buy_cents
-        end
-        column "buy_currency" do |rate|
-          rate.buy_currency
-        end
-        column "pay_cents" do |rate|
-          rate.pay_cents
-        end
-        column "pay_currency" do |rate|
-          rate.pay_currency
-        end
-      end
     end
     active_admin_comments
   end
@@ -91,36 +78,71 @@ ActiveAdmin.register Exchange do
     end
   end
 
+  sidebar "Rates", only: [:show, :edit] do
+    table_for exchange.rates do |r|
+      r.column("For")    { |rate| status_tag rate.category }
+      r.column("Buy")     { |rate| humanized_money_with_symbol rate.buy}
+      b.column("Pay")    { |rate| humanized_money_with_symbol rate.pay }
+    end
+  end
+
   form do |f|
     f.inputs 'Details' do
       f.input :name
       f.input :address
       f.input :phone
       f.input :website
+      f.inputs do
+      f.has_many :rates, new_record: 'Add' do |b|
+        b.input :buy_cents
+      end
+    end
     end
     f.actions
   end
   
-  permit_params :name, :address, :phone, :website
+  permit_params :id, :name, :address, :phone, :website, 
+    rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
+    business_hours_attributes: [:id, :day, :open1, :close1, :open2, :close2]
 
+  sidebar "Business Information", only: [:show, :edit] do
+    ul do
+      li link_to "Exchange Rates",    admin_exchange_rates_path(exchange)
+    end
+  end
+  
 
   # rates page (nested reousrce)
   ActiveAdmin.register Rate do
 
     belongs_to :exchange
 
-    permit_params :exchange_id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
+    permit_params :id, :exchange_id, :category, :up_to_cents, :up_to_currency, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
+  
+    form do |f|
+      f.inputs 'Rates' do
+        f.input :category
+        f.input :up_to_cents
+        f.input :up_to_currency
+        f.input :buy_cents
+        f.input :buy_currency
+        f.input :pay_cents
+        f.input :pay_currency
+      end
+      f.actions
+    end
 
     index do
       render partial: 'form'
-#      selectable_column
+      selectable_column
       id_column
-      column :buy_currency, :sortable => :buy_currency do |resource|
-        editable_text_column resource, :buy_currency
+      column :buy do |resource|
+        editable_text_column resource, :buy
       end
-      column :pay_currency
+      column :pay_currency do |resource|
+        editable_text_column resource, :pay_currency
+      end
       column :pay_cents
-      column :source
       actions
     end
     
@@ -134,6 +156,16 @@ ActiveAdmin.register Exchange do
       def index
         @rate = Rate.new
         super
+      end
+      
+      def update
+        @rate = Rate.find(params[:id])  
+        if @rate.update(permitted_params[:rate])
+          respond_to do |format|
+                format.json 
+              end
+        else
+        end
       end
 
       def create
