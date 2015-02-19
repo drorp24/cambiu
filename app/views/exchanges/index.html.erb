@@ -1,7 +1,102 @@
-Hello there!
-
+<div class="container-fluid">
+	<div class="row">
+		<div id="map_container" class="col-md-5 col-md-offset-1">
+			<div id="map-canvas"></div>			
+		</div>
+		<div class="col-md-4 col-md-offset-2">
+			<h2>This is your map</h2>
+		</div>
+	</div>
+</div>
 <script>
+
 $(document).ready(function() {
-	// mixpanel people.set
+
+  // mixpanel people.set
+
+	var london = new google.maps.LatLng(51.507351, -0.127758);
+
+	var exchanges = [
+		<% Exchange.where(city: "London").each do |exchange| %>
+			<% next unless exchange.latitude and exchange.longitude %>
+	  		new google.maps.LatLng(<%= exchange.latitude %>, <%= exchange.longitude %>),
+  		<% end %>
+  		new google.maps.LatLng(<%= Exchange.last.latitude %>, <%= Exchange.last.longitude %>)
+	];
+
+	var markers = [];
+	var map;
+
+ 	function initialize() {
+		var mapOptions = {
+	      center: london,
+	      zoom: 14
+	    };    
+		map = new google.maps.Map(document.getElementById('map-canvas'),
+          	mapOptions);
+      	drop();
+ 	
+	var contentString = '<div id="content">'+
+	      '<div id="siteNotice">'+
+	      '</div>'+
+	      '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
+	      '<div id="bodyContent">'+
+	      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+	      'sandstone rock formation in the southern part of the '+
+	      'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+	      'south west of the nearest large town, Alice Springs; 450&#160;km '+
+	      '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+	      'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+	      'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+	      'Aboriginal people of the area. It has many springs, waterholes, '+
+	      'rock caves and ancient paintings. Uluru is listed as a World '+
+	      'Heritage Site.</p>'+
+	      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+	      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+	      '(last visited June 22, 2009).</p>'+
+	      '</div>'+
+	      '</div>';
+
+	var infowindow = new google.maps.InfoWindow({
+	      content: contentString
+	  	});
+
+  
+  	function drop() {
+	  clearMarkers();
+	  for (var i = 0; i < exchanges.length; i++) {
+//	    window.setTimeout(function() {
+	      addMarker(exchanges[i]);
+//	    }, i * 200);
+	  }
+	}
+	
+	var cambiuIcon = '<%= image_path 'icon.png' %>';
+
+	function addMarker(position) {
+	  	var marker = new google.maps.Marker({
+		    position: position,
+		    map: map,
+		    icon: cambiuIcon,
+		    animation: google.maps.Animation.DROP
+	  	})
+	  	
+	  	markers.push(marker);
+	  	
+	  	google.maps.event.addListener(marker, 'click', function() {
+    		infowindow.open(map,marker);
+  		});
+	}
+	
+	function clearMarkers() {
+	  	for (var i = 0; i < markers.length; i++) {
+	    markers[i].setMap(null);
+  		}
+  		markers = [];
+	}
+
+}	 
+ 	google.maps.event.addDomListener(window, 'load', initialize);
+
 });
 </script>

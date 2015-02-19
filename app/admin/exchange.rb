@@ -66,6 +66,8 @@ ActiveAdmin.register Exchange do
       row :chain
       row :address
       row :phone
+      row :latitude
+      row :longitude
     end
     active_admin_comments
   end
