@@ -39,7 +39,7 @@ class Currency
    Money::Currency.table.inject([]) do |array, (id, attributes)|
     priority = attributes[:priority]
     if priority && priority < 10
-      hash[priority.to_s.to_sym] = attributes[:iso_code]
+      hash[attributes[:iso_code].to_sym] = attributes[:iso_code]
     end
    end 
    hash
