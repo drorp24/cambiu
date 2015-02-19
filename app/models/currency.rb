@@ -33,5 +33,16 @@ class Currency
     array
     end.compact.flatten
   end  
+  
+  def self.select
+   hash = {}
+   Money::Currency.table.inject([]) do |array, (id, attributes)|
+    priority = attributes[:priority]
+    if priority && priority < 10
+      hash[priority.to_s.to_sym] = attributes[:iso_code]
+    end
+   end 
+   hash
+  end
 
 end
