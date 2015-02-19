@@ -53,6 +53,7 @@ gem 'font_assets'
 gem 'newrelic_rpm'
 gem 'actionpack-page_caching'
 gem 'omniauth-facebook'
+gem 'best_in_place', '~> 3.0.1'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

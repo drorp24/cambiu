@@ -122,12 +122,26 @@ ActiveAdmin.register Exchange do
 
     index do
       id_column
-      column :source
-      column :category
-      column :buy 
-      column :buy_currency
-      column :pay 
-      column :pay_currency
+      column :source        do |rate|
+#        best_in_place rate, :source, as: :select, collection: {:"0"=>"Phone", :"1"=>"API", :"2"=>"Scraping"}
+        "Phone"
+      end
+      column :category      do |rate|
+#        best_in_place rate, :category, as: :select, collection: {:"0"=>"Walk-in", :"1"=>"Pickup", :"2"=>"Delivery"}
+        "Walk-in"
+      end  
+      column :buy           do |rate|
+        best_in_place rate, :buy, :as => :input
+      end 
+      column :buy_currency  do |rate|
+        best_in_place rate, :buy_currency, as: :select, collection: Currency.select
+      end 
+      column :pay           do |rate|
+        best_in_place rate, :pay, :as => :input
+      end 
+      column :pay_currency  do |rate|
+        best_in_place rate, :pay_currency, as: :select, collection: Currency.select
+      end 
       actions
     end
 
