@@ -16,3 +16,4 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require 'jquery.backstretch'
+//= require maps

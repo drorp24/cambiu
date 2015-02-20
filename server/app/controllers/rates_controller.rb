@@ -11,7 +11,7 @@ class RatesController < ApplicationController
         format.html { render :action => "edit" }
         format.json { respond_with_bip(rate) }
       end
-  end  
+    end  
   end
 
   def rates_params
