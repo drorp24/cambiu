@@ -6,7 +6,12 @@ Rails.application.routes.draw do
   end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  resources :exchanges
+  resources :exchanges do
+    member do
+      get 'quote'
+    end
+  end
+  
   resources :currencies do
     collection do
       get 'rates', 'exchange'

@@ -8,6 +8,9 @@
 		</div>
 	</div>
 </div>
+<div id="exchange_info">
+	Hi folks, I am the exchange info!
+</div>
 <script>
 
 $(document).ready(function() {
@@ -19,9 +22,9 @@ $(document).ready(function() {
 	var exchanges = [
 		<% Exchange.where(city: "London").each do |exchange| %>
 			<% next unless exchange.latitude and exchange.longitude %>
-	  		new google.maps.LatLng(<%= exchange.latitude %>, <%= exchange.longitude %>),
+	  		[<%= exchange.id.to_s %>, <%= exchange.latitude %>, <%= exchange.longitude %>, '<%= exchange.name %>'],
   		<% end %>
-  		new google.maps.LatLng(<%= Exchange.last.latitude %>, <%= Exchange.last.longitude %>)
+  		[<%= Exchange.last.id.to_s %>, <%= Exchange.last.latitude %>, <%= Exchange.last.longitude %>, '<%= Exchange.last.name %>']
 	];
 
 	var markers = [];
@@ -34,33 +37,7 @@ $(document).ready(function() {
 	    };    
 		map = new google.maps.Map(document.getElementById('map-canvas'),
           	mapOptions);
-      	drop();
- 	
-	var contentString = '<div id="content">'+
-	      '<div id="siteNotice">'+
-	      '</div>'+
-	      '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-	      '<div id="bodyContent">'+
-	      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-	      'sandstone rock formation in the southern part of the '+
-	      'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-	      'south west of the nearest large town, Alice Springs; 450&#160;km '+
-	      '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-	      'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-	      'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-	      'Aboriginal people of the area. It has many springs, waterholes, '+
-	      'rock caves and ancient paintings. Uluru is listed as a World '+
-	      'Heritage Site.</p>'+
-	      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-	      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-	      '(last visited June 22, 2009).</p>'+
-	      '</div>'+
-	      '</div>';
-
-	var infowindow = new google.maps.InfoWindow({
-	      content: contentString
-	  	});
-
+      	drop(); 	
   
   	function drop() {
 	  clearMarkers();
@@ -73,17 +50,31 @@ $(document).ready(function() {
 	
 	var cambiuIcon = '<%= image_path 'icon.png' %>';
 
-	function addMarker(position) {
+	function addMarker(exchange) {
 	  	var marker = new google.maps.Marker({
-		    position: position,
+		    position: new google.maps.LatLng(exchange[1], exchange[2]),
+		    title: exchange[3],
 		    map: map,
 		    icon: cambiuIcon,
-		    animation: google.maps.Animation.DROP
+		    animation: google.maps.Animation.DROP,
+		    zIndex: exchange[0] // holds the exchange id 
 	  	})
 	  	
 	  	markers.push(marker);
 	  	
 	  	google.maps.event.addListener(marker, 'click', function() {
+	  		$.getJSON(
+	  			'/exchanges/' + marker.zIndex + '/quote', {
+	  				buy_amount: 	getParameterByName('buy_amount'),
+	  				buy_currency: 	getParameterByName('buy_currency'),
+	  				pay_currency:	getParameterByName('pay_currency')
+	  			})
+  			.done(function(data) {
+				$('#exchange_info').html(data.fractional);
+			})
+			var infowindow = new google.maps.InfoWindow({
+	      		content: $('#exchange_info').html()
+	  		});
     		infowindow.open(map,marker);
   		});
 	}

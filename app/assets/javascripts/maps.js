@@ -1,3 +1,4 @@
+/*
 if (navigator.geolocation) {
   var timeoutVal = 10 * 1000 * 1000;
   navigator.geolocation.getCurrentPosition(
@@ -20,4 +21,11 @@ function displayError(error) {
     3: 'Request timeout'
   };
   alert("Error: " + errors[error.code]);
+}
+*/
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
