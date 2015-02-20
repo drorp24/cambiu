@@ -1,19 +1,35 @@
 class ExchangesController < ApplicationController 
   
   def index
-    city =          params[:city] ||      "London"
-    latitude =      params[:latitude] ||  51.507351
-    longitude =     params[:longitude] || -0.127758
-    # extract exchanges by lat/long
+  end
+  
+  def search
+    latitude =      params[:latitude] 
+    longitude =     params[:longitude] 
+    bbox =          params[:bbox]    
     buy_amount =    params[:buy_amount]
     buy_currency =  params[:buy_currency]
     pay_currency =  params[:pay_currency]
-    
-    
-    respond_to do |format| 
-      format.html {render layout: 'boots'}
-      format.json {render json: @exchanges_quotes}
+
+    @exchange_quotes = []
+    exchanges = Exchange.where(city: "London")           # ToDo: change to filter by lat/long and bbox
+    exchanges.each do |exchange|       
+      exchange_quote = {}
+      exchange_quote[:id] = exchange.id
+      exchange_quote[:name] = exchange.name
+      exchange_quote[:latitude] = exchange.latitude
+      exchange_quote[:longitude] = exchange.longitude   
+      exchange_quote[:quote] = nil
+      if buy_amount and buy_currency and pay_currency        
+        if quote = exchange.quote(buy_amount, buy_currency, pay_currency)
+          quote = quote.fractional / 100
+          exchange_quote[:quote] = quote
+        end
+      end
+      @exchange_quotes << exchange_quote
     end
+    
+    render json: @exchange_quotes
 
   end
 
