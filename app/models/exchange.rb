@@ -11,6 +11,7 @@ class Exchange < ActiveRecord::Base
   
 
   def quote(buy_amount, buy_currency, pay_currency)
+    return nil unless rates
     return nil unless rate = rates.where(buy_currency: buy_currency, pay_currency: pay_currency).first
     return nil unless rate.pay_cents.present? and rate.buy_cents.present?
     pay_cents = buy_amount.to_i * 100 * (rate.pay_cents / rate.buy_cents)
