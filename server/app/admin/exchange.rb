@@ -84,8 +84,9 @@ ActiveAdmin.register Exchange do
     table_for exchange.rates do |r|
       r.column("For")    { |rate| status_tag rate.category }
       r.column("Buy")     { |rate| humanized_money_with_symbol rate.buy}
-      b.column("Pay")    { |rate| humanized_money_with_symbol rate.pay }
+      r.column("Pay")    { |rate| humanized_money_with_symbol rate.pay }
     end
+    link_to "Update rates",    admin_exchange_rates_path(exchange)
   end
 
   form do |f|
@@ -107,13 +108,6 @@ ActiveAdmin.register Exchange do
     rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
     business_hours_attributes: [:id, :day, :open1, :close1, :open2, :close2]
 
-  sidebar "Business Information", only: [:show, :edit] do
-    ul do
-      li link_to "Exchange Rates",    admin_exchange_rates_path(exchange)
-    end
-  end
-  
-
   # rates page (nested reousrce)
   ActiveAdmin.register Rate do
 
@@ -121,16 +115,17 @@ ActiveAdmin.register Exchange do
 
     permit_params :id, :exchange_id, :category, :up_to_cents, :up_to_currency, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
   
+    scope :walkin
+    scope :pickup
+    scope :delivery
 
     index do
       id_column
       column :source        do |rate|
-#        best_in_place rate, :source, as: :select, collection: {:"0"=>"Phone", :"1"=>"API", :"2"=>"Scraping"}
-        "Phone"
+        best_in_place rate, :source, as: :select, collection: {:"phone"=>"Phone", :"api"=>"API", :"scraping"=>"Scraping"}
       end
       column :category      do |rate|
-#        best_in_place rate, :category, as: :select, collection: {:"0"=>"Walk-in", :"1"=>"Pickup", :"2"=>"Delivery"}
-        "Walk-in"
+        best_in_place rate, :category, as: :select, collection: {:"walkin"=>"Walk-in", :"pickup"=>"Pickup", :"delivery"=>"Delivery"}
       end  
       column :buy           do |rate|
         best_in_place rate, :buy, :as => :input
@@ -144,7 +139,9 @@ ActiveAdmin.register Exchange do
       column :pay_currency  do |rate|
         best_in_place rate, :pay_currency, as: :select, collection: Currency.select
       end 
-      actions
+      actions defaults: false do |post|
+        link_to "Add another rate", new_admin_exchange_rate_path(params[:exchange_id])
+  end
     end
 
     filter :buy_currency
@@ -163,37 +160,15 @@ ActiveAdmin.register Exchange do
       f.actions
     end
     
-=begin
     controller do
-      # [eventually will not be needed] redirect to index rather than show
-
-      def index
-        @rate = Rate.new
-        super
-      end
-      
-      def update
-        @rate = Rate.find(params[:id])  
-        if @rate.update(permitted_params[:rate])
-          respond_to do |format|
-                format.json 
-              end
-        else
-        end
-      end
-
-      def create
-        @rate = Rate.new(permitted_params[:rate])
-        @rate.exchange_id = params[:exchange_id]  
-        if @rate.save
-          redirect_to admin_exchange_rates_path(params[:exchange_id]), notice: "Rate added successfully"
-        else
-          redirect_to admin_exchange_rates_path(params[:exchange_id]), notice: "Rate creation failed!"
-        end
+ 
+      def new
+        @rate = Rate.create_template(params[:exchange_id])
+        notice = @rate.errors.any? ? @rate.errors.full_messages : nil
+        redirect_to admin_exchange_rates_path(params[:exchange_id]), notice: notice
       end
 
     end
-=end
 
   end
 end

@@ -29,7 +29,7 @@ class ExchangesController < ApplicationController
       @exchange_quotes << exchange_quote
     end
     
-    render json: @exchange_quotes
+    render json: @exchange_quotes.sort_by{|e| e[:quote] || 1000000}
 
   end
 

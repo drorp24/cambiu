@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150215223055) do
+ActiveRecord::Schema.define(version: 20150220232659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 20150215223055) do
     t.string   "buy_currency"
     t.integer  "pay_cents"
     t.string   "pay_currency"
-    t.string   "source"
+    t.integer  "source"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "category"
