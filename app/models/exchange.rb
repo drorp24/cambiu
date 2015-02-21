@@ -12,9 +12,17 @@ class Exchange < ActiveRecord::Base
 
   def quote(buy_amount, buy_currency, pay_currency)
     return nil unless rates
-    return nil unless rate = rates.where(buy_currency: buy_currency, pay_currency: pay_currency).first
-    return nil unless rate.pay_cents.present? and rate.buy_cents.present?
-    pay_cents = buy_amount.to_i * 100 * (rate.pay_cents / rate.buy_cents)
+    return nil unless 
+      (rate = rates.where(buy_currency: buy_currency, pay_currency: pay_currency).first) or
+      (rev_rate = rates.where(buy_currency: pay_currency, pay_currency: buy_currency).first) 
+    if rate
+      return nil unless rate.pay_cents.present? and rate.buy_cents.present?
+      pay_cents = buy_amount.to_i * 100 * (rate.pay_cents.to_f / rate.buy_cents.to_f)
+    end
+    if rev_rate
+      return nil unless rev_rate.pay_cents.present? and rev_rate.buy_cents.present?      
+      pay_cents = buy_amount.to_i * 100 * (rev_rate.buy_cents.to_f / rev_rate.pay_cents.to_f)
+    end
     Money.new(pay_cents, pay_currency)
   end
 
