@@ -66,6 +66,22 @@ class Exchange < ActiveRecord::Base
     end     
   end
 
+  def open_today
+    bh = self.business_hours.where(day: Date.today.wday).first
+    return nil unless bh
+    open1 = bh.open1 ? bh.open1.strftime("%H:%M") : nil
+    close1 = bh.close1 ? bh.close1.strftime("%H:%M") : nil
+    open2 = bh.open2 ? bh.open2.strftime("%H:%M") : nil
+    close2 = bh.close2 ? bh.close2.strftime("%H:%M") : nil
+    if open1 and close1
+      result = open1 + " - " + close1
+      if open2 and close2
+        result += ", " + open2 + " - " + close2
+      end
+    end
+    result
+  end
+
   def self.list(amenity, area)
     options={amenity:       amenity,
              area:          area,
