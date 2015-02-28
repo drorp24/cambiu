@@ -1,4 +1,4 @@
-/*
+
 if (navigator.geolocation) {
   var timeoutVal = 10 * 1000 * 1000;
   navigator.geolocation.getCurrentPosition(
@@ -12,7 +12,7 @@ else {
 }
 
 function displayPosition(position) {
-  alert("Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude);
+//  alert("Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude);
 }
 function displayError(error) {
   var errors = { 
@@ -22,7 +22,7 @@ function displayError(error) {
   };
   alert("Error: " + errors[error.code]);
 }
-*/
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

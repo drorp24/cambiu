@@ -6,3 +6,6 @@ html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
     position: absolute;
     top: -99999px;
 }
+#landing ul.list-group {
+    margin-left: 0;
+}
