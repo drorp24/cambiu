@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150220232659) do
+ActiveRecord::Schema.define(version: 20150228195848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,9 +126,27 @@ ActiveRecord::Schema.define(version: 20150220232659) do
     t.integer  "category"
     t.integer  "up_to_cents"
     t.string   "up_to_currency"
+    t.integer  "chain_id"
   end
 
+  add_index "rates", ["chain_id"], :name => "index_rates_on_chain_id"
   add_index "rates", ["exchange_id"], :name => "index_rates_on_exchange_id"
+
+  create_table "s_currencies", force: true do |t|
+    t.integer  "source_id"
+    t.string   "name"
+    t.string   "iso_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "s_currencies", ["source_id"], :name => "index_s_currencies_on_source_id"
+
+  create_table "sources", force: true do |t|
+    t.text     "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "uploads", force: true do |t|
     t.integer  "source_type"
