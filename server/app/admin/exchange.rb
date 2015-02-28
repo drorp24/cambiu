@@ -44,6 +44,15 @@ ActiveAdmin.register Exchange do
     link_to 'OSM Import', import_osm_admin_exchanges_path, method: :post
   end
 
+  # scraping
+  collection_action :scraping, method: :post do
+    Scraping.thomas
+    redirect_to collection_path, notice: "Thomas Exchange Global scraped successfully!"
+  end
+  action_item only: :index do
+    link_to 'Scraping', scraping_admin_exchanges_path, method: :post
+  end
+
   filter :chain
   filter :name
   filter :address
