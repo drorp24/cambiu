@@ -21,7 +21,7 @@ class Scraping
       buy_currency =  currency_iso_code
       buy_cents     = 100
       pay_currency  = "GBP"
-      pay_cents     = node.css('td')[2].text.remove(',').to_f * 100.0
+      pay_cents     = (1.0/(node.css('td')[2].text.remove(',').to_f)) * 100.0
       Rate.refresh(chain_id, buy_currency, buy_cents, pay_currency, pay_cents)
     end
   end
