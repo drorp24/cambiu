@@ -17,6 +17,8 @@ class ExchangesController < ApplicationController
       exchange_quote = {}
       exchange_quote[:id] = exchange.id
       exchange_quote[:name] = exchange.name
+      exchange_quote[:address] = exchange.address
+      exchange_quote[:open_today] = exchange.open_today
       exchange_quote[:latitude] = exchange.latitude
       exchange_quote[:longitude] = exchange.longitude   
       exchange_quote[:quote] = nil
@@ -24,6 +26,7 @@ class ExchangesController < ApplicationController
         if quote = exchange.quote(buy_amount, buy_currency, pay_currency)
           quote = quote.fractional / 100
           exchange_quote[:quote] = quote
+          exchange_quote[:edited_quote] = view_context.humanized_money_with_symbol quote
         end
       end
       @exchange_quotes << exchange_quote
