@@ -8,6 +8,10 @@ class Exchange < ActiveRecord::Base
   belongs_to  :upload
   belongs_to  :admin_user
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
+
+  def effective_rates
+    rates.any? ? rates : chain.rates
+  end
   
 
   def quote(buy_amount, buy_currency, pay_currency)

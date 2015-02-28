@@ -81,8 +81,9 @@ ActiveAdmin.register Exchange do
   end
 
   sidebar "Rates", only: [:show, :edit] do
-    table_for exchange.rates do |r|
+    table_for exchange.effective_rates do |r|
       r.column("For")    { |rate| status_tag rate.category }
+      r.column("Cur")    { |rate| rate.buy_currency }
       r.column("Buy")     { |rate| humanized_money_with_symbol rate.buy}
       r.column("Pay")    { |rate| humanized_money_with_symbol rate.pay }
     end
