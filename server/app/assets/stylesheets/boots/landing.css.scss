@@ -1,3 +1,49 @@
+$brand-color: #FA5241;
+$brand-font: "Giorgio";
+$regular-font: 'Roboto', sans-serif;
+$basic-color: #555555;
+$inverse-color: #ffffff;
+
+
+#landing #message {
+  margin-top: 50vh;
+  color: $inverse-color;
+  font-weight: 600;
+  text-shadow: 0 0px 5px #000000;
+  #message_header {
+    text-transform: uppercase;
+    font-size: 2.2em;
+  }
+  #message_remainder {
+    font-size: 1em;
+    font-weight: 100;
+  }
+}
+
+#landing nav.navbar-inverse {
+    background: none;
+    border: none;
+    #comp_name {
+        font-size: 2em;
+        margin-left: 5%;
+        padding-top: 20px;
+        color: $basic-color;
+        padding: 20px;
+        font-weight: 800;
+    }
+    
+    a {
+     color: $inverse-color;
+     font-size: 1.1em;   
+    }
+}
+
+#landing .navbar .nav > li > a {
+    font-size: 1.2em;
+    font-family: $regular-font;
+    font-weight: 600;
+}
+
 @media (max-width: 600px) {
     body {
         background-image: image-url('bgm2.jpg');
@@ -9,11 +55,12 @@
 }
 @media (min-width: 601px){
     body {
-        background-image: image-url('bg.jpg');
+        background-image: image-url('bg1.jpg');
         background-repeat:  no-repeat;
         background-position-x:  center;
         background-position-y:  center;
-        background-size: cover;        
+        background-size: cover;  
+        background-position: bottom;      
     }
 }
 
@@ -23,9 +70,18 @@
     }
 }
 
+body#landing {
+    color: $basic-color;
+}  
+
+#landing_header {
+    height: 100px;
+}
+
 #landing .page-title {
     font-family: "Giorgio";
-    color: #FA5241;
+    color: $brand-color;
+    font-size: 2em;
 }
 
 #landing .navbar {
@@ -87,24 +143,7 @@ body#landing, #landing h2 {
     font-family: 'Helvetica';
 }
 
-.photo_background {
-    color: #FFFFFF;
-}
 
-#landing #new_visitor input.btn#landing_main_button {
-    font-size: 2.2em;
-    text-shadow: 0 0px 3px #000000;
-    
-}
-
-#landing_content .row {
-/*    
-    background-color: rgba(0, 0, 0, 0.2);
-*/
-    font-family: Helvetica;
-    text-shadow: 0 3px 0 #000000;
-    margin-top: 20px;
-}
 #landing_options_form {
     width: 50%;
     margin-left: auto;
@@ -132,20 +171,6 @@ body#landing, #landing h2 {
 
 #landing_title {
     font-size: 1.5em;
-}
-#landing_name {
-    font-family: "Giorgio";
-    text-shadow: 0 3px 0 #333333;
-    font-size: 3em;
-    text-transform: none;
-
-}
-#landing_name, #landing_icon {
-    /*
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    */    
 }
 #landing_name.h1 {
     text-align: left;
@@ -186,10 +211,7 @@ body#landing, #landing h2 {
     text-align: center;
 }
 
-#landing nav.navbar {
-    min-height: 0;
-    opacity: 0.75;
-}
+
 .form-group.inline div, .form-group.inline label, .form-group.inline input {
     display: inline;
     line-height: 42px;

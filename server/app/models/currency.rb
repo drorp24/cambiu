@@ -5,8 +5,12 @@ class Currency
     @bank = Money.default_bank = eu_bank
     cache = "exchange_rate.xml"
     if !@bank.rates_updated_at || @bank.rates_updated_at < Time.now - 1.days
+      begin
       @bank.save_rates(cache)
       @bank.update_rates(cache)
+      rescue => e
+        return nil
+      end
     end
   end
 
