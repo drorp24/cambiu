@@ -1,3 +1,9 @@
+@media (max-width: 700px) and (orientation: portrait) {
+    #map_container {
+        display: none;
+    }
+}
+
 #landing .navbar {
     margin-bottom: 0;
 }
