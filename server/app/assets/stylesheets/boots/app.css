@@ -1,3 +1,7 @@
+#exchanges {
+    margin-top: 100px;
+}
+
 html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
 #map_container {
     height: 500px;
