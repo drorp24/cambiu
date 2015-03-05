@@ -22,13 +22,13 @@
 			<div class="row">
 				<form class="form-inline col-md-8 col-md-offset-2 col-xs-offset-1">
 					<div class="form-group col-md-3 col-xs-10">
-						<input data-autonumeric="true" class="form-control" placeholder="How much do you need">
+						<input data-autonumeric="true" name="buy_amount" class="form-control" placeholder="How much do you need">
 				  	</div>
 				  	<div class="form-group col-md-3 col-xs-10">
-						<input type="text" class="form-control" placeholder="In what currency">
+						<input type="text" name="buy_currency" class="form-control" placeholder="In what currency">
 				  	</div>
 				  	<div id="the-basics" class="form-group col-md-3 col-xs-10">
-						<input type="text" class="form-control" placeholder="Paying with">
+						<input type="text" name="pay_currency" class="form-control" placeholder="Paying with">
 				  	</div>
 				  	<div class="form-group col-md-3 col-xs-10">
 						<button type="submit" class="form-control btn btn-success">Get it</button>
@@ -44,6 +44,11 @@
 <script>
 $(document).ready(function() {
 	
+$( "form" ).on( "submit", function( event ) {
+  event.preventDefault();
+  window.location.href = "/exchanges?" + $( this ).serialize();
+});
+
 $('.typeahead.input-sm').siblings('input.tt-hint').addClass('hint-small');
 $('.typeahead.input-lg').siblings('input.tt-hint').addClass('hint-large');	
 
