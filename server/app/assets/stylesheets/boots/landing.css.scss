@@ -1,6 +1,7 @@
 $brand-color: #FA5241;
 $brand-font: "Giorgio";
 $regular-font: 'Roboto', sans-serif;
+/*$regular-font: 'Helvetica'; */
 $basic-color: #555555;
 $inverse-color: #ffffff;
 
@@ -17,9 +18,36 @@ $inverse-color: #ffffff;
     width: 120%;
   }
 }
+  #landing nav {
+    background: none;
+    border: none;
+  }
+  #landing .navbar .container-fluid #bs-example-navbar-collapse-1.collapse.navbar-collapse {
+    border: none;
+    border-color: transparent;
+    color: transparent;
+    background: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  #landing .navbar #fluid.container-fluid {
+    border: none;
+    border-color: transparent;
+    color: transparent;
+    background: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  #landing .navbar-inverse .navbar-collapse {
+    border: none;
+  }
+  #landin .navbar-inverse {
+    box-shadow: none;
+  }
+
 
 #landing_form {
-  margin-top: 50px;
+  margin-top: 20px;
   input:nth-child(1) {
   }
   input, button{
@@ -43,7 +71,7 @@ $inverse-color: #ffffff;
 }
 @media (min-width: 601px) {
   #landing #message {
-    margin-top: 45vh;
+    margin-top: 50vh;
   }
   #landing nav.bavbar-default {
     border: none;
@@ -57,18 +85,16 @@ $inverse-color: #ffffff;
   text-shadow: 0 0px 5px #000000;
   #message_header {
     text-transform: uppercase;
-    font-size: 3em;
+    font-size: 3.5em;
   }
   #message_remainder {
-    font-size: 1em;
+    font-size: 1.2em;
     font-weight: 100;
   }
 }
 
 @media (max-width: 600px) {
-  #landing nav.navbar-default {
-  }
-    a:not(#comp_name) {
+     a:not(#comp_name) {
      color: $basic-color;
      font-size: 1.1em;   
      text-shadow: none;
@@ -76,33 +102,27 @@ $inverse-color: #ffffff;
 }
 
 @media (min-width: 601px) {
-  #landing nav.navbar-default {
+  #landing nav.navbar-inverse {
     background: none;
     border: none;
   }
     a:not(#comp_name) {
-     color: $inverse-color;
-     text-shadow: 0 0px 2px #000000;
-     font-size: 1.1em;   
+     color: $basic-color;
+/*     text-shadow: 0 1px 0px #000000; */ 
+     font-size: 1em;  
+     font-weight: 100; 
     }
 
 
 }
-#landing nav.navbar-default {
+#landing nav.navbar-inverse {
     #comp_name {
-        font-size: 2em;
+        font-size: 2.5em;
         margin-left: 5%;
         padding-top: 20px;
         color: $basic-color;
-        padding: 20px;
         font-weight: 800;
     }    
-}
-
-#landing .navbar .nav > li > a {
-    font-size: 1.2em;
-    font-family: $regular-font;
-    font-weight: 600;
 }
 
 @media (max-width: 600px) {

@@ -7,12 +7,12 @@ class ExchangesController < ApplicationController
     latitude =      params[:latitude] 
     longitude =     params[:longitude] 
     bbox =          params[:bbox]    
-    buy_amount =    params[:buy_amount]
+    buy_amount =    params[:buy_amount].remove(",")
     buy_currency =  params[:buy_currency]
     pay_currency =  params[:pay_currency]
 
     @exchange_quotes = []
-    exchanges = Exchange.where(city: "London")           # ToDo: change to filter by lat/long and bbox
+    exchanges = Exchange.includes(:business_hours).where(city: "London")           # ToDo: change to filter by lat/long and bbox
     exchanges.each do |exchange|       
       exchange_quote = {}
       exchange_quote[:id] = exchange.id
