@@ -1,6 +1,9 @@
 <script>
 
 $(document).ready(function() {
+	$('.collapse').collapse({
+  toggle: true
+})
 
 //  ToDo: mixpanel people.set
 
@@ -113,39 +116,49 @@ $(document).ready(function() {
 
 });
 </script>
+
+
 <div class="container-fluid">
 	<div id="exchanges" class="row">
-		<div class="col-md-6 col-xs-12">
-			<div class="panel panel-default">
-			  <!-- Default panel contents -->
-			  <div class="panel-heading">Panel heading</div>
-			  <div class="panel-body">
-			    <p>...</p>
-			  </div>
-			
+		<div class="col-md-6">			
 			  <!-- List group -->
-			  <ul class="list-group">
-			  <% 10.times do |i| %>
-			    <li id=<%="exchange_list_#{i}"%> class="list-group-item" style="visibility: hidden;">
-			    	<p>
-			    	 	<span class="badge pull-right"></span>
-				    	<span class="name"></span>			    		
-			    	</p>
-			    	<p class="small">
-			    		<span class="address"></span>
-		    		</p>
-					<p class="small">
-						<span>Open today: </span>
-						<span class="open_today"></span>
-					</p>
-		    	 </li>
-			  <% end %>
-			  </ul>
-			</div>
+			  <div class="list-group">
+			  	<% 10.times do |i| %>
+				    <a href="#" id=<%="exchange_list_#{i}"%> class="list-group-item" style="visibility: hidden;">
+				    	<div class="row">
+					    	<div class="col-xs-8">
+						    	<h4 class="name list-group-item-heading"></h4>
+						    	<p class="address list-group-item-text"></p>
+						    	<p class="list-group-item-text ">
+									<span>Open today: </span>
+									<span class="open_today"></span>			    		
+						    	</p>
+					    	</div>
+					    	<div class="col-xs-4">
+						    	<i class="fa fa-chevron-right fa-2x pull-right"></i>				    		
+						    	<span class="badge price list-group-item-text pull-right"></span>
+				    		</div>
+			    		</div>
+			    	 </a>
+			  	<% end %>
+			  </div>
 		</div>
 		<div id="map_container" class="col-md-6">
 			<div id="map-canvas"></div>			
 		</div>
 
 	</div>
+</div>
+
+
+<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  Link with href
+</a>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  Button with data-target
+</button>
+<div class="collapse" id="collapseExample">
+  <div class="well">
+    ...
+  </div>
 </div>

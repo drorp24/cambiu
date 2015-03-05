@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -19,9 +19,9 @@
 		<!--<li>
 			<div class="fb-like pull-right" data-href="https://www.cambiu.com" data-width="50px" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>			 
 		</li>-->
-		<li><a href="#">Who are we</a></li>
+		<li><a href="#">What is cambiu</a></li>
 		<li><a href="#">How does it work</a></li>
-		<li><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %></li>
+		<li><%= link_to "Sign in", user_omniauth_authorize_path(:facebook) %></li>
 		<li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
      </ul>
     </div><!-- /.navbar-collapse -->

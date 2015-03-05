@@ -1,0 +1,42 @@
+@media (max-width: 600px) {
+    body#landing {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    #landing .col-md-6 {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    #landing .row .col-xs-12.full {
+        margin: 0;
+    }
+    #landing .list-group-item {
+        border-radius: 0;
+    }
+} 
+
+#exchanges i.fa {
+    line-height: 60px;
+}
+
+#landing .badge.price {
+    border-radius: 95px;
+    padding: 19px 9px;
+    margin-top: 5px;
+}
+
+#exchanges {
+    margin-top: 100px;
+}
+
+html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+#map_container {
+    height: 500px;
+}
+#exchange_info {
+    position: absolute;
+    top: -99999px;
+}
+#landing ul.list-group {
+    margin-left: 0;
+}
