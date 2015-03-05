@@ -10,7 +10,7 @@ class Exchange < ActiveRecord::Base
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
 
   def effective_rates
-    rates.any? ? rates : chain.rates
+    rates.any? ? rates : (chain ? chain.rates : nil)
   end
   
 
