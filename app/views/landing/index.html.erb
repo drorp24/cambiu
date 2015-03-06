@@ -21,13 +21,16 @@
 		<div id="landing_form">
 			<div class="row">
 				<form id="new_user" method="post" action="/users" class="form-inline col-md-8 col-md-offset-2 col-xs-offset-1">
-					<div class="form-group col-md-3 col-xs-10">
+					<div id="mobile_input_trigger" class="form-group col-md-3 col-xs-10">
+						<input class="form-control" placeholder="Check rates">
+				  	</div>
+					<div class="form-group col-md-3 col-xs-11">
 						<input data-autonumeric="true" name="user[buy_amount]" class="form-control" placeholder="How much do you need">
 				  	</div>
-				  	<div class="form-group col-md-3 col-xs-10">
+				  	<div class="form-group col-md-3 col-xs-11">
 						<input type="text" name="user[buy_currency]" class="form-control" placeholder="In what currency">
 				  	</div>
-				  	<div id="the-basics" class="form-group col-md-3 col-xs-10">
+				  	<div id="the-basics" class="form-group col-md-3 col-xs-11">
 						<input type="text" name="user[pay_currency]" class="form-control" placeholder="Paying with">
 				  	</div>
 				  	<div class="hidden" style="display:none">
@@ -37,7 +40,7 @@
 				  		<input type="hidden" name="user[landing]" value="default">
 				  		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 					</div>
-				  	<div class="form-group col-md-3 col-xs-10">
+				  	<div class="form-group col-md-3 col-xs-11">
 						<button id="landing_main_button" class="form-control btn btn-success" type="submit">Get it</button>
 					</div>
 				</form>
@@ -51,7 +54,12 @@
 <script>
 $(document).ready(function() {
 	
-	getLocation()
+	getLocation();
+	
+	$('#mobile_input_trigger input').click(function() {
+		$('#mobile_input_trigger').css('display', 'none');
+		$('.form-group:not(#mobile_input_trigger)').css('display', 'block');
+	})
 	
 	$('#landing_main_button').click(function() {
 		ga('send', 'event', 'button', 'click', 'landing-main-button');
