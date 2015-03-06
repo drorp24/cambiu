@@ -1,14 +1,24 @@
 class UsersController < ApplicationController 
-  
+
   def create
-    puts ""
-    puts ""
-    puts ""
-    puts "arrived!"
-    puts ""
-    puts ""
-    puts ""
-    redirect_to landing_path, notice: 'thank you!'
+    
+    # user hit the button again in the same session
+    redirect_to landing_path and return if session[:user_id]
+    
+    # new guest user
+    @user = User.new_guest(users_params)
+    if @user.save
+      session[:user_id] = @user.id
+      redirect_to landing_path, notice: "new user saved: #{@user.email}"
+    else
+      redirect_to landing_path, notice: "user was not saved"
+    end
+
   end
       
+  def users_params
+    params.require(:user).permit!
+  end
+
+
 end

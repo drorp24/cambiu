@@ -23,21 +23,22 @@
 				<%= simple_form_for @user, wrapper: :inline_form, 
 					:html => { :class => 'form-inline col-md-8 col-md-offset-2 col-xs-offset-1' } do |f| %>
 					<div class="form-group col-md-3 col-xs-10">
-						<input data-autonumeric="true" name="buy_amount" class="form-control" placeholder="How much do you need">
+				  		<%= f.input :buy_amount, placeholder: 'How much do you need', input_html: { class: 'form-control', data: {autonumeric: true} }, label: false %>
 				  	</div>
 				  	<div class="form-group col-md-3 col-xs-10">
-						<input type="text" name="buy_currency" class="form-control" placeholder="In what currency">
+				  		<%= f.input :buy_currency, placeholder: 'In which currency', input_html: { class: 'form-control' }, label: false %>
 				  	</div>
 				  	<div id="the-basics" class="form-group col-md-3 col-xs-10">
-						<input type="text" name="pay_currency" class="form-control" placeholder="Paying with">
+				  		<%= f.input :pay_currency, placeholder: 'Paying with', input_html: { class: 'form-control' }, label: false %>
 				  	</div>
 				  	<div class="hidden" style="display:none">
-				  		<input type="hidden" name="latitude" value="51.507351">
-				  		<input type="hidden" name="longitude" value="-0.127758">
-				  		<input type="hidden" name="bbox" value="default">
+				  		<%= f.input :latitude, as: :hidden, input_html: {value: "default"} %>
+				  		<%= f.input :longitude, as: :hidden, input_html: {value: "default"} %>
+				  		<%= f.input :bbox, as: :hidden, input_html: {value: "default"} %>
+				  		<%= f.input :landing, as: :hidden, input_html: {value: request.original_fullpath.remove("/")} %>
 			  		</div>
 				  	<div class="form-group col-md-3 col-xs-10">
-						<%= button_to "Get it", users_path, method: :post, class: "form-control btn btn-success" %>
+						<%= button_to "Get it", users_path, method: :post, id: "landing_main_button", class: "form-control btn btn-success" %>
 					</div>
 				<% end %>
 			</div>
@@ -50,50 +51,40 @@
 <script>
 $(document).ready(function() {
 	
-
-$('#landing_main_button').click(function() {
-	ga('send', 'event', 'button', 'click', 'landing-main-button');
-	mixpanel.track("Landing main button");
-})
-$('#join').click(function() {
-	ga('send', 'event', 'button', 'click', 'join');
-	mixpanel.track("Landing Join button");
-})
-
-
-/*
-$( "form" ).on( "submit", function( event ) {
-  event.preventDefault();
-  window.location.href = "/exchanges?" + $( this ).serialize();
-});
-*/
-
-
-
+	getLocation()
+	
+	$('#landing_main_button').click(function() {
+		ga('send', 'event', 'button', 'click', 'landing-main-button');
+		mixpanel.track("Landing main button");
+	})
+	$('#join').click(function() {
+		ga('send', 'event', 'button', 'click', 'join');
+		mixpanel.track("Landing Join button");
+	})
 
 
 // typeahead - with override issues
 
-$('.typeahead.input-sm').siblings('input.tt-hint').addClass('hint-small');
-$('.typeahead.input-lg').siblings('input.tt-hint').addClass('hint-large');	
-
-var substringMatcher = function(strs) {
-  return function findMatches(q, cb) {
-    var matches, substrRegex;
+	$('.typeahead.input-sm').siblings('input.tt-hint').addClass('hint-small');
+	$('.typeahead.input-lg').siblings('input.tt-hint').addClass('hint-large');	
+	
+	var substringMatcher = function(strs) {
+  		return function findMatches(q, cb) {
+    	var matches, substrRegex;
  
-    // an array that will be populated with substring matches
-    matches = [];
- 
-    // regex used to determine if a string contains the substring `q`
-    substrRegex = new RegExp(q, 'i');
- 
-    // iterate through the pool of strings and for any string that
-    // contains the substring `q`, add it to the `matches` array
-    $.each(strs, function(i, str) {
-      if (substrRegex.test(str)) {
-        // the typeahead jQuery plugin expects suggestions to a
-        // JavaScript object, refer to typeahead docs for more info
-        matches.push({ value: str });
+	    // an array that will be populated with substring matches
+	    matches = [];
+	 
+	    // regex used to determine if a string contains the substring `q`
+	    substrRegex = new RegExp(q, 'i');
+	 
+	    // iterate through the pool of strings and for any string that
+	    // contains the substring `q`, add it to the `matches` array
+	    $.each(strs, function(i, str) {
+	      if (substrRegex.test(str)) {
+	        // the typeahead jQuery plugin expects suggestions to a
+	        // JavaScript object, refer to typeahead docs for more info
+	        matches.push({ value: str });
       }
     });
  

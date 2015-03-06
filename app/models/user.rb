@@ -4,8 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:facebook]
 
-  monetize :buy_cents
-  monetize :pay_cents
+  def self.new_guest(params)
+    new({guest: true, email: Devise.friendly_token.first(8)}.merge(params))
+  end
   
   def password_required?
      new_record? ? false : super
