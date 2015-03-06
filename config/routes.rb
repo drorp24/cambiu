@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  root 'landing#index'
+
+  # landing pages
+  root 'landing#index', as: :landing
+  get 'currency_exchange',  to: 'landing#index'
+  get 'save_money',         to: 'landing#index'
+  get 'best_rates',         to: 'landing#index'
+  # landing pages
+
   devise_for :users, :controllers => {registrations: "users/registrations", sessions: "users/sessions", omniauth_callbacks: "users/omniauth_callbacks" }
   devise_scope :user do
     get 'sign_out', :to => 'devise/sessions#destroy', :as => :adestroy_user_session
