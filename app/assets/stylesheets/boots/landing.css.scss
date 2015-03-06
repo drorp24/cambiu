@@ -6,6 +6,10 @@ $basic-color: #555555;
 $inverse-color: #ffffff;
 
 
+#landing #new_user input[type="submit"] {
+  font-size: 22px;
+}
+
 #landing .alert {
   margin-top: 70px;
   .close {
