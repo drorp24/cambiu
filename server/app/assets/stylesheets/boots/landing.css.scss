@@ -4,12 +4,81 @@ $regular-font: 'Roboto', sans-serif;
 /*$regular-font: 'Helvetica'; */
 $basic-color: #555555;
 $inverse-color: #ffffff;
+//$inset-shadow: rgba(0,​ 0,​ 0,​ 0.25) 0px -1px 0px;
 
 
-#landing #landing_form #new_user .form-group {
-  padding-left: 0;
-  padding-right: 0;
+@media (min-width: 601px){
+  #landing nav.navbar-inverse {
+    background: none;
+    border: none;
+  
+    #comp_name {
+      font-size: 3em;
+      margin-left: 5%;
+      padding-top: 20px;
+      color: $inverse-color;
+      font-weight: 800;
+      }    
+    }
+    a:not(#comp_name) {
+     color: $inverse-color;
+     text-shadow: 0 0.5px 0px #000000;  
+     font-size: 1em;  
+     font-weight: 600; 
+    }
+  #landing #message {
+    color: $inverse-color;
+    font-weight: 600;
+    text-shadow: 0 0px 5px #000000;
+    #message_header {
+      text-transform: uppercase;
+      font-size: 3.5em;
+    }
+    #message_remainder {
+      font-size: 1.5em;
+      font-weight: 100;
+    }
+  }
 }
+
+@media (max-width: 600px){
+  #landing nav.navbar-inverse {
+      #comp_name {
+          font-size: 2em;
+          margin-left: 5%;
+          padding-top: 20px;
+          color: $inverse-color;
+          font-weight: 800;
+      }    
+  }
+     a:not(#comp_name) {
+     color: $inverse-color;
+     font-size: 1.1em;   
+     text-shadow: none;
+    }
+
+  #landing #landing_header {
+    height: 75px;
+  }
+  #landing #message {
+    color: $inverse-color;
+    font-weight: 600;
+    text-shadow: 0 0px 5px #000000;
+    padding: 5%;
+    #message_header {
+      text-transform: uppercase;
+      font-size: 1.5em;
+    }
+    #message_remainder {
+      font-size: 1em;
+      font-weight: 100;
+    }
+  }
+}
+
+
+
+
 
 #landing #new_user input[type="submit"] {
   font-size: 22px;
@@ -23,8 +92,8 @@ $inverse-color: #ffffff;
 }
 
 @media (min-width: 601px) {
-  #new_user input, #new_user input.btn[type="submit"] {
-    width: 130%;
+  #new_user input, #new_user button {
+    width: 120%;
   }
 }
   #landing nav {
@@ -88,55 +157,10 @@ $inverse-color: #ffffff;
 
 }
 
-#landing #message {
-  color: $inverse-color;
-  font-weight: 600;
-  text-shadow: 0 0px 5px #000000;
-  #message_header {
-    text-transform: uppercase;
-    font-size: 3.5em;
-  }
-  #message_remainder {
-    font-size: 1.2em;
-    font-weight: 100;
-  }
-}
-
-@media (max-width: 600px) {
-     a:not(#comp_name) {
-     color: $basic-color;
-     font-size: 1.1em;   
-     text-shadow: none;
-    }
-}
-
-@media (min-width: 601px) {
-  #landing nav.navbar-inverse {
-    background: none;
-    border: none;
-  }
-    a:not(#comp_name) {
-     color: $basic-color;
-/*     text-shadow: 0 1px 0px #000000; */ 
-     font-size: 1em;  
-     font-weight: 100; 
-    }
-
-
-}
-#landing nav.navbar-inverse {
-    #comp_name {
-        font-size: 2.5em;
-        margin-left: 5%;
-        padding-top: 20px;
-        color: $basic-color;
-        font-weight: 800;
-    }    
-}
 
 @media (max-width: 600px) {
     body {
-        background-image: image-url('bgm1.jpg');
+        background-image: image-url('bgm3.jpg');
         background-repeat:  no-repeat;
         background-position-x:  center;
         background-position-y:  center;
@@ -191,12 +215,6 @@ body#landing {
     font-size: 1.5em;
     text-transform: none;
 }
-
-#landing #landing_main_button {
-    margin-left: 5%;
-    width: 96%;
-}
-
 
 #video_background {
     width: 100%;

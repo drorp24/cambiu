@@ -9,9 +9,9 @@ class UsersController < ApplicationController
     @user = User.new_guest(users_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to landing_path, notice: "new user saved: #{@user.email}"
+      redirect_to landing_path
     else
-      redirect_to landing_path, notice: "user was not saved"
+      redirect_to landing_path, alert: "user was not saved"
     end
 
   end
