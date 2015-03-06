@@ -8,6 +8,10 @@ $inverse-color: #ffffff;
 
 
 @media (min-width: 601px){
+  #landing #new_user #mobile_input_trigger {
+    display: none;
+  }
+
   #landing nav.navbar-inverse {
     background: none;
     border: none;
@@ -42,6 +46,18 @@ $inverse-color: #ffffff;
 }
 
 @media (max-width: 600px){
+  #landing #landing_form {
+      margin-top: 10vh;
+    }
+
+  #landing #new_user .form-group:not(#mobile_input_trigger) {
+    display: none;
+  }
+  #landing #new_user #mobile_input_trigger {
+    margin-top: 40vh; 
+    font-size: 1em;
+  }
+
   #landing nav.navbar-inverse {
       #comp_name {
           font-size: 2em;
