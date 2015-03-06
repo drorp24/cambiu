@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   get 'best_rates',         to: 'landing#index'
   # landing pages
 
+  # non-devise route: post users, routed here to users#create to create guest users
+  post 'users', to: 'users#create', as: :users
+
   devise_for :users, :controllers => {registrations: "users/registrations", sessions: "users/sessions", omniauth_callbacks: "users/omniauth_callbacks" }
   devise_scope :user do
     get 'sign_out', :to => 'devise/sessions#destroy', :as => :adestroy_user_session
