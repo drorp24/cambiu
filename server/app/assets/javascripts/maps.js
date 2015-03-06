@@ -1,19 +1,26 @@
+function getLocation() {
 
-if (navigator.geolocation) {
-  var timeoutVal = 10 * 1000 * 1000;
-  navigator.geolocation.getCurrentPosition(
-    displayPosition, 
-    displayError,
-    { enableHighAccuracy: false, timeout: timeoutVal, maximumAge: 0 }
-  );
-}
-else {
-  alert("Geolocation is not supported by this browser");
+    var latitude;
+    var longitude;
+
+    if (navigator.geolocation) {
+      var timeoutVal = 10 * 1000 * 1000;
+      navigator.geolocation.getCurrentPosition(
+        displayPosition, 
+        displayError,
+        { enableHighAccuracy: false, timeout: timeoutVal, maximumAge: 0 }
+      );
+    }
+    else {
+      alert("Geolocation is not supported by this browser");
+    }
+    
+    function displayPosition(position) {
+        $('#user_latitude').val(position.coords.latitude);
+        $('#user_longitude').val(position.coords.longitude);
+    }
 }
 
-function displayPosition(position) {
-//  alert("Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude);
-}
 function displayError(error) {
   var errors = { 
     1: 'Permission denied',

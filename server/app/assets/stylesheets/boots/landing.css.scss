@@ -6,6 +6,11 @@ $basic-color: #555555;
 $inverse-color: #ffffff;
 
 
+#landing #landing_form #new_user .form-group {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 #landing #new_user input[type="submit"] {
   font-size: 22px;
 }
@@ -18,8 +23,8 @@ $inverse-color: #ffffff;
 }
 
 @media (min-width: 601px) {
-  #landing_form input, #landing_form button {
-    width: 120%;
+  #new_user input, #new_user input.btn[type="submit"] {
+    width: 130%;
   }
 }
   #landing nav {
@@ -50,7 +55,7 @@ $inverse-color: #ffffff;
   }
 
 
-#landing_form {
+#new_user {
   margin-top: 20px;
   input:nth-child(1) {
   }

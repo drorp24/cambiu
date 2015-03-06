@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150306122416) do
+ActiveRecord::Schema.define(version: 20150306150150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,9 +177,7 @@ ActiveRecord::Schema.define(version: 20150306122416) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "buy_cents",              default: 0
     t.string   "buy_currency"
-    t.integer  "pay_cents",              default: 0
     t.string   "pay_currency"
     t.string   "provider"
     t.string   "uid"
@@ -192,6 +190,12 @@ ActiveRecord::Schema.define(version: 20150306122416) do
     t.string   "timezone"
     t.string   "locale"
     t.boolean  "guest"
+    t.string   "landing"
+    t.string   "buy_amount"
+    t.string   "pay_amount"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.float    "bbox"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
