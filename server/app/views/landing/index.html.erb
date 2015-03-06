@@ -49,10 +49,29 @@
 <script>
 $(document).ready(function() {
 	
+
+$('#landing_main_button').click(function() {
+	ga('send', 'event', 'button', 'click', 'landing-main-button');
+	mixpanel.track("Landing main button");
+})
+$('#join').click(function() {
+	ga('send', 'event', 'button', 'click', 'join');
+	mixpanel.track("Landing Join button");
+})
+
+
+
 $( "form" ).on( "submit", function( event ) {
   event.preventDefault();
   window.location.href = "/exchanges?" + $( this ).serialize();
 });
+
+
+
+
+
+
+// typeahead - with override issues
 
 $('.typeahead.input-sm').siblings('input.tt-hint').addClass('hint-small');
 $('.typeahead.input-lg').siblings('input.tt-hint').addClass('hint-large');	
