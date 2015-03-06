@@ -6,11 +6,16 @@ class ApplicationController < ActionController::Base
   layout 'boots'
   
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_landing
 #  before_action :authenticate_user!
 
 
   
   protected
+  
+  def set_landing
+    @landing = request.original_fullpath.remove("/")
+  end
 
   def find_guest_user
     @guest_user = User.find(session[:user_id]) if session[:user_id]

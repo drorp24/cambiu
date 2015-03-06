@@ -11,36 +11,36 @@
 		<div id="landing_message">
 			<div class="row">
 				<div id="message" class="text-center">
-					<div id="message_header">Marketing message</div>
+					<div id="message_header"><%= t :title, scope: [@landing], default: 'Best currency exchange deals near you' %></div>
 					<div class="col-md-6 col-md-offset-3" id="message_remainder">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+						<%= t :text, scope: [@landing], default: 'Save on high commission fees with a few simple clicks. Anytime. Anywhere.' %>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div id="landing_form">
 			<div class="row">
-				<%= simple_form_for @user, wrapper: :inline_form, 
-					:html => { :class => 'form-inline col-md-8 col-md-offset-2 col-xs-offset-1' } do |f| %>
+				<form id="new_user" method="post" action="/users" class="form-inline col-md-8 col-md-offset-2 col-xs-offset-1">
 					<div class="form-group col-md-3 col-xs-10">
-				  		<%= f.input :buy_amount, placeholder: 'How much do you need', input_html: { class: 'form-control', data: {autonumeric: true} }, label: false %>
+						<input data-autonumeric="true" name="user[buy_amount]" class="form-control" placeholder="How much do you need">
 				  	</div>
 				  	<div class="form-group col-md-3 col-xs-10">
-				  		<%= f.input :buy_currency, placeholder: 'In which currency', input_html: { class: 'form-control' }, label: false %>
+						<input type="text" name="user[buy_currency]" class="form-control" placeholder="In what currency">
 				  	</div>
 				  	<div id="the-basics" class="form-group col-md-3 col-xs-10">
-				  		<%= f.input :pay_currency, placeholder: 'Paying with', input_html: { class: 'form-control' }, label: false %>
+						<input type="text" name="user[pay_currency]" class="form-control" placeholder="Paying with">
 				  	</div>
 				  	<div class="hidden" style="display:none">
-				  		<%= f.input :latitude, as: :hidden, input_html: {value: "default"} %>
-				  		<%= f.input :longitude, as: :hidden, input_html: {value: "default"} %>
-				  		<%= f.input :bbox, as: :hidden, input_html: {value: "default"} %>
-				  		<%= f.input :landing, as: :hidden, input_html: {value: request.original_fullpath.remove("/")} %>
-			  		</div>
-				  	<div class="form-group col-md-3 col-xs-10">
-						<%= button_to "Get it", users_path, method: :post, id: "landing_main_button", class: "form-control btn btn-success" %>
+				  		<input type="hidden" name="user[latitude]" value="51.507351">
+				  		<input type="hidden" name="user[longitude]" value="-0.127758">
+				  		<input type="hidden" name="user[bbox]" value="default">
+				  		<input type="hidden" name="user[landing]" value="default">
+				  		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 					</div>
-				<% end %>
+				  	<div class="form-group col-md-3 col-xs-10">
+						<button id="landing_main_button" class="form-control btn btn-success" type="submit">Get it</button>
+					</div>
+				</form>
 			</div>
 		</div>
 		

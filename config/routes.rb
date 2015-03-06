@@ -2,9 +2,9 @@ Rails.application.routes.draw do
 
   # landing pages
   root 'landing#index', as: :landing
-  get 'currency_exchange',  to: 'landing#index'
-  get 'save_money',         to: 'landing#index'
-  get 'best_rates',         to: 'landing#index'
+  get 'currency_exchange',  to: 'landing#index', as: :currency_exchange  
+  get 'save_money',         to: 'landing#index', as: :save_money
+  get 'best_rates',         to: 'landing#index', as: :best_rates
   # landing pages
 
   # non-devise route: post users, routed here to users#create to create guest users
