@@ -128,9 +128,9 @@ $(document).ready(function() {
 				var offer = Math.round((data*1.05)/100).toFixed(2);
 				$('.form-group:not(.email_group)').css('display', 'none');
 				$('.email_group').css('display', 'block');
-				$('#offer').attr('placeholder', '<%= t :offer_prefix, scope: [@landing], default: 'We have an offer for ' %>' + offer);
-				$('#signin_request').attr('placeholder', '<%= t :signin_request, scope: [@landing], default: 'Interested? Sign-in' %>');
 				$('#user_pay_amount').val(offer);
+				$('#message_header').html('<%= t :offer_prefix, scope: [@landing], default: 'We can offer it for ' %>' + offer);
+				$('#message_remainder').html('<%= t :signin_request, scope: [@landing], default: 'Interested? Sign-in' %>');
 			}
 		})
 	});
