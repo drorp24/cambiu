@@ -10,10 +10,33 @@ class UsersController < ApplicationController
 
     # new guest user
     @user = User.new_guest(users_params)
+    puts ""
+    puts ""
+    puts ""
+    puts "@user:"
+    puts ""
+    puts @user.inspect
+    puts ""
+    puts ""
+    puts ""
     if @user.save
+      puts ""
+      puts ""
+      puts ""
+      puts "saved"
+      puts ""
+      puts ""
+      puts ""
       session[:user_id] = @user.id
       redirect_to landing_path
     else
+      puts ""
+      puts ""
+      puts ""
+      puts "not saved"
+      puts ""
+      puts ""
+      puts ""
       redirect_to landing_path, alert: "user was not saved"
     end
 
