@@ -25,23 +25,36 @@
 						<input class="form-control" placeholder="Check rates">
 				  	</div>
 					<div class="form-group col-md-3 col-xs-11">
-						<input data-autonumeric="true" id="user_buy_amount" name="user[buy_amount]" class="form-control" placeholder="How much do you need">
+						<input id="user_buy_amount" data-autonumeric="true" name="user[buy_amount]" class="form-control" placeholder="How much do you need">
 				  	</div>
 				  	<div class="form-group col-md-3 col-xs-11">
-						<input type="text" name="user[buy_currency]" class="form-control" placeholder="In what currency">
+						<input id="user_buy_currency" type="text" name="user[buy_currency]" class="form-control" placeholder="In what currency">
 				  	</div>
 				  	<div id="the-basics" class="form-group col-md-3 col-xs-11">
-						<input type="text" name="user[pay_currency]" class="form-control" placeholder="Paying with">
+						<input id="user_pay_currency" type="text" name="user[pay_currency]" class="form-control" placeholder="Paying with">
 				  	</div>
 				  	<div class="hidden" style="display:none">
+				  		<input id="user_pay_amount" type="hidden" name="user[pay_amount]">
 				  		<input type="hidden" name="user[latitude]" value="51.507351">
 				  		<input type="hidden" name="user[longitude]" value="-0.127758">
 				  		<input type="hidden" name="user[bbox]" value="default">
-				  		<input type="hidden" name="user[landing]" value="default">
+				  		<input type="hidden" name="user[landing]" value="<%= @landing %>">
 				  		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 					</div>
-				  	<div class="form-group col-md-3 col-xs-11">
-						<button id="landing_main_button" class="form-control btn btn-success" type="submit">Get it</button>
+				  	<div id="serach_div" class="form-group col-md-3 col-xs-11">
+						<button id="search_button" class="form-control btn btn-success" type="button"><%= t :search_button, scope: [@landing], default: 'Get it' %></button>
+					</div>
+				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
+						<input id="offer" type="text" name="offer" class="form-control not-input">
+				  	</div>
+				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
+						<input id="signin_request" type="text" name="signin_request" class="form-control not-input">
+				  	</div>
+				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
+						<input type="email" name="user[email]" class="form-control" placeholder="Your email">
+				  	</div>
+				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
+						<button id="email_button" class="form-control btn btn-success" type="submit"><%= t :signin_button, scope: [@landing], default: 'Get it' %></button>
 					</div>
 				</form>
 			</div>
@@ -54,6 +67,8 @@
 <script>
 $(document).ready(function() {
 	
+
+	// hide address bar - not working as of iOS7
 	window.addEventListener("load",function() {
 	// Set a timeout...
 	setTimeout(function(){
@@ -62,22 +77,63 @@ $(document).ready(function() {
 	}, 0);
 	});
 
+
+	// Store user location in hidden form fields
 	getLocation();
 	
+
+	
+
+
+	// Analyses & Flow
 	$('#mobile_input_trigger input').click(function() {
 		$('#mobile_input_trigger').css('display', 'none');
 		$('.form-group:not(#mobile_input_trigger)').css('display', 'block');
 		$('#user_buy_amount').focus();
 	})
+
+	$('#user_buy_amount, #user_buy_currency, #user_pay_currency').change(function() {
+		ga('send', 'event', 'button', 'click', 'rates');
+		mixpanel.track('Checking rates');
+	})
+
+	$('#search_button').click(function() {
+		ga('send', 'event', 'button', 'click', 'search');
+		mixpanel.track("Search button");
+
+		var buy_cents =    $('#user_buy_amount').val().replace(',', '').replace('.', '');
+		var buy_currency = $('#user_buy_currency').val();
+		var pay_currency = $('#user_pay_currency').val();
+
+		$.get('/currencies/exchange', {
+			buy_cents: buy_cents,
+			buy_currency: buy_currency,
+			pay_currency: pay_currency
+		}
+		).done(function(data) {
+			if (data == null) {
+				location.reload(); 				
+			} else {
+				var offer = Math.round((data*1.05)/100).toFixed(2);
+				$('.form-group:not(.email_group)').css('display', 'none');
+				$('.email_group').css('display', 'block');
+				$('#offer').attr('placeholder', '<%= t :offer_prefix, scope: [@landing], default: 'We have an offer for ' %>' + offer);
+				$('#signin_request').attr('placeholder', '<%= t :signin_request, scope: [@landing], default: 'Interested? Sign-in' %>');
+				$('#user_pay_amount').val(offer);
+			}
+		})
+	});
+
+	$('#email_button').click(function() {
+		ga('send', 'event', 'button', 'click', 'email');
+		mixpanel.track("Email button");
+		$('#message_header').html('<%= t :thanks_title, scope: [@landing], default: 'Thank you for your interest!' %>')
+		$('#message_remainder').html('<%= t :thanks_text, scope: [@landing], default: 'You will let you know as soon as we launch!' %>')
+	})
 	
-	$('#landing_main_button').click(function() {
-		ga('send', 'event', 'button', 'click', 'landing-main-button');
-		mixpanel.track("Landing main button");
-	})
-	$('#join').click(function() {
-		ga('send', 'event', 'button', 'click', 'join');
-		mixpanel.track("Landing Join button");
-	})
+
+
+
 
 
 // typeahead - with override issues

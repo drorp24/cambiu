@@ -21,7 +21,11 @@ class Currency
 
   def exchange(buy_cents, buy_currency, pay_currency)
     return nil unless @bank  
-    @bank.exchange(buy_cents, buy_currency, pay_currency).fractional 
+    begin
+      @bank.exchange(buy_cents, buy_currency, pay_currency).fractional 
+    rescue => e
+      return nil
+    end
   end
 
   def self.major

@@ -7,6 +7,24 @@ $inverse-color: #ffffff;
 //$inset-shadow: rgba(0,​ 0,​ 0,​ 0.25) 0px -1px 0px;
 
 
+#landing #landing_form #new_user .email_group.form-group input.not-input {
+  border: none;
+  background-color: transparent;
+  color: $inverse-color !important;
+  font-weight: 600;
+  
+}
+#landing #landing_form #new_user .email_group.form-group input.not-input::-moz-placeholder {
+  color: $inverse-color !important;
+  opacity:  1;
+  font-weight: 600;
+}
+
+#landing #landing_form #new_user .email_group.form-group input.not-input::-webkit-input-placeholder {
+  color: $inverse-color !important;
+  font-weight: 600;
+}
+
 @media (min-width: 601px){
   #landing #new_user #mobile_input_trigger {
     display: none;
@@ -47,14 +65,14 @@ $inverse-color: #ffffff;
 
 @media (max-width: 600px){
   #landing #landing_form {
-      margin-top: 5vh;
+      margin-top: 1vh;
     }
 
   #landing #new_user .form-group:not(#mobile_input_trigger) {
     display: none;
   }
   #landing #new_user #mobile_input_trigger {
-    margin-top: 30vh; 
+    margin-top: 25vh; 
     font-size: 1em;
   }
 
