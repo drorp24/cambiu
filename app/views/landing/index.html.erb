@@ -54,7 +54,7 @@
 						<input type="email" name="user[email]" class="form-control" placeholder="Your email">
 				  	</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
-						<button id="email_button" class="form-control btn btn-success" type="submit"><%= t :signin_button, scope: [@landing], default: 'Get it' %></button>
+						<button id="email_button" class="form-control btn btn-success" type="text"><%= t :signin_button, scope: [@landing], default: 'Get it' %></button>
 					</div>
 				</form>
 			</div>
@@ -82,8 +82,19 @@ $(document).ready(function() {
 	getLocation();
 	
 
-	
-
+	// rails' jquery_ujs remote by hand
+	$('#new_user').submit(function() {  
+	    var valuesToSubmit = $(this).serialize();
+	    $.ajax({
+	        type: "POST",
+	        url: $(this).attr('action'), 
+	        data: valuesToSubmit,
+	        dataType: "JSON",
+	    }).success(function(json){
+	        //act on result.
+	    });
+	    return false; // prevents normal behaviour
+	});
 
 	// Analyses & Flow
 	$('#mobile_input_trigger input').click(function() {
