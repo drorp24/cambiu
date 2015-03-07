@@ -51,7 +51,7 @@
 						<input id="signin_request" type="text" name="signin_request" class="form-control not-input">
 				  	</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
-						<input type="email" name="user[email]" class="form-control" placeholder="Your email">
+						<input id="user_email" type="email" name="user[email]" class="form-control" placeholder="Your email">
 				  	</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
 						<button id="email_button" class="form-control btn btn-success" type="text"><%= t :signin_button, scope: [@landing], default: 'Get it' %></button>
@@ -129,7 +129,7 @@ $(document).ready(function() {
 				$('.form-group:not(.email_group)').css('display', 'none');
 				$('.email_group').css('display', 'block');
 				$('#user_pay_amount').val(offer);
-				$('#message_header').html('<%= t :offer_prefix, scope: [@landing], default: 'We can offer it for ' %>' + offer);
+				$('#message_header').html('<%= t :offer_prefix, scope: [@landing], default: 'We can offer it for ' %>' + $('#user_buy_currency').val() + ' ' + offer);
 				$('#message_remainder').html('<%= t :signin_request, scope: [@landing], default: 'Interested? Sign-in' %>');
 			}
 		})
@@ -139,7 +139,9 @@ $(document).ready(function() {
 		ga('send', 'event', 'button', 'click', 'email');
 		mixpanel.track("Email button");
 		$('#message_header').html('<%= t :thanks_title, scope: [@landing], default: 'Thank you for your interest!' %>')
-		$('#message_remainder').html('<%= t :thanks_text, scope: [@landing], default: 'You will let you know as soon as we launch!' %>')
+		if ($('#user_email').val()) {
+			$('#message_remainder').html('<%= t :thanks_text, scope: [@landing], default: 'We will let you know as soon as we launch!' %>')			
+		}
 	})
 	
 
@@ -178,7 +180,7 @@ $(document).ready(function() {
  
 var currencies = ['GBP', 'USD', 'EUR', 'AUD', 'CAD', 'JPY'];
  
-$('#the-basics .typeahead').typeahead({
+$('#new_user .typeahead').typeahead({
   hint: true,
   highlight: true,
   minLength: 1
