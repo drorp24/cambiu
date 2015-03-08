@@ -19,10 +19,10 @@ class Currency
     @bank.rates     
   end
 
-  def exchange(buy_cents, buy_currency, pay_currency)
+  def exchange(pay_cents, pay_currency, buy_currency)
     return nil unless @bank  
     begin
-      @bank.exchange(buy_cents, buy_currency, pay_currency).fractional 
+      @bank.exchange(pay_cents, pay_currency, buy_currency)
     rescue => e
       return nil
     end
