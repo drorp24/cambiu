@@ -6,6 +6,9 @@ $basic-color: #555555;
 $inverse-color: #ffffff;
 //$inset-shadow: rgba(0,​ 0,​ 0,​ 0.25) 0px -1px 0px;
 
+#landing .help-block {
+  color: $inverse-color;
+}
 
 #landing #landing_form #new_user .email_group.form-group input.not-input {
   border: none;
@@ -126,8 +129,11 @@ $inverse-color: #ffffff;
 }
 
 @media (min-width: 601px) {
-  #new_user input, #new_user button {
+  #new_user input, #new_user button, .help-block {
     width: 120%;
+  }
+  #new_user select {
+    width: 127%;
   }
 }
   #landing nav {
@@ -162,7 +168,7 @@ $inverse-color: #ffffff;
   margin-top: 20px;
   input:nth-child(1) {
   }
-  input, button{
+  input, button, select{
     height: 50px;
     font-weight: 100;
     border-radius: 0;
