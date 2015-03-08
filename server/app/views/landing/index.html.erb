@@ -25,7 +25,7 @@
 						<input class="form-control" placeholder="Check rates">
 				  	</div>
 					<div class="form-group col-md-3 col-xs-11">
-						<input id="user_pay_amount" data-autonumeric="true" name="user[pay_amount]" class="form-control" placeholder="Change">
+						<input id="user_pay_amount" data-autonumeric="true" name="user[pay_amount]" class="form-control" placeholder="Amount">
 				  	</div>
 				  	<div class="form-group col-md-3 col-xs-11">
 						<select id="user_pay_currency" name="user[pay_currency]" class="select optional text-center form-control">
@@ -56,7 +56,7 @@
 				  		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 					</div>
 				  	<div id="serach_div" class="form-group col-md-3 col-xs-11">
-						<button id="search_button" class="form-control btn btn-success" type="button"><%= t :search_button, scope: [@landing], default: 'Get it' %></button>
+						<button id="search_button" class="form-control btn btn-success" type="button"><%= t :search_button, scope: [@landing], default: 'Exchange' %></button>
 					</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
 						<input id="offer" type="text" name="offer" class="form-control not-input">
@@ -65,10 +65,10 @@
 						<input id="signin_request" type="text" name="signin_request" class="form-control not-input">
 				  	</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
-						<input id="user_email" type="email" name="user[email]" class="form-control" placeholder="Your email">
+						<input id="user_email" type="email" name="user[email]" class="form-control" placeholder="Enter your email">
 				  	</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
-						<button id="email_button" class="form-control btn btn-success" type="text"><%= t :signin_button, scope: [@landing], default: 'Get it' %></button>
+						<button id="email_button" class="form-control btn btn-success" type="text"><%= t :signin_button, scope: [@landing], default: 'Book it' %></button>
 					</div>
 				</form>
 			</div>
@@ -140,12 +140,11 @@ $(document).ready(function() {
 		).done(function(data) {
 			if (data == null) {
 				location.reload(); 				
-			} else {
+			} else {				console.log(data.offer)
 				$('.form-group:not(.email_group)').css('display', 'none');
 				$('.email_group').css('display', 'block');
-				console.log(data)
-				$('#message_header').html('<%= t :offer_prefix, scope: [@landing], default: 'We can offer you ' %>' + data);
-				$('#message_remainder').html('<%= t :signin_request, scope: [@landing], default: 'Interested? Sign-in' %>');
+				$('#message_header').html('<%= t :offer_prefix, scope: [@landing], default: 'We can offer you ' %>' + data.offer.replace(/['"]+/g, ''));
+				$('#message_remainder').html('<%= t :gain, scope: [@landing], default: 'Your gain: ' %>' + data.gain.replace(/['"]+/g, ''));
 			}
 		})
 	});
