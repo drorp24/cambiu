@@ -6,6 +6,11 @@ $basic-color: #555555;
 $inverse-color: #ffffff;
 //$inset-shadow: rgba(0,​ 0,​ 0,​ 0.25) 0px -1px 0px;
 
+body#landing #cambiu_menu.navbar-collapse.collapse {
+  background-color: white;
+  color: #555555;
+}
+
 #landing .help-block {
   color: $inverse-color;
 }
@@ -60,7 +65,7 @@ $inverse-color: #ffffff;
       font-size: 3.5em;
     }
     #message_remainder {
-      font-size: 1.5em;
+      font-size: 2em;
       font-weight: 100;
     }
   }
@@ -80,6 +85,12 @@ $inverse-color: #ffffff;
   }
 
   #landing nav.navbar-inverse {
+      .in {
+        background: rgba(54, 25, 25, 0.2);
+        color: $basic-color;
+        height: 30vh;
+      }
+
       #comp_name {
           font-size: 2em;
           margin-left: 5%;
@@ -88,10 +99,10 @@ $inverse-color: #ffffff;
           font-weight: 800;
       }    
   }
-     a:not(#comp_name) {
-     color: $inverse-color;
+     a, a:hover{
      font-size: 1.1em;   
      text-shadow: none;
+     color: $basic-color;
     }
 
   #landing #landing_header {
