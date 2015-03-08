@@ -40,7 +40,7 @@ en:
     offer_prefix: "We offer "
     gain: "Your gain: "
     signin_button: "Sign-in"
-    thanks_title: "Thank you for your interest"
+    thanks_title: "Thanks for the interest"
     thanks_text: "We launch soon!"
   best_rates:
     ga_tracking_id: "UA-60416765-1"
@@ -51,6 +51,6 @@ en:
     offer_prefix: "We offer "
     gain: "Your gain: "
     signin_button: "Sign-in"
-    thanks_title: "Thank you for your interest"
+    thanks_title: "Thanks for the interest"
     thanks_text: "We launch soon!"
  
