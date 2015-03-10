@@ -25,9 +25,11 @@
 						<input class="form-control" placeholder="Check rates">
 				  	</div>
 					<div class="form-group col-md-3 col-xs-11">
-						<input id="user_pay_amount" data-autonumeric="true" name="user[pay_amount]" class="form-control" placeholder="Amount">
+						<p class="help-block">Change</p>
+						<input id="user_pay_amount" data-autonumeric="true" name="user[pay_amount]" class="form-control" placeholder="1,000">
 				  	</div>
 				  	<div class="form-group col-md-3 col-xs-11">
+						<p class="help-block">&nbsp;</p>
 						<select id="user_pay_currency" name="user[pay_currency]" class="select optional text-center form-control">
 							<option value="GBP" selected="selected">GBP</option>
 							<option value="EUR">EUR</option>
@@ -38,6 +40,7 @@
 						</select>
 					</div>
 				  	<div id="the-basics" class="form-group col-md-3 col-xs-11">
+						<p class="help-block">To</p>
 						<select id="user_buy_currency" name="user[buy_currency]" class="select optional text-center form-control">
 							<option value="USD" selected="selected">USD</option>
 							<option value="EUR">EUR</option>
@@ -56,6 +59,7 @@
 				  		<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 					</div>
 				  	<div id="serach_div" class="form-group col-md-3 col-xs-11">
+						<p class="help-block">&nbsp;</p>
 						<button id="search_button" class="form-control btn btn-success" type="button"><%= t :search_button, scope: [@landing], default: 'Exchange' %></button>
 					</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">

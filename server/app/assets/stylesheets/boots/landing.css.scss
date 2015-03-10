@@ -8,6 +8,7 @@ $inverse-color: #ffffff;
 
 #landing .help-block {
   color: $inverse-color;
+  margin: 0;
 }
 
 #landing #landing_form #new_user .email_group.form-group input.not-input {
@@ -195,7 +196,7 @@ $inverse-color: #ffffff;
 }
 @media (min-width: 601px) {
   #landing #message {
-    margin-top: 55vh;
+    margin-top: 50vh;
   }
   #landing nav.bavbar-default {
     border: none;
