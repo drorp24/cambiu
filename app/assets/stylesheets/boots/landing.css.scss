@@ -6,6 +6,10 @@ $basic-color: #555555;
 $inverse-color: #ffffff;
 //$inset-shadow: rgba(0,​ 0,​ 0,​ 0.25) 0px -1px 0px;
 
+#landing #user_pay_amount {
+  color: #555555;
+}
+
 #landing .help-block {
   color: $inverse-color;
   margin: 0;
