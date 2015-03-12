@@ -6,39 +6,39 @@ $basic-color: #555555;
 $inverse-color: #ffffff;
 //$inset-shadow: rgba(0,​ 0,​ 0,​ 0.25) 0px -1px 0px;
 
-#landing #user_pay_amount {
+#cambiu #user_pay_amount {
   color: #555555;
 }
 
-#landing .help-block {
+#cambiu .help-block {
   color: $inverse-color;
   margin: 0;
 }
 
-#landing #landing_form #new_user .email_group.form-group input.not-input {
+#cambiu #landing_form #new_user .email_group.form-group input.not-input {
   border: none;
   background-color: transparent;
   color: $inverse-color !important;
   font-weight: 600;
   
 }
-#landing #landing_form #new_user .email_group.form-group input.not-input::-moz-placeholder {
+#cambiu #landing_form #new_user .email_group.form-group input.not-input::-moz-placeholder {
   color: $inverse-color !important;
   opacity:  1;
   font-weight: 600;
 }
 
-#landing #landing_form #new_user .email_group.form-group input.not-input::-webkit-input-placeholder {
+#cambiu #landing_form #new_user .email_group.form-group input.not-input::-webkit-input-placeholder {
   color: $inverse-color !important;
   font-weight: 600;
 }
 
 @media (min-width: 601px){
-  #landing #new_user #mobile_input_trigger {
+  #cambiu #new_user #mobile_input_trigger {
     display: none;
   }
 
-  #landing nav.navbar-inverse {
+  #cambiu nav.navbar-inverse {
     background: none;
     border: none;
   
@@ -56,7 +56,7 @@ $inverse-color: #ffffff;
      font-size: 1em;  
      font-weight: 600; 
     }
-  #landing #message {
+  #cambiu #message {
     color: $inverse-color;
     font-weight: 600;
     text-shadow: 0 0px 5px #000000;
@@ -72,19 +72,19 @@ $inverse-color: #ffffff;
 }
 
 @media (max-width: 600px){
-  #landing #landing_form {
+  #cambiu #landing_form {
       margin-top: 1vh;
     }
 
-  #landing #new_user .form-group:not(#mobile_input_trigger) {
+  #cambiu #new_user .form-group:not(#mobile_input_trigger) {
     display: none;
   }
-  #landing #new_user #mobile_input_trigger {
+  #cambiu #new_user #mobile_input_trigger {
     margin-top: 25vh; 
     font-size: 1em;
   }
 
-  #landing nav.navbar-inverse {
+  #cambiu nav.navbar-inverse {
       .in {
         background: rgba(54, 25, 25, 0.2);
         color: $basic-color;
@@ -105,10 +105,10 @@ $inverse-color: #ffffff;
      color: $basic-color;
     }
 
-  #landing #landing_header {
+  #cambiu #landing_header {
     height: 13vh;
   }
-  #landing #message {
+  #cambiu #message {
     color: $inverse-color;
     font-weight: 600;
     text-shadow: 0 0px 5px #000000;
@@ -128,11 +128,11 @@ $inverse-color: #ffffff;
 
 
 
-#landing #new_user input[type="submit"] {
+#cambiu #new_user input[type="submit"] {
   font-size: 22px;
 }
 
-#landing .alert {
+#cambiu .alert {
   margin-top: 70px;
   .close {
     right: 0;
@@ -147,11 +147,11 @@ $inverse-color: #ffffff;
     width: 127%;
   }
 }
-  #landing nav {
+  #cambiu nav {
     background: none;
     border: none;
   }
-  #landing .navbar .container-fluid #bs-example-navbar-collapse-1.collapse.navbar-collapse {
+  #cambiu .navbar .container-fluid #bs-example-navbar-collapse-1.collapse.navbar-collapse {
     border: none;
     border-color: transparent;
     color: transparent;
@@ -159,7 +159,7 @@ $inverse-color: #ffffff;
     border: 0 !important;
     box-shadow: none !important;
   }
-  #landing .navbar #fluid.container-fluid {
+  #cambiu .navbar #fluid.container-fluid {
     border: none;
     border-color: transparent;
     color: transparent;
@@ -167,7 +167,7 @@ $inverse-color: #ffffff;
     border: 0 !important;
     box-shadow: none !important;
   }
-  #landing .navbar-inverse .navbar-collapse {
+  #cambiu .navbar-inverse .navbar-collapse {
     border: none;
   }
   #landin .navbar-inverse {
@@ -194,15 +194,15 @@ $inverse-color: #ffffff;
 }
 
 @media (max-width: 600px) {
-  #landing #message {
+  #cambiu #message {
     margin-top: 1vh;
   }
 }
 @media (min-width: 601px) {
-  #landing #message {
+  #cambiu #message {
     margin-top: 50vh;
   }
-  #landing nav.bavbar-default {
+  #cambiu nav.bavbar-default {
     border: none;
     }
 
@@ -235,7 +235,7 @@ $inverse-color: #ffffff;
     }
 }
 
-body#landing {
+body#cambiu {
     color: $basic-color;
 }  
 
@@ -243,13 +243,13 @@ body#landing {
     height: 100px;
 }
 
-#landing .page-title {
+#cambiu .page-title {
     font-family: "Giorgio";
     color: $brand-color;
     font-size: 2em;
 }
 
-#landing .navbar {
+#cambiu .navbar {
     margin-bottom: 0;
 }
 
@@ -262,7 +262,7 @@ body#landing {
     margin-top: 35px;
 }
 
-#landing .hero.title {
+#cambiu .hero.title {
     font-size: 1.5em;
     text-transform: none;
 }
@@ -271,7 +271,7 @@ body#landing {
     width: 100%;
 }
 
-#landing .nav.navbar-nav li a {
+#cambiu .nav.navbar-nav li a {
     line-height: 40px;
 }
 
@@ -279,13 +279,13 @@ body#landing {
     line-height: 30px;
 }
 
-#landing #landing_content .row #subscribe {
+#cambiu #landing_content .row #subscribe {
     text-shadow: none;
     text-transform: none;
     background-color: #555555;
 }
 
-body#landing, #landing h2 {
+body#cambiu, #cambiu h2 {
 
     font-family: 'Helvetica';
 }
@@ -327,7 +327,7 @@ body#landing, #landing h2 {
     position: relative;
     bottom: 8px;
 }
-#landing input:not(.btn) {
+#cambiu input:not(.btn) {
     /*
     opacity: 1;
     border: 1px solid transparent;
@@ -336,7 +336,7 @@ body#landing, #landing h2 {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
     */
 }
-#landing input[type="text"] {
+#cambiu input[type="text"] {
     color: #555555;
 }
 
@@ -344,7 +344,7 @@ body#landing, #landing h2 {
     position: relative;
     top: 24px;
 }
-#landing select {
+#cambiu select {
     color: #888;
     text-align: -webkit-center;
     text-align: center;
@@ -354,33 +354,33 @@ body#landing, #landing h2 {
 div.inline {
     display: block;
 }
-#landing #new_visitor input:not(#visitor_email),  #landing #new_visitor label, #landing #new_visitor select {
+#cambiu #new_visitor input:not(#visitor_email),  #cambiu #new_visitor label, #cambiu #new_visitor select {
     font-size: 24px;  
     line-height: 24px;
     margin-bottom: 20px;
 }
-#landing #new_visitor input.btn {
+#cambiu #new_visitor input.btn {
     height: 54px;
 }
-#landing #visitor_email {
+#cambiu #visitor_email {
     height: 54px;
     width: 100%;
     
 }
 
 @media only screen and (max-width: 767px) {
-    #landing #new_visitor input.btn, #landing #visitor_email {
+    #cambiu #new_visitor input.btn, #cambiu #visitor_email {
         height: 54px;
         width: 85%;
         margin-left: 6%;
         background-color: #ffffff;
     }
-     body#landing, #landing h2 {
+     body#cambiu, #cambiu h2 {
         color: #333333;
         text-shadow: none;
     }   
 }
-#landing #new_visitor input#visitor_email {
+#cambiu #new_visitor input#visitor_email {
     font-size: 16px;
 }
 
