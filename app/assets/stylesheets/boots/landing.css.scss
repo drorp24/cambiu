@@ -34,7 +34,7 @@ $inverse-color: #ffffff;
 }
 
 @media (min-width: 601px){
-  #cambiu #new_user #mobile_input_trigger {
+  #cambiu #landing_page #new_user #mobile_input_trigger {
     display: none;
   }
 
@@ -76,7 +76,7 @@ $inverse-color: #ffffff;
       margin-top: 1vh;
     }
 
-  #cambiu #new_user .form-group:not(#mobile_input_trigger) {
+  #cambiu #landing_page #new_user .form-group:not(#mobile_input_trigger) {
     display: none;
   }
   #cambiu #new_user #mobile_input_trigger {
@@ -143,7 +143,7 @@ $inverse-color: #ffffff;
   #new_user input, #new_user button, .help-block {
     width: 120%;
   }
-  #new_user select {
+  #landing_page #new_user select {
     width: 127%;
   }
 }
@@ -175,7 +175,7 @@ $inverse-color: #ffffff;
   }
 
 
-#new_user {
+#landing_page #new_user {
   margin-top: 20px;
   input:nth-child(1) {
   }
@@ -210,7 +210,7 @@ $inverse-color: #ffffff;
 
 
 @media (max-width: 600px) {
-    body {
+    body #landing_page {
         background-image: image-url('bgm3.jpg');
         background-repeat:  no-repeat;
         background-position-x:  center;
@@ -219,7 +219,7 @@ $inverse-color: #ffffff;
     }    
 }
 @media (min-width: 601px){
-    body {
+    body #landing_page {
         background-image: image-url('bg1.jpg');
         background-repeat:  no-repeat;
         background-position-x:  center;
