@@ -26,6 +26,17 @@ en:
     ga_tracking_id: "UA-60617243-1"
   app:
     ga_tracking_id: "UA-59245909-1"    
+  home:
+    ga_tracking_id: "UA-59245909-3"
+    mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
+    title: "Cambiu homepage marketing title"
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor."
+    search_button: "Exchange"
+    offer_prefix: "We offer "
+    gain: "Your gain: "
+    signin_button: "Book now"
+    thanks_title: "Thanks for the interest"
+    thanks_text: "We launch soon!"
   currency_exchange:
     ga_tracking_id: "UA-59245909-3"
     mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"

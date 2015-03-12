@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   
   def set_landing
     @landing = request.original_fullpath.remove("/")
+    @landing = "home" if @landing.blank?
   end
 
   def find_guest_user

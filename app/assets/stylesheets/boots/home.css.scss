@@ -1,0 +1,397 @@
+$brand-color: #FA5241;
+$brand-font: "Giorgio";
+$regular-font: 'Roboto', sans-serif;
+/*$regular-font: 'Helvetica'; */
+$basic-color: #555555;
+$inverse-color: #ffffff;
+//$inset-shadow: rgba(0,​ 0,​ 0,​ 0.25) 0px -1px 0px;
+
+#landing #user_pay_amount {
+  color: #555555;
+}
+
+#landing .help-block {
+  color: $inverse-color;
+  margin: 0;
+}
+
+#landing #home_form #new_user .email_group.form-group input.not-input {
+  border: none;
+  background-color: transparent;
+  color: $inverse-color !important;
+  font-weight: 600;
+  
+}
+#landing #home_form #new_user .email_group.form-group input.not-input::-moz-placeholder {
+  color: $inverse-color !important;
+  opacity:  1;
+  font-weight: 600;
+}
+
+#landing #home_form #new_user .email_group.form-group input.not-input::-webkit-input-placeholder {
+  color: $inverse-color !important;
+  font-weight: 600;
+}
+
+@media (min-width: 601px){
+  #landing #new_user #mobile_input_trigger {
+    display: none;
+  }
+
+  #landing nav.navbar-inverse {
+    background: none;
+    border: none;
+  
+    #comp_name {
+      font-size: 3em;
+      margin-left: 5%;
+      padding-top: 20px;
+      color: $inverse-color;
+      font-weight: 800;
+      }    
+    }
+    a:not(#comp_name) {
+     color: $inverse-color;
+     text-shadow: 0 0.5px 0px #000000;  
+     font-size: 1em;  
+     font-weight: 600; 
+    }
+  #landing #message {
+    color: $inverse-color;
+    font-weight: 600;
+    text-shadow: 0 0px 5px #000000;
+    #message_header {
+      text-transform: uppercase;
+      font-size: 3.5em;
+    }
+    #message_remainder {
+      font-size: 2em;
+      font-weight: 100;
+    }
+  }
+}
+
+@media (max-width: 600px){
+  #landing #home_form {
+      margin-top: 1vh;
+    }
+
+  #landing #new_user .form-group:not(#mobile_input_trigger) {
+    display: none;
+  }
+  #landing #new_user #mobile_input_trigger {
+    margin-top: 25vh; 
+    font-size: 1em;
+  }
+
+  #landing nav.navbar-inverse {
+      .in {
+        background: rgba(54, 25, 25, 0.2);
+        color: $basic-color;
+        height: 30vh;
+      }
+
+      #comp_name {
+          font-size: 2em;
+          margin-left: 5%;
+          padding-top: 20px;
+          color: $inverse-color;
+          font-weight: 800;
+      }    
+  }
+     a, a:hover{
+     font-size: 1.1em;   
+     text-shadow: none;
+     color: $basic-color;
+    }
+
+  #landing #home_header {
+    height: 13vh;
+  }
+  #landing #message {
+    color: $inverse-color;
+    font-weight: 600;
+    text-shadow: 0 0px 5px #000000;
+    padding: 5%;
+    #message_header {
+      text-transform: uppercase;
+      font-size: 2em;
+    }
+    #message_remainder {
+      font-size: 1em;
+      font-weight: 100;
+    }
+  }
+}
+
+
+
+
+
+#landing #new_user input[type="submit"] {
+  font-size: 22px;
+}
+
+#landing .alert {
+  margin-top: 70px;
+  .close {
+    right: 0;
+  }
+}
+
+@media (min-width: 601px) {
+  #new_user input, #new_user button, .help-block {
+    width: 120%;
+  }
+  #new_user select {
+    width: 127%;
+  }
+}
+  #landing nav {
+    background: none;
+    border: none;
+  }
+  #landing .navbar .container-fluid #bs-example-navbar-collapse-1.collapse.navbar-collapse {
+    border: none;
+    border-color: transparent;
+    color: transparent;
+    background: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  #landing .navbar #fluid.container-fluid {
+    border: none;
+    border-color: transparent;
+    color: transparent;
+    background: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  #landing .navbar-inverse .navbar-collapse {
+    border: none;
+  }
+  #landin .navbar-inverse {
+    box-shadow: none;
+  }
+
+
+#new_user {
+  margin-top: 20px;
+  input:nth-child(1) {
+  }
+  input, button, select{
+    height: 50px;
+    font-weight: 100;
+    border-radius: 0;
+  }
+  input {
+    font-size: 1.1em;
+    text-align: center;
+  }
+  button {
+    font-size: 1.7em;
+  }
+}
+
+@media (max-width: 600px) {
+  #landing #message {
+    margin-top: 1vh;
+  }
+}
+@media (min-width: 601px) {
+  #landing #message {
+    margin-top: 50vh;
+  }
+  #landing nav.bavbar-default {
+    border: none;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+    body {
+        background-image: image-url('bgm3.jpg');
+        background-repeat:  no-repeat;
+        background-position-x:  center;
+        background-position-y:  center;
+        background-size: cover;
+    }    
+}
+@media (min-width: 601px){
+    body {
+        background-image: image-url('bg1.jpg');
+        background-repeat:  no-repeat;
+        background-position-x:  center;
+        background-position-y:  center;
+        background-size: cover;  
+        background-position: bottom;      
+    }
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+    #map_container {
+        display: none;
+    }
+}
+
+body#landing {
+    color: $basic-color;
+}  
+
+#home_header {
+    height: 100px;
+}
+
+#landing .page-title {
+    font-family: "Giorgio";
+    color: $brand-color;
+    font-size: 2em;
+}
+
+#landing .navbar {
+    margin-bottom: 0;
+}
+
+.wrapper_grey {
+    background-color: #f2f2f2;
+    padding: 0 30px;
+}
+
+#new_visitor {
+    margin-top: 35px;
+}
+
+#landing .hero.title {
+    font-size: 1.5em;
+    text-transform: none;
+}
+
+#video_background {
+    width: 100%;
+}
+
+#landing .nav.navbar-nav li a {
+    line-height: 40px;
+}
+
+#fb_like {
+    line-height: 30px;
+}
+
+#landing #home_content .row #subscribe {
+    text-shadow: none;
+    text-transform: none;
+    background-color: #555555;
+}
+
+body#landing, #landing h2 {
+
+    font-family: 'Helvetica';
+}
+
+
+#para {
+    font-size: 3.8em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.handwriting {
+}
+
+.name_and_logo {
+    /*
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    */    
+}
+
+#home_title {
+    font-size: 1.5em;
+}
+#home_name.h1 {
+    text-align: left;
+    font-size: 5.5em;
+    font-weight: 800;
+}
+#home_icon {
+    width: 15%;
+    margin-left: auto;
+    margin-right: auto;    
+    
+}
+#home_icon img {
+    width: 8%;
+    position: relative;
+    bottom: 8px;
+}
+#landing input:not(.btn) {
+    /*
+    opacity: 1;
+    border: 1px solid transparent;
+    border-top: none;
+    border-bottom: 1px solid #DDD;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
+    */
+}
+#landing input[type="text"] {
+    color: #555555;
+}
+
+#find_out {
+    position: relative;
+    top: 24px;
+}
+#landing select {
+    color: #888;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+
+div.inline {
+    display: block;
+}
+#landing #new_visitor input:not(#visitor_email),  #landing #new_visitor label, #landing #new_visitor select {
+    font-size: 24px;  
+    line-height: 24px;
+    margin-bottom: 20px;
+}
+#landing #new_visitor input.btn {
+    height: 54px;
+}
+#landing #visitor_email {
+    height: 54px;
+    width: 100%;
+    
+}
+
+@media only screen and (max-width: 767px) {
+    #landing #new_visitor input.btn, #landing #visitor_email {
+        height: 54px;
+        width: 85%;
+        margin-left: 6%;
+        background-color: #ffffff;
+    }
+     body#landing, #landing h2 {
+        color: #333333;
+        text-shadow: none;
+    }   
+}
+#landing #new_visitor input#visitor_email {
+    font-size: 16px;
+}
+
+#new_visitor input, #new_visitor select {
+    width: 85%;
+    height: 42px;
+}
+h1.hero {
+    font-size: 3.0em;
+    font-weight: 600;
+}
+
+#home_content {
+}
