@@ -20,8 +20,14 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  start_free:
+    ga_tracking_id: "UA-60617930-1"
+  bestdeals:
+    ga_tracking_id: "UA-60617243-1"
+  app:
+    ga_tracking_id: "UA-59245909-1"    
   currency_exchange:
-    ga_tracking_id: "UA-59245909-2"
+    ga_tracking_id: "UA-59245909-3"
     mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
     title: "Find the best exchange deals near you"
     text: "Save on high commission fees with a few simple clicks. Anytime. Anywhere."
