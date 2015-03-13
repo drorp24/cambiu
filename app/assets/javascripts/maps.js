@@ -16,8 +16,27 @@ function getLocation() {
     }
     
     function displayPosition(position) {
-        $('#user_latitude').val(position.coords.latitude);
-        $('#user_longitude').val(position.coords.longitude);
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        var latlng = new google.maps.LatLng(lat, lng);
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'latLng': latlng}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[1]) {
+                  var location = results[1].formatted_address;
+                $('#current_address').html(location);
+                $('#location').val(location);
+              } else {
+                $('#current_address').html(" an environment with no location service");
+              }
+            } else {
+              alert('Geocoder failed due to: ' + status);
+            }
+      });
+
+        $('#user_latitude').val(lat);
+        $('#user_longitude').val(lng);
+        
     }
 }
 

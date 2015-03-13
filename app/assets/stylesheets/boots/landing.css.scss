@@ -38,7 +38,7 @@ $inverse-color: #ffffff;
     display: none;
   }
 
-  #cambiu nav.navbar-inverse {
+  #cambiu #landing_page nav.navbar-inverse {
     background: none;
     border: none;
   
@@ -50,7 +50,7 @@ $inverse-color: #ffffff;
       font-weight: 800;
       }    
     }
-    a:not(#comp_name) {
+    #landing_page a:not(#comp_name) {
      color: $inverse-color;
      text-shadow: 0 0.5px 0px #000000;  
      font-size: 1em;  
@@ -84,7 +84,7 @@ $inverse-color: #ffffff;
     font-size: 1em;
   }
 
-  #cambiu nav.navbar-inverse {
+  #cambiu #landing_page nav.navbar-inverse {
       .in {
         background: rgba(54, 25, 25, 0.2);
         color: $basic-color;
@@ -243,9 +243,9 @@ body#cambiu {
     height: 100px;
 }
 
-#cambiu .page-title {
+#cambiu #landing_page .page-title {
     font-family: "Giorgio";
-    color: $brand-color;
+    color: $inverse-color;
     font-size: 2em;
 }
 
@@ -344,7 +344,7 @@ body#cambiu, #cambiu h2 {
     position: relative;
     top: 24px;
 }
-#cambiu select {
+#cambiu #landing_page select {
     color: #888;
     text-align: -webkit-center;
     text-align: center;

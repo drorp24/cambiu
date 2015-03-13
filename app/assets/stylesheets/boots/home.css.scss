@@ -13,12 +13,23 @@ $top-offset: -223px;
 $std-margin: 20px;
 
 @media (min-width: 601px){
-  #cambiu {    
-    nav.navbar-inverse .navbar-header {
+  body#cambiu {    
+    padding-left: 0;
+    padding-right: 0;
+    nav.navbar-inverse  {
       #comp_name {
-        font-size: 3.5em;
+        font-family: "Giorgio";
+        font-size: 2.5em;
         text-shadow: $mild-shadow;
         margin-left: 20%;
+        color: $brand-color;
+      }
+      #cambiu_menu .nav > li > a {
+        color: $ab-color;
+        font-size: 1em;
+        &:hover {
+          color: $brand-color;
+        }
       }
     }
     #home_a {      
@@ -58,10 +69,13 @@ $std-margin: 20px;
             font-size: 1.5em;
             margin-top: 15px;
           }
+          #message_bottom {
+            margin-top: $std-margin;
+          }
         }
         #home_form {
           padding-top: 15px;
-          input, select, #search_div, button {
+          input, select, #search_div, button, #location {
             width: 100%;
             height: $input-height;
             margin-bottom: 20px;
@@ -76,6 +90,17 @@ $std-margin: 20px;
               font-size: 3em;
               height: $input-height;
               text-shadow: $crisp-shadow;
+          }
+          #location {
+            font-size: 1em;
+          }
+          #location_link {
+            margin-left: 10px;
+            text-decoration: underline;
+            color: $inverse-color;
+            &:hover {
+              color: $brand-color;
+            }
           }
         }
       }
@@ -137,24 +162,40 @@ $std-margin: 20px;
 }
 
 @media (max-width: 600px) {
-  #cambiu {
+  body#cambiu {
+      padding-left: 0;
+      padding-right: 0;
+     #video_background {
+        display: none;
+      }             
+      nav.navbar-inverse {
+        #comp_name {
+        font-family: "Giorgio";
+        font-size: 1.5em;
+        text-shadow: $mild-shadow;
+        margin-left: 5%;
+        color: $brand-color;
+        }
+        #cambiu_menu {          
+          background:rgba(0,0,0,0.7);
+          .nav > li > a {
+            color: $inverse-color;
+            font-size: 0.8em;
+            font-weight: 600;
+            &:hover {
+              color: $brand-color;
+            }
+          }
+        }
+      }
+      #home_a {
         background-image: image-url('bgm1.jpg');
         background-repeat:  no-repeat;
         background-position-x:  center;
         background-position-y:  center;
         background-size: cover;
-      #video_background {
-        display: none;
-      }             
-      nav.navbar-inverse .navbar-header {
-        #comp_name {
-          font-size: 1.5em;
-          text-shadow: $crisp-shadow;
-        }
-      }
-      #home_a {
-        #home_container {
-          margin-top: 15vh;          
+         #home_container {
+          margin-top: 10vh;          
           color: $inverse-color;
           #home_message {
             text-shadow: $hallow-shadow;
@@ -167,6 +208,9 @@ $std-margin: 20px;
               font-size: 1em;
               margin-top: 15px;
               margin-bottom: 20px;
+            }
+            #message_bottom {
+              margin-top: $std-margin;
             }
           }
           #home_form {
@@ -187,8 +231,74 @@ $std-margin: 20px;
               line-height: $input-height;
               text-shadow: $hallow-shadow;
             }
+          #location_text {
+            font-size: 1em;
+            font-weight: 600;
+          }
+          #location_link {
+            margin-left: 10px;
+            color: $inverse-color;
+            text-decoration: underline;
+            font-weight: 600;
+            &:hover {
+              color: $brand-color;
+            }
+          }
+          #location_input {
+            margin-top: $std-margin;
           }
         }
+        }
       }
+    #home_b {
+      background-color: #edefed;
+      .row {
+        margin-top: $std-margin;
+      }
+      #b_title {
+        font-size: 2em;
+        color: $ab_color;
+        font-weight: 600;
+        margin: $std-margin * 2;
+      }
+      #b_features {
+        i {
+          font-size: 5em;
+        }
+      }
+      .feature_title {
+        font-size: 1.5em;
+        font-weight: 600;
+        margin-top: $std-margin;
+      }      
+      .feature_description {
+        font-size: 1em;
+        font-weight: 100;
+        margin-top: $std-margin;
+        color: #888888;
+        padding-bottom: $std-margin * 5;
+      }
+    }
+    #home_c {
+      background-color: #ffffff;
+      #c_chains {
+        font-size: 2em;
+        color: $ab_color;
+        font-weight: 600;
+        margin: $std-margin * 2;        
+      }
+     .row {
+        margin-top: $std-margin;
+        img {
+          height: 90px;
+        }
+        img#coventgarden {
+          height: 160px;
+          position: relative;
+          top: -25px;
+        }
+      }
+    }   
+
   }
 }     
