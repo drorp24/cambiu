@@ -11,6 +11,11 @@ $crisp-shadow: 0px 0px 1px #000000;
 $input-height: 55px;
 $top-offset: -223px;
 $std-margin: 20px;
+$b-bg-color: #edefed;
+$b-bg-color: #ffffff;
+$c-bg-color: #ffffff;
+$footer-bg-color: #353639;
+$footer-color: #7c7d7f;
 
 @media (min-width: 601px){
   body#cambiu {    
@@ -106,7 +111,7 @@ $std-margin: 20px;
       }
     }
     #home_b {
-      background-color: #edefed;
+      background-color: $b-bg-color;
       position: relative;
       top: $top-offset;
       .row {
@@ -137,7 +142,7 @@ $std-margin: 20px;
       }
     }
     #home_c {
-      background-color: #ffffff;
+      background-color: $c-bg-color;
       position: relative;
       top: $top-offset;
       #c_chains {
@@ -156,6 +161,49 @@ $std-margin: 20px;
           position: relative;
           top: -25px;
         }
+      }
+      #social_icons {
+        font-size: 2em;
+        color: #999999;
+        margin-bottom: $std-margin * 2;
+        a {
+          color: #999999;
+          &:hover {
+            color: $brand-color;
+          }
+        }
+      }
+    }
+    #footer {
+      margin-top: $top-offset /2;
+      background-color: $footer-bg-color;
+      color: $footer-color;
+      a {
+        display: block;
+        text-align: center;
+        color: $footer-color;
+        &:first-child {
+          margin-top: $std-margin * 2;
+        }
+        &:hover {
+          color: $brand-color;
+          text-decoration: none;
+        }
+      }
+      cite {
+        font-style: italic;
+      }
+      #quote blockquote {
+       border: none;
+          p {
+            font-size: 1.3em;
+          }
+          footer {
+            font-size: 0.8em;
+          }        
+      }
+       #copyright {
+        margin: $std-margin * 3;
       }
     }   
   }  
@@ -251,15 +299,15 @@ $std-margin: 20px;
         }
       }
     #home_b {
-      background-color: #edefed;
+      background-color: $b-bg-color;
       .row {
         margin-top: $std-margin;
       }
       #b_title {
         font-size: 2em;
         color: $ab_color;
-        font-weight: 600;
-        margin: $std-margin * 2;
+        font-weight: 100;
+        margin: $std-margin ;
       }
       #b_features {
         i {
@@ -280,7 +328,7 @@ $std-margin: 20px;
       }
     }
     #home_c {
-      background-color: #ffffff;
+      background-color: c-bg-color;
       #c_chains {
         font-size: 2em;
         color: $ab_color;
@@ -299,6 +347,9 @@ $std-margin: 20px;
         }
       }
     }   
-
+    #footer {
+      background-color: $footer-bg-color;
+      color: $footer-color;
+    }   
   }
 }     

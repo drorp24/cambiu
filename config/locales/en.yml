@@ -37,9 +37,9 @@ en:
     signin_button: "Book now"
     thanks_title: "Thanks for the interest"
     thanks_text: "We launch soon!"
-    b_title: "Main features"
+    b_title: "Features"
     b_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequaint."
-    c_chains: "Chains"
+    c_chains: ""
   currency_exchange:
     ga_tracking_id: "UA-59245909-3"
     mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
