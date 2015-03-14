@@ -18,6 +18,8 @@ $footer-bg-color: #353639;
 $footer-color: #7c7d7f;
 $brand-lighten-factor: 10%;
 
+html, body { height: 100%; }
+
 @media (min-width: 601px){
   body#cambiu {    
     padding-left: 0;
@@ -211,17 +213,22 @@ $brand-lighten-factor: 10%;
   }  
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   body#cambiu {
     /*
       padding-left: 0;
       padding-right: 0;
       */
-        background-image: image-url('9Noise.jpg');
-        background-repeat:  no-repeat;
-        background-position-x:  center;
-        background-position-y:  center;
+     max-width: 100%;
+     width: 100%;
+     overflow-x: hidden;
+        background: image-url('9Noise.jpg')  no-repeat scroll !important;
+        background-position:  center center;
+        nackground-attachment: fixed;
         background-size: cover;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
      #video_background {
         display: none;
       }             
