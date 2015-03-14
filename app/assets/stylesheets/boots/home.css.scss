@@ -218,7 +218,6 @@ $brand-lighten-factor: 10%;
 
 @media (max-width: 767px) {
   body#cambiu {
-    padding-right: 40px; 
     /*
       padding-left: 0;
       padding-right: 0;
@@ -241,10 +240,9 @@ $brand-lighten-factor: 10%;
         #comp_name {
         font-family: "Giorgio";
         font-size: 1.5em;
-        text-shadow: $mild-shadow;
         margin-left: 5%; 
         color: $brand-color;
-        font-weight: 600;
+        font-weight: 100;
         }
         .navbar-toggle {
           background-color: $brand-color;
@@ -263,6 +261,7 @@ $brand-lighten-factor: 10%;
         }
       }
       #home_a {
+        height: 600px;
          #home_container {
           margin-top: 15vh;          
           color: $inverse-color;
@@ -320,7 +319,6 @@ $brand-lighten-factor: 10%;
       }
     #home_b {
       background-color: $b-bg-color;
-      margin-top: 70px;
       .row {
         margin-top: $std-margin;
       }
