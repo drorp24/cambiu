@@ -224,8 +224,8 @@ $brand-lighten-factor: 10%;
         font-size: 1.5em;
         text-shadow: $mild-shadow;
         margin-left: 5%;
-        color: lighten($brand-color, $brand-lighten-factor);
-        font-weight: 600;
+        color: $brand-color;
+        font-weight: 100;
         }
         #cambiu_menu {          
           background:rgba(0,0,0,0.7);
@@ -247,9 +247,9 @@ $brand-lighten-factor: 10%;
         background-size: cover;
          #home_container {
           margin-top: 10vh;          
-          color: $inverse-color;
+          color: $ab-color;
           #home_message {
-            text-shadow: $hallow-shadow; 
+/*            text-shadow: $hallow-shadow; */ 
             #message_header {
               text-transform: uppercase;
               font-size: 1.5em;
@@ -281,7 +281,7 @@ $brand-lighten-factor: 10%;
             #exchange_symbol i {
               font-size: 2em;
               line-height: $input-height;
-              text-shadow: $hallow-shadow;
+/*              text-shadow: $crisp-shadow; */
             }
           #location_text {
             font-size: 1em;
@@ -289,7 +289,7 @@ $brand-lighten-factor: 10%;
           }
           #location_link {
             margin-left: 10px;
-            color: $inverse-color;
+/*            color: $inverse-color; */
             text-decoration: underline;
             font-weight: 600;
             &:hover {
