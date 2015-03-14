@@ -213,8 +213,15 @@ $brand-lighten-factor: 10%;
 
 @media (max-width: 600px) {
   body#cambiu {
+    /*
       padding-left: 0;
       padding-right: 0;
+      */
+        background-image: image-url('9Noise.jpg');
+        background-repeat:  no-repeat;
+        background-position-x:  center;
+        background-position-y:  center;
+        background-size: cover;
      #video_background {
         display: none;
       }             
@@ -240,11 +247,6 @@ $brand-lighten-factor: 10%;
         }
       }
       #home_a {
-        background-image: image-url('9Noise.jpg');
-        background-repeat:  no-repeat;
-        background-position-x:  center;
-        background-position-y:  center;
-        background-size: cover;
          #home_container {
           margin-top: 10vh;          
           color: $inverse-color;
