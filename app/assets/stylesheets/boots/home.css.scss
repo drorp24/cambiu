@@ -240,19 +240,19 @@ $brand-lighten-factor: 10%;
         }
       }
       #home_a {
-        background-image: image-url('03.jpg');
+        background-image: image-url('9Noise.jpg');
         background-repeat:  no-repeat;
         background-position-x:  center;
         background-position-y:  center;
         background-size: cover;
          #home_container {
           margin-top: 10vh;          
-          color: $ab-color;
+          color: $inverse-color;
           #home_message {
-/*            text-shadow: $hallow-shadow; */ 
+            text-shadow: $crisp-shadow;  
             #message_header {
               text-transform: uppercase;
-              font-size: 1.5em;
+              font-size: 1.4em;
               font-weight: 600;
             }
             #message_remainder {
@@ -285,14 +285,12 @@ $brand-lighten-factor: 10%;
             }
           #location_text {
             font-size: 1em;
-            font-weight: 600;
           }
           #location_link {
             margin-left: 10px;
-/*            color: $inverse-color; */
+            color: $inverse-color; 
             text-decoration: underline;
-            font-weight: 600;
-            &:hover {
+             &:hover {
               color: $brand-color;
             }
           }
