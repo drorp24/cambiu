@@ -16,6 +16,7 @@ $b-bg-color: #ffffff;
 $c-bg-color: #ffffff;
 $footer-bg-color: #353639;
 $footer-color: #7c7d7f;
+$brand-lighten-factor: 10%;
 
 @media (min-width: 601px){
   body#cambiu {    
@@ -24,10 +25,11 @@ $footer-color: #7c7d7f;
     nav.navbar-inverse  {
       #comp_name {
         font-family: "Giorgio";
-        font-size: 2.5em;
+        font-size: 3em;
         text-shadow: $mild-shadow;
         margin-left: 20%;
-        color: $brand-color;
+        color: lighten($brand-color, $brand-lighten-factor);
+        font-weight: 600; 
       }
       #cambiu_menu .nav > li > a {
         color: $ab-color;
@@ -222,7 +224,8 @@ $footer-color: #7c7d7f;
         font-size: 1.5em;
         text-shadow: $mild-shadow;
         margin-left: 5%;
-        color: $brand-color;
+        color: lighten($brand-color, $brand-lighten-factor);
+        font-weight: 600;
         }
         #cambiu_menu {          
           background:rgba(0,0,0,0.7);
@@ -237,7 +240,7 @@ $footer-color: #7c7d7f;
         }
       }
       #home_a {
-        background-image: image-url('bgm1.jpg');
+        background-image: image-url('03.jpg');
         background-repeat:  no-repeat;
         background-position-x:  center;
         background-position-y:  center;
@@ -246,7 +249,7 @@ $footer-color: #7c7d7f;
           margin-top: 10vh;          
           color: $inverse-color;
           #home_message {
-            text-shadow: $hallow-shadow;
+            text-shadow: $hallow-shadow; 
             #message_header {
               text-transform: uppercase;
               font-size: 1.5em;
@@ -254,15 +257,16 @@ $footer-color: #7c7d7f;
             }
             #message_remainder {
               font-size: 1em;
-              margin-top: 15px;
+              margin-top: 5px;
               margin-bottom: 20px;
+              font-weight: 400;
             }
             #message_bottom {
               margin-top: $std-margin;
             }
           }
           #home_form {
-            margin-top: 15vh;
+            margin-top: 10vh;
             input, select, #search_div, button {
               width: 100%;
               height: $input-height;

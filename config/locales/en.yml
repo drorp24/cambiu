@@ -30,7 +30,7 @@ en:
     ga_tracking_id: "UA-59245909-3"
     mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
     title: "Cambiu homepage marketing title"
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
     search_button: "Exchange"
     offer_prefix: "We offer "
     gain: "Your gain: "
