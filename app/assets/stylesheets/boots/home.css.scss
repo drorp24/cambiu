@@ -18,8 +18,6 @@ $footer-bg-color: #353639;
 $footer-color: #7c7d7f;
 $brand-lighten-factor: 10%;
 
-html, body { height: 100%; }
-
 @media (min-width: 768px){
   body#cambiu {    
     padding-left: 0;
@@ -223,14 +221,14 @@ html, body { height: 100%; }
      max-width: 100%;
      width: 100%;
      */
-     overflow-x: hidden;
+     overflow-x: hidden; 
         background: image-url('9Noise.jpg')  no-repeat scroll !important;
         background-position:  center center;
         background-attachment: fixed;
-        background-size: cover;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
+        background-size: cover;
      #video_background {
         display: none;
       }             
