@@ -122,8 +122,8 @@ $brand-lighten-factor: 10%;
       #b_title {
         font-size: 2em;
         color: $ab_color;
-        font-weight: 600;
-        margin: $std-margin * 2;
+        font-weight: 100;
+        margin-top: $std-margin * 2;
       }
       #b_features {
         i {
@@ -156,12 +156,13 @@ $brand-lighten-factor: 10%;
      .row {
         margin-top: $std-margin;
         img {
-          height: 90px;
+          height: 60px;
+          margin-bottom: 30px;
         }
         img#coventgarden {
           height: 160px;
           position: relative;
-          top: -25px;
+          top: -35px;
         }
       }
       #social_icons {
@@ -180,6 +181,9 @@ $brand-lighten-factor: 10%;
       margin-top: $top-offset /2;
       background-color: $footer-bg-color;
       color: $footer-color;
+      #testimonial {
+        padding-top: $std-margin * 2;
+      }
       a {
         display: block;
         text-align: center;
@@ -239,7 +243,10 @@ $brand-lighten-factor: 10%;
         text-shadow: $mild-shadow;
         margin-left: 5%;
         color: $brand-color;
-        font-weight: 100;
+        font-weight: 600;
+        }
+        .navbar-toggle {
+          background-color: $brand-color;
         }
         #cambiu_menu {          
           background:rgba(0,0,0,0.7);
@@ -247,6 +254,7 @@ $brand-lighten-factor: 10%;
             color: $inverse-color;
             font-size: 1em;
             font-weight: 600;
+            text-align: center;
             &:hover {
               color: $brand-color;
             }
@@ -275,7 +283,7 @@ $brand-lighten-factor: 10%;
             }
           }
           #home_form {
-            margin-top: 10vh;
+            margin-top: 5vh;
             input, select, #search_div, button {
               width: 100%;
               height: $input-height;
@@ -311,6 +319,7 @@ $brand-lighten-factor: 10%;
       }
     #home_b {
       background-color: $b-bg-color;
+      margin-top: 70px;
       .row {
         margin-top: $std-margin;
       }
@@ -373,6 +382,11 @@ $brand-lighten-factor: 10%;
     #footer {
       background-color: $footer-bg-color;
       color: $footer-color;
+      margin-left: -20px;
+      margin-right: -20px;
+      #testimonial {
+        padding-top: $std-margin;
+      }
       a {
         display: block;
         text-align: center;
