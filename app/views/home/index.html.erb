@@ -231,6 +231,7 @@ $(document).ready(function() {
 		mixpanel.track('Checking rates');
 	})
 
+/*
 	$('#search_button').click(function() {
 		ga('send', 'event', 'button', 'click', 'Clicking search');
 		mixpanel.track("Search button");
@@ -238,6 +239,7 @@ $(document).ready(function() {
 		var pay_cents =    $('#user_pay_amount').val().replace(',', '').replace('.', '');
 		var pay_currency = $('#user_pay_currency').val();
 		var buy_currency = $('#user_buy_currency').val();
+
 
 		$.get('/currencies/exchange', {
 			pay_cents: pay_cents,
@@ -255,7 +257,7 @@ $(document).ready(function() {
 			}
 		})
 	});
-
+*/
 	$('#email_button').click(function() {
 		ga('send', 'event', 'button', 'click', 'Leaving email');
 		mixpanel.track("Email button");
