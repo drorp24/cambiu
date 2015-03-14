@@ -219,12 +219,14 @@ html, body { height: 100%; }
       padding-left: 0;
       padding-right: 0;
       */
+     /*
      max-width: 100%;
      width: 100%;
+     */
      overflow-x: hidden;
         background: image-url('9Noise.jpg')  no-repeat scroll !important;
         background-position:  center center;
-        nackground-attachment: fixed;
+        background-attachment: fixed;
         background-size: cover;
         -webkit-background-size: cover;
         -moz-background-size: cover;
@@ -245,7 +247,7 @@ html, body { height: 100%; }
           background:rgba(0,0,0,0.7);
           .nav > li > a {
             color: $inverse-color;
-            font-size: 0.8em;
+            font-size: 1em;
             font-weight: 600;
             &:hover {
               color: $brand-color;
