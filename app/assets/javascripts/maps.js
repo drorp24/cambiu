@@ -1,3 +1,8 @@
+// global variables can be used anytime in the page
+var lat;
+var lng;
+var place;
+
 function getLocation() {
 
     var latitude;
@@ -16,16 +21,21 @@ function getLocation() {
     }
     
     function displayPosition(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
+        lat = position.coords.latitude;
+        lng = position.coords.longitude;
         var latlng = new google.maps.LatLng(lat, lng);
         geocoder = new google.maps.Geocoder();
         geocoder.geocode({'latLng': latlng}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               if (results[1]) {
-                  var location = results[1].formatted_address;
-                $('#current_address').html(location);
-                $('#location').val(location);
+                place = results[1].formatted_address;
+                mixpanel.register({
+                    "lat": lat,
+                    "lng": lng,
+                    "location": place 
+                });
+                $('#current_address').html(place);
+                $('#location').val(place);
               } else {
                 $('#current_address').html(" an environment with no location service");
               }
