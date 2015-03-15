@@ -14,7 +14,8 @@
 				<form id="new_user" method="post" action="/users" class="form-inline">
 					<div class="row">
 					  	<div class="form-group col-md-5 col-xs-5">
-							<select id="user_pay_currency" name="user[pay_currency]" class="select optional text-center form-control">
+							<select id="user_pay_currency" name="user[pay_currency]" class="select optional text-center form-control"
+							 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
 								<option value="GBP" selected="selected">GBP</option>
 								<option value="EUR">EUR</option>
 								<option value="USD">USD</option>
@@ -27,7 +28,8 @@
 							<i class="fa fa-hand-o-right"></i>
 						</div>
 					  	<div id="the-basics" class="form-group col-md-5 col-xs-5">
-							<select id="user_buy_currency" name="user[buy_currency]" class="select optional text-center form-control">
+							<select id="user_buy_currency" name="user[buy_currency]" class="select optional text-center form-control"
+							 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="foreign" data-key3="currency">
 								<option value="USD" selected="selected">USD</option>
 								<option value="EUR">EUR</option>
 								<option value="GBP">GBP</option>
@@ -39,7 +41,8 @@
 				  	</div>
 				  	<div class="row">
 						<div class="form-group col-md-12 col-xs-12">
-							<input type="text" pattern="\d*" id="user_pay_amount" data-autonumeric="true" name="user[pay_amount]" class="form-control" placeholder="placeholder" value="1001">
+							<input type="text" pattern="\d*" id="user_pay_amount" data-autonumeric="true" name="user[pay_amount]" class="form-control" placeholder="placeholder" value="1001"
+							 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
 					  	</div>
 				  	</div>
 				  	<div class="row">
@@ -57,10 +60,11 @@
 								<button id="search_button" class="form-control btn btn-success" type="button"><%= t :search_button, scope: [@landing], default: 'Exchange' %></button>
 							</div>
 							<div id="location_text" class="form-group">
-								You are at <span id="current_address"></span><a href="#" id="location_link">Change location</a>
+								You are at <span id="current_address"></span><a href="#" id="location_link" data-link="Change location">Change location</a>
 							</div>
 							<div id="location_input" class="form-group" style="display: none;">
-								<input type="text" id="location_search" name="location_search" placeholder="look for exchanges in..." class="form-control">
+								<input type="text" id="location_search" name="location_search" placeholder="look for exchanges in..." class="form-control"
+							 	data-analyze="change" data-activity="Search" data-key1="searched" data-val1="location" data-key2="type" data-val2="search" data-key3="location">
 							</div>
 						</div>
 					</div>
@@ -197,83 +201,13 @@ $(document).ready(function() {
 	$('#user_pay_amount_val, #user_pay_amount').val("1,000.00");
 	
 
-	// hide address bar - not working
-	window.addEventListener("load",function() {
-	// Set a timeout...
-	setTimeout(function(){
-		// Hide the address bar!
-		window.scrollTo(0, 1);
-	}, 0);
-	});
-
-
 	// Get user location and store in gloval vars and hidden form fields
 	getLocation();
-
-	// rails' jquery_ujs remote by hand
-	$('#new_user').submit(function() {  
-	    var valuesToSubmit = $(this).serialize();
-	    $.ajax({
-	        type: "POST",
-	        url: $(this).attr('action'), 
-	        data: valuesToSubmit,
-	        dataType: "JSON",
-	    }).success(function(json){
-	        //act on result.
-	    });
-	    return false; // prevents normal behaviour
-	});
-
-	// Analyses
-	$('#user_pay_currency').change(function() {
-		var val = $(this).val();
-		ga('send', 'event', 'Search', 'currency', 'local', val);
-		mixpanel.track('Search', {
-			'searched': 'currency',
-			'type': 'local',
-			'currency': val
-		});
-	})
-
-	$('#user_buy_currency').change(function() {
-		var val = $(this).val();
-		ga('send', 'event', 'Search', 'currency', 'foreign', val);
-		mixpanel.track('Search', {
-			'searched': 'currency',
-			'type': 'foreign',
-			'currency': val
-		});
-	})
-
-	$('#user_pay_amount').change(function() {
-		var val = $(this).val();
-		ga('send', 'event', 'Search', 'amount', 'local', val);
-		mixpanel.track('Search', {
-			'searched': 'amount',
-			'type': 'local',
-			'amount': val
-		});
-	})
 
 	$('#location_link').click(function() {
 		$('#location_text').css('display', 'none');
 		$('#location_input').css('display', 'block');
 		$('#location_search').focus();
-		ga('send', 'event', 'Search', 'location', 'change');
-		mixpanel.track('Search', {
-			'searched': 'location',
-			'type': 'change'
-		});
-	})
-
-	$('#location_search').change(function() {
-		var val = $(this).val();
-		ga('send', 'event', 'Search', 'location', 'search', val);
-		mixpanel.track('Search', {
-			'searched': 'location',
-			'type': 'search',
-			'location': val
-		});
 	})
 
 
