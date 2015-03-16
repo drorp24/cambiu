@@ -52,5 +52,9 @@ class Currency
    end 
    hash
   end
+  
+  def self.display(money)
+    ActionController::Base.helpers.humanized_money_with_symbol(money)
+  end
 
 end

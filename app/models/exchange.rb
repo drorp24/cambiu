@@ -13,21 +13,54 @@ class Exchange < ActiveRecord::Base
     rates.any? ? rates : (chain ? chain.rates : nil)
   end
   
+  def self.search(params)
+ 
+    latitude =      params[:latitude] 
+    longitude =     params[:longitude] 
+    bbox =          params[:bbox]    
+    pay_currency =  params[:pay_currency]
+    buy_currency =  params[:buy_currency]
+    pay_amount =    params[:pay_amount].remove(",")
+     
+    @exchange_quotes = []
+    exchanges = Exchange.includes(:business_hours).where(city: "London")           # ToDo: change to filter by lat/long and bbox
+    exchanges.each do |exchange|       
+      exchange_quote = {}
+      exchange_quote[:id] = exchange.id
+      exchange_quote[:name] = exchange.name
+      exchange_quote[:address] = exchange.address
+      exchange_quote[:open_today] = exchange.open_today
+      exchange_quote[:latitude] = exchange.latitude
+      exchange_quote[:longitude] = exchange.longitude   
+      exchange_quote[:quote] = nil
+      if pay_currency and buy_currency and pay_amount      
+        if quote = exchange.quote(pay_currency, buy_currency, pay_amount)
+          quote = quote.fractional / 100
+          exchange_quote[:quote] = quote
+          exchange_quote[:edited_quote] = Currency.display(quote)
+        end
+      end
+      @exchange_quotes << exchange_quote
+    end
+    
+    @exchange_quotes.sort_by{|e| e[:quote] || 1000000}
 
-  def quote(buy_amount, buy_currency, pay_currency)
+  end
+
+  def quote(pay_currency, buy_currency, pay_amount)
     return nil unless rates
     return nil unless 
-      (rate = rates.where(buy_currency: buy_currency, pay_currency: pay_currency).first) or
+      (rate = rates.where(pay_currency: pay_currency, buy_currency: buy_currency).first) or
       (rev_rate = rates.where(buy_currency: pay_currency, pay_currency: buy_currency).first) 
     if rate
       return nil unless rate.pay_cents.present? and rate.buy_cents.present?
-      pay_cents = buy_amount.to_i * 100 * (rate.pay_cents.to_f / rate.buy_cents.to_f)
+      buy_cents = pay_amount.to_i * 100 * (rate.buy_cents.to_f / rate.pay_cents.to_f)
     end
     if rev_rate
       return nil unless rev_rate.pay_cents.present? and rev_rate.buy_cents.present?      
-      pay_cents = buy_amount.to_i * 100 * (rev_rate.buy_cents.to_f / rev_rate.pay_cents.to_f)
+      buy_cents = pay_amount.to_i * 100 * (rev_rate.pay_cents.to_f / rev_rate.buy_cents.to_f)  #TODO: Introduce buy vs sell rates
     end
-    Money.new(pay_cents, pay_currency)
+    Money.new(buy_cents, buy_currency)
   end
 
   def update_csv_business_hours(csv_busines_hours, day)

@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   
   def set_landing
     @landing = request.original_fullpath.remove("/")
-    @landing = "app" if @landing.blank?
+    @landing = "app" unless ["save_money", "best_rates", "currency_exchange"].include? @landing 
   end
 
   def find_guest_user

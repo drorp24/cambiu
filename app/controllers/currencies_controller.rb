@@ -16,7 +16,7 @@ class CurrenciesController < ApplicationController
   private
   
   def edited(money)
-    ActionController::Base.helpers.humanized_money_with_symbol(money).to_json
+    Currency.display(money).to_json
   end
 
   def set_currency

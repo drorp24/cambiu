@@ -152,7 +152,7 @@ $brand-lighten-factor: 10%;
         font-size: 2em;
         color: $ab_color;
         font-weight: 600;
-        margin: $std-margin * 2;        
+        margin: ($std-margin * 2), 0;         
       }
      .row {
         margin-top: $std-margin;

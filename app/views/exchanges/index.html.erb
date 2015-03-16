@@ -14,9 +14,9 @@ $('.exchange_details').collapse('hide')
 		var latitude =		getParameterByName('latitude') || 51.507351
 		var longitude =		getParameterByName('longitude') || -0.127758
 		var bbox =			getParameterByName('bbox')
-		var buy_amount = 	getParameterByName('buy_amount')
-		var buy_currency = 	getParameterByName('buy_currency')
-		var pay_currency =	getParameterByName('pay_currency')
+		var pay_currency = 	getParameterByName('buy_currency')
+		var buy_currency =	getParameterByName('pay_currency')
+		var pay_amount = 	getParameterByName('pay_amount')
 
 		var mapOptions = {
 	      center: new google.maps.LatLng(latitude, longitude),
@@ -26,26 +26,24 @@ $('.exchange_details').collapse('hide')
 		map = new google.maps.Map(document.getElementById('map-canvas'),
           	mapOptions);
 
-      	search(latitude, longitude, bbox, buy_amount, buy_currency, pay_currency); 	
+      	search(latitude, longitude, bbox, buy_currency, pay_currency, pay_amount); 	
 	}
   
-
-	function search(latitude, longitude, bbox, buy_amount, buy_currency, pay_currency) {
+	function search(latitude, longitude, bbox, pay_currency, buy_currency, pay_amount) {
 		$.get(
 		'/exchanges/search', {
 			latitude:		latitude,
 			longitude:		longitude,
 			bbox:			bbox,
-			buy_amount: 	buy_amount,
+			pay_currency:	pay_currency,
 			buy_currency: 	buy_currency,
-			pay_currency:	pay_currency
+			pay_amount: 	pay_amount
 		})
 		.done(function(exchanges) {
 			updateMarkers(exchanges)
 			updateExchanges(exchanges)
 		})		
 	}	
-
 
   	function updateMarkers(exchanges) {
 	  clearMarkers();
@@ -107,7 +105,12 @@ $('.exchange_details').collapse('hide')
 	}
 	
 	
-
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
 	 
  	google.maps.event.addDomListener(window, 'load', initialize);
 
