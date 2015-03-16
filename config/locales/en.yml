@@ -25,8 +25,8 @@ en:
       ga_tracking_id: "UA-60776239-1"
       mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
     staging:
-      ga_tracking_id: "UA-60776239-1"
-      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+      ga_tracking_id: "UA-60801249-1"
+      mixpanel_token: "6fc206a566429d259ecacbc1d0311db6"
     production:
       ga_tracking_id: "UA-60758089-1"
       mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
