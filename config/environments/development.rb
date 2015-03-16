@@ -39,5 +39,4 @@ Rails.application.configure do
   
   config.fb_app_id = '1553546578234138'
   config.fb_app_secret = '90ce76e38c01f6a7eae41c6f37a1bb9a' 
-  config.bg_img = "https://d2zc23renulrga.cloudfront.net/assets/41254/izzg1ykwb9tmf2c7932d/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg"
 end

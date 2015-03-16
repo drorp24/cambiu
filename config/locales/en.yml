@@ -20,19 +20,16 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  development:
-    ga_tracking_id: "UA-60776239-1"
-  staging:
-    ga_tracking_id: "UA-60776239-1"
-  start_free:
-    ga_tracking_id: "UA-60617930-1"
-  bestdeals:
-    ga_tracking_id: "UA-60617243-1"
   app:
-    ga_tracking_id: "UA-59245909-1"    
-  home:
-    ga_tracking_id: "UA-59245909-3"
-    mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    development:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    staging:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    production:
+      ga_tracking_id: "UA-60758089-1"
+      mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
     title: "Cambiu homepage marketing title"
     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
     search_button: "Exchange"
@@ -44,20 +41,16 @@ en:
     b_title: "Features"
     b_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequaint."
     c_chains: ""
-  currency_exchange:
-    ga_tracking_id: "UA-59245909-1"
-    mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
-    title: "Find the best exchange deals near you"
-    text: "Save on high commission fees with a few simple clicks. Anytime. Anywhere."
-    search_button: "Exchange"
-    offer_prefix: "We offer "
-    gain: "Your gain: "
-    signin_button: "Book now"
-    thanks_title: "Thanks for the interest"
-    thanks_text: "We launch soon!"
   save_money:
-    ga_tracking_id: "UA-60416557-1"
-    mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
+    development:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    staging:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    production:
+      ga_tracking_id: "UA-60416557-1"
+      mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
     title: "Exchange currency with cambiu"
     text: "Save up to 10% of your money. It's that simple."
     search_button: "Exchange"
@@ -67,8 +60,15 @@ en:
     thanks_title: "Thanks for the interest"
     thanks_text: "We launch soon!"
   best_rates:
-    ga_tracking_id: "UA-60416765-1"
-    mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
+    development:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    staging:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    production:
+      ga_tracking_id: "UA-60416765-1"
+      mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
     title: "Best Exchange Rates in London!"
     text: "Use cambiu to find the best deals around: Secure and hassle free."
     search_button: "Exchange"
@@ -77,4 +77,25 @@ en:
     signin_button: "Book now"
     thanks_title: "Thanks for the interest"
     thanks_text: "We launch soon!"
- 
+  currency_exchange:
+    development:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    staging:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    production:
+      ga_tracking_id: "UA-59245909-1"
+      mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
+    title: "Find the best exchange deals near you"
+    text: "Save on high commission fees with a few simple clicks. Anytime. Anywhere."
+    search_button: "Exchange"
+    offer_prefix: "We offer "
+    gain: "Your gain: "
+    signin_button: "Book now"
+    thanks_title: "Thanks for the interest"
+    thanks_text: "We launch soon!"
+  start_free:
+    ga_tracking_id: "UA-60617930-1"
+  bestdeals:
+    ga_tracking_id: "UA-60617243-1" 
