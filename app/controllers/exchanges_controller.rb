@@ -3,7 +3,7 @@ class ExchangesController < ApplicationController
   def index
   end
   
-  def search
+  def search          # TODO: Caching!!               
     
     @exchanges = Exchange.search(params)   # TODO: Error checking etc
     render json: @exchanges
