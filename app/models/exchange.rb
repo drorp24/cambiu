@@ -8,6 +8,8 @@ class Exchange < ActiveRecord::Base
   belongs_to  :upload
   belongs_to  :admin_user
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
+  
+  geocoded_by :address
 
   def effective_rates
     rates.any? ? rates : (chain ? chain.rates : nil)
@@ -15,15 +17,24 @@ class Exchange < ActiveRecord::Base
   
   def self.search(params)
  
-    latitude =      params[:latitude] 
-    longitude =     params[:longitude] 
-    bbox =          params[:bbox]    
-    pay_currency =  params[:pay_currency]
-    buy_currency =  params[:buy_currency]
-    pay_amount =    Currency.strip(params[:pay_amount])
+    return if params[:pay_currency].blank? or params[:buy_currency].blank? or params[:pay_amount].blank?
+    
+    location_search = params[:location_search]
+    latitude =        params[:latitude] 
+    longitude =       params[:longitude]
+    distance =        params[:distance].present? ? params[:distance] : 20     
+
+    pay_currency =    params[:pay_currency]
+    buy_currency =    params[:buy_currency]
+    pay_amount =      Currency.strip(params[:pay_amount])
+    
+    center = location_search.present? ? [location_search] : ((latitude.present? and longitude.present?) ? [latitude, longitude] : ['London'])  
+  # center = ['London']    # TODO: Force London. This is to first check it can find exchanges by the user's location
+    box = Geocoder::Calculations.bounding_box(center, distance)
+    
      
     @exchange_quotes = []
-    exchanges = Exchange.includes(:business_hours).where(city: "London")           # ToDo: change to filter by lat/long and bbox
+    exchanges = Exchange.geocoded.within_bounding_box(box).includes(:business_hours, :rates)          
     exchanges.each do |exchange|       
       exchange_quote = {}
       exchange_quote[:id] = exchange.id
@@ -31,7 +42,9 @@ class Exchange < ActiveRecord::Base
       exchange_quote[:address] = exchange.address
       exchange_quote[:open_today] = exchange.open_today
       exchange_quote[:latitude] = exchange.latitude
-      exchange_quote[:longitude] = exchange.longitude   
+      exchange_quote[:longitude] = exchange.longitude 
+      exchange_quote[:distance] = exchange.distance_from(center)  
+      exchange_quote[:bearing] = Geocoder::Calculations.compass_point(exchange.bearing_from(center))  
       exchange_quote[:quote] = nil
       if pay_currency and buy_currency and pay_amount      
         if quote = exchange.quote(pay_currency, buy_currency, pay_amount)

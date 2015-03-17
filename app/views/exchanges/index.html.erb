@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 		var latitude =		getParameterByName('latitude') || 51.507351
 		var longitude =		getParameterByName('longitude') || -0.127758
-		var bbox =			getParameterByName('bbox')
+		var distance =		getParameterByName('distance')
 		var pay_currency = 	getParameterByName('buy_currency')
 		var buy_currency =	getParameterByName('pay_currency')
 		var pay_amount = 	getParameterByName('pay_amount')
@@ -29,7 +29,7 @@ $(document).ready(function() {
       	search(latitude, longitude, bbox, buy_currency, pay_currency, pay_amount); 	
 	}
   
-	function search(latitude, longitude, bbox, pay_currency, buy_currency, pay_amount) {
+	function search(latitude, longitude, distance, pay_currency, buy_currency, pay_amount) {
 		$.get(
 		'/exchanges/search', {
 			latitude:		latitude,
