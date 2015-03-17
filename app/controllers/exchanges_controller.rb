@@ -5,8 +5,8 @@ class ExchangesController < ApplicationController
   
   def search          # TODO: Caching!!               
     
-    @exchanges = Exchange.search(params)   # TODO: Error checking etc
-    render json: @exchanges
+#    @exchanges = Exchange.search(params)   # TODO: Error checking etc
+#    render json: @exchanges
 
   end
 
