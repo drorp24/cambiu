@@ -99,6 +99,36 @@ $brand-lighten-factor: 10%;
               height: $input-height;
               text-shadow: $crisp-shadow;
           }
+          #pay_amount_help {
+            position: absolute;
+            height: $input-height;
+            width: 20%;
+            #pay_amount_text {
+              display: table-cell;
+              vertical-align: middle;
+              text-align: center;
+              color: #999999;
+              height: $input-height;
+            }
+          }
+          #pay_amount_icon {
+            position: absolute;
+            top: 0;
+            right: 15px;
+            height: $input-height;
+            width: 20%;
+            #pay_amount_img {
+              display: table-cell;
+              vertical-align: middle;
+              text-align: center;
+              color: #999999;
+              height: $input-height;
+              width: 10%;
+              i {
+                text-align: center;
+              }
+            }
+          }
           #location {
             font-size: 1em;
           }
@@ -299,6 +329,12 @@ $brand-lighten-factor: 10%;
               font-size: 2em;
               line-height: $input-height-mobile;
 /*              text-shadow: $crisp-shadow; */
+            }
+            #pay_amount_help {
+              display: none;
+            }
+            #pay_amount_icon {
+              display: none;
             }
           #location_text {
             font-size: 1em;

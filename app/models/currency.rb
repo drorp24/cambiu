@@ -54,7 +54,11 @@ class Currency
   end
   
   def self.display(money)
-    ActionController::Base.helpers.humanized_money_with_symbol(money)
+    money.present? ? ActionController::Base.helpers.humanized_money_with_symbol(money) : "N/A"
+  end
+  
+  def self.strip(display_amount)
+    display_amount.rpartition(" ")[2].remove(",")
   end
 
 end

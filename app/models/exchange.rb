@@ -20,7 +20,7 @@ class Exchange < ActiveRecord::Base
     bbox =          params[:bbox]    
     pay_currency =  params[:pay_currency]
     buy_currency =  params[:buy_currency]
-    pay_amount =    params[:pay_amount].remove(",")
+    pay_amount =    Currency.strip(params[:pay_amount])
      
     @exchange_quotes = []
     exchanges = Exchange.includes(:business_hours).where(city: "London")           # ToDo: change to filter by lat/long and bbox

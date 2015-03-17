@@ -16,12 +16,12 @@
 					  	<div class="form-group col-md-5 col-xs-5">
 							<select id="pay_currency" name="pay_currency" class="select optional text-center form-control"
 							 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
-								<option value="GBP" selected="selected">GBP</option>
-								<option value="EUR">EUR</option>
-								<option value="USD">USD</option>
-								<option value="AUD">AUD</option>
-								<option value="CAD">CAD</option>
-								<option value="JPY">JPY</option>
+								<option data-symbol="￡ " value="GBP" selected="selected">GBP</option>
+								<option data-symbol="€ " value="EUR">EUR</option>
+								<option data-symbol="$ " value="USD">USD</option>
+								<option data-symbol="$ " value="AUD">AUD</option>
+								<option data-symbol="$ " value="CAD">CAD</option>
+								<option data-symbol="￥ " value="JPY">JPY</option>
 							</select>
 						</div>
 						<div id="exchange_symbol" class="col-md-2 col-xs-2">
@@ -41,8 +41,14 @@
 				  	</div>
 				  	<div class="row">
 						<div class="form-group col-md-12 col-xs-12">
+							<div id="pay_amount_help">
+								<div id="pay_amount_text">I want to change</div>
+							</div>
 							<input type="text" pattern="\d*" id="pay_amount" data-autonumeric="true" name="pay_amount" class="form-control" placeholder="placeholder" value="1001"
 							 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
+							<div id="pay_amount_icon">
+								<div id="pay_amount_img"><i class="fa fa-pencil"></i></div>
+							</div>
 					  	</div>
 				  	</div>
 				  	<div class="row">
@@ -196,6 +202,18 @@
 <script>
 $(document).ready(function() {
 	
+
+	// Form initial curr symbold and amount
+	set_pay_symbol();
+
+	$('#pay_currency').change(function() {
+		set_pay_symbol();
+	})
+	
+	function set_pay_symbol() {
+		$('#pay_amount').autoNumeric('update', {aSign: $('#pay_currency').find('option:selected').attr('data-symbol')}); 
+	}
+
 	$('#user_pay_amount_val, #user_pay_amount').val("1,000.00");
 	
 
@@ -207,6 +225,7 @@ $(document).ready(function() {
 		$('#location_input').css('display', 'block');
 		$('#location_search').focus();
 	})
+	
 
 
 })
