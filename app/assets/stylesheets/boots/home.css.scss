@@ -256,6 +256,11 @@ $brand-lighten-factor: 10%;
           padding: 15px 9px;
           margin-top: 5px;
         }
+        .list-group-item:hover {
+          background-color: #f5f5f5;
+          color: #555;
+          text-decoration: none;
+        }
      }
       #map_container {
         height: 200vh;
