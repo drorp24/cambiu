@@ -242,6 +242,28 @@ $brand-lighten-factor: 10%;
        #copyright {
         margin: $std-margin * 3;
       }
+    }
+    #exchanges_page {
+      margin-top: 60px;
+      #exchanges_list {
+        position: absolute; 
+        left: 5%;
+        top: 25vh;
+        width: 35%; 
+        z-index: 1000;
+        .badge.price {
+          border-radius: 95px;
+          padding: 15px 9px;
+          margin-top: 5px;
+        }
+     }
+      #map_container {
+        height: 200vh;
+        z-index: -1;
+        position: fixed;
+        right: 0;
+        width: 100%;
+      }
     }   
   }  
 }
