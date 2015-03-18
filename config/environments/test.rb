@@ -12,7 +12,7 @@ Rails.application.configure do
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
-  config.action_controller.perform_caching = true
+  config.action_controller.perform_caching = false
   config.static_cache_control = "public, max-age=31536000"   # not passed to Cloudfront
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
@@ -60,7 +60,7 @@ Rails.application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"
-  config.action_controller.asset_host = "http://d1ceq0a364c7fg.cloudfront.net"
+  config.action_controller.asset_host = "cdn.cambiu.com"
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -82,7 +82,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
     
-  config.action_mailer.default_url_options = { host: 'staging.cambiu.com' }
+  config.action_mailer.default_url_options = { host: 'testing.cambiu.com' }
   
   config.fb_app_id = '376989465817901'
   config.fb_app_secret = 'a29bf9274ee952ba90a09f2354f871b2' 
