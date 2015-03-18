@@ -246,10 +246,6 @@ $brand-lighten-factor: 10%;
     #exchanges_page {
       margin-top: 60px;
       #exchanges_list {
-        position: absolute; 
-        left: 5%;
-        top: 25vh;
-        width: 35%; 
         z-index: 1000;
         .badge.price {
           border-radius: 95px;
@@ -267,30 +263,22 @@ $brand-lighten-factor: 10%;
       #map_container {
         height: 200vh;
         z-index: -1;
-/*        position: fixed; */ 
-        right: 0;
-        width: 100%;
-      }
+        position: fixed; 
+        top: -60px;
+        padding: 0;  
+       }
     }   
   }  
 }
 
 @media (max-width: 767px) {
   body#cambiu {
-    /*
-      padding-left: 0;
-      padding-right: 0;
-      */
-     /*
-     max-width: 100%;
-     width: 100%;
-     */
-        background: image-url('9Noise.jpg')  no-repeat scroll !important;
-        background-position:  center center;
-        background-attachment: fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
+    background: image-url('9Noise.jpg')  no-repeat scroll !important;
+    background-position:  center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
         background-size: cover;
      #video_background {
         display: none;
