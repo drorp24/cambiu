@@ -8,8 +8,10 @@ $(document).ready(function() {
 	var map;
 	var markers = [];
 	var exchanges = [];
+	var service = new google.maps.places.PlacesService(map);
 
  	function initialize() {
+
 
 		var latitude =		getParameterByName('latitude') || 51.507351
 		var longitude =		getParameterByName('longitude') || -0.127758
@@ -26,7 +28,7 @@ $(document).ready(function() {
 		map = new google.maps.Map(document.getElementById('map-canvas'),
           	mapOptions);
 
-      	search(latitude, longitude, bbox, buy_currency, pay_currency, pay_amount); 	
+      	search(latitude, longitude, distance, buy_currency, pay_currency, pay_amount); 	
 	}
   
 	function search(latitude, longitude, distance, pay_currency, buy_currency, pay_amount) {
@@ -34,7 +36,7 @@ $(document).ready(function() {
 		'/exchanges/search', {
 			latitude:		latitude,
 			longitude:		longitude,
-			bbox:			bbox,
+			distance:		distance,
 			pay_currency:	pay_currency,
 			buy_currency: 	buy_currency,
 			pay_amount: 	pay_amount
@@ -89,13 +91,45 @@ $(document).ready(function() {
 	}
 	
 	function addExchange(exchange, index) {
-		var exchange_el = $('.exchange_' + String(index));
+		exchange_el = $('.exchange_' + String(index));
 		exchange_el.find('.badge').html(exchange.edited_quote);
 		exchange_el.find('.name').html(exchange.name);
 		exchange_el.find('.address').html(exchange.address);
 		exchange_el.find('.open_today').html(exchange.open_today);
+		console.log('before');		
+		place_photo(exchange);
 		exchange_el.css('visibility', 'visible');
 		exchange_el.show();
+	}
+	
+	function place_photo(exchange) {
+		var request = {query: exchange.name + ' ' + exchange.address};
+		
+		service.textSearch(request, gp_ts_callback);
+		
+		function gp_ts_callback(results, status) {
+			console.log('gp_ts_callback');
+			if (status == google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+		    		      
+			    var place = results[0];
+			    var place_id = place.place_id
+			    console.log("place_id: " + place_id)
+			      
+			    var request = {placeId: place_id};
+			    service.getDetails(request, gp_pd_callback);
+			      
+		    	function gp_pd_callback(place, status) {
+		    		console.log('gp_pd_callback');
+				  	if (status == google.maps.places.PlacesServiceStatus.OK) {
+					    if (place.photos.length > 0) {
+					    	photo_url = place.photos[0].getUrl();
+					    	console.log("photo_url: " + photo_url);
+					    	
+					  	}
+				   	}		    
+		  		}
+			}
+		}
 	}
 	
 	function clearExchanges() {
@@ -110,7 +144,7 @@ $(document).ready(function() {
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 	 
-// 	google.maps.event.addDomListener(window, 'load', initialize);
+ 	google.maps.event.addDomListener(window, 'load', initialize);
 
 
 });
@@ -122,7 +156,6 @@ $(document).ready(function() {
 		<div id="exchanges_list">			
 
 		  	
-			  	
 			  	
 				<div class="list-group">
 					<a class="list-group-item" data-toggle="collapse" href="#collapseExample">
@@ -176,7 +209,6 @@ $(document).ready(function() {
 					</div>			  			  	
 					
 				</div>
-
 
 
 

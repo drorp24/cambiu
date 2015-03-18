@@ -267,10 +267,9 @@ $brand-lighten-factor: 10%;
       #map_container {
         height: 200vh;
         z-index: -1;
- /*       position: fixed; */
+/*        position: fixed; */ 
         right: 0;
         width: 100%;
-        display: none;
       }
     }   
   }  
