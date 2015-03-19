@@ -19,6 +19,7 @@ $(document).ready(function() {
 		var pay_currency = 	getParameterByName('buy_currency')
 		var buy_currency =	getParameterByName('pay_currency')
 		var pay_amount = 	getParameterByName('pay_amount')
+		var sort = 			getParameterByName('sort')
 
 		var mapOptions = {
 	      center: new google.maps.LatLng(latitude, longitude),
@@ -40,7 +41,7 @@ $(document).ready(function() {
 			pay_currency:	pay_currency,
 			buy_currency: 	buy_currency,
 			pay_amount: 	pay_amount,
-			sort
+			sort:			sort
 		})
 		.done(function(exchanges) {
 			updateMarkers(exchanges)
@@ -61,7 +62,7 @@ $(document).ready(function() {
 		    title: exchange.name,
 		    map: map,
 		    icon: '<%= image_path 'icon.png' %>',
-		    animation: google.maps.Animation.DROP,
+//		    animation: google.maps.Animation.DROP,
 		    zIndex: exchange.id // holds the exchange id 
 	  	})
 	  	
@@ -74,17 +75,20 @@ $(document).ready(function() {
 	  	
 	  	markers.push(marker);
 	  	
+		var id = "#exchange_det_" + String(exchange.id);	
 	  	google.maps.event.addListener(marker, 'click', function() {
-    		$('#exchange_sum_0').addClass('active');
+    		$('.list-group-item[href="0"]'.replace("0", id)).addClass('active');
   		});
-	  	google.maps.event.addDomListener(document.getElementById('exchange_sum_0'), 'click', function() {
-if (exchange.id == "400") {
+
+
+/*
+	  	google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
 			var infowindow = new google.maps.InfoWindow({
-	      		content: String(exchange.id)
+	      		content: String(exchange.name)
 	  		});
     		infowindow.open(map,marker);
-}
   		});
+*/
 	}
 	
 	function clearMarkers() {
@@ -96,29 +100,50 @@ if (exchange.id == "400") {
 	
 	function updateExchanges(exchanges) {
     	clearExchanges();
-	  	for (var i = 0; i < 5; i++) {
+	  	for (var i = 0; i < exchanges.length; i++) {
 	    	addExchange(exchanges[i], i);
-	  	}		
+	  	}
+	  	
+	  	$('.list-group-item').click(function() {
+	  		$(this).next().toggleClass('in')
+	  	})
+
+//	  	$('.collapse').collapse()		
 	}
 	
 	function addExchange(exchange, index) {
+
+		var exchange_el = 	$('.template').clone().removeClass('template');
+		var exchange_sum = 	exchange_el.find('.list-group-item')
+		var exchange_det = 	exchange_el.find('.collapse')
+		var id = '#exchange_det_' + exchange.id
+
+		exchange_sum.attr('href', id)
+		exchange_det.attr('id', id)
+		
+		exchange_sum.html(exchange.name)
+		exchange_det.find('.well').html(exchange.id)
+		
+		exchange_el.appendTo('#exchanges_list .list-group')
+		exchange_el.find('.list-group-item').unwrap()
+		
+/*		
 		exchange_el = $('.exchange_' + String(index));
 		exchange_el.find('.badge').html(exchange.edited_quote);
 		exchange_el.find('.name').html(exchange.name);
 		exchange_el.find('.address').html(exchange.address);
 		exchange_el.find('.open_today').html(exchange.open_today);
-		place_photo(exchange);
+//		place_photo(exchange);
 		exchange_el.css('visibility', 'visible');
 		exchange_el.show();
-		console.log('after')
-
+*/
 	
 
 
 	function place_photo(exchange) {
 		var request = {query: exchange.name + ' ' + exchange.address};
 		
-var service = new google.maps.places.PlacesService(map);
+		var service = new google.maps.places.PlacesService(map);
 		service.textSearch(request, gp_ts_callback);
 		
 		function gp_ts_callback(results, status) {
@@ -149,7 +174,7 @@ var service = new google.maps.places.PlacesService(map);
 	}
 	
 	function clearExchanges() {
-		$('ul.list-group li').hide();
+		$('#exchanges_list .list-group').empty();
 	}
 	
 	
@@ -170,12 +195,10 @@ var service = new google.maps.places.PlacesService(map);
 
 <div class="container-fluid">
 	<div id="exchanges_page" class="row">
-		<div id="exchanges_list" class="col-md-5 col-md-offset-1 col-xs-12">			
+		<div  id="exchanges_list" class="col-md-5 col-md-offset-1 col-xs-12">	
+			<div class="list-group">	
 
-		  	
-			  	
-				<div class="list-group">
-					<a id="exchange_sum_0" class="list-group-item" data-toggle="collapse" href="#exchange_det_0">
+					<a class="list-group-item" data-toggle="collapse" href="#exchange_det_0">
 					  Link with href1
 					</a>
 					
@@ -183,107 +206,27 @@ var service = new google.maps.places.PlacesService(map);
 					  <div class="well">
 					    first detail
 					  </div>
-					</div>			  			  	
-
-					<a class="list-group-item" data-toggle="collapse" href="#collapseExample1">
-					  Link with href2
-					</a>
-					
-					<div class="collapse" id="collapseExample1">
-					  <div class="well">
-					    second detail
-					  </div>
-					</div>			  			  	
-					
-					<a class="list-group-item" data-toggle="collapse" href="#collapseExample2">
-					  Link with href3
-					</a>
-					
-					<div class="collapse" id="collapseExample2">
-					  <div class="well">
-					    third detail
-					  </div>
-					</div>			  			  	
-					
-					<a class="list-group-item" data-toggle="collapse" href="#collapseExample3">
-					  Link with href4
-					</a>
-					
-					<div class="collapse" id="collapseExample3">
-					  <div class="well">
-					    fourth detail
-					  </div>
-					</div>			  			  	
-					
-					<a class="list-group-item" data-toggle="collapse" href="#collapseExample4">
-					  Link with href5
-					</a>
-					
-					<div class="collapse" id="collapseExample4">
-					  <div class="well">
-					    fifth detail
-					  </div>
-					</div>			  			  	
-					<a class="list-group-item" data-toggle="collapse" href="#collapseExample5">
-					  Link with href1
-					</a>
-					
-					<div class="collapse" id="collapseExample5">
-					  <div class="well">
-					    first detail
-					  </div>
-					</div>			  			  	
-
-					<a class="list-group-item" data-toggle="collapse" href="#collapseExample6">
-					  Link with href1
-					</a>
-					
-					<div class="collapse" id="collapseExample6">
-					  <div class="well">
-					    first detail
-					  </div>
-					</div>			  			  	
-
-					<a class="list-group-item" data-toggle="collapse" href="#collapseExample7">
-					  Link with href1
-					</a>
-					
-					<div class="collapse" id="collapseExample7">
-					  <div class="well">
-					    first detail
-					  </div>
-					</div>			  			  	
-
-					<a class="list-group-item" data-toggle="collapse" href="#collapseExample8">
-					  Link with href1
-					</a>
-					
-					<div class="collapse" id="collapseExample8">
-					  <div class="well">
-					    first detail
-					  </div>
-					</div>			  			  	
-
-					<a class="list-group-item" data-toggle="collapse" href="#collapseExample9">
-					  Link with href1
-					</a>
-					
-					<div class="collapse" id="collapseExampl9">
-					  <div class="well">
-					    first detail
-					  </div>
-					</div>			  			  	
-
-					
-				</div>
-
-
-
-
+					</div>
+			
+				<!--   Exchange list goes here -->
+			</div>
 		</div>
 		<div id="map_container" class="col-md-12">
 			<div id="map-canvas"></div>			
 		</div>
 
 	</div>
+
+	<!--   Exchange template  -->
+	<div class="template" style="display: none">
+
+		<a class="list-group-item" data-toggle="collapse" href="#exchange_det_0" aria-expanded="false" aria-controls="collapseExample">
+			
+		</a>
+		<div class="collapse" id="exchange_det_0">
+			<div class="well">
+			</div>
+	  	</div>
+	</div>			  			  	
+
 </div>

@@ -253,11 +253,19 @@ $brand-lighten-factor: 10%;
           margin-top: 5px;
         }
         .collapse {
+        z-index: 1000;
+         }
+         .list-group-item {
+           z-index: 1000;
+         }
+         .collapse {
+           z-index: 1000;
          }
         .list-group-item:hover {
           background-color: #f5f5f5;
           color: #555;
           text-decoration: none;
+        z-index: 1000;
         }
      }
       #map_container {
