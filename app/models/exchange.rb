@@ -26,6 +26,7 @@ class Exchange < ActiveRecord::Base
     pay_currency =    params[:pay_currency]
     buy_currency =    params[:buy_currency]
     pay_amount =      Currency.strip(params[:pay_amount])
+    sort =            params[:sort] || "amount"
     
     cache_key = "#{location_search}#{latitude}#{longitude}#{distance}#{pay_currency}#{buy_currency}#{pay_amount}"
     Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
@@ -58,8 +59,12 @@ class Exchange < ActiveRecord::Base
         @exchange_quotes << exchange_quote
       end
       
-      @exchange_quotes.sort_by{|e| e[:quote] || 1000000}
-      
+      if sort == "amount"
+        @exchange_quotes.sort_by{|e| e[:quote] || 1000000}
+      else
+        @exchange_quotes.sort_by{|e| e[:distance] }
+      end
+            
     end
 
   end

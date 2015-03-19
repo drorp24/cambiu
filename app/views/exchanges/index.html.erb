@@ -28,10 +28,10 @@ $(document).ready(function() {
 		map = new google.maps.Map(document.getElementById('map-canvas'),
           	mapOptions);
 
-      	search(latitude, longitude, distance, buy_currency, pay_currency, pay_amount); 	
+      	search(latitude, longitude, distance, buy_currency, pay_currency, pay_amount, sort); 	
 	}
   
-	function search(latitude, longitude, distance, pay_currency, buy_currency, pay_amount) {
+	function search(latitude, longitude, distance, pay_currency, buy_currency, pay_amount, sort) {
 		$.get(
 		'/exchanges/search', {
 			latitude:		latitude,
@@ -39,7 +39,8 @@ $(document).ready(function() {
 			distance:		distance,
 			pay_currency:	pay_currency,
 			buy_currency: 	buy_currency,
-			pay_amount: 	pay_amount
+			pay_amount: 	pay_amount,
+			sort
 		})
 		.done(function(exchanges) {
 			updateMarkers(exchanges)
