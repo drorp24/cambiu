@@ -16,9 +16,8 @@ class Exchange < ActiveRecord::Base
   end
   
   def self.search(params)
- 
+
     return if params[:pay_currency].blank? or params[:buy_currency].blank? or params[:pay_amount].blank?
-    
     location_search = params[:location_search]
     latitude =        params[:latitude] 
     longitude =       params[:longitude]
@@ -28,35 +27,40 @@ class Exchange < ActiveRecord::Base
     buy_currency =    params[:buy_currency]
     pay_amount =      Currency.strip(params[:pay_amount])
     
-    center = location_search.present? ? [location_search] : ((latitude.present? and longitude.present?) ? [latitude, longitude] : ['London'])  
-  # center = ['London']    # TODO: Force London. This is to first check it can find exchanges by the user's location
-    box = Geocoder::Calculations.bounding_box(center, distance)
+    cache_key = "#{location_search}#{latitude}#{longitude}#{distance}#{pay_currency}#{buy_currency}#{pay_amount}"
+    Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
     
-     
-    @exchange_quotes = []
-    exchanges = Exchange.geocoded.within_bounding_box(box).includes(:business_hours, :rates)          
-    exchanges.each do |exchange|       
-      exchange_quote = {}
-      exchange_quote[:id] = exchange.id
-      exchange_quote[:name] = exchange.name
-      exchange_quote[:address] = exchange.address
-      exchange_quote[:open_today] = exchange.open_today
-      exchange_quote[:latitude] = exchange.latitude
-      exchange_quote[:longitude] = exchange.longitude 
-      exchange_quote[:distance] = exchange.distance_from(center)  
-      exchange_quote[:bearing] = Geocoder::Calculations.compass_point(exchange.bearing_from(center))  
-      exchange_quote[:quote] = nil
-      if pay_currency and buy_currency and pay_amount      
-        if quote = exchange.quote(pay_currency, buy_currency, pay_amount)
-          quote = quote.fractional / 100
-          exchange_quote[:quote] = quote
-          exchange_quote[:edited_quote] = Currency.display(quote)
+      center = location_search.present? ? [location_search] : ((latitude.present? and longitude.present?) ? [latitude, longitude] : ['London'])  
+    # center = ['London']    # TODO: Force London. This is to first check it can find exchanges by the user's location
+      box = Geocoder::Calculations.bounding_box(center, distance)
+      
+       
+      @exchange_quotes = []
+      exchanges = Exchange.geocoded.within_bounding_box(box).includes(:business_hours, :rates)          
+      exchanges.each do |exchange|       
+        exchange_quote = {}
+        exchange_quote[:id] = exchange.id
+        exchange_quote[:name] = exchange.name
+        exchange_quote[:address] = exchange.address
+        exchange_quote[:open_today] = exchange.open_today
+        exchange_quote[:latitude] = exchange.latitude
+        exchange_quote[:longitude] = exchange.longitude 
+        exchange_quote[:distance] = exchange.distance_from(center)  
+        exchange_quote[:bearing] = Geocoder::Calculations.compass_point(exchange.bearing_from(center))  
+        exchange_quote[:quote] = nil
+        if pay_currency and buy_currency and pay_amount      
+          if quote = exchange.quote(pay_currency, buy_currency, pay_amount)
+            quote = quote.fractional / 100
+            exchange_quote[:quote] = quote
+            exchange_quote[:edited_quote] = Currency.display(quote)
+          end
         end
+        @exchange_quotes << exchange_quote
       end
-      @exchange_quotes << exchange_quote
+      
+      @exchange_quotes.sort_by{|e| e[:quote] || 1000000}
+      
     end
-    
-    @exchange_quotes.sort_by{|e| e[:quote] || 1000000}
 
   end
 
