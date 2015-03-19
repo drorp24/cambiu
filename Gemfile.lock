@@ -143,6 +143,7 @@ GEM
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    le (2.6.2)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
@@ -300,6 +301,7 @@ DEPENDENCIES
   httpi (~> 1.1.0)
   jbuilder (~> 2.0)
   jquery-rails
+  le
   money
   money-rails
   newrelic_rpm
