@@ -19,6 +19,7 @@ $footer-bg-color: #353639;
 $footer-color: #7c7d7f;
 $brand-lighten-factor: 10%;
 $navbar-bg-color: rgba(0,0,0,0.5);
+$navbar-height: 50px;
 $exchanges-header-bg-color: #fff;
 $exchanges-header-height: 10em;
 $exchanges-header-margin-top: 10em;
@@ -32,6 +33,21 @@ $exchanges-header-margin-top: 10em;
     nav.navbar-inverse  {
       z-index: 1002;
       background-color: white;
+        #exchange_title {
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: $navbar-height;
+          #exchange_params {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            height: $navbar-height;
+            line-height: $navbar-height;
+            text-align: center;
+          }
+      }
+
       #comp_name {
         font-family: "Giorgio";
         font-size: 2em;
@@ -302,12 +318,26 @@ $exchanges-header-margin-top: 10em;
     nav.navbar-inverse {
       background:rgba(0,0,0,1);
       .navbar-header {
-          margin-left: 5%;
-          margin-right: 5%;
+      }
+      #exchange_title {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: $navbar-height;
+        #exchange_params {
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+          color: white;
+          height: $navbar-height;
+          line-height: $navbar-height;
+          text-align: center;
+          font-size: 0.9em;
+        }
       }
       #comp_name {
       font-family: "Giorgio";
-      font-size: 1.5em;
+      font-size: 1.2em;
       margin-left: 5%; 
       color: $brand-color;
       font-weight: 100;
@@ -494,7 +524,7 @@ $exchanges-header-margin-top: 10em;
         }
       }
       #exchanges_page {
-        margin-top: 50px;
+        margin-top: $navbar-height;
         border-radius: 0;
         #exchanges {
           z-index: 1000;
