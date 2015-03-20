@@ -8,6 +8,7 @@ $(document).ready(function() {
 	var map;
 	var markers = [];
 	var exchanges = [];
+	var exchanges_array = []
 //	var service = new google.maps.places.PlacesService(map);
 
  	function initialize() {
@@ -45,6 +46,7 @@ $(document).ready(function() {
 		})
 		.done(function(exchanges) {
 			updateMarkers(exchanges)
+			exchanges_array = exchanges;
 			updateExchanges(exchanges)
 		})		
 	}	
@@ -98,18 +100,6 @@ $(document).ready(function() {
   		markers = [];
 	}
 	
-	function updateExchanges(exchanges) {
-    	clearExchanges();
-	  	for (var i = 0; i < exchanges.length; i++) {
-	    	addExchange(exchanges[i], i);
-	  	}
-	  	
-	  	$('.list-group-item').click(function() {
-	  		$(this).next().toggleClass('in')
-	  	})
-
-//	  	$('.collapse').collapse()		
-	}
 	
 	function addExchange(exchange, index) {
 
@@ -121,7 +111,7 @@ $(document).ready(function() {
 		exchange_sum.attr('href', id)
 		exchange_det.attr('id', id)
 		
-		exchange_sum.html(exchange.name)
+		exchange_sum.html(exchange.name + ' Distance: ' + String(exchange.distance) + ' Quote: ' + String(exchange.quote))
 		exchange_det.find('.well').html(exchange.id)
 		
 		exchange_el.appendTo('#exchanges_list .list-group')
@@ -174,7 +164,7 @@ $(document).ready(function() {
 	}
 	
 	function clearExchanges() {
-//		$('#exchanges_list .list-group').empty();
+		$('#exchanges_list .list-group').empty();
 	}
 	
 	
@@ -186,6 +176,30 @@ $(document).ready(function() {
     }
 	 
  	google.maps.event.addDomListener(window, 'load', initialize);
+ 	
+ 	$('#distance').click(function() {
+ 		exchanges_array.sort(function(a, b){return a.distance-b.distance});
+ 		updateExchanges(exchanges_array);
+ 	})
+  	$('#quote').click(function() {
+ 		exchanges_array.sort(function(a, b){return a.quote || 10000000});
+ 		updateExchanges(exchanges_array);
+ 	})
+ 	
+ 	
+ 		function updateExchanges(exchanges) {
+    	clearExchanges();
+	  	for (var i = 0; i < exchanges.length; i++) {
+	    	addExchange(exchanges[i], i);
+	  	}
+	  	
+	  	$('.list-group-item').click(function() {
+	  		$(this).next().toggleClass('in')
+	  	})
+
+//	  	$('.collapse').collapse()		
+	}
+
  	
 
 
@@ -200,7 +214,8 @@ $(document).ready(function() {
 			<div id="exchanges" class="col-md-5 col-xs-12">
 				<div id="exchanges_header" class="col-md-5 col-xs-12">
 					<div >
-						I am exchange header
+						<button id="distance" class="btn btn-success">Distance</button>
+						<button id="quote" class="btn btn-success">Quote</button>
 					</div>
 				</div> 
 				<div  id="exchanges_list">	
