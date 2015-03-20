@@ -174,7 +174,7 @@ $(document).ready(function() {
 	}
 	
 	function clearExchanges() {
-		$('#exchanges_list .list-group').empty();
+//		$('#exchanges_list .list-group').empty();
 	}
 	
 	
@@ -194,29 +194,28 @@ $(document).ready(function() {
 
 
 <div class="container-fluid">
-	<div id="exchanges_page" class="row">
-		<div  id="exchanges_list" class="col-md-5 col-md-offset-1 col-xs-12">	
-			<div class="list-group">	
 
-					<a class="list-group-item" data-toggle="collapse" href="#exchange_det_0">
-					  Link with href1
-					</a>
-					
-					<div class="collapse" id="exchange_det_0">
-					  <div class="well">
-					    first detail
-					  </div>
-					</div>
-			
-				<!--   Exchange list goes here -->
+	<div id="exchanges_page">
+		<div class="row">
+			<div id="exchanges_header" class="col-md-5 col-md-offset-1 col-xs-12">
+				<div >
+					I am exchange header
+				</div> 
 			</div>
 		</div>
-		<div id="map_container" class="col-md-12">
-			<div id="map-canvas"></div>			
+		<div class="row">			
+			<div  id="exchanges_list" class="col-md-5 col-md-offset-1 col-xs-12">	
+				<div class="list-group">
+					<!--   Exchange list goes here -->
+				</div>
+			</div>
+			<div id="map_container" class="col-md-12">
+				<div id="map-canvas"></div>			
+			</div>
+	
 		</div>
-
 	</div>
-
+	
 	<!--   Exchange template  -->
 	<div class="template" style="display: none">
 

@@ -37,7 +37,7 @@ class Exchange < ActiveRecord::Base
       
        
       @exchange_quotes = []
-      exchanges = Exchange.geocoded.within_bounding_box(box).includes(:business_hours, :rates)          
+      exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:business_hours, :rates)          
       exchanges.each do |exchange|       
         exchange_quote = {}
         exchange_quote[:id] = exchange.id
