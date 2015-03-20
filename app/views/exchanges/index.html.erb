@@ -182,7 +182,7 @@ $(document).ready(function() {
  		updateExchanges(exchanges_array);
  	})
   	$('#quote').click(function() {
- 		exchanges_array.sort(function(a, b){return a.quote || 10000000});
+ 		exchanges_array.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)});
  		updateExchanges(exchanges_array);
  	})
  	
