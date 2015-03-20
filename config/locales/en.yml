@@ -24,6 +24,9 @@ en:
     development:
       ga_tracking_id: "UA-60776239-1"
       mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    test:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
     staging:
       ga_tracking_id: "UA-60801249-1"
       mixpanel_token: "6fc206a566429d259ecacbc1d0311db6"
