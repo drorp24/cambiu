@@ -43,6 +43,8 @@ $exchanges-header-margin-top: 10em;
           top: 0;
           width: 100%;
           height: $navbar-height;
+          z-index: 5000;
+          margin-left: -15px;
           #exchange_params {
             width: 100%;
             margin-left: auto;
@@ -50,6 +52,13 @@ $exchanges-header-margin-top: 10em;
             height: $navbar-height;
             line-height: $navbar-height;
             text-align: center;
+            z-index: 2000;
+            .data-toggle {
+              
+            }
+            #exchange_params_change {
+
+            }
           }
         }
      }
@@ -340,6 +349,12 @@ $exchanges-header-margin-top: 10em;
             line-height: $navbar-height;
             text-align: center;
             font-size: 0.9em;
+            .data-toggle {
+              
+            }
+            #exchange_params_change {
+ 
+            }
           }
         }
       }
@@ -352,6 +367,8 @@ $exchanges-header-margin-top: 10em;
       }
       .navbar-toggle {
         background-color: $brand-color;
+        margin-right: 0;
+        z-index: 5000;
       }
       #cambiu_menu {  
         margin-left: 0;
@@ -368,204 +385,200 @@ $exchanges-header-margin-top: 10em;
         }
       }
     }    
-/*    .container-fluid {
-      padding-left: 0;
-      padding-right: 0; */
-      #home_a {
-        height: 600px;
-         #home_container {
-          margin-top: 15vh;          
-          color: $inverse-color;
-          #home_message {
-            text-shadow: $crisp-shadow;  
-            #message_header {
-              text-transform: uppercase;
-              font-size: 1.4em;
-              font-weight: 600;
-            }
-            #message_remainder {
-              font-size: 1em;
-              margin-top: 5px;
-              margin-bottom: 20px;
-              font-weight: 400;
-            }
-            #message_bottom {
-              margin-top: $std-margin;
-            }
+    #home_a {
+      height: 600px;
+       #home_container {
+        margin-top: 15vh;          
+        color: $inverse-color;
+        #home_message {
+          text-shadow: $crisp-shadow;  
+          #message_header {
+            text-transform: uppercase;
+            font-size: 1.4em;
+            font-weight: 600;
           }
-          #home_form {
-            margin-top: 5vh;
-            input, select, #search_div, button {
-              width: 100%;
-              height: $input-height-mobile;
-              margin-bottom: 0px;
-              text-align: center;
-              font-size: 1em;
-              font-weight: 100;
-            }
-            button#search_button.btn.btn-success {
-              font-size: 1.5em;
-            }
-            #exchange_symbol i {
-              font-size: 2em;
-              line-height: $input-height-mobile;
-/*              text-shadow: $crisp-shadow; */
-            }
-            #pay_amount_help {
-              display: none;
-            }
-            #pay_amount_icon {
-              display: none;
-            }
-          #location_text {
+          #message_remainder {
             font-size: 1em;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            font-weight: 400;
           }
-          #location_link {
-            margin-left: 10px;
-            color: $inverse-color; 
-            text-decoration: underline;
-             &:hover {
-              color: $brand-color;
-            }
-          }
-          #location_input {
+          #message_bottom {
             margin-top: $std-margin;
           }
         }
-        }
-      }
-      #home_b {
-        background-color: $b-bg-color;
-        .row {
-          margin-top: $std-margin;
-        }
-        #b_title {
-          font-size: 2em;
-          color: $ab_color;
-          font-weight: 100;
-          margin: $std-margin ;
-        }
-        #b_features {
-          i {
-            font-size: 5em;
+        #home_form {
+          margin-top: 5vh;
+          input, select, #search_div, button {
+            width: 100%;
+            height: $input-height-mobile;
+            margin-bottom: 0px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: 100;
           }
-        }
-        .feature_title {
-          font-size: 1.5em;
-          font-weight: 600;
-          margin-top: $std-margin;
-        }      
-        .feature_description {
+          button#search_button.btn.btn-success {
+            font-size: 1.5em;
+          }
+          #exchange_symbol i {
+            font-size: 2em;
+            line-height: $input-height-mobile;
+/*              text-shadow: $crisp-shadow; */
+          }
+          #pay_amount_help {
+            display: none;
+          }
+          #pay_amount_icon {
+            display: none;
+          }
+        #location_text {
           font-size: 1em;
-          font-weight: 100;
+        }
+        #location_link {
+          margin-left: 10px;
+          color: $inverse-color; 
+          text-decoration: underline;
+           &:hover {
+            color: $brand-color;
+          }
+        }
+        #location_input {
           margin-top: $std-margin;
-          color: #888888;
-          padding-bottom: $std-margin * 5;
         }
       }
-      #home_c {
-        background-color: c-bg-color;
-        #c_chains {
-          font-size: 2em;
-          color: $ab_color;
-          font-weight: 600;
-          margin: $std-margin * 2;        
+      }
+    }
+    #home_b {
+      background-color: $b-bg-color;
+      .row {
+        margin-top: $std-margin;
+      }
+      #b_title {
+        font-size: 2em;
+        color: $ab_color;
+        font-weight: 100;
+        margin: $std-margin ;
+      }
+      #b_features {
+        i {
+          font-size: 5em;
         }
-       .row {
-          margin-top: $std-margin;
-          img {
-            height: 70px;
-            width: 80%;
-          }
-          img#coventgarden {
-            height: 160px;
-            position: relative;
-            top: -25px;
-          }
+      }
+      .feature_title {
+        font-size: 1.5em;
+        font-weight: 600;
+        margin-top: $std-margin;
+      }      
+      .feature_description {
+        font-size: 1em;
+        font-weight: 100;
+        margin-top: $std-margin;
+        color: #888888;
+        padding-bottom: $std-margin * 5;
+      }
+    }
+    #home_c {
+      background-color: c-bg-color;
+      #c_chains {
+        font-size: 2em;
+        color: $ab_color;
+        font-weight: 600;
+        margin: $std-margin * 2;        
+      }
+     .row {
+        margin-top: $std-margin;
+        img {
+          height: 70px;
+          width: 80%;
         }
-        #social_icons {
-          font-size: 2em;
-          color: #999999;
-          margin-bottom: $std-margin * 2;
-          a {
-            color: #999999;
-            &:hover {
-              color: $brand-color;
-            }
-          }
+        img#coventgarden {
+          height: 160px;
+          position: relative;
+          top: -25px;
         }
-      }   
-      #footer {
-        background-color: $footer-bg-color;
-        color: $footer-color;
-        margin-left: -20px;
-        margin-right: -20px;
-        #testimonial {
-          padding-top: $std-margin;
-        }
+      }
+      #social_icons {
+        font-size: 2em;
+        color: #999999;
+        margin-bottom: $std-margin * 2;
         a {
-          display: block;
-          text-align: center;
-          color: $footer-color;
-          &:first-child {
-            margin-top: $std-margin * 2;
-          }
+          color: #999999;
           &:hover {
             color: $brand-color;
-            text-decoration: none;
           }
-        }
-        cite {
-          font-style: italic;
-        }
-        #quote blockquote {
-         border: none;
-            p {
-              font-size: 1.3em;
-            }
-            footer {
-              font-size: 0.8em;
-            }        
-        }
-         #copyright {
-          margin: $std-margin * 3;
         }
       }
-      #exchanges_page {
-        margin-top: $navbar-height;
-        margin-left: -15px;
-        margin-right: -15px;
-        border-radius: 0;
-        #exchanges {
-          z-index: 1000;
-          #exchanges_header {
-          z-index: 1001;
-          height: $exchanges-header-height;
-          background-color: $exchanges-header-bg-color;
+    }   
+    #footer {
+      background-color: $footer-bg-color;
+      color: $footer-color;
+      margin-left: -20px;
+      margin-right: -20px;
+      #testimonial {
+        padding-top: $std-margin;
+      }
+      a {
+        display: block;
+        text-align: center;
+        color: $footer-color;
+        &:first-child {
+          margin-top: $std-margin * 2;
+        }
+        &:hover {
+          color: $brand-color;
+          text-decoration: none;
+        }
+      }
+      cite {
+        font-style: italic;
+      }
+      #quote blockquote {
+       border: none;
+          p {
+            font-size: 1.3em;
           }
-          #exchanges_list {
-          z-index: 1000;
-          .list-group
-            .list-group-item
-              &:hover {
-                background-color: #f5f5f5;
-                color: #555;
-                text-decoration: none;
-                z-index: 1000;
-              }
-            .collapse {
+          footer {
+            font-size: 0.8em;
+          }        
+      }
+       #copyright {
+        margin: $std-margin * 3;
+      }
+    }
+    #exchanges_page {
+      margin-top: $navbar-height;
+      margin-left: -15px;
+      margin-right: -15px;
+      border-radius: 0;
+      #exchanges {
+        z-index: 1000;
+        #exchanges_header {
+        z-index: 1001;
+        height: $exchanges-header-height;
+        background-color: $exchanges-header-bg-color;
+        }
+        #exchanges_list {
+        z-index: 1000;
+        .list-group
+          .list-group-item
+            &:hover {
+              background-color: #f5f5f5;
+              color: #555;
+              text-decoration: none;
               z-index: 1000;
-             }
-          }
+            }
+          .collapse {
+            z-index: 1000;
+           }
         }
-        #map_container {
-          height: 200vh;
-          z-index: 999;
-          position: fixed; 
-          top: -60px;
-          padding: 0;  
-        }
-      }       
-/*    } */  
+      }
+      #map_container {
+        height: 200vh;
+        z-index: 999;
+        position: fixed; 
+        top: -60px;
+        padding: 0;  
+      }
+    }       
   }
 }     
