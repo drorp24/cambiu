@@ -18,7 +18,7 @@ $c-bg-color: #ffffff;
 $footer-bg-color: #353639;
 $footer-color: #7c7d7f;
 $brand-lighten-factor: 10%;
-$navbar-bg-color: #fff;
+$navbar-bg-color: rgba(0,0,0,0.5);
 $exchanges-header-bg-color: #fff;
 $exchanges-header-height: 10em;
 $exchanges-header-margin-top: 10em;
@@ -27,19 +27,22 @@ $exchanges-header-margin-top: 10em;
   body#cambiu {    
     padding-left: 0;
     padding-right: 0;
+      background-color: $navbar-bg-color;
+  
     nav.navbar-inverse  {
       z-index: 1002;
-      background-color: $navbar-bg-color;
+      background-color: white;
       #comp_name {
         font-family: "Giorgio";
-        font-size: 3em;
-        text-shadow: $mild-shadow;
-        margin-left: 20%;
+        font-size: 2em;
+        margin-left: 5%;
+        position: relative;
+        top: 5px;
         color: lighten($brand-color, $brand-lighten-factor);
-        font-weight: 600; 
+        font-weight: 100; 
       }
       #cambiu_menu .nav > li > a {
-        color: $ab-color;
+        color: $footer-color;
         font-size: 1em;
         &:hover {
           color: $brand-color;
@@ -253,16 +256,13 @@ $exchanges-header-margin-top: 10em;
       margin-top: 60px;
       #exchanges {
         z-index: 1000;
-        padding: 0;
         #exchanges_header {
         z-index: 1001;
-        position: fixed;
         height: $exchanges-header-height;
         background-color: $exchanges-header-bg-color;
         }
         #exchanges_list {
         z-index: 1000;
-        margin-top: $exchanges-header-height;
         .list-group
           .list-group-item
             &:hover {
@@ -281,7 +281,8 @@ $exchanges-header-margin-top: 10em;
         z-index: 999;
         position: fixed; 
         top: -60px;
-        padding: 0;  
+        padding: 0;
+        margin-left: -15px; 
       }
     }   
   }  
@@ -289,40 +290,49 @@ $exchanges-header-margin-top: 10em;
 
 @media (max-width: 767px) {
   body#cambiu {
-    background: image-url('9Noise.jpg')  no-repeat scroll !important;
+    padding-left: 0;
+    padding-right: 0;
+    background: image-url('9Noise.jpg')  no-repeat fixed !important;
     background-position:  center center;
     background-attachment: fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
         background-size: cover;
-     #video_background {
-        display: none;
-      }             
-      nav.navbar-inverse {
-        #comp_name {
-        font-family: "Giorgio";
-        font-size: 1.5em;
-        margin-left: 5%; 
-        color: $brand-color;
-        font-weight: 100;
-        }
-        .navbar-toggle {
-          background-color: $brand-color;
-        }
-        #cambiu_menu {          
-          background:rgba(0,0,0,0.7);
-          .nav > li > a {
-            color: $inverse-color;
-            font-size: 1em;
-            font-weight: 600;
-            text-align: center;
-            &:hover {
-              color: $brand-color;
-            }
+    nav.navbar-inverse {
+      background:rgba(0,0,0,1);
+      .navbar-header {
+          margin-left: 5%;
+          margin-right: 5%;
+      }
+      #comp_name {
+      font-family: "Giorgio";
+      font-size: 1.5em;
+      margin-left: 5%; 
+      color: $brand-color;
+      font-weight: 100;
+      }
+      .navbar-toggle {
+        background-color: $brand-color;
+      }
+      #cambiu_menu {  
+        margin-left: 0;
+        margin-right: 0;        
+        background:rgba(0,0,0,0.7);
+        .nav > li > a {
+          color: $inverse-color;
+          font-size: 1em;
+          font-weight: 600;
+          text-align: center;
+          &:hover {
+            color: $brand-color;
           }
         }
       }
+    }    
+    .container-fluid {
+      padding-left: 0;
+      padding-right: 0;
       #home_a {
         height: 600px;
          #home_container {
@@ -386,102 +396,136 @@ $exchanges-header-margin-top: 10em;
         }
         }
       }
-    #home_b {
-      background-color: $b-bg-color;
-      .row {
-        margin-top: $std-margin;
-      }
-      #b_title {
-        font-size: 2em;
-        color: $ab_color;
-        font-weight: 100;
-        margin: $std-margin ;
-      }
-      #b_features {
-        i {
-          font-size: 5em;
+      #home_b {
+        background-color: $b-bg-color;
+        .row {
+          margin-top: $std-margin;
+        }
+        #b_title {
+          font-size: 2em;
+          color: $ab_color;
+          font-weight: 100;
+          margin: $std-margin ;
+        }
+        #b_features {
+          i {
+            font-size: 5em;
+          }
+        }
+        .feature_title {
+          font-size: 1.5em;
+          font-weight: 600;
+          margin-top: $std-margin;
+        }      
+        .feature_description {
+          font-size: 1em;
+          font-weight: 100;
+          margin-top: $std-margin;
+          color: #888888;
+          padding-bottom: $std-margin * 5;
         }
       }
-      .feature_title {
-        font-size: 1.5em;
-        font-weight: 600;
-        margin-top: $std-margin;
-      }      
-      .feature_description {
-        font-size: 1em;
-        font-weight: 100;
-        margin-top: $std-margin;
-        color: #888888;
-        padding-bottom: $std-margin * 5;
-      }
-    }
-    #home_c {
-      background-color: c-bg-color;
-      #c_chains {
-        font-size: 2em;
-        color: $ab_color;
-        font-weight: 600;
-        margin: $std-margin * 2;        
-      }
-     .row {
-        margin-top: $std-margin;
-        img {
-          height: 70px;
-          width: 80%;
+      #home_c {
+        background-color: c-bg-color;
+        #c_chains {
+          font-size: 2em;
+          color: $ab_color;
+          font-weight: 600;
+          margin: $std-margin * 2;        
         }
-        img#coventgarden {
-          height: 160px;
-          position: relative;
-          top: -25px;
+       .row {
+          margin-top: $std-margin;
+          img {
+            height: 70px;
+            width: 80%;
+          }
+          img#coventgarden {
+            height: 160px;
+            position: relative;
+            top: -25px;
+          }
         }
-      }
-      #social_icons {
-        font-size: 2em;
-        color: #999999;
-        margin-bottom: $std-margin * 2;
-        a {
+        #social_icons {
+          font-size: 2em;
           color: #999999;
+          margin-bottom: $std-margin * 2;
+          a {
+            color: #999999;
+            &:hover {
+              color: $brand-color;
+            }
+          }
+        }
+      }   
+      #footer {
+        background-color: $footer-bg-color;
+        color: $footer-color;
+        margin-left: -20px;
+        margin-right: -20px;
+        #testimonial {
+          padding-top: $std-margin;
+        }
+        a {
+          display: block;
+          text-align: center;
+          color: $footer-color;
+          &:first-child {
+            margin-top: $std-margin * 2;
+          }
           &:hover {
             color: $brand-color;
+            text-decoration: none;
           }
         }
-      }
-    }   
-    #footer {
-      background-color: $footer-bg-color;
-      color: $footer-color;
-      margin-left: -20px;
-      margin-right: -20px;
-      #testimonial {
-        padding-top: $std-margin;
-      }
-      a {
-        display: block;
-        text-align: center;
-        color: $footer-color;
-        &:first-child {
-          margin-top: $std-margin * 2;
+        cite {
+          font-style: italic;
         }
-        &:hover {
-          color: $brand-color;
-          text-decoration: none;
+        #quote blockquote {
+         border: none;
+            p {
+              font-size: 1.3em;
+            }
+            footer {
+              font-size: 0.8em;
+            }        
+        }
+         #copyright {
+          margin: $std-margin * 3;
         }
       }
-      cite {
-        font-style: italic;
-      }
-      #quote blockquote {
-       border: none;
-          p {
-            font-size: 1.3em;
+      #exchanges_page {
+        margin-top: 50px;
+        border-radius: 0;
+        #exchanges {
+          z-index: 1000;
+          #exchanges_header {
+          z-index: 1001;
+          height: $exchanges-header-height;
+          background-color: $exchanges-header-bg-color;
           }
-          footer {
-            font-size: 0.8em;
-          }        
-      }
-       #copyright {
-        margin: $std-margin * 3;
-      }
-    }   
+          #exchanges_list {
+          z-index: 1000;
+          .list-group
+            .list-group-item
+              &:hover {
+                background-color: #f5f5f5;
+                color: #555;
+                text-decoration: none;
+                z-index: 1000;
+              }
+            .collapse {
+              z-index: 1000;
+             }
+          }
+        }
+        #map_container {
+          height: 200vh;
+          z-index: 999;
+          position: fixed; 
+          top: -60px;
+          padding: 0;  
+        }
+      }       
+    }  
   }
 }     

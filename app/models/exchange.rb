@@ -31,11 +31,10 @@ class Exchange < ActiveRecord::Base
     cache_key = "#{location_search}#{latitude}#{longitude}#{distance}#{pay_currency}#{buy_currency}#{pay_amount}"
     Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
     
-      center = location_search.present? ? [location_search] : ((latitude.present? and longitude.present?) ? [latitude, longitude] : ['London'])  
+      center = location_search.present? ? [location_search] : ((latitude.present? and longitude.present?) ? [latitude, longitude] : 'London')  
     # center = ['London']    # TODO: Force London. This is to first check it can find exchanges by the user's location
       box = Geocoder::Calculations.bounding_box(center, distance)
-      
-       
+
       @exchange_quotes = []
       exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:business_hours, :rates)          
       exchanges.each do |exchange|       
