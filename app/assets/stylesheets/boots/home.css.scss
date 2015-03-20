@@ -32,8 +32,13 @@ $exchanges-header-margin-top: 10em;
   
     nav.navbar-inverse  {
       z-index: 1002;
-      background-color: white;
-        #exchange_title {
+      &.home #exchange_title {
+        display: none;
+      }
+      &:not(.home) {
+        background-color: white;
+         #exchange_title {
+          display: block;
           position: absolute;
           top: 0;
           width: 100%;
@@ -46,8 +51,8 @@ $exchanges-header-margin-top: 10em;
             line-height: $navbar-height;
             text-align: center;
           }
-      }
-
+        }
+     }
       #comp_name {
         font-family: "Giorgio";
         font-size: 2em;
@@ -308,7 +313,7 @@ $exchanges-header-margin-top: 10em;
   body#cambiu {
     padding-left: 0;
     padding-right: 0;
-    background: image-url('9Noise.jpg')  no-repeat fixed !important;
+    background: image-url('9Noise.jpg')  no-repeat scroll !important;
     background-position:  center center;
     background-attachment: fixed;
     -webkit-background-size: cover;
@@ -316,23 +321,26 @@ $exchanges-header-margin-top: 10em;
     -o-background-size: cover;
         background-size: cover;
     nav.navbar-inverse {
-      background:rgba(0,0,0,1);
-      .navbar-header {
+      &.home #exchange_title {
+        display: none;
       }
-      #exchange_title {
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: $navbar-height;
-        #exchange_params {
+      &:not(.home) {
+        background:rgba(0,0,0,1);
+        #exchange_title {
+          position: absolute;
+          top: 0;
           width: 100%;
-          margin-left: auto;
-          margin-right: auto;
-          color: white;
           height: $navbar-height;
-          line-height: $navbar-height;
-          text-align: center;
-          font-size: 0.9em;
+          #exchange_params {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            color: white;
+            height: $navbar-height;
+            line-height: $navbar-height;
+            text-align: center;
+            font-size: 0.9em;
+          }
         }
       }
       #comp_name {
@@ -360,9 +368,9 @@ $exchanges-header-margin-top: 10em;
         }
       }
     }    
-    .container-fluid {
+/*    .container-fluid {
       padding-left: 0;
-      padding-right: 0;
+      padding-right: 0; */
       #home_a {
         height: 600px;
          #home_container {
@@ -525,6 +533,8 @@ $exchanges-header-margin-top: 10em;
       }
       #exchanges_page {
         margin-top: $navbar-height;
+        margin-left: -15px;
+        margin-right: -15px;
         border-radius: 0;
         #exchanges {
           z-index: 1000;
@@ -556,6 +566,6 @@ $exchanges-header-margin-top: 10em;
           padding: 0;  
         }
       }       
-    }  
+/*    } */  
   }
 }     
