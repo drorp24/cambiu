@@ -18,10 +18,10 @@ var searched_location = (location_search ? location_search : ((latitude && longi
 
 
 function updateParamsDisplay() {
-    $('#pay_amount').html(pay_amount);
-    $('#pay_currency').html(pay_currency);
-    $('#buy_currency').html("to " + String(buy_currency));
-    $('#searched_location').html((searched_location == "nearby") ? "nearby" : "in " + searched_location);
+    $('#pay_amount_display').html(pay_amount.replace(/\s+/g, ''));
+//    $('#pay_currency_display').html(pay_currency);
+    $('#buy_currency_display').html("to " + String(buy_currency));
+    $('#searched_location_display').html((searched_location == "nearby") ? "nearby" : "in " + searched_location);
 }
 
 
