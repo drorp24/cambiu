@@ -13,15 +13,6 @@ $(document).ready(function() {
 
  	function initialize() {
 
-
-		var latitude =		getParameterByName('latitude') || 51.507351
-		var longitude =		getParameterByName('longitude') || -0.127758
-		var distance =		getParameterByName('distance')
-		var pay_currency = 	getParameterByName('buy_currency')
-		var buy_currency =	getParameterByName('pay_currency')
-		var pay_amount = 	getParameterByName('pay_amount')
-		var sort = 			getParameterByName('sort')
-
 		var mapOptions = {
 	      center: new google.maps.LatLng(latitude, longitude),
 	      zoom: 14
@@ -30,22 +21,24 @@ $(document).ready(function() {
 		map = new google.maps.Map(document.getElementById('map-canvas'),
           	mapOptions);
 
-      	search(latitude, longitude, distance, buy_currency, pay_currency, pay_amount, sort); 	
+      	search(location_search, latitude, longitude, distance, buy_currency, pay_currency, pay_amount, sort); 	
 	}
   
-	function search(latitude, longitude, distance, pay_currency, buy_currency, pay_amount, sort) {
+	function search(location_search, latitude, longitude, distance, pay_currency, buy_currency, pay_amount, sort) {
 		$.get(
 		'/exchanges/search', {
-			latitude:		latitude,
-			longitude:		longitude,
-			distance:		distance,
-			pay_currency:	pay_currency,
-			buy_currency: 	buy_currency,
-			pay_amount: 	pay_amount,
-			sort:			sort
+			location_search: 	location_search,
+			latitude:			latitude,
+			longitude:			longitude,
+			distance:			distance,
+			pay_currency:		pay_currency,
+			buy_currency: 		buy_currency,
+			pay_amount: 		pay_amount,
+			sort:				sort
 		})
 		.done(function(exchanges) {
-			updateMarkers(exchanges)
+			updateMarkers(exchanges);
+			updateParamsDisplay();
 			exchanges_array = exchanges;
 			updateExchanges(exchanges)
 		})		
@@ -168,13 +161,6 @@ $(document).ready(function() {
 	}
 	
 	
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
-	 
  	google.maps.event.addDomListener(window, 'load', initialize);
  	
  	$('#distance').click(function() {

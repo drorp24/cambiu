@@ -1,3 +1,4 @@
+
 // global variables can be used anytime in the page
 var lat;
 var lng;
@@ -35,7 +36,7 @@ function getLocation() {
                     "location": place 
                 });
                 $('#current_address').html(place);
-                $('#location').val(place);
+                $('#geocoded_location').val(place);
               } else {
                 $('#current_address').html(" an environment with no location service");
               }
