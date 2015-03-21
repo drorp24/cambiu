@@ -83,6 +83,67 @@ $exchanges-header-margin-top: 10em;
         }
       }
     }
+    form {
+      padding-top: 15px;
+      input, select, #search_div, button, #location {
+        width: 100%;
+        height: $input-height;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: 100;
+      }
+      button#search_button.btn.btn-success {
+        font-size: 1.3em;
+      }
+      #exchange_symbol i {
+          font-size: 3em;
+          height: $input-height;
+          text-shadow: $crisp-shadow;
+      }
+      #pay_amount_help {
+        position: absolute;
+        height: $input-height;
+        width: 20%;
+        #pay_amount_text {
+          display: table-cell;
+          vertical-align: middle;
+          text-align: center;
+          color: #999999;
+          height: $input-height;
+        }
+      }
+      #pay_amount_icon {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        height: $input-height;
+        width: 20%;
+        #pay_amount_img {
+          display: table-cell;
+          vertical-align: middle;
+          text-align: center;
+          color: #999999;
+          height: $input-height;
+          width: 10%;
+          i {
+            text-align: center;
+          }
+        }
+      }
+      #location {
+        font-size: 1em;
+      }
+      #location_link {
+        margin-left: 10px;
+        text-decoration: underline;
+        color: $inverse-color;
+        &:hover {
+          color: $brand-color;
+        }
+      }
+    }
+
     #home_a {      
       background-image: image-url('bg.jpg');
       background-repeat:  no-repeat;
@@ -122,66 +183,6 @@ $exchanges-header-margin-top: 10em;
           }
           #message_bottom {
             margin-top: $std-margin;
-          }
-        }
-        #home_form {
-          padding-top: 15px;
-          input, select, #search_div, button, #location {
-            width: 100%;
-            height: $input-height;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: 100;
-          }
-          button#search_button.btn.btn-success {
-            font-size: 1.3em;
-          }
-          #exchange_symbol i {
-              font-size: 3em;
-              height: $input-height;
-              text-shadow: $crisp-shadow;
-          }
-          #pay_amount_help {
-            position: absolute;
-            height: $input-height;
-            width: 20%;
-            #pay_amount_text {
-              display: table-cell;
-              vertical-align: middle;
-              text-align: center;
-              color: #999999;
-              height: $input-height;
-            }
-          }
-          #pay_amount_icon {
-            position: absolute;
-            top: 0;
-            right: 15px;
-            height: $input-height;
-            width: 20%;
-            #pay_amount_img {
-              display: table-cell;
-              vertical-align: middle;
-              text-align: center;
-              color: #999999;
-              height: $input-height;
-              width: 10%;
-              i {
-                text-align: center;
-              }
-            }
-          }
-          #location {
-            font-size: 1em;
-          }
-          #location_link {
-            margin-left: 10px;
-            text-decoration: underline;
-            color: $inverse-color;
-            &:hover {
-              color: $brand-color;
-            }
           }
         }
       }
@@ -326,12 +327,12 @@ $exchanges-header-margin-top: 10em;
   body#cambiu {
     padding-left: 0;
     padding-right: 0;
-/*    background: image-url('9Noise.jpg')  no-repeat scroll !important;
+    background: image-url('9Noise.jpg')  no-repeat scroll !important;
     background-position:  center center;
     background-attachment: fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
-    -o-background-size: cover;*/
+    -o-background-size: cover;
         background-size: cover; 
     nav.navbar-inverse {
       &.home #exchange_title {
@@ -372,7 +373,6 @@ $exchanges-header-margin-top: 10em;
           text-align: center;
           width: 100%;
         }
-
       }
       #comp_name {
       font-family: "Giorgio";
@@ -403,6 +403,45 @@ $exchanges-header-margin-top: 10em;
         }
       }
     }    
+    form {
+      margin-top: 5vh;
+      input, select, #search_div, button {
+        width: 100%;
+        height: $input-height-mobile;
+        margin-bottom: 0px;
+        text-align: center;
+        font-size: 1em;
+        font-weight: 100;
+      }
+      button#search_button.btn.btn-success {
+        font-size: 1.5em;
+      }
+      #exchange_symbol i {
+        font-size: 2em;
+        line-height: $input-height-mobile;
+/*              text-shadow: $crisp-shadow; */
+      }
+      #pay_amount_help {
+        display: none;
+      }
+      #pay_amount_icon {
+        display: none;
+      }
+      #location_text {
+        font-size: 1em;
+      }
+      #location_link {
+        margin-left: 10px;
+        color: $inverse-color; 
+        text-decoration: underline;
+         &:hover {
+          color: $brand-color;
+        }
+      }
+      #location_input {
+        margin-top: $std-margin;
+      }
+    }           
     #home_a {
       height: 600px;
        #home_container {
@@ -424,46 +463,7 @@ $exchanges-header-margin-top: 10em;
           #message_bottom {
             margin-top: $std-margin;
           }
-        }
-        #home_form {
-          margin-top: 5vh;
-          input, select, #search_div, button {
-            width: 100%;
-            height: $input-height-mobile;
-            margin-bottom: 0px;
-            text-align: center;
-            font-size: 1em;
-            font-weight: 100;
-          }
-          button#search_button.btn.btn-success {
-            font-size: 1.5em;
-          }
-          #exchange_symbol i {
-            font-size: 2em;
-            line-height: $input-height-mobile;
-/*              text-shadow: $crisp-shadow; */
-          }
-          #pay_amount_help {
-            display: none;
-          }
-          #pay_amount_icon {
-            display: none;
-          }
-        #location_text {
-          font-size: 1em;
-        }
-        #location_link {
-          margin-left: 10px;
-          color: $inverse-color; 
-          text-decoration: underline;
-           &:hover {
-            color: $brand-color;
-          }
-        }
-        #location_input {
-          margin-top: $std-margin;
-        }
-      }
+        }              
       }
     }
     #home_b {

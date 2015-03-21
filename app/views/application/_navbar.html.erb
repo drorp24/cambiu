@@ -14,17 +14,13 @@
 	<a data-toggle="collapse" href="#exchange_params_change" id="exchange_title">
 		<div id="exchange_params">
 			<div id="exchange_params_display">
-				<i class="fa fa-search"></i>
-				<span id="pay_amount_display"></span>
-				<span id="pay_currency_display"></span>
-				<span id="buy_currency_display"></span>
-				<span id="searched_location_display"></span>
+				<%= render 'exchange_params_display' %>
 			</div>
 		</div>
 	</a>
 	<div class="collapse" id="exchange_params_change">
 		<div class="well">
-			Parameters change
+			<%= render 'exchange_params_form' %>
 		</div>
 	</div>
 

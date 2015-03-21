@@ -205,21 +205,10 @@ $(document).ready(function() {
 	
 	// TODO: remove. Secret door to 2nd page
 	$('#search_button').click(function() {
-		if ($('#pay_amount_val').val() != "2412") {return false;}
+		if ($('#home_form #pay_amount_val').val() != "2412") {return false;}
 	})
 	
-	// Form initial curr symbold and amount
-	set_pay_symbol();
-	$('#pay_currency').change(function() {
-		set_pay_symbol();
-	})
-	
-	function set_pay_symbol() {
-		$('#pay_amount').autoNumeric('update', {aSign: $('#pay_currency').find('option:selected').attr('data-symbol')}); 
-	}
-
-	$('#user_pay_amount_val, #user_pay_amount').val("1,000.00");
-	
+	input_currency($('#home_form #pay_amount'), $('#home_form #pay_currency'));
 
 	// Get user location and store in gloval vars and hidden form fields
 	getLocation();

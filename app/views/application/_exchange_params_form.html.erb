@@ -1,0 +1,52 @@
+<form id="search_form" action="/exchanges/search" class="form-inline" novalidate>
+	<div class="row">
+		<div class="form-group col-md-2 col-xs-6">
+			<input type="text" pattern="\d*" id="pay_amount" data-autonumeric="true" name="pay_amount" class="form-control" placeholder="placeholder" value="1001"
+			 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
+	  	</div>
+	  	<div class="form-group col-md-2 col-xs-6">
+			<select id="pay_currency" name="pay_currency" class="select optional text-center form-control"
+			 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
+				<option data-symbol="￡ " value="GBP" selected="selected">GBP</option>
+				<option data-symbol="€ " value="EUR">EUR</option>
+				<option data-symbol="$ " value="USD">USD</option>
+				<option data-symbol="$ " value="AUD">AUD</option>
+				<option data-symbol="$ " value="CAD">CAD</option>
+				<option data-symbol="￥ " value="JPY">JPY</option>
+			</select>
+		</div>
+		<div id="exchange_symbol" class="col-md-1 col-xs-12">
+			<i class="fa fa-hand-o-right"></i>
+		</div>
+	  	<div class="form-group col-md-2 col-xs-12">
+			<select id="buy_currency" name="buy_currency" class="select optional text-center form-control"
+			 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="foreign" data-key3="currency">
+				<option value="USD" selected="selected">USD</option>
+				<option value="EUR">EUR</option>
+				<option value="GBP">GBP</option>
+				<option value="AUD">AUD</option>
+				<option value="CAD">CAD</option>
+				<option value="JPY">JPY</option>
+			</select>
+	  	</div>
+		<div class="form-group col-md-5 col-xs-12">
+			<input type="text" id="location_search" name="location_search" class="form-control" placeholder="where" 
+			 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="location" data-key2="type" data-val2="search" data-key3="location">
+	  	</div>
+  	</div>
+  	<div class="hidden" style="display:none">
+  		<input type="hidden" name="latitude">
+  		<input type="hidden" name="longitude">
+  		<input type="hidden" name="geocoded_location" id="geocoded_location">
+  		<input type="hidden" name="distance">
+  		<input type="hidden" name="sort" value="amount">
+  		<input type="hidden" name="landing" value="<%= @landing %>">
+	</div>
+</form>
+<script>
+	$(document).ready(function() {
+			
+		input_currency($('#search_form #pay_amount'), $('#search_form #pay_currency'));
+
+	})
+</script>
