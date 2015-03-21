@@ -1,6 +1,6 @@
 <form id="search_form" action="/exchanges/search" class="form-inline" novalidate>
 	<div class="row">
-		<div class="form-group col-md-2 col-xs-6">
+		<div class="form-group col-md-3 col-xs-6">
 			<input type="text" pattern="\d*" id="pay_amount" data-autonumeric="true" name="pay_amount" class="form-control" placeholder="placeholder" value="1001"
 			 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
 	  	</div>
@@ -29,10 +29,24 @@
 				<option value="JPY">JPY</option>
 			</select>
 	  	</div>
-		<div class="form-group col-md-5 col-xs-12">
-			<input type="text" id="location_search" name="location_search" class="form-control" placeholder="where" 
+		<div class="form-group col-md-4 col-xs-12">
+			<input type="text" id="location_search" name="location_search" class="form-control" placeholder="Current location" 
 			 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="location" data-key2="type" data-val2="search" data-key3="location">
 	  	</div>
+	  	<div class="form-group col-md-4 col-md-offset-4 col-xs-12">
+			<div class="btn-group" data-toggle="buttons">
+			  <label class="btn btn-primary active">
+			    <input type="checkbox" autocomplete="off" checked> Best price
+			  </label>
+			  <label class="btn btn-success">
+			    <input type="checkbox" autocomplete="off"> Nearest
+			  </label>
+			</div>		
+		</div>
+	  	<div id="search_div" class="form-group">
+			<button id="search_button" class="form-control btn btn-success" type="submit">Search</button>
+		</div>
+
   	</div>
   	<div class="hidden" style="display:none">
   		<input type="hidden" name="latitude">

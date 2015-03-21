@@ -28,8 +28,10 @@ $exchanges-header-margin-top: 10em;
   body#cambiu {    
     padding-left: 0;
     padding-right: 0;
-      background-color: $navbar-bg-color;
-  
+    background-color: $navbar-bg-color;
+    input, select, button {
+      border-radius: 0;
+    }  
     nav.navbar-inverse  {
       z-index: 1002;
       &.home #exchange_title {
@@ -92,6 +94,10 @@ $exchanges-header-margin-top: 10em;
         text-align: center;
         font-size: 1.5em;
         font-weight: 100;
+        &.part {
+          width: 50%;
+          font-size: 21px;
+        }
       }
       button#search_button.btn.btn-success {
         font-size: 1.3em;
@@ -412,6 +418,9 @@ $exchanges-header-margin-top: 10em;
         text-align: center;
         font-size: 1em;
         font-weight: 100;
+        &.part {
+          width: 50%;
+        }
       }
       button#search_button.btn.btn-success {
         font-size: 1.5em;
