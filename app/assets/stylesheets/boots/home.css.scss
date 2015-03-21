@@ -326,13 +326,13 @@ $exchanges-header-margin-top: 10em;
   body#cambiu {
     padding-left: 0;
     padding-right: 0;
-    background: image-url('9Noise.jpg')  no-repeat scroll !important;
+/*    background: image-url('9Noise.jpg')  no-repeat scroll !important;
     background-position:  center center;
     background-attachment: fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
-    -o-background-size: cover;
-        background-size: cover;
+    -o-background-size: cover;*/
+        background-size: cover; 
     nav.navbar-inverse {
       &.home #exchange_title {
         display: none;
@@ -357,9 +357,11 @@ $exchanges-header-margin-top: 10em;
             height: $navbar-height;
             line-height: $navbar-height;
             text-align: center;
-            font-size: 0.9em;
-            .data-toggle {
-              
+            font-size: 0.8em;
+            #exchange_params_display {
+              color: $basic-color;
+              text-align: center;
+              color: $inverse-color;
             }
           }
         }
