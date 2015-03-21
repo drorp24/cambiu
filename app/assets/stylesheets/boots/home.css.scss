@@ -56,10 +56,14 @@ $exchanges-header-margin-top: 10em;
             .data-toggle {
               
             }
-            #exchange_params_change {
-
-            }
           }
+        }
+        #exchange_params_change {
+          position: absolute;
+          top: 60px;
+          margin-left: -15px;
+          text-align: center;
+          width: 100%;
         }
      }
       #comp_name {
@@ -357,11 +361,16 @@ $exchanges-header-margin-top: 10em;
             .data-toggle {
               
             }
-            #exchange_params_change {
- 
-            }
           }
         }
+        #exchange_params_change {
+          position: absolute;
+          top: 50px;
+          margin-left: -15px;
+          text-align: center;
+          width: 100%;
+        }
+
       }
       #comp_name {
       font-family: "Giorgio";
