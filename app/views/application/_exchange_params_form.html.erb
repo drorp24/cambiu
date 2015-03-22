@@ -61,7 +61,7 @@
 		</div>
 	</div>
 	<div class="form-group col-md-2 col-md-pull-3 col-xs-12">
-		<input class="make-switch" type="checkbox" data-on-text="Best price" data-on-color="default" data-off-text="Nearest" data-off-color="default">
+		<input id="sort" class="make-switch" type="checkbox" data-on-text="Best price" data-on-color="default" data-off-text="Nearest" data-off-color="default">
 	</div>
 
   	<div class="hidden" style="display:none">
@@ -90,6 +90,7 @@ $(document).ready(function() {
 	var searchBox = new google.maps.places.SearchBox(input, {
   		bounds: defaultBounds
 	});
+	
 	
 })
 </script>

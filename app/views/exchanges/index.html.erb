@@ -173,8 +173,8 @@ $(document).ready(function() {
  	})
  	
  	
- 		function updateExchanges(exchanges) {
-    	clearExchanges();
+	function updateExchanges(exchanges) {
+		clearExchanges();
 	  	for (var i = 0; i < exchanges.length; i++) {
 	    	addExchange(exchanges[i], i);
 	  	}
@@ -185,7 +185,26 @@ $(document).ready(function() {
 
 //	  	$('.collapse').collapse()		
 	}
+	
+	$('#search_form #search_button').click(function(event) {
+		location_search =   $('#search_form #location_search').val();
+		latitude =          $('#search_form #latitude').val() || 51.507351;
+		longitude =         $('#search_form #longitude').val() || -0.127758;
+		geocoded_location = $('#search_form #geocoded_location').val();
+		distance =          $('#search_form #distance').val();
+		pay_currency =      $('#search_form #pay_currency').val();
+		buy_currency =      $('#search_form #buy_currency').val();
+		pay_amount =        $('#search_form #pay_amount').val();
+		sort =              $('#search_form #sort').val();
+		searched_location = (location_search ? location_search : ((latitude && longitude) ? "nearby" : "London"));
+		
+		search(location_search, latitude, longitude, distance, buy_currency, pay_currency, pay_amount, sort);
+		event.preventDefault();
 
+	})
+
+
+	
  	
 
 
