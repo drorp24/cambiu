@@ -56,6 +56,7 @@ gem 'omniauth-facebook'
 gem 'best_in_place', github: 'bernat/best_in_place'
 gem 'font-awesome-sass'
 gem 'le'
+gem "bootstrap-switch-rails"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

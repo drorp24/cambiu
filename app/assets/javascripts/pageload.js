@@ -24,6 +24,7 @@ function updateParamsDisplay() {
     $('#searched_location_display').html((searched_location == "nearby") ? "nearby" : "in " + searched_location);
 }
 
+// Prefix input elements with the respective selected currency 
 function input_currency(pay_el, currency_el) {
   
     function set_pay_symbol(pay_el, currency_el) {
@@ -40,7 +41,10 @@ function input_currency(pay_el, currency_el) {
 
 $(document).ready(function() {
     
-    // Prefix input elements with the respective selected currency 
+    
+    $.fn.bootstrapSwitch.defaults.size = 'large';
+    $.fn.bootstrapSwitch.defaults.onColor = 'success';
+    $('.make-switch').bootstrapSwitch();    
 
 
     // Link analyses

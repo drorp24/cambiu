@@ -16,4 +16,5 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require maps
+//= require bootstrap-switch
 //= require pageload
