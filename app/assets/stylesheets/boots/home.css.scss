@@ -43,6 +43,7 @@ $border-radius: 0;
       color: $inverse-color;
       font-size: 1.3em;
       text-shadow: none;
+      margin-top: 0;
     }
     input, select, button {
       border-radius: $border-radius;
@@ -137,6 +138,10 @@ $border-radius: 0;
       }
     }
     &:not(.home) {
+      #exchange_params_wrapper {
+        margin: 0;
+        padding: 0;
+      }
       form {
         padding-top: 15px;
         input, select, button, #location, .bootstrap-switch {
@@ -246,7 +251,6 @@ $border-radius: 0;
         #exchange_params_change {
           position: absolute;
           top: 60px;
-          margin-left: -15px;
           text-align: center;
           width: 100%;
         }

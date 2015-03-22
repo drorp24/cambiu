@@ -41,7 +41,18 @@ function input_currency(pay_el, currency_el) {
 
 $(document).ready(function() {
     
+
+    // Fix google autocomplete z-index dynamically
+    var pacContainerInitialized = false;
+    $('.location.search').keypress(function() {
+        if (!pacContainerInitialized) {
+        $('.pac-container').css('z-index', 
+        '9999');
+        pacContainerInitialized = true;
+        }
+    });
     
+    // Initialize bootstrap-switch
     $('.make-switch').bootstrapSwitch();    
 
 
