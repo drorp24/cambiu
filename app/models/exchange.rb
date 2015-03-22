@@ -45,8 +45,8 @@ class Exchange < ActiveRecord::Base
         exchange_quote[:open_today] = exchange.open_today
         exchange_quote[:latitude] = exchange.latitude
         exchange_quote[:longitude] = exchange.longitude 
-        exchange_quote[:distance] = exchange.distance_from(center)  
-        exchange_quote[:bearing] = Geocoder::Calculations.compass_point(exchange.bearing_from(center))  
+        exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : "5.55"  
+        exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"  
         exchange_quote[:quote] = nil
         if pay_currency and buy_currency and pay_amount      
           if quote = exchange.quote(pay_currency, buy_currency, pay_amount)
