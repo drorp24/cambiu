@@ -51,9 +51,10 @@ $border-radius: 0;
       border-radius: $border-radius;
       .bootstrap-switch-handle-on, .bootstrap-switch-handle-off, .bootstrap-switch-on, .bootstrap-switch-off, .bootstrap-switch-container {
         border-radius: $border-radius;
-        &.bootstrap-switch-black {
+        &.bootstrap-switch-default {
           background: none repeat scroll 0 0 #000;
           color: $inverse-color;
+          height: $search-input-height;
         }
       }
     }
@@ -140,13 +141,13 @@ $border-radius: 0;
         }
         .hint_on_input {
           position: absolute;
-        }
+        }/*
         .bootstrap-switch.bootstrap-switch-large {          
           .bootstrap-switch-handle-on, .bootstrap-switch-handle-off {
           font-size: 1em;
           line-height: 1.9em;
           }
-        }
+        }*/
         button#search_button.btn.btn-success {
           font-size: 1.3em;
         }
@@ -460,14 +461,29 @@ $border-radius: 0;
     }
     .bootstrap-switch {
       border-radius: $border-radius;
-      .bootstrap-switch-handle-on, .bootstrap-switch-handle-off, .bootstrap-switch-on, .bootstrap-switch-off, .bootstrap-switch-container {
-        border-radius: $border-radius;
-        &.bootstrap-switch-black {
-          background: none repeat scroll 0 0 #000;
-          color: $inverse-color;
+      &.bootstrap-switch-large {
+        .bootstrap-switch-label, .bootstrap-switch-handle-off, .bootstrap-switch-handle-on {
+        padding: 0;
         }
       }
-    }
+      .bootstrap-switch-container {
+        height: $input-height-mobile;
+      }
+      .bootstrap-switch-handle-on, .bootstrap-switch-handle-off, .bootstrap-switch-label {
+        border-radius: $border-radius;
+        line-height: $input-height-mobile;
+        /*
+        &.bootstrap-switch-default {
+          background: none repeat scroll 0 0 #000;
+          color: $inverse-color;
+          height: $input-height-mobile;
+          height: 100%;
+          position: relative;
+          bottom: 22px;
+        */  
+        }
+      }
+    
     .help_text {
       margin-top: -15px;
       color: $help-text-color;
@@ -529,13 +545,13 @@ $border-radius: 0;
           &.part {
             width: 50%;
           }
-        }
+        }/*
         .bootstrap-switch.bootstrap-switch-large {          
           .bootstrap-switch-handle-on, .bootstrap-switch-handle-off {
           font-size: 1em;
           line-height: 1.9em;
           }
-        }
+        }*/
         button#search_button.btn.btn-success {
           font-size: 1.5em;
         }

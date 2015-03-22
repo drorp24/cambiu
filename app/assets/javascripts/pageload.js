@@ -42,8 +42,6 @@ function input_currency(pay_el, currency_el) {
 $(document).ready(function() {
     
     
-    $.fn.bootstrapSwitch.defaults.size = 'large';
-    $.fn.bootstrapSwitch.defaults.onColor = 'success';
     $('.make-switch').bootstrapSwitch();    
 
 
