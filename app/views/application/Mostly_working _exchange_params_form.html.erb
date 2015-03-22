@@ -1,6 +1,6 @@
 <form id="search_form" action="/exchanges/search" class="form-inline" novalidate>
 	<div class="row">
-		<div class="mobile_only middle_wrapper help_text col-xs-12">
+		<div class="mobile_only middle_wrapper help_text col-md-1 col-xs-12">
 			<div class="middle">
 				Exchange
 			</div>
@@ -36,7 +36,7 @@
 				<option value="JPY">JPY</option>
 			</select>
 	  	</div>
-		<div class="mobile_only middle_wrapper help_text col-xs-12">
+		<div class="mobile_only middle_wrapper help_text col-md-1 col-xs-12">
 			<div class="middle">
 				in
 			</div>
@@ -56,31 +56,53 @@
 			  </label>
 			</div>
 		-->
-		<div class="mobile_only middle_wrapper help_text  col-xs-12">
+		<div class="mobile_only middle_wrapper help_text col-md-1 col-xs-12">
 			<div class="middle">
 				Order by
 			</div>
 		</div>
-		<div class="col-md-4 col-xs-12">
-			<input class="make-switch" type="checkbox" data-handle-width="120" data-on-text="Best price" data-on-color="default" data-off-text="Nearest" data-off-color="default">
-		</div>
+			<input class="make-switch" type="checkbox" data-on-text="Best price" data-on-color="default" data-off-text="Nearest" data-off-color="default">
 
-	  	<div class="hidden" style="display:none">
-	  		<input type="hidden" name="latitude">
-	  		<input type="hidden" name="longitude">
-	  		<input type="hidden" name="geocoded_location" id="geocoded_location">
-	  		<input type="hidden" name="distance">
-	  		<input type="hidden" name="sort" value="amount">
-	  		<input type="hidden" name="landing" value="<%= @landing %>">
-		</div>
+
 
 	  	<div id="search_div" class="col-md-4 col-md-offset-4 col-xs-12" class="form-group">
 			<button id="search_button" class="form-control btn btn-cambiu" type="submit">Find offers</button>
 		</div>
 
   	</div>
+  	<div class="row">
+  				<input class="make-switch" type="checkbox">
+		
+	</div>
+  	
+  	  		<div class="col-xs-12" style="height: 200px;">
+			<input class="make-switch" type="checkbox" data-on-text="Best" data-handle-width="120" data-size="large" data-on-color="success" data-off-text="Nearest" data-off-color="success" style="font-size: 9px;">
+						<input class="make-switch" type="checkbox" data-on-text="Best price" data-on-color="default" data-off-text="Nearest" data-off-color="default">
+
+		</div>
+
+
+	
+	
+  	<div class="hidden" style="display:none">
+  		<input type="hidden" name="latitude">
+  		<input type="hidden" name="longitude">
+  		<input type="hidden" name="geocoded_location" id="geocoded_location">
+  		<input type="hidden" name="distance">
+  		<input type="hidden" name="sort" value="amount">
+  		<input type="hidden" name="landing" value="<%= @landing %>">
+	</div>
 	
 </form>
+after form
+  	<div class="row">
+  		<div class="col-xs-12" style="height: 200px;">
+			<input class="make-switch" type="checkbox" data-on-text="Best" data-handle-width="120" data-size="large" data-on-color="success" data-off-text="Nearest" data-off-color="success" style="font-size: 9px;">
+						<input class="make-switch" type="checkbox" data-on-text="Best price" data-on-color="default" data-off-text="Nearest" data-off-color="default">
+
+		</div>
+	</div>
+
 <script>
 	$(document).ready(function() {
 		
