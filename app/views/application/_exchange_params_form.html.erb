@@ -82,11 +82,18 @@
 	
 </form>
 <script>
-	$(document).ready(function() {
-		
-		// TOTO: move to pageload.js
-			
-		input_currency($('#search_form #pay_amount'), $('#search_form #pay_currency'));
+$(document).ready(function() {
+	
+	input_currency($('#search_form #pay_amount'), $('#search_form #pay_currency'));
+	
+	var defaultBounds = new google.maps.LatLngBounds(
+	  new google.maps.LatLng(-33.8902, 151.1759),
+	  new google.maps.LatLng(-33.8474, 151.2631));
 
-	})
+	var input = document.getElementById('location_search');
+	var searchBox = new google.maps.places.SearchBox(input, {
+  		bounds: defaultBounds
+	});
+
+})
 </script>
