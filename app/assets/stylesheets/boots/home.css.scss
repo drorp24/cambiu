@@ -24,14 +24,38 @@ $navbar-height: 50px;
 $exchanges-header-bg-color: #fff;
 $exchanges-header-height: 10em;
 $exchanges-header-margin-top: 10em;
+$help-text-color: #888;
+$border-radius: 0;
 
 @media (min-width: 768px){
   body#cambiu {    
     padding-left: 0;
     padding-right: 0;
     background-color: $navbar-bg-color;
+    .mobile_only {
+      display: none;
+    }
+    #search_button.btn-cambiu {
+/*      background-image: linear-gradient(to bottom, lighten($brand-color, $brand-lighten-factor) 0%, $brand-color 100%); */
+      background-color: $brand-color;
+      background-repeat: repeat-x;
+ /*     border-color: #3e8f3e; */
+      color: $inverse-color;
+      font-size: 1.3em;
+      text-shadow: none;
+    }
     input, select, button {
-      border-radius: 0;
+      border-radius: $border-radius;
+    }
+    .bootstrap-switch {
+      border-radius: $border-radius;
+      .bootstrap-switch-handle-on, .bootstrap-switch-handle-off, .bootstrap-switch-on, .bootstrap-switch-off, .bootstrap-switch-container {
+        border-radius: $border-radius;
+        &.bootstrap-switch-black {
+          background: none repeat scroll 0 0 #000;
+          color: $inverse-color;
+        }
+      }
     }
     &.home {
       form {
@@ -48,8 +72,8 @@ $exchanges-header-margin-top: 10em;
             font-size: 21px;
           }
         }
-        button#search_button.btn.btn-success {
-          font-size: 1.3em;
+        button#search_button.btn{
+          font-size: 1.2em;
         }
         #exchange_symbol i {
             font-size: 3em;
@@ -126,9 +150,9 @@ $exchanges-header-margin-top: 10em;
         button#search_button.btn.btn-success {
           font-size: 1.3em;
         }
-        #exchange_sign_wrapper {           // This is the only thing that works for up to one line.
+        .middle_wrapper {           // This is the only thing that works for up to one line.
             height: $search-input-height;  // Beyond: replace line-height with: display: table-cell.
-            #exchange_sign {
+            .middle {
               height: $search-input-height;
               vertical-align: middle;
               text-align: center;
@@ -421,7 +445,136 @@ $exchanges-header-margin-top: 10em;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-        background-size: cover; 
+        background-size: cover;
+    .btn-cambiu {
+/*      background-image: linear-gradient(to bottom, lighten($brand-color, $brand-lighten-factor) 0%, $brand-color 100%); */
+      background-color: $brand-color;
+      background-repeat: repeat-x;
+ /*     border-color: #3e8f3e; */
+      color: $inverse-color;
+      font-size: 1.5em;
+      text-shadow: none;
+    }
+    input, select, button:not(.navbar-toggle) {
+      border-radius: $border-radius;
+    }
+    .bootstrap-switch {
+      border-radius: $border-radius;
+      .bootstrap-switch-handle-on, .bootstrap-switch-handle-off, .bootstrap-switch-on, .bootstrap-switch-off, .bootstrap-switch-container {
+        border-radius: $border-radius;
+        &.bootstrap-switch-black {
+          background: none repeat scroll 0 0 #000;
+          color: $inverse-color;
+        }
+      }
+    }
+    .help_text {
+      margin-top: -15px;
+      color: $help-text-color;
+    }
+    &.home {    
+      form {
+        margin-top: 5vh;
+        input, select, #search_div, button, .bootstrap-switch {
+          width: 100%;
+          height: $input-height-mobile;
+          margin-bottom: 0px;
+          text-align: center;
+          font-size: 1em;
+          font-weight: 100;
+          &.part {
+            width: 50%;
+          }
+        }
+        button#search_button.btn.btn-success {
+          font-size: 1.5em;
+        }
+        #exchange_symbol i {
+          font-size: 2em;
+          line-height: $input-height-mobile;
+  /*              text-shadow: $crisp-shadow; */
+        }
+        #pay_amount_help {
+          display: none;
+        }
+        #pay_amount_icon {
+          display: none;
+        }
+        #location_text {
+          font-size: 1em;
+        }
+        #location_link {
+          margin-left: 10px;
+          color: $inverse-color; 
+          text-decoration: underline;
+           &:hover {
+            color: $brand-color;
+          }
+        }
+        #location_input {
+          margin-top: $std-margin;
+        }
+      }
+    }
+    &:not(.home) {
+      form {
+        margin-top: 5vh;
+        input, select, button, .bootstrap-switch {
+          width: 100%;
+          height: $input-height-mobile;
+          margin-bottom: 0px;
+          text-align: center;
+          font-size: 1em;
+          font-weight: 100;
+          &.part {
+            width: 50%;
+          }
+        }
+        .bootstrap-switch.bootstrap-switch-large {          
+          .bootstrap-switch-handle-on, .bootstrap-switch-handle-off {
+          font-size: 1em;
+          line-height: 1.9em;
+          }
+        }
+        button#search_button.btn.btn-success {
+          font-size: 1.5em;
+        }
+        .middle_wrapper {           // This is the only thing that works for up to one line.
+          height: $search-input-height;  // Beyond: replace line-height with: display: table-cell.
+          .middle {
+            height: $input-height-mobile;
+            vertical-align: middle;
+            text-align: center;
+            line-height: $input-height-mobile;
+          }
+        }
+        #exchange_symbol i {
+          font-size: 2em;
+          line-height: $input-height-mobile;
+  /*              text-shadow: $crisp-shadow; */
+        }
+        #pay_amount_help {
+          display: none;
+        }
+        #pay_amount_icon {
+          display: none;
+        }
+        #location_text {
+          font-size: 1em;
+        }
+        #location_link {
+          margin-left: 10px;
+          color: $inverse-color; 
+          text-decoration: underline;
+           &:hover {
+            color: $brand-color;
+          }
+        }
+        #location_input {
+          margin-top: $std-margin;
+        }
+      }
+    }
     nav.navbar-inverse {
       &.home #exchange_title {
         display: none;
@@ -490,49 +643,7 @@ $exchanges-header-margin-top: 10em;
           }
         }
       }
-    }    
-    form {
-      margin-top: 5vh;
-      input, select, #search_div, button {
-        width: 100%;
-        height: $input-height-mobile;
-        margin-bottom: 0px;
-        text-align: center;
-        font-size: 1em;
-        font-weight: 100;
-        &.part {
-          width: 50%;
-        }
-      }
-      button#search_button.btn.btn-success {
-        font-size: 1.5em;
-      }
-      #exchange_symbol i {
-        font-size: 2em;
-        line-height: $input-height-mobile;
-/*              text-shadow: $crisp-shadow; */
-      }
-      #pay_amount_help {
-        display: none;
-      }
-      #pay_amount_icon {
-        display: none;
-      }
-      #location_text {
-        font-size: 1em;
-      }
-      #location_link {
-        margin-left: 10px;
-        color: $inverse-color; 
-        text-decoration: underline;
-         &:hover {
-          color: $brand-color;
-        }
-      }
-      #location_input {
-        margin-top: $std-margin;
-      }
-    }           
+    }                
     #home_a {
       height: 600px;
        #home_container {
@@ -658,7 +769,7 @@ $exchanges-header-margin-top: 10em;
       margin-top: $navbar-height;
       margin-left: -15px;
       margin-right: -15px;
-      border-radius: 0;
+      border-radius: $border-radius;
       #exchanges {
         z-index: 1000;
         #exchanges_header {
