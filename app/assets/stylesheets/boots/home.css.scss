@@ -48,18 +48,28 @@ $border-radius: 0;
       border-radius: $border-radius;
     }
     .bootstrap-switch {
-      border-radius: $border-radius;
-      .bootstrap-switch-handle-on, .bootstrap-switch-handle-off, .bootstrap-switch-on, .bootstrap-switch-off, .bootstrap-switch-container {
+      border-radius: $border-radius;      
+        .bootstrap-switch-label, .bootstrap-switch-handle-off, .bootstrap-switch-handle-on {
+          padding-top: 0;
+          padding-bottom: 0;
+        }     
+      .bootstrap-switch-container {
+        height: $search-input-height;
+      }
+      .bootstrap-switch-handle-on, .bootstrap-switch-handle-off, .bootstrap-switch-label {
         border-radius: $border-radius;
+        line-height: $search-input-height;
         /*
         &.bootstrap-switch-default {
           background: none repeat scroll 0 0 #000;
           color: $inverse-color;
-          height: $search-input-height;
+          height: $input-height-mobile;
+          height: 100%;
+          position: relative;
+          bottom: 22px;
+        */  
         }
-        */
       }
-    }
     &.home {
       form {
         padding-top: 15px;
@@ -462,12 +472,11 @@ $border-radius: 0;
       border-radius: $border-radius;
     }
     .bootstrap-switch {
-      border-radius: $border-radius;
-      &.bootstrap-switch-large {
+      border-radius: $border-radius;      
         .bootstrap-switch-label, .bootstrap-switch-handle-off, .bootstrap-switch-handle-on {
-        padding: 0;
-        }
-      }
+          padding-top: 0;
+          padding-bottom: 0;
+        }     
       .bootstrap-switch-container {
         height: $input-height-mobile;
       }
@@ -629,6 +638,7 @@ $border-radius: 0;
           position: absolute;
           top: 50px;
           margin-left: -15px;
+          margin-top: -15px;
           text-align: center;
           width: 100%;
         }
