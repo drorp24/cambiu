@@ -13,13 +13,17 @@ $(document).ready(function() {
 //	var service = new google.maps.places.PlacesService(map);
 
  	function initialize() {
-		var mapOptions = {
-	      center: new google.maps.LatLng(latitude, longitude),
-	      zoom: 12
-	    };    
-
-		map = new google.maps.Map(document.getElementById('map-canvas'),
-          	mapOptions);
+ 		
+		// dont load map in mobile
+ 		if (desktop) {
+			var mapOptions = {
+		      center: new google.maps.LatLng(latitude, longitude),
+		      zoom: 12
+		    };    
+	
+			map = new google.maps.Map(document.getElementById('map-canvas'),
+	          	mapOptions);
+      	}
 
       	search(location_search, latitude, longitude, distance, buy_currency, pay_currency, pay_amount, sort); 	
 	}
@@ -37,7 +41,7 @@ $(document).ready(function() {
 			sort:				sort
 		})
 		.done(function(exchanges) {
-			updateMarkers(exchanges);
+			if (desktop) {updateMarkers(exchanges)};
 			updateParamsDisplay();
 			exchanges_array = exchanges;
 			updateExchanges(exchanges)

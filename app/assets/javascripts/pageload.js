@@ -1,10 +1,7 @@
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-         
+var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
+var mobile = media == 'mobile';
+var desktop = media == 'desktop';
+
 var location_search =   getParameterByName('location_search');
 var latitude =          getParameterByName('latitude') || 53.509590;
 var longitude =         getParameterByName('longitude') || -0.131920;
@@ -15,6 +12,15 @@ var buy_currency =      getParameterByName('buy_currency');
 var pay_amount =        getParameterByName('pay_amount');
 var sort =              getParameterByName('sort');
 var searched_location = (location_search ? location_search : ((latitude && longitude) ? "nearby" : "London"));
+
+
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 
 function updateParamsDisplay() {
