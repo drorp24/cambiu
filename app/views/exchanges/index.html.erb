@@ -9,13 +9,14 @@ $(document).ready(function() {
 	var markers = [];
 	var exchanges = [];
 	var exchanges_array = []
+	var current_state;
 //	var service = new google.maps.places.PlacesService(map);
 
  	function initialize() {
 
 		var mapOptions = {
 	      center: new google.maps.LatLng(latitude, longitude),
-	      zoom: 14
+	      zoom: 10
 	    };    
 
 		map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -46,7 +47,7 @@ $(document).ready(function() {
 
   	function updateMarkers(exchanges) {
 	  clearMarkers();
-	  for (var i = 0; i < exchanges.length; i++) {
+	  for (var i = 0; i < Math.min(exchanges.length, 15); i++) {
 	      addMarker(exchanges[i]);
 	  }
 	}
@@ -163,14 +164,20 @@ $(document).ready(function() {
 	
  	google.maps.event.addDomListener(window, 'load', initialize);
  	
- 	$('#distance').click(function() {
+ 	function sort_by_distance() {
  		exchanges_array.sort(function(a, b){return a.distance-b.distance});
  		updateExchanges(exchanges_array);
- 	})
-  	$('#quote').click(function() {
+//		updateMarkers(exchanges);
+//		updateParamsDisplay();
+//		exchanges_array = exchanges;
+	}
+  	function sort_by_amount() {
  		exchanges_array.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)});
  		updateExchanges(exchanges_array);
- 	})
+//		updateMarkers(exchanges);
+//		updateParamsDisplay();
+//		exchanges_array = exchanges;
+ 	}
  	
  	
 	function updateExchanges(exchanges) {
@@ -195,7 +202,7 @@ $(document).ready(function() {
 		pay_currency =      $('#search_form #pay_currency').val();
 		buy_currency =      $('#search_form #buy_currency').val();
 		pay_amount =        $('#search_form #pay_amount').val();
-		sort =              $('#search_form #sort').val();
+		sort =              $('#search_form #sort').bootstrapSwitch('state') ? 'amount' : 'distance';
 		searched_location = (location_search ? location_search : ((latitude && longitude) ? "nearby" : "London"));
 		
 		search(location_search, latitude, longitude, distance, buy_currency, pay_currency, pay_amount, sort);
@@ -204,8 +211,14 @@ $(document).ready(function() {
 	})
 
 
-	
- 	
+	$('#search_form #sort').on('switchChange.bootstrapSwitch', function(event, state) {
+	  if (state) {
+	  	sort_by_amount();	
+	  } else {
+	  	sort_by_distance();	
+	  }
+	});	
+	 	
 
 
 });

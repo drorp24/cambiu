@@ -72,6 +72,9 @@ $border-radius: 0;
         }
       }
     &.home {
+      #exchange_params_wrapper{
+        display: none;
+      }
       form {
         padding-top: 15px;
         input, select, #search_div, button, #location, .bootstrap-switch {
@@ -504,6 +507,9 @@ $border-radius: 0;
       color: $help-text-color;
     }
     &.home {    
+      #exchange_params_wrapper {
+        display: none;
+      }
       form {
         margin-top: 5vh;
         input, select, #search_div, button, .bootstrap-switch {
