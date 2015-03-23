@@ -49,7 +49,7 @@ class Exchange < ActiveRecord::Base
         exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"  
         exchange_quote[:quote] = nil
         if pay_currency and buy_currency and pay_amount      
-          if quote = Money.new(rand(350..427), buy_currency) # exchange.quote(pay_currency, buy_currency, pay_amount) TODO: Handle random quotes
+          if quote = Money.new(rand(330..460), buy_currency) # exchange.quote(pay_currency, buy_currency, pay_amount) TODO: Handle random quotes
             quote = quote.fractional / 100.00
             exchange_quote[:quote] = quote
             exchange_quote[:edited_quote] = Currency.display(quote)

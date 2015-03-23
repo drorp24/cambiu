@@ -13,10 +13,9 @@ $(document).ready(function() {
 //	var service = new google.maps.places.PlacesService(map);
 
  	function initialize() {
-
 		var mapOptions = {
 	      center: new google.maps.LatLng(latitude, longitude),
-	      zoom: 10
+	      zoom: 12
 	    };    
 
 		map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -47,7 +46,7 @@ $(document).ready(function() {
 
   	function updateMarkers(exchanges) {
 	  clearMarkers();
-	  for (var i = 0; i < Math.min(exchanges.length, 15); i++) {
+	  for (var i = 0; i < Math.min(exchanges.length, 30); i++) {
 	      addMarker(exchanges[i]);
 	  }
 	}
@@ -243,7 +242,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>
-		<div id="map_container" class="col-md-12">
+		<div id="map_container" class="col-md-6 col-md-offset-6">
 			<div id="map-canvas"></div>			
 		</div>
 	</div>		

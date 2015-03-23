@@ -6,8 +6,8 @@ function getParameterByName(name) {
 }
          
 var location_search =   getParameterByName('location_search');
-var latitude =          getParameterByName('latitude') || 51.507351;
-var longitude =         getParameterByName('longitude') || -0.127758;
+var latitude =          getParameterByName('latitude') || 53.509590;
+var longitude =         getParameterByName('longitude') || -0.131920;
 var geocoded_location = getParameterByName('geocoded_location');
 var distance =          getParameterByName('distance');
 var pay_currency =      getParameterByName('pay_currency');

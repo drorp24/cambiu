@@ -254,6 +254,7 @@ $border-radius: 0;
         #exchange_params_change {
           position: absolute;
           top: 60px;
+          left: 0;
           text-align: center;
           width: 100%;
         }
@@ -423,12 +424,14 @@ $border-radius: 0;
       margin-top: 60px;
       #exchanges {
         z-index: 1000;
+        margin-left: -15px;
         #exchanges_header {
         z-index: 1001;
         height: $exchanges-header-height;
         background-color: $exchanges-header-bg-color;
         }
         #exchanges_list {
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
         z-index: 1000;
         .list-group
           .list-group-item
@@ -444,12 +447,14 @@ $border-radius: 0;
         }
       }
       #map_container {
-        height: 200vh;
-        z-index: 999;
         position: fixed; 
-        top: -60px;
+        top: 60px;
+        left: 50%;
+        width: 53%;
+        height: 100vh;
+        z-index: 999;
         padding: 0;
-        margin-left: -15px; 
+        margin-left: -30px; 
       }
     }   
   }  
