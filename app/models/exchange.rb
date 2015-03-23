@@ -16,7 +16,7 @@ class Exchange < ActiveRecord::Base
   end
   
   def self.search(params)
-
+     
     return if params[:pay_currency].blank? or params[:buy_currency].blank? or params[:pay_amount].blank?
     location_search = params[:location_search]
     latitude =        params[:latitude] 

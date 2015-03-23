@@ -18,3 +18,5 @@
 //= require maps
 //= require bootstrap-switch
 //= require pageload
+//= require jquery.form
+//= require exchanges

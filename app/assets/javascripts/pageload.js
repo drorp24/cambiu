@@ -2,9 +2,12 @@ var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'deskto
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
 
+
+// TODP: remove. Page 1 will pass parameters thru ajas formSubmit. No rul params
+/*
 var location_search =   getParameterByName('location_search');
-var latitude =          getParameterByName('latitude') || 53.509590;
-var longitude =         getParameterByName('longitude') || -0.131920;
+var latitude =          getParameterByName('latitude');
+var longitude =         getParameterByName('longitude');
 var geocoded_location = getParameterByName('geocoded_location');
 var distance =          getParameterByName('distance');
 var pay_currency =      getParameterByName('pay_currency');
@@ -12,8 +15,7 @@ var buy_currency =      getParameterByName('buy_currency');
 var pay_amount =        getParameterByName('pay_amount');
 var sort =              getParameterByName('sort');
 var searched_location = (location_search ? location_search : ((latitude && longitude) ? "nearby" : "London"));
-
-
+*/
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");

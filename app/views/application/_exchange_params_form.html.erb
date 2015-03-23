@@ -61,15 +61,16 @@
 		</div>
 	</div>
 	<div class="form-group col-md-2 col-md-pull-3 col-xs-12">
-		<input id="sort" class="make-switch" type="checkbox" data-on-text="Best price" data-on-color="default" data-off-text="Nearest" data-off-color="default">
+		<input id="sort_switch" class="make-switch" type="checkbox" data-on-text="Best price" data-on-color="default" data-off-text="Nearest" data-off-color="default">
 	</div>
 
   	<div class="hidden" style="display:none">
-  		<input type="hidden" name="latitude">
-  		<input type="hidden" name="longitude">
+  		<input type="hidden" name="latitude" class="location">
+  		<input type="hidden" name="longitude" class="location">
   		<input type="hidden" name="geocoded_location" id="geocoded_location">
   		<input type="hidden" name="distance">
-  		<input type="hidden" name="sort" value="amount">
+  		<input type="hidden" name="sort" id="sort">
+  		<input type="hidden" name="searched_location" id="searched_location">
   		<input type="hidden" name="landing" value="<%= @landing %>">
 	</div>
 
@@ -77,20 +78,3 @@
 		<button id="search_button" class="form-control btn btn-cambiu" type="submit">Find offers</button>
 	</div>	
 </form>
-<script>
-$(document).ready(function() {
-	
-	input_currency($('#search_form #pay_amount'), $('#search_form #pay_currency'));
-	
-	var defaultBounds = new google.maps.LatLngBounds(
-	  new google.maps.LatLng(-33.8902, 151.1759),
-	  new google.maps.LatLng(-33.8474, 151.2631));
-
-	var input = document.getElementById('location_search');
-	var searchBox = new google.maps.places.SearchBox(input, {
-  		bounds: defaultBounds
-	});
-	
-	
-})
-</script>
