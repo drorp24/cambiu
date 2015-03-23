@@ -230,9 +230,16 @@ $exchange_params_change_height: 77px;
       &.home #exchange_title {
         display: none;
       }
+      .navbar-nav > li > a {
+        text-shadow: none;
+      }
+      .navbar-brand {
+        text-shadow: none;
+      }
       &:not(.home) {
         background-color: white;
          #exchange_title {
+          color: $footer-color;
           display: block;
           position: absolute;
           top: 0;
@@ -436,10 +443,13 @@ $exchange_params_change_height: 77px;
         background-color: $exchanges-header-bg-color;
         }
         #exchanges_list {
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
+        border-radius: 0;
         z-index: 1000;
         .list-group
-          .list-group-item
+          .list-group-item {
+            border-radius: 0;
+            }
             &:hover {
               background-color: #f5f5f5;
               color: #555;
@@ -625,6 +635,12 @@ $exchange_params_change_height: 77px;
     nav.navbar-inverse {
       &.home #exchange_title {
         display: none;
+      }
+      .navbar-nav > li > a {
+        text-shadow: none;
+      }
+      .navbar-brand {
+        text-shadow: none;
       }
       &:not(.home) {
         z-index: 4000;
@@ -828,7 +844,9 @@ $exchange_params_change_height: 77px;
         #exchanges_list {
         z-index: 1000;
         .list-group
-          .list-group-item
+          .list-group-item {
+            border-radius: 0;
+            }
             &:hover {
               background-color: #f5f5f5;
               color: #555;

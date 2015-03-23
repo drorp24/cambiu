@@ -37,8 +37,7 @@ $(document).ready(function() {
             center: new google.maps.LatLng(latitude, longitude),
             zoom: 12
         };      
-        map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);    
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
     }    
 
     function updatePage(exchanges) {
@@ -241,10 +240,12 @@ $(document).ready(function() {
         if (places.length == 0) {return;}        
         place = places[0];       
         if (!place.geometry) {alert('no geometry'); return;}
-        lat = place.geometry.location.lat; 
-        alert(lat);  
-        lng = place.geometry.location.lng;
-        draw_map(lat, lng); 
+
+        var mapOptions = {
+            center: place.geometry.location,
+            zoom: 12
+        };      
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
     });
    
 
