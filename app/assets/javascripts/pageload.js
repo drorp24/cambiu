@@ -17,6 +17,29 @@ var sort =              getParameterByName('sort');
 var searched_location = (location_search ? location_search : ((latitude && longitude) ? "nearby" : "London"));
 */
 
+// Global functions
+
+var display = function(term) {
+    switch (term) {
+        case 'quote':
+            return 'Best price';
+        case 'distance':
+            return 'Nearest';
+    }
+};        
+
+// extract form parameters
+var params = function() {        
+    form_el = '#search_form';
+    var values = {};
+    $.each($(form_el).serializeArray(), function(i, field) {
+        values[field.name] = field.value;
+    });
+    values['sort'] = $('#sort_switch').bootstrapSwitch('state') ? 'quote' : 'distance';
+    return values;    
+};
+
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -24,13 +47,6 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-
-function updateParamsDisplay() {
-    $('#pay_amount_display').html(pay_amount.replace(/\s+/g, ''));
-//    $('#pay_currency_display').html(pay_currency);
-    $('#buy_currency_display').html("to " + String(buy_currency));
-    $('#searched_location_display').html((searched_location == "nearby") ? "nearby" : "in " + searched_location);
-}
 
 // Prefix input elements with the respective selected currency 
 function input_currency(pay_el, currency_el) {

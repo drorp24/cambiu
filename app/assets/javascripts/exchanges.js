@@ -1,14 +1,13 @@
-$(document).ready(function() {
-
     // Global, session variables
     var map;
     var markers = [];
     var exchanges = [];
-    var exchanges_array = [];
-    var params = params('#search_form');
-     
+    var exchanges_array = []; 
 
-    // new ajax search
+
+$(document).ready(function() {
+
+   // new ajax search
     $('#search_form').ajaxForm({ 
             dataType:   'json', 
         beforeSubmit:   beforeSubmit,
@@ -26,7 +25,7 @@ $(document).ready(function() {
     function initialize() {
         
         if (desktop) {
-            draw_map(params.latitude, params.longitude);
+            draw_map(params().latitude, params().longitude);
         }
     
         $('#search_form').submit();     
@@ -110,7 +109,7 @@ $(document).ready(function() {
         exchange_sum.html(exchange.name + ' Distance: ' + String(exchange.distance) + ' Quote: ' + String(exchange.quote));
         exchange_det.find('.well').html(exchange.id);
         
-        exchange_el.appendTo('#exchanges_list .list-group');
+        exchange_el.appendTo('#exchanges_list .list-group #exchanges_items');
         exchange_el.find('.list-group-item').unwrap();
         
     /*      
@@ -161,7 +160,7 @@ $(document).ready(function() {
     
     function clearExchanges() {
         $('#exchanges_list #exchanges_items').empty();
-    }
+   }
     
     
     
@@ -182,31 +181,30 @@ $(document).ready(function() {
     function updateResults(exchanges) {
         $('#loader_message').css('display', 'none');
         $('#result_message').css('display', 'block');
-        $('#sort_order').html(display(params.sort));
+        $('#exchanges_count').html(exchanges.length);
+        $('#sort_order').html(display(params().sort));
     }
     
+
     function updateParamsDisplay() {
-        $('#pay_amount_display').html(params.pay_amount);
-        $('#buy_currency_display').html('to ' + params.buy_currency);
-        $('#searched_location_display').html(params.searched_location == 'Nearby' ? 'Nearby' : ' in ' + params.searched_location);
+        $('#pay_amount_display').html(params().pay_amount.replace(/\s+/g, ''));
+        $('#buy_currency_display').html('to ' + params().buy_currency);
+        $('#searched_location_display').html(params().searched_location == 'Nearby' ? 'Nearby' : ' in ' + params().searched_location);
     }
     
 
     // Update sort param and client-sort when changed   
     $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
         val = state ? 'quote' : 'distance';
-       $('#sort').val(val);
+        $('#sort').val(val);
+        sort_by(val);
     });
     
-    $('#sort').change(function() {
-       sort_by((this).val()); 
-    });
-    
-    function sort_by(order) {
-        if (order == 'distance') {
-          exchanges_array.sort(function(a, b){return a.distance-b.distance;});  
+   function sort_by(order) {
+       if (order == 'distance') {
+         exchanges_array.sort(function(a, b){return a.distance-b.distance;});  
         }
-        if (order == 'quote') {
+        else if (order == 'quote') {
             exchanges_array.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000);});            
         }
         updateExchanges(exchanges_array); // TODO: replace with updatePage
@@ -247,27 +245,6 @@ $(document).ready(function() {
         };      
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
     });
-   
-
-    // Misc auxiliary functions
-    function display(term) {
-        switch (term) {
-            case 'quote':
-                return 'Best price';
-            case 'distance':
-                return 'Nearest';
-        }
-    }        
-    
-    // extract form parameters
-    function params(form_el) {        
-        var values = {};
-        $.each($(form_el).serializeArray(), function(i, field) {
-            values[field.name] = field.value;
-        });
-        values['sort'] = $('#sort_switch').bootstrapSwitch('state') ? 'quote' : 'distance';
-        return values;    
-    }
-    
+       
     
 });
