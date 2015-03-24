@@ -2,7 +2,9 @@
     var map;
     var markers = [];
     var exchanges = [];
-    var exchanges_array = []; 
+    var exchanges_array = [];
+    var exchanges_by_quote = [];
+    var exchanges_by_distance = []; 
 
 
 $(document).ready(function() {
@@ -15,7 +17,9 @@ $(document).ready(function() {
     });
     
     function beforeSubmit() {
-         $('#loader_message').css('display', 'block');
+        $('#empty_message').css('display', 'none');
+        $('#result_message').css('display', 'none');
+        $('#loader_message').css('display', 'block');
     } 
 
 
@@ -33,7 +37,7 @@ $(document).ready(function() {
           
     function draw_map(latitude, longitude) {
         var mapOptions = {
-            center: new google.maps.LatLng(latitude, longitude),
+            center: new google.maps.LatLng(null, null),
             zoom: 12
         };      
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
@@ -59,6 +63,7 @@ $(document).ready(function() {
             position: new google.maps.LatLng(exchange.latitude, exchange.longitude),
             title: exchange.name,
             map: map,
+            icon: '/icon.png',
     //          animation: google.maps.Animation.DROP,
             zIndex: exchange.id // holds the exchange id 
         });
@@ -178,11 +183,22 @@ $(document).ready(function() {
     }
     
 
+
     function updateResults(exchanges) {
+        results = exchanges.length;
         $('#loader_message').css('display', 'none');
-        $('#result_message').css('display', 'block');
-        $('#exchanges_count').html(exchanges.length);
-        $('#sort_order').html(display(params().sort));
+        if (results > 0) {
+            $('#empty_message').css('display', 'none');
+            $('#result_message').css('display', 'block');
+            $('#exchanges_count').html(results);
+            $('#sort_order').html(display(params().sort));            
+        } else {
+            $('#result_message').css('display', 'none');
+            $('#empty_message').css('display', 'block');
+            location_search = params().location_search;
+            location_search ? location_search : "this place";
+            $('#empty_location').html(location_search);
+        }
     }
     
 
@@ -197,15 +213,18 @@ $(document).ready(function() {
     $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
         val = state ? 'quote' : 'distance';
         $('#sort').val(val);
+        $('#sort_order').html(display(val));
         sort_by(val);
     });
     
    function sort_by(order) {
        if (order == 'distance') {
-         exchanges_array.sort(function(a, b){return a.distance-b.distance;});  
+         exchanges_array = 
+         exchanges_by_distance.length > 0 ? exchanges_by_distance : exchanges_array.sort(function(a, b){return a.distance-b.distance;});  
         }
         else if (order == 'quote') {
-            exchanges_array.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000);});            
+         exchanges_array = 
+         exchanges_by_quote.length > 0 ? exchanges_by_quote : exchanges_array.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000);});            
         }
         updateExchanges(exchanges_array); // TODO: replace with updatePage
     }    
@@ -217,6 +236,7 @@ $(document).ready(function() {
         var longitude = $('#longitude').val();
         var val = location_search ? location_search : ((latitude && longitude) ? "Nearest" : "London");
          $('#searched_location').val(val);
+         $('#searched_location_display').html(val == 'Nearest' ? val : 'in ' + val);
     });
 
     

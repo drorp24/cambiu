@@ -22,9 +22,9 @@ var searched_location = (location_search ? location_search : ((latitude && longi
 var display = function(term) {
     switch (term) {
         case 'quote':
-            return 'Best price';
+            return 'best prices first:';
         case 'distance':
-            return 'Nearest';
+            return 'nearest first:';
     }
 };        
 

@@ -7,14 +7,20 @@
 						<!--   Search trigger, loading indicator -->
 						<div id="exchanges_header_item" class="list-group-item">
 							<div class="row">
-								<div class="col-md-4 col-xs-12">
+								<div class="col-md-12 col-xs-12 text-center">
 									<div id="loader_message">
-										Finding offers...
+										<span id="loading_icon"><%= image_tag "loader1.gif"%></span>
+										<span>Finding offers...</span>
 									</div>
 									<div id="result_message" style="display: none;">
-										<span id="exchanges_count"></span>
-										<span> offers found, sorted by </span>
+										<span class="badge" id="exchanges_count"></span>
+										<span> matching offers found, </span>
 										<span id="sort_order"></span>
+									</div>
+									<div id="empty_message" style="display: none;">
+										<span>Our service is not available yet in </span>
+										<span id="empty_location"></span>.&nbsp;
+										<span></span>
 									</div>
 								</div>
 							</div>

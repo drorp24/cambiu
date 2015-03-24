@@ -161,6 +161,9 @@ $exchange_params_change_height: 77px;
             font-size: 21px;
           }
         }
+        #location_search_icon {
+          position: absolute;
+        }
         .hint_on_input {
           position: absolute;
         }/*
@@ -172,6 +175,12 @@ $exchange_params_change_height: 77px;
         }*/
         button#search_button.btn.btn-success {
           font-size: 1.3em;
+        }
+        .icon {
+          margin-top: -60px;
+          width: 15%;
+          font-size: 1.5em;
+          color: $help-text-color;
         }
         .middle_wrapper {           // This is the only thing that works for up to one line.
             height: $search-input-height;  // Beyond: replace line-height with: display: table-cell.
@@ -359,7 +368,7 @@ $exchange_params_change_height: 77px;
         font-size: 1em;
         font-weight: 100;
         margin-top: $std-margin;
-        color: #888888;
+        color: $help-text-color;
         padding-bottom: $std-margin * 5;
       }
     }
@@ -447,6 +456,16 @@ $exchange_params_change_height: 77px;
         border-radius: 0;
         z-index: 1000;
         .list-group
+           #exchanges_header_item {
+            color: $ab-color;
+            font-family: verdana;
+            font-size: 1.1em;
+            color: #444;
+            #loading_icon {
+              height: $search-input-height;
+              width: auto;
+            }
+          }
           .list-group-item {
             border-radius: 0;
             }
@@ -595,6 +614,15 @@ $exchange_params_change_height: 77px;
         }*/
         button#search_button.btn.btn-success {
           font-size: 1.5em;
+        }
+        .icon {
+          display: none;
+          /*
+          margin-top: -60px;
+          width: 15%;
+          font-size: 1.5em;
+          color: $help-text-color;
+          */
         }
         .middle_wrapper {           // This is the only thing that works for up to one line.
           height: $search-input-height;  // Beyond: replace line-height with: display: table-cell.
@@ -757,7 +785,7 @@ $exchange_params_change_height: 77px;
         font-size: 1em;
         font-weight: 100;
         margin-top: $std-margin;
-        color: #888888;
+        color: $help-text-color;
         padding-bottom: $std-margin * 5;
       }
     }
@@ -844,6 +872,12 @@ $exchange_params_change_height: 77px;
         #exchanges_list {
         z-index: 1000;
         .list-group
+          #exchanges_header_item {
+            color: $ab-color;
+            font-family: verdana;
+            font-size: 1.1em;
+            color: #444;
+          }
           .list-group-item {
             border-radius: 0;
             }
