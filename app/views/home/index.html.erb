@@ -14,7 +14,7 @@
 				<form id="search_form" action="/exchanges" class="form-inline" method="post" novalidate>
 					<div class="row">
 					  	<div class="form-group col-md-5 col-xs-5">
-							<select id="pay_currency" name="pay_currency" class="select optional text-center form-control"
+							<select id="pay_currency" name="pay_currency" class="currency_select select optional text-center form-control"
 							 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
 								<option data-symbol="￡ " value="GBP" selected="selected">GBP</option>
 								<option data-symbol="€ " value="EUR">EUR</option>
@@ -27,7 +27,7 @@
 						<div id="exchange_symbol" class="col-md-2 col-xs-2">
 							<i class="fa fa-hand-o-right"></i>
 						</div>
-					  	<div id="the-basics" class="form-group col-md-5 col-xs-5">
+					  	<div class="form-group col-md-5 col-xs-5">
 							<select id="buy_currency" name="buy_currency" class="select optional text-center form-control"
 							 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="foreign" data-key3="currency">
 								<option value="USD" selected="selected">USD</option>
@@ -204,8 +204,6 @@
 <script>
 $(document).ready(function() {
 	
-	input_currency($('#home_form #pay_amount'), $('#home_form #pay_currency'));
-
 	$('#location_link').click(function() {
 		$('#location_text').css('display', 'none');
 		$('#location_input').css('display', 'block');

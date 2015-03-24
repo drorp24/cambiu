@@ -9,7 +9,7 @@
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
   	</div>
   	<div class="form-group col-md-1 col-xs-6">
-		<select id="pay_currency" name="pay_currency" class="select optional text-center form-control"
+		<select id="pay_currency" name="pay_currency" class="currency_select select optional text-center form-control"
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
 			<option data-symbol="￡ " value="GBP" selected="selected">GBP</option>
 			<option data-symbol="€ " value="EUR">EUR</option>
@@ -89,7 +89,7 @@ $(document).ready(function(){
     
         $('#pay_currency').val('<%= params[:pay_currency] %>');
         $('#pay_amount').val('<%= params[:pay_amount] %>');
-        input_currency($('#search_form #pay_amount'), $('#search_form #pay_currency'));
+        bind_currency_to_autonumeric();
         $('#buy_currency').val('<%= params[:buy_currency] %>');
         $('#latitude').val('<%= params[:latitude] %>');
         $('#longitude').val('<%= params[:longitude] %>');

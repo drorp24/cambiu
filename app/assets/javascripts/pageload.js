@@ -50,18 +50,19 @@ function getParameterByName(name) {
 
 
 // Prefix input elements with the respective selected currency 
-function input_currency(pay_el, currency_el) {
+var bind_currency_to_autonumeric = function() {
   
-    function set_pay_symbol(pay_el, currency_el) {
-        pay_el.autoNumeric('update', {aSign: currency_el.find('option:selected').attr('data-symbol')}); 
+    update_currency_symbol();
+
+    $('.currency_select').change(function() {
+        update_currency_symbol();
+    });
+
+    function update_currency_symbol() {
+        $('[data-autonumeric]').autoNumeric('update', {aSign: $('.currency_select').find('option:selected').attr('data-symbol')}); 
     }
 
-    set_pay_symbol(pay_el, currency_el);
-
-    currency_el.change(function() {
-        set_pay_symbol(pay_el, currency_el);
-    });       
-}
+};
 
 
 $(document).ready(function() {
@@ -69,7 +70,9 @@ $(document).ready(function() {
 
     // Get user location and store in gloval vars and hidden form fields
     getLocation();
-
+    
+    bind_currency_to_autonumeric();
+    
     // Fix google autocomplete z-index dynamically
     var pacContainerInitialized = false;
     $('.location.search').keypress(function() {

@@ -146,6 +146,9 @@ $exchange_params_change_height: 77px;
       }
     }
     &:not(.home) {
+      #pay_currency_display {
+        display: none;
+      }
       #exchange_params_wrapper {
         margin: 0;
         padding: 0;
@@ -596,6 +599,9 @@ $exchange_params_change_height: 77px;
       }
     }
     &:not(.home) {
+      #pay_currency_display {
+        display: none;
+      }
       form {
         margin-top: 5vh;
         input, select, button, .bootstrap-switch {

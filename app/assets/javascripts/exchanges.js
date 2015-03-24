@@ -229,7 +229,24 @@ $(document).ready(function() {
         updateExchanges(exchanges_array); // TODO: replace with updatePage
     }    
 
-    // Update searched_location param
+ 
+    // pay_amount change
+    $('#pay_amount').change(function() {
+        $('#pay_amount_display').html($(this).val());
+    });
+ 
+    // pay_currency change
+    $('#pay_currency').change(function() {
+        $('#pay_amount_display').html($('#pay_amount').val());
+        $('#pay_currency_display').html($(this).val());
+    });
+    
+    // buy_currency change
+    $('#buy_currency').change(function() {
+        $('#buy_currency_display').html('to ' + $(this).val());
+    });
+    
+    // location change
     $('.location').change(function() {
         var location_search = $('#location_search').val();
         var latitude = $('#latitude').val();
@@ -240,10 +257,6 @@ $(document).ready(function() {
     });
 
     
-    // Prefix pay_amount with pay_currency 
-    input_currency($('#search_form #pay_amount'), $('#search_form #pay_currency'));
-    
-
     // Google maps places autocomplete
     var input = document.getElementById('location_search');
     var searchBox = new google.maps.places.SearchBox(input, {
