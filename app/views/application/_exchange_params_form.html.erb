@@ -5,7 +5,7 @@
 		</div>
 	</div>
 	<div class="form-group col-md-2 col-xs-6">
-		<input type="text" pattern="\d*" id="pay_amount" data-autonumeric="true" name="pay_amount" class="form-control" placeholder="placeholder" value="1015"
+		<input type="text" pattern="\d*" id="pay_amount" data-autonumeric="true" name="pay_amount" class="form-control" placeholder="placeholder" value="1029"
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
   	</div>
   	<div class="form-group col-md-1 col-xs-6">
@@ -82,14 +82,14 @@
 	</div>	
 </form>
 <script>
-	$(document).ready(function(){
+$(document).ready(function(){
 		
     // Initial population of parameters in the form. Only exchanges/create has values in params to populate
     <% unless params.empty? %>
     
+        $('#pay_currency').val('<%= params[:pay_currency] %>');
         $('#pay_amount').val('<%= params[:pay_amount] %>');
         input_currency($('#search_form #pay_amount'), $('#search_form #pay_currency'));
-        $('#pay_currency').val('<%= params[:pay_currency] %>');
         $('#buy_currency').val('<%= params[:buy_currency] %>');
         $('#latitude').val('<%= params[:latitude] %>');
         $('#longitude').val('<%= params[:longitude] %>');
@@ -102,5 +102,5 @@
    
     <% end %>
 
-	})
+})
 </script>

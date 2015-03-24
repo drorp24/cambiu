@@ -36,6 +36,7 @@ var params = function() {
         values[field.name] = field.value;
     });
     values['sort'] = $('#sort_switch').bootstrapSwitch('state') ? 'quote' : 'distance';
+    values['edited_pay_amount'] = $('#pay_amount').val().replace(/\s+/g, '');
     return values;    
 };
 

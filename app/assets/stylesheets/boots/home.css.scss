@@ -100,6 +100,8 @@ $exchange_params_change_height: 77px;
             text-shadow: $crisp-shadow;
         }
         #pay_amount_help {
+          display: none;
+          /*
           position: absolute;
           height: $home-input-height;
           width: 20%;
@@ -110,6 +112,7 @@ $exchange_params_change_height: 77px;
             color: #999999;
             height: $home-input-height;
           }
+          */
         }
         #pay_amount_icon {
           position: absolute;

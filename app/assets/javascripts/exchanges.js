@@ -203,7 +203,7 @@ $(document).ready(function() {
     
 
     function updateParamsDisplay() {
-        $('#pay_amount_display').html(params().pay_amount.replace(/\s+/g, ''));
+        $('#pay_amount_display').html(params().edited_pay_amount);
         $('#buy_currency_display').html('to ' + params().buy_currency);
         $('#searched_location_display').html(params().searched_location == 'Nearby' ? 'Nearby' : ' in ' + params().searched_location);
     }
