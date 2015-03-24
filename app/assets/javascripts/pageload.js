@@ -66,6 +66,9 @@ function input_currency(pay_el, currency_el) {
 $(document).ready(function() {
     
 
+    // Get user location and store in gloval vars and hidden form fields
+    getLocation();
+
     // Fix google autocomplete z-index dynamically
     var pacContainerInitialized = false;
     $('.location.search').keypress(function() {

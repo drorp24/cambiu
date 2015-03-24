@@ -11,7 +11,7 @@
 				</div>
 			</div>
 			<div id="home_form" class="col-md-4 col-md-offset-1 col-xs-12 text-center">
-				<form id="search_form" action="/exchanges" class="form-inline" novalidate>
+				<form id="search_form" action="/exchanges" class="form-inline" method="post" novalidate>
 					<div class="row">
 					  	<div class="form-group col-md-5 col-xs-5">
 							<select id="pay_currency" name="pay_currency" class="select optional text-center form-control"
@@ -44,7 +44,7 @@
 							<div id="pay_amount_help">
 								<div id="pay_amount_text">I want to change</div>
 							</div>
-							<input type="text" pattern="\d*" id="pay_amount" data-autonumeric="true" name="pay_amount" class="form-control" placeholder="placeholder" value="1001"
+							<input type="text" pattern="\d*" id="pay_amount" data-autonumeric="true" name="pay_amount" class="form-control" placeholder="placeholder" value="1000"
 							 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
 							<div id="pay_amount_icon">
 								<div id="pay_amount_img"><i class="fa fa-pencil"></i></div>
@@ -58,8 +58,9 @@
 						  		<input type="hidden" name="longitude">
 						  		<input type="hidden" name="geocoded_location" id="geocoded_location">
 						  		<input type="hidden" name="distance">
-						  		<input type="hidden" name="sort" value="amount">
+						  		<input type="hidden" name="sort" value="quote">
 						  		<input type="hidden" name="landing" value="<%= @landing %>">
+						  		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 							</div>
 						  	<div id="search_div" class="form-group">
 								<button id="search_button" class="form-control btn btn-success" type="submit"><%= t :search_button, scope: [@landing], default: 'Exchange' %></button>
@@ -203,23 +204,13 @@
 <script>
 $(document).ready(function() {
 	
-	// TODO: remove. Secret door to 2nd page
-	$('#search_button').click(function() {
-		if ($('#home_form #pay_amount_val').val() != "2412") {return false;}
-	})
-	
 	input_currency($('#home_form #pay_amount'), $('#home_form #pay_currency'));
-
-	// Get user location and store in gloval vars and hidden form fields
-	getLocation();
 
 	$('#location_link').click(function() {
 		$('#location_text').css('display', 'none');
 		$('#location_input').css('display', 'block');
 		$('#location_search').focus();
 	})
-	
-
 
 })
 </script>

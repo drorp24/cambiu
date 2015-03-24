@@ -5,7 +5,7 @@
 		</div>
 	</div>
 	<div class="form-group col-md-2 col-xs-6">
-		<input type="text" pattern="\d*" id="pay_amount" data-autonumeric="true" name="pay_amount" class="form-control" placeholder="placeholder" value="1001"
+		<input type="text" pattern="\d*" id="pay_amount" data-autonumeric="true" name="pay_amount" class="form-control" placeholder="placeholder" value="1015"
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
   	</div>
   	<div class="form-group col-md-1 col-xs-6">
@@ -81,3 +81,26 @@
 		<button id="search_button" class="form-control btn btn-cambiu" type="submit">Find offers</button>
 	</div>	
 </form>
+<script>
+	$(document).ready(function(){
+		
+    // Initial population of parameters in the form. Only exchanges/create has values in params to populate
+    <% unless params.empty? %>
+    
+        $('#pay_amount').val('<%= params[:pay_amount] %>');
+        input_currency($('#search_form #pay_amount'), $('#search_form #pay_currency'));
+        $('#pay_currency').val('<%= params[:pay_currency] %>');
+        $('#buy_currency').val('<%= params[:buy_currency] %>');
+        $('#latitude').val('<%= params[:latitude] %>');
+        $('#longitude').val('<%= params[:longitude] %>');
+        $('#geocoded_location').val('<%= params[:geocoded_location] %>');
+        $('#distance').val('<%= params[:distance] %>');
+        $('#location_search').val('<%= params[:location_search] %>');
+		$('#sort_switch').bootstrapSwitch('state', <%= params[:sort] == 'quote' %>, false);
+       	$('#sort').val('<%= params[:sort] %>');
+       	$('#searched_location').val('<%= params[:location_search].present? ? params[:location_search] : ((params[:latitude].present? && params[:longitude].present?) ? "Nearest" : "London") %>');
+   
+    <% end %>
+
+	})
+</script>

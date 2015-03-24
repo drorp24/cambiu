@@ -244,7 +244,6 @@ $(document).ready(function() {
     input_currency($('#search_form #pay_amount'), $('#search_form #pay_currency'));
     
 
-
     // Google maps places autocomplete
     var input = document.getElementById('location_search');
     var searchBox = new google.maps.places.SearchBox(input, {
