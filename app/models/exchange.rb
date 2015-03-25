@@ -2,6 +2,7 @@ class Exchange < ActiveRecord::Base
   
   belongs_to  :chain
   has_many    :business_hours
+  has_one     :open_today, -> {where(day: Date.today.wday)}, class_name: "BusinessHour"
   accepts_nested_attributes_for :business_hours
   has_many    :rates
   accepts_nested_attributes_for :rates
@@ -36,13 +37,13 @@ class Exchange < ActiveRecord::Base
       box = Geocoder::Calculations.bounding_box(center, distance)
 
       @exchange_quotes = []
-      exchanges = Exchange.includes(:business_hours, :rates).geocoded.within_bounding_box(box).where.not(name: nil)          
+      exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:open_today, :rates)
       exchanges.each do |exchange|       
         exchange_quote = {}
         exchange_quote[:id] = exchange.id
         exchange_quote[:name] = exchange.name
         exchange_quote[:address] = exchange.address
-        exchange_quote[:open_today] = exchange.open_today
+        exchange_quote[:open_today] = exchange.todays_hours
         exchange_quote[:latitude] = exchange.latitude
         exchange_quote[:longitude] = exchange.longitude 
         exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : rand(1.2..17.9) 
@@ -124,6 +125,7 @@ class Exchange < ActiveRecord::Base
     end     
   end
 
+=begin
   def open_today
     bh = self.business_hours.where(day: Date.today.wday).first
     return nil unless bh
@@ -139,6 +141,23 @@ class Exchange < ActiveRecord::Base
     end
     result
   end
+=end  
+
+  def todays_hours
+    bh = open_today
+        return nil unless bh
+    open1 = bh.open1 ? bh.open1.strftime("%H:%M") : nil
+    close1 = bh.close1 ? bh.close1.strftime("%H:%M") : nil
+    open2 = bh.open2 ? bh.open2.strftime("%H:%M") : nil
+    close2 = bh.close2 ? bh.close2.strftime("%H:%M") : nil
+    if open1 and close1
+      result = open1 + " - " + close1
+      if open2 and close2
+        result += ", " + open2 + " - " + close2
+      end
+    end
+    result
+  end 
 
   def self.list(amenity, area)
     options={amenity:       amenity,
