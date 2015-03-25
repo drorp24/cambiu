@@ -44,15 +44,15 @@ $(document).ready(function() {
     }    
 
     function updatePage(exchanges) {
-        if (desktop) {updateMarkers(exchanges);};
         updateExchanges(exchanges);
+        if (desktop) {updateMarkers(exchanges);};
         updateResults(exchanges);
         updateParamsDisplay();
         exchanges_array = exchanges;
     }   
     
     function updateMarkers(exchanges) {
-      clearMarkers();
+//      clearMarkers();
       for (var i = 0; i < Math.min(exchanges.length, 30); i++) {
           addMarker(exchanges[i]);
       }
@@ -61,6 +61,7 @@ $(document).ready(function() {
     function addMarker(exchange) {
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(exchange.latitude, exchange.longitude),
+            disableAutoPan: true,
             title: exchange.name,
             map: map,
             icon: '/icon.png',
@@ -68,9 +69,16 @@ $(document).ready(function() {
             zIndex: exchange.id // holds the exchange id 
         });
         
-        if (exchange.quote) {
+        if (exchange.edited_quote) {
+            var exchange_window_el =   $('.exchange_window.template').clone().removeClass('template');
+            exchange_window_el.find('.exchange_window_quote').html(exchange.edited_quote);
+            exchange_window_el.find('.exchange_window_name').html(exchange.name);
+            exchange_window_el.find('.exchange_window_address').html(exchange.address);
+            exchange_window_el.find('.exchange_window_open').html(exchange.todays_hours);
+            exchange_window_el.attr('id', 'exchange_window_' + exchange.id);
+            
             var infowindow = new google.maps.InfoWindow({
-                content: String(exchange.edited_quote)
+                content: exchange_window_el.html() 
             });
             infowindow.open(map,marker);
         }
@@ -79,18 +87,18 @@ $(document).ready(function() {
         
         var id = "#exchange_det_" + String(exchange.id);    
         google.maps.event.addListener(marker, 'click', function() {
-            $('.list-group-item[href="0"]'.replace("0", id)).addClass('active');
+           $('.list-group-item[href="0"]'.replace("0", id)).addClass('active');
         });
     
-    
-    /*
+ /*   
             google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
-                var infowindow = new google.maps.InfoWindow({
-                    content: String(exchange.name)
+ 
+              var infowindow = new google.maps.InfoWindow({
+                    //content: String(exchange.name)
                 });
                 infowindow.open(map,marker);
             });
-    */
+  */  
     }
     
     function clearMarkers() {
@@ -103,7 +111,7 @@ $(document).ready(function() {
     
     function addExchange(exchange, index) {
     
-        var exchange_el =   $('.template').clone().removeClass('template');
+        var exchange_el =   $('exchange_row.template').clone().removeClass('template');
         var exchange_sum =  exchange_el.find('.list-group-item');
         var exchange_det =  exchange_el.find('.collapse');
         var id = '#exchange_det_' + exchange.id;
@@ -111,7 +119,7 @@ $(document).ready(function() {
         exchange_sum.attr('href', id);
         exchange_det.attr('id', id);
         
-        exchange_sum.html(exchange.name + ' Distance: ' + String(exchange.distance) + ' Quote: ' + String(exchange.quote));
+        exchange_sum.html(exchange.name + ' ' + exchange.id + ' Distance: ' + String(exchange.distance) + ' Quote: ' + String(exchange.quote));
         exchange_det.find('.well').html(exchange.id);
         
         exchange_el.appendTo('#exchanges_list .list-group #exchanges_items');
