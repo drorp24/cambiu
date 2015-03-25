@@ -69,15 +69,18 @@ $(document).ready(function() {
             zIndex: exchange.id // holds the exchange id 
         });
         
+        var infowindow;
+        var exchange_window_el;
+        
         if (exchange.edited_quote) {
-            var exchange_window_el =   $('.exchange_window.template').clone().removeClass('template');
+            exchange_window_el =   $('.exchange_window.template').clone().removeClass('template');
             exchange_window_el.find('.exchange_window_quote').html(exchange.edited_quote);
             exchange_window_el.find('.exchange_window_name').html(exchange.name);
             exchange_window_el.find('.exchange_window_address').html(exchange.address);
             exchange_window_el.find('.exchange_window_open').html(exchange.todays_hours);
             exchange_window_el.attr('id', 'exchange_window_' + exchange.id);
             
-            var infowindow = new google.maps.InfoWindow({
+            infowindow = new google.maps.InfoWindow({
                 content: exchange_window_el.html() 
             });
             infowindow.open(map,marker);
@@ -95,15 +98,13 @@ $(document).ready(function() {
         // when any row is clicked, pan to respective infoWindow and show details
         google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
  
-             map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
-  
-  
-  
-              var infowindow = new google.maps.InfoWindow({
-                    //content: String(exchange.name)
-            });
-            infowindow.open(map,marker);
-        });
+            exchange_window_el.find('.exchange_window_sum').css('display', 'none');
+            exchange_window_el.find('.exchange_window_det').css('display', 'block');
+            infowindow.setContent(exchange_window_el.html());
+            
+            map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
+ 
+         });
     
     }
     
