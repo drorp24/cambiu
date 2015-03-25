@@ -85,20 +85,26 @@ $(document).ready(function() {
         
         markers.push(marker);
         
+        // when any infoWindow is clicked, make the respective row active
         var id = "#exchange_det_" + String(exchange.id);    
         google.maps.event.addListener(marker, 'click', function() {
            $('.list-group-item[href="0"]'.replace("0", id)).addClass('active');
         });
     
- /*   
-            google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
+   
+        // when any row is clicked, pan to respective infoWindow and show details
+        google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
  
+             map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
+  
+  
+  
               var infowindow = new google.maps.InfoWindow({
                     //content: String(exchange.name)
-                });
-                infowindow.open(map,marker);
             });
-  */  
+            infowindow.open(map,marker);
+        });
+    
     }
     
     function clearMarkers() {
@@ -111,7 +117,7 @@ $(document).ready(function() {
     
     function addExchange(exchange, index) {
     
-        var exchange_el =   $('exchange_row.template').clone().removeClass('template');
+        var exchange_el =   $('.exchange_row.template').clone().removeClass('template');
         var exchange_sum =  exchange_el.find('.list-group-item');
         var exchange_det =  exchange_el.find('.collapse');
         var id = '#exchange_det_' + exchange.id;
