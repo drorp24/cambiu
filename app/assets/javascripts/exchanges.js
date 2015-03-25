@@ -66,7 +66,7 @@ $(document).ready(function() {
             map: map,
             icon: '/icon.png',
     //          animation: google.maps.Animation.DROP,
-            zIndex: exchange.id // holds the exchange id 
+    //        zIndex: exchange.id // holds the exchange id 
         });
         
         var infowindow;
@@ -98,9 +98,13 @@ $(document).ready(function() {
         // when any row is clicked, pan to respective infoWindow and show details
         google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
  
+            $('.exchange_window_det').css('display', 'none');
             exchange_window_el.find('.exchange_window_sum').css('display', 'none');
             exchange_window_el.find('.exchange_window_det').css('display', 'block');
+            exchange_window_el.find('.exchange_window_det').addClass('in');
             infowindow.setContent(exchange_window_el.html());
+            infowindow.setZIndex(1000);
+//            $('.exchange_window_det.in').parent().parent().parent().parent().children().css('background', "yellow");
             
             map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
  
