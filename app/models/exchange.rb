@@ -51,9 +51,9 @@ class Exchange < ActiveRecord::Base
         exchange_quote[:quote] = nil
         if pay_currency and buy_currency and pay_amount      
           if quote = Money.new(rand(330..460), buy_currency) # exchange.quote(pay_currency, buy_currency, pay_amount) TODO: Handle random quotes
+            exchange_quote[:edited_quote] = Currency.display(quote)
             quote = quote.fractional / 100.00
             exchange_quote[:quote] = quote
-            exchange_quote[:edited_quote] = Currency.display(quote)
           end
         end
         @exchange_quotes << exchange_quote
