@@ -29,7 +29,7 @@ class Exchange < ActiveRecord::Base
     pay_amount =      Currency.strip(params[:pay_amount])
     sort =            params[:sort] || "amount"
     
-    cache_key = "#{location_search}#{latitude}#{longitude}#{distance}#{pay_currency}#{buy_currency}#{pay_amount}"
+    cache_key = "#{location_search}#{latitude}#{longitude}#{distance}#{pay_currency}#{buy_currency}#{pay_amount}#{sort}"
     Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
     
       center = location_search.present? ? location_search : ((latitude.present? and longitude.present?) ? [latitude, longitude] : 'London')  
@@ -37,7 +37,7 @@ class Exchange < ActiveRecord::Base
       box = Geocoder::Calculations.bounding_box(center, distance)
 
       @exchange_quotes = []
-      exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).limit(10).includes(:open_today, :rates)
+      exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:open_today, :rates)
       exchanges.each do |exchange|       
         exchange_quote = {}
         exchange_quote[:id] = exchange.id
@@ -59,7 +59,7 @@ class Exchange < ActiveRecord::Base
         @exchange_quotes << exchange_quote
       end
       
-      if sort == "amount"
+      if sort == "quote"
         @exchange_quotes.sort_by{|e| e[:quote] || 1000000}
       else
         @exchange_quotes.sort_by{|e| e[:distance] }

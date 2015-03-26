@@ -30,6 +30,8 @@ $navbar-height: 60px;
 $exchange_params_change_height: 77px;
 $exchange-row-height: 50px;
 $exchange-row-height-mobile: 75px;
+$exchange-det-row-height: 30px;
+$exchange-det-row-height-mobile: 30px;
 
 
 @media (min-width: 768px){
@@ -516,6 +518,21 @@ $exchange-row-height-mobile: 75px;
         display: table-cell;
       }
     }
+    .exchange_row_det {
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .middle-parent-det {           
+      height: $exchange-det-row-height;  
+      .middle-child {
+        height: $exchange-det-row-height;
+        vertical-align: middle;
+  //    text-align: center;
+        display: table-cell;
+      }
+    }
     .quote {
       font-size: 1.5em;
       font-weight: 600;
@@ -982,6 +999,21 @@ $exchange-row-height-mobile: 75px;
   //      text-align: center;
       display: table-cell;
      }    
+    }
+    .exchange_row_det {
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .middle-parent-det {           
+      height: $exchange-det-row-height-mobile;  
+      .middle-child {
+        height: $exchange-det-row-height-mobile;
+        vertical-align: middle;
+  //    text-align: center;
+        display: table-cell;
+      }
     }
      .quote {
       font-size: 1.2em;
