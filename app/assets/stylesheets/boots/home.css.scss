@@ -521,6 +521,7 @@ $exchange-row-height-mobile: 75px;
       font-size: 1.5em;
       font-weight: 600;
       line-height: $exchange-row-height / 2;
+      color: #111;
     }
     .comparison {
       line-height: $exchange-row-height / 2;
@@ -529,7 +530,7 @@ $exchange-row-height-mobile: 75px;
     .name {
       font-weight: 400;
       font-size: 1.2em;
-      color: #333;
+      color: #222;
       text-align: left;
     }
     .distance {
@@ -988,7 +989,7 @@ $exchange-row-height-mobile: 75px;
     .name {
       font-weight: 400;
       font-size: 1em;
-      color: #333;
+      color: #222;
       text-align: left;
       padding-left: 1em;
     }
