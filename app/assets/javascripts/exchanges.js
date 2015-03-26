@@ -136,7 +136,10 @@ $(document).ready(function() {
         exchange_el.find('.distance').html(String(exchange.distance.toFixed(2)));
         exchange_el.find('.name').html(exchange.name);
         exchange_el.find('.quote').html(exchange.edited_quote);
-        if (exchange.quote > 0) {exchange_el.find('.comparison').html('Gain €9.99');}
+        if (exchange.quote > 0) {
+            exchange_el.find('#comparison').css('display', 'block');
+            exchange_el.find('.comparison-amount').html('€9.99');
+        }
 
 
 

@@ -472,7 +472,6 @@ $exchange-row-height-mobile: 75px;
         .list-group
            #exchanges_header_item {
             color: $ab-color;
-            font-family: verdana;
             font-size: 1.1em;
             color: #444;
             #loading_icon {
@@ -523,14 +522,17 @@ $exchange-row-height-mobile: 75px;
       line-height: $exchange-row-height / 2;
       color: #111;
     }
-    .comparison {
+    .comparison-m {
+      display: none;
+    }
+    .comparison-amount, .comparison-d {
       line-height: $exchange-row-height / 2;
       font-size: 0.8em;
     }
     .name {
-      font-weight: 400;
+      font-weight: 300;
       font-size: 1.2em;
-      color: #222;
+      color: #333;
       text-align: left;
     }
     .distance {
@@ -539,15 +541,21 @@ $exchange-row-height-mobile: 75px;
       display: inline;
       color: #111;
     }
-    .units {
+    .units-d {
       font-size: 0.9em;
       font-weight: 100;
       display: inline;
+    }
+    .units-m {
+      display: none;
     }
 
 // exchange row
   }  
 }
+
+
+
 
 
 
@@ -973,7 +981,6 @@ $exchange-row-height-mobile: 75px;
         vertical-align: middle;
   //      text-align: center;
       display: table-cell;
-      color: #222;
      }    
     }
      .quote {
@@ -982,24 +989,30 @@ $exchange-row-height-mobile: 75px;
       line-height: $exchange-row-height / 2;
       color: #111;
     }
-    .comparison {
+    .comparison-d {
+      display: none;
+    }
+    .comparison-amount, .comparison-m {
       line-height: $exchange-row-height / 2;
       font-size: 0.8em;
     }
     .name {
-      font-weight: 400;
-      font-size: 1em;
-      color: #222;
+      font-weight: 300;
+      font-size: 0.9em;
+      color: #333;
       text-align: left;
       padding-left: 1em;
     }
     .distance {
-      font-size: 0.9em;
+      font-size: 0.8em;
       font-weight: 1.2em;
       display: inline;
       color: #111;
     }
-    .units {
+    .units-d {
+      display: none;
+    }
+    .units-m {
       font-size: 0.8em;
       font-weight: 100;
       display: inline;
