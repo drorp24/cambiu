@@ -47,12 +47,12 @@ $exchange-row-height: 50px;
     }
 }
 
-body#cambiu {
-  font-family: 'Roboto', sans-serif;
-}
-
 @media (min-width: 768px){
   body#cambiu {    
+    font-family: 'Roboto', sans-serif;
+    &:not(.exchanges) {
+      font-family: Helvetica;
+    }
     padding-left: 0;
     padding-right: 0;
     background-color: $navbar-bg-color;
@@ -522,11 +522,40 @@ body#cambiu {
          }
       }
     }
+    // exchange row
+    .quote {
+      font-size: 1.5em;
+      font-weight: 500;
+      line-height: $exchange-row-height / 2;
+    }
+    .comparison {
+      line-height: $exchange-row-height / 2;
+      font-size: 0.8em;
+    }
+    .name {
+      font-weight: 400;
+      font-size: 1.1em;
+      color: #333;
+      text-align: left;
+    }
+    .distance {
+      font-size: 0.9em;
+      font-weight: 1.2em;
+      display: inline;
+      color: #111;
+    }
+    .units {
+      font-size: 0.9em;
+      font-weight: 100;
+      display: inline;
+    }
+// exchange row
   }  
 }
 
 @media (max-width: 767px) {
   body#cambiu {
+    font-family: Helvetica;
     padding-left: 0;
     padding-right: 0;
     background: image-url('9Noise.jpg')  no-repeat scroll !important;
@@ -937,33 +966,34 @@ body#cambiu {
         padding: 0;  
       }
     }       
+    // exchange row
+    .quote {
+      font-size: 1.5em;
+      font-weight: 500;
+      line-height: $exchange-row-height / 2;
+    }
+    .comparison {
+      line-height: $exchange-row-height / 2;
+      font-size: 0.8em;
+    }
+    .name {
+      font-weight: 400;
+      font-size: 1.1em;
+      color: #333;
+      text-align: left;
+      padding-left: 1em;
+    }
+    .distance {
+      font-size: 0.9em;
+      font-weight: 1.2em;
+      display: inline;
+      color: #111;
+    }
+    .units {
+      font-size: 0.9em;
+      font-weight: 100;
+      display: inline;
+    }
+// exchange row
   }
-}
-
-// exchange_row
-.quote {
-  font-size: 1.5em;
-  font-weight: 500;
-  line-height: $exchange-row-height / 2;
-}
-.comparison {
-  line-height: $exchange-row-height / 2;
-  font-size: 0.8em;
-}
-.name {
-  font-weight: 400;
-  font-size: 1.2em;
-  color: #333;
-  text-align: left;
-}
-.distance {
-  font-size: 0.9em;
-  font-weight: 1.2em;
-  display: inline;
-  color: #111;
-}
-.units {
-  font-size: 0.9em;
-  font-weight: 100;
-  display: inline;
 }
