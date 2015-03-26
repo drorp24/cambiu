@@ -55,7 +55,9 @@ gem 'actionpack-page_caching'
 gem 'omniauth-facebook'
 gem 'best_in_place', github: 'bernat/best_in_place'
 gem 'font-awesome-sass'
-gem 'le', group: :production
+group :test, :staging, :production do
+  gem 'le'
+end
 gem "bootstrap-switch-rails"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
