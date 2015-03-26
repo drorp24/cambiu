@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317172119) do
+ActiveRecord::Schema.define(version: 20150326081136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 20150317172119) do
   end
 
   add_index "exchanges", ["chain_id"], :name => "index_exchanges_on_chain_id"
+  add_index "exchanges", ["latitude", "longitude"], :name => "index_exchanges_on_latitude_and_longitude"
   add_index "exchanges", ["latitude"], :name => "index_exchanges_on_latitude"
   add_index "exchanges", ["longitude"], :name => "index_exchanges_on_longitude"
   add_index "exchanges", ["name", "address"], :name => "index_exchanges_on_name_and_address"

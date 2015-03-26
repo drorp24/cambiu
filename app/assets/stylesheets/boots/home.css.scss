@@ -29,23 +29,8 @@ $border-radius: 0;
 $navbar-height: 60px;
 $exchange_params_change_height: 77px;
 $exchange-row-height: 50px;
+$exchange-row-height-mobile: 75px;
 
-// Global settings
-
-.outer {
-  display : flex;
-  align-items : center;
-}
-
-.middle-parent {           
-    height: $exchange-row-height;  
-    .middle-child {
-      height: $exchange-row-height;
-      vertical-align: middle;
-//      text-align: center;
-      display: table-cell;
-    }
-}
 
 @media (min-width: 768px){
   body#cambiu {    
@@ -523,6 +508,15 @@ $exchange-row-height: 50px;
       }
     }
     // exchange row
+    .middle-parent {           
+      height: $exchange-row-height;  
+      .middle-child {
+        height: $exchange-row-height;
+        vertical-align: middle;
+  //    text-align: center;
+        display: table-cell;
+      }
+    }
     .quote {
       font-size: 1.5em;
       font-weight: 500;
@@ -534,7 +528,7 @@ $exchange-row-height: 50px;
     }
     .name {
       font-weight: 400;
-      font-size: 1.1em;
+      font-size: 1.2em;
       color: #333;
       text-align: left;
     }
@@ -549,9 +543,14 @@ $exchange-row-height: 50px;
       font-weight: 100;
       display: inline;
     }
+
 // exchange row
   }  
 }
+
+
+
+
 
 @media (max-width: 767px) {
   body#cambiu {
@@ -927,7 +926,6 @@ $exchange-row-height: 50px;
       border-radius: $border-radius;
       #exchanges {
         z-index: 1000;
-        font-family: Roboto;
         #exchanges_header {
         z-index: 1001;
         height: $exchanges-header-height;
@@ -967,10 +965,21 @@ $exchange-row-height: 50px;
       }
     }       
     // exchange row
-    .quote {
-      font-size: 1.5em;
+    .middle-parent {           
+      height: $exchange-row-height-mobile;  
+      .middle-child {
+        height: $exchange-row-height-mobile;
+        vertical-align: middle;
+  //      text-align: center;
+      display: table-cell;
+      color: #222;
+     }    
+    }
+     .quote {
+      font-size: 1.2em;
       font-weight: 500;
       line-height: $exchange-row-height / 2;
+      color: #111;
     }
     .comparison {
       line-height: $exchange-row-height / 2;
@@ -978,7 +987,7 @@ $exchange-row-height: 50px;
     }
     .name {
       font-weight: 400;
-      font-size: 1.1em;
+      font-size: 1em;
       color: #333;
       text-align: left;
       padding-left: 1em;
@@ -990,7 +999,7 @@ $exchange-row-height: 50px;
       color: #111;
     }
     .units {
-      font-size: 0.9em;
+      font-size: 0.8em;
       font-weight: 100;
       display: inline;
     }
