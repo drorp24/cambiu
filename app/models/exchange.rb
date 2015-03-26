@@ -37,7 +37,7 @@ class Exchange < ActiveRecord::Base
       box = Geocoder::Calculations.bounding_box(center, distance)
 
       @exchange_quotes = []
-      exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).limit(5).includes(:open_today, :rates)
+      exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).limit(10).includes(:open_today, :rates)
       exchanges.each do |exchange|       
         exchange_quote = {}
         exchange_quote[:id] = exchange.id

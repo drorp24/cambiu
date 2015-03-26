@@ -28,6 +28,28 @@ $help-text-color: #888;
 $border-radius: 0;
 $navbar-height: 60px;
 $exchange_params_change_height: 77px;
+$exchange-row-height: 50px;
+
+// Global settings
+
+.outer {
+  display : flex;
+  align-items : center;
+}
+
+.middle-parent {           
+    height: $exchange-row-height;  
+    .middle-child {
+      height: $exchange-row-height;
+      vertical-align: middle;
+//      text-align: center;
+      display: table-cell;
+    }
+}
+
+body#cambiu {
+  font-family: 'Roboto', sans-serif;
+}
 
 @media (min-width: 768px){
   body#cambiu {    
@@ -44,6 +66,7 @@ $exchange_params_change_height: 77px;
  /*     border-color: #3e8f3e; */
       color: $inverse-color;
       font-size: 1.3em;
+      font-weight: 400;
       text-shadow: none;
       margin-top: 0;
     }
@@ -498,7 +521,7 @@ $exchange_params_change_height: 77px;
         .exchange_window_sum {
          }
       }
-    }   
+    }
   }  
 }
 
@@ -875,34 +898,37 @@ $exchange_params_change_height: 77px;
       border-radius: $border-radius;
       #exchanges {
         z-index: 1000;
+        font-family: Roboto;
         #exchanges_header {
         z-index: 1001;
         height: $exchanges-header-height;
         background-color: $exchanges-header-bg-color;
         }
         #exchanges_list {
-        z-index: 1000;
-        .list-group
-          #exchanges_header_item {
-            color: $ab-color;
-            font-family: verdana;
-            font-size: 1.1em;
-            color: #444;
-          }
-          .list-group-item {
-            border-radius: 0;
-            }
-            &:hover {
-              background-color: #f5f5f5;
-              color: #555;
-              text-decoration: none;
-              z-index: 1000;
-            }
-          .collapse {
-            z-index: 1000;
+          z-index: 1000;
+          .list-group {
+            #exchanges_header_item {
+              color: $ab-color;
+              font-size: 1.2em;
            }
+            #exchanges_items {
+              .list-group-item {
+                border-radius: 0;
+               }
+              &:hover {
+                background-color: #f5f5f5;
+                color: #555;
+                text-decoration: none;
+                z-index: 1000;
+              }
+              .collapse {
+                z-index: 1000;
+              }  
+            }
+          }
         }
       }
+    
       #map_container {
         height: 200vh;
         z-index: 999;
@@ -912,4 +938,32 @@ $exchange_params_change_height: 77px;
       }
     }       
   }
-}     
+}
+
+// exchange_row
+.quote {
+  font-size: 1.5em;
+  font-weight: 500;
+  line-height: $exchange-row-height / 2;
+}
+.comparison {
+  line-height: $exchange-row-height / 2;
+  font-size: 0.8em;
+}
+.name {
+  font-weight: 400;
+  font-size: 1.2em;
+  color: #333;
+  text-align: left;
+}
+.distance {
+  font-size: 0.9em;
+  font-weight: 1.2em;
+  display: inline;
+  color: #111;
+}
+.units {
+  font-size: 0.9em;
+  font-weight: 100;
+  display: inline;
+}

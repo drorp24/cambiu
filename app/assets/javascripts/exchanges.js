@@ -91,25 +91,28 @@ $(document).ready(function() {
         // when any infoWindow is clicked, make the respective row active
         var id = "#exchange_det_" + String(exchange.id);    
         google.maps.event.addListener(marker, 'click', function() {
-           $('.list-group-item[href="0"]'.replace("0", id)).addClass('active');
+           $('.list-group-item[href="0"]'.replace("0", id)).toggleClass('active');
         });
     
    
         // when any row is clicked, pan to respective infoWindow and show details
-        google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
- 
-            $('.exchange_window_det').css('display', 'none');
-            exchange_window_el.find('.exchange_window_sum').css('display', 'none');
-            exchange_window_el.find('.exchange_window_det').css('display', 'block');
-            exchange_window_el.find('.exchange_window_det').addClass('in');
-            infowindow.setContent(exchange_window_el.html());
-            infowindow.setZIndex(1000);
-//            $('.exchange_window_det.in').parent().parent().parent().parent().children().css('background', "yellow");
-            
-            map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
- 
-         });
-    
+        if (exchange_window_el) {
+            google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
+     
+                $('.exchange_window_det').css('display', 'none');
+                $('.exchange_window_sum').css('display', 'block');
+                exchange_window_el.find('.exchange_window_sum').css('display', 'none');
+                exchange_window_el.find('.exchange_window_det').css('display', 'block');
+                exchange_window_el.find('.exchange_window_det').addClass('in');
+                infowindow.setContent(exchange_window_el.html());
+                infowindow.setZIndex(2000);
+    //            $('.exchange_window_det.in').parent().parent().parent().parent().children().css('background', "yellow");
+                
+                map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
+     
+             });            
+        }    
+
     }
     
     function clearMarkers() {
@@ -130,22 +133,17 @@ $(document).ready(function() {
         exchange_sum.attr('href', id);
         exchange_det.attr('id', id);
         
-        exchange_sum.html(exchange.name + ' ' + exchange.id + ' Distance: ' + String(exchange.distance) + ' Quote: ' + String(exchange.quote));
-        exchange_det.find('.well').html(exchange.id);
+        exchange_el.find('.distance').html(String(exchange.distance.toFixed(2)));
+        exchange_el.find('.name').html(exchange.name);
+        exchange_el.find('.quote').html(exchange.edited_quote);
+        exchange_el.find('.comparison').html('Gain €9.99');
+
+
+
         
-        exchange_el.appendTo('#exchanges_list .list-group #exchanges_items');
-        exchange_el.find('.list-group-item').unwrap();
+        exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
+        exchange_det.appendTo('#exchanges_list .list-group #exchanges_items');
         
-    /*      
-            exchange_el = $('.exchange_' + String(index));
-            exchange_el.find('.badge').html(exchange.edited_quote);
-            exchange_el.find('.name').html(exchange.name);
-            exchange_el.find('.address').html(exchange.address);
-            exchange_el.find('.open_today').html(exchange.open_today);
-    //      place_photo(exchange);
-            exchange_el.css('visibility', 'visible');
-            exchange_el.show();
-    */
     
     
     
