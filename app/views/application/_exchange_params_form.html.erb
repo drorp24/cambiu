@@ -395,15 +395,22 @@ $(document).ready(function(){
         sort_by(val);
     });
     
-    function sort_by(order) {
-       if (order == 'distance') {
-         exchanges_array = 
-         exchanges_by_distance.length > 0 ? exchanges_by_distance : exchanges_array.sort(function(a, b){return a.distance-b.distance;});  
+	function sort_by(order) {
+		if (order == 'distance') {
+	     	if (exchanges_by_distance.length > 0) {
+	         	exchanges_array = exchanges_by_distance
+	         } else {
+	         	exchanges_by_distance = exchanges_array.sort(function(a, b){return a.distance-b.distance;});  
+	         }
         }
         else if (order == 'quote') {
-         exchanges_array = 
-         exchanges_by_quote.length > 0 ? exchanges_by_quote : exchanges_array.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000);});            
+	 		if (exchanges_by_quote.length > 0) {
+	         	exchanges_array = exchanges_by_quote
+	         } else {
+	         	exchanges_by_quote = exchanges_array.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)});  
+	         }
         }
+        clearExchanges();
         updateExchanges(exchanges_array); // TODO: replace with updatePage. TODO: store the div's as well and replace as needed.
     }    
 
