@@ -37,36 +37,33 @@
 		</div>
 	</div>				  			  	
 
-<!--   Exchange row template  -->
-<div class="exchange_row template" style="display: none;">
-
-	<a class="list-group-item " data-toggle="collapse" href="#exchange_det_0">
-		<div class="row">
-			<%= render 'exchange_sum_template' %>
-		</div>			
-	</a>
-	<div class="exchange_row_det collapse" id="exchange_det_0">
-		<div class="row">
-			<%= render 'exchange_det_template' %>
+	<!--   Exchange row template  -->
+	<div class="exchange_row template" style="display: none;">
+	
+		<a class="list-group-item " data-toggle="collapse" href="#exchange_det_0">
+			<div class="row">
+				<%= render 'exchange_sum_template' %>
+			</div>			
+		</a>
+		<div class="exchange_row_det collapse well" id="exchange_det_0">
+			<div class="row">
+				<%= render 'exchange_det_template' %>
+			</div>
+	  	</div>
+	</div>	
+	
+	<!--   Exchange InfoWindow template  -->
+	<div class="exchange_window template" id="0">
+		<div class="exchange_window_sum">
+			<div class="exchange_window_quote"></div>
 		</div>
-  	</div>
-</div>	
-
-<!--   Exchange InfoWindow template  -->
-<div class="exchange_window template" id="0">
-	<div class="exchange_window_sum">
-		<div class="exchange_window_quote"></div>
-	</div>
-	<div class="exchange_window_det" style="display:none">
-		<div class="exchange_window_name"></div>
-		<div class="exchange_window_address"></div>
-		<div class="exchange_window_quote"></div>
-		<div class="exchange_window_open"></div>				
-	</div>
-</div>		
+		<div class="exchange_window_det" style="display:none">
+			<div class="exchange_window_name"></div>
+			<div class="exchange_window_address"></div>
+			<div class="exchange_window_quote"></div>
+			<div class="exchange_window_open"></div>				
+		</div>
+	</div>		
 		
 
-
-
 </div>
-	

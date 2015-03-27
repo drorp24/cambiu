@@ -1,7 +1,27 @@
-<div class="middle-parent-det col-md-10 col-xs-10">
-	<div class="middle-child ">
-		<div class="distance">3</div>
-		<div class="units-d">km</div>
-		<div class="units-m"></div>
+<div class="email_request">
+	<div class="middle-parent-det col-md-10 col-xs-10">
+		<div style="display:none;">
+			<input type="email" class="email rounded" name="user[email]" placeholder="Enter your email to receive confirmation">
+		</div>
+		<div>
+			<%= simple_form_for @user, validate: true, remote: true, html: { data: { url: '/users', type: :json } } do |f| %>
+  				<%= f.input :email, placeholder: "Enter your email to receive confirmation", label: false, type: "email", required: true %>
+  				<%= f.input :pay_amount, as: "hidden" %>
+ 				<%= f.input :pay_currency, as: "hidden" %>
+ 				<%= f.input :buy_currency, as: "hidden" %>
+ 				<%= f.input :latitude, as: "hidden" %>
+ 				<%= f.input :longitude, as: "hidden" %>
+ 				<%= f.input :location_search, as: "hidden" %>
+				<%= f.input :geocoded_location, as: "hidden" %> 				
+		</div>
 	</div>
+	<div class="middle-parent-det col-md-2 col-xs-2">
+		<div>
+			<%= f.button :submit, 'Submit', class: "email_submit btn btn-mini btn-default rounded" %>
+			<% end %>
+		</div>
+	</div>
+</div>
+<div class="exchange_details" style="display: none;">
+	hello!
 </div>

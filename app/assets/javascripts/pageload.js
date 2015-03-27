@@ -28,18 +28,19 @@ var display = function(term) {
     }
 };        
 
+/*
 // extract form parameters
-var params = function() {        
+function params() {        
     form_el = '#search_form';
     var values = {};
     $.each($(form_el).serializeArray(), function(i, field) {
         values[field.name] = field.value;
     });
     values['sort'] = $('#sort_switch').bootstrapSwitch('state') ? 'quote' : 'distance';
-    values['edited_pay_amount'] = $('#pay_amount').val().replace(/\s+/g, '');
+//    values['edited_pay_amount'] = $('#pay_amount').val().replace(/\s+/g, '');
     return values;    
 };
-
+*/
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -64,10 +65,8 @@ var bind_currency_to_autonumeric = function() {
 
 };
 
-
 $(document).ready(function() {
     
-
     // Get user location and store in gloval vars and hidden form fields
     getLocation();
     

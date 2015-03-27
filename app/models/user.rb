@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:facebook]
 
+   validates_presence_of :email
+  
   def self.new_guest(params)
     new({guest: true, email: params[:email] || Devise.friendly_token.first(8)}.merge(params))
   end

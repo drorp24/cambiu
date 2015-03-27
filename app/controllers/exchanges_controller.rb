@@ -1,10 +1,12 @@
 class ExchangesController < ApplicationController 
   
   def index
+    @user = User.new
   end
   
   def create
-    render :index
+    @user = User.new
+   render :index
   end
   
   def search                                # TODO: eager loading, performance improvement!                   

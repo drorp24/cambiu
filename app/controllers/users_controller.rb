@@ -3,16 +3,15 @@ class UsersController < ApplicationController
 
   def create
     
-    # user hit the button again in the same session
-    return if session[:user_id] and users_params[:email].blank?
+    return if users_params[:email].blank? or User.where(email: users_params[:email]).exists? 
     
-  # user has already provided his email once
-    return if User.where(email: users_params[:email]).exists? 
-
     # new guest user
     @user = User.new_guest(users_params)
-    @user.save
-    respond_with @user
+    if @user.save
+      respond_with @user
+    else
+      render nothing: true
+    end
 
   end
       
