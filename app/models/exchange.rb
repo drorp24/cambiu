@@ -18,7 +18,7 @@ class Exchange < ActiveRecord::Base
   
   def self.search(params)
      
-    return if params[:pay_currency].blank? or params[:buy_currency].blank? or params[:pay_amount].blank?
+    return if params[:pay_currency].blank? or params[:buy_currency].blank? or params[:actual_pay_amount].blank?
     location_search = params[:location_search]
     latitude =        params[:latitude] 
     longitude =       params[:longitude]
@@ -26,7 +26,7 @@ class Exchange < ActiveRecord::Base
 
     pay_currency =    params[:pay_currency]
     buy_currency =    params[:buy_currency]
-    pay_amount =      Currency.strip(params[:pay_amount])
+    pay_amount =      params[:actual_pay_amount] # before: Currency.strip(params[:pay_amount])
     sort =            params[:sort] || "amount"
     
     cache_key = "#{location_search}#{latitude}#{longitude}#{distance}#{pay_currency}#{buy_currency}#{pay_amount}#{sort}"

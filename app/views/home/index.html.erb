@@ -60,6 +60,7 @@
 						  		<input type="hidden" name="distance">
 						  		<input type="hidden" name="sort" value="quote">
 						  		<input type="hidden" name="landing" value="<%= @landing %>">
+						  		<input type="hidden" name="actual_pay_amount" id="actual_pay_amount">
 						  		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 							</div>
 						  	<div id="search_div" class="form-group">
@@ -203,6 +204,12 @@
 
 <script>
 $(document).ready(function() {
+	
+
+	$('#home_form #actual_pay_amount').val($('#home_form #pay_amount_val').val());
+	$('#home_form #pay_amount').change(function() {
+		$('#home_form #actual_pay_amount').val($('#home_form #pay_amount_val').val());
+	})
 	
 	$('#location_link').click(function() {
 		$('#location_text').css('display', 'none');

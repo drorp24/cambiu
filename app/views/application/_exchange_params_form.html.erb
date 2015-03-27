@@ -75,6 +75,7 @@
   		<input type="hidden" name="sort" id="sort">
   		<input type="hidden" name="searched_location" id="searched_location">
   		<input type="hidden" name="landing" value="<%= @landing %>">
+  		<input type="hidden" name="actual_pay_amount" id="actual_pay_amount">
 	</div>
 
   	<div id="search_div" class="form-group col-md-2 col-xs-12" class="form-group">
@@ -90,6 +91,7 @@ $(document).ready(function(){
 		$('#exchange_params_display span').html("");
         $('#pay_currency').val('<%= params[:pay_currency] %>');
         $('#pay_amount').val('<%= params[:pay_amount] %>');
+        $('#actual_pay_amount').val('<%= params[:actual_pay_amount] %>');
         bind_currency_to_autonumeric();
         $('#buy_currency').val('<%= params[:buy_currency] %>');
         $('#latitude').val('<%= params[:latitude] %>');
@@ -116,11 +118,10 @@ $(document).ready(function(){
     var exchanges_by_distance = []; 
 
 
-$(document).ready(function() {
-
-    // params (copied from 1st page by _exchange_params_form)  // TODO: one form, one page
+   // params (copied from 1st page by _exchange_params_form)  // TODO: one form, one page
     var params = {
         pay_amount:         $('#pay_amount_val').val(),
+        actual_pay_amount:	$('#actual_pay_amount').val(),
         edited_pay_amount:  $('#pay_amount').val().replace(/\s+/g, ''),
         pay_currency:       $('#pay_currency').val(),
         buy_currency:       $('#buy_currency').val(),
@@ -155,6 +156,8 @@ $(document).ready(function() {
 
     function updatePage(exchanges) {
  
+        clearExchanges();
+
         if (exchanges && exchanges.length > 0) {
 
             updateExchanges(exchanges);
@@ -169,7 +172,7 @@ $(document).ready(function() {
 
     // On page load only
     function initialize() {
-        
+    	
         draw_map(params.location_search, params.latitude, params.longitude);
     
         $('#search_form').submit();     
@@ -182,8 +185,7 @@ $(document).ready(function() {
     // exchanges dynamic markup
  
     function updateExchanges(exchanges) {
-        clearExchanges();
-        for (var i = 0; i < exchanges.length; i++) {
+         for (var i = 0; i < exchanges.length; i++) {
             addExchange(exchanges[i], i);
         }
         
@@ -479,54 +481,53 @@ $(document).ready(function() {
     
     
     function draw_map(place, latitude, longitude) {
-         console.log('entry. place: ' + place) 
-        console.log('entry. latitude: ' + latitude) 
-       console.log('entry. longitude: ' + longitude) 
-       
+ 
         if (mobile) {return;}
         
         if (place) {
- console.log('if place')           
            geocoder = new google.maps.Geocoder();
            geocoder.geocode( { 'address': place}, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK) {
-console.log('status is ok')
+
                 center = results[0].geometry.location;
-console.log('and center is ' + center)
-              } else {
- console.log('status is not ok')
-               alert("Geocode was not successful for the following reason: " + status);
+		        var mapOptions = {
+		            center: center,
+		            zoom: 12
+		        };      		        
+		        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
+ 
+               } else {
+                alert("Geocode was not successful for the following reason: " + status);
               }
             }); 
+
         } else if (latitude && longitude) {
-console.log('if l & l')           
+
             center = new google.maps.LatLng(latitude, longitude);
+	        var mapOptions = {
+	            center: center,
+	            zoom: 12
+	        };      	        
+	        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
 
         } else {
+ 
            geocoder = new google.maps.Geocoder();
            geocoder.geocode( { 'address': 'London, UK'}, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK) {
-                center = results[0].geometry.location;
-              } else {
+	            center = results[0].geometry.location;
+		        var mapOptions = {
+		            center: center,
+		            zoom: 12
+		        };      		        
+		        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
+             } else {
                 alert("Geocode was not successful for the following reason: " + status);
               }
             });             
         }
  
- 
- console.log('center: ' + center)
-       
-        var mapOptions = {
-            center: center,
-            zoom: 12
-        };      
-        
-        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
     }    
-
-
-    
-});
 
 })
 </script>
