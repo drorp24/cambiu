@@ -1,9 +1,8 @@
 
 // global variables can be used anytime in the page
-var lat;
-var lng;
-
 function getLocation() {
+    
+    sessionStorage.getLocation_invoked = true;
 
     var latitude;
     var longitude;
@@ -23,13 +22,14 @@ function getLocation() {
     function displayPosition(position) {
         lat = position.coords.latitude;
         lng = position.coords.longitude;
+        sessionStorage.lat = lat;
+        sessionStorage.lng = lng;
         var latlng = new google.maps.LatLng(lat, lng);
         geocoder = new google.maps.Geocoder();
         geocoder.geocode({'latLng': latlng}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               if (results[1]) {
                 var place = results[1].formatted_address;
-                console.log('just geocoded place. It is: ' + place)
                 mixpanel.register({
                     "lat": lat,
                     "lng": lng,
@@ -38,7 +38,7 @@ function getLocation() {
                 $('#home_form #search_form #latitude').val(lat);
                 $('#home_form #search_form #longitude').val(lng);
                 $('#home_form #search_form #geocoded_location').val(place);
-                console.log('just placed it in the form. geocoded_location is now: ' + $('#home_form #search_form #geocoded_location').val())
+                $('#current_address').html(place);
               } else {
                 $('#current_address').html(" an environment with no location service");
               }
