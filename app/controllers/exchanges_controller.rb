@@ -3,12 +3,7 @@ class ExchangesController < ApplicationController
   def index
     @user = User.new
   end
-  
-  def create
-    @user = User.new
-   render :index
-  end
-  
+    
   def search                                # TODO: eager loading, performance improvement!                   
     @exchanges = Exchange.search(params)    # TODO: Error checking etc
     render json: @exchanges

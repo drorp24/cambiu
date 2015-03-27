@@ -34,6 +34,10 @@ $exchange-det-row-height: 30px;
 $exchange-det-row-height-mobile: 30px;
 $placeholder-color: #333;
 
+html.turbolinks-progress-bar::before {
+  background-color: red !important;
+  height: 5px !important;
+}
 
 @media (min-width: 768px){
   body#cambiu {    
