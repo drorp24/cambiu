@@ -67,8 +67,9 @@ var bind_currency_to_autonumeric = function() {
 
 $(document).ready(function() {
     
+    console.log('pageload');
+    
     // Get user location and store in gloval vars and hidden form fields
-    getLocation();
     
     bind_currency_to_autonumeric();
     

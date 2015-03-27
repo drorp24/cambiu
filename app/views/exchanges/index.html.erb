@@ -1,3 +1,18 @@
+<% content_for :search do %>
+	<a data-toggle="collapse" href="#exchange_params_change" id="exchange_title">
+		<div id="exchange_params">
+			<div id="exchange_params_display">
+				<%= render 'exchange_params_display' %>
+			</div>
+		</div>
+	</a>
+	<div class="collapse" id="exchange_params_change">
+		<div id="exchange_params_wrapper" class="row well clearfix">
+			<%= render 'exchange_params_form' %>
+		</div>
+	</div>
+<% end %>
+
 <div class="container-fluid">
 	<div id="exchanges_page">
 		<div class="row" id="exchanges_content">
@@ -18,9 +33,9 @@
 										<span id="sort_order"></span>
 									</div>
 									<div id="empty_message" style="display: none;">
-										<span>No deals at the moment in </span>
+										<span>No offers found in </span>
 										<span id="empty_location"></span>.&nbsp;
-										<span>Try changing your search</span>
+										<span><a>Change your search</a></span>
 										<span></span>
 									</div>
 								</div>

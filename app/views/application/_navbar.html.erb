@@ -11,20 +11,8 @@
       <a class="page-title navbar-brand text-center" id="comp_name" href="#">cambiu</a>
     </div>
     
-	<a data-toggle="collapse" href="#exchange_params_change" id="exchange_title">
-		<div id="exchange_params">
-			<div id="exchange_params_display">
-				<%= render 'exchange_params_display' %>
-			</div>
-		</div>
-	</a>
-	<div class="collapse" id="exchange_params_change">
-		<div id="exchange_params_wrapper" class="row well clearfix">
-			<%= render 'exchange_params_form' %>
-		</div>
-	</div>
-
-
+	<%= yield :search %>
+	
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="cambiu_menu">
       	<ul class="nav navbar-nav">
