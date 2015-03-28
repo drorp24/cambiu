@@ -14,30 +14,7 @@ if ($('body').hasClass('exchanges'))   {
 
 
     console.log('exchanges')
-    
-   // params (copied from 1st page by _exchange_params_form)  // TODO: one form, one page
-    var params = {
-        pay_amount:         $('#pay_amount_val').val(),
-        actual_pay_amount:  $('#actual_pay_amount').val(),
-        edited_pay_amount:  $('#pay_amount').val().replace(/\s+/g, ''),
-        pay_currency:       $('#pay_currency').val(),
-        buy_currency:       $('#buy_currency').val(),
-        latitude:           $('#latitude').val(),
-        longitude:          $('#longitude').val(),
-        geocoded_location:  $('#geocoded_location').val(),
-        location_search:    $('#location_search').val(),
-        searched_location:  $('#location_search').val() || $('#geocoded_location').val() || 'this area',
-        distance:           $('#distance').val(),
-        sort:               $('#sort_switch').bootstrapSwitch('state') ? 'quote' : 'distance',
-        landing:            $('#landing').val()
-    };
-    
-    console.log('populated params from form values.')
-    console.log('params.edited_pay_amount is now: ' + params.edited_pay_amount)
-    console.log('params.geocoded_location is now: ' + params.geocoded_location)
-    console.log('params.searched_location is now: ' + params.searched_location)
-   
- 
+        
     
     function beforeSubmit() {
         $('#empty_message').css('display', 'none');

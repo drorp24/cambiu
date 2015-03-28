@@ -35,9 +35,9 @@ function getLocation() {
                     "lng": lng,
                     "location": place 
                 });
-                $('#home_form #search_form #latitude').val(lat);
-                $('#home_form #search_form #longitude').val(lng);
-                $('#home_form #search_form #geocoded_location').val(place);
+                $('#search_form #latitude').val(lat);
+                $('#search_form #longitude').val(lng);
+                $('#search_form #geocoded_location').val(place);
                 $('#current_address').html(place);
               } else {
                 $('#current_address').html(" an environment with no location service");
