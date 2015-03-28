@@ -1,23 +1,9 @@
 var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
+var params;
+var pacContainerInitialized = false;
 
-
-// TODP: remove. Page 1 will pass parameters thru ajas formSubmit. No rul params
-/*
-var location_search =   getParameterByName('location_search');
-var latitude =          getParameterByName('latitude');
-var longitude =         getParameterByName('longitude');
-var geocoded_location = getParameterByName('geocoded_location');
-var distance =          getParameterByName('distance');
-var pay_currency =      getParameterByName('pay_currency');
-var buy_currency =      getParameterByName('buy_currency');
-var pay_amount =        getParameterByName('pay_amount');
-var sort =              getParameterByName('sort');
-var searched_location = (location_search ? location_search : ((latitude && longitude) ? "nearby" : "London"));
-*/
-
-// Global functions
 
 var display = function(term) {
     switch (term) {
@@ -27,20 +13,6 @@ var display = function(term) {
             return 'nearest first:';
     }
 };        
-
-/*
-// extract form parameters
-function params() {        
-    form_el = '#search_form';
-    var values = {};
-    $.each($(form_el).serializeArray(), function(i, field) {
-        values[field.name] = field.value;
-    });
-    values['sort'] = $('#sort_switch').bootstrapSwitch('state') ? 'quote' : 'distance';
-//    values['edited_pay_amount'] = $('#pay_amount').val().replace(/\s+/g, '');
-    return values;    
-};
-*/
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -69,13 +41,88 @@ $(document).ready(function() {
     
     console.log('pageload');
     
+
+    // Parameters & Form
+    // 
+    // Retrieve parameters from form or url and put in params objects
+    // If not in form then update form
+    
+
+    // Set form decoding fields first
+    $('#actual_pay_amount').val($('#pay_amount_val').val());
+    $('#pay_amount').change(function() {
+        $('#actual_pay_amount').val($('#pay_amount_val').val());
+    });
+    
+    $('#searched_location').val($('#location_search').val() || $('#geocoded_location').val() || 'this area');
+    $('#geocoded_location').change(function() {
+        $('#searched_location').val(searched_location);
+    });
+    if ($('#sort').val()) {var sort = $('#sort').val();} else {var sort = 'quote';}; // if sort added to home page. exchanges page has its own trigger.    
+    $('#sort').val(sort);
+    $('#sort_switch').bootstrapSwitch('state', sort == 'quote');
+    $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
+        val = state ? 'quote' : 'distance';
+        $('#sort').val(val);
+    });
+ 
+    var pay_amount =            $('#actual_pay_amount').val() ||    getParameterByName('actual_pay_amount');
+    var edited_pay_amount =     $('#pay_amount').val() ||           getParameterByName('pay_amount').replace(/\s+/g, '');
+    var pay_currency =          $('#pay_currency').val() ||         getParameterByName('pay_currency');
+    var buy_currency =          $('#buy_currency').val() ||         getParameterByName('buy_currency');
+    var latitude =              $('#latitude').val() ||             getParameterByName('latitude');
+    var longitude =             $('#longitude').val() ||            getParameterByName('longitude');
+    var geocoded_location =     $('#geocoded_location').val() ||    getParameterByName('geocoded_location');
+    var location_search =       $('#location_search').val() ||      getParameterByName('location_search');
+    var searched_location =     $('#searched_location').val() ||    getParameterByName('searched_location');
+    var distance =              $('distance').val() ||              getParameterByName('distance') || 'quote';
+    var sort =                  $('#sort').val() ||                 getParameterByName('sort');      
+    var landing =               $('#landing').val() ||              getParameterByName('landing');      
+    
+    
+
+    params = {
+        pay_amount:         pay_amount,
+        edited_pay_amount:  edited_pay_amount,
+        pay_currency:       pay_currency,
+        buy_currency:       buy_currency,
+        latitude:           latitude,
+        longitude:          longitude,
+        geocoded_location:  geocoded_location,
+        location_search:    location_search,
+        searched_location:  location_search || geocoded_location || 'this area',
+        distance:           distance,
+        sort:               sort,
+        landing:            landing
+    };
+
+    // Form
+    // Init values (first entry into page)
+    
+    if (!$('#pay_amount').val()) {
+        $('#pay_amount').val(params.edited_pay_amount);
+        $('#pay_amount_val').val(params.pay_amount);
+        $('#actual_pay_amount').val(params.pay_amount);
+        $('#pay_currency').val(params.pay_currency);
+        $('#buy_currency').val(params.buy_currency);
+        $('#latitude').val(params.latitude);
+        $('#longitude').val(params.longitude);
+        $('#geocoded_location').val(params.geocoded_location);
+        $('#location_search').val(params.location_search);
+        $('#searched_location').val(params.searched_location);
+        $('#distance').val(params.distance);
+        $('#sort').val(params.sort);
+        $('#landing').val(params.landing);
+    }
+    
+    
+
     // Get user location and store in gloval vars and hidden form fields
     if (!sessionStorage.getLocation_invoked || !sessionStorage.lat || !sessionStorage.lng) {getLocation();}
     
     bind_currency_to_autonumeric();
     
     // Fix google autocomplete z-index dynamically
-    var pacContainerInitialized = false;
     $('.location.search').keypress(function() {
         if (!pacContainerInitialized) {
         $('.pac-container').css('z-index', 

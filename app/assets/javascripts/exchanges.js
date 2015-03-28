@@ -303,23 +303,6 @@ if ($('body').hasClass('exchanges'))   {
         params.buy_currency = $*(this).val();
     });
     
-/* senseless. TODO: Handle the case where location is reverted to current location only. All the rest covered below.
-    // location change
-    $('#location_search').change(function() {
-        var location_search = $('#location_search').val();
-        var latitude = $('#latitude').val();
-        var longitude = $('#longitude').val();
-        console.log('Location change: location_search: ' + $('#location_search').val())
-        console.log('location_search form value is: ' + location_search)
-        console.log('Location change: params.geocoded_location: ' + params.geocoded_location)
-        console.log('Location change: location_search: ' + location_search)
-        var searched_location = location_search || params.geocoded_location || 'this area';
-         $('#searched_location').val(searched_location);
-         $('#searched_location_display').html(searched_location);
-         params.searched_location = searched_location;
-    });
-*/    
-    
     // Enble location search - Google maps places autocomplete
     var input = document.getElementById('location_search');
     var searchBox = new google.maps.places.SearchBox(input, {
@@ -338,7 +321,6 @@ if ($('body').hasClass('exchanges'))   {
         name = $('#location_search').val();
         if (name == null) {alert('null')} 
         if (name == "") {alert('spaces')}
-        console.log(name)
         $('#searched_location').val(name);
         $('#searched_location_display').html(name);
         params.location_search = name;
