@@ -90,8 +90,8 @@ if ($('body').hasClass('exchanges'))   {
         }
         exchange_el.find('.address').html(exchange.address);
         exchange_el.find('.open_today').html(exchange.open_today);
-        exchange_el.find('.open_today').attr('href', exchange.website);
-        exchange_el.find('.phone').attr('href', 'tel:+44' + exchange.phone.substring(1));
+        exchange_el.find('.open_today').attr('href', exchange.website ? exchange.website : "#");
+        exchange_el.find('.phone').attr('href', exchange.phone ? 'tel:+44' + exchange.phone.substring(1) : "#");
         exchange_el.find('.website').attr('href', exchange.website);
         exchange_el.find('.directions').attr('data-lat', exchange.latitude); 
         exchange_el.find('.directions').attr('data-lng', exchange.longitude); 
@@ -164,7 +164,7 @@ if ($('body').hasClass('exchanges'))   {
         });
         
         $('.directions').click(function() {
-            var from =  new google.maps.LatLng(params.latitude, params.longitude);
+            var from =  production ? new google.maps.LatLng(params.latitude, params.longitude) : new google.maps.LatLng(params.test_lat, params.test_lng);
             var to =    new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
             calcRoute(from, to);
             return false;  
