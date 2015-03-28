@@ -2,8 +2,6 @@
 // global variables can be used anytime in the page
 function getLocation() {
     
-    sessionStorage.getLocation_invoked = true;
-
     var latitude;
     var longitude;
 

@@ -6,6 +6,8 @@ if ($('body').hasClass('exchanges'))   {
     var map;
     var center;
     var geocoder;
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
     var markers = [];
     var exchanges = [];
     var exchanges_array = [];
@@ -13,7 +15,7 @@ if ($('body').hasClass('exchanges'))   {
     var exchanges_by_distance = []; 
 
 
-    console.log('exchanges')
+    console.log('exchanges');
         
     
     function beforeSubmit() {
@@ -43,7 +45,7 @@ if ($('body').hasClass('exchanges'))   {
         
         draw_map(params.location_search, params.latitude, params.longitude);
     
-        $('#exchange_params_wrapper #search_form').submit();     
+        $('#search_form').submit();     
     }
           
 
@@ -63,6 +65,10 @@ if ($('body').hasClass('exchanges'))   {
     }
     
 
+    //
+    // Add Exchange
+    // 
+ 
     function addExchange(exchange, index) {
     
         var exchange_el =   $('.exchange_row.template').clone().removeClass('template');
@@ -82,13 +88,24 @@ if ($('body').hasClass('exchanges'))   {
             exchange_el.find('.comparison').css('display', 'block');
             exchange_el.find('.comparison-amount').html('€9.99');
         }
+        exchange_el.find('.address').html(exchange.address);
+        exchange_el.find('.open_today').html(exchange.open_today);
+        exchange_el.find('.open_today').attr('href', exchange.website);
+        exchange_el.find('.phone').attr('href', 'tel:+44' + exchange.phone.substring(1));
+        exchange_el.find('.website').attr('href', exchange.website);
+        exchange_el.find('.directions').attr('data-lat', exchange.latitude); 
+        exchange_el.find('.directions').attr('data-lng', exchange.longitude); 
         
-        
+
         exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
         exchange_det.appendTo('#exchanges_list .list-group #exchanges_items');        
     }
     
-    
+    //
+    // Add Exchange
+    //   
+ 
+ 
    function add_photo(exchange) {
         var request = {query: exchange.name + ' ' + exchange.address};
         
@@ -145,6 +162,13 @@ if ($('body').hasClass('exchanges'))   {
             $('.email_request').css('display', 'none');
             $('.exchange_details').css('display', 'block');
         });
+        
+        $('.directions').click(function() {
+            var from =  new google.maps.LatLng(params.latitude, params.longitude);
+            var to =    new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
+            calcRoute(from, to);
+            return false;  
+        });        
 
     }
     
@@ -339,9 +363,12 @@ if ($('body').hasClass('exchanges'))   {
     });
     
     
+    // TODO: Try again to DRY the code...
     function draw_map(place, latitude, longitude) {
  
         if (mobile) {return;}
+        
+        directionsDisplay = new google.maps.DirectionsRenderer();
         
         if (place) {
            geocoder = new google.maps.Geocoder();
@@ -353,7 +380,8 @@ if ($('body').hasClass('exchanges'))   {
                     center: center,
                     zoom: 12
                 };                      
-                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
+                directionsDisplay.setMap(map);   
  
                } else {
                 alert("Geocode was not successful for the following reason: " + status);
@@ -367,7 +395,8 @@ if ($('body').hasClass('exchanges'))   {
                 center: center,
                 zoom: 12
             };                  
-            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            directionsDisplay.setMap(map);    
 
         } else {
  
@@ -379,14 +408,34 @@ if ($('body').hasClass('exchanges'))   {
                     center: center,
                     zoom: 12
                 };                      
-                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);    
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                directionsDisplay.setMap(map);    
              } else {
                 alert("Geocode was not successful for the following reason: " + status);
               }
             });             
         }
  
-    }  
+    }
+    
+    function calcRoute(from, to) {
+
+      var request = {
+          origin: from,
+          destination: to,
+          travelMode: google.maps.TravelMode.WALKING,
+          region: "uk"
+      };
+
+      directionsService.route(request, function(response, status) {
+          console.log(status);
+        if (status == google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+        }
+      });
+
+    }
+  
     
     
         // new page

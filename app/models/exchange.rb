@@ -29,27 +29,46 @@ class Exchange < ActiveRecord::Base
     pay_amount =      params[:actual_pay_amount] # before: Currency.strip(params[:pay_amount])
     sort =            params[:sort] || "amount"
     
-    cache_key = "#{location_search}#{latitude}#{longitude}#{distance}#{pay_currency}#{buy_currency}#{pay_amount}#{sort}"
-    Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
-    
-      center = location_search.present? ? location_search : ((latitude.present? and longitude.present?) ? [latitude, longitude] : 'London')  
-    # center = ['London']    # TODO: Force London. This is to first check it can find exchanges by the user's location
-      box = Geocoder::Calculations.bounding_box(center, distance)
+    center = location_search.present? ? location_search : ((latitude.present? and longitude.present?) ? [latitude, longitude] : 'London')  
+  # center = ['London']    # TODO: Force London. This is to first check it can find exchanges by the user's location
+    box = Geocoder::Calculations.bounding_box(center, distance)
 
+    cache_key = "#{location_search}#{latitude}#{longitude}#{distance}#{pay_currency}#{buy_currency}#{pay_amount}#{sort}"
+    if Rails.application.config.action_controller.perform_caching
+        puts ""
+        puts "searched results fetched from cache"
+        puts ""
+        Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
+          perform_search(box, pay_amount, pay_currency, buy_currency, sort)
+        end
+    else
+      puts ""
+      puts "searched results not fetched from cache"
+      puts ""
+      perform_search(box, pay_amount, pay_currency, buy_currency, sort)  
+    end
+   
+  end
+    
+  def self.perform_search(box, pay_amount, pay_currency, buy_currency, sort)      
+  
       @exchange_quotes = []
       exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:open_today, :rates)
-      exchanges.each do |exchange|       
+      exchanges.each do |exchange| 
+        next unless exchange.id == 48 
         exchange_quote = {}
         exchange_quote[:id] = exchange.id
         exchange_quote[:name] = exchange.name
         exchange_quote[:address] = exchange.address
         exchange_quote[:open_today] = exchange.todays_hours
+        exchange_quote[:phone] = exchange.phone
+        exchange_quote[:website] = exchange.website
         exchange_quote[:latitude] = exchange.latitude
         exchange_quote[:longitude] = exchange.longitude 
         exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : rand(1.2..17.9) 
         exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"  
         exchange_quote[:quote] = nil
-        if pay_currency and buy_currency and pay_amount      
+        if pay_amount  and pay_currency and buy_currency     
           if quote = Money.new(rand(330..460), buy_currency) # exchange.quote(pay_currency, buy_currency, pay_amount) TODO: Handle random quotes
             exchange_quote[:edited_quote] = Currency.display(quote)
             quote = quote.fractional / 100.00
@@ -64,8 +83,6 @@ class Exchange < ActiveRecord::Base
       else
         @exchange_quotes.sort_by{|e| e[:distance] }
       end
-            
-    end
 
   end
 

@@ -1,6 +1,7 @@
 var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
+var production = $('body').hasClass('production');
 var params;
 var pacContainerInitialized = false;
 
@@ -67,7 +68,7 @@ $(document).ready(function() {
     });
  
     var pay_amount =            $('#actual_pay_amount').val() ||    getParameterByName('actual_pay_amount');
-    var edited_pay_amount =     $('#pay_amount').val() ||           getParameterByName('pay_amount').replace(/\s+/g, '');
+    var edited_pay_amount =     $('#pay_amount').val().replace(/\s+/g, '') ||           getParameterByName('pay_amount').replace(/\s+/g, '');
     var pay_currency =          $('#pay_currency').val() ||         getParameterByName('pay_currency');
     var buy_currency =          $('#buy_currency').val() ||         getParameterByName('buy_currency');
     var latitude =              $('#latitude').val() ||             getParameterByName('latitude');
@@ -86,9 +87,9 @@ $(document).ready(function() {
         edited_pay_amount:  edited_pay_amount,
         pay_currency:       pay_currency,
         buy_currency:       buy_currency,
-        latitude:           latitude,
-        longitude:          longitude,
-        geocoded_location:  geocoded_location,
+        latitude:           production ? latitude : 51.5130,
+        longitude:          production ? longitude : -0.1310,
+        geocoded_location:  production ? geocoded_location : "London Soho",
         location_search:    location_search,
         searched_location:  location_search || geocoded_location || 'this area',
         distance:           distance,
@@ -118,7 +119,7 @@ $(document).ready(function() {
     
 
     // Get user location and store in gloval vars and hidden form fields
-    if (!sessionStorage.getLocation_invoked || !sessionStorage.lat || !sessionStorage.lng) {getLocation();}
+    getLocation();
     
     bind_currency_to_autonumeric();
     

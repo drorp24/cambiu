@@ -465,7 +465,7 @@ html.turbolinks-progress-bar::before {
     #exchanges_page {
       margin-top: $navbar-height + $exchange_params_change_height;
       #exchanges {
-        z-index: 1000;
+ /*       z-index: 1000; */
         margin-left: -15px;
         #exchanges_header {
         z-index: 1001;
@@ -475,7 +475,7 @@ html.turbolinks-progress-bar::before {
         #exchanges_list {
         box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
         border-radius: 0;
-        z-index: 1000;
+/*        z-index: 1000; */
         .list-group
            #exchanges_header_item {
             color: $ab-color;
@@ -493,10 +493,10 @@ html.turbolinks-progress-bar::before {
               background-color: #f5f5f5;
               color: #555;
               text-decoration: none;
-              z-index: 1000;
+ /*             z-index: 1000; */
             }
           .collapse {
-            z-index: 1000;
+/*            z-index: 1000; */
            }
         }
       }

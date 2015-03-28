@@ -20,7 +20,7 @@
 
 </head>
   	
-<body id="cambiu" class="<%= params[:controller]%>">
+<body id="cambiu" class="<%= "#{params[:controller]} #{Rails.env}" %>">
 
 	<%= render 'facebook' %>
 	<%= render 'navbar' %>	
