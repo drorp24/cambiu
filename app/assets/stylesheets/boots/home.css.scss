@@ -30,14 +30,15 @@ $navbar-height: 60px;
 $exchange_params_change_height: 77px;
 $exchange-row-height: 50px;
 $exchange-row-height-mobile: 75px;
-$exchange-det-row-height: 30px;
-$exchange-det-row-height-mobile: 30px;
+$exchange-det-row-height: 60px;
+$exchange-det-row-height-mobile: 60px;
 $placeholder-color: #333;
 
 html.turbolinks-progress-bar::before {
   background-color: red !important;
   height: 5px !important;
 }
+
 
 @media (min-width: 768px){
   body#cambiu {    
@@ -526,9 +527,28 @@ html.turbolinks-progress-bar::before {
     .exchange_row_det {
       padding-left: 15px;
       padding-right: 15px;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding-top: 30px;
+      padding-bottom: 30px;
       margin-bottom: 0;
+      .exchange_details {
+        i {
+          text-align: center;
+          font-size: 1.5em;
+          color: #555;
+        }
+        .middle-parent-det div {
+          text-align: center;
+          &.address {
+            text-align: left;
+            font-size: 1.3em;
+            color: #555;
+            font-weight: 100;
+          }
+          &.opening_hours {
+            text-align: left;
+          }
+        }
+      }
     }
     .middle-parent-det {           
       height: $exchange-det-row-height;  
@@ -536,8 +556,17 @@ html.turbolinks-progress-bar::before {
         height: $exchange-det-row-height;
         vertical-align: middle;
   //    text-align: center;
-        display: table-cell;
+ //       display: table-cell;
+        div {
+          margin-top: 15px;
+        }
       }
+      .email_submit {
+        height: $search-input-height;
+        position: relative;
+        top: 10px;
+      }
+
     }
     .quote {
       font-size: 1.5em;
@@ -983,7 +1012,7 @@ html.turbolinks-progress-bar::before {
     #exchanges_page {
       margin-top: $navbar-height;
       margin-left: -15px;
-      margin-right: -15px;
+      margin-right: -15px; 
       border-radius: $border-radius;
       #exchanges {
         z-index: 1000;
@@ -1038,19 +1067,48 @@ html.turbolinks-progress-bar::before {
     .exchange_row_det {
       padding-left: 15px;
       padding-right: 15px;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding-top: 30px;
+      padding-bottom: 30px;
       margin-bottom: 0;
+      .exchange_details {
+        i {
+          text-align: center;
+          font-size: 1.5em;
+          color: #555;
+        }
+        .middle-parent-det div {
+          text-align: center;
+          &.address {
+            font-size: 1.3em;
+            color: #555;
+            font-weight: 100;
+          }
+          &.opening_hours {
+          }
+        }
+      }
     }
     .middle-parent-det {           
-      height: $exchange-det-row-height-mobile;  
+      height: $exchange-det-row-height-mobile; 
       .middle-child {
         height: $exchange-det-row-height-mobile;
         vertical-align: middle;
   //    text-align: center;
-        display: table-cell;
+  //      display: table-cell;
+        div {
+          margin-top: 15px;
+        }
+     }
+      .email_submit {
+         height: $input-height-mobile;
+         position: relative;
+         bottom: 5px;
+         
       }
-    }
+     }
+     .exchange_details .middle-parent-det {
+       margin-bottom: 30px;
+     }
      .quote {
       font-size: 1.2em;
       font-weight: 600;
@@ -1092,6 +1150,30 @@ html.turbolinks-progress-bar::before {
       width: 100%;
       border-radius: 4px;
       height: $exchange-det-row-height-mobile;
+    }
+    input[type="email"]::-moz-placeholder { 
+      color: #333
+    }
+    .email_request form input[type="email"] {
+      position: relative;
+      bottom: 20px;
+      border-radius: 4px;
+    }
+    ::-webkit-input-placeholder {
+      color: $placeholder-color;
+      text-transform: uppercase;
+    }
+    ::-moz-placeholder {
+      color: $placeholder-color;
+    }
+    :-moz-placeholder {   /* Older versions of Firefox */
+      color: $placeholder-color;
+    }
+    :-ms-input-placeholder { 
+      color: $placeholder-color;
+    }
+    .rounded {
+      border-radius: 4px;
     }
 // exchange row
   }

@@ -2,8 +2,9 @@
 // global variables can be used anytime in the page
 function getLocation() {
 
-    console.log('getLocation')
-        
+    if (sessionStorage.latitude && sessionStorage.longitude) {return;}
+    console.log('getLocation');   
+       
     var latitude;
     var longitude;
 
