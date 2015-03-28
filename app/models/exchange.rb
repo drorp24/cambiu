@@ -35,16 +35,12 @@ class Exchange < ActiveRecord::Base
 
     cache_key = "#{location_search}#{latitude}#{longitude}#{distance}#{pay_currency}#{buy_currency}#{pay_amount}#{sort}"
     if Rails.application.config.action_controller.perform_caching
-        puts ""
-        puts "searched results fetched from cache"
-        puts ""
+        Rails.logger.info("searched results fetched from cache")
         Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
           perform_search(box, pay_amount, pay_currency, buy_currency, sort)
         end
     else
-      puts ""
-      puts "searched results not fetched from cache"
-      puts ""
+      Rails.logger.info("searched results *not* fetched from cache")
       perform_search(box, pay_amount, pay_currency, buy_currency, sort)  
     end
    
@@ -55,7 +51,6 @@ class Exchange < ActiveRecord::Base
       @exchange_quotes = []
       exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:open_today, :rates)
       exchanges.each do |exchange| 
-        next unless exchange.id == 48 
         exchange_quote = {}
         exchange_quote[:id] = exchange.id
         exchange_quote[:name] = exchange.name

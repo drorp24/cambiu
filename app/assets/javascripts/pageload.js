@@ -49,7 +49,9 @@ $(document).ready(function() {
     // If not in form then update form
     
 
-    // Set form decoding fields first
+    // Populate location and form decoding fields first
+    getLocation();
+    
     $('#actual_pay_amount').val($('#pay_amount_val').val());
     $('#pay_amount').change(function() {
         $('#actual_pay_amount').val($('#pay_amount_val').val());
@@ -71,9 +73,9 @@ $(document).ready(function() {
     var edited_pay_amount =     $('#pay_amount').val().replace(/\s+/g, '') ||           getParameterByName('pay_amount').replace(/\s+/g, '');
     var pay_currency =          $('#pay_currency').val() ||         getParameterByName('pay_currency');
     var buy_currency =          $('#buy_currency').val() ||         getParameterByName('buy_currency');
-    var latitude =              $('#latitude').val() ||             getParameterByName('latitude');
-    var longitude =             $('#longitude').val() ||            getParameterByName('longitude');
-    var geocoded_location =     $('#geocoded_location').val() ||    getParameterByName('geocoded_location');
+    var latitude =              $('#latitude').val() ||             getParameterByName('latitude') || sessionStorage.latitude;
+    var longitude =             $('#longitude').val() ||            getParameterByName('longitude') || sessionStorage.longitude;
+    var geocoded_location =     $('#geocoded_location').val() ||    getParameterByName('geocoded_location') || sessionStorage.geocoded_location;
     var location_search =       $('#location_search').val() ||      getParameterByName('location_search');
     var searched_location =     $('#searched_location').val() ||    getParameterByName('searched_location');
     var distance =              $('distance').val() ||              getParameterByName('distance') || 'quote';
@@ -87,14 +89,17 @@ $(document).ready(function() {
         edited_pay_amount:  edited_pay_amount,
         pay_currency:       pay_currency,
         buy_currency:       buy_currency,
-        latitude:           production ? latitude : 51.5130,
-        longitude:          production ? longitude : -0.1310,
+        latitude:           latitude,
+        longitude:          longitude,
         geocoded_location:  production ? geocoded_location : "London Soho",
         location_search:    location_search,
         searched_location:  location_search || geocoded_location || 'this area',
         distance:           distance,
         sort:               sort,
-        landing:            landing
+        landing:            landing,
+        test_lat:           51.513,
+        test_lng:           -0.131
+        
     };
 
     // Form
@@ -116,11 +121,7 @@ $(document).ready(function() {
         $('#landing').val(params.landing);
     }
     
-    
 
-    // Get user location and store in gloval vars and hidden form fields
-    getLocation();
-    
     bind_currency_to_autonumeric();
     
     // Fix google autocomplete z-index dynamically
