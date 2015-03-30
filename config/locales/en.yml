@@ -59,4 +59,16 @@ en:
     signin_button: "Book now"
     thanks_title: "Thanks for the interest"
     thanks_text: "We launch soon!"
+  best_deals:
+    ga_tracking_id: "UA-60617243-1"
+    mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    title: "Need money exchange?"
+    text: "Let us find you the best currency exchange deals around you!"
+    search_button: "Exchange"
+    offer_prefix: "We offer "
+    gain: "Your gain: "
+    signin_button: "Book now"
+    thanks_title: "Thanks for the interest"
+    thanks_text: "We launch soon!"
+    
  
