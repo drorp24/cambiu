@@ -21,7 +21,7 @@ Rails.application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Changed to true for heroku: rails now uses CloudFonrt cdn 
-  config.serve_static_assets = true
+  config.serve_static_assets = false
 
   # Compress JavaScripts and CSS.
   config.assets.compress = true
@@ -60,7 +60,7 @@ Rails.application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"
-  config.action_controller.asset_host = "http://d29wr857bsaesb.cloudfront.net"
+  # onfig.action_controller.asset_host = "http://d29wr857bsaesb.cloudfront.net"
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
