@@ -97,8 +97,8 @@ $(document).ready(function() {
         distance:           distance,
         sort:               sort,
         landing:            landing,
-        test_lat:           51.513,
-        test_lng:           -0.131
+        test_lat:           51.50169,
+        test_lng:           -0.16030
         
     };
 
@@ -121,6 +121,10 @@ $(document).ready(function() {
         $('#landing').val(params.landing);
     }
     
+    // for tests only:
+    
+    $('#latitude').val(params.test_lat)
+    $('#longitude').val(params.test_lng)
 
     bind_currency_to_autonumeric();
     
