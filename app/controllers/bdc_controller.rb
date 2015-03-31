@@ -1,5 +1,11 @@
 class BdcController < ApplicationController 
-#  caches_page :index    # removed to allow expires_in to work. delete the gem later
+respond_to :json
+
+  def create    
+    @exchange = Exchange.new(params)
+    @exchange.save
+    respond_with @exchange
+  end
   
   def index
     render layout: 'bdc'

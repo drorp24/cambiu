@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'best_deals',         to: 'landing#index'
   get 'start_today',        to: 'landing#index'
   get 'bdc',                to: 'bdc#index'
+  post 'bdc/create',        to: 'bdc#create'
   # landing pages
 
   # non-devise route: post users, routed here to users#create to create guest users

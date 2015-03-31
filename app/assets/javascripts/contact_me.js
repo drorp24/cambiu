@@ -18,14 +18,17 @@ var firstName = name; // For Success/Failure Message
 if (firstName.indexOf(' ') >= 0) {
 firstName = name.split(' ').slice(0, -1).join(' ');
 }
+ga('send', 'event', 'button', 'click', 'Contact us', email);
 $.ajax({
-url: "././mail/contact_me.php",
+url: "/bdc/create",
 type: "POST",
 data: {
+status: 'applicant',
 name: name,
 phone: phone,
 email: email,
-message: message
+message: message,
+authenticity_token: $('input[name='authenticity_token']).val()
 },
 cache: false,
 success: function() {
@@ -50,7 +53,7 @@ $('#success > .alert-danger').append('</div>');
 //clear all fields
 $('#contactForm').trigger("reset");
 },
-})
+});
 },
 filter: function() {
 return $(this).is(":visible");

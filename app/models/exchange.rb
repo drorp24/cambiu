@@ -8,6 +8,7 @@ class Exchange < ActiveRecord::Base
   belongs_to  :upload
   belongs_to  :admin_user
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
+  enum status: [ :active, :applicant ]
 
   def effective_rates
     rates.any? ? rates : (chain ? chain.rates : nil)
