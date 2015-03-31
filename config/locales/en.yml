@@ -70,5 +70,8 @@ en:
     signin_button: "Book now"
     thanks_title: "Thanks for the interest"
     thanks_text: "We launch soon!"
-    
+  bdc:
+    ga_tracking_id: "UA-61298482-1"
+    mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+   
  

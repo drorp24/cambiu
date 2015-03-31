@@ -1,0 +1,22 @@
+<html>
+	<meta charset="utf-8">
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<title>Cambiu</title>
+  	<%= csrf_meta_tags %>
+
+	<%= stylesheet_link_tag "bdc", :media => "all", 'data-turbolinks-track' => true %>
+	<%= render 'favicons' %>
+	<%= render 'bdc_fonts' %>	
+
+    <%= javascript_include_tag "bdc", 'data-turbolinks-track' => true %>
+	<%= render 'google_analytics' %>
+	<%= render 'mixpanel' %>
+	
+<body id="page-top" class="index">	
+	
+	<%= yield %>
+	
+</body>
+
+</html>
