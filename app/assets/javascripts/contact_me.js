@@ -28,7 +28,7 @@ name: name,
 phone: phone,
 email: email,
 message: message,
-authenticity_token: $('input[name='authenticity_token']).val()
+//authenticity_token: $('input[name='authenticity_token']).val()
 },
 cache: false,
 success: function() {
