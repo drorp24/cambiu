@@ -5,7 +5,6 @@
 //= require best_in_place.jquery-ui
 //= require jquery.purr
 //= require best_in_place.purr
-//= require turbolinks
 $(document).ready(function() {
     function add_rate() {
     var top_tr = $('#index_table_rates tbody').find('tr').first();
