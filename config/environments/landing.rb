@@ -1,7 +1,6 @@
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
-
-  config.is_landing_page = false
+  
+  config.is_landing_page = true
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -14,7 +13,7 @@ Rails.application.configure do
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
   config.static_cache_control = "public, max-age=31536000"   # not passed to Cloudfront
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
@@ -23,7 +22,7 @@ Rails.application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Changed to true for heroku: rails now uses CloudFonrt cdn 
-  config.serve_static_assets = true
+  config.serve_static_assets = false
 
   # Compress JavaScripts and CSS.
   config.assets.compress = true
@@ -62,7 +61,7 @@ Rails.application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"
-  config.action_controller.asset_host = "http://d368eop2iyjvb5.cloudfront.net"
+  # onfig.action_controller.asset_host = "http://d29wr857bsaesb.cloudfront.net"
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -84,9 +83,10 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
     
-  config.action_mailer.default_url_options = { host: 'staging.cambiu.com' }
+  config.action_mailer.default_url_options = { host: 'www.cambiu.com' }
   
-  config.fb_app_id = '803314713056637'
-  config.fb_app_secret = 'f8535d022dd9afff4c14e8a8c28b5ab7' 
+  config.fb_app_id = '723500647767844'
+  config.fb_app_secret = 'bb6127ea9108606b581b1fb288fd08e1' 
+  config.bg_img = "https://d2zc23renulrga.cloudfront.net/assets/41254/izzg1ykwb9tmf2c7932d/ZLSw0SXxThSrkXRIiCdT_DSC_0345.jpg"
 
 end

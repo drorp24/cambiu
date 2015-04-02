@@ -9,11 +9,11 @@
 	<title><%= content_for?(:title) ? yield(:title) : "Cambiu" %></title>
 	<%= csrf_meta_tags %>
 
-	<%= stylesheet_link_tag "boots", :media => "all", 'data-turbolinks-track' => true %>
+	<%= stylesheet_link_tag "boots", :media => "all", 'data-turbolinks-track' => !Rails.application.config.is_landing_page %>
 	<%= render 'favicons' %>
 	<%= render 'fonts' %>	
 
-    <%= javascript_include_tag "boots", 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag "boots", 'data-turbolinks-track' => !Rails.application.config.is_landing_page %>
 	<%= render 'google_maps' %>
 	<%= render 'google_analytics' %>
 	<%= render 'mixpanel' %>
