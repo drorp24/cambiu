@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   protected
   
   def set_landing
-    @landing = request.original_fullpath.remove("/")
+    @landing = request.original_fullpath.remove("/").split("?")[0]
   end
 
   def find_guest_user
