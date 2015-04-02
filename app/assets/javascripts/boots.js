@@ -17,3 +17,4 @@
 //= require bootstrap-sprockets
 //= require maps
 //= require typeahead.bundle
+//= require analytics
