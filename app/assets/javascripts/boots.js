@@ -11,10 +11,8 @@
 // about supported directives.
 //
 //= require jquery
-// require jquery.turbolinks
 //= require jquery_ujs
 //= require autonumeric
 //= require bootstrap-sprockets
 //= require maps
 //= require analytics
-// require turbolinks
