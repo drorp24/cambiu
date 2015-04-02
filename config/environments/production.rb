@@ -1,6 +1,5 @@
 Rails.application.configure do
-  
-  config.is_landing_page = false
+  # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
   config.cache_classes = true
