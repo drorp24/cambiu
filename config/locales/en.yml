@@ -38,7 +38,7 @@ en:
     thanks_title: "Thanks for the interest"
     thanks_text: "We launch soon!"
   save_money:
-    ga_tracking_id: "UA-60416557-1"
+    ga_tracking_id: "UA-61560045-1"
     mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
     title: "Exchange currency with cambiu"
     text: "Save up to 10% of your money. It's that simple."
