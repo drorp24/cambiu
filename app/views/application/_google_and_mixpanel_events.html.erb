@@ -1,0 +1,50 @@
+<script>
+	
+$(document).ready(function() {
+	
+    // Link analyses
+    // TODO: Handle buttons too
+    // TODO: Try using exitent attributes such as "id" or "href" rather than having to add data- fields ('data-link')
+ 
+    mixpanel.track_links("a", "link", function(ele) { 
+        return { clicked: $(ele).attr('id') };
+    }); 
+    $("a").click(function(){
+       dataLayer.push({
+           'link': $(this).attr('id')
+       }); 
+    });
+    $("button").click(function(){
+        dataLayer.push({
+           'button': $(this).attr('id')
+       }); 
+    });
+
+    // Change analyses
+	// TODO: replace $("[data-analyze='change']") with $('select') and $('input')
+    // TODO: Try to guess the key/values from existent html attributes rather than having to add data- fields ('data-key-)
+
+    $("[data-analyze='change']").change(function() {
+
+        var activity = $(this).attr('data-activity');
+        var key1 = $(this).attr('data-key1');
+        var val1 = $(this).attr('data-val1');
+        var key2 = $(this).attr('data-key2');
+        var val2 = $(this).attr('data-val2');
+        var key3 = $(this).attr('data-key3');
+        var val3 = $(this).val();
+        
+        var aa = {};
+        aa[key1] = val1;
+        aa[key2] = val2;
+        aa[key3] = val3;
+
+        dataLayer.push(aa);
+        mixpanel.track(activity, aa);
+    });
+
+	
+	
+})
+		
+</script>
