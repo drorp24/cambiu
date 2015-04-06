@@ -42,6 +42,8 @@ $(document).ready(function() {
     
     console.log('pageload');
     
+//    mixpanel.track("Page view");
+    
 
     // Parameters & Form
     // 
@@ -123,8 +125,8 @@ $(document).ready(function() {
     
     // for tests only:
     
-    $('#latitude').val(params.test_lat)
-    $('#longitude').val(params.test_lng)
+    $('#latitude').val(params.test_lat);
+    $('#longitude').val(params.test_lng);
 
     bind_currency_to_autonumeric();
     
