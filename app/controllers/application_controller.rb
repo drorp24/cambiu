@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   protected
   
   def set_landing
-    @landing = request.original_fullpath.remove("/")
+    @landing = request.original_fullpath.remove("/").split("?")[0]
     @landing = "app" unless ["save_money", "best_rates", "currency_exchange"].include? @landing 
   end
 

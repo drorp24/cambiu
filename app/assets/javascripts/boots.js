@@ -11,12 +11,13 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require autonumeric
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap-sprockets
 //= require maps
 //= require bootstrap-switch
 //= require pageload
 //= require jquery.form
 //= require exchanges
+//= require turbolinks
