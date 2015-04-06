@@ -25,10 +25,10 @@
 						<input class="form-control" placeholder="Check rates">
 				  	</div>
 					<div class="form-group col-md-3 col-xs-11">
-						<input type="text" id="user_pay_amount" data-autonumeric="true" name="user[pay_amount]" class="form-control">
+						<input type="text" id="pay_amount" data-autonumeric="true" name="user[pay_amount]" class="form-control" value="1000">
 				  	</div>
 				  	<div class="form-group col-md-3 col-xs-11">
-						<select id="user_pay_currency" name="user[pay_currency]" class="select optional text-center form-control">
+						<select id="pay_currency" name="user[pay_currency]" class="select optional text-center form-control">
 							<option value="GBP" selected="selected">GBP</option>
 							<option value="EUR">EUR</option>
 							<option value="USD">USD</option>
@@ -38,7 +38,7 @@
 						</select>
 					</div>
 				  	<div id="the-basics" class="form-group col-md-3 col-xs-11">
-						<select id="user_buy_currency" name="user[buy_currency]" class="select optional text-center form-control">
+						<select id="buy_currency" name="user[buy_currency]" class="select optional text-center form-control">
 							<option value="USD" selected="selected">USD</option>
 							<option value="EUR">EUR</option>
 							<option value="GBP">GBP</option>
@@ -48,7 +48,6 @@
 						</select>
 				  	</div>
 				  	<div class="hidden" style="display:none">
-				  		<input id="user_pay_amount" type="hidden" name="user[pay_amount]">
 				  		<input type="hidden" name="user[latitude]" value="51.507351">
 				  		<input type="hidden" name="user[longitude]" value="-0.127758">
 				  		<input type="hidden" name="user[bbox]" value="default">
@@ -65,7 +64,7 @@
 						<input id="signin_request" type="text" name="signin_request" class="form-control not-input">
 				  	</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
-						<input id="user_email" type="email" name="user[email]" class="form-control" placeholder="Enter your email">
+						<input id="email" type="email" name="user[email]" class="form-control" placeholder="Enter your email">
 				  	</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
 						<button id="email_button" class="form-control btn btn-success" type="text"><%= t :signin_button, scope: [@landing], default: 'Book it' %></button>
@@ -80,9 +79,7 @@
 </div>
 <script>
 $(document).ready(function() {
-	
-	$('#user_pay_amount_val, #user_pay_amount').val("1,000.00");
-	
+		
 
 	// hide address bar - not working as of iOS7
 	window.addEventListener("load",function() {
@@ -118,10 +115,10 @@ $(document).ready(function() {
 		mixpanel.track('First mobile click');
 		$('#mobile_input_trigger').css('display', 'none');
 		$('.form-group:not(#mobile_input_trigger, .email_group)').css('display', 'block');
-		$('#user_buy_amount').focus();
+		$('#buy_amount').focus();
 	})
 
-	$('#user_pay_amount, #user_pay_currency, #user_buy_currency').change(function() {
+	$('#pay_amount, #pay_currency, #buy_currency').change(function() {
 		ga('send', 'event', 'button', 'click', 'Populating rates');
 		mixpanel.track('Checking rates');
 	})
@@ -130,9 +127,9 @@ $(document).ready(function() {
 		ga('send', 'event', 'button', 'click', 'Clicking search');
 		mixpanel.track("Search button");
 
-		var pay_cents =    $('#user_pay_amount').val().replace(',', '').replace('.', '');
-		var pay_currency = $('#user_pay_currency').val();
-		var buy_currency = $('#user_buy_currency').val();
+		var pay_cents =    $('#pay_amount').val().replace(',', '').replace('.', '');
+		var pay_currency = $('#pay_currency').val();
+		var buy_currency = $('#buy_currency').val();
 
 		$.get('/currencies/exchange', {
 			pay_cents: pay_cents,
@@ -155,7 +152,7 @@ $(document).ready(function() {
 		ga('send', 'event', 'button', 'click', 'Leaving email');
 		mixpanel.track("Email button");
 		$('#message_header').html('<%= t :thanks_title, scope: [@landing], default: 'Thank you for your interest!' %>')
-		if ($('#user_email').val()) {
+		if ($('#email').val()) {
 			$('#message_remainder').html('<%= t :thanks_text, scope: [@landing], default: 'We will let you know as soon as we launch!' %>')			
 		}
 	})
@@ -164,48 +161,6 @@ $(document).ready(function() {
 
 
 
-
-// typeahead - with override issues
-
-	$('.typeahead.input-sm').siblings('input.tt-hint').addClass('hint-small');
-	$('.typeahead.input-lg').siblings('input.tt-hint').addClass('hint-large');	
-	
-	var substringMatcher = function(strs) {
-  		return function findMatches(q, cb) {
-    	var matches, substrRegex;
- 
-	    // an array that will be populated with substring matches
-	    matches = [];
-	 
-	    // regex used to determine if a string contains the substring `q`
-	    substrRegex = new RegExp(q, 'i');
-	 
-	    // iterate through the pool of strings and for any string that
-	    // contains the substring `q`, add it to the `matches` array
-	    $.each(strs, function(i, str) {
-	      if (substrRegex.test(str)) {
-	        // the typeahead jQuery plugin expects suggestions to a
-	        // JavaScript object, refer to typeahead docs for more info
-	        matches.push({ value: str });
-      }
-    });
- 
-    cb(matches);
-  };
-};
- 
-var currencies = ['GBP', 'USD', 'EUR', 'AUD', 'CAD', 'JPY'];
- 
-$('#new_user .typeahead').typeahead({
-  hint: true,
-  highlight: true,
-  minLength: 1
-},
-{
-  name: 'currencies',
-  displayKey: 'value',
-  source: substringMatcher(currencies)
-});
 
 })
 </script>

@@ -51,6 +51,9 @@ en:
     staging:
       ga_tracking_id: "UA-60776239-1"
       mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    test:
+      ga_tracking_id: "UA-60416557-1"
+      mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
     production:
       ga_tracking_id: "UA-60416557-1"
       mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
