@@ -14,9 +14,11 @@ $(document).ready(function() {
            'link': $(this).attr('id')
        }); 
     });
+    console.log('binding dataLayer vars to button click');
     $("button").click(function(){
         dataLayer.push({
-           'button': $(this).attr('id')
+        	'event': 'button',
+           	'clicked': $(this).attr('id')
        }); 
     });
 
