@@ -114,7 +114,7 @@ $(document).ready(function() {
 
 	// Analyses & Flow
 	$('#mobile_input_trigger input').click(function() {
-		ga('send', 'event', 'button', 'click', 'First mobile click');
+//		ga('send', 'event', 'button', 'click', 'First mobile click');
 		mixpanel.track('First mobile click');
 		$('#mobile_input_trigger').css('display', 'none');
 		$('.form-group:not(#mobile_input_trigger, .email_group)').css('display', 'block');
@@ -122,12 +122,12 @@ $(document).ready(function() {
 	})
 
 	$('#user_pay_amount, #user_pay_currency, #user_buy_currency').change(function() {
-		ga('send', 'event', 'button', 'click', 'Populating rates');
+//		ga('send', 'event', 'button', 'click', 'Populating rates');
 		mixpanel.track('Checking rates');
 	})
 
 	$('#search_button').click(function() {
-		ga('send', 'event', 'button', 'click', 'Clicking search');
+//		ga('send', 'event', 'button', 'click', 'Clicking search');
 		mixpanel.track("Search button");
 
 		var pay_cents =    $('#user_pay_amount').val().replace(',', '').replace('.', '');
@@ -152,7 +152,7 @@ $(document).ready(function() {
 	});
 
 	$('#email_button').click(function() {
-		ga('send', 'event', 'button', 'click', 'Leaving email');
+//		ga('send', 'event', 'button', 'click', 'Leaving email');
 		mixpanel.track("Email button");
 		$('#message_header').html('<%= t :thanks_title, scope: [@landing], default: 'Thank you for your interest!' %>')
 		if ($('#user_email').val()) {

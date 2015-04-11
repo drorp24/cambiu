@@ -11,16 +11,17 @@
 
 	<%= stylesheet_link_tag "boots", :media => "all", 'data-turbolinks-track' => true %>
 	<%= render 'favicons' %>
-	<%= render 'fonts' %>	
 
-    <%= javascript_include_tag "boots", 'data-turbolinks-track' => true %>
-	<%= render 'google_analytics' %>
+    <%= render 'google_maps' if @landing == 'app' %>
 	<%= render 'mixpanel' %>
+    <%= javascript_include_tag "boots", 'data-turbolinks-track' => true %>
 
 </head>
   	
 <body id="landing">
 
+	<%= render 'google_tag_manager' %>
+	<%= render 'google_and_mixpanel_events' %>
 	<%= render 'facebook' %>
 	<%= render 'navbar' %>	
 	<%= bootstrap_flash %>	  
