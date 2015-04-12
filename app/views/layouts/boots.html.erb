@@ -14,7 +14,9 @@
 
     <%= render 'google_maps' if @landing == 'app' %>
 	<%= render 'mixpanel' %>
-    <%= javascript_include_tag "boots", 'data-turbolinks-track' => true %>
+	<% unless params[:controller] == "landing" %>
+    	<%= javascript_include_tag "boots", 'data-turbolinks-track' => true, defer: true %>
+	<% end %>
 
 </head>
   	
@@ -27,6 +29,10 @@
 	<%= bootstrap_flash %>	  
 
 	<%= yield %>
+
+	<% if params[:controller] == "landing" %>
+    	<%= javascript_include_tag "landing", 'data-turbolinks-track' => true, defer: true %>
+	<% end %>
 
 </body>
 
