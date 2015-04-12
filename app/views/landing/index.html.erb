@@ -64,7 +64,7 @@
 						<input id="signin_request" type="text" name="signin_request" class="form-control not-input">
 				  	</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
-						<input id="email" type="email" name="user[email]" class="form-control" placeholder="Enter your email">
+						<input id="email" type="email" name="user[email]" class="form-control" placeholder="Enter your email" required>
 				  	</div>
 				  	<div class="email_group form-group col-md-3 col-xs-11" style="display: none">
 						<button id="email_button" class="form-control btn btn-success" type="text"><%= t :signin_button, scope: [@landing], default: 'Book it' %></button>
@@ -96,7 +96,9 @@ $(document).ready(function() {
 	
 
 	// rails' jquery_ujs remote by hand
-	$('#new_user').submit(function() {  
+	$('#new_user').submit(function() { 
+		email = $('#email').val(); 
+		dataLayer.push({'email': email});
 	    var valuesToSubmit = $(this).serialize();
 	    $.ajax({
 	        type: "POST",

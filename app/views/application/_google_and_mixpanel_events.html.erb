@@ -9,18 +9,6 @@ $(document).ready(function() {
     mixpanel.track_links("a", "link", function(ele) { 
         return { clicked: $(ele).attr('id') };
     }); 
-    $("a").click(function(){
-       dataLayer.push({
-           'link': $(this).attr('id')
-       }); 
-    });
-    console.log('binding dataLayer vars to button click');
-    $("button").click(function(){
-        dataLayer.push({
-        	'event': 'button',
-           	'clicked': $(this).attr('id')
-       }); 
-    });
 
     // Change analyses
 	// TODO: replace $("[data-analyze='change']") with $('select') and $('input')
@@ -41,7 +29,6 @@ $(document).ready(function() {
         aa[key2] = val2;
         aa[key3] = val3;
 
-        dataLayer.push(aa);
         mixpanel.track(activity, aa);
     });
 
