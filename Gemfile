@@ -60,6 +60,9 @@ group :test, :staging, :production do
 end
 gem "bootstrap-switch-rails"
 gem 'jquery-turbolinks'
+gem 'actionpack-action_caching'
+gem 'dalli'
+gem 'memcachier'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

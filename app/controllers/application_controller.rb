@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
-  layout 'boots'
-  
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_landing
 #  before_action :authenticate_user!
@@ -12,6 +10,11 @@ class ApplicationController < ActionController::Base
 
   
   protected
+  
+  def set_http_cache_headers
+    expires_in 1.month, public: true
+    fresh_when last_modified: Date.new(2015, 1, 1), public: true
+  end
   
   def set_landing
     @landing = request.original_fullpath.remove("/").split("?")[0]

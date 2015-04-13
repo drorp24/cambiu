@@ -1,7 +1,9 @@
 <script>
-console.log('land branch');
+  var host = window.location.host
+  var path = window.location.pathname
+  hostpath = (host == 'localhost:3000' || host == 'www.cambiu.com' || host == 'testing.cambiu.com') ? host : host + path
   dataLayer = [{
-  	'hostpath': 	window.location.host + window.location.pathname
+  	'hostpath': 	hostpath
   }];
 </script>
 

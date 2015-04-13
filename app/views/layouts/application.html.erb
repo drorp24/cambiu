@@ -1,14 +1,37 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Cambiu</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
 
-<%= yield %>
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<title><%= content_for?(:title) ? yield(:title) : "Cambiu" %></title>
+	<%= csrf_meta_tags %>
+
+	<%= stylesheet_link_tag "boots", :media => "all", 'data-turbolinks-track' => true %>
+
+ 	<% unless params[:controller] == "landing" %>
+    	<%= javascript_include_tag "boots", 'data-turbolinks-track' => true, defer: true %>
+	<% end %>
+
+</head>
+  	
+<body id="cambiu" class="<%= "#{params[:controller]} #{Rails.env}" %>">
+
+	<%= render 'google_tag_manager' %>
+	<%= render 'navbar' %>	
+	<%= bootstrap_flash %>	  
+
+	<%= yield %>
+
+	<% if params[:controller] == "landing" %>
+    	<%= javascript_include_tag "landing", 'data-turbolinks-track' => true %>
+	<% else %>
+		<%= render 'facebook' %>
+	   	<%= render 'google_maps' %>
+	<% end %>
 
 </body>
+
 </html>

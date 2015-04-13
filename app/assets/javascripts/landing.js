@@ -14,4 +14,6 @@
 //= require jquery.turbolinks
 //= require bootstrap-sprockets
 //= require jquery.form
+//= require mixpanel
+//= require landing_index
 //= require turbolinks

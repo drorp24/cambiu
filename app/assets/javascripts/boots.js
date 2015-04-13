@@ -20,4 +20,6 @@
 //= require pageload
 //= require jquery.form
 //= require exchanges
+//= require mixpanel
+//= require landing_index
 //= require turbolinks
