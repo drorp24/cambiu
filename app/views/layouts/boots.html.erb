@@ -12,9 +12,7 @@
 	<%= stylesheet_link_tag "boots", :media => "all", 'data-turbolinks-track' => true %>
 	<%= render 'favicons' %>
 
-    <%= render 'google_maps' if @landing == 'app' %>
-	<%= render 'mixpanel' %>
-	<% unless params[:controller] == "landing" %>
+ 	<% unless params[:controller] == "landing" %>
     	<%= javascript_include_tag "boots", 'data-turbolinks-track' => true, defer: true %>
 	<% end %>
 
@@ -23,7 +21,6 @@
 <body id="cambiu" class="<%= "#{params[:controller]} #{Rails.env}" %>">
 
 	<%= render 'google_tag_manager' %>
-	<%= render 'google_and_mixpanel_events' %>
 	<%= render 'facebook' %>
 	<%= render 'navbar' %>	
 	<%= bootstrap_flash %>	  
@@ -31,8 +28,10 @@
 	<%= yield %>
 
 	<% if params[:controller] == "landing" %>
-    	<%= javascript_include_tag "landing", 'data-turbolinks-track' => true, defer: true %>
+    	<%= javascript_include_tag "landing", 'data-turbolinks-track' => true %>
 	<% end %>
+	<%= render 'mixpanel' %>
+   	<%= render 'google_maps' if @landing == 'app' %>
 
 </body>
 
