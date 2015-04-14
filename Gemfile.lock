@@ -315,6 +315,7 @@ DEPENDENCIES
   jquery-turbolinks
   le
   memcachier
+  monetize
   money
   money-rails
   newrelic_rpm
@@ -323,6 +324,7 @@ DEPENDENCIES
   pg
   rails (= 4.1.6)
   rails_12factor
+  responders
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   simple_form

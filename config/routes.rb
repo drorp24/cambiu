@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   # landing pages
   root 'home#index'
+  resources :searches
   get 'currency_exchange',  to: 'landing#index', as: :currency_exchange  
   get 'save_money',         to: 'landing#index', as: :save_money
   get 'best_rates',         to: 'landing#index', as: :best_rates

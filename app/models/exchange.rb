@@ -12,10 +12,32 @@ class Exchange < ActiveRecord::Base
   
   geocoded_by :address
 
+
+  # TODO: Write anew
+  def quote(pay, buy)
+    return nil unless rates
+    return nil unless 
+      (rate = rates.where(pay_currency: pay_currency, buy_currency: buy_currency).first) or
+      (rev_rate = rates.where(buy_currency: pay_currency, pay_currency: buy_currency).first) 
+    if rate
+      return nil unless rate.pay_cents.present? and rate.buy_cents.present?
+      buy_cents = pay_amount.to_i * 100 * (rate.buy_cents.to_f / rate.pay_cents.to_f)
+    end
+    if rev_rate
+      return nil unless rev_rate.pay_cents.present? and rev_rate.buy_cents.present?      
+      buy_cents = pay_amount.to_i * 100 * (rev_rate.pay_cents.to_f / rev_rate.buy_cents.to_f)  #TODO: Introduce buy vs sell rates
+    end
+    Money.new(buy_cents, buy_currency)
+  end
+
+
+
   def effective_rates
     rates.any? ? rates : (chain ? chain.rates : nil)
   end
   
+# TODO: Remove. All search will be handled by Search model
+    
   def self.search(params)
      
     return if params[:pay_currency].blank? or params[:buy_currency].blank? or params[:actual_pay_amount].blank?
@@ -81,7 +103,7 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  def quote(pay_currency, buy_currency, pay_amount)
+  def old_quote(pay_currency, buy_currency, pay_amount)
     return nil unless rates
     return nil unless 
       (rate = rates.where(pay_currency: pay_currency, buy_currency: buy_currency).first) or
@@ -96,6 +118,24 @@ class Exchange < ActiveRecord::Base
     end
     Money.new(buy_cents, buy_currency)
   end
+
+# TODO: Remove. All search will be handled by Search model
+
+  def todays_hours
+    bh = open_today
+        return nil unless bh
+    open1 = bh.open1 ? bh.open1.strftime("%H:%M") : nil
+    close1 = bh.close1 ? bh.close1.strftime("%H:%M") : nil
+    open2 = bh.open2 ? bh.open2.strftime("%H:%M") : nil
+    close2 = bh.close2 ? bh.close2.strftime("%H:%M") : nil
+    if open1 and close1
+      result = open1 + " - " + close1
+      if open2 and close2
+        result += ", " + open2 + " - " + close2
+      end
+    end
+    result
+  end 
 
   def update_csv_business_hours(csv_busines_hours, day)
 
@@ -155,21 +195,6 @@ class Exchange < ActiveRecord::Base
   end
 =end  
 
-  def todays_hours
-    bh = open_today
-        return nil unless bh
-    open1 = bh.open1 ? bh.open1.strftime("%H:%M") : nil
-    close1 = bh.close1 ? bh.close1.strftime("%H:%M") : nil
-    open2 = bh.open2 ? bh.open2.strftime("%H:%M") : nil
-    close2 = bh.close2 ? bh.close2.strftime("%H:%M") : nil
-    if open1 and close1
-      result = open1 + " - " + close1
-      if open2 and close2
-        result += ", " + open2 + " - " + close2
-      end
-    end
-    result
-  end 
 
   def self.list(amenity, area)
     options={amenity:       amenity,

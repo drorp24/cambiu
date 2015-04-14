@@ -63,6 +63,8 @@ gem 'jquery-turbolinks'
 gem 'actionpack-action_caching'
 gem 'dalli'
 gem 'memcachier'
+gem "responders"
+gem 'monetize'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
