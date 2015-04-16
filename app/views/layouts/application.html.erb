@@ -9,10 +9,10 @@
 	<title><%= content_for?(:title) ? yield(:title) : "Cambiu" %></title>
 	<%= csrf_meta_tags %>
 
-	<%= stylesheet_link_tag "boots", :media => "all", 'data-turbolinks-track' => true %>
+	<%= stylesheet_link_tag "boots", :media => "all" %>
 
  	<% unless params[:controller] == "landing" %>
-    	<%= javascript_include_tag "boots", 'data-turbolinks-track' => true, defer: true %>
+    	<%= javascript_include_tag "boots", defer: true %>
 	<% end %>
 
 </head>
@@ -26,7 +26,7 @@
 	<%= yield %>
 
 	<% if params[:controller] == "landing" %>
-    	<%= javascript_include_tag "landing", 'data-turbolinks-track' => true %>
+    	<%= javascript_include_tag "landing" %>
 	<% else %>
 		<%= render 'facebook' %>
 	   	<%= render 'google_maps' %>

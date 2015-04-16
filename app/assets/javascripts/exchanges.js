@@ -1,6 +1,6 @@
 $(document).ready(function() {
     
-if ($('body').hasClass('exchanges'))   {    
+//if ($('body').hasClass('exchanges'))   {    
 
     // TODO: these global var won't survive the next page. Move to sessionStore.
     var map;
@@ -307,25 +307,6 @@ if ($('body').hasClass('exchanges'))   {
     }    
 
  
-    // pay_amount change
-    $('#pay_amount').change(function() {
-        $('#pay_amount_display').html($(this).val());
-        params.edited_pay_amount = $(this).val;
-        params.pay_amount = $('#pay_amount_val').val();
-    });
- 
-    // pay_currency change
-    $('#pay_currency').change(function() {
-        $('#pay_amount_display').html($('#pay_amount').val());
-        $('#pay_currency_display').html($(this).val());
-        params.pay_currency = $(this).val();
-    });
-    
-    // buy_currency change
-    $('#buy_currency').change(function() {
-        $('#buy_currency_display').html('to ' + $(this).val());
-        params.buy_currency = $*(this).val();
-    });
     
     // Enble location search - Google maps places autocomplete
     var input = document.getElementById('location_search');
@@ -367,7 +348,7 @@ if ($('body').hasClass('exchanges'))   {
     function draw_map(place, latitude, longitude) {
  
         if (mobile) {return;}
-        
+        console.log('drawing map...');        
         directionsDisplay = new google.maps.DirectionsRenderer();
         
         if (place) {
@@ -449,8 +430,8 @@ if ($('body').hasClass('exchanges'))   {
         beforeSubmit:   beforeSubmit,
              success:   updatePage 
     });
-  
 
-}
+
+//}
     
 });

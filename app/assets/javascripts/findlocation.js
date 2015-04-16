@@ -2,6 +2,7 @@
 // global variables can be used anytime in the page
 function getLocation() {
 
+//  There should be a better way of avoiding to ask the user again and again if he permits to use his location
     if (sessionStorage.latitude && sessionStorage.longitude) {return;}
     console.log('getLocation');   
        
@@ -17,7 +18,7 @@ function getLocation() {
       );
     }
     else {
-      alert("Geolocation is not supported by this browser");
+      alert("We cant locate you. Please specify where you want to search.");
     }
     
     function displayPosition(position) {
@@ -49,9 +50,6 @@ function getLocation() {
             }
       });
 
-        $('#user_latitude').val(lat);
-        $('#user_longitude').val(lng);
-        
     }
 }
 

@@ -35,12 +35,6 @@ $exchange-det-row-height-mobile: 60px;
 $placeholder-color: #333;
 
 
-html.turbolinks-progress-bar::before {
-  background-color: red !important;
-  height: 5px !important;
-}
-
-
 @media (min-width: 768px){
   body#cambiu {    
     font-family: 'Roboto', sans-serif;

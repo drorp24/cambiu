@@ -1,0 +1,19 @@
+<%= simple_form_for Search.new do |f| %>
+	
+	<div class="form-group col-md-2">
+		<%= f.input :pay_currency, label: false %>
+	</div>
+	<div class="form-group col-md-2">
+		<%= f.input :buy_currency, label: false %>
+	</div>
+	<div class="form-group col-md-2">
+		<%= f.input :pay_amount, label: false %>
+	</div>
+	<div class="form-group col-md-2">
+		<%= f.input :buy_amount, label: false %>
+	</div>
+	<div class="form-group col-md-2">
+		<%= f.button :submit %>
+	</div>
+
+<% end %>
