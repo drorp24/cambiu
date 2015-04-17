@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require bootstrap-select
 //= require autonumeric
 //= require pageload
 //= require jquery_ujs
