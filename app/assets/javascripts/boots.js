@@ -11,12 +11,13 @@
 // about supported directives.
 //
 //= require jquery
+//= require bootstrap-select
 //= require autonumeric
+//= require pageload
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require findlocation
 //= require bootstrap-switch
-//= require pageload
 //= require jquery.form
 //= require search
 //= require exchanges

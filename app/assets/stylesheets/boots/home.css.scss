@@ -32,12 +32,36 @@ $exchange-row-height: 50px;
 $exchange-row-height-mobile: 75px;
 $exchange-det-row-height: 60px;
 $exchange-det-row-height-mobile: 60px;
-$placeholder-color: #333;
+$placeholder-font-size: 0.8em;
+$placeholder-color: #999;
 
+@mixin search-placeholder-def($placeholder-color) {
+  color:    $placeholder-color !important;
+  text-align: left;
+  text-indent: 5% !important;
+  font-size: $placeholder-font-size; 
+  text-transform: uppercase; 
+}
+
+@mixin search-placeholder($placeholder-color) {   
+  &::-webkit-input-placeholder { /* WebKit browsers */
+    @include search-placeholder-def($placeholder-color);
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    @include search-placeholder-def($placeholder-color);
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+    @include search-placeholder-def($placeholder-color);
+ }
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+    @include search-placeholder-def($placeholder-color);
+  }
+}
 
 @media (min-width: 768px){
   body#cambiu {    
     font-family: 'Roboto', sans-serif;
+    color: $basic-color;
     &:not(.exchanges) {
       font-family: Helvetica;
     }
@@ -47,6 +71,8 @@ $placeholder-color: #333;
     .mobile_only {
       display: none;
     }
+
+    
     #search_button.btn-cambiu {
 /*      background-image: linear-gradient(to bottom, lighten($brand-color, $brand-lighten-factor) 0%, $brand-color 100%); */
       background-color: $brand-color;
@@ -340,6 +366,41 @@ $placeholder-color: #333;
       #home_container {
         margin-top: 75vh;
         color: $inverse-color;
+        
+        #new_search {
+          select {
+            text-indent: 0;
+             width: 100%;
+            option {
+                text-indent: 0;
+                background-color: white;
+                color: $basic-color;
+            }
+          }
+          .bootstrap-select {
+            width: 100%;
+            button.selectpicker {
+              color: $inverse-color;
+            }
+          }
+          .dropdown-menu {
+            .popover-title {
+                color: $basic-color;
+                font-family: Roboto;
+                font-size: 0.9em;
+                text-transform: uppercase;
+                text-align: center;
+                button {
+                  visibility: hidden;
+                }
+            }
+          }  
+          input {
+            @include search-placeholder(#999);           
+         }
+        }
+
+        
         #home_message {
           text-shadow: $hallow-shadow;
           #message_header {
@@ -648,6 +709,27 @@ $placeholder-color: #333;
     -moz-background-size: cover;
     -o-background-size: cover;
         background-size: cover;
+
+    #new_search {
+      select {
+        text-indent: 0;
+        background-color: $brand-color;
+        width: 100%;
+        .popover-title {
+          color: $basic-color;
+        }
+        option {
+          text-indent: 0;
+          background-color: white;
+          color: $basic-color;
+        }
+      }
+      input {
+        @include search-placeholder(#fff);           
+     }
+    }
+
+
     .btn-cambiu {
 /*      background-image: linear-gradient(to bottom, lighten($brand-color, $brand-lighten-factor) 0%, $brand-color 100%); */
       background-color: $brand-color;

@@ -26,14 +26,23 @@ function getParameterByName(name) {
 // Prefix input elements with the respective selected currency 
 var bind_currency_to_autonumeric = function() {
   
-    update_currency_symbol();
-
-    $('.currency_select').change(function() {
-        update_currency_symbol();
+    $('[data-autonumeric]').each(function() {
+        if ($(this).val() > 0) {
+            console('val: ' + String($(this).val()))
+            update_currency_symbol($(this));
+        }
     });
 
-    function update_currency_symbol() {
-        $('[data-autonumeric]').autoNumeric('update', {aSign: $('.currency_select').find('option:selected').attr('data-symbol')}); 
+    $('.currency_select').change(function() {
+        console.log('changed')
+        update_currency_symbol($('#' + $(this).attr('data-symboltarget')));
+    });
+
+    function update_currency_symbol(el) {
+        currency_select_el = $('#' + el.attr('data-symbolsource'));
+        console.log('currency_select_el ' + '#' + el.attr('data-symbolsource'))
+        $('[data-autonumeric]').autoNumeric('update', {aSign: currency_select_el.find('option:selected').attr('data-symbol')}); 
+        alert('stop')
     }
 
 };
@@ -42,7 +51,9 @@ $(document).ready(function() {
     
     console.log('pageload');
     
-//    mixpanel.track("Page view");
+//    bind_currency_to_autonumeric();
+    
+ //    mixpanel.track("Page view");
     
 
     // Parameters & Form

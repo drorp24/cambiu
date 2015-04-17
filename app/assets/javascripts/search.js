@@ -93,8 +93,6 @@ $(document).ready(function() {
 
     // UI
 
-    bind_currency_to_autonumeric();
-    
     // Fix google autocomplete z-index dynamically
     $('.location.search').keypress(function() {
         if (!pacContainerInitialized) {

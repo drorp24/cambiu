@@ -34,13 +34,19 @@ class Currency
     if priority && priority < 10
       hash = {}
       hash[:iso_code] = attributes[:iso_code]
-      hash[:name] = attributes[:name]
-      array[priority] ||= []
+#      hash[:name] = attributes[:name]
+     hash[:symbol] = attributes[:symbol]
+     hash[:select] = attributes[:symbol] + ' ' + attributes[:iso_code]
+     array[priority] ||= []
       array[priority] << hash
     end
     array
     end.compact.flatten
   end  
+  
+  def self.major_with_symbol
+    major.collect{|c| [ c[:select], c[:iso_code], {:'data-symbol' => c[:symbol]}] }
+  end
   
   def self.select
    hash = {}
