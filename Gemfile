@@ -6,7 +6,6 @@ gem 'rails', '4.1.6'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
@@ -26,7 +25,7 @@ gem 'spring',        group: :development
 
 gem 'rails_12factor', group: :production
 
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin' , github: 'activeadmin'
 gem 'devise'
 gem 'activerecord-postgis-adapter'
 gem 'geocoder'
@@ -39,7 +38,6 @@ gem 'diskcached'
 gem 'active_admin_importable'
 gem 'tod'
 gem 'twitter-bootstrap-rails'
-gem 'bootstrap-sass', '~> 3.3.3'
 gem 'simple_form'
 gem 'backstretch-rails'
 gem 'money'
@@ -52,7 +50,8 @@ gem 'newrelic_rpm'
 gem 'actionpack-page_caching'
 gem 'omniauth-facebook'
 gem 'best_in_place', github: 'bernat/best_in_place'
-gem 'font-awesome-sass'
+gem 'bootstrap-sass', '~> 3.3.4'
+gem 'sass-rails', '>= 3.2'
 group :test, :staging, :production do
   gem 'le'
 end
@@ -62,6 +61,8 @@ gem 'dalli'
 gem 'memcachier'
 gem "responders"
 gem 'monetize'
+#gem 'compass-rails'
+#gem 'chosen-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

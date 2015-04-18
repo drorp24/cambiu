@@ -11,10 +11,14 @@
 // about supported directives.
 //
 //= require jquery
+//= require select-parser
+//= require abstract-chosen
+//= require chosen.jquery
+//= require choseninit
 //= require autonumeric
 //= require pageload
 //= require jquery_ujs
-//= require bootstrap-sprockets
+//= require bootstrap
 //= require findlocation
 //= require bootstrap-switch
 //= require jquery.form
