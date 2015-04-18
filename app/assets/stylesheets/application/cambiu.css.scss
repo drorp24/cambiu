@@ -1,0 +1,59 @@
+// Imports
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome-sprockets";
+
+// Variables
+$font-family: "Roboto";
+$color: #888;
+
+// Mixins
+@mixin search-placeholder-def($placeholder-color) {
+  color:    $placeholder-color !important;
+  text-align: left;
+  text-indent: 5% !important;
+  font-size: $placeholder-font-size; 
+  text-transform: uppercase; 
+}
+
+@mixin search-placeholder($placeholder-color) {   
+  &::-webkit-input-placeholder { /* WebKit browsers */
+    @include search-placeholder-def($placeholder-color);
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    @include search-placeholder-def($placeholder-color);
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+    @include search-placeholder-def($placeholder-color);
+ }
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+    @include search-placeholder-def($placeholder-color);
+  }
+}
+
+
+// cross-media definitions
+body, a {
+  font-family: $font-family;
+  color: $color;
+}
+
+@media (min-width: $screen-md-min){
+
+  body {
+    background-image: image-url('header_background.jpg') no-repeat center center cover;
+
+  }
+
+}
+
+
+
+@media (max-width: $screen-md-min) {
+
+  body {
+    background-image: image-url('header_background-mobile.jpg') no-repeat center center cover;
+
+  }
+
+}

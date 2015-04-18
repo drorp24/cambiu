@@ -33,11 +33,6 @@ function getLocation() {
               if (results[1]) {
                 var place = results[1].formatted_address;
                 sessionStorage.geocoded_location = place;
-                mixpanel.register({
-                    "lat": lat,
-                    "lng": lng,
-                    "location": place 
-                });
                 $('#latitude').val(lat);
                 $('#longitude').val(lng);
                 $('#geocoded_location').val(place);

@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="page-title navbar-brand text-center" id="comp_name" href="#">cambiu</a>
+      <a class="page-title navbar-brand text-center" id="navbar_logo" href="#"><%= image_tag 'logo.png' %></a>
     </div>
     
 	<%= yield :search %>
@@ -18,10 +18,9 @@
       	<ul class="nav navbar-nav">
    	 	</ul>
 	     <ul class="nav navbar-nav navbar-right">
-			<li><a href="#" data-link="About us">About us</a></li>
-			<li><a href="#" data-link="Blog">Blog</a></li>
-			<li><a href="#" data-link="Add exchange">Add Exchange</a></li>
-			<li><a href="#" data-link="Contact">Contact</a></li>
+			<li><%= link_to "How it works", "#" %></li>
+			<li><%= link_to "Add Exchange", "cambiulanding.com/bdc" %></li>
+			<li><%= mail_to "info@cambiu.com", "Contact" %></li>
 			<!--
 			<li><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %></li>
 			<li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>

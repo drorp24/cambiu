@@ -26,11 +26,12 @@ $(document).ready(function() {
 
     function updatePage(exchanges) {
  
+        draw_map(params.location_search, params.latitude, params.longitude);
         clearExchanges();
 
         if (exchanges && exchanges.length > 0) {
 
-            updateExchanges(exchanges);
+           updateExchanges(exchanges);
             bindBehavior();
             updateMarkers(exchanges);
             exchanges_array = exchanges;           
@@ -40,14 +41,17 @@ $(document).ready(function() {
     }   
     
 
-    // On page load only
+// TODO: Remove, not needed anymore:
+// draw_map moved to updatePage
+// and submit occurs whenever any of the two forms is submited 
+/*
     function initialize() {
         
         draw_map(params.location_search, params.latitude, params.longitude);
     
         $('#search_form').submit();     
     }
-          
+*/          
 
 
     // on search (triggered by formSubmit, whether programmatically at load time or by user)
@@ -419,8 +423,8 @@ $(document).ready(function() {
   
     
     
-        // new page
-    google.maps.event.addDomListener(window, 'load', initialize);        
+// invoked by the for submit instead of page load
+//    google.maps.event.addDomListener(window, 'load', initialize);        
 
 
  

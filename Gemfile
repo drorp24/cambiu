@@ -5,8 +5,6 @@ ruby '2.0.0'
 gem 'rails', '4.1.6'
 # Use postgresql as the database for Active Record
 gem 'pg'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
@@ -38,8 +36,8 @@ gem 'nokogiri'
 gem 'diskcached'
 gem 'active_admin_importable'
 gem 'tod'
-gem 'twitter-bootstrap-rails'
-gem 'bootstrap-sass', '~> 3.3.3'
+#gem 'twitter-bootstrap-rails'
+gem 'bootstrap-sass', '~> 3.3.3'     # always use this one which enables to include just the right modules
 gem 'simple_form'
 gem 'backstretch-rails'
 gem 'money'
