@@ -3,7 +3,7 @@
 function getLocation() {
 
 //  There should be a better way of avoiding to ask the user again and again if he permits to use his location
-    if (sessionStorage.latitude && sessionStorage.longitude) {return;}
+//    if (sessionStorage.latitude && sessionStorage.longitude) {return;}
     console.log('getLocation');   
        
     var latitude;
