@@ -12,13 +12,13 @@
 //
 //= require jquery
 //= require autonumeric
-//= require pageload
+//= require /application/pageload
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require findlocation
 //= require bootstrap-switch
 //= require jquery.form
-//= require search
-//= require exchanges
+//= require /application/search
+//= require /application/exchanges
 //= require mixpanel
 //= require landing_index
