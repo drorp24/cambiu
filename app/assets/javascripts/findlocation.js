@@ -59,5 +59,5 @@ function displayError(error) {
     2: 'Position unavailable',
     3: 'Request timeout'
   };
-  console.log("Error: " + errors[error.code]);
+//  console.log("Error: " + errors[error.code]);
 }
