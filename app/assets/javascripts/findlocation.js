@@ -46,7 +46,7 @@ function getLocation() {
                 $('#current_address').html(" an environment with no location service");
               }
             } else {
-              alert('Geocoder failed due to: ' + status);
+              console.log('Geocoder failed due to: ' + status);
             }
       });
 
@@ -59,5 +59,5 @@ function displayError(error) {
     2: 'Position unavailable',
     3: 'Request timeout'
   };
-  alert("Error: " + errors[error.code]);
+  console.log("Error: " + errors[error.code]);
 }
