@@ -11,7 +11,5 @@
 // about supported directives.
 //
 //= require jquery
-//= require bootstrap-sprockets
 //= require jquery.form
-//= require mixpanel
 //= require landing_index

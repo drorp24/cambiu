@@ -31,7 +31,7 @@ $(document).ready(function() {
     // Analyses & Flow
     $('#mobile_input_trigger input').click(function() {
 //      ga('send', 'event', 'button', 'click', 'First mobile click');
-        mixpanel.track('First mobile click');
+//        mixpanel.track('First mobile click');
         $('#mobile_input_trigger').css('display', 'none');
         $('.form-group:not(#mobile_input_trigger, .email_group)').css('display', 'block');
         $('#buy_amount').focus();
@@ -39,12 +39,12 @@ $(document).ready(function() {
 
     $('#pay_amount, #pay_currency, #buy_currency').change(function() {
 //      ga('send', 'event', 'button', 'click', 'Populating rates');
-        mixpanel.track('Checking rates');
+//        mixpanel.track('Checking rates');
     });
 
     $('#search_button').click(function() {
 //      ga('send', 'event', 'button', 'click', 'Clicking search');
-        mixpanel.track("Search button");
+//        mixpanel.track("Search button");
 
         var pay_cents =    $('#pay_amount').val().replace(',', '').replace('.', '');
         var pay_currency = $('#pay_currency').val();
@@ -69,7 +69,7 @@ $(document).ready(function() {
 
     $('#email_button').click(function() {
 //      ga('send', 'event', 'button', 'click', 'Leaving email');
-        mixpanel.track("Email button");
+//        mixpanel.track("Email button");
         $('#message_header').html('Thank you for your interest!');
         if ($('#email').val()) {
             $('#message_remainder').html('We launch soon!');         

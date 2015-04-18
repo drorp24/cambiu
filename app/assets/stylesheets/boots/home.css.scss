@@ -341,7 +341,7 @@ $placeholder-color: #999;
     }
 
     #home_a {      
-      background-image: image-url('bg.jpg');
+      background-image: image-url('header_background.jpg');
       background-repeat:  no-repeat;
       background-position-x:  center;
       background-position-y:  center;
@@ -702,7 +702,7 @@ $placeholder-color: #999;
     font-family: Helvetica;
     padding-left: 0;
     padding-right: 0;
-    background: image-url('9Noise.jpg')  no-repeat scroll !important;
+    background: image-url('header_background_mobile')  no-repeat scroll !important;
     background-position:  center center;
     background-attachment: fixed;
     -webkit-background-size: cover;
