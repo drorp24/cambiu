@@ -8,6 +8,15 @@ $font-family: "Roboto";
 $color: #888;
 
 // Mixins
+@mixin background-img($img) {
+    background-image: image-url($img);
+    background-repeat:  no-repeat;
+    background-position-x:  center;
+    background-position-y:  center;
+    background-size: cover;  
+}
+
+
 @mixin search-placeholder-def($placeholder-color) {
   color:    $placeholder-color !important;
   text-align: left;
@@ -38,22 +47,21 @@ body, a {
   color: $color;
 }
 
-@media (min-width: $screen-md-min){
+@media (min-width: 769px){
 
-  body {
-    background-image: image-url('header_background.jpg') no-repeat center center cover;
-
+  #home_a {
+    @include background-img('header_background.jpg');
+    height: 75vh;
   }
 
 }
 
 
 
-@media (max-width: $screen-md-min) {
+@media (max-width: 768px) {
 
   body {
-    background-image: image-url('header_background-mobile.jpg') no-repeat center center cover;
-
+    @include background-img('header_background_mobile.jpg');
   }
 
 }
