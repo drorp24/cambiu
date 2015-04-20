@@ -36,8 +36,6 @@ gem 'nokogiri'
 gem 'diskcached'
 gem 'active_admin_importable'
 gem 'tod'
-#gem 'twitter-bootstrap-rails'
-gem 'bootstrap-sass', '~> 3.3.3'     # always use this one which enables to include just the right modules
 gem 'simple_form'
 gem 'backstretch-rails'
 gem 'money'
@@ -50,7 +48,6 @@ gem 'newrelic_rpm'
 gem 'actionpack-page_caching'
 gem 'omniauth-facebook'
 gem 'best_in_place', github: 'bernat/best_in_place'
-gem 'font-awesome-sass'
 group :test, :staging, :production do
   gem 'le'
 end
@@ -60,6 +57,15 @@ gem 'dalli'
 gem 'memcachier'
 gem "responders"
 gem 'monetize'
+
+#gem 'twitter-bootstrap-rails'      # dont use it
+gem 'bootstrap-sass', '~> 3.3.3'    # use this: enables to include just the needed modules, gives access to twbs mixins
+gem 'sass-rails'
+gem 'sass'
+gem 'font-awesome-rails'
+#gem 'compass-rails'
+#gem 'chosen-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
