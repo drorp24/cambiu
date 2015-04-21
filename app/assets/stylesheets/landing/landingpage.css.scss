@@ -214,7 +214,7 @@ $inverse-color: #ffffff;
 
 }
 
-/*
+
 @media (max-width: 600px) {
     body #landing_page {
         background-image: image-url('bgm3.jpg');
@@ -234,7 +234,7 @@ $inverse-color: #ffffff;
         background-position: bottom;      
     }
 }
-*/
+
 @media (max-width: 600px) and (orientation: portrait) {
     #map_container {
         display: none;
