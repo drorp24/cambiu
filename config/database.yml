@@ -85,3 +85,4 @@ production:
   database: currency_net_mvp_production
   username: currency_net_mvp
   password: <%= ENV['CURRENCY_NET_MVP_DATABASE_PASSWORD'] %>
+  pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>

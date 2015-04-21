@@ -63,6 +63,10 @@ gem 'bootstrap-sass', '~> 3.3.3'    # use this: enables to include just the need
 gem 'sass-rails'
 gem 'sass'
 gem 'font-awesome-rails'
+group :test, :staging, :production do
+  gem 'puma'
+  gem "rack-timeout"
+end
 #gem 'compass-rails'
 #gem 'chosen-rails'
 
