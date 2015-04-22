@@ -70,6 +70,12 @@ $(document).ready(function() {
     $('#email_button').click(function() {
 //      ga('send', 'event', 'button', 'click', 'Leaving email');
 //        mixpanel.track("Email button");
+        if ($('#email').val().length > 3) {   // primitive validity check, change
+                dataLayer.push({
+                        'event': 'gtm.formSubmit'
+                });
+            $('#new_user').empty();
+        }
         $('#message_header').html('Thank you for your interest!');
         if ($('#email').val()) {
             $('#message_remainder').html('We launch soon!');         

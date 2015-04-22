@@ -108,6 +108,12 @@ $(document).ready(function() {
  
  
      function beforeSubmit() {
+         // trigger gtm.formSubmit
+ /*        
+                            dataLayer.push({
+                        'event': 'gtm.formSubmit'
+                    })
+*/
         $('#empty_message').css('display', 'none');
         $('#result_message').css('display', 'none');
         $('#loader_message').css('display', 'block');
