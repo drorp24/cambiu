@@ -59,9 +59,13 @@ class Currency
    hash
   end
   
+
+  # replaced with '.format'
+=begin
   def self.display(money)
     money.present? ? ActionController::Base.helpers.humanized_money_with_symbol(money) : "N/A"
   end
+=end
   
   def self.strip(display_amount)
     display_amount.rpartition(" ")[2].remove(",")

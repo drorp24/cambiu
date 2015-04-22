@@ -5,8 +5,7 @@ class CurrenciesController < ApplicationController
     interbank_value = @currency.exchange(params[:pay_cents], params[:pay_currency], params[:buy_currency])
     offer = interbank_value * 1.02
     gain = interbank_value * 0.1
-    render json: {offer: edited(offer), gain: edited(gain)}
-    puts edited(offer)
+    render json: {offer: offer.format, gain: gain.format}
   end
   
   def rates
@@ -15,10 +14,6 @@ class CurrenciesController < ApplicationController
   
   private
   
-  def edited(money)
-    Currency.display(money).to_json
-  end
-
   def set_currency
     @currency ||= Currency.new    
   end
