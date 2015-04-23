@@ -480,6 +480,7 @@ $(document).ready(function() {
         if ($('#homepage').css('display') == 'block') {
             $('#homepage').css('display', 'none');
             $('#exchanges').css('display', 'block');
+            $('#exchanges').css('visibility', 'visible');
             $('nav.navbar').removeClass('home');
             $('nav.navbar').addClass('exchanges');
             $('body').removeClass('home');

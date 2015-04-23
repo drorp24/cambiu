@@ -1,20 +1,21 @@
-<% content_for :search do %>
-	<a data-toggle="collapse" href="#exchange_params_change" id="exchange_title">
-		<div id="exchange_params">
-			<div id="exchange_params_display">
-				<%= render 'exchange_params_display' %>
-			</div>
-		</div>
-	</a>
-	<div class="collapse" id="exchange_params_change">
-		<div id="exchange_params_wrapper" class="row well clearfix">
-			<%= render 'exchange_params_form' %>
-		</div>
-	</div>
-<% end %>
-
 <div class="container-fluid">
 	<div id="exchanges_page">
+		<div class="row">
+			<div class="parameters">				
+				<a data-toggle="collapse" href="#exchange_params_change" id="exchange_title">
+					<div id="exchange_params">
+						<div id="exchange_params_display">
+							<%= render 'exchange_params_display' %>
+						</div>
+					</div>
+				</a>
+				<div class="collapse" id="exchange_params_change">
+					<div id="exchange_params_wrapper" class="row well clearfix">
+						<%= render 'exchange_params_form' %>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row" id="exchanges_content">
 			<div id="exchanges" class="col-md-5 col-xs-12">
 				<div  id="exchanges_list">	
@@ -73,7 +74,7 @@
 		<div class="exchange_window_sum">
 			<div class="exchange_window_quote"></div>
 		</div>
-		<div class="exchange_window_det" style="display:block">
+		<div class="exchange_window_det" style="display:none;">
 			<div class="exchange_window_name"></div>
 			<div class="exchange_window_address"></div>
 			<div class="exchange_window_quote"></div>

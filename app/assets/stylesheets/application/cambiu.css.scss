@@ -19,6 +19,17 @@ $button-height: 50px;
 $form-text-transform: uppercase;
 $border-bottom: 3px solid $darkgreen;
 
+// OLD SEARCH PAGE
+$search-input-height: 40px;
+$input-height-mobile: 40px;
+$help-text-color: #888;
+$inverse-color: #ffffff;
+
+
+
+// OLD SEARCH PAGE
+
+
 // Mixins
 @mixin search-form-def {
   color: $darkgreen;
@@ -95,23 +106,31 @@ $border-bottom: 3px solid $darkgreen;
 }
 
 
-.exchange_window_sum {
-  z-index: 999;
-  display: block;
-  visibility: visible;
-  height: 50px;
-  width: 50px;
-  font-size: 2em;
-}
-
-.gm-style-iw {
-//  color: red;
-}
-
-// cross-media 
+//
+// CROSS-MEDIA
+// Attempt to define things here 
+//
 body#cambiu {
-  font-family: $font-family;
+    
+  padding-top: 50px;
+  font-family: Helvetica;
   color: $color;
+  .form-control {border-radius: $border-radius;}
+  .navbar {
+    background-color: #fff;
+    margin-bottom: 0;
+      .navbar-brand {
+        margin-top: -10px;
+      }
+      .navbar-nav > li > a {
+        line-height: 35px;
+        margin-bottom: -20px;
+        color: $lightgrey;
+      }
+  }
+  .mobile_only {
+      display: none;
+  }
   #new_search {
     input, select {
       @include search-form-def;
@@ -161,8 +180,72 @@ body#cambiu {
     height: 10vh;
     border-top: 5px solid $lightgreen;
   }
+  
+  &.exchanges {
+    .parameters {
+      position: fixed;
+      background-color: #fff;
+      width: 100%;
+      z-index: 1;
+      height: 10vh;
+    }
+    #exchanges_content {
+      z-index: -1;
+      margin-top: 65px;
+      font-family: $font-family;
+      .distance {
+        font-size: 0.9em;
+        color: #111;
+        display: inline;
+      }
+      .name {
+        font-weight: 300;
+        color: #333;
+      }
+      .units-d {
+        font-size: 0.9em;
+        font-weight: 100;
+        display: inline;
+      }
+      .units-m {
+        display: none;
+      }
+      .middle-parent .middle-child {
+        height: 50px;
+        vertical-align: middle;
+        display: table-cell;
+      }
+      .quote {
+        font-weight: 600;
+        line-height: 25px;
+        color: #111;
+      }
+      .comparison {
+        text-align: center;
+      }
+      .comparison-d {
+        line-height: 25px;
+        font-size: 0.8em;
+      }
+      .comparison-m {
+        display: none;
+      }
+      .comparison-amount {
+        line-height: 25px;
+        font-size: 0.8em;
+      }
+      .rounded {
+        border-radius: 4px;
+      }
+
+    }
+  }
 }
 
+//
+// CROSS-MEDIA END
+// Attempt to define things above 
+//
 
 
 
@@ -173,21 +256,13 @@ body#cambiu {
   body#cambiu {
   
     &.home  {
-      .navbar-brand {
-        margin-top: -10px;
-      }
-      .navbar-nav > li > a {
-        line-height: 35px;
-        margin-bottom: -20px;
-        color: $lightgrey;
-      }
       .background {
         @include background-img('header_background.jpg');      
+        height: 85vh;
       }
-      height: 90vh;
       .above_fold {
         .main {
-          margin-top: 10vh;
+          margin-top: 15vh;
           margin-bottom: 10vh;
           .marketing {
             .pre {
@@ -213,6 +288,127 @@ body#cambiu {
     }
     
     &.exchanges {
+      
+      .name {
+        font-size: 1.2em;
+      }
+      .quote {
+        font-size: 1.5em;
+      }
+// OLD SEARCH PAGE
+
+    .bootstrap-switch {
+      border-radius: $border-radius;      
+        .bootstrap-switch-label, .bootstrap-switch-handle-off, .bootstrap-switch-handle-on {
+          padding-top: 0;
+          padding-bottom: 0;
+        }     
+      .bootstrap-switch-container {
+        height: $search-input-height;
+      }
+      .bootstrap-switch-handle-on, .bootstrap-switch-handle-off, .bootstrap-switch-label {
+        border-radius: $border-radius;
+        line-height: $search-input-height;
+      }
+    }
+      #pay_currency_display {
+        display: none;
+      }
+      #exchange_params_wrapper {
+        margin: 0;
+        padding: 0;
+      }
+      form {
+        padding-top: 15px;
+        input, select, button, #location, .bootstrap-switch {
+          width: 100%;
+          height: $search-input-height;
+          margin-bottom: 20px;
+          text-align: center;
+          font-size: 1em;
+          font-weight: 100;
+          &.part {
+            width: 50%;
+            font-size: 21px;
+          }
+        }
+        #location_search_icon {
+          position: absolute;
+        }
+        .hint_on_input {
+          position: absolute;
+        }/*
+        .bootstrap-switch.bootstrap-switch-large {          
+          .bootstrap-switch-handle-on, .bootstrap-switch-handle-off {
+          font-size: 1em;
+          line-height: 1.9em;
+          }
+        }*/
+        button#search_button.btn.btn-success {
+          font-size: 1.3em;
+        }
+        .icon {
+          margin-top: -60px;
+          width: 15%;
+          font-size: 1.5em;
+          color: $help-text-color;
+        }
+        .middle_wrapper {           // This is the only thing that works for up to one line.
+            height: $search-input-height;  // Beyond: replace line-height with: display: table-cell.
+            .middle {
+              height: $search-input-height;
+              vertical-align: middle;
+              text-align: center;
+              line-height: $search-input-height;
+            }
+        }
+        #pay_amount_help {
+          position: absolute;
+          height: $search-input-height;
+          width: 20%;
+          #pay_amount_text {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            color: #999999;
+            height: $search-input-height;
+          }
+        }
+        #pay_amount_icon {
+          position: absolute;
+          top: 0;
+          right: 15px;
+          height: $search-input-height;
+          width: 20%;
+          #pay_amount_img {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            color: #999999;
+            height: $search-input-height;
+            width: 10%;
+            i {
+              text-align: center;
+            }
+          }
+        }
+        #location {
+          font-size: 1em;
+        }
+        #location_link {
+          margin-left: 10px;
+          text-decoration: underline;
+          color: $inverse-color;
+          &:hover {
+            color: $brand-color;
+          }
+        }
+      }
+// OLD SEARCH PAGE
+
+      
+      
+      
       #map_container {
         position: fixed;
         margin-left: 39.4%;
@@ -265,6 +461,12 @@ body#cambiu {
     &.exchanges {
       #map_container {
         display: none;
+      }
+      .name {
+        font-size: 0.9em;
+      }
+      .quote {
+        font-size: 1em;
       }
     }
   

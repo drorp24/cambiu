@@ -23,8 +23,7 @@ $(document).ready(function() {
 
 
 
-
-
+    // behavior
 
    $('#search_buy_amount').keyup(function() {
        $('#search_pay_amount').val("");
@@ -34,7 +33,26 @@ $(document).ready(function() {
    }); 
 
 
+    // UI
+    if ($('#sort').val()) {var sort = $('#sort').val();} else {var sort = 'quote';}; // if sort added to home page. exchanges page has its own trigger.    
+    $('#sort').val(sort);
+    $('#sort_switch').bootstrapSwitch('state', sort == 'quote');
+    $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
+        val = state ? 'quote' : 'distance';
+        $('#sort').val(val);
+    });
 
+    // Fix google autocomplete z-index dynamically
+    $('#search_location').keypress(function() {
+        if (!pacContainerInitialized) {
+        $('.pac-container').css('z-index', 
+        '9999');
+        pacContainerInitialized = true;
+        }
+    });
+    
+    // Initialize bootstrap-switch
+    $('.make-switch').bootstrapSwitch();    
 
 
 
@@ -105,17 +123,6 @@ $(document).ready(function() {
 
     // UI
 
-    // Fix google autocomplete z-index dynamically
-    $('#search_location').keypress(function() {
-        if (!pacContainerInitialized) {
-        $('.pac-container').css('z-index', 
-        '9999');
-        pacContainerInitialized = true;
-        }
-    });
-    
-    // Initialize bootstrap-switch
-    $('.make-switch').bootstrapSwitch();    
 
 */ 
  
