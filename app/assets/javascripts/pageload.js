@@ -4,6 +4,7 @@ var desktop = media == 'desktop';
 var production = $('body').hasClass('production');
 var params;
 var pacContainerInitialized = false;
+var searchBox;
 
 
 var display = function(term) {
@@ -70,16 +71,6 @@ $(document).ready(function() {
             results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
-
-
-    // hide address bar - not working
-    window.addEventListener("load",function() {
-    // Set a timeout...
-    setTimeout(function(){
-        // Hide the address bar!
-        window.scrollTo(0, 1);
-    }, 0);
-    });
 
 
 });

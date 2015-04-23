@@ -24,15 +24,15 @@ function getLocation() {
     function displayPosition(position) {
         lat = position.coords.latitude;
         lng = position.coords.longitude;
-        sessionStorage.latitude = lat;
-        sessionStorage.longitude = lng;
+        sessionStorage.lat = lat;
+        sessionStorage.lng = lng;
         var latlng = new google.maps.LatLng(lat, lng);
         geocoder = new google.maps.Geocoder();
         geocoder.geocode({'latLng': latlng}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               if (results[1]) {
                 var place = results[1].formatted_address;
-                sessionStorage.geocoded_location = place;
+                sessionStorage.user_location = place;
                 $('#latitude').val(lat);
                 $('#longitude').val(lng);
                 $('#geocoded_location').val(place);

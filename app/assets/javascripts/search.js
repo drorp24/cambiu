@@ -4,7 +4,25 @@
 $(document).ready(function() {
     
     console.log('search');
+    
+//  Populate search_form
 
+    $('#search_location').attr('placeholder', "   " + sessionStorage.user_location);
+
+    // Enble location search - Google maps places autocomplete
+    // TODO: Same for the search_form on the search page
+    var input = document.getElementById('search_location');
+    searchBox = new google.maps.places.SearchBox(input, {
+        types: ['regions']
+    });
+
+
+
+
+
+
+
+// OLD CODE - SOME STILL NEEDED
     $('#actual_pay_amount').val($('#pay_amount_val').val());
     $('#pay_amount').change(function() {
         $('#actual_pay_amount').val($('#pay_amount_val').val());
@@ -94,7 +112,7 @@ $(document).ready(function() {
     // UI
 
     // Fix google autocomplete z-index dynamically
-    $('.location.search').keypress(function() {
+    $('#search_location').keypress(function() {
         if (!pacContainerInitialized) {
         $('.pac-container').css('z-index', 
         '9999');

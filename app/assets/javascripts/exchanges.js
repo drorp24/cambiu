@@ -312,12 +312,6 @@ $(document).ready(function() {
 
  
     
-    // Enble location search - Google maps places autocomplete
-    var input = document.getElementById('location_search');
-    var searchBox = new google.maps.places.SearchBox(input, {
-        types: ['regions']
-    });
-
     // change map center according to searched location 
     google.maps.event.addListener(searchBox, 'places_changed', function() {
         
@@ -328,7 +322,7 @@ $(document).ready(function() {
 //        clearExchanges();
       
         name = $('#location_search').val();
-        if (name == null) {alert('null')} 
+        if (name == null) {alert('null')}   
         if (name == "") {alert('spaces')}
         $('#searched_location').val(name);
         $('#searched_location_display').html(name);
