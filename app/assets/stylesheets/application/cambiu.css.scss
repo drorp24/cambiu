@@ -95,7 +95,18 @@ $border-bottom: 3px solid $darkgreen;
 }
 
 
+.exchange_window_sum {
+  z-index: 999;
+  display: block;
+  visibility: visible;
+  height: 50px;
+  width: 50px;
+  font-size: 2em;
+}
 
+.gm-style-iw {
+//  color: red;
+}
 
 // cross-media 
 body#cambiu {
@@ -159,44 +170,59 @@ body#cambiu {
 @media (min-width: $screen-sm-min){
 
 
-  body#cambiu.home  {
-    .navbar-brand {
-      margin-top: -10px;
-    }
-    .navbar-nav > li > a {
-      line-height: 35px;
-      margin-bottom: -20px;
-      color: $lightgrey;
-    }
-    .background {
-      @include background-img('header_background.jpg');      
-    }
-    height: 90vh;
-    .above_fold {
-      .main {
-        margin-top: 10vh;
-        margin-bottom: 10vh;
-        .marketing {
-          .pre {
-            font-weight: 500;
-            color: $darkgrey;
-            font-size: 1.2em;            
-          }
-          .heading {
-            font-weight: 500;
-            color: $lightgreen;
-            text-transform: uppercase;
-            font-size: 3.2em;
-            line-height: 1.1em;
-          }
-          .post {
-            font-weight: 400;
-            color: $darkgrey;
-            font-size: 1.2em;
+  body#cambiu {
+  
+    &.home  {
+      .navbar-brand {
+        margin-top: -10px;
+      }
+      .navbar-nav > li > a {
+        line-height: 35px;
+        margin-bottom: -20px;
+        color: $lightgrey;
+      }
+      .background {
+        @include background-img('header_background.jpg');      
+      }
+      height: 90vh;
+      .above_fold {
+        .main {
+          margin-top: 10vh;
+          margin-bottom: 10vh;
+          .marketing {
+            .pre {
+              font-weight: 500;
+              color: $darkgrey;
+              font-size: 1.2em;            
+            }
+            .heading {
+              font-weight: 500;
+              color: $lightgreen;
+              text-transform: uppercase;
+              font-size: 3.2em;
+              line-height: 1.1em;
+            }
+            .post {
+              font-weight: 400;
+              color: $darkgrey;
+              font-size: 1.2em;
+            }
           }
         }
       }
     }
+    
+    &.exchanges {
+      #map_container {
+        position: fixed;
+        margin-left: 39.4%;
+        width: 61.5%;
+        #map-canvas {
+          height: 100vh;
+        }
+      }
+    }
+  
   }
 }
 
@@ -204,33 +230,44 @@ body#cambiu {
 // mobile
 @media (max-width: $screen-xs-max) {
 
-  body#cambiu.home {
-    @include background-img('header_background_mobile.jpg');
-    height: 100vh;
-    .above_fold {
-      .main {
-        margin-top: 3vh;
-        margin-bottom: 3vh;
-        .marketing {
-          .pre {
-            font-weight: 500;
-            color: $darkgrey;
-            font-size: 1em;            
-          }
-          .heading {
-            font-weight: 500;
-            color: $lightgreen;
-            text-transform: uppercase;
-            font-size: 2em;
-            line-height: 1.1em;
-          }
-          .post {
-            font-weight: 400;
-            color: $darkgrey;
-            font-size: 0.9em;
+  body#cambiu {
+
+    &.home {
+      @include background-img('header_background_mobile.jpg');
+      height: 100vh;
+      .above_fold {
+        .main {
+          margin-top: 3vh;
+          margin-bottom: 3vh;
+          .marketing {
+            .pre {
+              font-weight: 500;
+              color: $darkgrey;
+              font-size: 1em;            
+            }
+            .heading {
+              font-weight: 500;
+              color: $lightgreen;
+              text-transform: uppercase;
+              font-size: 2em;
+              line-height: 1.1em;
+            }
+            .post {
+              font-weight: 400;
+              color: $darkgrey;
+              font-size: 0.9em;
+            }
           }
         }
       }
     }
+    
+    &.exchanges {
+      #map_container {
+        display: none;
+      }
+    }
+  
   }
+ 
 }

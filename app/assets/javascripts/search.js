@@ -5,10 +5,6 @@ $(document).ready(function() {
     
     console.log('search');
     
-//  Populate search_form
-
-    $('#search_location').attr('placeholder', "   " + sessionStorage.user_location);
-
     // Enble location search - Google maps places autocomplete
     // TODO: Same for the search_form on the search page
     var input = document.getElementById('search_location');
@@ -17,12 +13,41 @@ $(document).ready(function() {
     });
 
 
+    // Populate search_form
+
+    $('#search_location').attr('placeholder', "   " + sessionStorage.user_location);
+    $('#search_user_location').val(sessionStorage.user_location);
+    $('#search_user_lat').val(sessionStorage.user_lat);
+    $('#search_user_lng').val(sessionStorage.user_lng);
+    $('#search_page').val(window.location.host + window.location.pathname);
+
+
+
+
+
+
+   $('#search_buy_amount').keyup(function() {
+       $('#search_pay_amount').val("");
+   }); 
+   $('#search_pay_amount').keyup(function() {
+       $('#search_buy_amount').val("");
+   }); 
+
+
+
+
+
+
+
+
 
 
 
 
 
 // OLD CODE - SOME STILL NEEDED
+/*
+
     $('#actual_pay_amount').val($('#pay_amount_val').val());
     $('#pay_amount').change(function() {
         $('#actual_pay_amount').val($('#pay_amount_val').val());
@@ -58,37 +83,6 @@ $(document).ready(function() {
     });
 
  
-    var pay_amount =            $('#actual_pay_amount').val() ||    getParameterByName('actual_pay_amount');
-    var edited_pay_amount =     $('#pay_amount').val().replace(/\s+/g, '') ||           getParameterByName('pay_amount').replace(/\s+/g, '');
-    var pay_currency =          $('#pay_currency').val() ||         getParameterByName('pay_currency');
-    var buy_currency =          $('#buy_currency').val() ||         getParameterByName('buy_currency');
-    var latitude =              $('#latitude').val() ||             getParameterByName('latitude') || sessionStorage.latitude;
-    var longitude =             $('#longitude').val() ||            getParameterByName('longitude') || sessionStorage.longitude;
-    var geocoded_location =     $('#geocoded_location').val() ||    getParameterByName('geocoded_location') || sessionStorage.geocoded_location;
-    var location_search =       $('#location_search').val() ||      getParameterByName('location_search');
-    var searched_location =     $('#searched_location').val() ||    getParameterByName('searched_location');
-    var distance =              $('distance').val() ||              getParameterByName('distance') || 'quote';
-    var sort =                  $('#sort').val() ||                 getParameterByName('sort');      
-    var landing =               $('#landing').val() ||              getParameterByName('landing');      
-    
-    
-
-    params = {
-        pay_amount:         pay_amount,
-        edited_pay_amount:  edited_pay_amount,
-        pay_currency:       pay_currency,
-        buy_currency:       buy_currency,
-        latitude:           production ? latitude : 51.50169, 
-        longitude:          production ? longitude : -0.16030,
-        geocoded_location:  production ? geocoded_location : "London Soho",
-        location_search:    location_search,
-        searched_location:  location_search || geocoded_location || 'this area',
-        distance:           distance,
-        sort:               sort,
-        landing:            landing,
-        
-    };
-
     // Form
     // Init values (first entry into page)
     
@@ -123,37 +117,7 @@ $(document).ready(function() {
     // Initialize bootstrap-switch
     $('.make-switch').bootstrapSwitch();    
 
+*/ 
  
- 
-     function beforeSubmit() {
-         // trigger gtm.formSubmit
- /*        
-                            dataLayer.push({
-                        'event': 'gtm.formSubmit'
-                    })
-*/
-        $('#empty_message').css('display', 'none');
-        $('#result_message').css('display', 'none');
-        $('#loader_message').css('display', 'block');
-    } 
- 
-    function reveal_exchanges() {
-        $('#homepage').css('display', 'none');
-        $('nav.navbar').removeClass('home');
-        $('nav.navbar').addClass('exchanges');
-        $('#exchanges').css('display', 'block');
-        $('body').removeClass('home');
-        $('body').addClass('exchanges');
-        // push to html5 history;
-    }
-
-   // new ajax search
-    $('#new_search').ajaxForm({ 
-            dataType:   'json', 
-        beforeSubmit:   beforeSubmit,
-             success:   reveal_exchanges 
-    });
-  
-
      
 }); 

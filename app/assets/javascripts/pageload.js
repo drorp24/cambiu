@@ -5,6 +5,42 @@ var production = $('body').hasClass('production');
 var params;
 var pacContainerInitialized = false;
 var searchBox;
+var map;
+var markers;
+var center;
+var geocoder;
+var directionsDisplay;
+var markers = [];
+var exchanges = [];
+var infowindows = [];
+var exchanges_array = [];
+var exchanges_by_quote = [];
+var exchanges_by_distance = []; 
+
+
+// Initialize Google map with London
+/*
+function initialize() {
+  var mapOptions = {
+    zoom: 8,
+    center: new google.maps.LatLng(51.50169, -0.16030)
+  };
+
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+}
+
+function loadScript() {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp' +
+      '&signed_in=true&callback=initialize';
+  document.body.appendChild(script);
+}
+
+window.onload = loadScript;
+*/
+
 
 
 var display = function(term) {

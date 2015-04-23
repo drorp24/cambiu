@@ -26,7 +26,7 @@ class Search < ActiveRecord::Base
    
   end
     
-  def self.find_exchanges(center, box, pay, buy, sort)      
+  def find_exchanges(center, box, pay, buy, sort)      
   
       @exchange_quotes = []
       # TODO: Like open_today, try if possible to define 'applicable_rate' scope that yields *one* rate record according to from & to currencies 
@@ -46,7 +46,7 @@ class Search < ActiveRecord::Base
         exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : rand(1.2..17.9) 
         exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"  
         quote = Money.new(rand(33000..46000), buy.currency.iso_code) # exchange.quote(pay, buy) TODO: Handle random quotes
-        exchange_quote[:edited_quote] = Currency.display(quote)
+        exchange_quote[:edited_quote] = quote.format
         exchange_quote[:quote] = quote.fractional / 100.00
 
         @exchange_quotes << exchange_quote

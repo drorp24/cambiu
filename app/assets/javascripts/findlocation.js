@@ -12,7 +12,7 @@ function getLocation() {
     if (navigator.geolocation) {
       var timeoutVal = 10 * 1000 * 1000;
       navigator.geolocation.getCurrentPosition(
-        displayPosition, 
+        findPosition, 
         displayError,
         { enableHighAccuracy: false, timeout: timeoutVal, maximumAge: 0 }
       );
@@ -21,26 +21,22 @@ function getLocation() {
       alert("We cant locate you. Please specify where you want to search.");
     }
     
-    function displayPosition(position) {
+    function findPosition(position) {
         lat = position.coords.latitude;
         lng = position.coords.longitude;
-        sessionStorage.lat = lat;
-        sessionStorage.lng = lng;
+        sessionStorage.user_lat = lat;
+        sessionStorage.user_lng = lng;
         var latlng = new google.maps.LatLng(lat, lng);
         geocoder = new google.maps.Geocoder();
         geocoder.geocode({'latLng': latlng}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               if (results[1]) {
-                var place = results[1].formatted_address;
-                sessionStorage.user_location = place;
-                $('#latitude').val(lat);
-                $('#longitude').val(lng);
-                $('#geocoded_location').val(place);
-                $('#current_address').html(place);
+                sessionStorage.user_location = results[1].formatted_address;
               } else {
-                $('#current_address').html(" an environment with no location service");
+                sessionStorage.user_location = null;
               }
             } else {
+              sessionStorage.user_location = null;
               console.log('Geocoder failed due to: ' + status);
             }
       });

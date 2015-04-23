@@ -2,36 +2,22 @@ $(document).ready(function() {
     
 //if ($('body').hasClass('exchanges'))   {    
 
-    // TODO: these global var won't survive the next page. Move to sessionStore.
-    var map;
-    var center;
-    var geocoder;
-    var directionsDisplay;
-    var directionsService = new google.maps.DirectionsService();
-    var markers = [];
-    var exchanges = [];
-    var exchanges_array = [];
-    var exchanges_by_quote = [];
-    var exchanges_by_distance = []; 
 
+    var directionsService = new google.maps.DirectionsService();
 
     console.log('exchanges');
         
     
-    function beforeSubmit() {
-        $('#empty_message').css('display', 'none');
-        $('#result_message').css('display', 'none');
-        $('#loader_message').css('display', 'block');
-    } 
-
     function updatePage(exchanges) {
+
+        console.log('updatePage');
  
-        draw_map(params.location_search, params.latitude, params.longitude);
+//        drawMap(params.location, params.user_lat, params.user_lng);
         clearExchanges();
 
         if (exchanges && exchanges.length > 0) {
 
-           updateExchanges(exchanges);
+            updateExchanges(exchanges);
             bindBehavior();
             updateMarkers(exchanges);
             exchanges_array = exchanges;           
@@ -42,12 +28,12 @@ $(document).ready(function() {
     
 
 // TODO: Remove, not needed anymore:
-// draw_map moved to updatePage
+// drawMap moved to updatePage
 // and submit occurs whenever any of the two forms is submited 
 /*
     function initialize() {
         
-        draw_map(params.location_search, params.latitude, params.longitude);
+        drawMap(params.location, null, null);
     
         $('#search_form').submit();     
     }
@@ -59,6 +45,9 @@ $(document).ready(function() {
     // exchanges dynamic markup
  
     function updateExchanges(exchanges) {
+
+        console.log('updateExchanges');
+
          for (var i = 0; i < exchanges.length; i++) {
             addExchange(exchanges[i], i);
         }
@@ -168,7 +157,7 @@ $(document).ready(function() {
         });
         
         $('.directions').click(function() {
-            var from =  production ? new google.maps.LatLng(params.latitude, params.longitude) : new google.maps.LatLng(params.test_lat, params.test_lng);
+            var from =  production ? new google.maps.LatLng(params.user_lat, params.user_lng) : new google.maps.LatLng(params.test_lat, params.test_lng);
             var to =    new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
             calcRoute(from, to);
             return false;  
@@ -178,6 +167,9 @@ $(document).ready(function() {
     
 
     function updateResults(exchanges) {
+
+        console.log('updateResults');
+
         $('#loader_message').css('display', 'none');
          if (exchanges && exchanges.length) {
             $('#empty_message').css('display', 'none');
@@ -187,15 +179,18 @@ $(document).ready(function() {
         } else {
             $('#result_message').css('display', 'none');
             $('#empty_message').css('display', 'block');
-            $('#empty_location').html(params.searched_location);
+            $('#empty_location').html(params.location);
         }
     }
     
 
     function updateParamsDisplay() {
+
+        console.log('updateParamsDisplay');
+
         $('#pay_amount_display').html(params.edited_pay_amount);
         $('#buy_currency_display').html('to ' + params.buy_currency);
-        $('#searched_location_display').html('in ' + params.searched_location);
+        $('#searched_location_display').html('in ' + params.location);
     }
     
 
@@ -205,15 +200,21 @@ $(document).ready(function() {
     //
     function updateMarkers(exchanges) {
         
+        console.log('updateMarkers');
+
+
         if (mobile) {return;}
         
-        clearMarkers();
+//        clearMarkers();
         for (var i = 0; i < Math.min(exchanges.length, 30); i++) {
             addMarker(exchanges[i]);
         }
     }
     
     function addMarker(exchange) {
+
+        console.log('addMarker. exchange ID: ' + String(exchange.id));
+        
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(exchange.latitude, exchange.longitude),
             disableAutoPan: true,
@@ -242,6 +243,7 @@ $(document).ready(function() {
         }
         
         markers.push(marker);
+        infowindows.push(infowindow);
         
         // when any infoWindow is clicked, make the respective row active
         var id = "#exchange_det_" + String(exchange.id);    
@@ -275,6 +277,7 @@ $(document).ready(function() {
             markers[i].setMap(null);
         }
         markers = [];
+        infowindows = [];
     }
     
 
@@ -315,23 +318,22 @@ $(document).ready(function() {
     // change map center according to searched location 
     google.maps.event.addListener(searchBox, 'places_changed', function() {
         
+        if ($('body#cambiu').hasClass('home')) {return;}
+ 
         var places = searchBox.getPlaces();
         if (places.length == 0) {return;}        
         place = places[0]; 
         
 //        clearExchanges();
       
-        name = $('#location_search').val();
-        if (name == null) {alert('null')}   
-        if (name == "") {alert('spaces')}
-        $('#searched_location').val(name);
+/*
+        $('#search_location').val(name);
         $('#searched_location_display').html(name);
-        params.location_search = name;
-        params.searched_location = name;
-
+        params.location = name;
+*/
         if (!place.geometry) {alert('We have an issue with this location. Please try a different one'); return;}
         place = place.geometry.location;
-        draw_map(null, place.lat(), place.lng());
+        drawMap(null, place.lat(), place.lng());
         
     });
     
@@ -343,11 +345,19 @@ $(document).ready(function() {
     
     
     // TODO: Try again to DRY the code...
-    function draw_map(place, latitude, longitude) {
+    function drawMap(place, latitude, longitude) {
  
+ 
+        console.log('drawMap');
+        console.log('place: ' + place);
+        console.log('latitude: ' + String(latitude));
+        console.log('longitude: ' + String(longitude));
+        
         if (mobile) {return;}
-        console.log('drawing map...');        
+
+        console.log('before directionsDisplay')
         directionsDisplay = new google.maps.DirectionsRenderer();
+        console.log('after directionsDisplay')
         
         if (place) {
            geocoder = new google.maps.Geocoder();
@@ -355,11 +365,13 @@ $(document).ready(function() {
               if (status == google.maps.GeocoderStatus.OK) {
 
                 center = results[0].geometry.location;
+                console.log('going by place. center: ' + center);
                 var mapOptions = {
                     center: center,
                     zoom: 12
                 };                      
                 map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
+                console.log('map is set now')
                 directionsDisplay.setMap(map);   
  
                } else {
@@ -421,15 +433,92 @@ $(document).ready(function() {
 //    google.maps.event.addDomListener(window, 'load', initialize);        
 
 
+
+
+ 
+    // Form behavior
+    // Before actions
+
+    function startLoader() {
+        $('#empty_message').css('display', 'none');
+        $('#result_message').css('display', 'none');
+        $('#loader_message').css('display', 'block');        
+    }
+    
+    function triggerGtm() {         
+        dataLayer.push({
+            'event': 'gtm.formSubmit'
+        });        
+    }
+
+ 
+    function setParams() {
+           
+        params = {
+            edited_pay_amount:  $('#search_pay_amount').val(),
+            pay_amount:         $('#search_pay_amount_val').val(),
+            edited_buy_amount:  $('#search_buy_amount').val(),
+            buy_amount:         $('#search_buy_amount_val').val(),
+            pay_currency:       $('#search_pay_currency').val(),
+            buy_currency:       $('#search_buy_currency').val(),
+            location:           $('#search_location').val() || $('#search_user_location').val() || 'London, UK', 
+            distance:           $('#search_distance').val(),
+            distance_unit:      $('#search_distance_unit').val(),
+            sort:               $('#search_sort').val(),
+            user_lat:           $('#search_user_lat').val(), 
+            user_lng:           $('#search_user_lng').val(), 
+            user_location:      $('#search_user_location').val(),
+            test_lat:           51.50169,
+            test_lng:           -0.16030,
+            test_location:      'London, UK' 
+        };
+
+    }
+
+
+    function changePage() {
+        if ($('#homepage').css('display') == 'block') {
+            $('#homepage').css('display', 'none');
+            $('#exchanges').css('display', 'block');
+            $('nav.navbar').removeClass('home');
+            $('nav.navbar').addClass('exchanges');
+            $('body').removeClass('home');
+            $('body').addClass('exchanges');
+            // push to html5 history;            
+        }
+    }
+
+
+   function beforeSubmit() {
+
+        console.log('beforeSubmit');
+        
+        startLoader();
+        triggerGtm();
+        setParams();
+        changePage();
+
+    } 
  
    // new ajax search
-    $('#exchange_params_wrapper #search_form').ajaxForm({ 
+    $('#new_search').ajaxForm({ 
             dataType:   'json', 
         beforeSubmit:   beforeSubmit,
-             success:   updatePage 
+             success:   updatePage
     });
+  
 
 
-//}
+    function initialize() {
+        
+        console.log('initialize');
+        drawMap("London", null, null);
+    
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);        
+
+
+
     
 });

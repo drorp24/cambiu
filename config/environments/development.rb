@@ -42,5 +42,5 @@ Rails.application.configure do
   config.fb_app_id = '1553546578234138'
   config.fb_app_secret = '90ce76e38c01f6a7eae41c6f37a1bb9a' 
   
-  config.use_google_geocoding = true
+  config.use_google_geocoding = false
 end
