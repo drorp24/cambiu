@@ -12,14 +12,13 @@ $(document).ready(function() {
 
         console.log('updatePage');
  
-//        drawMap(params.location, params.user_lat, params.user_lng);
+        drawMap(params.location, params.user_lat, params.user_lng, exchanges);
         clearExchanges();
 
         if (exchanges && exchanges.length > 0) {
 
             updateExchanges(exchanges);
             bindBehavior();
-            updateMarkers(exchanges);
             exchanges_array = exchanges;           
         }
         updateResults(exchanges);
@@ -205,7 +204,7 @@ $(document).ready(function() {
 
         if (mobile) {return;}
         
-//        clearMarkers();
+        clearMarkers();
         for (var i = 0; i < Math.min(exchanges.length, 30); i++) {
             addMarker(exchanges[i]);
         }
@@ -345,7 +344,7 @@ $(document).ready(function() {
     
     
     // TODO: Try again to DRY the code...
-    function drawMap(place, latitude, longitude) {
+    function drawMap(place, latitude, longitude, exchanges) {
  
  
         console.log('drawMap');
@@ -372,6 +371,7 @@ $(document).ready(function() {
                 };                      
                 map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
                 console.log('map is set now')
+                updateMarkers(exchanges);
                 directionsDisplay.setMap(map);   
  
                } else {
@@ -387,6 +387,7 @@ $(document).ready(function() {
                 zoom: 12
             };                  
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                updateMarkers(exchanges);
             directionsDisplay.setMap(map);    
 
         } else {
@@ -400,6 +401,7 @@ $(document).ready(function() {
                     zoom: 12
                 };                      
                 map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                updateMarkers(exchanges);
                 directionsDisplay.setMap(map);    
              } else {
                 alert("Geocode was not successful for the following reason: " + status);
@@ -510,6 +512,7 @@ $(document).ready(function() {
   
 
 
+ /*
     function initialize() {
         
         console.log('initialize');
@@ -518,7 +521,7 @@ $(document).ready(function() {
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);        
-
+*/
 
 
     

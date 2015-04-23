@@ -182,16 +182,22 @@ body#cambiu {
   }
   
   &.exchanges {
+      #location_search {
+        @include placeholder-icon("\f041");
+      }
+      #exchanges {
+        z-index: 1;
+      }
     .parameters {
       position: fixed;
       background-color: #fff;
       width: 100%;
       z-index: 1;
-      height: 10vh;
+      height: 97px;
     }
     #exchanges_content {
       z-index: -1;
-      margin-top: 65px;
+      margin-top: 97px;
       font-family: $font-family;
       .distance {
         font-size: 0.9em;
@@ -289,12 +295,21 @@ body#cambiu {
     
     &.exchanges {
       
+      #exchanges {
+        padding-left: 0;
+        z-index: -1;
+      }
+      
       .name {
         font-size: 1.2em;
       }
       .quote {
-        font-size: 1.5em;
+        font-size: 1.3em;
       }
+      #exchanges_items {        
+        box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+      }
+
 // OLD SEARCH PAGE
 
     .bootstrap-switch {
@@ -410,9 +425,11 @@ body#cambiu {
       
       
       #map_container {
+        z-index: -1;
         position: fixed;
         margin-left: 39.4%;
         width: 61.5%;
+        height: 100vh;
         #map-canvas {
           height: 100vh;
         }
