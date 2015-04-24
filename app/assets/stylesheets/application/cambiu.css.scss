@@ -12,6 +12,7 @@ $darkgreen: #34700C;
 $lightgrey: #999;
 $darkgrey: #333;
 $greybg: #3b3b3b;
+$lightgreybg: #f6f6f6;
 $border-radius: 0;
 $form-control-line-height: 35px;
 $form-control-height: 45px;
@@ -198,6 +199,7 @@ body#cambiu {
   
   .getstarted_button_container {
     margin-top: -10vh;
+    margin-bottom: 20vh;
     .getstarted_button {
       background-color: $lightgreen;
       border-bottom: 3px solid $darkgreen;
@@ -216,6 +218,12 @@ body#cambiu {
       top: 33px;
       height: 50px;
     }
+  }
+  
+  .testimonials {
+    background-color: $lightgreybg;
+    border-top: 2px solid $lightgreen;
+    padding: 25px inherit;
   }
   
   &.exchanges {
