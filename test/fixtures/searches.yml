@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pay_currency: MyString
+  buy_currency: MyString
+  pay_amount: MyString
+  buy_amount: MyString
+  location: MyString
+  user_lat: MyString
+  user_lng: MyString
+  user_location: MyString
+  distance: 9.99
+  distance_unit: MyString
+  sort: MyString
+
+two:
+  pay_currency: MyString
+  buy_currency: MyString
+  pay_amount: MyString
+  buy_amount: MyString
+  location: MyString
+  user_lat: MyString
+  user_lng: MyString
+  user_location: MyString
+  distance: 9.99
+  distance_unit: MyString
+  sort: MyString

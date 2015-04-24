@@ -1,0 +1,107 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  app:
+    development:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    test:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    staging:
+      ga_tracking_id: "UA-60801249-1"
+      mixpanel_token: "6fc206a566429d259ecacbc1d0311db6"
+    production:
+      ga_tracking_id: "UA-60758089-1"
+      mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
+    title: "Cambiu homepage marketing title"
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+    search_button: "Exchange"
+    offer_prefix: "We offer "
+    gain: "Your gain: "
+    signin_button: "Book now"
+    thanks_title: "Thanks for the interest"
+    thanks_text: "We launch soon!"
+    b_title: "Features"
+    b_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequaint."
+    c_chains: ""
+  save_money:
+    development:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    staging:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    test:
+      ga_tracking_id: "UA-60416557-1"
+      mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
+    production:
+      ga_tracking_id: "UA-60416557-1"
+      mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
+    title: "Exchange currency with cambiu"
+    text: "Save up to 10% of your money. It's that simple."
+    search_button: "Exchange"
+    offer_prefix: "We offer "
+    gain: "Your gain: "
+    signin_button: "Book now"
+    thanks_title: "Thanks for the interest"
+    thanks_text: "We launch soon!"
+  best_rates:
+    development:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    staging:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    production:
+      ga_tracking_id: "UA-60416765-1"
+      mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
+    title: "Best Exchange Rates in London!"
+    text: "Use cambiu to find the best deals around: Secure and hassle free."
+    search_button: "Exchange"
+    offer_prefix: "We offer "
+    gain: "Your gain: "
+    signin_button: "Book now"
+    thanks_title: "Thanks for the interest"
+    thanks_text: "We launch soon!"
+  currency_exchange:
+    development:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    staging:
+      ga_tracking_id: "UA-60776239-1"
+      mixpanel_token: "aa1eaabda0abe65effad5c5c0118313e"
+    production:
+      ga_tracking_id: "UA-59245909-1"
+      mixpanel_token: "12bf0fd696b6ae4fc5e52c7a92ac7dd1"
+    title: "Find the best exchange deals near you"
+    text: "Save on high commission fees with a few simple clicks. Anytime. Anywhere."
+    search_button: "Exchange"
+    offer_prefix: "We offer "
+    gain: "Your gain: "
+    signin_button: "Book now"
+    thanks_title: "Thanks for the interest"
+    thanks_text: "We launch soon!"
+  start_free:
+    ga_tracking_id: "UA-60617930-1"
+  bestdeals:
+    ga_tracking_id: "UA-60617243-1" 

@@ -1,0 +1,86 @@
+<div class="container-fluid">
+	<div id="exchanges_page">
+		<div class="row">
+			<div class="parameters">				
+				<a data-toggle="collapse" href="#exchange_params_change" id="exchange_title">
+					<div id="exchange_params">
+						<div id="exchange_params_display">
+							<%= render 'exchange_params_display' %>
+						</div>
+					</div>
+				</a>
+				<div class="collapse" id="exchange_params_change">
+					<div id="exchange_params_wrapper" class="row well clearfix">
+						<%= render 'exchange_params_form' %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="exchanges_content">
+			<div id="exchanges" class="col-md-5 col-xs-12">
+				<div  id="exchanges_list">	
+					<div class="list-group">
+						<!--   Search trigger, loading indicator -->
+						<div id="exchanges_header_item" class="list-group-item">
+							<div class="row">
+								<div class="col-md-12 col-xs-12">
+									<div id="loader_message">
+										<span id="loading_icon"><%= image_tag "loader1.gif"%></span>
+										<span>Finding offers...</span>
+									</div>
+									<div id="result_message" style="display: none;">
+										<span class="badge" id="exchanges_count"></span>
+										<span> matching offers found, </span>
+										<span id="sort_order"></span>
+									</div>
+									<div id="empty_message" style="display: none;">
+										<span>No offers found in </span>
+										<span id="empty_location"></span>.&nbsp;
+										<span><a>Change your search</a></span>
+										<span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="exchanges_items">
+							<!--   Exchange list goes here -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="map_container" class="col-md-7">
+				<div id="map-canvas"></div>			
+			</div>
+		</div>
+	</div>				  			  	
+
+	<!--   Exchange row template  -->
+	<div class="exchange_row template" style="display: none;">
+	
+		<a class="list-group-item " data-toggle="collapse" href="#exchange_det_0">
+			<div class="row">
+				<%= render 'exchange_sum_template' %>
+			</div>			
+		</a>
+		<div class="exchange_row_det collapse well" id="exchange_det_0">
+			<div class="row">
+				<%= render 'exchange_det_template' %>
+			</div>
+	  	</div>
+	</div>	
+	
+	<!--   Exchange InfoWindow template  -->
+	<div class="exchange_window template" id="0">
+		<div class="exchange_window_sum">
+			<div class="exchange_window_quote"></div>
+		</div>
+		<div class="exchange_window_det" style="display:none;">
+			<div class="exchange_window_name"></div>
+			<div class="exchange_window_address"></div>
+			<div class="exchange_window_quote"></div>
+			<div class="exchange_window_open"></div>				
+		</div>
+	</div>		
+		
+
+</div>

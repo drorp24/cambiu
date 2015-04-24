@@ -1,0 +1,35 @@
+<nav  class="navbar navbar-fixed-top <%= params[:controller]%>" >
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="row">
+    	<div class="col-xs-12 col-md-4 col-md-offset-1">
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#cambiu_menu">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="page-title navbar-brand text-center" id="navbar_logo" href="#"><%= image_tag 'logo.png' %></a>
+		    </div>
+	    </div>
+		
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="col-xs-12 col-md-5">
+		    <div class="collapse navbar-collapse" id="cambiu_menu">
+		      	<ul class="nav navbar-nav">
+		   	 	</ul>
+			     <ul class="nav navbar-nav navbar-right">
+					<li><%= link_to "How it works", "#how_does_it_work" %></li>
+					<li><%= link_to "Add Exchange", "http://cambiulanding.com/bdc" %></li>
+					<li><%= mail_to "info@cambiu.com", "Contact" %></li>
+					<!--
+					<li><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %></li>
+					<li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+					-->
+			     </ul>
+		    </div><!-- /.navbar-collapse -->
+		</div>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>

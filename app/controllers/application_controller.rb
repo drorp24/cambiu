@@ -1,0 +1,38 @@
+require "application_responder"
+
+class ApplicationController < ActionController::Base
+  self.responder = ApplicationResponder
+  respond_to :html
+
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
+  
+  before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_landing
+#  before_action :authenticate_user!
+
+
+  
+  protected
+  
+  def set_http_cache_headers
+    expires_in 1.month, public: true
+    fresh_when last_modified: Date.new(2015, 1, 1), public: true
+  end
+  
+  def set_landing
+    @landing = request.original_fullpath.remove("/").split("?")[0]
+    @landing = "app" unless ["save_money", "best_rates", "currency_exchange"].include? @landing 
+  end
+
+  def find_guest_user
+    @guest_user = User.find(session[:user_id]) if session[:user_id]
+  end
+  
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:guest, :username, :email, :password, :password_confirmation, :remember_me, :buy_amount, :pay_amount, :buy_currency, :pay_currency, :latitude, :longitude, :location, :bbox, :landing, :geocoded_location, :location_search) }
+    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:buy, :buy_currency, :pay, :pay_currency, :login, :username, :email, :password, :password_confirmation, :buy_cents, :pay_cents, :remember_me) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:username, :email, :password, :password_confirmation, :current_password) }
+  end
+end
