@@ -32,7 +32,8 @@ function getLocation() {
             if (status == google.maps.GeocoderStatus.OK) {
               if (results[1]) {
                 sessionStorage.user_location = results[1].formatted_address;
-              } else {
+                $('#search_location').attr('placeholder', sessionStorage.user_location);
+             } else {
                 sessionStorage.user_location = null;
               }
             } else {

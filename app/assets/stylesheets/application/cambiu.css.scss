@@ -18,6 +18,7 @@ $form-control-height: 45px;
 $button-height: 50px;
 $form-text-transform: uppercase;
 $border-bottom: 3px solid $darkgreen;
+$std-margin: 5vh;
 
 // OLD SEARCH PAGE
 $search-input-height: 40px;
@@ -79,7 +80,7 @@ $inverse-color: #ffffff;
 
 @mixin placeholder-icon-def($code) {
   font-family: fontAwesome;
-  content: $code;
+  content: $code + '   ';
 }
 
 @mixin placeholder-icon($code) {
@@ -113,7 +114,7 @@ $inverse-color: #ffffff;
 body#cambiu {
     
   padding-top: 50px;
-  font-family: Helvetica;
+  font-family: $font-family;
   color: $color;
   .form-control {border-radius: $border-radius;}
   .navbar {
@@ -127,6 +128,10 @@ body#cambiu {
         margin-bottom: -20px;
         color: $lightgrey;
       }
+  }
+  .section_anchor {
+    display: block;
+    margin-bottom: 100px;
   }
   .mobile_only {
       display: none;
@@ -148,7 +153,7 @@ body#cambiu {
         line-height: inherit;
         text-align: center;
         color: #fff;
-        font-size: 1.5em;
+        font-size: 1.3em;
         font-weight: 400;
         height: $button-height;
         border-bottom: $border-bottom;
@@ -175,10 +180,42 @@ body#cambiu {
       color: $darkgrey;
     }
   }
-  .rates {
-    background-color: $greybg;
-    height: 10vh;
-    border-top: 5px solid $lightgreen;
+  .rates_banner img {
+    width: 100%;
+  }
+
+  .how_does_it_work {
+    .row {
+      margin-top: $std-margin;
+    }
+    h2 {
+      color: $darkgrey;
+    }
+    .hdiw_text {
+      margin-top: 25px;
+    }
+  }
+  
+  .getstarted_button_container {
+    margin-top: -10vh;
+    .getstarted_button {
+      background-color: $lightgreen;
+      border-bottom: 3px solid $darkgreen;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 1.3em;
+      font-weight: 400;
+      height: $button-height;
+      border-radius: 5px;
+      &:hover {
+        background-color: $darkgreen;
+      }
+    }
+    img {
+      position: relative;
+      top: 33px;
+      height: 50px;
+    }
   }
   
   &.exchanges {
@@ -271,7 +308,7 @@ body#cambiu {
     &.home  {
       .background {
         @include background-img('header_background.jpg');      
-        height: 85vh;
+        height: 75vh;
       }
       .above_fold {
         .main {
@@ -290,16 +327,30 @@ body#cambiu {
               font-size: 3.2em;
               line-height: 1.1em;
             }
+            .pre {
+              font-weight: 600;
+            }
             .post {
               font-weight: 400;
               color: $darkgrey;
-              font-size: 1.2em;
+              font-size: 1.1em;
             }
           }
         }
       }
     }
-    
+
+    .getstarted_button_container {
+      .getstarted_button {
+        margin-left: -12.5%;
+        width: 125%;
+      }
+      img {
+        right: 14px;
+      }
+    }
+
+     
     &.exchanges {
       
       #exchanges {
@@ -483,8 +534,22 @@ body#cambiu {
           }
         }
       }
+      .rates_banner img {
+        display: none;
+      }
+
     }
     
+    .getstarted_button_container {
+      .getstarted_button {
+         width: 100%;
+      }
+      img {
+        right: -6%;
+      }
+    }
+
+
     &.exchanges {
       #map_container {
         display: none;

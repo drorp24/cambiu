@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     // Populate search_form
 
-    $('#search_location').attr('placeholder', "   " + sessionStorage.user_location);
+    $('#search_location').attr('placeholder', sessionStorage.user_location);
     $('#search_user_location').val(sessionStorage.user_location);
     $('#search_user_lat').val(sessionStorage.user_lat);
     $('#search_user_lng').val(sessionStorage.user_lng);
@@ -31,7 +31,10 @@ $(document).ready(function() {
    $('#search_pay_amount').keyup(function() {
        $('#search_buy_amount').val("");
    }); 
-
+   
+   $('#search_location').click(function() {
+       $('#search_location').attr('placeholder', 'Look for deals in...');
+   });
 
     // UI
     if ($('#sort').val()) {var sort = $('#sort').val();} else {var sort = 'quote';}; // if sort added to home page. exchanges page has its own trigger.    
