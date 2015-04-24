@@ -15,4 +15,5 @@
 //= require autonumeric
 //= require bootstrap/transition
 //= require bootstrap/collapse
+//= require bootstrap/carousel
 //= require bootstrap-switch
