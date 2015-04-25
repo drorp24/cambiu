@@ -233,12 +233,20 @@ body#cambiu {
   
   .testimonials {
     background-color: $lightgreybg;
-    border-top: 2px solid $lightgreen;
+    border-top: 3px solid $lightgreen;
     padding: 25px inherit;
+    .fivestars {
+      margin: 10px;
+    }
     #testimonials_carousel {
 
       .middle-parent {
-        @include middle-parent(120px, 65px);
+        @media (min-width: $screen-sm-min) {
+          @include middle-parent(120px, 65px);
+        }
+        @media (max-width: $screen-xs-max) {
+          @include middle-parent(100px, 65px);
+        }
       }
 
       .carousel-control {
@@ -277,22 +285,34 @@ body#cambiu {
 
         }
         .active {
-          border: 2px solid $lightgreen;
-          background-position-x: -2px;
-          background-position-y: -2px;
+          border: 4px solid $lightgreen;
+          background-position-x: -4px;
+          background-position-y: -4px;
         }
       }
       .testimonial {
-        font-size: 1.1em;
-        font-weight: 300;
+        @media (max-width: $screen-xs-max){
+          font-size: 1em;
+        }
+        @media (min-width: $screen-sm-min){
+          font-size: 1.1em;
+        }
+        font-weight: 400;
         margin-top: 7px;
-        margin-left: -20px;
         color: #000;
+        @media (min-width: $screen-sm-min) {
+          margin-left: -20px;
+        }
       }
       .credit {
         color: $lightgreen;
-        margin-left: -20px;
         margin-top: -15px;
+        @media (min-width: $screen-sm-min) {
+          margin-left: -20px;
+        }
+        @media (max-width: $screen-xs-max){
+          font-size: 0.9em;
+        }
       }
     }
   }
