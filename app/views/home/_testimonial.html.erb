@@ -1,0 +1,25 @@
+<%= content_tag("div", class: "item #{status}")  do %>
+    <div class="row">
+        <div class="col-md-2 col-sm-2 col-xs-12">
+             <a class="left carousel-control middle-parent" href="#testimonials_carousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left middle-child"></span>
+            </a>
+         </div>
+        <div class="col-md-2 col-sm-2 col-xs-12 middle-parent">
+          <div class="middle-child">
+            <%= image_tag "testimonials_user_#{number}.png", class: "media-object img-rounded img-responsive" %>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 middle-parent">
+          <div class="caption middle-child">
+            <p class="testimonial">The smartness of the platform id that it allows our company a simple way to get multiple quotes on each deal.</p>
+            <p class="credit">David Kosky the <%= number %>  - Asset Manager London & Capital</p>
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-12">
+          <a class="right carousel-control middle-parent" href="#testimonials_carousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right middle-child"></span>
+          </a>
+        </div>
+    </div>
+<% end %>

@@ -26,13 +26,23 @@ $search-input-height: 40px;
 $input-height-mobile: 40px;
 $help-text-color: #888;
 $inverse-color: #ffffff;
-
-
-
-// OLD SEARCH PAGE
+// OLD SEARCH PAGE END
 
 
 // Mixins
+@mixin middle-parent($height) {
+  height: $height;
+  .middle-child {
+    height: $height;
+    vertical-align: middle;
+    display: table-cell;
+    img {
+      height: $height;
+    }
+  }
+}
+
+
 @mixin search-form-def {
   color: $darkgreen;
   text-align: left;
@@ -118,6 +128,7 @@ body#cambiu {
   font-family: $font-family;
   color: $color;
   .form-control {border-radius: $border-radius;}
+
   .navbar {
     background-color: #fff;
     margin-bottom: 0;
@@ -224,6 +235,52 @@ body#cambiu {
     background-color: $lightgreybg;
     border-top: 2px solid $lightgreen;
     padding: 25px inherit;
+    #testimonials_carousel {
+
+      .middle-parent {
+        @include middle-parent(65px);
+      }
+
+      .carousel-control {
+        background: none;
+        .glyphicon-chevron-left, .glyphicon-chevron-right {
+          position: static;
+          width: 100%;
+          margin: inherit;
+          padding: inherit;
+        }
+      }
+      .carousel-indicators {
+        position: static;
+        width: 100%;
+        padding: inherit;
+        margin: inherit;
+        li {
+          width: 36px;
+          height: 36px;
+          border-radius: 36px;
+          background-size: 36px;
+          &[data-slide-to="0"] {
+            background-image: image-url('testimonials_user_1.png');
+          }
+          &[data-slide-to="1"] {
+            background-image: image-url('testimonials_user_2.png');
+          }
+           &[data-slide-to="2"] {
+            background-image: image-url('testimonials_user_3.png');
+          }
+          &[data-slide-to="3"] {
+            background-image: image-url('testimonials_user_4.png');
+          }
+
+        }
+        .active {
+          border: 2px solid $lightgreen;
+          background-position-x: -2px;
+          background-position-y: -2px;
+        }
+      }
+    }
   }
   
   &.exchanges {
