@@ -127,6 +127,9 @@ body#cambiu {
   padding-top: 50px;
   font-family: $font-family;
   color: $color;
+  a:not(.carousel-control) {
+    color: $lightgrey;
+  }
   .form-control {border-radius: $border-radius;}
 
   .navbar {
@@ -194,6 +197,7 @@ body#cambiu {
   }
   .rates_banner img {
     width: 100%;
+    height: 65px;
   }
 
   .how_does_it_work {
@@ -339,6 +343,35 @@ body#cambiu {
     border-top: 2px solid $darkgreen;
     p {
       margin-bottom: 0;
+    }
+  }
+
+  .footer {
+    @media (max-width: $screen-xs-max) {
+ //     text-align: center;
+    }
+    border-top: 5px solid $lightgreen;
+    background-color: $lightgreybg;
+    padding-top: 25px;
+    .links_title {
+      color: #333;
+    }
+    a {
+      display: block;
+      line-height: 25px;
+      &:hover {
+        text-decoration: none;
+        color: $lightgreen;
+      }
+    }
+    .all_rights_reserved {
+      margin: 25px;
+    }
+    .social_networks {
+      margin-top: 25px;
+      a {
+        height: 45px;
+      }
     }
   }
   
