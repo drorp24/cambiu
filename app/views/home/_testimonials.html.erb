@@ -1,25 +1,31 @@
 <div class="testimonials">
 
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6 col-xs-12">
 
-  <div id="testimonials_carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div id="testimonials_carousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-        <%= render partial: 'testimonial', locals: {status: 'active', number: '1'} %>
-        <%= render partial: 'testimonial', locals: {status: '', number: '2'} %>
-        <%= render partial: 'testimonial', locals: {status: '', number: '3'} %>
-        <%= render partial: 'testimonial', locals: {status: '', number: '4'} %>
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner">
+            <%= render partial: 'testimonial', locals: {status: 'active', number: '1'} %>
+            <%= render partial: 'testimonial', locals: {status: '', number: '2'} %>
+            <%= render partial: 'testimonial', locals: {status: '', number: '3'} %>
+            <%= render partial: 'testimonial', locals: {status: '', number: '4'} %>
+          </div>
+
+
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#testimonials_carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#testimonials_carousel" data-slide-to="1"></li>
+            <li data-target="#testimonials_carousel" data-slide-to="2"></li>
+            <li data-target="#testimonials_carousel" data-slide-to="3"></li>
+          </ol>
+
+        </div>
+
+      </div>
     </div>
-
-
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#testimonials_carousel" data-slide-to="0" class="active"></li>
-      <li data-target="#testimonials_carousel" data-slide-to="1"></li>
-      <li data-target="#testimonials_carousel" data-slide-to="2"></li>
-      <li data-target="#testimonials_carousel" data-slide-to="3"></li>
-    </ol>
-  </div>
 
 
 </div>
