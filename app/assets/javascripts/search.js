@@ -22,6 +22,15 @@ $(document).ready(function() {
     $('#search_page').val(window.location.host + window.location.pathname);
 
 
+    // open parameters collapsed form in desktops only
+    var mq = window.matchMedia('(min-width: 768px)');
+    if(mq.matches) {
+        $('.parameters .collapse').addClass('in');
+    } else {
+        // the width of browser is less then 700px
+    }
+    
+
 
     // behavior
 

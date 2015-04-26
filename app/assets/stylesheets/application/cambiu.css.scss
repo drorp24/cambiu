@@ -385,6 +385,10 @@ body#cambiu {
       }
       #exchanges {
         z-index: 0;
+        @media (max-width: $screen-xs-max){
+          padding-right: 0;
+          padding-left: 0;
+        }
       }
       .badge {
         background-color: $brand-color;
@@ -400,6 +404,11 @@ body#cambiu {
       z-index: -1;
       margin-top: 97px;
       font-family: $font-family;
+      @media (max-width: $screen-xs-max) {
+        #distance {
+          display: none;
+        }
+      }
       .distance {
         font-size: 0.9em;
         color: #111;
