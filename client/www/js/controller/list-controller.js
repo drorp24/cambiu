@@ -1,3 +1,0 @@
-function listController($scope) {
-  
-}

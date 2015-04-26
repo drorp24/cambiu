@@ -1,8 +1,0 @@
-<ion-view scroll="true">
-  <div class="list-view">
-    <div class="item" ng-repeat="ex in exchanges"
-         ng-click="setSelectedExchange(ex.id)" ng-class="{'active': (ex.id == currentExchange.id)}">
-      {{ ::ex.name }}
-    </div>
-  </div>
-</ion-view>
