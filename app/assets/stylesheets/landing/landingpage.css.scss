@@ -10,7 +10,6 @@ body#cambiu.landing #cambiu_menu.navbar-collapse.collapse {
     display: none !important;
   } 
 
-
 @media (min-width: 768px){
   #cambiu.landing #pay_amount {
     margin-left: 32px;
@@ -188,6 +187,7 @@ body#cambiu.landing #cambiu_menu.navbar-collapse.collapse {
 
 #landing_page #new_user {
   margin-top: 20px;
+  margin-bottom: 50px;
   input:nth-child(1) {
   }
   input, button, select{
