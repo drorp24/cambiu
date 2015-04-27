@@ -1,3 +1,5 @@
+require 'tod'
+
 class BusinessHour < ActiveRecord::Base
 
   belongs_to :exchange
