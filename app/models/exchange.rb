@@ -126,6 +126,7 @@ class Exchange < ActiveRecord::Base
   def todays_hours
     bh = open_today
         return nil unless bh
+        puts self.id
     open1 = bh.open1 ? bh.open1.strftime("%H:%M") : nil
     close1 = bh.close1 ? bh.close1.strftime("%H:%M") : nil
     open2 = bh.open2 ? bh.open2.strftime("%H:%M") : nil
