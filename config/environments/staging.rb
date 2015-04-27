@@ -13,7 +13,7 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = true
-  config.static_cache_control = "public, s-maxage=31536000, max-age=31536000"
+  config.static_cache_control = "public, max-age=31536000"
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
@@ -96,6 +96,6 @@ Rails.application.configure do
   config.fb_app_id = '803314713056637'
   config.fb_app_secret = 'f8535d022dd9afff4c14e8a8c28b5ab7' 
 
-  config.use_google_geocoding = true
+  config.use_google_geocoding = false
   
 end
