@@ -150,13 +150,13 @@ class Exchange < ActiveRecord::Base
       hours = csv_busines_hours.gsub(/\s+/, "").partition(",")
       if !hours[0].blank?
         hours1 = hours[0].partition("-")
-        bh.open1 =  TimeOfDay(hours1[0])
-        bh.close1 = TimeOfDay(hours1[2])
+        bh.open1 =  Tod::TimeOfDay(hours1[0])
+        bh.close1 = Tod::TimeOfDay(hours1[2])
       end
       if !hours[2].blank?
         hours2 = hours[2].partition("-")
-        bh.open2 =  TimeOfDay(hours2[0])
-        bh.close2 = TimeOfDay(hours2[2])
+        bh.open2 =  Tod::TimeOfDay(hours2[0])
+        bh.close2 = Tod::TimeOfDay(hours2[2])
       end      
     end
 
@@ -173,7 +173,7 @@ class Exchange < ActiveRecord::Base
        end
       define_method "#{day_name}_#{col}=" do |tod|
         b = BusinessHour.find_or_initialize_by(exchange_id: self.id, day: day)
-        b.send "#{col}=", TimeOfDay.parse(tod)
+        b.send "#{col}=", Tod::TimeOfDay.parse(tod)
         b.save  
       end
     end     
