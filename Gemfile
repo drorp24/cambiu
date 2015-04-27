@@ -67,6 +67,7 @@ group :test, :staging, :production do
   gem 'puma'
   gem "rack-timeout"
 end
+#gem 'cloudinary'
 #gem 'compass-rails'
 #gem 'chosen-rails'
 
