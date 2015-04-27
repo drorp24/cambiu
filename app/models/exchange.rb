@@ -1,3 +1,5 @@
+require 'tod'
+
 class Exchange < ActiveRecord::Base
   
   belongs_to  :chain
