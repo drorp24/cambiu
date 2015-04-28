@@ -187,8 +187,7 @@ $(document).ready(function() {
 
         console.log('updateParamsDisplay');
 
-        $('#pay_amount_display').html(params.edited_pay_amount);
-        $('#buy_currency_display').html('to ' + params.buy_currency);
+        $('#buy_amount_display').html(params.edited_buy_amount);
         $('#searched_location_display').html('in ' + params.location);
     }
     

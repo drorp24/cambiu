@@ -246,7 +246,7 @@ body#cambiu {
 
       .middle-parent {
         @media (min-width: $screen-sm-min) {
-          @include middle-parent(120px, 65px);
+          @include middle-parent(160px, 65px);
         }
         @media (max-width: $screen-xs-max) {
           @include middle-parent(100px, 65px);
@@ -426,12 +426,17 @@ body#cambiu {
       .units-m {
         display: none;
       }
-      .middle-parent .middle-child {
-        height: 50px;
-        vertical-align: middle;
-        display: table-cell;
+      .middle-parent {
+        .middle-child {
+          height: 50px;
+          vertical-align: middle;
+          display: table-cell;
+        }
       }
-      .quote {
+      .middle-child.email_submit { // Temporary
+        margin-top: 17px;
+      }
+        .quote {
         font-weight: 600;
         line-height: 25px;
         color: #111;

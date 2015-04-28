@@ -12,7 +12,18 @@
         </div>
         <div class="col-md-6 col-xs-12 middle-parent">
           <div class="caption middle-child">
-            <p class="testimonial">"The smartness of the platform is that it allows our company a simple way to get multiple quotes on each deal."</p>
+            <p class="testimonial">
+            	<% case number %>
+            	<% when '1' %>
+            	"I even don't need to leave home to compare prices.  With cambiu, it's really simple to exchange currency at a time and place convenient for me. It's saved me so much time and the best thing is, I can even use their service on my smartphone."
+            	<% when '2' %>
+            	"For so long, I've changed money using the place right by my office, but  I had never even thought that I could get a better price by walking just two minutes further down the road! cambiu is simply genius: why didn't anyone think of it before? "
+            	<% when '3' %>
+            	"Before I fly abroad, I always change money with cambiu. Their service is simple, reliable, convenient and most importantly, it saves me money. I'd recommended it to all my friends!"
+            	<% when '4' %>
+            	"The smartness of the platform is that it allows our company a simple way to get multiple quotes on each deal."
+				<% end %>
+			</p>
            </div>
         </div>
         <div class="col-md-1 col-xs-12">

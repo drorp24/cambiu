@@ -44,6 +44,15 @@ $(document).ready(function() {
    $('#search_location').click(function() {
        $('#search_location').attr('placeholder', 'Look for deals in...');
    });
+   
+   // Temporary
+   // search_button click just collapses the form, nothing else
+   
+   $('#search_button').click(function() {
+      $('#exchange_params_change').collapse('toggle');
+      return false; 
+   });
+   
 
     // UI
     if ($('#sort').val()) {var sort = $('#sort').val();} else {var sort = 'quote';}; // if sort added to home page. exchanges page has its own trigger.    

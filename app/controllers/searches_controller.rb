@@ -1,5 +1,6 @@
 class SearchesController < ApplicationController 
- 
+  skip_before_filter :verify_authenticity_token 
+
   def create
     @search = Search.create!(search_params)  
     render json: @search.exchanges                                                
