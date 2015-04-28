@@ -121,12 +121,15 @@ class Exchange < ActiveRecord::Base
     Money.new(buy_cents, buy_currency)
   end
 
-# TODO: Remove. All search will be handled by Search model
+# TODO: STOPPED WORKING: something to do with BusinessHour serialize by Tod::TimeOfDay
+# Landing database works find: open1.class is Tod::TimeOfDay, but staging serialize puts string in there
+# The symptom: cannot save a BusinessHour instance record after putting there a tod object in open1
 
+=begin
   def todays_hours
     bh = open_today
         return nil unless bh
-        puts self.id
+        puts self.id  
     open1 = bh.open1 ? bh.open1.strftime("%H:%M") : nil
     close1 = bh.close1 ? bh.close1.strftime("%H:%M") : nil
     open2 = bh.open2 ? bh.open2.strftime("%H:%M") : nil
@@ -139,6 +142,17 @@ class Exchange < ActiveRecord::Base
     end
     result
   end 
+=end
+
+  def todays_hours 
+    @todays_hours ||= make_hour(rand(7..10)) + " - " + make_hour(rand(17..20))
+  end
+  
+  def make_hour(int)
+    hour = int.to_s + ":00"
+    hour = "0" + hour if int < 10
+    hour
+  end
 
   def update_csv_business_hours(csv_busines_hours, day)
 
