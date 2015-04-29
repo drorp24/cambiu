@@ -15,7 +15,7 @@ class CurrenciesController < ApplicationController
   private
   
   def set_currency
-    @currency ||= Currency.new    ``
+    @currency ||= Currency.new
   end
 
 end

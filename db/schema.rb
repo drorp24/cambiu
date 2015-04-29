@@ -109,6 +109,8 @@ ActiveRecord::Schema.define(version: 20150414164832) do
     t.boolean  "accessible"
     t.integer  "upload_id"
     t.integer  "admin_user_id"
+    t.string   "status"
+    t.text     "message"
   end
 
   add_index "exchanges", ["chain_id"], :name => "index_exchanges_on_chain_id"
