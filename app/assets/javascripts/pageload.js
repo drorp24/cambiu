@@ -15,31 +15,30 @@ var exchanges = [];
 var infowindows = [];
 var exchanges_array = [];
 var exchanges_by_quote = [];
-var exchanges_by_distance = []; 
+var exchanges_by_distance = [];
 
+setPage = function(to) {
+    var to_class = to.replace('#', '')
 
-// Initialize Google map with London
-/*
-function initialize() {
-  var mapOptions = {
-    zoom: 8,
-    center: new google.maps.LatLng(51.50169, -0.16030)
-  };
+    $(to).show();
+    $('nav.navbar').addClass(to_class);
+    $('body').addClass(to_class);
+ }
 
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-}
+changePage = function(from, to) {
 
-function loadScript() {
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp' +
-      '&signed_in=true&callback=initialize';
-  document.body.appendChild(script);
-}
+    var from_class = from.replace('#', '')
+    var to_class = to.replace('#', '')
 
-window.onload = loadScript;
-*/
+    $(from).hide();
+    $(to).show();
+    $('nav.navbar').removeClass(from_class);
+    $('nav.navbar').addClass(to_class);
+    $('body').removeClass(from_class);
+    $('body').addClass(to_class);
+    window.location.hash = to;
+    // push to html5 history;
+ }
 
 
 
@@ -52,15 +51,7 @@ var display = function(term) {
     }
 };        
 
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-
-// Prefix input elements with the respective selected currency 
+// Prefix input elements with the respective selected currency
 var bind_currency_to_autonumeric = function() {
  
     $('[data-autonumeric]').autoNumeric('init'); 
@@ -85,7 +76,13 @@ var bind_currency_to_autonumeric = function() {
 $(document).ready(function() {
     
     console.log('pageload');
-    
+
+    if(window.location.hash) {
+        changePage('#homepage', window.location.hash)
+    } else {
+        setPage('#homepage')
+    }
+
     bind_currency_to_autonumeric();
     
  //    mixpanel.track("Page view");

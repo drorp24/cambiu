@@ -477,19 +477,6 @@ $(document).ready(function() {
     }
 
 
-    function changePage() {
-        if ($('#homepage').css('display') == 'block') {
-            $('#homepage').css('display', 'none');
-            $('#exchanges').css('display', 'block');
-            $('#exchanges').css('visibility', 'visible');
-            $('nav.navbar').removeClass('home');
-            $('nav.navbar').addClass('exchanges');
-            $('body').removeClass('home');
-            $('body').addClass('exchanges');
-            // push to html5 history;            
-        }
-    }
-
 
    function beforeSubmit() {
 
@@ -498,7 +485,6 @@ $(document).ready(function() {
         startLoader();
         triggerGtm();
         setParams();
-        changePage();
 
     } 
  
