@@ -485,6 +485,7 @@ $(document).ready(function() {
         startLoader();
         triggerGtm();
         setParams();
+        changePage('#homepage', '#exchanges');
 
     } 
  
