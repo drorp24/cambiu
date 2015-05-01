@@ -11,21 +11,32 @@ $(document).ready(function() {
         $('#exchange_params_change').collapse('toggle');
         return false;
     });
+    // Behavior Temporary
+    // search_button click just collapses the form, nothing else
 
 
 
 
     console.log('search');
     
-    // Enble location search - Google maps places autocomplete
-    // TODO: Same for the search_form on the search page
-    var input = document.getElementById('search_location');
-    searchBox = new google.maps.places.SearchBox(input, {
-        types: ['regions']
+
+    // Initial population from sessionStorage
+
+    $('[data-field]').each(function() {
+
+        var field = $(this).data('field');
+        var value = sessionStorage.getItem(field);
+        var $this = $(this);
+
+        if ($this.is('input, select')) {
+            $this.val(value);
+        } else {
+            $this.html(value);
+        }
     });
 
 
-    // Populate search_form
+    // Refresh user's location
 
     $('[data-field=user_location]').val(sessionStorage.user_location);
     $('[data-field=user_lat]').val(sessionStorage.user_lat);
@@ -33,19 +44,7 @@ $(document).ready(function() {
     $('span[data-field=user_location]').html(sessionStorage.user_location)
 
 
-    // behavior
-
-   $('#search_buy_amount').keyup(function() {
-       $('#search_pay_amount').val("");
-   }); 
-   $('#search_pay_amount').keyup(function() {
-       $('#search_buy_amount').val("");
-   }); 
-   
-   $('#search_location').click(function() {
-       $('#search_location').attr('placeholder', 'Look for deals in...');
-   });
-
+    // Binding
 
     function bind(field, event) {
         var elements = '[data-field=' + field + ']';
@@ -71,18 +70,38 @@ $(document).ready(function() {
 
     $('#homepage form input').each(function() {
         var field = $(this).data('field');
-        console.log(field);
         bind(field, 'keyup');
     });
 
     $('#homepage form select').each(function() {
         var field = $(this).data('field');
-        console.log(field);
         bind(field, 'change');
     });
 
 
-     // UI
+    // Behavior
+
+    $('#search_buy_amount').keyup(function() {
+        $('#search_pay_amount').val("");
+    });
+    $('#search_pay_amount').keyup(function() {
+        $('#search_buy_amount').val("");
+    });
+
+    $('#search_location').click(function() {
+        $('#search_location').attr('placeholder', 'Look for deals in...');
+    });
+
+    // Enble location search - Google maps places autocomplete
+    // TODO: Same for the search_form on the search page
+    var input = document.getElementById('search_location');
+    searchBox = new google.maps.places.SearchBox(input, {
+        types: ['regions']
+    });
+
+
+
+    // UI
 
     // open parameters collapsed form in desktops only
     var mq = window.matchMedia('(min-width: 768px)');
