@@ -18,17 +18,17 @@ var exchanges_by_quote = [];
 var exchanges_by_distance = [];
 
 setPage = function(to) {
-    var to_class = to.replace('#', '')
+    var to_class = to.replace('#', '');
 
     $(to).show();
     $('nav.navbar').addClass(to_class);
     $('body').addClass(to_class);
- }
+ };
 
 changePage = function(from, to) {
 
-    var from_class = from.replace('#', '')
-    var to_class = to.replace('#', '')
+    var from_class = from.replace('#', '');
+    var to_class = to.replace('#', '');
 
     $(from).hide();
     $(to).show();
@@ -38,16 +38,16 @@ changePage = function(from, to) {
     $('body').addClass(to_class);
     window.location.hash = to;
     // push to html5 history;
- }
+ };
 
 
 
 var display = function(term) {
     switch (term) {
         case 'quote':
-            return 'best prices first:';
+            return 'Best prices first';
         case 'distance':
-            return 'nearest first:';
+            return 'Nearest first';
     }
 };        
 
@@ -78,7 +78,7 @@ $(document).ready(function() {
     console.log('pageload');
 
     if(window.location.hash) {
-        changePage('#homepage', window.location.hash)
+        changePage('#homepage', window.location.hash);
     } else {
         setPage('#homepage')
     }

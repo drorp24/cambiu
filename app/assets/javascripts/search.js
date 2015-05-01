@@ -4,23 +4,14 @@
 $(document).ready(function() {
 
 
-    // Behavior Temporary
-    // search_button click just collapses the form, nothing else
-
-    $('#search_button').click(function() {
-        $('#exchange_params_change').collapse('toggle');
-        return false;
-    });
-    // Behavior Temporary
-    // search_button click just collapses the form, nothing else
-
-
-
 
     console.log('search');
-    
+
 
     // Initial population from sessionStorage
+
+    sessionStorage.pay_currency = sessionStorage.pay_currency || "GBP";
+    sessionStorage.buy_currency = sessionStorage.buy_currency || "EUR";
 
     $('[data-field]').each(function() {
 
@@ -78,8 +69,7 @@ $(document).ready(function() {
         bind(field, 'change');
     });
 
-
-    // Behavior
+     // Behavior
 
     $('#search_buy_amount').keyup(function() {
         $('#search_pay_amount').val("");

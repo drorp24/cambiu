@@ -6,8 +6,8 @@ $(document).ready(function() {
     var directionsService = new google.maps.DirectionsService();
 
     console.log('exchanges');
-        
-    
+
+
     function updatePage(exchanges) {
 
         console.log('updatePage');
@@ -23,7 +23,7 @@ $(document).ready(function() {
         }
         updateResults(exchanges);
         updateParamsDisplay();
-    }   
+    };
     
 
 // TODO: Remove, not needed anymore:
@@ -315,24 +315,22 @@ $(document).ready(function() {
     
     // change map center according to searched location 
     google.maps.event.addListener(searchBox, 'places_changed', function() {
-        
-        if ($('body#cambiu').hasClass('home')) {return;}
- 
+
         var places = searchBox.getPlaces();
         if (places.length == 0) {return;}        
-        place = places[0]; 
-        
-//        clearExchanges();
-      
-/*
-        $('#search_location').val(name);
-        $('#searched_location_display').html(name);
-        params.location = name;
-*/
-        if (!place.geometry) {alert('We have an issue with this location. Please try a different one'); return;}
-        place = place.geometry.location;
-        drawMap(null, place.lat(), place.lng());
-        
+        place = places[0];
+        formatted_address = place.formatted_address;
+        name = place.name;
+        console.log(place)
+        sessionStorage.location = formatted_address;
+        sessionStorage.location_short = name;
+        $('[data-field=location]:not(#search_location)').val(name);
+
+        if(window.location.hash == '#exchanges') {
+            if (!place.geometry) {alert('We have an issue with this location. Please try a different one'); return;}
+            place = place.geometry.location;
+            drawMap(null, place.lat(), place.lng());
+        }
     });
     
     $('#location_search').change(function() {
@@ -370,7 +368,9 @@ $(document).ready(function() {
                 };                      
                 map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
                 console.log('map is set now')
-                updateMarkers(exchanges);
+              if (exchanges && exchanges.length > 0) {
+                  updateMarkers(exchanges);
+              }
                 directionsDisplay.setMap(map);   
  
                } else {
@@ -386,8 +386,10 @@ $(document).ready(function() {
                 zoom: 12
             };                  
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            if (exchanges && exchanges.length > 0) {
                 updateMarkers(exchanges);
-            directionsDisplay.setMap(map);    
+            }
+            directionsDisplay.setMap(map);
 
         } else {
  
@@ -400,8 +402,10 @@ $(document).ready(function() {
                     zoom: 12
                 };                      
                 map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                updateMarkers(exchanges);
-                directionsDisplay.setMap(map);    
+                  if (exchanges && exchanges.length > 0) {
+                      updateMarkers(exchanges);
+                  }
+                  directionsDisplay.setMap(map);
              } else {
                 alert("Geocode was not successful for the following reason: " + status);
               }
@@ -487,27 +491,47 @@ $(document).ready(function() {
         setParams();
         changePage('#homepage', '#exchanges');
 
-    } 
+    };
  
    // new ajax search
-    $('#new_search').ajaxForm({ 
-            dataType:   'json', 
+    $('#new_search').ajaxForm({
+        dataType:       'json',
         beforeSubmit:   beforeSubmit,
-             success:   updatePage
+        success:        updatePage
     });
-  
 
 
- /*
-    function initialize() {
-        
-        console.log('initialize');
-        drawMap("London", null, null);
-    
+    // only after this point can #new_search submits be triggered
+    // ajax search if #exchanges pages is refreshed or search_button is clicked
+
+    if(window.location.hash) {
+         $('#new_search').submit();
+        return false;
     }
 
-    google.maps.event.addDomListener(window, 'load', initialize);        
-*/
+    $('#search_button').click(function() {
+        alert('clicked')
+        if (mobile) {$('#exchange_params_change').collapse('toggle');}
+        $('#new_search').submit();
+        return false;
+    });
+    // Behavior Temporary
+    // search_button click just collapses the form, nothing else
+
+
+
+
+
+    /*
+       function initialize() {
+
+           console.log('initialize');
+           drawMap("London", null, null);
+
+       }
+
+       google.maps.event.addDomListener(window, 'load', initialize);
+   */
 
 
     
