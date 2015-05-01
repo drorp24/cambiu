@@ -1,4 +1,4 @@
-<%= simple_form_for(Search.new, defaults: {input_html: {class: 'form-control'}, label: false}, html: {novalidate: true}) do |f| %>
+<%= simple_form_for(Search.new, defaults: {input_html: {class: 'form-control'}, label: false}, html: {:"way-data" => "params1", :'way-persistent' => '', novalidate: true}) do |f| %>
 	
 	<div class="row">
 		<div class="form-group col-md-8 col-xs-7">

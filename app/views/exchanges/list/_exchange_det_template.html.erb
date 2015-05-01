@@ -1,7 +1,7 @@
 <div class="email_request">
 	<div class="middle-parent-det col-md-10 col-xs-9">
 		<div class="middle-child">
-			<%= simple_form_for @user, validate: true, remote: true, html: { data: { url: '/users', type: :json } } do |f| %>
+			<%= simple_form_for User.new, validate: true, remote: true, html: { data: { url: '/users', type: :json } } do |f| %>
   				<%= f.input :email, placeholder: "Enter your email to receive confirmation", label: false, type: "email", required: true %>
   				<%= f.input :pay_amount, as: "hidden" %>
  				<%= f.input :pay_currency, as: "hidden" %>
@@ -46,7 +46,7 @@
 	<div class="middle-parent-det col-md-2 col-xs-4">
 		<div class="middle-child">
 			<div><i class="fa fa-link"></i></div>
-			<div><a class="website" href="#">website</div>
+			<div><a class="website" href="#">website</a></div>
 		</div>
 	</div>
 </div>

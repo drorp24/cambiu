@@ -1,13 +1,13 @@
 <a name="exchanges" class="section_anchor"></a>
 <div class="container-fluid">
 	<div id="exchanges_page">
-      <!-- render 'exchange_params' to return oldstyle params bar -->
+      <!-- render 'exchanges/params/exchange_params' to return oldstyle params bar -->
        <div class="row" id="exchanges_content">
            <div id="exchanges" class="col-md-5 col-xs-12">
                <div  id="exchanges_list">
                     <div class="list-group">
                        <!--   Search trigger, loading indicator -->
-                         <%= render 'exchanges_header_item' %>
+                         <%= render 'exchanges/list/exchanges_header_item' %>
                         <div id="exchanges_items">
 							<!--   Exchange list goes here -->
 						</div>
@@ -18,19 +18,23 @@
 				<div id="map-canvas"></div>			
 			</div>
 		</div>
-	</div>				  			  	
+	</div>	
+  
+    <div style="display: none;">
+      <%= render 'search_form' %>
+    </div>
 
 	<!--   Exchange row template  -->
 	<div class="exchange_row template" style="display: none;">
 	
 		<a class="list-group-item " data-toggle="collapse" href="#exchange_det_0">
 			<div class="row">
-				<%= render 'exchange_sum_template' %>
+				<%= render 'exchanges/list/exchange_sum_template' %>
 			</div>			
 		</a>
 		<div class="exchange_row_det collapse well" id="exchange_det_0">
 			<div class="row">
-				<%= render 'exchange_det_template' %>
+				<%= render 'exchanges/list/exchange_det_template' %>
 			</div>
 	  	</div>
 	</div>	

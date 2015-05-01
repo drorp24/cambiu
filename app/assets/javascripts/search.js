@@ -15,11 +15,10 @@ $(document).ready(function() {
 
     // Populate search_form
 
-    $('#search_location').attr('placeholder', sessionStorage.user_location);
-    $('#search_user_location').val(sessionStorage.user_location);
-    $('#search_user_lat').val(sessionStorage.user_lat);
-    $('#search_user_lng').val(sessionStorage.user_lng);
-    $('#search_page').val(window.location.host + window.location.pathname);
+    $('[name="search[location]"]').val(sessionStorage.user_location);
+    $('[name="search[user_lat]"]').val(sessionStorage.user_lat);
+    $('[name="search[user_lng]"]').val(sessionStorage.user_lng);
+    $('[name="search[page]"]').val(window.location.host + window.location.pathname);
 
 
     // open parameters collapsed form in desktops only
