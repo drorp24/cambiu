@@ -2,7 +2,7 @@ var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'deskto
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
 var production = $('body').hasClass('production');
-var params;
+var params = {};
 var pacContainerInitialized = false;
 var searchBox;
 var map;

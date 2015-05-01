@@ -5,11 +5,11 @@
 		</div>
 	</div>
 	<div class="form-group col-md-2 col-xs-6">
-		<input type="text" pattern="\d*" id="pay_amount" data-autonumeric="true" name="pay_amount" class="form-control" placeholder="placeholder"
+		<input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-autonumeric="true" name="buy_amount" class="form-control" placeholder="placeholder"
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
   	</div>
   	<div class="form-group col-md-1 col-xs-6">
-		<select id="pay_currency" name="pay_currency" class="currency_select select optional text-center form-control"
+		<select id="pay_currency" data-field="pay_currency" name="pay_currency" class="currency_select select optional text-center form-control"
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
 			<option selected disabled hidden value=''></option>
 			<option data-symbol="￡ " value="GBP">GBP</option>
@@ -26,7 +26,7 @@
 		</div>
 	</div>
   	<div class="form-group col-md-1 col-xs-12">
-		<select id="buy_currency" name="buy_currency" class="select optional text-center form-control"
+		<select id="buy_currency" data-field="buy_currency" name="buy_currency" class="select optional text-center form-control"
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="foreign" data-key3="currency">
 			<option selected disabled hidden value=''></option>
 			<option value="USD">USD</option>
@@ -43,7 +43,7 @@
 		</div>
 	</div>
 	<div class="form-group col-md-3 col-md-push-2 col-xs-12">
-		<input type="text" id="location_search" name="location_search" class="location search form-control" placeholder="   Current location" 
+		<input type="text" id="location_search" data-field="location" name="location_search" class="location search form-control" placeholder="   Current location"
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="location" data-key2="type" data-val2="search" data-key3="location">
   	</div>
   	<!-- Bootstrap original radio in button
@@ -67,14 +67,13 @@
 	</div>
 
   	<div class="hidden" style="display:none">
-  		<input type="hidden" name="latitude" class="location" id="latitude">
-  		<input type="hidden" name="longitude" class="location" id="longitude">
-  		<input type="hidden" name="geocoded_location" id="geocoded_location">
-  		<input type="hidden" name="distance">
-  		<input type="hidden" name="sort" id="sort">
-  		<input type="hidden" name="searched_location" id="searched_location">
-  		<input type="hidden" name="landing" value="<%= @landing %>">
-  		<input type="hidden" name="actual_pay_amount" id="actual_pay_amount">
+  		<input type="hidden" name="latitude" class="location" id="latitude" data-field="user_lat">
+  		<input type="hidden" name="longitude" class="location" id="longitude" data-field="user_lng">
+  		<input type="hidden" name="geocoded_location" id="geocoded_location" data-field="location">
+  		<input type="hidden" name="distance" data-field="distance">
+  		<input type="hidden" name="sort" id="sort" data-field="sort">
+  		<input type="hidden" name="searched_location" id="searched_location" data-field="location">
+  		<input type="hidden" name="actual_pay_amount" id="actual_pay_amount" data-field="actual_pay_amount">
 	</div>
 
   	<div id="search_div" class="form-group col-md-2 col-xs-12" class="form-group">

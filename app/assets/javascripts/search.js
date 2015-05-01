@@ -2,7 +2,19 @@
 // Search params, search form fields and the impact of their changes
 //
 $(document).ready(function() {
-    
+
+
+    // Behavior Temporary
+    // search_button click just collapses the form, nothing else
+
+    $('#search_button').click(function() {
+        $('#exchange_params_change').collapse('toggle');
+        return false;
+    });
+
+
+
+
     console.log('search');
     
     // Enble location search - Google maps places autocomplete
@@ -15,20 +27,10 @@ $(document).ready(function() {
 
     // Populate search_form
 
-    $('[name="search[location]"]').val(sessionStorage.user_location);
-    $('[name="search[user_lat]"]').val(sessionStorage.user_lat);
-    $('[name="search[user_lng]"]').val(sessionStorage.user_lng);
-    $('[name="search[page]"]').val(window.location.host + window.location.pathname);
-
-
-    // open parameters collapsed form in desktops only
-    var mq = window.matchMedia('(min-width: 768px)');
-    if(mq.matches) {
-        $('.parameters .collapse').addClass('in');
-    } else {
-        // the width of browser is less then 700px
-    }
-    
+    $('[data-field=user_location]').val(sessionStorage.user_location);
+    $('[data-field=user_lat]').val(sessionStorage.user_lat);
+    $('[data-field=user_lng]').val(sessionStorage.user_lng);
+    $('span[data-field=user_location]').html(sessionStorage.user_location)
 
 
     // behavior
@@ -43,17 +45,54 @@ $(document).ready(function() {
    $('#search_location').click(function() {
        $('#search_location').attr('placeholder', 'Look for deals in...');
    });
-   
-   // Temporary
-   // search_button click just collapses the form, nothing else
-   
-   $('#search_button').click(function() {
-      $('#exchange_params_change').collapse('toggle');
-      return false; 
-   });
-   
 
-    // UI
+
+    function bind(field, event) {
+        var elements = '[data-field=' + field + ']';
+        $(elements).on(event, function() {
+
+            var changed_el = $(this);
+            var value = $(this).val();
+
+            sessionStorage.setItem(field, value);
+
+            $(elements).each(function() {
+                var $this = $(this);
+                if (!$this.is(changed_el)) {
+                    if ($this.is('select, input')) {
+                        $this.val(value);
+                    } else {
+                        $(this).html(value);
+                    }
+                }
+            })
+        })
+    }
+
+    $('#homepage form input').each(function() {
+        var field = $(this).data('field');
+        console.log(field);
+        bind(field, 'keyup');
+    });
+
+    $('#homepage form select').each(function() {
+        var field = $(this).data('field');
+        console.log(field);
+        bind(field, 'change');
+    });
+
+
+     // UI
+
+    // open parameters collapsed form in desktops only
+    var mq = window.matchMedia('(min-width: 768px)');
+    if(mq.matches) {
+        $('.parameters .collapse').addClass('in');
+    } else {
+        // the width of browser is less then 700px
+    }
+
+
     if ($('#sort').val()) {var sort = $('#sort').val();} else {var sort = 'quote';}; // if sort added to home page. exchanges page has its own trigger.    
     $('#sort').val(sort);
     $('#sort_switch').bootstrapSwitch('state', sort == 'quote');

@@ -130,6 +130,9 @@ body#cambiu {
   a:not(.carousel-control) {
     color: $lightgrey;
   }
+  .list-group-item, .well {
+    border-radius: 0;
+  }
   .form-control {border-radius: $border-radius;}
 
   .navbar {
@@ -402,7 +405,7 @@ body#cambiu {
     }
     #exchanges_content {
       z-index: -1;
- //     margin-top: 97px;
+      margin-top: 97px;
       font-family: $font-family;
       @media (max-width: $screen-xs-max) {
         #distance {

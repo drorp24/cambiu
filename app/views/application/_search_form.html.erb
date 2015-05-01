@@ -2,33 +2,33 @@
 	
 	<div class="row">
 		<div class="form-group col-md-8 col-xs-7">
-			<%= f.input :pay_amount, input_html: {data: {autonumeric: true, symbolsource: 'search_pay_currency'}, pattern: "\d*"}, placeholder: "  I have:" %>
+			<%= f.input :pay_amount, input_html: {data: {autonumeric: true, symbolsource: 'search_pay_currency', field: 'pay_amount'}, pattern: "\d*"}, placeholder: "  I have:" %>
 		</div>
 		<div class="form-group col-md-4 col-xs-5">
-			<%= f.input :pay_currency, collection: Currency.major_with_symbol, input_html: {class: 'currency_select form-control', data: {header: 'My currency', style: 'btn-danger', symboltarget: 'search_pay_amount'}}, selected: "GBP",  include_blank: false %>
+			<%= f.input :pay_currency, collection: Currency.major_with_symbol, input_html: {class: 'currency_select form-control', data: {field: 'pay_currency', header: 'My currency', style: 'btn-danger', symboltarget: 'search_pay_amount'}}, selected: "GBP",  include_blank: false %>
 		</div>
 	</div>
 	<div class="row">
 		<div class="form-group col-md-8 col-xs-7">
-			<%= f.input :buy_amount, input_html: {data: {autonumeric: true, symbolsource: 'search_buy_currency'}, pattern: "\d*"}, placeholder: "  I need:" %>
+			<%= f.input :buy_amount, input_html: {data: {autonumeric: true, symbolsource: 'search_buy_currency', field:'buy_amount'}, pattern: "\d*"}, placeholder: "  I need:" %>
 		</div>
 		<div class="form-group col-md-4 col-xs-5">
-			<%= f.input :buy_currency, collection: Currency.major_with_symbol, input_html: {class: 'currency_select form-control', data: {header: 'Desired currency', style: 'btn-danger', symboltarget: 'search_buy_amount'}}, selected: "USD", include_blank: false %>
+			<%= f.input :buy_currency, collection: Currency.major_with_symbol, input_html: {class: 'currency_select form-control', data: {header: 'Desired currency', style: 'btn-danger', symboltarget: 'search_buy_amount', field:'buy_currency'}}, selected: "USD", include_blank: false %>
 		</div>
 	</div>
 	<div class="row">
 		<div class="form-group col-md-12 col-xs-12">
-			<%= f.input :location, placeholder: '  Look for deals in...' %>
+			<%= f.input :location, input_html: {data: {field: 'location'}}, placeholder: '  Look for deals in...' %>
 		</div>
 	</div>
 	
 	<div class="hidden_fields">
-			<%= f.input_field :user_lat, 		as: :hidden %>
-			<%= f.input_field :user_lng, 		as: :hidden %>
-			<%= f.input_field :user_location, 	as: :hidden %>
-			<%= f.input_field :distance, 		as: :hidden %>
-			<%= f.input_field :distance_unit, 	as: :hidden %>
-			<%= f.input_field :sort, 			as: :hidden %>
+			<%= f.input_field :user_lat, 		as: :hidden, data: {field: 'user_lat'} %>
+			<%= f.input_field :user_lng, 		as: :hidden, data: {field: 'user_lng'} %>
+			<%= f.input_field :user_location, 	as: :hidden, data: {field: 'user_location'} %>
+			<%= f.input_field :distance, 		as: :hidden, data: {field: 'distance'} %>
+			<%= f.input_field :distance_unit, 	as: :hidden, data: {field: 'distance_unit'} %>
+			<%= f.input_field :sort, 			as: :hidden, data: {field: 'sort'} %>
 	</div>
 
 	<div class="row">
