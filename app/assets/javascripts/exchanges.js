@@ -284,16 +284,38 @@ $(document).ready(function() {
     // Events & impacts
     //
     
-    // Update sort param and client-sort when changed   
+    // Update sort param and client-sort when changed
     $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
         val = state ? 'quote' : 'distance';
         $('#sort').val(val);
         $('#search_sort').val(val);
         $('#sort_order').html(display(val));
+        if (val == 'quote') {
+            $('.sorted_by.nearest').removeClass('active')
+            $('.sorted_by.bestprice').addClass('active')
+        } else {
+            $('.sorted_by.bestprice').removeClass('active')
+            $('.sorted_by.nearest').addClass('active')
+        }
         params.sort = val;
         sort_by(val);
     });
-    
+
+    $('.sorted_by.bestprice').click(function() {
+        if (!$(this).hasClass('active')) {
+            $('.sorted_by.nearest').removeClass('active');
+            $(this).addClass('active');
+            sort_by('quote')
+        }
+    });
+    $('.sorted_by.nearest').click(function() {
+        if (!$(this).hasClass('active')) {
+            $('.sorted_by.bestprice').removeClass('active');
+            $(this).addClass('active');
+            sort_by('distance')
+        }
+    });
+
     function sort_by(order) {
         if (order == 'distance') {
             if (exchanges_by_distance.length > 0) {

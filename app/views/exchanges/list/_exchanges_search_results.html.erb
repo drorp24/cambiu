@@ -6,17 +6,19 @@
         <span>Finding offers...</span>
       </div>
       <div id="result_message" style="display: none;">
-        <span class="badge" id="exchanges_count"></span>
-        <span> matching offers found in </span>
-        <span data-field="location"></span>
-        <span>,</span>
-        <span id="sort_order"></span>
+        <div class="results col-md-4 col-xs-4 middle-parent">
+          <span class="middle-child" id="exchanges_count"></span>
+          <span  class="middle-child"> results sorted by </span>
+        </div>
+        <div class="sorted_by bestprice col-md-4 col-xs-4 middle-parent">
+          <span class="middle-child">Best price</span>
+        </div>
+        <div class="sorted_by nearest col-md-4 col-xs-4 middle-parent">
+          <span class="middle-child">Nearest</span>
+        </div>
       </div>
       <div id="empty_message" style="display: none;">
-        <span>No offers found in </span>
-        <span id="empty_location"></span>.&nbsp;
-        <span><a>Change your search</a></span>
-        <span></span>
+        <span>No offers found. Click below to change your search criteria.</span>
       </div>
     </div>
   </div>

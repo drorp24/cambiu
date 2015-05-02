@@ -129,13 +129,12 @@ $(document).ready(function() {
     }
 
 
-    if ($('#sort').val()) {var sort = $('#sort').val();} else {var sort = 'quote';}; // if sort added to home page. exchanges page has its own trigger.    
-    $('#sort').val(sort);
+    // sort bootstrapSwitch and results banner
+    var sort = sessionStorage.sort
     $('#sort_switch').bootstrapSwitch('state', sort == 'quote');
-    $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
-        val = state ? 'quote' : 'distance';
-        $('#sort').val(val);
-    });
+    el = sort == 'quote' ? '.sorted_by.bestprice' : '.sorted_by.nearest';
+    $(el).addClass('active');
+
 
     // Fix google autocomplete z-index dynamically
     $('#search_location').keypress(function() {

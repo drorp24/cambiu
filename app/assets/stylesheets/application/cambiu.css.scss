@@ -419,6 +419,26 @@ body#cambiu {
             }
           }
         }
+        #exchanges_search_results {
+          text-align: center;
+          .results {
+            font-size: 1em;
+            color: #333;
+            font-weight: 500;
+          }
+          .middle-parent {
+            @include middle-parent(35px, 0);
+            margin-bottom: -10px;
+          }
+          .sorted_by {
+             text-transform: uppercase;
+            cursor: pointer;
+            &.active {
+              background-color: $lightgreen;
+              color: #fff;
+            }
+          }
+        }
       }
       .badge {
         background-color: $brand-color;
