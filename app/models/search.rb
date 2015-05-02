@@ -9,7 +9,7 @@ class Search < ActiveRecord::Base
     distance_unit ||= "km" 
     sort          ||= "quote"
     center          = location.present? ? location : ((user_lat.present? and user_lng.present?) ? [user_lat, user_lng] : 'London')  
-    box             = Geocoder::Calculations.bounding_box(center, distance)       # TODO: use requested unit
+    box             = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.bounding_box(center, distance) : nil      # TODO: overcome failures, return all exchanges from DB # TODO: use requested unit
 
     # TODO: Important: expire cache key when applicable rate updated_at changes (check if possible: fresh_when @applicable_rate)
     #       If not possible, don't use cache, or rates will be stale
@@ -30,7 +30,11 @@ class Search < ActiveRecord::Base
   
       @exchange_quotes = []
       # TODO: Like open_today, try if possible to define 'applicable_rate' scope that yields *one* rate record according to from & to currencies 
-      exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:open_today, :rates)
+      if Rails.application.config.use_google_geocoding
+        exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:open_today, :rates)
+      else
+        exchanges = Exchange.where.not(name: nil).includes(:open_today, :rates).limit(50)
+      end
       exchanges.each do |exchange| 
 
         exchange_quote = {}
@@ -43,7 +47,7 @@ class Search < ActiveRecord::Base
         exchange_quote[:website] = exchange.website
         exchange_quote[:latitude] = exchange.latitude
         exchange_quote[:longitude] = exchange.longitude 
-        exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : rand(1.2..17.9) 
+        exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : rand(27..2789)
         exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"  
         quote = Money.new(rand(33000..46000), buy.currency.iso_code) # exchange.quote(pay, buy) TODO: Handle random quotes
         exchange_quote[:edited_quote] = quote.format

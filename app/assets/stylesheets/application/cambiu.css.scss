@@ -127,6 +127,7 @@ body#cambiu {
   padding-top: 50px;
   font-family: $font-family;
   color: $color;
+  .btn {border-radius: $border-radius;}
   a:not(.carousel-control) {
     color: $lightgrey;
   }
@@ -150,9 +151,6 @@ body#cambiu {
   .section_anchor {
     display: block;
     margin-bottom: 100px;
-  }
-  .mobile_only {
-      display: none;
   }
   #new_search {
     input, select {
@@ -385,6 +383,8 @@ body#cambiu {
       #search_button {
         background-color: $brand-color;
         color: #fff;
+        font-weight: 400;
+        font-size: 1.2em;
       }
       #exchanges {
         z-index: 0;
@@ -422,17 +422,32 @@ body#cambiu {
         #exchanges_search_results {
           text-align: center;
           .results {
-            font-size: 1em;
+            @media (max-width: $screen-xs-max) {
+              font-size: 0.9em;
+            }
+            @media (min-width: $screen-sm-min) {
+              font-size: 1em;
+            }
             color: #333;
             font-weight: 500;
+            span {
+              text-indent: 2px;
+            }
           }
           .middle-parent {
             @include middle-parent(35px, 0);
             margin-bottom: -10px;
           }
           .sorted_by {
-             text-transform: uppercase;
-            cursor: pointer;
+              text-transform: uppercase;
+              cursor: pointer;
+            font-weight: 700;
+              @media (max-width: $screen-xs-max) {
+                font-size: 0.7em;
+              }
+              @media (min-width: $screen-sm-min) {
+                font-size: 1em;
+              }
             &.active {
               background-color: $lightgreen;
               color: #fff;
@@ -454,18 +469,19 @@ body#cambiu {
       z-index: -1;
       margin-top: 97px;
       font-family: $font-family;
-      @media (max-width: $screen-xs-max) {
-        #distance {
-          display: none;
+      .distance {
+        font-size: 0.8em;
+        display: inline;
+        &::before {
+          font-family: fontAwesome;
+          content: "\f041" + '    ';
+        }
+        &::after {
+          content: "m";
         }
       }
-      .distance {
-        font-size: 0.9em;
-        color: #111;
-        display: inline;
-      }
       .name {
-        font-weight: 300;
+        font-weight: 400;
         color: #333;
       }
       .units-d {
@@ -499,16 +515,27 @@ body#cambiu {
         font-size: 0.8em;
       }
       .comparison-m {
-        display: none;
       }
       .comparison-amount {
         line-height: 25px;
         font-size: 0.8em;
+        font-weight: 500;
+        color: #333;
       }
       .rounded {
         border-radius: 4px;
       }
 
+    }
+    .getit button.btn.btn-default#getit_button {
+      border-color: $lightgreen;
+      color: $lightgreen;
+      text-transform: uppercase;
+    }
+    .exchange_row {
+      .middle-parent {
+        @include middle-parent(70px, 0)
+      }
     }
   }
 }
@@ -525,7 +552,10 @@ body#cambiu {
 
 
   body#cambiu {
-  
+
+    .mobile_only {
+      display: none !important;
+    }
     &.home  {
       .background {
         @include background-img('header_background.jpg');      
@@ -582,7 +612,7 @@ body#cambiu {
         font-size: 1.2em;
       }
       .quote {
-        font-size: 1.3em;
+        font-size: 1.2em;
       }
       #exchanges_items {        
         box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
@@ -722,7 +752,10 @@ body#cambiu {
 @media (max-width: $screen-xs-max) {
 
   body#cambiu {
-    
+
+    .desktop_only {
+      display: none !important;
+    }
     .navbar-toggle .icon-bar {
       background-color: $brand-color;
     }
@@ -779,7 +812,7 @@ body#cambiu {
         font-size: 0.9em;
       }
       .quote {
-        font-size: 1em;
+        font-size: 0.9em;
       }
     }
   

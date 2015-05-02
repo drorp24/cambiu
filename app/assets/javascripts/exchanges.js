@@ -73,7 +73,7 @@ $(document).ready(function() {
         exchange_sum.attr('data-id', exchange.id);
         exchange_det.attr('data-id', exchange.id);
         
-        exchange_el.find('.distance').html(String(exchange.distance.toFixed(2)));
+        exchange_el.find('.distance').html(String(exchange.distance));
         exchange_el.find('.name').html(exchange.name);
         exchange_el.find('.quote').html(exchange.edited_quote);
         if (exchange.quote > 0) {
