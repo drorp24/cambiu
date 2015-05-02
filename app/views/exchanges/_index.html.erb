@@ -4,7 +4,7 @@
       <%= render 'exchanges/params/exchange_params' %>
        <div class="row" id="exchanges_content">
            <div id="exchanges" class="col-md-5 col-xs-12">
-               <div  id="exchanges_list">
+               <div  id="exchanges_list" class="active page">
                     <div class="list-group">
                         <%= render 'exchanges/list/exchanges_search_params' %>
                         <%= render 'exchanges/list/exchanges_search_search' %>
@@ -14,6 +14,9 @@
 						</div>
                     </div>
 				</div>
+                <div id="exchange_summary" class="page" style="display: none">
+                    Hi I am the exchange summary page
+                </div>
 			</div>
 			<div id="map_container" class="col-md-7">
 				<div id="map-canvas"></div>			

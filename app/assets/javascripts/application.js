@@ -9,6 +9,7 @@
 //= require pageload
 //= require search
 //= require exchanges
+//= require pages
 
 //= require jquery_ujs
 //= require jquery.form

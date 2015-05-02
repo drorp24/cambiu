@@ -527,6 +527,14 @@ body#cambiu {
       }
 
     }
+    .getit_parent {
+      @media (min-width: $screen-sm-min) {
+        padding-left: 6px;
+      }
+      @media (max-width: $screen-xs-max) {
+        padding-left: 0px;
+      }
+    }
     .getit button.btn.btn-default#getit_button {
       border-color: $lightgreen;
       color: $lightgreen;
