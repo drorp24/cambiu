@@ -1,0 +1,34 @@
+<div  id="exchanges_list" class="active page">
+  <div class="list-group">
+    <%= render 'exchanges/list/exchanges_search_params' %>
+    <%= render 'exchanges/list/exchanges_search_search' %>
+    <%= render 'exchanges/list/exchanges_search_results' %>
+    <div id="exchanges_items">
+      <!--   Exchange list goes here -->
+    </div>
+  </div>
+</div>
+
+<!--              T E M P L A T E S              -->
+
+<!--   Exchange row template  -->
+<div class="exchange_row template" style="display: none;">
+  <div class="list-group-item">
+    <div class="row">
+      <%= render 'exchanges/list/exchange_sum_template' %>
+    </div>
+  </div>
+</div>
+
+<!--   Exchange InfoWindow template  -->
+<div class="exchange_window template" id="0">
+  <div class="exchange_window_sum">
+    <div class="exchange_window_quote"></div>
+  </div>
+  <div class="exchange_window_det" style="display:none;">
+    <div class="exchange_window_name"></div>
+    <div class="exchange_window_address"></div>
+    <div class="exchange_window_quote"></div>
+    <div class="exchange_window_open"></div>
+  </div>
+</div>
