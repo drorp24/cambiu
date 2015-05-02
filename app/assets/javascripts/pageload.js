@@ -40,14 +40,12 @@ changePage = function(from, to) {
     // push to html5 history;
  };
 
-
-
 var display = function(term) {
     switch (term) {
         case 'quote':
-            return 'Best prices first';
+            return 'best prices first';
         case 'distance':
-            return 'Nearest first';
+            return 'nearest first';
     }
 };        
 

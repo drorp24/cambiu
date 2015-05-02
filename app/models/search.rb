@@ -7,7 +7,7 @@ class Search < ActiveRecord::Base
     buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)   
     distance      ||=  20    
     distance_unit ||= "km" 
-    sort          ||= "amount"
+    sort          ||= "quote"
     center          = location.present? ? location : ((user_lat.present? and user_lng.present?) ? [user_lat, user_lng] : 'London')  
     box             = Geocoder::Calculations.bounding_box(center, distance)       # TODO: use requested unit
 

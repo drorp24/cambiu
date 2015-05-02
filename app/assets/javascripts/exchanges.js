@@ -131,6 +131,7 @@ $(document).ready(function() {
  
     
     function clearExchanges() {
+        console.log('clearExchanges');
         $('#exchanges_list #exchanges_items').empty();
     }
     
@@ -287,6 +288,7 @@ $(document).ready(function() {
     $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
         val = state ? 'quote' : 'distance';
         $('#sort').val(val);
+        $('#search_sort').val(val);
         $('#sort_order').html(display(val));
         params.sort = val;
         sort_by(val);
@@ -506,11 +508,9 @@ $(document).ready(function() {
 
     if(window.location.hash) {
          $('#new_search').submit();
-        return false;
     }
 
     $('#search_button').click(function() {
-        alert('clicked')
         if (mobile) {$('#exchange_params_change').collapse('toggle');}
         $('#new_search').submit();
         return false;

@@ -13,6 +13,9 @@ $(document).ready(function() {
     sessionStorage.pay_currency = sessionStorage.pay_currency || "GBP";
     sessionStorage.buy_currency = sessionStorage.buy_currency || "EUR";
 
+    sessionStorage.page = window.location.hostname;
+    sessionStorage.rest = window.location.hash;
+
     $('[data-field]').each(function() {
 
         var field = $(this).data('field');
@@ -33,6 +36,10 @@ $(document).ready(function() {
     $('[data-field=user_lat]').val(sessionStorage.user_lat);
     $('[data-field=user_lng]').val(sessionStorage.user_lng);
     $('span[data-field=user_location]').html(sessionStorage.user_location)
+
+    $('[data-field=page]').val(sessionStorage.page);
+    $('[data-field=rest]').val(sessionStorage.rest);
+
 
 
     // Binding
