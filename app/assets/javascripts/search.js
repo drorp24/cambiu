@@ -1,6 +1,39 @@
 //
 // Search params, search form fields and the impact of their changes
 //
+
+
+// Global functions
+
+function set(field, value, excluded) {
+    var elements = '[data-field=' + field + ']';
+
+    sessionStorage.setItem(field, value);
+
+    $(elements).each(function() {
+        var $this = $(this);
+        if (!$this.is(excluded)) {
+            if ($this.is('select, input')) {
+                $this.val(value);
+            } else {
+                $this.html(value);
+            }
+        }
+    })
+}
+
+function bind(field, event) {
+    var elements = '[data-field=' + field + ']';
+    $(elements).on(event, function() {
+
+        var changed_el = $(this);
+        var value = $(this).val();
+
+        set(field, value, changed_el)
+    })
+}
+
+
 $(document).ready(function() {
 
 
@@ -8,7 +41,7 @@ $(document).ready(function() {
     console.log('search');
 
 
-    // Initial population from sessionStorage
+    //Restore values from sessionStorage
 
     sessionStorage.pay_currency = sessionStorage.pay_currency || "GBP";
     sessionStorage.buy_currency = sessionStorage.buy_currency || "EUR";
@@ -30,12 +63,12 @@ $(document).ready(function() {
     });
 
 
-    // Refresh user's location
+    // Refresh user's current location
 
-    $('[data-field=user_location]').val(sessionStorage.user_location);
+    $('input[data-field=user_location]').val(sessionStorage.user_location);
+    $('span[data-field=user_location]').html(sessionStorage.user_location);
     $('[data-field=user_lat]').val(sessionStorage.user_lat);
     $('[data-field=user_lng]').val(sessionStorage.user_lng);
-    $('span[data-field=user_location]').html(sessionStorage.user_location)
 
     $('[data-field=page]').val(sessionStorage.page);
     $('[data-field=rest]').val(sessionStorage.rest);
@@ -44,27 +77,6 @@ $(document).ready(function() {
 
     // Binding
 
-    function bind(field, event) {
-        var elements = '[data-field=' + field + ']';
-        $(elements).on(event, function() {
-
-            var changed_el = $(this);
-            var value = $(this).val();
-
-            sessionStorage.setItem(field, value);
-
-            $(elements).each(function() {
-                var $this = $(this);
-                if (!$this.is(changed_el)) {
-                    if ($this.is('select, input')) {
-                        $this.val(value);
-                    } else {
-                        $(this).html(value);
-                    }
-                }
-            })
-        })
-    }
 
     $('#homepage form input').each(function() {
         var field = $(this).data('field');
@@ -76,17 +88,25 @@ $(document).ready(function() {
         bind(field, 'change');
     });
 
+
+
      // Behavior
 
-    $('#search_buy_amount').keyup(function() {
-        $('#search_pay_amount').val("");
+    bind_currency_to_autonumeric();
+
+    $('#search_buy_amount').click(function() {
+        set('pay_amount', '', '')
     });
-    $('#search_pay_amount').keyup(function() {
-        $('#search_buy_amount').val("");
+    $('#search_pay_amount').click(function() {
+        set('buy_amount', '', '')
     });
 
     $('#search_location').click(function() {
         $('#search_location').attr('placeholder', 'Look for deals in...');
+    });
+
+    $('.open_search').click(function() {
+        $('#exchange_params_change').collapse('show')
     });
 
     // Enble location search - Google maps places autocomplete

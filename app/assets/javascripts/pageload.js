@@ -81,8 +81,7 @@ $(document).ready(function() {
         setPage('#homepage')
     }
 
-    bind_currency_to_autonumeric();
-    
+
  //    mixpanel.track("Page view");
     
 

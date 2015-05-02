@@ -392,6 +392,33 @@ body#cambiu {
           padding-right: 0;
           padding-left: 0;
         }
+        #exchanges_search_params {
+          background-color: $lightgreen;
+          border: 1px solid $lightgreen;
+          .exchanges_search_params_title {
+            font-size: 1.2em;
+            color: #fff;
+            font-weight: 300;
+            [data-field] {
+              font-weight: 500;
+            }
+          }
+        }
+        #exchanges_search_search {
+          padding-right: 30px;
+          padding-left: 30px;
+          border: 8px solid $lightgreen;
+          bordeer-top: none;
+          .exchanges_search_search_title {
+            font-size: 1em;
+            color: $lightgrey;
+            font-weight: 100;
+            text-transform: uppercase;
+            [data-field] {
+              font-weight: 500;
+            }
+          }
+        }
       }
       .badge {
         background-color: $brand-color;

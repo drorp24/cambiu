@@ -326,7 +326,7 @@ $(document).ready(function() {
         console.log(place)
         sessionStorage.location = formatted_address;
         sessionStorage.location_short = name;
-        $('[data-field=location]:not(#search_location)').val(name);
+        set('location', name, '#homepage #search_location');
 
         if(window.location.hash == '#exchanges') {
             if (!place.geometry) {alert('We have an issue with this location. Please try a different one'); return;}
