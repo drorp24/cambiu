@@ -528,12 +528,14 @@ body#cambiu {
 
     }
     .getit_parent {
+      /*
       @media (min-width: $screen-sm-min) {
         padding-left: 6px;
       }
       @media (max-width: $screen-xs-max) {
         padding-left: 0px;
       }
+      */
     }
     .getit button.btn.btn-default#getit_button {
       border-color: $lightgreen;
@@ -543,6 +545,11 @@ body#cambiu {
     .exchange_row {
       .middle-parent {
         @include middle-parent(70px, 0)
+      }
+    }
+    #exchange_summary {
+      .exchange_summary_bg img {
+        width: 100%;
       }
     }
   }
@@ -743,8 +750,8 @@ body#cambiu {
       #map_container {
         z-index: -2;
         position: fixed;
-        margin-left: 39.4%;
-        width: 61.5%;
+        margin-left: 31%;
+        width: 70%;
         height: 100vh;
         #map-canvas {
           height: 100vh;
