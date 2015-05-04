@@ -98,8 +98,8 @@ $(document).ready(function() {
             var places = searchBox.getPlaces();
             if (places.length == 0) {return;}
             place = places[0];
-            set('location', place.formatted_address, '#homepage #search_location');
-            set('location_short', place.name, '#homepage #search_location');
+            set('location', place.formatted_address);
+            set('location_short', place.name);
 
             if (window.location.hash == '#exchanges') {
                 if (!place.geometry) {

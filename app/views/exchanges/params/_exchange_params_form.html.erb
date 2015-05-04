@@ -1,42 +1,42 @@
 <form id="search_form" action="/exchanges/search" class="form-inline" novalidate>
 	<div class="mobile_only middle_wrapper help_text col-xs-12">
 		<div class="middle">
-			Exchange
+			Buy
 		</div>
 	</div>
 	<div class="form-group col-md-2 col-xs-6">
-		<input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-autonumeric="true" name="buy_amount" class="form-control" placeholder="placeholder"
+		<input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control" placeholder="placeholder"
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
   	</div>
-  	<div class="form-group col-md-1 col-xs-6">
-		<select id="pay_currency" data-field="pay_currency" name="pay_currency" class="currency_select select optional text-center form-control"
-		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
-			<option selected disabled hidden value=''></option>
-			<option data-symbol="￡ " value="GBP">GBP</option>
-			<option data-symbol="€ " value="EUR">EUR</option>
-			<option data-symbol="$ " value="USD">USD</option>
-			<option data-symbol="$ " value="AUD">AUD</option>
-			<option data-symbol="$ " value="CAD">CAD</option>
-			<option data-symbol="￥ " value="JPY">JPY</option>
-		</select>
-	</div>
-	<div class="mobile_only middle_wrapper help_text col-md-1 col-xs-12">
+  <div class="form-group col-md-1 col-xs-6">
+    <select id="buy_currency" data-field="buy_currency" data-symboltarget="buy_amount" name="buy_currency" class="currency_select select optional text-center form-control"
+            data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="foreign" data-key3="currency">
+      <option selected disabled hidden value=''></option>
+      <option data-symbol="$ "  value="USD">USD</option>
+      <option data-symbol="€ "  value="EUR">EUR</option>
+      <option data-symbol="￡ " value="GBP">GBP</option>
+      <option data-symbol="$ "  value="AUD">AUD</option>
+      <option data-symbol="$ "  value="CAD">CAD</option>
+      <option data-symbol="￥ " value="JPY">JPY</option>
+    </select>
+  </div>
+ 	<div class="mobile_only middle_wrapper help_text col-md-1 col-xs-12">
 		<div class="middle">
-			to
+			pay
 		</div>
 	</div>
-  	<div class="form-group col-md-1 col-xs-12">
-		<select id="buy_currency" data-field="buy_currency" name="buy_currency" class="select optional text-center form-control"
-		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="foreign" data-key3="currency">
-			<option selected disabled hidden value=''></option>
-			<option value="USD">USD</option>
-			<option value="EUR">EUR</option>
-			<option value="GBP">GBP</option>
-			<option value="AUD">AUD</option>
-			<option value="CAD">CAD</option>
-			<option value="JPY">JPY</option>
-		</select>
-  	</div>
+  <div class="form-group col-md-1 col-xs-12">
+    <select id="pay_currency" data-field="pay_currency" data-symboltarget="pay_amount" name="pay_currency" class="currency_select select optional text-center form-control"
+            data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
+      <option selected disabled hidden value=''></option>
+      <option data-symbol="￡ " value="GBP">GBP</option>
+      <option data-symbol="€ " value="EUR">EUR</option>
+      <option data-symbol="$ " value="USD">USD</option>
+      <option data-symbol="$ " value="AUD">AUD</option>
+      <option data-symbol="$ " value="CAD">CAD</option>
+      <option data-symbol="￥ " value="JPY">JPY</option>
+    </select>
+  </div>
 	<div class="mobile_only middle_wrapper help_text col-xs-12">
 		<div class="middle">
 			in
@@ -62,7 +62,6 @@
 			Order by
 		</div>
 	</div>
-	<div class="form-group col-md-2 col-md-pull-3 col-xs-12">
 		<input id="sort_switch" class="make-switch" type="checkbox" data-on-text="Best price" data-on-color="default" data-off-text="Nearest" data-off-color="default">
 	</div>
 

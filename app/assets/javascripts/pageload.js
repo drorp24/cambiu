@@ -65,7 +65,7 @@ var bind_currency_to_autonumeric = function() {
     function update_currency_symbol(el) {
         currency_select_el = $('#' + el.attr('data-symbolsource'));
         symbol = currency_select_el.find('option:selected').attr('data-symbol');
-        el.attr('data-a-sign', symbol); 
+        el.attr('data-a-sign', symbol);
         el.autoNumeric('update', {aSign: symbol});
     }
 
