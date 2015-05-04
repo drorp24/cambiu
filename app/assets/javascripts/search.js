@@ -6,6 +6,11 @@
         if (excluded === undefined) excluded = '';
         var elements = '[data-field=' + field + ']';
 
+        if (field =='buy_amount' || field == "pay_amount") {
+            value = value.substr(2);
+            $('.simple_form ' + '#search_' + field + '_val').val(value);
+        }    // TODO: Remove this ugly hack
+
         sessionStorage.setItem(field, value);
 
         $(elements).each(function() {
@@ -74,8 +79,6 @@ $(document).ready(function() {
         bind(field, 'change');
     });
 
-    bind_currency_to_autonumeric();
-
     $('#search_buy_amount').click(function() {
         set('pay_amount', '')
     });
@@ -125,10 +128,40 @@ $(document).ready(function() {
     });
 
     $('input[data-field=location]').click(function() {
-        $(this).val('')
+        $(this).val('');
     })
 
-        // UI
+
+
+
+    // Prefix input elements with the respective selected currency
+    var bind_currency_to_autonumeric = function() {
+
+        $('[data-autonumeric]').autoNumeric('init');
+
+        $('[data-autonumeric]').each(function() {
+            update_currency_symbol($(this));
+        });
+
+        $('.currency_select').change(function() {
+            update_currency_symbol($('#' + $(this).attr('data-symboltarget')));
+        });
+
+        function update_currency_symbol(el) {
+            currency_select_el = $('#' + el.attr('data-symbolsource'));
+            symbol = currency_select_el.find('option:selected').attr('data-symbol');
+            el.attr('data-a-sign', symbol);
+            el.autoNumeric('update', {aSign: symbol});
+        }
+
+    };
+
+
+    bind_currency_to_autonumeric();
+
+
+
+    // UI
 
     // open parameters collapsed form in desktops only
     var mq = window.matchMedia('(min-width: 768px)');
@@ -140,7 +173,7 @@ $(document).ready(function() {
 
 
     // sort bootstrapSwitch and results banner
-    var sort = sessionStorage.sort
+    var sort = sessionStorage.sort;
     $('#sort_switch').bootstrapSwitch('state', sort == 'quote');
     el = sort == 'quote' ? '.sorted_by.bestprice' : '.sorted_by.nearest';
     $(el).addClass('active');
