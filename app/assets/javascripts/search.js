@@ -124,7 +124,11 @@ $(document).ready(function() {
         searchbox_addListener(searchBox);
     });
 
-    // UI
+    $('input[data-field=location]').click(function() {
+        $(this).val('')
+    })
+
+        // UI
 
     // open parameters collapsed form in desktops only
     var mq = window.matchMedia('(min-width: 768px)');
