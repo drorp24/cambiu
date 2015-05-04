@@ -101,6 +101,9 @@ $(document).ready(function() {
             set('location', place.formatted_address);
             set('location_short', place.name);
 
+            $('#new_search').submit()
+
+/*          TODO: Remove.
             if (window.location.hash == '#exchanges') {
                 if (!place.geometry) {
                     alert('We have an issue with this location. Please try a different one');
@@ -109,6 +112,7 @@ $(document).ready(function() {
                 place = place.geometry.location;
                 drawMap(null, place.lat(), place.lng());
             }
+*/
         });
     }
 
