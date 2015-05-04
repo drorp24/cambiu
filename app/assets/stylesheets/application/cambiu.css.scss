@@ -22,6 +22,7 @@ $border-bottom: 3px solid $darkgreen;
 $std-margin: 5vh;
 $parameters-height: 75px;
 $parameters-bg-color: rgba(0,0,0,0.7);
+$exchange_summary_banner_relative_top: -100px;
 
 // OLD SEARCH PAGE
 $search-input-height: 40px;
@@ -566,8 +567,83 @@ body#cambiu {
       }
     }
     #exchange_summary {
+      box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+      min-height: 100vh;
+      background-color: #fff;
+      .exchange_summary_title {
+        display: none;
+        text-align: center;
+        text-transform: uppercase;
+        color: #555;
+        font-size: 1.5em;
+        position: absolute;
+        top: 50px;
+        left: 25%;
+        font-weight: 500;
+      }
       .exchange_summary_bg img {
         width: 100%;
+      }
+       .exchange_summary_banner {
+        background-color: $lightgreen;
+        color: #fff;
+        position: relative;
+        top: $exchange_summary_banner_relative_top;
+        .left {
+          margin-left: 15px;
+        }
+        @media (max-width: $screen-xs-max) {
+          .right {
+            margin-left: 15px;
+          }
+        }
+         .es_icon {
+          font-size: 3.5em;
+          text-align: center;
+          margin-top: 10px;
+        }
+        .es_distance {
+          font-size: 1em;
+          text-align: center;
+        }
+        .es_name {
+          font-size: 1.3em;
+          font-weight: 500;
+          margin-top: 15px;
+          margin-bottom: 5px;
+        }
+        .es_address {
+          font-size: 1.2em;
+          font-weight: 300;
+          margin-top: 12px;
+        }
+        .es_opening_hours {
+          font-size: 0.9em;
+          font-weight: 200;
+          margin-bottom: 10px;
+          margin-top: 5px;
+        }
+      }
+      .order {
+        margin-top: $exchange_summary_banner_relative_top + 25px;
+        .buy_amount {
+          font-size: 1em;
+        }
+        .buy_currency {
+          font-size: 1em;
+        }
+        .pay_amount {
+          font-size: 1em;
+        }
+        .pay_currency {
+          font-size: 1em;
+        }
+        .gain_amount {
+          font-size: 1em;
+        }
+        .gain_currency {
+          font-size: 1em;
+        }
       }
     }
   }
@@ -771,6 +847,7 @@ body#cambiu {
         margin-left: 31%;
         width: 70%;
         height: 100vh;
+        top: 125px;  /// ?????????
         #map-canvas {
           height: 100vh;
         }
