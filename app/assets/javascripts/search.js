@@ -6,6 +6,7 @@
 // Global functions
 
 function set(field, value, excluded) {
+    if (excluded === undefined) excluded = '';
     var elements = '[data-field=' + field + ']';
 
     sessionStorage.setItem(field, value);
@@ -65,13 +66,16 @@ $(document).ready(function() {
 
     // Refresh user's current location
 
+/*  NOT NEEDED
     $('input[data-field=user_location]').val(sessionStorage.user_location);
-    $('span[data-field=user_location]').html(sessionStorage.user_location);
+    $('input[data-field=location]').val(sessionStorage.user_location);
+     $('span[data-field=user_location]').html(sessionStorage.user_location);
     $('[data-field=user_lat]').val(sessionStorage.user_lat);
     $('[data-field=user_lng]').val(sessionStorage.user_lng);
 
     $('[data-field=page]').val(sessionStorage.page);
     $('[data-field=rest]').val(sessionStorage.rest);
+*/
 
 
 
@@ -95,10 +99,10 @@ $(document).ready(function() {
     bind_currency_to_autonumeric();
 
     $('#search_buy_amount').click(function() {
-        set('pay_amount', '', '')
+        set('pay_amount', '')
     });
     $('#search_pay_amount').click(function() {
-        set('buy_amount', '', '')
+        set('buy_amount', '')
     });
 
     $('#search_location').click(function() {
@@ -109,12 +113,49 @@ $(document).ready(function() {
         $('#exchange_params_change').collapse('show')
     });
 
-    // Enble location search - Google maps places autocomplete
-    // TODO: Same for the search_form on the search page
-    var input = document.getElementById('search_location');
-    searchBox = new google.maps.places.SearchBox(input, {
-        types: ['regions']
+    // Enable location search - Google maps places autocomplete
+
+    function searchbox_addListener(searchBox) {
+        google.maps.event.addListener(searchBox, 'places_changed', function () {
+            var places = searchBox.getPlaces();
+            if (places.length == 0) {return;}
+            place = places[0];
+            set('location', place.formatted_address, '#homepage #search_location');
+            set('location_short', place.name, '#homepage #search_location');
+
+            if (window.location.hash == '#exchanges') {
+                if (!place.geometry) {
+                    alert('We have an issue with this location. Please try a different one');
+                    return;
+                }
+                place = place.geometry.location;
+                drawMap(null, place.lat(), place.lng());
+            }
+        });
+    }
+
+    $('input[data-field=location]').each(function() {
+        input = $(this).get(0);
+        searchBoxes.push(new google.maps.places.SearchBox(input, {
+            types: ['regions']
+        }));
     });
+
+    for (var i = 0; i < searchBoxes.length; i++) {
+        searchbox_addListener(searchBoxes[i]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -137,14 +178,14 @@ $(document).ready(function() {
 
 
     // Fix google autocomplete z-index dynamically
-    $('#search_location').keypress(function() {
+    $('[data-field=location]').keypress(function() {
         if (!pacContainerInitialized) {
         $('.pac-container').css('z-index', 
         '9999');
         pacContainerInitialized = true;
         }
     });
-    
+
     // Initialize bootstrap-switch
     $('.make-switch').bootstrapSwitch();    
 

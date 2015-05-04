@@ -4,9 +4,8 @@ var desktop = media == 'desktop';
 var production = $('body').hasClass('production');
 var params = {};
 var pacContainerInitialized = false;
-var searchBox;
+var searchBoxes = [];
 var map;
-var markers;
 var center;
 var geocoder;
 var directionsDisplay;
@@ -16,6 +15,7 @@ var infowindows = [];
 var exchanges_array = [];
 var exchanges_by_quote = [];
 var exchanges_by_distance = [];
+var drawMap;
 
 setPage = function(to) {
     var to_class = to.replace('#', '');

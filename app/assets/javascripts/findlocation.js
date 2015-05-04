@@ -32,12 +32,15 @@ function getLocation() {
             if (status == google.maps.GeocoderStatus.OK) {
               if (results[1]) {
                 sessionStorage.user_location = results[1].formatted_address;
-                $('#search_location').attr('placeholder', sessionStorage.user_location);
+                sessionStorage.location = sessionStorage.location || results[1].formatted_address;
+                sessionStorage.location_short = sessionStorage.location_short || results[1].address_components[1].short_name;
+                  console.log(results);
+// handle form field in search.js not here                $('#search_location').attr('placeholder', sessionStorage.user_location);
              } else {
-                sessionStorage.user_location = null;
+// just don't set perhaps a prev value exists                sessionStorage.user_location = null;
               }
             } else {
-              sessionStorage.user_location = null;
+// just don't set perhaps a prev value exists              sessionStorage.user_location = null;
               console.log('Geocoder failed due to: ' + status);
             }
       });

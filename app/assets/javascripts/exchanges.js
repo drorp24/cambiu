@@ -337,35 +337,8 @@ $(document).ready(function() {
 
  
     
-    // change map center according to searched location 
-    google.maps.event.addListener(searchBox, 'places_changed', function() {
-
-        var places = searchBox.getPlaces();
-        if (places.length == 0) {return;}        
-        place = places[0];
-        formatted_address = place.formatted_address;
-        name = place.name;
-        console.log(place)
-        sessionStorage.location = formatted_address;
-        sessionStorage.location_short = name;
-        set('location', name, '#homepage #search_location');
-
-        if(window.location.hash == '#exchanges') {
-            if (!place.geometry) {alert('We have an issue with this location. Please try a different one'); return;}
-            place = place.geometry.location;
-            drawMap(null, place.lat(), place.lng());
-        }
-    });
-    
-    $('#location_search').change(function() {
-        if ($('#location_search').val == null) {
-            alert('so this is null')
-        }
-    });
-    
-    
     // TODO: Try again to DRY the code...
-    function drawMap(place, latitude, longitude, exchanges) {
+    drawMap = function (place, latitude, longitude, exchanges) {
  
  
         console.log('drawMap');
