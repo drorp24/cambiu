@@ -49,27 +49,6 @@ var display = function(term) {
     }
 };        
 
-// Prefix input elements with the respective selected currency
-var bind_currency_to_autonumeric = function() {
- 
-    $('[data-autonumeric]').autoNumeric('init'); 
- 
-    $('[data-autonumeric]').each(function() {
-        update_currency_symbol($(this));
-    });
-
-    $('.currency_select').change(function() {
-       update_currency_symbol($('#' + $(this).attr('data-symboltarget')));
-    });
-
-    function update_currency_symbol(el) {
-        currency_select_el = $('#' + el.attr('data-symbolsource'));
-        symbol = currency_select_el.find('option:selected').attr('data-symbol');
-        el.attr('data-a-sign', symbol);
-        el.autoNumeric('update', {aSign: symbol});
-    }
-
-};
 
 $(document).ready(function() {
     
