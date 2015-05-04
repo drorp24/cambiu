@@ -22,7 +22,7 @@ $border-bottom: 3px solid $darkgreen;
 $std-margin: 5vh;
 $parameters-height: 75px;
 $parameters-bg-color: rgba(0,0,0,0.7);
-$exchange_summary_banner_relative_top: -100px;
+$exchange_summary_banner_relative_top: -10px;
 
 // OLD SEARCH PAGE
 $search-input-height: 40px;
@@ -89,6 +89,28 @@ $inverse-color: #ffffff;
  }
   &:-ms-input-placeholder {
     @include placeholder-center-def;
+  }
+}
+
+@mixin placeholder-left-def {
+  text-align: left;
+  text-indent: 10px;
+  color: #555;
+  font-weight: 400;
+}
+
+@mixin placeholder-left {
+  &::-webkit-input-placeholder {
+    @include placeholder-left-def;
+  }
+  &:-moz-placeholder {
+    @include placeholder-left-def;
+  }
+  &::-moz-placeholder {
+    @include placeholder-left-def;
+  }
+  &:-ms-input-placeholder {
+    @include placeholder-left-def;
   }
 }
 
@@ -470,7 +492,12 @@ body#cambiu {
       background-color: #fff;
       width: 100%;
       z-index: 1;
-      height: $parameters-height;
+      @media (max-width: $screen-xs-max) {
+        height: 0;
+      }
+      @media (min-width: $screen-sm-min) {
+        height: $parameters-height;
+      }
     }
     #exchange_params_wrapper {
       @media (max-width: $screen-xs-max) {
@@ -486,7 +513,12 @@ body#cambiu {
     }
     #exchanges_content {
       z-index: -1;
-      margin-top: $parameters-height;
+      @media (max-width: $screen-xs-max) {
+        margin-top: 0;
+      }
+      @media (min-width: $screen-sm-min) {
+        margin-top: $parameters-height;
+      }
       font-family: $font-family;
       .distance {
         font-size: 0.8em;
@@ -592,6 +624,7 @@ body#cambiu {
       }
       .exchange_summary_bg img {
         width: 100%;
+        height: 165px;
       }
        .exchange_summary_banner {
         background-color: $lightgreen;
@@ -616,18 +649,23 @@ body#cambiu {
           text-align: center;
         }
         .es_name {
-          font-size: 1.3em;
-          font-weight: 500;
+          @media (max-width: $screen-xs-max) {
+            font-size: 0.9em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.1em;
+          }
+         font-weight: 400;
           margin-top: 15px;
           margin-bottom: 5px;
         }
         .es_address {
-          font-size: 1.2em;
-          font-weight: 300;
+          font-size: 1em;
+          font-weight: 200;
           margin-top: 12px;
         }
         .es_opening_hours {
-          font-size: 0.9em;
+          font-size: 0.8em;
           font-weight: 200;
           margin-bottom: 10px;
           margin-top: 5px;
@@ -636,10 +674,20 @@ body#cambiu {
       .order {
         margin-top: $exchange_summary_banner_relative_top + 25px;
         .buy_amount {
-          font-size: 1em;
+          @media (max-width: $screen-xs-max) {
+            font-size: 0.8em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 1em;
+          }
         }
         .buy {
-          font-size: 1.1em;
+          @media (max-width: $screen-xs-max) {
+            font-size: 0.9em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.1em;
+          }
         }
         .sum {
           float: right;
@@ -647,22 +695,96 @@ body#cambiu {
         .pay {
           color: #333;
           font-weight: 500;
-          font-size: 1.2em;
+          @media (max-width: $screen-xs-max) {
+            font-size: 1em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.2em;
+          }
         }
         .buy_currency {
-          font-size: 1em;
+          @media (max-width: $screen-xs-max) {
+            font-size: 0.8em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 1em;
+          }
         }
         .pay_amount {
-          font-size: 1em;
+          @media (max-width: $screen-xs-max) {
+            font-size: 0.8em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 1em;
+          }
         }
         .pay_currency {
-          font-size: 1em;
+          @media (max-width: $screen-xs-max) {
+            font-size: 0.8em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 1em;
+          }
         }
         .gain_amount {
-          font-size: 1em;
-        }
+          @media (max-width: $screen-xs-max) {
+            font-size: 0.8em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 1em;
+          }
+       }
         .gain_currency {
-          font-size: 1em;
+          @media (max-width: $screen-xs-max) {
+            font-size: 0.8em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 1em;
+          }
+        }
+      }
+      .email_form {
+        form {
+          @media (min-width: $screen-sm-min) {
+            padding: 5%;
+          }
+          @media (max-width: $screen-xs-max) {
+            input {
+              width: 90%;
+              margin-left: 5%;
+              margin-bottom: 10px;
+            }
+          }
+          #user_email {
+            @include placeholder-icon("\f0e0");
+            @include placeholder-left;
+            @media (max-width: $screen-xs-max) {
+              height: 40px;
+              margin-top: 30px;
+            }
+          }
+          .email_submit {
+            margin-top: -5px;
+            background-color: $lightgreen;
+            border-bottom: 3px solid $darkgreen;
+            @media (min-width: $screen-sm-min) {
+              height: 50px;
+            }
+            @media (max-width: $screen-xs-max) {
+              height: 50px;
+              margin-top: 20px;
+            }
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 400;
+            border-radius: 4px;
+            font-size: 1.1em;
+          }
+        }
+        .no_thanks {
+          @media (min-width: $screen-sm-min) {
+            margin-top: -30px;
+          }
         }
       }
     }

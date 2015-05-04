@@ -1,0 +1,11 @@
+<%= simple_form_for User.new, validate: true, remote: true, html: { data: { url: '/users', type: :json } } do |f| %>
+    <%= f.input :email, placeholder: "  Enter your email to guarantee this deal", label: false, type: "email", required: true %>
+    <%= f.input :pay_amount, as: "hidden" %>
+    <%= f.input :pay_currency, as: "hidden" %>
+    <%= f.input :buy_currency, as: "hidden" %>
+    <%= f.input :latitude, as: "hidden" %>
+    <%= f.input :longitude, as: "hidden" %>
+    <%= f.input :location_search, as: "hidden" %>
+    <%= f.input :geocoded_location, as: "hidden" %>
+    <%= f.button :submit, 'Guarantee this deal!', class: "middle-child email_submit btn btn-mini btn-default rounded" %>
+<% end %>
