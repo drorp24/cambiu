@@ -20,6 +20,8 @@ $button-height: 50px;
 $form-text-transform: uppercase;
 $border-bottom: 3px solid $darkgreen;
 $std-margin: 5vh;
+$parameters-height: 75px;
+$parameters-bg-color: rgba(0,0,0,0.7);
 
 // OLD SEARCH PAGE
 $search-input-height: 40px;
@@ -383,8 +385,12 @@ body#cambiu {
       #search_button {
         background-color: $brand-color;
         color: #fff;
-        font-weight: 400;
-        font-size: 1.2em;
+        font-weight: 300;
+        font-size: 1.4em;
+        @media (max-width: $screen-xs-max) {
+          height: 50px;
+          margin-top: 20px;
+        }
       }
       #exchanges {
         z-index: 0;
@@ -463,11 +469,23 @@ body#cambiu {
       background-color: #fff;
       width: 100%;
       z-index: 1;
-      height: 97px;
+      height: $parameters-height;
+    }
+    #exchange_params_wrapper {
+      @media (max-width: $screen-xs-max) {
+        background-color: $parameters-bg-color;
+      }
+       color: #fff;
+      font-size: 1em;
+      font-weight: 400;
+      line-height: 2.5em;
+      text-align: center;
+      text-transform: uppercase;
+      border: none;
     }
     #exchanges_content {
       z-index: -1;
-      margin-top: 97px;
+      margin-top: $parameters-height;
       font-family: $font-family;
       .distance {
         font-size: 0.8em;
