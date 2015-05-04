@@ -581,6 +581,15 @@ body#cambiu {
         left: 25%;
         font-weight: 500;
       }
+      .back {
+        position: absolute;
+        top: 15px;
+        left: 30px;
+        color: #333;
+        font-size: 1.2em;
+        font-weight: 200;
+        color: #777;
+      }
       .exchange_summary_bg img {
         width: 100%;
       }
@@ -598,12 +607,12 @@ body#cambiu {
           }
         }
          .es_icon {
-          font-size: 3.5em;
+          font-size: 3em;
           text-align: center;
-          margin-top: 10px;
+          margin-top: 15px;
         }
         .es_distance {
-          font-size: 1em;
+          font-size: 0.9em;
           text-align: center;
         }
         .es_name {
@@ -628,6 +637,17 @@ body#cambiu {
         margin-top: $exchange_summary_banner_relative_top + 25px;
         .buy_amount {
           font-size: 1em;
+        }
+        .buy {
+          font-size: 1.1em;
+        }
+        .sum {
+          float: right;
+        }
+        .pay {
+          color: #333;
+          font-weight: 500;
+          font-size: 1.2em;
         }
         .buy_currency {
           font-size: 1em;
