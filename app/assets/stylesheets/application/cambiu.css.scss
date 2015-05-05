@@ -92,25 +92,26 @@ $inverse-color: #ffffff;
   }
 }
 
-@mixin placeholder-left-def {
+@mixin placeholder-email-def {
   text-align: left;
   text-indent: 10px;
   color: #555;
   font-weight: 400;
+  text-transform: initial;
 }
 
-@mixin placeholder-left {
+@mixin placeholder-email {
   &::-webkit-input-placeholder {
-    @include placeholder-left-def;
+    @include placeholder-email-def;
   }
   &:-moz-placeholder {
-    @include placeholder-left-def;
+    @include placeholder-email-def;
   }
   &::-moz-placeholder {
-    @include placeholder-left-def;
+    @include placeholder-email-def;
   }
   &:-ms-input-placeholder {
-    @include placeholder-left-def;
+    @include placeholder-email-def;
   }
 }
 
@@ -745,6 +746,11 @@ body#cambiu {
       }
       .email_form {
         form {
+          /*
+          img, p, select, input:not([data-email-part]) {
+            display: none;
+          }
+          */
           @media (min-width: $screen-sm-min) {
             padding: 5%;
           }
@@ -755,9 +761,10 @@ body#cambiu {
               margin-bottom: 10px;
             }
           }
-          #user_email {
+          #search_email {
             @include placeholder-icon("\f0e0");
-            @include placeholder-left;
+            @include placeholder-email;
+            text-transform: capitalize;
             @media (max-width: $screen-xs-max) {
               height: 40px;
               margin-top: 30px;

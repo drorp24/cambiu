@@ -21,7 +21,7 @@
 			<%= f.input :location, input_html: {data: {field: 'location', searchbox: 'true'}}, placeholder: '  Current location' %>
 		</div>
 	</div>
-	
+
 	<div class="hidden_fields">
 			<%= f.input_field :user_lat, 		as: :hidden, data: {field: 'user_lat'} %>
 			<%= f.input_field :user_lng, 		as: :hidden, data: {field: 'user_lng'} %>
@@ -34,6 +34,7 @@
             <%= f.input_field :location_short, 	as: :hidden, data: {field: 'location_short'} %>
 	</div>
 
+
 	<div class="row">
 		<div class="form-group col-md-12 col-xs-12">
 			<%= image_tag 'logo_no_text.png' %>
@@ -44,5 +45,6 @@
 	<div class="after_submit">
 		<p>We give users more than 94.6% profit for their money! </p>
 	</div>
-	
+
+
 <% end %>

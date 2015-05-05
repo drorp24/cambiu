@@ -1,0 +1,24 @@
+<%= simple_form_for Search.new, url: record_searches_path, validate: false, remote: true, html: { id: 'email_form', data: {type: :json } } do |f| %>
+
+    <%= f.input :email, placeholder: "  Enter your email to guarantee this deal", required: false, label: false, type: "email" %>
+
+      <div class="hidden_fields">
+        <%= f.input_field :pay_amount, 		as: :hidden, data: {field: 'pay_amount'} %>
+        <%= f.input_field :pay_currency, 	as: :hidden, data: {field: 'pay_currency'} %>
+        <%= f.input_field :buy_amount, 		as: :hidden, data: {field: 'buy_amount'} %>
+        <%= f.input_field :buy_currency, 	as: :hidden, data: {field: 'buy_currency'} %>
+        <%= f.input_field :location, 		as: :hidden, data: {field: 'location'} %>
+        <%= f.input_field :user_lat, 		as: :hidden, data: {field: 'user_lat'} %>
+        <%= f.input_field :user_lng, 		as: :hidden, data: {field: 'user_lng'} %>
+        <%= f.input_field :user_location, 	as: :hidden, data: {field: 'user_location'} %>
+        <%= f.input_field :distance, 		as: :hidden, data: {field: 'distance'} %>
+        <%= f.input_field :distance_unit, 	as: :hidden, data: {field: 'distance_unit'} %>
+        <%= f.input_field :sort, 			as: :hidden, data: {field: 'sort'} %>
+        <%= f.input_field :page, 			as: :hidden, data: {field: 'page'} %>
+        <%= f.input_field :rest, 			as: :hidden, data: {field: 'rest'} %>
+        <%= f.input_field :location_short, 	as: :hidden, data: {field: 'location_short'} %>
+      </div>
+
+    <%= f.button :submit, 'Guarantee this deal!', data: {href: "#exchange_voucher"}, class: "middle-child email_submit btn btn-mini btn-default rounded" %>
+
+<% end %>
