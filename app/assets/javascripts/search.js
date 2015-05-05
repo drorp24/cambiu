@@ -6,7 +6,7 @@
     function set(field, value, excluded) {
         if (excluded === undefined) excluded = '';
         var elements = '[data-field=' + field + ']';
-        var value_clean = value.replace(/\D/g,'');
+        var value_clean = value ? value.replace(/\D/g,'') : null;
 
         if (field =='buy_amount' || field == "pay_amount") {
             sessionStorage.setItem(field, value_clean);
@@ -57,17 +57,13 @@ $(document).ready(function() {
 
     // Restore session state
 
-    $('[data-field]').each(function() {
+    $('#homepage form [data-field]').each(function() {
 
         var field = $(this).data('field');
         var value = sessionStorage.getItem(field);
-        var $this = $(this);
 
-        if ($this.is('input, select')) {
-            $this.val(value);
-        } else {
-            $this.html(value);
-        }
+        set(field, value);
+
     });
 
 
@@ -123,10 +119,10 @@ $(document).ready(function() {
 
 
     $('#search_buy_amount').click(function() {
-        set('pay_amount', '')
+        set('pay_amount', null)
     });
     $('#search_pay_amount').click(function() {
-        set('buy_amount', '')
+        set('buy_amount', null)
     });
 
     $('#search_location').click(function() {

@@ -9,6 +9,10 @@ $(document).ready(function() {
         old_page.hide();
         new_page.addClass('active');
         new_page.show();
+
+        // also change hash and push to history
+
+//        return false;
     }))
 
     

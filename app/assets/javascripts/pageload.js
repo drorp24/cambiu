@@ -55,7 +55,7 @@ $(document).ready(function() {
     
     console.log('pageload');
 
-    homepage = $('body').hasClass('home');
+    homepage = $('body').hasClass('homepage');
 
     if(window.location.hash) {
         changePage('#homepage', window.location.hash);
