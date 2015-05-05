@@ -2,6 +2,7 @@ var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'deskto
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
 var production = $('body').hasClass('production');
+var homepage;
 var params = {};
 var pacContainerInitialized = false;
 var searchBoxes = [];
@@ -53,6 +54,8 @@ var display = function(term) {
 $(document).ready(function() {
     
     console.log('pageload');
+
+    homepage = $('body').hasClass('home');
 
     if(window.location.hash) {
         changePage('#homepage', window.location.hash);
