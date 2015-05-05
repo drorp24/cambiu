@@ -1,22 +1,24 @@
 //
 // Search params, search form fields and the impact of their changes
 //
+// Prefix input elements with the respective selected currency
 
     function set(field, value, excluded) {
         if (excluded === undefined) excluded = '';
         var elements = '[data-field=' + field + ']';
+        var value_clean = value.replace(/\D/g,'');
 
         if (field =='buy_amount' || field == "pay_amount") {
-            value = value.substr(2);
-            $('.simple_form ' + '#search_' + field + '_val').val(value);
-        }    // TODO: Remove this ugly hack
-
-        sessionStorage.setItem(field, value);
+            sessionStorage.setItem(field, value_clean);
+            $('.simple_form ' + '#search_' + field + '_val').val(value_clean);   // Ugly hack for autocomplete sending _val values to server
+        }  else {
+            sessionStorage.setItem(field, value);
+        }
 
         $(elements).each(function() {
             var $this = $(this);
             if (!$this.is(excluded)) {
-                if ($this.is('select, input')) {
+                if ($this.is('input, select')) {
                     $this.val(value);
                 } else {
                     $this.html(value);
@@ -29,8 +31,10 @@
         var elements = '[data-field=' + field + ']';
         $(elements).on(event, function() {
 
-            var changed_el = $(this);
-            var value = $(this).val();
+            var $this = $(this);
+            if ($this.is('select')) return;
+            var changed_el = $this;
+            var value = $this.val();
 
             set(field, value, changed_el);
             if (field=='location') set('location_short', value, changed_el);
@@ -67,6 +71,7 @@ $(document).ready(function() {
     });
 
 
+
     // Binding
 
     $('#homepage form input').each(function() {
@@ -74,10 +79,48 @@ $(document).ready(function() {
         bind(field, 'keyup');
     });
 
+/*  // select changes (=currency changes) are handled by autonumeric below
     $('#homepage form select').each(function() {
         var field = $(this).data('field');
         bind(field, 'change');
     });
+*/
+    // Currencies: initial settings & change events
+    var bind_currency_to_autonumeric = function() {
+
+        $('[data-autonumeric]').autoNumeric('init');
+
+        $('[data-autonumeric]').each(function() {
+            update_currency_symbol($(this));
+        });
+
+        $('.currency_select').change(function() {
+            var $this   = $(this);
+            var field   = $this.data('field');
+            var value   = $this.val();
+            var target  = $this.data('symboltarget');
+            var symbol  = $this.find('option:selected').attr('data-symbol');
+
+            set(field, value, $this);
+
+            $('[data-field=' + target + ']').each(function() {
+                update_currency_symbol($(this), symbol);
+            })
+        });
+
+        function update_currency_symbol(el, symbol) {
+            if (symbol === undefined) {
+                currency_select_el = $('#' + el.attr('data-symbolsource'));
+                symbol = currency_select_el.find('option:selected').attr('data-symbol');
+            }
+            el.attr('data-a-sign', symbol);
+            el.autoNumeric('update', {aSign: symbol});
+        }
+
+    };
+
+    bind_currency_to_autonumeric();
+
 
     $('#search_buy_amount').click(function() {
         set('pay_amount', '')
@@ -104,7 +147,7 @@ $(document).ready(function() {
             set('location', place.formatted_address);
             set('location_short', place.name);
 
-            $('#new_search').submit()
+            if (!homepage) $('#new_search').submit();
 
 /*          TODO: Remove.
             if (window.location.hash == '#exchanges') {
@@ -131,33 +174,6 @@ $(document).ready(function() {
         $(this).val('');
     })
 
-
-
-
-    // Prefix input elements with the respective selected currency
-    var bind_currency_to_autonumeric = function() {
-
-        $('[data-autonumeric]').autoNumeric('init');
-
-        $('[data-autonumeric]').each(function() {
-            update_currency_symbol($(this));
-        });
-
-        $('.currency_select').change(function() {
-            update_currency_symbol($('#' + $(this).attr('data-symboltarget')));
-        });
-
-        function update_currency_symbol(el) {
-            currency_select_el = $('#' + el.attr('data-symbolsource'));
-            symbol = currency_select_el.find('option:selected').attr('data-symbol');
-            el.attr('data-a-sign', symbol);
-            el.autoNumeric('update', {aSign: symbol});
-        }
-
-    };
-
-
-    bind_currency_to_autonumeric();
 
 
 
