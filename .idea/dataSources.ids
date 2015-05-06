@@ -1765,6 +1765,8 @@
       <column name="page" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="rest" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="location_short" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="host" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="searches_pkey" columns="id"/>
     </table>
     <table name="searches_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
