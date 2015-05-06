@@ -599,9 +599,14 @@ body#cambiu {
         @include middle-parent(70px, 0)
       }
     }
-    #exchange_summary {
+    .page {
+      background-color: #fff;
       box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
       min-height: 100vh;
+      margin-right: -15px;
+    }
+    #exchange_summary {
+       min-height: 100vh;
       background-color: #fff;
       .exchange_summary_title {
         display: none;
@@ -690,8 +695,14 @@ body#cambiu {
             font-size: 1.1em;
           }
         }
+        .you_chose {
+          font-weight: 300;
+        }
         .sum {
           float: right;
+          @media (max-width: $screen-xs-max) {
+            font-weight: 900;
+          }
         }
         .pay {
           color: #333;
@@ -703,9 +714,17 @@ body#cambiu {
             font-size: 1.2em;
           }
         }
+        .buy_amount {
+          @media (max-width: $screen-xs-max) {
+            font-size: 1em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 1em;
+          }
+        }
         .buy_currency {
           @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
+            font-size: 1em;
           }
           @media (min-width: $screen-sm-min) {
             font-size: 1em;
@@ -713,7 +732,7 @@ body#cambiu {
         }
         .pay_amount {
           @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
+            font-size: 1em;
           }
           @media (min-width: $screen-sm-min) {
             font-size: 1em;
@@ -721,7 +740,7 @@ body#cambiu {
         }
         .pay_currency {
           @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
+            font-size: 1em;
           }
           @media (min-width: $screen-sm-min) {
             font-size: 1em;
@@ -729,7 +748,7 @@ body#cambiu {
         }
         .gain_amount {
           @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
+            font-size: 1em;
           }
           @media (min-width: $screen-sm-min) {
             font-size: 1em;
@@ -737,7 +756,7 @@ body#cambiu {
        }
         .gain_currency {
           @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
+            font-size: 1em;
           }
           @media (min-width: $screen-sm-min) {
             font-size: 1em;
@@ -751,9 +770,9 @@ body#cambiu {
             display: none;
           }
           */
-          @media (min-width: $screen-sm-min) {
+ //         @media (min-width: $screen-sm-min) {
             padding: 5%;
-          }
+   //       }
           @media (max-width: $screen-xs-max) {
             input {
               width: 90%;
@@ -873,7 +892,7 @@ body#cambiu {
         font-size: 1.2em;
       }
       #exchanges_items {        
-        box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+//        box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
       }
 
 // OLD SEARCH PAGE
@@ -993,7 +1012,7 @@ body#cambiu {
       #map_container {
         z-index: -2;
         position: fixed;
-        margin-left: 31%;
+        margin-left: 32.2%;
         width: 70%;
         height: 100vh;
         top: 125px;  /// ?????????
@@ -1002,7 +1021,7 @@ body#cambiu {
         }
       }
     }
-  
+
   }
 }
 
