@@ -219,7 +219,7 @@ $(document).ready(function() {
             disableAutoPan: true,
             title: exchange.name,
             map: map,
-            icon: '/logo_no_text.png'
+            icon: '/logo32.png'
     //          animation: google.maps.Animation.DROP,
     //        zIndex: exchange.id // holds the exchange id 
         });
