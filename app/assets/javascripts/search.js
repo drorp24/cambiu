@@ -66,8 +66,6 @@ $(document).ready(function() {
 
     });
 
-
-
     // Binding
 
     $('#homepage form input').each(function() {
@@ -116,6 +114,16 @@ $(document).ready(function() {
     };
 
     bind_currency_to_autonumeric();
+
+    // fix autoNumeric placing "0.00" instead of null
+    function fix(field) {
+        if (sessionStorage.getItem(field) == '') {
+            sessionStorage.setItem(field, null);
+            set(field, null)
+        }
+    }
+    fix('pay_amount');
+    fix('buy_amount');
 
 
     $('#search_buy_amount').click(function() {
