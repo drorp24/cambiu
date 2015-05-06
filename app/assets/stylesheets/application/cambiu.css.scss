@@ -875,8 +875,23 @@ body#cambiu {
       }
       .exchange_voucher_order {
         .order {
-          font-size: 1.5em;
-          color: #333;
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.3em;
+          }
+          @media (max-width: $screen-xs-max) {
+            font-size: 0.9em;
+            font-weight: 500;
+          }
+            color: #333;
+          text-align: center;
+          font-weight: 300;
+          padding-top: 25px;
+          padding-bottom: 25px;
+          border: 1px solid #fff;
+          .exchange_icon i{
+            margin-right: 10px;
+            margin-left: 10px;
+          }
         }
       }
     }
