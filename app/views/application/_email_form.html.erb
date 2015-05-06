@@ -1,6 +1,6 @@
 <%= simple_form_for Search.new, url: record_searches_path, validate: false, remote: true, html: { id: 'email_form', data: {type: :json } } do |f| %>
 
-    <%= f.input :email, placeholder: "  Enter email to guarantee the deal", required: false, label: false, type: "email" %>
+    <%= f.input :email, placeholder: "  Enter email to guarantee deal", required: false, label: false, type: "email" %>
 
       <div class="hidden_fields">
         <%= f.input_field :pay_amount, 		as: :hidden, data: {field: 'pay_amount'} %>
