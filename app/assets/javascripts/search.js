@@ -151,7 +151,7 @@ $(document).ready(function() {
             set('location', place.formatted_address);
             set('location_short', place.name);
 
-            if (!homepage) $('#new_search').submit();
+            if (!$('body').hasClass('homepage')) $('#new_search').submit();
 
 /*          TODO: Remove.
             if (window.location.hash == '#exchanges') {
