@@ -34,7 +34,7 @@ class Search < ActiveRecord::Base
         exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:open_today, :rates)
       # TODO: The following 2 options are temporary only
       elsif location.downcase.include?("london")
-        exchanges = Exchange.where.not(name: nil).includes(:open_today, :rates).limit(50)
+        exchanges = Exchange.geocoded.where.not(name: nil).includes(:open_today, :rates).limit(50)
       else
         exchanges = []
       end
