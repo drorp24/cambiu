@@ -23,6 +23,8 @@ $(document).ready(function() {
         }
         updateResults(exchanges);
         updateParamsDisplay();
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+
     };
     
 

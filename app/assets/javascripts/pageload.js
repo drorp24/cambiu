@@ -54,6 +54,7 @@ var display = function(term) {
 $(document).ready(function() {
     
     console.log('pageload');
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     homepage = $('body').hasClass('homepage');
 
