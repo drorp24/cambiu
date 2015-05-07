@@ -828,6 +828,7 @@ body#cambiu {
         position: absolute;
         top: 20px;
         width: 100%;
+        max-height: 500px;
         left: 0;
         z-index: 0;
          filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12,Color='#444')";
@@ -846,35 +847,65 @@ body#cambiu {
         }
       }
       .voucher_title {
-        font-size: 1.5em;
-        font-weight: 700;
+        @media (min-width: $screen-sm-min) {
+          font-size: 1.5em;
+        }
+        @media (max-width: $screen-xs-max) {
+          font-size: 1.1em;
+        }
+         font-weight: 700;
         text-transform: uppercase;
       }
       .voucher_validity {
-        font-size: 1em;
+        @media (min-width: $screen-sm-min) {
+          font-size: 1em;
+        }
+        @media (max-width: $screen-xs-max) {
+          font-size: 0.9em;
+        }
         font-weight: 300;
         margin-bottom: 20px;
       }
       .exchange_voucher_banner {
-        margin-top: 30px;
-        margin-bottom: 30px;
+        margin-top: 15px;
+        margin-bottom: 20px;
         .es_name {
-          font-size: 1.3em;
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.3em;
+          }
+          @media (max-width: $screen-xs-max) {
+            font-size: 1.1em;
+          }
           color: #333;
           font-weight: 500;
-          margin-bottom: 10px;
+          margin-bottom: 0px;
         }
         .es_address {
-          font-size: 1.2em;
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.2em;
+          }
+          @media (max-width: $screen-xs-max) {
+            font-size: 1em;
+          }
           font-weight: 300;
           color: #555;
         }
       }
       .exchange_voucher_directions {
         color: #333;
-        font-size: 1.2em;
+        @media (min-width: $screen-sm-min) {
+          font-size: 1.1em;
+        }
+        @media (max-width: $screen-xs-max) {
+          font-size: 1em;
+        }
         font-weight: 400;
-        margin-bottom: 30px;
+        @media (min-width: $screen-sm-min) {
+          margin-bottom: 30px;
+        }
+        @media (max-width: $screen-xs-max) {
+          margin-bottom: 20px;
+        }
         color: $lightgreen;
       }
       .exchange_voucher_order {
@@ -889,8 +920,8 @@ body#cambiu {
             color: #333;
           text-align: center;
           font-weight: 300;
-          padding-top: 25px;
-          padding-bottom: 25px;
+          padding-top: 10px;
+          padding-bottom: 10px;
           box-shadow: inset 0 1px 0 rgba(0,0,0,.2), 0 0 4px rgba(0,0,0,0.1);
           .exchange_icon i{
             margin-right: 10px;
@@ -901,6 +932,46 @@ body#cambiu {
           font-size: 0.8em;
           margin-top: 10px;
           text-align: center;
+        }
+      }
+      .exchange_voucher_identification {
+        margin-top: 20px;
+        .identification {
+          border-top: 1px solid rgba(0,0,0,.1);
+          border-bottom: 1px solid rgba(0,0,0,.1);
+          padding-top: 10px;
+          padding-bottom: 10px;
+          .identification_icon {
+            @include middle-parent(30px, 30px);
+            padding-right: 10px;
+            padding-left: 10px;
+            img {
+              width: 100%;
+            }
+          }
+        }
+         .identification_note {
+          font-size: 0.8em;
+           text-align: center;
+        }
+      }
+      .confirmation_form {
+        .confirmation_button {
+          width: 100%;
+          background-color: $lightgreen;
+          border-top: 2px solid $darkgreen;
+          border-radius: 4px;
+          text-transform: uppercase;
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.1em;
+          }
+          @media (max-width: $screen-xs-max) {
+            font-size: 1em;
+          }
+          color: white;
+          font-weight: 400;
+          height: 50px;
+          margin-top: 10px;
         }
       }
     }
