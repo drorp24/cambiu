@@ -44,21 +44,21 @@ $(document).ready(function() {
     
 
 
+    // TODO: Remove det, replace classes with data- attributes, do it in a loop over the data fields
     function addExchange(exchange, index) {
     
         var exchange_el =   $('.exchange_row.template').clone().removeClass('template');
         var exchange_sum =  exchange_el.find('.list-group-item');
-        var exchange_det =  exchange_el.find('.collapse');
+         var exchange_det =  exchange_el.find('.collapse');
         var id = '#exchange_det_' + exchange.id;
     
         exchange_sum.attr('href', id);
         exchange_det.attr('id', id);
-        exchange_sum.attr('data-id', exchange.id);
         exchange_det.attr('data-id', exchange.id);
         
         exchange_el.find('.distance').html(String(exchange.distance));
         exchange_el.find('.name').html(exchange.name);
-        exchange_el.find('.quote').html(exchange.edited_quote);
+        exchange_el.find('.quote').html(exchange.pay_amount);
         if (exchange.quote > 0) {
             exchange_el.find('.comparison').css('display', 'block');
             exchange_el.find('.comparison-amount').html('€9.99');
@@ -69,8 +69,11 @@ $(document).ready(function() {
         exchange_el.find('.phone').attr('href', exchange.phone ? 'tel:+44' + exchange.phone.substring(1) : "#");
         exchange_el.find('.website').attr('href', exchange.website);
         exchange_el.find('.directions').attr('data-lat', exchange.latitude); 
-        exchange_el.find('.directions').attr('data-lng', exchange.longitude); 
-        
+        exchange_el.find('.directions').attr('data-lng', exchange.longitude);
+
+
+        exchange_sum.find('[data-id]').attr('data-id', exchange.id);
+
 
         exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
         exchange_det.appendTo('#exchanges_list .list-group #exchanges_items');        

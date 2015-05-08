@@ -1,24 +1,44 @@
+// Switch to a different pane according to href
+// If href element also includes data-id then populate model data before switching panes
+
 $(document).ready(function() {
 
+    function populate(el, exchange) {
+
+        var field = el.data('field');
+        var value = exchange[field];
+
+        el.html(value);
+    }
+
+
+    // consider css transition (take it from collapse css transition)
+    // also change hash and push to history
+    function paneSwitch(old_page, new_page) {
+        old_page.removeClass('active');
+        old_page.hide();
+        new_page.addClass('active');
+        new_page.show();
+    }
+
     $('#exchanges').on('click', '[data-href]', (function() {
+
         var $this = $(this);
         var old_page = $('.active.page');
         var new_page = $($this.data('href'));
 
-        // exchanges.js - record the exchange id on the '#getit_button' (the one with the href, triggering this event)
-        // id = $this.data('id');
-        // var results = $.grep(exchanges_array, function(e){ return e.id == id; });
-        // var exchange = results[0]
-        // now populate everything in the summary page and the voucher page taking values from exchange, e.g., exchange.address
-        // then continue below: hiding the old page and showing the new page.
+        if ($this.attr('data-id')) {
 
+            var id = $this.data('id');
+            var results = $.grep(exchanges, function(e){ return e.id == id; });
+            var exchange = results[0];
 
-        old_page.removeClass('active');
-        old_page.hide();
-        new_page.addClass('active');
-        new_page.show();    // consider css transition (take it from collapse css transition)
+            new_page.find('[data-model=exchange]').each(function() {
+                populate($(this), exchange)
+            });
+        }
 
-        // also change hash and push to history
+        paneSwitch(old_page, new_page);
 
     }))
 
