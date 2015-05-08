@@ -13,10 +13,13 @@ var directionsDisplay;
 var markers = [];
 var exchanges = [];
 var infowindows = [];
-var exchanges_array = [];
 var exchanges_by_quote = [];
 var exchanges_by_distance = [];
 var drawMap;
+var clearExchanges;
+var updateExchanges;
+var sort_by;
+var sort_ui;
 
 setPage = function(to) {
     var to_class = to.replace('#', '');

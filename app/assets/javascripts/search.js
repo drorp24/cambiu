@@ -182,6 +182,61 @@ $(document).ready(function() {
 
 
 
+    // Sorting
+
+   sort_ui = function(sort) {
+
+        console.log('sort_ui');
+
+        $('#sort_switch').bootstrapSwitch('state', sort == 'quote', true);
+        $('.sorted_by').each(function() {
+            $this = $(this);
+            if ($this.data('sort')== sort) {$this.addClass('active')} else {$this.removeClass('active')}
+        })
+    };
+
+    sort_by = function(sort) {
+
+        console.log('sort_by ' + sort);
+
+        sort_ui(sort);
+
+        sessionStorage.sort = sort;
+
+        if (exchanges.length == 0) return;
+
+        if (sort == 'distance') {
+            if (exchanges_by_distance.length > 0) {
+                exchanges = exchanges_by_distance
+            } else {
+                exchanges_by_distance = exchanges.sort(function(a, b){return a.distance-b.distance;}).slice(0);
+            }
+        }
+        else if (sort == 'quote') {
+            if (exchanges_by_quote.length > 0) {
+                exchanges = exchanges_by_quote
+            } else {
+                exchanges_by_quote = exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)}).slice(0);
+            }
+        }
+        clearExchanges();
+        updateExchanges(exchanges);
+    };
+
+
+    $('.make-switch').bootstrapSwitch();
+
+    $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
+        sort_by(state ? 'quote' : 'distance');
+    });
+
+    $('.sorted_by').click(function() {
+         sort_by($(this).data('sort'));
+    });
+
+    sort_ui(sessionStorage.sort);
+
+
     // UI
 
     // open parameters collapsed form in desktops only
@@ -192,27 +247,15 @@ $(document).ready(function() {
         // the width of browser is less then 700px
     }
 
-
-    // sort bootstrapSwitch and results banner
-    var sort = sessionStorage.sort;
-    $('#sort_switch').bootstrapSwitch('state', sort == 'quote');
-    el = sort == 'quote' ? '.sorted_by.bestprice' : '.sorted_by.nearest';
-    $(el).addClass('active');
-
-
     // Fix google autocomplete z-index dynamically
     $('[data-field=location]').keypress(function() {
         if (!pacContainerInitialized) {
-        $('.pac-container').css('z-index', 
-        '9999');
-        pacContainerInitialized = true;
+            $('.pac-container').css('z-index',
+                '9999');
+            pacContainerInitialized = true;
         }
     });
 
-    // Initialize bootstrap-switch
-    $('.make-switch').bootstrapSwitch();    
 
 
-
-     
 }); 
