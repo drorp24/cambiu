@@ -72,7 +72,7 @@ $(document).ready(function() {
         exchange_el.find('.directions').attr('data-lng', exchange.longitude);
 
 
-        exchange_sum.find('[data-id]').attr('data-id', exchange.id);
+        exchange_sum.find('[data-exchangeid]').attr('data-exchangeid', exchange.id);
 
 
         exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');

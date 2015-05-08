@@ -27,15 +27,17 @@ $(document).ready(function() {
         var old_page = $('.active.page');
         var new_page = $($this.data('href'));
 
-        if ($this.attr('data-id')) {
+        if ($this.attr('data-exchangeid')) {
 
-            var id = $this.data('id');
-            var results = $.grep(exchanges, function(e){ return e.id == id; });
+            var exchangeid = $this.data('exchangeid');
+            var results = $.grep(exchanges, function(e){ return e.id == exchangeid; });
             var exchange = results[0];
 
             new_page.find('[data-model=exchange]').each(function() {
                 populate($(this), exchange)
             });
+
+            $('[data-current-exchange]').attr('data-exchangeid', exchangeid)
         }
 
         paneSwitch(old_page, new_page);

@@ -20,6 +20,6 @@
         <%= f.input_field :exchange_id, 	as: :hidden, data: {field: 'exchange_id'} %>
       </div>
 
-    <%= f.button :submit, 'Guarantee this deal!', data: {href: "#exchange_voucher", id: ''}, class: "middle-child email_submit btn btn-mini btn-default rounded" %>
+    <%= f.button :submit, 'Guarantee this deal!', data: {href: '#exchange_voucher', current_exchange: 'true', exchangeid: ''}, class: "middle-child email_submit btn btn-mini btn-default rounded" %>
 
 <% end %>

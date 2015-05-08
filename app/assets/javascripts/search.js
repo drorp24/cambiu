@@ -58,7 +58,7 @@ $(document).ready(function() {
 
     // Restore session state
 
-    $('.email_form form [data-field]').each(function() {
+    $('#homepage form [data-field]').each(function() {
 
         var field = $(this).data('field');
         var value = sessionStorage.getItem(field);
@@ -73,6 +73,7 @@ $(document).ready(function() {
         var field = $(this).data('field');
         bind(field, 'keyup');
     });
+
 
 /*  // select changes (=currency changes) are handled by autonumeric below
     $('#homepage form select').each(function() {
