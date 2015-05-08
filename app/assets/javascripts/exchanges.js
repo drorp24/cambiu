@@ -8,10 +8,12 @@ $(document).ready(function() {
     console.log('exchanges');
 
 
-    function updatePage(exchanges) {
+    function updatePage(data) {
 
         console.log('updatePage');
- 
+
+        exchanges = data;
+
         drawMap(params.location, params.user_lat, params.user_lng, exchanges);
         clearExchanges();
 
@@ -19,8 +21,7 @@ $(document).ready(function() {
 
             updateExchanges(exchanges);
             bindBehavior();
-            exchanges_array = exchanges;           
-        }
+         }
         updateResults(exchanges);
         updateParamsDisplay();
         document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -214,8 +215,6 @@ $(document).ready(function() {
     
     function addMarker(exchange) {
 
-        console.log('addMarker. exchange ID: ' + String(exchange.id));
-        
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(exchange.latitude, exchange.longitude),
             disableAutoPan: true,
@@ -321,20 +320,20 @@ $(document).ready(function() {
     function sort_by(order) {
         if (order == 'distance') {
             if (exchanges_by_distance.length > 0) {
-                exchanges_array = exchanges_by_distance
+                exchanges = exchanges_by_distance
              } else {
-                exchanges_by_distance = exchanges_array.sort(function(a, b){return a.distance-b.distance;});  
+                exchanges_by_distance = exchanges.sort(function(a, b){return a.distance-b.distance;});
              }
         }
         else if (order == 'quote') {
             if (exchanges_by_quote.length > 0) {
-                exchanges_array = exchanges_by_quote
+                exchanges = exchanges_by_quote
              } else {
-                exchanges_by_quote = exchanges_array.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)});  
+                exchanges_by_quote = exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)});
              }
         }
         clearExchanges();
-        updateExchanges(exchanges_array); // TODO: replace with updatePage. TODO: store the div's as well and replace as needed.
+        updateExchanges(exchanges); // TODO: replace with updatePage. TODO: store the div's as well and replace as needed.
     }    
 
  
