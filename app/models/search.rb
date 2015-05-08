@@ -38,7 +38,7 @@ class Search < ActiveRecord::Base
       else
         exchanges = []
       end
-      exchanges.each do |exchange| 
+      exchanges.each do |exchange|
 
         exchange_quote = {}
 
@@ -55,6 +55,12 @@ class Search < ActiveRecord::Base
         quote = Money.new(rand(33000..46000), buy.currency.iso_code) # exchange.quote(pay, buy) TODO: Handle random quotes
         exchange_quote[:edited_quote] = quote.format
         exchange_quote[:quote] = quote.fractional / 100.00
+        exchange_quote[:pay_amount] = Money.new((buy * 57).amount, pay_currency).format
+        exchange_quote[:pay_currency] = pay.currency.iso_code
+        exchange_quote[:buy_amount] = buy.format
+        exchange_quote[:buy_currency] = buy.currency.iso_code
+        exchange_quote[:gain_amount] = Money.new((buy * 7).amount, pay_currency).format
+        exchange_quote[:gain_currency] = pay.currency.iso_code
 
         @exchange_quotes << exchange_quote
 

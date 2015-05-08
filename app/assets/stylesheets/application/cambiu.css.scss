@@ -627,6 +627,10 @@ body#cambiu {
         font-size: 1.2em;
         font-weight: 200;
         color: #777;
+        cursor: pointer;
+        &:hover {
+          color: $lightgreen;
+        }
       }
       .exchange_summary_bg img {
         width: 100%;
@@ -699,7 +703,7 @@ body#cambiu {
           font-weight: 300;
         }
         .sum {
-          float: right;
+          text-align: right;
           @media (max-width: $screen-xs-max) {
             font-weight: 900;
           }

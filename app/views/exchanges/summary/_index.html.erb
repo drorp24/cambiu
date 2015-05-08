@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-md-12 col-xs-12">
         <div class="exchange_summary_title">Exchange Summary</div>
-        <div class="back"><%= fa_icon "chevron-left", text: "  Back", left: true %></div>
+        <div class="back" data-href="#exchanges_list"><%= fa_icon "chevron-left", text: "  Back", left: true %></div>
         <%= image_tag 'summary_bg.jpg' %>
       </div>
     </div>
@@ -15,14 +15,14 @@
       <div class="col-md-2 col-xs-2">
         <div class="left">
           <div class="es_icon"><%= fa_icon 'map-marker inverse' %></div>
-          <div class="es_distance" data-field="e_distance">456m</div>
+          <div class="es_distance" data-model="exchange" data-field="distance">456m</div>
         </div>
       </div>
       <div class="col-md-10 col-xs-10">
         <div class="right">
-          <div class="es_name" data-field="e_name">Moneycorp Currency Exchange Service</div>
-          <div class="es_address" data-field="e_address">4 Sloan Square city of London</div>
-          <div class="es_opening_hours" data-field="e_opening_hours">Open Today: 10:00am  -  5:00pm</div>
+          <div class="es_name" data-model="exchange" data-field="name">Moneycorp Currency Exchange Service</div>
+          <div class="es_address" data-model="exchange" data-field="address">4 Sloan Square city of London</div>
+          <div class="es_opening_hours" data-model="exchange" data-field="opening_hours">Open Today: 10:00am  -  5:00pm</div>
         </div>
       </div>
     </div>
@@ -42,16 +42,16 @@
       </div>
       <div class="pay col-xs-5 col-md-4">
         <div class="sum">
-            <span class="buy_amount" data-field="e_buy_amount">$ 1,367.40</span>
-            <span class="buy_currency" data-field="e_buy_currency">EUR</span>
+            <span class="buy_amount" data-model="exchange" data-field="buy_amount">$ 1,367.40</span>
+            <span class="buy_currency" data-model="exchange" data-field="buy_currency">EUR</span>
         </div>
         <div class="sum">
-            <span class="pay_amount" data-field="e_pay_amount">1,000.00</span>
-            <span class="pay_currency" data-field="e_pay_currency">GBP</span>
+            <span class="pay_amount" data-model="exchange" data-field="pay_amount">1,000.00</span>
+            <span class="pay_currency" data-model="exchange" data-field="pay_currency">GBP</span>
         </div>
         <div class="sum">
-            <span class="gain_amount" data-field="e_gain_amount">35.20</span>
-            <span class="gain_currency" data-field="e_gain_currency">EUR</span>
+            <span class="gain_amount" data-model="exchange" data-field="gain_amount">35.20</span>
+            <span class="gain_currency" data-model="exchange" data-field="gain_currency">EUR</span>
         </div>
       </div>
     </div>
