@@ -49,10 +49,11 @@ $(document).ready(function() {
 
     //Default and per-page values
 
-    sessionStorage.pay_currency = sessionStorage.pay_currency || "GBP";
-    sessionStorage.buy_currency = sessionStorage.buy_currency || "EUR";
-    sessionStorage.page = window.location.hostname;
-    sessionStorage.rest = window.location.hash;
+    sessionStorage.pay_currency = sessionStorage.pay_currency || 'GBP';
+    sessionStorage.buy_currency = sessionStorage.buy_currency || 'EUR';
+    sessionStorage.sort         = 'quote';
+    sessionStorage.page         = window.location.hostname;
+    sessionStorage.rest         = window.location.hash;
 
 
     // Restore session state
