@@ -17,8 +17,9 @@
         <%= f.input_field :page, 			as: :hidden, data: {field: 'page'} %>
         <%= f.input_field :rest, 			as: :hidden, data: {field: 'rest'} %>
         <%= f.input_field :location_short, 	as: :hidden, data: {field: 'location_short'} %>
+        <%= f.input_field :exchange_id, 	as: :hidden, data: {field: 'exchange_id'} %>
       </div>
 
-    <%= f.button :submit, 'Guarantee this deal!', data: {href: "#exchange_voucher"}, class: "middle-child email_submit btn btn-mini btn-default rounded" %>
+    <%= f.button :submit, 'Guarantee this deal!', data: {href: "#exchange_voucher", id: ''}, class: "middle-child email_submit btn btn-mini btn-default rounded" %>
 
 <% end %>

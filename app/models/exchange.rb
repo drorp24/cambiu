@@ -1,6 +1,7 @@
 require 'tod'
 
 class Exchange < ActiveRecord::Base
+  has_many :searches
   
   belongs_to  :chain
   has_many    :business_hours

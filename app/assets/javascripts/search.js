@@ -58,7 +58,7 @@ $(document).ready(function() {
 
     // Restore session state
 
-    $('#homepage form [data-field]').each(function() {
+    $('.email_form form [data-field]').each(function() {
 
         var field = $(this).data('field');
         var value = sessionStorage.getItem(field);

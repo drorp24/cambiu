@@ -650,13 +650,16 @@ body#cambiu {
           }
         }
          .es_icon {
-          font-size: 3em;
+          font-size: 2.5em;
           text-align: center;
           margin-top: 15px;
         }
         .es_distance {
-          font-size: 0.9em;
+          font-size: 0.7em;
           text-align: center;
+          &::after {
+            content: "m";
+          }
         }
         .es_name {
           @media (max-width: $screen-xs-max) {

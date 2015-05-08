@@ -1,4 +1,5 @@
 class Search < ActiveRecord::Base
+  belongs_to :exchange
   
   def exchanges
      
@@ -31,10 +32,10 @@ class Search < ActiveRecord::Base
       @exchange_quotes = []
       # TODO: Like open_today, try if possible to define 'applicable_rate' scope that yields *one* rate record according to from & to currencies 
       if Rails.application.config.use_google_geocoding
-        exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:open_today, :rates)
+        exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(:open_today, :rates)
       # TODO: The following 2 options are temporary only
       elsif location.downcase.include?("london")
-        exchanges = Exchange.geocoded.where.not(name: nil).includes(:open_today, :rates).limit(50)
+        exchanges = Exchange.geocoded.where.not(name: nil, address: nil).includes(:open_today, :rates).limit(50)
       else
         exchanges = []
       end
