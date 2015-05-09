@@ -7,6 +7,7 @@ $(document).ready(function() {
 
         var field = el.data('field');
         var value = exchange[field];
+    console.log('populate ' + field + ' with ' + value)
 
         el.html(value);
     }
@@ -28,16 +29,20 @@ $(document).ready(function() {
         var new_page = $($this.data('href'));
 
         if ($this.attr('data-exchangeid')) {
-
-            var exchangeid = $this.data('exchangeid');
-            var results = $.grep(exchanges, function(e){ return e.id == exchangeid; });
+console.log('this id: ' + $this.attr('id'))
+            var exchange_id = $this.data('exchangeid');
+            var results = $.grep(exchanges, function(e){ return e.id == exchange_id; });
             var exchange = results[0];
 
+  console.log('new_page id: ' + new_page.attr('id'))
+  console.log('exchange_id: ' + exchange_id)
             new_page.find('[data-model=exchange]').each(function() {
                 populate($(this), exchange)
             });
 
-            $('[data-current-exchange]').attr('data-exchangeid', exchangeid)
+            sessionStorage.exchange_id = exchange_id;
+            $('[data-current-exchange]').attr('data-exchangeid', exchange_id);
+            $('[data-field=exchange_id]').val(exchange_id)
         }
 
         paneSwitch(old_page, new_page);

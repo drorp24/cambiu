@@ -157,6 +157,9 @@ body#cambiu {
   a:not(.carousel-control) {
     color: $lightgrey;
   }
+  [data-href] {
+    cursor: pointer;
+  }
   .list-group-item, .well {
     border-radius: 0;
   }
