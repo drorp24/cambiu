@@ -10,7 +10,7 @@
         if (field =='buy_amount' || field == "pay_amount") {
             var value_clean = value  ? String(value).replace(/\D/g,'')  : null;
             sessionStorage.setItem(field, value_clean);
-            $('.simple_form ' + '#search_' + field + '_val').val(value_clean);   // Ugly hack for autocomplete sending _val values to server
+            $('.simple_form ' + '#search_' + field + '_val').val(value_clean);   // Ugly hack for autoNumeric sending _val values to server
         }  else {
             sessionStorage.setItem(field, value);
         }
@@ -87,6 +87,7 @@ $(document).ready(function() {
     var bind_currency_to_autonumeric = function() {
 
         $('[data-autonumeric]').autoNumeric('init');
+        console.log('autoNumeric initialized')
 
         $('[data-autonumeric]').each(function() {
             update_currency_symbol($(this));
@@ -101,7 +102,7 @@ $(document).ready(function() {
 
             set(field, value, $this);
 
-            $('[data-field=' + target + ']').each(function() {
+            $('[data-autonumeric][data-field=' + target + ']').each(function() {
                 update_currency_symbol($(this), symbol);
             })
         });
