@@ -22,6 +22,8 @@ var sort_by;
 var sort_ui;
 var set;
 var order = {};
+var model_set;
+var model_populate;
 
 setPage = function(to) {
     var to_class = to.replace('#', '');

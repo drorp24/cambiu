@@ -132,9 +132,7 @@ $(document).ready(function() {
 
         $('#exchanges').on('ajax:success', '#new_order', (function(evt, data, status, xhr) {
             order = data;
-            // TODO: Change below to loop over '[data-model=order]'
-            set('order_id', order.id)
-            set('order_expiry', order.expiry)
+            model_populate('order', order);
        }))
 
     }

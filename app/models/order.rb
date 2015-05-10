@@ -7,8 +7,21 @@ class Order < ActiveRecord::Base
 
   enum status: [ :produced, :used ]
 
+  # This is the way to include any non-model I want in the JSON response
+  def attributes
+    super.merge(expiry_s: self.expiry_s, voucher: self.voucher)
+  end
+
   before_create do
     self.expiry = 2.hours.from_now
+  end
+
+  def expiry_s
+    self.expiry.to_s(:short)
+  end
+
+  def voucher
+    (self.id + 80000).to_s
   end
 
 =begin

@@ -6,12 +6,12 @@
 
 //= require jquery
 //= require autonumeric
+//= require models
 //= require findlocation
 //= require pageload
 //= require jquery.form
 //= require search
 //= require exchanges
-//= require orders
 //= require pages
 
 //= require jquery_ujs
