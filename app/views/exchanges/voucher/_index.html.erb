@@ -87,7 +87,7 @@
   <div class="confirmation_form">
     <div class="row">
       <div class="col-xs-12">
-        <%= render 'confirmation_form' %>
+        <%= render partial: 'order_form', locals: {status: 'used'} %>
       </div>
     </div>
   </div>

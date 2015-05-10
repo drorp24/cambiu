@@ -12,10 +12,15 @@ $(document).ready(function() {
         el.html(value);
     }
 
+    function clearExchangeContext() {
+        sessionStorage.exchange_id  = null;
+        sessionStorage.order_id     = null;
+        // TODO: reverse the populate too
+    }
 
     // consider css transition (take it from collapse css transition)
     // also change hash and push to history
-    function paneSwitch(old_page, new_page) {
+    function pageSwitch(old_page, new_page) {
         old_page.removeClass('active');
         old_page.hide();
         new_page.addClass('active');
@@ -45,9 +50,16 @@ console.log('this id: ' + $this.attr('id'))
             $('[data-field=exchange_id]').val(exchange_id)
         }
 
-        paneSwitch(old_page, new_page);
+        if (new_page.data('search-home')) {
+            clearExchangeContext();
+        }
+
+        if ($this.data('reload')) {         // TODO: Check if reload is still needed
+            location.reload()
+        } else {
+            pageSwitch(old_page, new_page);
+        }
 
     }))
-
 
 });

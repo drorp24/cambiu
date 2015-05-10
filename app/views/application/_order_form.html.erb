@@ -1,0 +1,21 @@
+<%= simple_form_for Order.new, validate: false, remote: true, html: {data: {type: :json } } do |f| %>
+
+
+    <div class="hidden_fields">
+      <%= f.input_field :exchange_id, 	    as: :hidden, data: {field: 'exchange_id'} %>
+      <%= f.input_field :email, 		    as: :hidden, data: {field: 'email'} %>
+      <%= f.input_field :pay, 	            as: :hidden, data: {field: 'pay_amount'} %>
+      <%= f.input_field :pay_currency, 	    as: :hidden, data: {field: 'pay_currency'} %>
+      <%= f.input_field :buy, 	            as: :hidden, data: {field: 'buy_amount'} %>
+      <%= f.input_field :buy_currency, 	    as: :hidden, data: {field: 'buy_currency'} %>
+      <%= f.input_field :status, 	        as: :hidden, data: {field: 'status'}, value: status %>
+    </div>
+
+    <% if status == 'produced' %>
+        <%= f.button :submit, 'Get it', data: {href: '#exchange_summary', exchange_selection: 'true', exchangeid: ''}, id: 'getit_button', class: 'btn btn-mini btn-default' %>
+    <% elsif status == 'used' %>
+        <%= f.button :submit, 'Got the money, thanks you!', data: {href: '#exchanges_list', reload: 'true'}, class: 'btn confirmation_button' %>
+    <% end %>
+
+
+<% end %>

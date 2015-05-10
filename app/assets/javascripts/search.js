@@ -3,7 +3,7 @@
 //
 // Prefix input elements with the respective selected currency
 
-    function set(field, value, excluded) {
+    set = function(field, value, excluded) {
         if (excluded === undefined) excluded = '';
         var elements = '[data-field=' + field + ']';
         var value_clean = value ? value.replace(/\D/g,'') : null;
@@ -14,6 +14,8 @@
         }  else {
             sessionStorage.setItem(field, value);
         }
+
+        if (value === 'null' ) value = '';
 
         $(elements).each(function() {
             var $this = $(this);
@@ -49,12 +51,12 @@ $(document).ready(function() {
 
     //Default and per-page values
 
-    sessionStorage.pay_currency = sessionStorage.pay_currency || 'GBP';
-    sessionStorage.buy_currency = sessionStorage.buy_currency || 'EUR';
-    sessionStorage.sort         = 'quote';
     sessionStorage.page         = window.location.hostname;
     sessionStorage.rest         = window.location.hash;
 
+    sessionStorage.pay_currency = sessionStorage.pay_currency || 'GBP';
+    sessionStorage.buy_currency = sessionStorage.buy_currency || 'EUR';
+    sessionStorage.sort         = sessionStorage.sort || 'quote';
 
     // Restore session state
 

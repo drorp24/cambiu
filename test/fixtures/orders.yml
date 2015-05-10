@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  exchange_id: 
+  user_id: 
+  email: MyString
+  expiry: 2015-05-09 17:35:08
+  status: 1
+  pay_cents: 1
+  pay_currency: MyString
+  buy_cents: 1
+  buy_currency: MyString
+
+two:
+  exchange_id: 
+  user_id: 
+  email: MyString
+  expiry: 2015-05-09 17:35:08
+  status: 1
+  pay_cents: 1
+  pay_currency: MyString
+  buy_cents: 1
+  buy_currency: MyString
