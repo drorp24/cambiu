@@ -53,9 +53,9 @@ class Search < ActiveRecord::Base
         exchange_quote[:longitude] = exchange.longitude 
         exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : rand(27..2789)
         exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"  
-        quote = Money.new(rand(33000..46000), buy.currency.iso_code) # exchange.quote(pay, buy) TODO: Handle random quotes
-        exchange_quote[:edited_quote] = quote.format
-        exchange_quote[:quote] = quote.fractional / 100.00
+#        quote = Money.new(rand(33000..46000), buy.currency.iso_code) # exchange.quote(pay, buy) TODO: Handle random quotes
+        exchange_quote[:edited_quote] = pay.format
+#        exchange_quote[:quote] = quote.fractional / 100.00
         exchange_quote[:pay_amount] = Money.new((buy * 57).amount, pay_currency).format
         exchange_quote[:pay_currency] = pay.currency.iso_code
         exchange_quote[:buy_amount] = buy.format

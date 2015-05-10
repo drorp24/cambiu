@@ -195,7 +195,7 @@ $(document).ready(function() {
         
         if (exchange.edited_quote) {
             exchange_window_el =   $('.exchange_window.template').clone().removeClass('template');
-            exchange_window_el.find('.exchange_window_quote').html(exchange.edited_quote);
+            exchange_window_el.find('.exchange_window_quote').html(exchange.pay_amount);
             exchange_window_el.find('.exchange_window_name').html(exchange.name);
             exchange_window_el.find('.exchange_window_address').html(exchange.address);
             exchange_window_el.find('.exchange_window_open').html(exchange.todays_hours);
