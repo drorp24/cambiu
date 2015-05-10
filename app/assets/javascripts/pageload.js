@@ -21,6 +21,7 @@ var updateExchanges;
 var sort_by;
 var sort_ui;
 var set;
+var order = {};
 
 setPage = function(to) {
     var to_class = to.replace('#', '');

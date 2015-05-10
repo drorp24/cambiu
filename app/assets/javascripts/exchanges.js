@@ -121,12 +121,21 @@ $(document).ready(function() {
 
     function bindBehavior() {
 
+        // TODO: move to any of the .js files, with delegate, to save re-binding every time search is made (ajax:success may not be delegatable)
+
          $('.directions').click(function() {
             var from =  production ? new google.maps.LatLng(sessionStorage.user_lat, sessionStorage.user_lng) : new google.maps.LatLng(sessionStorage.test_lat, sessionStorage.test_lng);
             var to =    new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
             calcRoute(from, to);
             return false;  
-        });        
+        });
+
+        $('#exchanges').on('ajax:success', '#new_order', (function(evt, data, status, xhr) {
+            order = data;
+            // TODO: Change below to loop over '[data-model=order]'
+            set('order_id', order.id)
+            set('order_expiry', order.expiry)
+       }))
 
     }
     

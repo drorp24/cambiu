@@ -7,6 +7,10 @@ class Order < ActiveRecord::Base
 
   enum status: [ :produced, :used ]
 
+  before_create do
+    self.expiry = 2.hours.from_now
+  end
+
 =begin
   def pay_amount
     @pay.amount

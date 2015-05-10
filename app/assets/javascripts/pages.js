@@ -61,5 +61,4 @@ console.log('this id: ' + $this.attr('id'))
         }
 
     }))
-
 });

@@ -6,9 +6,9 @@
     set = function(field, value, excluded) {
         if (excluded === undefined) excluded = '';
         var elements = '[data-field=' + field + ']';
-        var value_clean = value ? value.replace(/\D/g,'') : null;
 
         if (field =='buy_amount' || field == "pay_amount") {
+            var value_clean = value  ? String(value).replace(/\D/g,'')  : null;
             sessionStorage.setItem(field, value_clean);
             $('.simple_form ' + '#search_' + field + '_val').val(value_clean);   // Ugly hack for autocomplete sending _val values to server
         }  else {
