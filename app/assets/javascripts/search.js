@@ -59,8 +59,10 @@ $(document).ready(function() {
     sessionStorage.page         = window.location.hostname;
     sessionStorage.rest         = window.location.hash;
 
+    // TODO: All these || dont work!
     sessionStorage.pay_currency = sessionStorage.pay_currency   || 'GBP';
     sessionStorage.buy_currency = sessionStorage.buy_currency   || 'EUR';
+//    sessionStorage.sort         = sessionStorage.sort || 'quote';
     sessionStorage.sort         = sessionStorage.sort || 'quote';
 
     if (!sessionStorage.location) {
