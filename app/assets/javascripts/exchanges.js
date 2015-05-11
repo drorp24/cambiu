@@ -357,18 +357,18 @@ $(document).ready(function() {
         $('#loader_message').css('display', 'block');        
     }
     
-    function triggerGtm() {         
+ /*   function triggerGtm() {
         dataLayer.push({
             'event': 'gtm.formSubmit'
         });        
     }
-
+*/
     function beforeSubmit() {
 
         console.log('beforeSubmit');
         
         startLoader();
-        triggerGtm();
+ //       triggerGtm();
         changePage('#homepage', '#exchanges');
 
     };
