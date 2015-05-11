@@ -15,7 +15,7 @@
             sessionStorage.setItem(field, value);
         }
 
-        if (value === 'null' ) value = '';
+ // Not needed anymore? see location       if (value === 'null' ) value = '';
 
         $(elements).each(function() {
             var $this = $(this);
@@ -57,6 +57,14 @@ $(document).ready(function() {
     sessionStorage.pay_currency = sessionStorage.pay_currency || 'GBP';
     sessionStorage.buy_currency = sessionStorage.buy_currency || 'EUR';
     sessionStorage.sort         = sessionStorage.sort || 'quote';
+
+            sessionStorage.location = sessionStorage.user_location;
+            sessionStorage.location_short = "Nearby"
+        } else {
+            sessionStorage.location = "London, UK";
+            sessionStorage.location_short = "London"
+        }
+    }
 
     // Restore session state
 
@@ -170,6 +178,14 @@ $(document).ready(function() {
 */
         });
     }
+
+    // Complementing searchbox_addListener with an event it won't detece - removing a location
+    $('[data-field=location]').change(function() {
+        if (!$(this).val()) {
+            set('location', sessionStorage.user_location ? sessionStorage.user_location : 'London, UK');
+            set('location_short', sessionStorage.user_location ? "Nearby" : 'London');
+        }
+    })
 
     $('input[data-field=location]').each(function() {
         input = $(this).get(0);

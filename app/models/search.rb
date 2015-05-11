@@ -53,15 +53,13 @@ class Search < ActiveRecord::Base
         exchange_quote[:longitude] = exchange.longitude 
         exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : rand(27..2789)
         exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"  
-#        quote = Money.new(rand(33000..46000), buy.currency.iso_code) # exchange.quote(pay, buy) TODO: Handle random quotes
-        exchange_quote[:edited_quote] = pay.format
-#        exchange_quote[:quote] = quote.fractional / 100.00
-        exchange_quote[:pay_amount] = Money.new((buy * 57).amount, pay_currency).format
+        exchange_quote[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(0.67..0.99)).format
         exchange_quote[:pay_currency] = pay.currency.iso_code
-        exchange_quote[:buy_amount] = buy.format
+        exchange_quote[:buy_amount] = buy.amount > 0 ? buy.format : (Bank.exchange(pay.amount, pay.currency.iso_code, buy.currency.iso_code) * rand(1.03..1.37)).format
         exchange_quote[:buy_currency] = buy.currency.iso_code
-        exchange_quote[:gain_amount] = Money.new((buy * 7).amount, pay_currency).format
-        exchange_quote[:gain_currency] = pay.currency.iso_code
+        exchange_quote[:edited_quote] = pay.amount > 0 ? buy.format : pay.format
+        exchange_quote[:gain_amount] = Money.new((buy * 7).amount, pay.amount > 0 ? buy.currency.iso_code : pay.currency.iso_code).format
+        exchange_quote[:gain_currency] = pay.amount > 0 ? buy.currency.iso_code : pay.currency.iso_code
 
         @exchange_quotes << exchange_quote
 

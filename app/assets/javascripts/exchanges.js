@@ -273,7 +273,7 @@ $(document).ready(function() {
               if (status == google.maps.GeocoderStatus.OK) {
 
                 center = results[0].geometry.location;
-                console.log('going by place. center: ' + center);
+                console.log('going by selected location. center: ' + center);
                 var mapOptions = {
                     center: center,
                     zoom: 12
@@ -292,6 +292,7 @@ $(document).ready(function() {
 
         } else if (latitude && longitude) {
 
+            console.log('going by user location. lat: ' + String(latitude) + ' lng: ' + String(longitude));
             center = new google.maps.LatLng(latitude, longitude);
             var mapOptions = {
                 center: center,
@@ -304,8 +305,9 @@ $(document).ready(function() {
             directionsDisplay.setMap(map);
 
         } else {
- 
-           geocoder = new google.maps.Geocoder();
+            console.log('draw: reached the else');
+
+            geocoder = new google.maps.Geocoder();
            geocoder.geocode( { 'address': 'London, UK'}, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK) {
                 center = results[0].geometry.location;
