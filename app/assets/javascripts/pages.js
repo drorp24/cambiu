@@ -7,9 +7,13 @@ $(document).ready(function() {
 
         var field = el.data('field');
         var value = exchange[field];
+        var lat   = el.data('lat');
+        var lng   = el.data('lng');
     console.log('populate ' + field + ' with ' + value)
 
-        el.html(value);
+        if (el.data('field'))   el.html(value);
+        if (el.data('lat')) {console.log(el.attr('data-lat'));    el.attr('data-lat', exchange.lat);}
+        if (el.data('lng'))     el.attr('data-lng', exchange.lng);
     }
 
     function clearExchangeContext() {

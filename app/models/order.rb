@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
   def attributes
     super.merge(expiry_s: self.expiry_s, voucher: self.voucher)
   end
-  
+
   before_create do
     self.expiry = 2.hours.from_now
   end
