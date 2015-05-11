@@ -39,7 +39,7 @@ gem 'tod'
 gem 'simple_form'
 gem 'backstretch-rails'
 gem 'money'
-gem 'eu_central_bank'
+#gem 'eu_central_bank'
 gem 'thin'
 gem 'money-rails'
 gem 'autonumeric-rails'
@@ -67,6 +67,8 @@ group :test, :staging, :production do
   gem 'puma'
   gem "rack-timeout"
 end
+gem 'google_currency'
+gem 'google_currency_rails_cache' # TODO: How to install
 #gem 'cloudinary'
 #gem 'compass-rails'
 #gem 'chosen-rails'
