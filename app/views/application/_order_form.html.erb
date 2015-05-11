@@ -14,7 +14,7 @@
     <% if status == 'produced' %>
         <%= f.button :submit, 'Get it', data: {href: '#exchange_summary', exchange_selection: 'true', exchangeid: ''}, id: 'getit_button', class: 'btn btn-mini btn-default' %>
     <% elsif status == 'used' %>
-        <%= f.button :submit, 'Got the money, thanks you!', data: {href: '#exchanges_list', reload: 'true'}, class: 'btn confirmation_button' %>
+        <%= f.button :submit, 'Got the money, thank you!', data: {href: '#exchanges_list', reload: 'true'}, class: 'btn confirmation_button' %>
     <% end %>
 
 

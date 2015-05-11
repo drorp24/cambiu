@@ -66,6 +66,8 @@ $(document).ready(function() {
     if (!sessionStorage.location) {
         set_default_location()
     }
+    sessionStorage.test_lat = 51.5144;
+    sessionStorage.test_lng = -0.1354;
 
     sessionStorage.email = '';
 

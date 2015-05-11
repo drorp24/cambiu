@@ -919,7 +919,9 @@ body#cambiu {
         @media (max-width: $screen-xs-max) {
           margin-bottom: 20px;
         }
-        color: $lightgreen;
+        a.directions {
+          color: $lightgreen !important;
+        }
       }
       .exchange_voucher_order {
         .order {

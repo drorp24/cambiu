@@ -12,8 +12,8 @@ $(document).ready(function() {
     console.log('populate ' + field + ' with ' + value)
 
         if (el.data('field'))   el.html(value);
-        if (el.data('lat')) {console.log(el.attr('data-lat'));    el.attr('data-lat', exchange.lat);}
-        if (el.data('lng'))     el.attr('data-lng', exchange.lng);
+        if (el.data('lat')) {console.log(el.attr('data-lat'));    el.attr('data-lat', exchange.latitude);}
+        if (el.data('lng'))     el.attr('data-lng', exchange.longitude);
     }
 
     function clearExchangeContext() {
