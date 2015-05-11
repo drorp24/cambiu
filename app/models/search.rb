@@ -49,8 +49,8 @@ class Search < ActiveRecord::Base
         exchange_quote[:open_today] = exchange.todays_hours
         exchange_quote[:phone] = exchange.phone
         exchange_quote[:website] = exchange.website
-        exchange_quote[:lat] = exchange.latitude
-        exchange_quote[:lng] = exchange.longitude
+        exchange_quote[:latitude] = exchange.latitude
+        exchange_quote[:longitude] = exchange.longitude 
         exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : rand(27..2789)
         exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"  
         exchange_quote[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(0.67..0.99)).format
