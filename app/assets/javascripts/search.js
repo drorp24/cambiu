@@ -59,8 +59,8 @@ $(document).ready(function() {
     sessionStorage.page         = window.location.hostname;
     sessionStorage.rest         = window.location.hash;
 
-    sessionStorage.pay_currency = sessionStorage.pay_currency || 'GBP';
-    sessionStorage.buy_currency = sessionStorage.buy_currency || 'EUR';
+    sessionStorage.pay_currency = sessionStorage.pay_currency   || 'GBP';
+    sessionStorage.buy_currency = sessionStorage.buy_currency   || 'EUR';
     sessionStorage.sort         = sessionStorage.sort || 'quote';
 
     if (!sessionStorage.location) {
@@ -144,12 +144,12 @@ $(document).ready(function() {
     fix('buy_amount');
 
 
-    $('#search_buy_amount').click(function() {
-        set('pay_amount', null)
-    });
-    $('#search_pay_amount').click(function() {
+    $('input[data-field=buy_amount]').click(function() {
+        set('pay_amount', null);
+      });
+    $('input[data-field=pay_amount]').click(function() {
         set('buy_amount', null)
-    });
+     });
 
     $('#search_location').click(function() {
         $('#search_location').attr('placeholder', 'Look for deals in...');

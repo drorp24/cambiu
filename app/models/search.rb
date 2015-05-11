@@ -6,7 +6,7 @@ class Search < ActiveRecord::Base
     return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
     pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
     buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)   
-    distance      ||=  20    
+    distance      ||=  20
     distance_unit ||= "km" 
     sort          ||= "quote"
     center          = location.present? ? location : ((user_lat.present? and user_lng.present?) ? [user_lat, user_lng] : 'London')  
@@ -57,8 +57,9 @@ class Search < ActiveRecord::Base
         exchange_quote[:pay_currency] = pay.currency.iso_code
         exchange_quote[:buy_amount] = buy.amount > 0 ? buy.format : (Bank.exchange(pay.amount, pay.currency.iso_code, buy.currency.iso_code) * rand(1.03..1.37)).format
         exchange_quote[:buy_currency] = buy.currency.iso_code
-        exchange_quote[:edited_quote] = pay.amount > 0 ? buy.format : pay.format
-        exchange_quote[:gain_amount] = Money.new((buy * 7).amount, pay.amount > 0 ? buy.currency.iso_code : pay.currency.iso_code).format
+        exchange_quote[:edited_quote] = pay.amount > 0 ? exchange_quote[:buy_amount] : exchange_quote[:pay_amount]
+        exchange_quote[:quote] = Monetize.parse(exchange_quote[:edited_quote]).amount
+        exchange_quote[:gain_amount] =  pay.amount > 0 ? ((exchange_quote[:quote] * 0.127).to_money(buy.currency.iso_code)).format : ((exchange_quote[:quote] * 0.127).to_money(pay.currency.iso_code)).format
         exchange_quote[:gain_currency] = pay.amount > 0 ? buy.currency.iso_code : pay.currency.iso_code
 
         @exchange_quotes << exchange_quote

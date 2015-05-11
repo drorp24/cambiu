@@ -4,8 +4,8 @@
 			I need
 		</div>
 	</div>
-	<div class="form-group col-md-2 col-xs-6">
-		<input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control" placeholder="placeholder"
+	<div class="form-group col-md-1 col-xs-6">
+		<input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control"
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
   	</div>
   <div class="form-group col-md-1 col-xs-6">
@@ -25,7 +25,11 @@
 			I have
 		</div>
 	</div>
-  <div class="form-group col-md-1 col-xs-12">
+  <div class="form-group col-md-1 col-xs-6">
+    <input type="text" pattern="\d*" id="pay_amount" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="pay_amount" class="form-control"
+           data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
+  </div>
+  <div class="form-group col-md-1 col-xs-6">
     <select id="pay_currency" data-field="pay_currency" data-symboltarget="pay_amount" name="pay_currency" class="currency_select select optional text-center form-control"
             data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
       <option selected disabled hidden value=''></option>

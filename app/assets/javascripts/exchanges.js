@@ -13,6 +13,7 @@ $(document).ready(function() {
         console.log('updatePage');
         exchanges = data;
 
+// real line        drawMap(sessionStorage.location, sessionStorage.user_lat, sessionStorage.user_lng, exchanges);
         drawMap(sessionStorage.location, sessionStorage.user_lat, sessionStorage.user_lng, exchanges);
         clearExchanges();
 
@@ -58,10 +59,10 @@ $(document).ready(function() {
         
         exchange_el.find('.distance').html(String(exchange.distance));
         exchange_el.find('.name').html(exchange.name);
-        exchange_el.find('.quote').html(exchange.pay_amount);
+        exchange_el.find('.quote').html(exchange.edited_quote);
         if (exchange.quote > 0) {
             exchange_el.find('.comparison').css('display', 'block');
-            exchange_el.find('.comparison-amount').html('€9.99');
+            exchange_el.find('[data-field=gain_amount]').html(exchange.gain_amount);
         }
         exchange_el.find('.address').html(exchange.address);
         exchange_el.find('.open_today').html(exchange.open_today);
