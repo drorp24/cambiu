@@ -86,8 +86,7 @@ $(document).ready(function() {
     // If not in form then update form
     
 
-    // Populate location and form decoding fields first
-    getLocation();
+     if (!sessionStorage.location) getLocation();
     
   // Google maps invoked from client so needs to read url params
     function getParameterByName(name) {
