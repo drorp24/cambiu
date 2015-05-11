@@ -58,6 +58,8 @@ $(document).ready(function() {
     sessionStorage.buy_currency = sessionStorage.buy_currency || 'EUR';
     sessionStorage.sort         = sessionStorage.sort || 'quote';
 
+    if (sessionStorage.location === "null") {
+        if (sessionStorage.user_location) {
             sessionStorage.location = sessionStorage.user_location;
             sessionStorage.location_short = "Nearby"
         } else {
