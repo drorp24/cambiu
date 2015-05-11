@@ -11,9 +11,22 @@ class Order < ActiveRecord::Base
   def attributes
     super.merge(expiry_s: self.expiry_s, voucher: self.voucher)
   end
-
+  
   before_create do
     self.expiry = 2.hours.from_now
+  end
+
+
+  def buy=(edited)
+    money             = Monetize.parse(edited)
+    self.buy_cents    = money.fractional
+    self.buy_currency = money.currency.iso_code
+  end
+
+  def pay=(edited)
+    money             = Monetize.parse(edited)
+    self.pay_cents    = money.fractional
+    self.pay_currency = money.currency.iso_code
   end
 
   def expiry_s
