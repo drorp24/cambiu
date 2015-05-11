@@ -390,6 +390,24 @@ $(document).ready(function() {
 
     $('#search_button').click(function() {
         if (mobile) {$('#exchange_params_change').collapse('toggle');}
+
+        // TODO: Merge with pages (currently not possible due to the return false). This form should be deleted
+        var $this = $(this);
+        if ($this.data('href')) {
+
+            var old_page = $('.active.page');
+            var new_page = $($this.data('href'));
+
+/*
+            if ($this.data('reload')) {         // TODO: Check if reload is still needed
+                location.reload()
+            } else {
+*/
+                pageSwitch(old_page, new_page);
+ //           }
+        }
+
+
         $('#new_search').submit();
         return false;
     });

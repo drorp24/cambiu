@@ -24,6 +24,7 @@ var set;
 var order = {};
 var model_set;
 var model_populate;
+var pageSwitch;
 
 setPage = function(to) {
     var to_class = to.replace('#', '');
@@ -37,6 +38,10 @@ changePage = function(from, to) {
 
     var from_class = from.replace('#', '');
     var to_class = to.replace('#', '');
+
+    if (!sessionStorage.location) {
+        set_default_location()
+    }
 
     $(from).hide();
     $(to).show();

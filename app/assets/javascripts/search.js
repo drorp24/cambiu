@@ -27,7 +27,7 @@
                 }
             }
         })
-    }
+    };
 
     function bind(field, event) {
         var elements = '[data-field=' + field + ']';
@@ -41,6 +41,11 @@
             set(field, value, changed_el);
             if (field=='location') set('location_short', value, changed_el);
         })
+    }
+
+    function set_default_location(excluded) {
+        set('location', sessionStorage.user_location ? sessionStorage.user_location : 'London, UK', excluded);
+        set('location_short', sessionStorage.user_location ? "Nearby" : 'London', excluded);
     }
 
 
@@ -58,15 +63,11 @@ $(document).ready(function() {
     sessionStorage.buy_currency = sessionStorage.buy_currency || 'EUR';
     sessionStorage.sort         = sessionStorage.sort || 'quote';
 
-    if (sessionStorage.location === "null") {
-        if (sessionStorage.user_location) {
-            sessionStorage.location = sessionStorage.user_location;
-            sessionStorage.location_short = "Nearby"
-        } else {
-            sessionStorage.location = "London, UK";
-            sessionStorage.location_short = "London"
-        }
+    if (!sessionStorage.location) {
+        set_default_location()
     }
+
+    sessionStorage.email = '';
 
     // Restore session state
 
@@ -161,7 +162,10 @@ $(document).ready(function() {
     function searchbox_addListener(searchBox) {
         google.maps.event.addListener(searchBox, 'places_changed', function () {
             var places = searchBox.getPlaces();
-            if (places.length == 0) {return;}
+            if (places.length == 0) {
+                set_default_location();
+                return
+            }
             place = places[0];
             set('location', place.formatted_address);
             set('location_short', place.name);
@@ -183,11 +187,11 @@ $(document).ready(function() {
 
     // Complementing searchbox_addListener with an event it won't detece - removing a location
     $('[data-field=location]').change(function() {
-        if (!$(this).val()) {
-            set('location', sessionStorage.user_location ? sessionStorage.user_location : 'London, UK');
-            set('location_short', sessionStorage.user_location ? "Nearby" : 'London');
-        }
-    })
+         var $this = $(this);
+         if (!$this.val()) {
+            set_default_location($this)
+         }
+    });
 
     $('input[data-field=location]').each(function() {
         input = $(this).get(0);
@@ -198,8 +202,10 @@ $(document).ready(function() {
     });
 
     $('input[data-field=location]').click(function() {
-        $(this).val('');
-    })
+        var $this = $(this);
+        $this.val('');
+        set_default_location($this)
+    });
 
 
 

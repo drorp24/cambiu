@@ -20,7 +20,7 @@ $(document).ready(function() {
 
     // consider css transition (take it from collapse css transition)
     // also change hash and push to history
-    function pageSwitch(old_page, new_page) {
+    pageSwitch = function(old_page, new_page) {
         old_page.removeClass('active');
         old_page.hide();
         new_page.addClass('active');
@@ -54,7 +54,7 @@ console.log('this id: ' + $this.attr('id'))
             clearExchangeContext();
         }
 
-        if ($this.data('reload')) {         // TODO: Check if reload is still needed
+        if ($this.data('reload')) {         // TODO: Why is reload  needed
             location.reload()
         } else {
             pageSwitch(old_page, new_page);
