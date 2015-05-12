@@ -96,5 +96,15 @@ $(document).ready(function() {
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
+    //UI
+
+    $('.getstarted_button').click(function(){
+        $('#homepage input[data-field=buy_amount]').focus()
+    })
+
+    $('.page-title.navbar-brand').click(function() {
+        location.reload()
+    })
+
 
 });

@@ -28,13 +28,13 @@
       <div class="col-xs-12 col-md-3">
         <div class="social_networks">
             <%= link_to "#" do  %>
-                <%= image_tag "facebook_icon.png" %> Facebook
+                <%= image_tag "facebook_icon.png", data: {clicked: 'facebook icon'} %> <span data-clicked="facebook link">Facebook</span>
             <% end %>
             <%= link_to "#" do  %>
-                <%= image_tag "twitter_icon.png" %> Twitter
+                <%= image_tag "twitter_icon.png", data: {clicked: 'twitter icon'} %> <span data-clicked="twitter link">Twitter</span>
             <% end %>
             <%= link_to "#" do  %>
-              <%= image_tag "googleplus_icon.png" %> Google+
+              <%= image_tag "googleplus_icon.png", data: {clicked: 'googleplus icon'} %> <span data-clicked="googleplus link">Google+</span>
             <% end %>
         </div>
       </div>

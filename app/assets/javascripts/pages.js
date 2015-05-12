@@ -9,11 +9,12 @@ $(document).ready(function() {
         var value = exchange[field];
         var lat   = el.data('lat');
         var lng   = el.data('lng');
-    console.log('populate ' + field + ' with ' + value)
+    console.log('populate ' + field + ' with ' + value);
 
-        if (el.data('field'))   el.html(value);
-        if (el.data('lat')) {console.log(el.attr('data-lat'));    el.attr('data-lat', exchange.latitude);}
-        if (el.data('lng'))     el.attr('data-lng', exchange.longitude);
+        if (el.data('field'))           el.html(value);
+        if (el.data('lat'))             el.attr('data-lat', exchange.latitude);
+        if (el.data('lng'))             el.attr('data-lng', exchange.longitude);
+        if (el.data('exchange-name'))   el.attr('data-exchange-name', exchange.name);
     }
 
     function clearExchangeContext() {

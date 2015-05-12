@@ -56,7 +56,7 @@ $(document).ready(function() {
         exchange_sum.attr('href', id);
         exchange_det.attr('id', id);
         exchange_det.attr('data-id', exchange.id);
-        
+
         exchange_el.find('.distance').html(String(exchange.distance));
         exchange_el.find('.name').html(exchange.name);
         exchange_el.find('.quote').html(exchange.edited_quote);
@@ -74,6 +74,7 @@ $(document).ready(function() {
 
 
         exchange_sum.find('[data-exchangeid]').attr('data-exchangeid', exchange.id);
+        exchange_sum.find('[data-exchange-name]').attr('data-exchange-name', exchange.name);
 
 
         exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
