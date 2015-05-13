@@ -100,7 +100,15 @@ $(document).ready(function() {
 
     $('.getstarted_button').click(function(){
         $('#homepage input[data-field=buy_amount]').focus()
-    })
+    });
+
+    $('.exchanges_search_search_title').click(function(){
+        if (sessionStorage.pay_amount != "null") {
+            $('#search_form input[data-field=pay_amount]').focus()
+        } else {
+            $('#search_form input[data-field=buy_amount]').focus()
+        }
+    });
 
     $('.page-title.navbar-brand').click(function() {
         location.reload()

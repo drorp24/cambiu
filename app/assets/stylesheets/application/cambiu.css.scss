@@ -276,7 +276,7 @@ body#cambiu {
 
       .middle-parent {
         @media (min-width: $screen-sm-min) {
-          @include middle-parent(160px, 65px);
+          @include middle-parent(120px, 65px);
         }
         @media (max-width: $screen-xs-max) {
           @include middle-parent(100px, 65px);
