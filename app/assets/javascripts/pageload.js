@@ -99,6 +99,11 @@ $(document).ready(function() {
     //UI
 
     $('.getstarted_button').click(function(){
+        if (sessionStorage.pay_amount != "null") {
+            $('#homepage input[data-field=pay_amount]').focus()
+        } else {
+            $('#homepage input[data-field=buy_amount]').focus()
+        }
         $('#homepage input[data-field=buy_amount]').focus()
     });
 
