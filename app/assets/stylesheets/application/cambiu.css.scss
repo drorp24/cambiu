@@ -373,6 +373,11 @@ body#cambiu {
     border-top: 2px solid $darkgreen;
     p {
       margin-bottom: 0;
+      @media (max-width: $screen-xs-max){
+        line-height: 1.4em;
+        font-size: 0.8em;
+        margin-top: 0.8em;
+      }
     }
   }
 
