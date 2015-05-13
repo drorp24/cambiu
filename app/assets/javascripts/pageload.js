@@ -99,13 +99,12 @@ $(document).ready(function() {
     //UI
 
     $('.getstarted_button').click(function(){
-        if (sessionStorage.pay_amount != "null") {
-            $('#homepage input[data-field=pay_amount]').focus()
+        if (sessionStorage.pay_amount != "null" ||sessionStorage.buy_amount != "null" ) {
+            $('#new_search').submit();
         } else {
             $('#homepage input[data-field=buy_amount]').focus()
         }
-        $('#homepage input[data-field=buy_amount]').focus()
-    });
+     });
 
     $('.exchanges_search_search_title').click(function(){
         if (sessionStorage.pay_amount != "null") {
