@@ -26,6 +26,7 @@ var model_set;
 var model_populate;
 var pageSwitch;
 
+/*
 setPage = function(to) {
     var to_class = to.replace('#', '');
 
@@ -33,26 +34,40 @@ setPage = function(to) {
     $('nav.navbar').addClass(to_class);
     $('body').addClass(to_class);
  };
+*/
 
-changePage = function(from, to) {
+    setPage = function(new_page, push) {
 
-    var from_class = from.replace('#', '');
-    var to_class = to.replace('#', '');
+        if (!sessionStorage.location) {     // hack
+            set_default_location()
+        }
 
-    if (!sessionStorage.location) {
-        set_default_location()
-    }
+        if (typeof push === 'undefined') push = true;
 
-    $(from).hide();
-    $(to).show();
-    $('nav.navbar').removeClass(from_class);
-    $('nav.navbar').addClass(to_class);
-    $('body').removeClass(from_class);
-    $('body').addClass(to_class);
-    window.location.hash = to;
-    // push to html5 history;
- };
+        var old_page        = $('.mainpage.active').attr('id');
+        var old_page_id     = '#' + old_page;
+        var old_page_el     = $(old_page_id);
+        var new_page_id     = '#' + new_page;
+        var new_page_el     = $(new_page_id);
 
+        $('body').removeClass(old_page);
+        $('body').addClass(new_page);
+        $('nav.navbar').removeClass(old_page);
+        $('nav.navbar').addClass(new_page);
+
+        old_page_el.removeClass('active');
+        new_page_el.addClass('active');
+        old_page_el.hide();
+        new_page_el.show();
+
+        if (push) history.pushState(null, null, new_page);
+     };
+
+    window.addEventListener("popstate", function(e) {
+         setPage(location.pathname.replace('/', ''), false)
+    });
+
+/*
 var display = function(term) {
     switch (term) {
         case 'quote':
@@ -62,20 +77,17 @@ var display = function(term) {
     }
 };        
 
+*/
 
 $(document).ready(function() {
     
     console.log('pageload');
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+    history.pushState(null, null, 'homepage')
 
     homepage = $('body').hasClass('homepage');
 
-    if(window.location.hash) {
-        changePage('#homepage', window.location.hash);
-    } else {
-        setPage('#homepage')
-    }
-
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
 
  //    mixpanel.track("Page view");
     
@@ -88,6 +100,7 @@ $(document).ready(function() {
 
      if (!sessionStorage.location) getLocation();
     
+/*
   // Google maps invoked from client so needs to read url params
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -95,6 +108,7 @@ $(document).ready(function() {
             results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
+*/
 
     //UI
 
@@ -114,7 +128,7 @@ $(document).ready(function() {
         }
     });
 
-    $('.page-title.navbar-brand').click(function() {
+    $('.page-title.navbar-brand').click(function() {  // hach
         location.reload()
     })
 

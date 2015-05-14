@@ -364,7 +364,7 @@ $(document).ready(function() {
         console.log('beforeSubmit');
         
         startLoader();
-        changePage('#homepage', '#exchanges');
+        setPage('exchanges');
 
     };
  
@@ -379,7 +379,7 @@ $(document).ready(function() {
     // only after this point can #new_search submits be triggered
     // ajax search if #exchanges pages is refreshed or search_button is clicked
 
-    if(window.location.hash) {
+    if(window.location.pathname == '/exchanges') {
          $('#new_search').submit();
     }
 
