@@ -364,7 +364,7 @@ $(document).ready(function() {
         console.log('beforeSubmit');
         
         startLoader();
-        setPage('exchanges');
+        setPage('exchanges', window.location.pathname != '/exchanges');
 
     };
  

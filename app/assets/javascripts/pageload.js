@@ -36,7 +36,17 @@ setPage = function(to) {
  };
 */
 
-    setPage = function(new_page, push) {
+var display = function(term) {
+    switch (term) {
+        case 'quote':
+            return 'best prices first:';
+        case 'distance':
+            return 'nearest first:';
+    }
+};
+
+
+setPage = function(new_page, push) {
 
         if (!sessionStorage.location) {     // hack
             set_default_location()
@@ -83,7 +93,8 @@ $(document).ready(function() {
     
     console.log('pageload');
 
-    history.pushState(null, null, 'homepage')
+    var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname;
+    history.replaceState(null, null,   reload_path);
 
     homepage = $('body').hasClass('homepage');
 
