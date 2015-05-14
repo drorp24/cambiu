@@ -1,6 +1,6 @@
-<%= simple_form_for Search.new, url: record_searches_path, validate: false, remote: true, html: { id: 'email_form', data: {type: :json } } do |f| %>
+<%= simple_form_for Search.new, url: record_searches_path, remote: true, html:  {id: 'email_form', novalidate: true, data: {type: :json } } do |f| %>
 
-    <%= f.input :email, placeholder: "  Enter your email to guarantee this deal", required: false, label: false, type: "email" %>
+    <%= f.input_field :email, required: false, data: {field: 'email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
 
       <div class="hidden_fields">
         <%= f.input_field :pay_amount, 		as: :hidden, data: {field: 'pay_amount'} %>
@@ -17,8 +17,10 @@
         <%= f.input_field :page, 			as: :hidden, data: {field: 'page'} %>
         <%= f.input_field :rest, 			as: :hidden, data: {field: 'rest'} %>
         <%= f.input_field :location_short, 	as: :hidden, data: {field: 'location_short'} %>
+        <%= f.input_field :exchange_id, 	as: :hidden, data: {field: 'exchange_id'} %>
       </div>
 
-    <%= f.button :submit, 'Guarantee this deal!', data: {href: "#exchange_voucher"}, class: "middle-child email_submit btn btn-mini btn-default rounded" %>
+    <%= f.button :submit, 'Guarantee this deal!',
+            data: {href: '#exchange_voucher', current_exchange: 'true', exchangeid: '', event: 'Leaving email'}, class: "middle-child email_submit btn btn-mini btn-default rounded" %>
 
 <% end %>

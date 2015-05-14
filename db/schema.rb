@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505195933) do
+ActiveRecord::Schema.define(version: 20150509143508) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,6 +119,23 @@ ActiveRecord::Schema.define(version: 20150505195933) do
   add_index "exchanges", ["longitude"], :name => "index_exchanges_on_longitude"
   add_index "exchanges", ["name", "address"], :name => "index_exchanges_on_name_and_address"
 
+  create_table "orders", force: true do |t|
+    t.integer  "exchange_id"
+    t.integer  "user_id"
+    t.string   "email"
+    t.datetime "expiry"
+    t.integer  "status",       default: 0
+    t.integer  "pay_cents"
+    t.string   "pay_currency"
+    t.integer  "buy_cents"
+    t.string   "buy_currency"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["exchange_id"], :name => "index_orders_on_exchange_id"
+  add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
+
   create_table "rates", force: true do |t|
     t.integer  "exchange_id"
     t.integer  "buy_cents"
@@ -166,7 +183,10 @@ ActiveRecord::Schema.define(version: 20150505195933) do
     t.string   "location_short"
     t.string   "email"
     t.string   "host"
+    t.integer  "exchange_id"
   end
+
+  add_index "searches", ["exchange_id"], :name => "index_searches_on_exchange_id"
 
   create_table "sources", force: true do |t|
     t.text     "url"

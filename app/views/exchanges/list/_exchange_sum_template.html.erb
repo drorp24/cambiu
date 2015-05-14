@@ -1,4 +1,4 @@
-<div class="middle-parent col-md-6 col-xs-6">
+<div class="middle-parent col-md-6 col-xs-5">
     <div class="middle-child">
         <div class="name"></div>
         <div id="distance">
@@ -12,11 +12,13 @@
 		<div class="comparison" style="display: none;">
 			<span class="comparison-d desktop_only">Your gain: </span>
 			<span class="comparison-m mobile_only">+ </span>
-			<span class="comparison-amount"></span>
+			<span data-field="gain_amount" class="comparison-amount"></span>
 		</div>			
 	</div>
 </div>
 <div class="middle-parent col-md-2 col-xs-2 getit_parent">
-	<div class="getit middle-child"><button id="getit_button" data-href="#exchange_summary" class="btn btn-mini btn-default">Get it</button></div>
+	<div class="getit middle-child">
+        <%= render partial: 'order_form', locals: {status: 'produced'} %>
+    </div>
 	<div class="close middle-child" style="display: none;"><i class="fa fa-times"></i></div>
 </div>

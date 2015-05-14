@@ -15,13 +15,13 @@
             <p class="testimonial">
             	<% case number %>
             	<% when '1' %>
-            	"I even don't need to leave home to compare prices.  With cambiu, it's really simple to exchange currency at a time and place convenient for me. It's saved me so much time and the best thing is, I can even use their service on my smartphone."
+            	"It's easy to use, location based and offers great rates. What's not to like ?!"
             	<% when '2' %>
-            	"For so long, I've changed money using the place right by my office, but  I had never even thought that I could get a better price by walking just two minutes further down the road! cambiu is simply genius: why didn't anyone think of it before? "
+            	"The service is so simple and intuitive , I use it on my smartphone."
             	<% when '3' %>
-            	"Before I fly abroad, I always change money with cambiu. Their service is simple, reliable, convenient and most importantly, it saves me money. I'd recommended it to all my friends!"
+            	"So cool! Why didn't anyone think of this before?"
             	<% when '4' %>
-            	"The smartness of the platform is that it allows our company a simple way to get multiple quotes on each deal."
+            	"It's a fantastic service and the best thing is- it saves me money "
 				<% end %>
 			</p>
            </div>
@@ -34,7 +34,18 @@
     </div>
     <div class="row">
       <div class="col-md-offset-4 col-ms-6 col-xs-12">
-        <p class="credit">David Kosky - Asset Manager London & Capital</p>
+        <p class="credit">
+          <% case number %>
+          <% when '1' %>
+              William Bower . International Trade Administration , London
+          <% when '2' %>
+              Lisa Shelford , Fashion entrepreneur and mother of 2 , London
+          <% when '3' %>
+              Kevin Tailor , Student , London
+          <% when '4' %>
+              Oliver Nelson , Adman , London
+        <% end %>
+        </p>
       </div>
     </div>
 <% end %>

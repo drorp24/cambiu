@@ -6,14 +6,15 @@
 
 //= require jquery
 //= require autonumeric
+//= require models
 //= require findlocation
 //= require pageload
+//= require jquery.form
 //= require search
 //= require exchanges
 //= require pages
 
 //= require jquery_ujs
-//= require jquery.form
 //= require bootstrap/transition
 //= require bootstrap/collapse
 //= require bootstrap/carousel

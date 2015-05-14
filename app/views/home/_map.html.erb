@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" data-clicked="map">
     <div class="map_heading text-center">
       <p>Currently connected <strong>537 exchanges</strong> and counting</p>
     </div>
@@ -6,4 +6,4 @@
       <%= image_tag 'Map.gif' %>
     </div>
 </div>
-<%= render 'getstarted' %>
+<%= render partial: 'getstarted', locals: {seq: 2} %>

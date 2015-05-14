@@ -157,6 +157,9 @@ body#cambiu {
   a:not(.carousel-control) {
     color: $lightgrey;
   }
+  [data-href] {
+    cursor: pointer;
+  }
   .list-group-item, .well {
     border-radius: 0;
   }
@@ -273,7 +276,7 @@ body#cambiu {
 
       .middle-parent {
         @media (min-width: $screen-sm-min) {
-          @include middle-parent(160px, 65px);
+          @include middle-parent(120px, 65px);
         }
         @media (max-width: $screen-xs-max) {
           @include middle-parent(100px, 65px);
@@ -433,6 +436,9 @@ body#cambiu {
               font-weight: 500;
             }
           }
+          #comma {
+            margin-left: -0.2em;
+          }
         }
         #exchanges_search_search {
           padding-right: 30px;
@@ -536,6 +542,9 @@ body#cambiu {
         font-weight: 400;
         color: #333;
       }
+      .list-group-item .name {
+        padding-top: 10px;
+      }
       .units-d {
         font-size: 0.9em;
         font-weight: 100;
@@ -558,6 +567,7 @@ body#cambiu {
         font-weight: 600;
         line-height: 25px;
         color: #111;
+          padding-top: 10px;
       }
       .comparison {
         text-align: center;
@@ -589,7 +599,7 @@ body#cambiu {
       }
       */
     }
-    .getit button.btn.btn-default#getit_button {
+    .getit .btn.btn-default#getit_button {
       border-color: $lightgreen;
       color: $lightgreen;
       text-transform: uppercase;
@@ -599,9 +609,14 @@ body#cambiu {
         @include middle-parent(70px, 0)
       }
     }
-    #exchange_summary {
+    .page {
+      background-color: #fff;
       box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
       min-height: 100vh;
+//      margin-right: -15px;
+    }
+    #exchange_summary {
+       min-height: 100vh;
       background-color: #fff;
       .exchange_summary_title {
         display: none;
@@ -622,6 +637,10 @@ body#cambiu {
         font-size: 1.2em;
         font-weight: 200;
         color: #777;
+        cursor: pointer;
+        &:hover {
+          color: $lightgreen;
+        }
       }
       .exchange_summary_bg img {
         width: 100%;
@@ -641,13 +660,16 @@ body#cambiu {
           }
         }
          .es_icon {
-          font-size: 3em;
+          font-size: 2.5em;
           text-align: center;
           margin-top: 15px;
         }
         .es_distance {
-          font-size: 0.9em;
+          font-size: 0.7em;
           text-align: center;
+          &::after {
+            content: "m";
+          }
         }
         .es_name {
           @media (max-width: $screen-xs-max) {
@@ -690,8 +712,14 @@ body#cambiu {
             font-size: 1.1em;
           }
         }
+        .you_chose {
+          font-weight: 300;
+        }
         .sum {
-          float: right;
+          text-align: right;
+          @media (max-width: $screen-xs-max) {
+            font-weight: 900;
+          }
         }
         .pay {
           color: #333;
@@ -703,44 +731,52 @@ body#cambiu {
             font-size: 1.2em;
           }
         }
-        .buy_currency {
+        .buy_amount {
           @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
+            font-size: 1em;
           }
           @media (min-width: $screen-sm-min) {
+            font-size: 0.9em;
+          }
+        }
+        .buy_currency {
+          @media (max-width: $screen-xs-max) {
             font-size: 1em;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 0.9em;
           }
         }
         .pay_amount {
           @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
+            font-size: 1em;
           }
           @media (min-width: $screen-sm-min) {
-            font-size: 1em;
+            font-size: 0.9em;
           }
         }
         .pay_currency {
           @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
+            font-size: 1em;
           }
           @media (min-width: $screen-sm-min) {
-            font-size: 1em;
+            font-size: 0.9em;
           }
         }
         .gain_amount {
           @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
+            font-size: 1em;
           }
           @media (min-width: $screen-sm-min) {
-            font-size: 1em;
+            font-size: 0.9em;
           }
        }
         .gain_currency {
           @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
+            font-size: 1em;
           }
           @media (min-width: $screen-sm-min) {
-            font-size: 1em;
+            font-size: 0.9em;
           }
         }
       }
@@ -751,9 +787,9 @@ body#cambiu {
             display: none;
           }
           */
-          @media (min-width: $screen-sm-min) {
+ //         @media (min-width: $screen-sm-min) {
             padding: 5%;
-          }
+   //       }
           @media (max-width: $screen-xs-max) {
             input {
               width: 90%;
@@ -792,6 +828,169 @@ body#cambiu {
           @media (min-width: $screen-sm-min) {
             margin-top: -30px;
           }
+        }
+      }
+    }
+    #exchange_voucher {
+      i {
+        margin-right: 5px;
+      }
+      padding-right: 15px;
+      padding-left: 15px;
+      .row {
+        margin-left: 0;
+        margin-right: 0;
+      }
+       .exchange_voucher_bg img {
+        position: absolute;
+        top: 20px;
+        width: 100%;
+        max-height: 500px;
+        left: 0;
+        z-index: 0;
+         filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12,Color='#444')";
+         filter: url(#drop-shadow);
+         -webkit-filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));
+         filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));     }
+      .voucher_heading {
+        padding-top: 10vh;
+        font-weight: 500;
+        border-bottom: 1px solid $lightgrey;
+        color: #333;
+        .printer_icon {
+          color: #888;
+          font-size: 2em;
+          margin-top: 0.2em;
+        }
+      }
+      .voucher_title {
+        @media (min-width: $screen-sm-min) {
+          font-size: 1.5em;
+        }
+        @media (max-width: $screen-xs-max) {
+          font-size: 1.1em;
+        }
+         font-weight: 700;
+        text-transform: uppercase;
+      }
+      .voucher_validity {
+        @media (min-width: $screen-sm-min) {
+          font-size: 1em;
+        }
+        @media (max-width: $screen-xs-max) {
+          font-size: 0.9em;
+        }
+        font-weight: 300;
+        margin-bottom: 20px;
+      }
+      .exchange_voucher_banner {
+        margin-top: 15px;
+        margin-bottom: 20px;
+        .es_name {
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.3em;
+          }
+          @media (max-width: $screen-xs-max) {
+            font-size: 1.1em;
+          }
+          color: #333;
+          font-weight: 500;
+          margin-bottom: 0px;
+        }
+        .es_address {
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.2em;
+          }
+          @media (max-width: $screen-xs-max) {
+            font-size: 1em;
+          }
+          font-weight: 300;
+          color: #555;
+        }
+      }
+      .exchange_voucher_directions {
+        color: #333;
+        @media (min-width: $screen-sm-min) {
+          font-size: 1.1em;
+        }
+        @media (max-width: $screen-xs-max) {
+          font-size: 1em;
+        }
+        font-weight: 400;
+        @media (min-width: $screen-sm-min) {
+          margin-bottom: 30px;
+        }
+        @media (max-width: $screen-xs-max) {
+          margin-bottom: 20px;
+        }
+        a.directions {
+          color: $lightgreen !important;
+        }
+      }
+      .exchange_voucher_order {
+        .order {
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.3em;
+          }
+          @media (max-width: $screen-xs-max) {
+            font-size: 0.9em;
+            font-weight: 500;
+          }
+            color: #333;
+          text-align: center;
+          font-weight: 300;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          box-shadow: inset 0 1px 0 rgba(0,0,0,.2), 0 0 4px rgba(0,0,0,0.1);
+          .exchange_icon i{
+            margin-right: 10px;
+            margin-left: 10px;
+          }
+        }
+        .subject_to_change {
+          font-size: 0.8em;
+          margin-top: 10px;
+          text-align: center;
+        }
+      }
+      .exchange_voucher_identification {
+        margin-top: 20px;
+        .identification {
+          border-top: 1px solid rgba(0,0,0,.1);
+          border-bottom: 1px solid rgba(0,0,0,.1);
+          padding-top: 10px;
+          padding-bottom: 10px;
+          .identification_icon {
+            @include middle-parent(30px, 30px);
+            padding-right: 10px;
+            padding-left: 10px;
+            img {
+              width: 100%;
+            }
+          }
+        }
+         .identification_note {
+          font-size: 0.8em;
+           text-align: center;
+        }
+      }
+      .confirmation_form {
+        .confirmation_button {
+          width: 100%;
+          background-color: $lightgreen;
+          border-top: 2px solid $darkgreen;
+          border-radius: 4px;
+          text-transform: uppercase;
+          @media (min-width: $screen-sm-min) {
+            font-size: 1.1em;
+          }
+          @media (max-width: $screen-xs-max) {
+            font-size: 1em;
+          }
+          color: white;
+          font-weight: 400;
+          height: 50px;
+          margin-top: 10px;
         }
       }
     }
@@ -873,7 +1072,7 @@ body#cambiu {
         font-size: 1.2em;
       }
       #exchanges_items {        
-        box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+//        box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
       }
 
 // OLD SEARCH PAGE
@@ -993,16 +1192,17 @@ body#cambiu {
       #map_container {
         z-index: -2;
         position: fixed;
-        margin-left: 31%;
+        margin-left: 30.2%;
         width: 70%;
         height: 100vh;
         top: 125px;  /// ?????????
+        padding-right: 0;
         #map-canvas {
           height: 100vh;
         }
       }
     }
-  
+
   }
 }
 
