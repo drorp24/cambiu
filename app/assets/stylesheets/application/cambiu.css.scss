@@ -138,9 +138,14 @@ $inverse-color: #ffffff;
 @mixin background-img($img) {
     background-image: image-url($img);
     background-repeat:  no-repeat;
-    background-position-x:  center;
-    background-position-y:  center;
-    background-size: cover;  
+//    background-position-x:  center;
+    @media (max-width: $screen-xs-max) {
+      background-size: 100%;
+    }
+
+    //    background-position-y:  center;
+//    background-size: cover;
+
 }
 
 
@@ -150,7 +155,9 @@ $inverse-color: #ffffff;
 //
 body#cambiu {
     
+  /*
   padding-top: 50px;
+  */
   font-family: $font-family;
   color: $color;
   .btn {border-radius: $border-radius;}
@@ -166,7 +173,8 @@ body#cambiu {
   .form-control {border-radius: $border-radius;}
 
   .navbar {
-    background-color: #fff;
+    background-color: transparent;
+    border: none;
     margin-bottom: 0;
       .navbar-brand {
         margin-top: -10px;
@@ -179,7 +187,9 @@ body#cambiu {
   }
   .section_anchor {
     display: block;
+    /*
     margin-bottom: 100px;
+    */
   }
   #new_search {
     input, select {
@@ -231,8 +241,18 @@ body#cambiu {
   }
 
   .how_does_it_work {
+    margin-top: -25px;
     .row {
       margin-top: $std-margin;
+    }
+    .hdiw_margin {
+      margin-top: -10px;
+    }
+    .how_does_it_work_title {
+      font-weight: 500;
+      color: #333;
+      font-size: 1.5em;
+      margin-bottom: -5px;
     }
     h2 {
       color: $darkgrey;
@@ -359,6 +379,7 @@ body#cambiu {
   }
   .map_heading {
     min-height: 70px;
+    margin-bottom: 100px;
     @media (max-width: $screen-xs-max){
       line-height: 35px;
     }
@@ -1016,18 +1037,21 @@ body#cambiu {
 
 
   body#cambiu {
+    @include background-img('header_background.jpg');
 
     .mobile_only {
       display: none !important;
     }
     &.home  {
       .background {
-        @include background-img('header_background.jpg');      
-        height: 75vh;
+        /*
+        @include background-img('header_background.jpg');
+        */
+        height: 62vh;
       }
       .above_fold {
         .main {
-          margin-top: 15vh;
+          margin-top: 10vh;
           margin-bottom: 10vh;
           .marketing {
             .pre {
