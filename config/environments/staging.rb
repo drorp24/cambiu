@@ -20,9 +20,6 @@ Rails.application.configure do
   # For large-scale production use, consider using a caching reverse proxy like nginx, varnish or squid.
   # config.action_dispatch.rack_cache = true
 
-  # Changed to true for heroku: rails now uses CloudFonrt cdn 
-  config.serve_static_assets = true
-
   # Compress JavaScripts and CSS.
   config.assets.compress = true
   config.assets.js_compressor = :uglifier
@@ -66,10 +63,12 @@ Rails.application.configure do
                      :socket_failure_delay => 0.2
                     }
 
+  # Changed to true for heroku: rails now uses CloudFonrt cdn
+  config.serve_static_assets = false
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"
   # config.action_controller.asset_host = "http://d368eop2iyjvb5.cloudfront.net"
-  config.action_controller.asset_host = ENV["CLOUDFRONT_DIST"]
+#  config.action_controller.asset_host = ENV["CLOUDFRONT_DIST"]
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
