@@ -46,13 +46,12 @@ var display = function(term) {
 };
 
 
-setPage = function(new_page, push) {
+/*
+setPage = function(new_page) {
 
         if (!sessionStorage.location) {     // hack
             set_default_location()
         }
-
-        if (typeof push === 'undefined') push = true;
 
         var old_page        = $('.mainpage.active').attr('id');
         var old_page_id     = '#' + old_page;
@@ -70,12 +69,21 @@ setPage = function(new_page, push) {
         old_page_el.hide();
         new_page_el.show();
 
-        if (push) history.pushState(null, null, new_page);
+        console.log('at setPage. history.state: ' + history.state);
+        if (history.state != new_page) {
+            console.log('state was not set so setting it now')
+            history.pushState(new_page, null, new_page);
+        } else {
+            console.log('state was set already. Not pushing anything')
+        }
      };
+*/
 
+/*
     window.addEventListener("popstate", function(e) {
          setPage(location.pathname.replace('/', ''), false)
     });
+*/
 
 /*
 var display = function(term) {

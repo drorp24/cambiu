@@ -5,65 +5,138 @@ $(document).ready(function() {
 
     function populate(el, exchange) {
 
-        var field = el.data('field');
-        var value = exchange[field];
-        var lat   = el.data('lat');
-        var lng   = el.data('lng');
-    console.log('populate ' + field + ' with ' + value);
-
-        if (el.data('field'))           el.html(value);
+        if (el.data('id'))              el.attr('id', exchange.id);
         if (el.data('lat'))             el.attr('data-lat', exchange.latitude);
         if (el.data('lng'))             el.attr('data-lng', exchange.longitude);
         if (el.data('exchange-name'))   el.attr('data-exchange-name', exchange.name);
+
+        if (el.data('field'))           el.html(exchange[el.data('field')]);
+
     }
 
-    function clearExchangeContext() {
-        sessionStorage.exchange_id  = null;
-        sessionStorage.order_id     = null;
-        // TODO: reverse the populate too
+    function unpopulate(el) {
+
+        if (el.data('id'))              el.attr('id', '');
+        if (el.data('lat'))             el.attr('data-lat', '');
+        if (el.data('lng'))             el.attr('data-lng', '');
+        if (el.data('exchange-name'))   el.attr('data-exchange-name', '');
+
+        if (el.data('field'))           el.html('');
+
     }
 
-    // consider css transition (take it from collapse css transition)
-    // also change hash and push to history
-    pageSwitch = function(old_page, new_page) {
-        old_page.removeClass('active');
-        old_page.hide();
-        new_page.addClass('active');
-        new_page.show();
-    }
+    setPage = function(url) {
 
-    $('#exchanges').on('click', '[data-href]', (function() {
+        var url_a       = url.split('/');
+        var page        = url_a[0];
+        var id          = url_a[1];
+        var pane        = url_a[2];
+        var exchangeid  = id;
 
-        var $this = $(this);
-        var old_page = $('.active.page');
-        var new_page = $($this.data('href'));
+        // update session
+        sessionStorage.exchangeid   = exchangeid    ? exchangeid    : null;
+        sessionStorage.page         = page  ? page  : null;
+        sessionStorage.pane         = pane  ? pane  : null;
+        sessionStorage.id           = id    ? id    : null;
+        console.log(page, pane, id, exchangeid);
 
-        if ($this.attr('data-exchangeid')) {
-console.log('this id: ' + $this.attr('id'))
-            var exchange_id = $this.data('exchangeid');
-            var results = $.grep(exchanges, function(e){ return e.id == exchange_id; });
-            var exchange = results[0];
 
-  console.log('new_page id: ' + new_page.attr('id'))
-  console.log('exchange_id: ' + exchange_id)
-            new_page.find('[data-model=exchange]').each(function() {
-                populate($(this), exchange)
-            });
+        // find exchange
+        if (exchangeid) {
 
-            sessionStorage.exchange_id = exchange_id;
-            $('[data-current-exchange]').attr('data-exchangeid', exchange_id);
-            $('[data-field=exchange_id]').val(exchange_id)
-        }
+            //??
+            $('[data-current-exchange]').attr('data-exchangeid', exchangeid);
+            $('[data-field=exchange_id]').val(exchangeid)
 
-        if (new_page.data('search-home')) {
-            clearExchangeContext();
-        }
-
-        if ($this.data('reload')) {         // TODO: Why is reload  needed
-            location.reload()
+            if (exchanges && exchanges.length > 0) {
+                var results = $.grep(exchanges, function(e){ return e.id == exchangeid; });
+                if (result[0]) {
+                    console.log('exchange with that id found in exchanges array');
+                    var exchange = results[0];
+                } else {
+                    console.log('exchange with this id not found in exchanges array');
+                    // bring it from the server
+                }
+            } else {
+                console.log('data-href contains id but exchanges is empty');
+                // bring exchanges from the server
+            }
         } else {
-            pageSwitch(old_page, new_page);
+
+            //??
+            $('[data-current-exchange]').attr('data-exchangeid', '');
+            $('[data-field=exchange_id]').val('')
+
         }
 
-    }))
+
+        // Order is important below this point
+
+        // replace page indication on body and navbar
+        var old_page        = $('.page.active').attr('id');
+        var old_page_id     = '#' + old_page;
+        var old_page_el     = $(old_page_id);
+        var new_page_id     = '#' + page;
+        var new_page_el     = $(new_page_id);
+
+        $('body').removeClass(old_page);
+        $('body').addClass(page);
+        $('nav.navbar').removeClass(old_page);
+        $('nav.navbar').addClass(page);
+
+
+        // activate/hide components
+
+        $('.active').hide();
+        $('.active').removeClass('active');
+        if (page) $('.page[data-page=' + page + ']').addClass('active');
+        if (pane) $('.pane[data-pane=' + pane + ']').addClass('active');
+        $('.active').show();
+
+
+        // populate/empty exchange
+        $('.active').each(function () {
+            $(this).find('[data-model=exchange]').each(function () {
+                if (exchange) {
+                    populate($(this), exchange)
+                } else {
+                    unpopulate($(this))
+                }
+            })
+        });
+
+        history.pushState(url, 'cambiu', url);
+
+
+    };
+
+    $('body').on('click', '[data-href]', (function() {
+
+        var $this =       $(this);
+        var exchangeid =  $this.data('exchangeid');
+        var href =        $this.data('href');
+        var page =        $this.data('href-page');
+        var pane =        $this.data('href-pane');
+        var id =          $this.data('href-id');
+        var url =         (page && pane && id) ? page + '/' + id + '/' + pane : href;
+
+        setPage(url);
+
+    }));
+
+
+
+
+    window.addEventListener("popstate", function(e) {
+
+        console.log('pop. e.state: ' + e.state)
+        setPage(e.state);
+
+    });
+
+
+
+
+
+
 });

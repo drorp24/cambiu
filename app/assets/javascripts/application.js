@@ -8,11 +8,11 @@
 //= require autonumeric
 //= require models
 //= require findlocation
+//= require pages
 //= require pageload
 //= require jquery.form
 //= require search
 //= require exchanges
-//= require pages
 
 //= require jquery_ujs
 //= require bootstrap/transition

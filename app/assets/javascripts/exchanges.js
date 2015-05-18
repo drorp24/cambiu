@@ -74,6 +74,10 @@ $(document).ready(function() {
 
 
         exchange_sum.find('[data-exchangeid]').attr('data-exchangeid', exchange.id);
+        exchange_sum.find('[data-href]').attr('data-href', 'exchanges/summary');
+        exchange_sum.find('[data-href-page]').attr('data-href-page', 'exchanges');
+        exchange_sum.find('[data-href-id]').attr('data-href-id', exchange.id);
+        exchange_sum.find('[data-href-pane]').attr('data-href-pane', 'summary');
         exchange_sum.find('[data-exchange-name]').attr('data-exchange-name', exchange.name);
 
 
@@ -364,7 +368,7 @@ $(document).ready(function() {
         console.log('beforeSubmit');
         
         startLoader();
-        setPage('exchanges', window.location.pathname != '/exchanges');
+        setPage('exchanges');
 
     };
  

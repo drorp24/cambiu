@@ -13,7 +13,7 @@
 
     <% if status == 'produced' %>
         <%= f.button :submit, 'Get it',
-             data: {href: '#exchange_summary', exchange_selection: 'true', exchangeid: '', voucher: 'true', voucher_status: status, model: 'exchange', exchange_name: "filler"},
+             data: {href: '', href_page: '', href_id: '', href_pane: '', exchange_selection: 'true', exchangeid: '', voucher: 'true', voucher_status: status, model: 'exchange', exchange_name: "filler"},
              id: 'getit_button', class: 'btn btn-mini btn-default' %>
     <% elsif status == 'used' %>
         <%= f.button :submit, 'Got the money, thank you!',
