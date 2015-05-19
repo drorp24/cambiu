@@ -5,14 +5,15 @@
 //
 
 //= require jquery
+//= require jquery.form
 //= require autonumeric
+
+//= require pageload
 //= require models
 //= require findlocation
-//= require pages
-//= require pageload
-//= require jquery.form
 //= require search
 //= require exchanges
+//= require pages
 
 //= require jquery_ujs
 //= require bootstrap/transition

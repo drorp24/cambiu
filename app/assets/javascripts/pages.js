@@ -1,6 +1,7 @@
 // Switch to a different pane according to href
 // If href element also includes data-id then populate model data before switching panes
 
+
 $(document).ready(function() {
 
     // TODO: Make it a loop
@@ -54,7 +55,7 @@ $(document).ready(function() {
 
 
         // find exchange
-        if (exchangeid) {
+        if (id) {
 
             //??
             $('[data-current-exchange]').attr('data-exchangeid', exchangeid);
@@ -70,11 +71,24 @@ $(document).ready(function() {
                     // bring it from the server
                 }
             } else {
-                console.log('data-href contains id but exchanges is empty');
-                // bring exchanges from the server
-            }
+                console.log('exchanges is empty. Submiting search');
+                 $('#new_search').submit();
+                $('#new_search').on('ajax:success', function(event, xhr, status, error) {
+                    // insert the failure message inside the "#account_settings" element
+                    alert('ajax:success')
+                });
+                 var results = $.grep(exchanges, function(e){ return e.id == exchangeid; });
+                 if (results[0]) {
+                     console.log('after submiting search: exchange with that id found in exchanges array');
+                     var exchange = results[0];
+                 } else {
+                     console.log('after submitting search: exchange with id of ' + exchangeid + ' was not found in exchanges array');
+                     // bring it from the server
+                 }
+             }
         } else {
 
+            console.log('no id in url');
             //??
             $('[data-current-exchange]').attr('data-exchangeid', '');
             $('[data-field=exchange_id]').val('')
@@ -124,7 +138,7 @@ $(document).ready(function() {
         $('.active').each(function () {
             $(this).find('[data-model=exchange]').each(function () {
                 if (exchange) {
-                    console.log('populating ' + $(this).attr('id'));
+                    console.log('populating ' + $(this).attr('id') + ' with exchange id: ' + exchange.id);
                     populate($(this), exchange)
                 } else {
                     console.log('unpopulating ' + $(this).attr('id'));
@@ -163,7 +177,13 @@ $(document).ready(function() {
 
     });
 
+    var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
+    console.log('at pageload. settingPage to: ' + reload_path);
+    setPage(reload_path);
 
+    if (!sessionStorage.location) getLocation();
+
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
 
 
 

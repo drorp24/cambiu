@@ -99,7 +99,7 @@ $(document).ready(function() {
     });
 */
     // Currencies: initial settings & change events
-    var bind_currency_to_autonumeric = function() {
+    bind_currency_to_autonumeric = function() {
 
         $('[data-autonumeric]').autoNumeric('init');
         console.log('autoNumeric initialized')
@@ -287,6 +287,28 @@ $(document).ready(function() {
             pacContainerInitialized = true;
         }
     });
+
+    //UI
+
+    $('.getstarted_button').click(function(){
+        if (sessionStorage.pay_amount != "null" ||sessionStorage.buy_amount != "null" ) {
+            $('#new_search').submit();
+        } else {
+            $('#homepage input[data-field=buy_amount]').focus()
+        }
+    });
+
+    $('.exchanges_search_search_title').click(function(){
+        if (sessionStorage.pay_amount != "null") {
+            $('#search_form input[data-field=pay_amount]').focus()
+        } else {
+            $('#search_form input[data-field=buy_amount]').focus()
+        }
+    });
+
+    $('.page-title.navbar-brand').click(function() {  // hach
+        location.reload()
+    })
 
 
 

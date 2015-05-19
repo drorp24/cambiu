@@ -25,6 +25,23 @@ var order = {};
 var model_set;
 var model_populate;
 var pageSwitch;
+var beforeSubmit;
+var startLoader;
+var updatePage;
+var display;
+var bind_currency_to_autonumeric;
+
+
+display = function(term) {
+    switch (term) {
+        case 'quote':
+            return 'best prices first:';
+        case 'distance':
+            return 'nearest first:';
+    }
+};
+
+
 
 /*
 setPage = function(to) {
@@ -36,14 +53,6 @@ setPage = function(to) {
  };
 */
 
-var display = function(term) {
-    switch (term) {
-        case 'quote':
-            return 'best prices first:';
-        case 'distance':
-            return 'nearest first:';
-    }
-};
 
 
 /*
@@ -101,15 +110,9 @@ $(document).ready(function() {
     
     console.log('pageload');
 
-    var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
-//    history.replaceState(null, null,   reload_path);
-    console.log('at pageload. settingPage to: ' + reload_path);
-    setPage(reload_path);
-    homepage = $('body').hasClass('homepage');
 
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
 
- //    mixpanel.track("Page view");
+    //    mixpanel.track("Page view");
     
 
     // Parameters & Form
@@ -118,8 +121,7 @@ $(document).ready(function() {
     // If not in form then update form
     
 
-     if (!sessionStorage.location) getLocation();
-    
+
 /*
   // Google maps invoked from client so needs to read url params
     function getParameterByName(name) {
@@ -130,27 +132,6 @@ $(document).ready(function() {
     }
 */
 
-    //UI
-
-    $('.getstarted_button').click(function(){
-        if (sessionStorage.pay_amount != "null" ||sessionStorage.buy_amount != "null" ) {
-            $('#new_search').submit();
-        } else {
-            $('#homepage input[data-field=buy_amount]').focus()
-        }
-     });
-
-    $('.exchanges_search_search_title').click(function(){
-        if (sessionStorage.pay_amount != "null") {
-            $('#search_form input[data-field=pay_amount]').focus()
-        } else {
-            $('#search_form input[data-field=buy_amount]').focus()
-        }
-    });
-
-    $('.page-title.navbar-brand').click(function() {  // hach
-        location.reload()
-    })
 
 
 });

@@ -8,7 +8,7 @@ $(document).ready(function() {
     console.log('exchanges');
 
 
-    function updatePage(data) {
+    updatePage = function(data) {
 
         console.log('updatePage');
         exchanges = data;
@@ -354,18 +354,15 @@ $(document).ready(function() {
 
      // Before actions
 
-    function startLoader() {
+    startLoader = function() {
         $('#empty_message').css('display', 'none');
         $('#result_message').css('display', 'none');
         $('#loader_message').css('display', 'block');        
     }
     
-    function beforeSubmit() {
+    beforeSubmit = function() {
 
         startLoader();
-        console.log('beforeSubmit: settingPage to exchanges/list');
-        setPage('exchanges/list');
-
     };
  
    // Search form
