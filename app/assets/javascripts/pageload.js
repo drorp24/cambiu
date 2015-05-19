@@ -30,6 +30,17 @@ var startLoader;
 var updatePage;
 var display;
 var bind_currency_to_autonumeric;
+var current_url;
+
+// intended to base on session values rather than window.location
+current_url = function() {
+    var url;
+
+    url = sessionStorage.page;
+    if (sessionStorage.id != "null") url += ('/' + sessionStorage.id);
+    if (sessionStorage.pane != "null") url += ('/' + sessionStorage.pane);
+    return url;
+};
 
 
 display = function(term) {

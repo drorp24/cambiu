@@ -67,29 +67,12 @@ $(document).ready(function() {
                     console.log('exchange with that id found in exchanges array');
                     var exchange = results[0];
                 } else {
-                    console.log('exchange with this id not found in exchanges array');
+                    console.log('exchange with this id was not found in exchanges array');
                     // bring it from the server
                 }
             } else {
-                console.log('exchanges is empty. Submiting search');
-                 $('#new_search').submit();
-                $('#new_search').on('ajax:success', function(event, xhr, status, error) {
-                    // insert the failure message inside the "#account_settings" element
-                    alert('ajax:success')
-                });
-                $('#new_search').on('ajax:success', function(event, xhr, status, error) {
-                    // insert the failure message inside the "#account_settings" element
-                    alert('second time!')
-                });
-                var results = $.grep(exchanges, function(e){ return e.id == exchangeid; });
-                 if (results[0]) {
-                     console.log('after submiting search: exchange with that id found in exchanges array');
-                     var exchange = results[0];
-                 } else {
-                     console.log('after submitting search: exchange with id of ' + exchangeid + ' was not found in exchanges array');
-                     // bring it from the server
-                 }
-             }
+                console.log('exchanges is empty');
+            }
         } else {
 
             console.log('no id in url');
@@ -176,20 +159,19 @@ $(document).ready(function() {
 
     window.addEventListener("popstate", function(e) {
 
-        console.log('pop. e.state: ' + e.state)
+        console.log('pop. e.state: ' + e.state);
         setPage(e.state);
 
     });
+
 
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
     console.log('at pageload. settingPage to: ' + reload_path);
     setPage(reload_path);
 
-    if (!sessionStorage.location) getLocation();
+
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;
-
-
-
+    if (!sessionStorage.location) getLocation();
 
 });

@@ -320,7 +320,8 @@ $(document).ready(function() {
     });
 
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
-        updatePage(data)
+        updatePage(data);
+        setPage(current_url())
     })
 
 
