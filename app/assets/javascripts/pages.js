@@ -45,7 +45,7 @@ $(document).ready(function() {
         }
         var exchangeid  = id;
 
-        console.log('setPage. page: ' + page + ' id: ' + id + ' pane: ' + pane);
+        console.log('setPage. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane);
 
         // update session
         sessionStorage.exchangeid   = exchangeid    ? exchangeid    : null;
@@ -105,6 +105,7 @@ $(document).ready(function() {
         $('.pane.active').hide();
         $('.page.active').removeClass('active');
         $('.pane.active').removeClass('active');
+        console.log('after removing active class there are ' + $('.page.active').length + ' pages active and ' + $('.pane.active').length + ' panes active.');
         if (page) {
             console.log('revealing page: ' + page);
             page_el = $('.page[data-page=' + page + ']');
@@ -120,10 +121,11 @@ $(document).ready(function() {
             pane_el.show();
         }
 
+        console.log('after adding active class to proper page and pane there are ' + $('.page.active').length + ' pages active and ' + $('.pane.active').length + ' panes active.');
 
         // populate/empty exchange
-        $('.active').each(function () {
-            $(this).find('[data-model=exchange]').each(function () {
+        $('.pane.active').each(function () {
+             $(this).find('[data-model=exchange]').each(function () {
                 if (exchange) {
                     console.log('populating ' + $(this).attr('id') + ' with exchange id: ' + exchange.id);
                     populate($(this), exchange)
@@ -150,6 +152,7 @@ $(document).ready(function() {
         var id =          $this.data('href-id');
         var url =         (page && pane && id) ? page + '/' + id + '/' + pane : href;
 
+        console.log('data-href element clicked. href-id: ' + id);
         setPage(url);
 
     }));
@@ -174,4 +177,22 @@ $(document).ready(function() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     if (!sessionStorage.location) getLocation();
 
+/*
+    $('#email_form').on('ajax:before', function(event, data, status, xhr) {
+        alert('email form ajax before. value of session id: ' + sessionStorage.id + ' data-href-id now: ' + $('#email_form .email_submit').data('href-id'))
+    })
+
+
+    window.addEventListener("storage", function(event) {
+        var key = event.key;
+        var newValue = event.newValue;
+        var oldValue = event.oldValue;
+        var url = event.url;
+        var storageArea = event.storageArea;
+
+        alert(key + ' was cahnged from ' + oldValue + ' to ' + newValue + ' in ' + url)
+
+        // handle the event
+    });
+*/
 });

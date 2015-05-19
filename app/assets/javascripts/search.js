@@ -322,6 +322,7 @@ $(document).ready(function() {
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
         updatePage(data);
         setPage(current_url())
+        // TODO: re-highlight selected exchange map marker
     })
 
 
