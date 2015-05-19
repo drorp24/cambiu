@@ -6,27 +6,27 @@ $(document).ready(function() {
     // TODO: Make it a loop
     function populate(el, exchange) {
 
-        if (el.data('id'))              el.attr('data-id', exchange.id);
-        if (el.data('href-id'))         el.attr('data-href-id', exchange.id);
-        if (el.data('lat'))             el.attr('data-lat', exchange.latitude);
-        if (el.data('lng'))             el.attr('data-lng', exchange.longitude);
-        if (el.data('exchange-name'))   el.attr('data-exchange-name', exchange.name);
+        if (el.is('[data-id]'))                 el.attr('data-id', exchange.id);
+        if (el.is('[data-href-id]'))            {el.attr('data-href-id', exchange.id); console.log('el with data-href-id. value ater set: ' + el.attr('data-href-id'))}
+        if (el.is('[data-lat]'))                el.attr('data-lat', exchange.latitude);
+        if (el.is('[data-lng]'))                el.attr('data-lng', exchange.longitude);
+        if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', exchange.name);
 
-        if (el.data('field'))           el.html(exchange[el.data('field')]);
+        if (el.data('field'))                   el.html(exchange[el.data('field')]);
 
-    }
+    };
 
 
-    // TODO: Unite with populate or do in one shot
+    // TODO: Unite, or do in one shot
     function unpopulate(el) {
 
-        if (el.data('id'))              el.attr('data-id', '');
-        if (el.data('href-id'))         el.attr('data-href-id', '');
-        if (el.data('lat'))             el.attr('data-lat', '');
-        if (el.data('lng'))             el.attr('data-lng', '');
-        if (el.data('exchange-name'))   el.attr('data-exchange-name', '');
+        if (el.is('[data-id]'))                 el.attr('data-id', '');
+        if (el.is('[data-href-id]'))            el.attr('data-href-id', '');
+        if (el.is('[data-lat]'))                el.attr('data-lat', '');
+        if (el.is('[data-lng]'))                el.attr('data-lng', '');
+        if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', '');
 
-        if (el.data('field'))           el.html('');
+        if (el.data('field'))                   el.html('');
 
     }
 
