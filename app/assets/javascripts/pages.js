@@ -3,9 +3,11 @@
 
 $(document).ready(function() {
 
+    // TODO: Make it a loop
     function populate(el, exchange) {
 
-        if (el.data('id'))              el.attr('id', exchange.id);
+        if (el.data('id'))              el.attr('data-id', exchange.id);
+        if (el.data('href-id'))         el.attr('data-href-id', exchange.id);
         if (el.data('lat'))             el.attr('data-lat', exchange.latitude);
         if (el.data('lng'))             el.attr('data-lng', exchange.longitude);
         if (el.data('exchange-name'))   el.attr('data-exchange-name', exchange.name);
@@ -14,9 +16,12 @@ $(document).ready(function() {
 
     }
 
+
+    // TODO: Unite with populate or do in one shot
     function unpopulate(el) {
 
-        if (el.data('id'))              el.attr('id', '');
+        if (el.data('id'))              el.attr('data-id', '');
+        if (el.data('href-id'))         el.attr('data-href-id', '');
         if (el.data('lat'))             el.attr('data-lat', '');
         if (el.data('lng'))             el.attr('data-lng', '');
         if (el.data('exchange-name'))   el.attr('data-exchange-name', '');
@@ -28,17 +33,24 @@ $(document).ready(function() {
     setPage = function(url) {
 
         var url_a       = url.split('/');
-        var page        = url_a[0];
-        var id          = url_a[1];
-        var pane        = url_a[2];
+        if (url_a.length == 3) {
+            var page        = url_a[0];
+            var id          = url_a[1];
+            var pane        = url_a[2];
+        } else {
+            var page        = url_a[0];
+            var pane        = url_a[1];
+            var id          = null;
+        }
         var exchangeid  = id;
+
+        console.log('setPage. page: ' + page + ' id: ' + id + ' pane: ' + pane);
 
         // update session
         sessionStorage.exchangeid   = exchangeid    ? exchangeid    : null;
         sessionStorage.page         = page  ? page  : null;
         sessionStorage.pane         = pane  ? pane  : null;
         sessionStorage.id           = id    ? id    : null;
-        console.log(page, pane, id, exchangeid);
 
 
         // find exchange
@@ -50,7 +62,7 @@ $(document).ready(function() {
 
             if (exchanges && exchanges.length > 0) {
                 var results = $.grep(exchanges, function(e){ return e.id == exchangeid; });
-                if (result[0]) {
+                if (results[0]) {
                     console.log('exchange with that id found in exchanges array');
                     var exchange = results[0];
                 } else {
@@ -87,26 +99,43 @@ $(document).ready(function() {
 
         // activate/hide components
 
-        $('.active').hide();
-        $('.active').removeClass('active');
-        if (page) $('.page[data-page=' + page + ']').addClass('active');
-        if (pane) $('.pane[data-pane=' + pane + ']').addClass('active');
-        $('.active').show();
+        // TODO: function
+        $('.page.active').hide();
+        $('.pane.active').hide();
+        $('.page.active').removeClass('active');
+        $('.pane.active').removeClass('active');
+        if (page) {
+            console.log('revealing page: ' + page);
+            page_el = $('.page[data-page=' + page + ']');
+            console.log('page_el id: ' + page_el.attr('id'))
+            page_el.addClass('active');
+            page_el.show();
+        }
+        if (pane) {
+            console.log('revealing pane: ' + pane);
+            pane_el = $('.pane[data-pane=' + pane + ']');
+            console.log('pane_el id: ' + pane_el.attr('id'))
+            pane_el.addClass('active');
+            pane_el.show();
+        }
 
 
         // populate/empty exchange
         $('.active').each(function () {
             $(this).find('[data-model=exchange]').each(function () {
                 if (exchange) {
+                    console.log('populating ' + $(this).attr('id'));
                     populate($(this), exchange)
                 } else {
+                    console.log('unpopulating ' + $(this).attr('id'));
                     unpopulate($(this))
                 }
             })
         });
 
-        history.pushState(url, 'cambiu', url);
-
+        var new_state = window.location.origin + '/' + url;
+        history.pushState(new_state, 'cambiu', new_state);
+        console.log('pushing state: ' + new_state);
 
     };
 
