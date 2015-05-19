@@ -17,7 +17,11 @@
              id: 'getit_button', class: 'btn btn-mini btn-default' %>
     <% elsif status == 'used' %>
         <%= f.button :submit, 'Got the money, thank you!',
-             data: {href: 'exchanges/list',  href_page: 'exchanges', href_id: '', href_pane: 'list', reload: 'true', voucher: 'true', voucher_status: status, exchange_name: "filler"},
+             data: {
+
+                     href: 'exchanges/list',  href_page: 'exchanges', href_id: '', href_pane: 'list', reload: 'true',
+
+                     voucher: 'true', voucher_status: status, exchange_name: "filler"},
              class: 'btn confirmation_button' %>
     <% end %>
 

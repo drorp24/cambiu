@@ -154,6 +154,7 @@ $(document).ready(function() {
 
         console.log('data-href element clicked. href-id: ' + id);
         setPage(url);
+        if ($this.is('[data-reload')) location.reload();
 
     }));
 
