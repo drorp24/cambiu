@@ -1,6 +1,6 @@
 # config/unicorn.rb
 worker_processes Integer(ENV["WEB_CONCURRENCY"] || 2)
-timeout 30
+timeout 15
 preload_app false
 listen ENV['PORT'], :backlog => Integer(ENV['UNICORN_BACKLOG'] || 200)
 
