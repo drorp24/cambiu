@@ -101,9 +101,10 @@ $(document).ready(function() {
     
     console.log('pageload');
 
-    var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname;
-    history.replaceState(null, null,   reload_path);
-
+    var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
+//    history.replaceState(null, null,   reload_path);
+    console.log('at pageload. settingPage to: ' + reload_path);
+    setPage(reload_path);
     homepage = $('body').hasClass('homepage');
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;

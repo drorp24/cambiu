@@ -74,10 +74,7 @@ $(document).ready(function() {
 
 
         exchange_sum.find('[data-exchangeid]').attr('data-exchangeid', exchange.id);
-        exchange_sum.find('[data-href]').attr('data-href', 'exchanges/summary');
-        exchange_sum.find('[data-href-page]').attr('data-href-page', 'exchanges');
         exchange_sum.find('[data-href-id]').attr('data-href-id', exchange.id);
-        exchange_sum.find('[data-href-pane]').attr('data-href-pane', 'summary');
         exchange_sum.find('[data-exchange-name]').attr('data-exchange-name', exchange.name);
 
 
@@ -365,10 +362,9 @@ $(document).ready(function() {
     
     function beforeSubmit() {
 
-        console.log('beforeSubmit');
-        
         startLoader();
-        setPage('exchanges');
+        console.log('beforeSubmit: settingPage to exchanges/list');
+        setPage('exchanges/list');
 
     };
  
@@ -383,7 +379,8 @@ $(document).ready(function() {
     // only after this point can #new_search submits be triggered
     // ajax search if #exchanges pages is refreshed or search_button is clicked
 
-    if(window.location.pathname == '/exchanges') {
+    // TODO: All this should be removed
+    if(window.location.pathname == '/exchanges/list') {
          $('#new_search').submit();
     }
 

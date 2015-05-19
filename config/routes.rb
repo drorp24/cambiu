@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   # landing pages
   root 'home#index'
   get 'homepage',           to: 'home#index'
-  get 'exchanges',          to: 'home#index'
+  get 'exchanges',              to: 'home#index'
+  get 'exchanges/list',          to: 'home#index'
+  get 'exchanges/:id/:view',          to: 'home#index'
   resources :searches do
     collection do
       post 'record'

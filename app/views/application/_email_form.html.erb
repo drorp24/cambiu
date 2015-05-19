@@ -21,6 +21,6 @@
       </div>
 
     <%= f.button :submit, 'Guarantee this deal!',
-            data: {href: '#exchange_voucher', current_exchange: 'true', exchangeid: '', event: 'Leaving email'}, class: "middle-child email_submit btn btn-mini btn-default rounded" %>
+            data: {href: 'exchanges/voucher', href_page: 'exchanges', href_id: '', href_pane: 'voucher', model: 'exchange', current_exchange: 'true', exchangeid: '', event: 'Leaving email'}, class: "middle-child email_submit btn btn-mini btn-default rounded" %>
 
 <% end %>
