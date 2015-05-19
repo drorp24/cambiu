@@ -64,9 +64,9 @@ gem 'sass-rails'
 gem 'sass'
 gem 'font-awesome-rails'
 group :test, :staging, :production do
-  gem 'puma'
-  gem "rack-timeout"
+  gem 'unicorn'
 end
+gem "rack-timeout"
 gem 'google_currency'
 gem 'google_currency_rails_cache' # TODO: How to install
 #gem 'cloudinary'
