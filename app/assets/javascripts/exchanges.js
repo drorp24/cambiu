@@ -364,22 +364,18 @@ $(document).ready(function() {
 
         startLoader();
     };
- 
-   // Search form
-    $('#new_search').ajaxForm({
-        dataType:       'json',
-        beforeSubmit:   beforeSubmit,
-        success:        updatePage
-    });
 
 
     // only after this point can #new_search submits be triggered
     // ajax search if #exchanges pages is refreshed or search_button is clicked
 
     // TODO: All this should be removed
+/*
     if(window.location.pathname == '/exchanges/list') {
+    alert('about to submit')
          $('#new_search').submit();
     }
+*/
 
     $('#search_button').click(function() {
         if (mobile) {$('#exchange_params_change').collapse('toggle');}

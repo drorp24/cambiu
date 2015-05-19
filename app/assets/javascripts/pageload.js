@@ -111,7 +111,6 @@ $(document).ready(function() {
     console.log('pageload');
 
 
-
     //    mixpanel.track("Page view");
     
 

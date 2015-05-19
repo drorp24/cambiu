@@ -1,4 +1,4 @@
-<%= simple_form_for(Search.new, defaults: {input_html: {class: 'form-control'}, label: false}, html: {novalidate: true}) do |f| %>
+<%= simple_form_for(Search.new, remote: true, defaults: {input_html: {class: 'form-control'}, label: false}, html: {data: {type: :json }, novalidate: true}) do |f| %>
 	
 	<div class="row">
 		<div class="form-group col-md-8 col-xs-7">

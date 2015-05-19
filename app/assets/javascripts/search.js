@@ -174,7 +174,7 @@ $(document).ready(function() {
             set('location', place.formatted_address);
             set('location_short', place.name);
 
-            if (!$('body').hasClass('homepage')) $('#new_search').submit();
+            if (!$('body').hasClass('homepage')) $('#new_search').submit();  // TODO: Consider doing in the search page too
 
 /*          TODO: Remove.
             if (window.location.hash == '#exchanges') {
@@ -306,10 +306,22 @@ $(document).ready(function() {
         }
     });
 
-    $('.page-title.navbar-brand').click(function() {  // hach
+    $('.page-title.navbar-brand').click(function() {  // TODO: bug. Put an href into the icon img
         location.reload()
     })
 
+
+
+    var homepage = $('body').hasClass('homepage');
+    if (!homepage) $('#new_search').submit();
+
+    $('#new_search').on('ajax:before', function() {
+        beforeSubmit()
+    });
+
+    $('#new_search').on('ajax:success', function(event, data, status, xhr) {
+        updatePage(data)
+    })
 
 
 }); 

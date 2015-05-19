@@ -11,8 +11,8 @@
 //= require pageload
 //= require models
 //= require findlocation
-//= require search
 //= require exchanges
+//= require search
 //= require pages
 
 //= require jquery_ujs

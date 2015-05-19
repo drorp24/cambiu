@@ -77,7 +77,11 @@ $(document).ready(function() {
                     // insert the failure message inside the "#account_settings" element
                     alert('ajax:success')
                 });
-                 var results = $.grep(exchanges, function(e){ return e.id == exchangeid; });
+                $('#new_search').on('ajax:success', function(event, xhr, status, error) {
+                    // insert the failure message inside the "#account_settings" element
+                    alert('second time!')
+                });
+                var results = $.grep(exchanges, function(e){ return e.id == exchangeid; });
                  if (results[0]) {
                      console.log('after submiting search: exchange with that id found in exchanges array');
                      var exchange = results[0];
