@@ -8,7 +8,7 @@
         var elements = '[data-field=' + field + ']';
 
         if (field =='buy_amount' || field == "pay_amount") {
-            var value_clean = value  ? String(value).replace(/\D/g,'')  : null;
+            var value_clean = value  ? String(value).replace(/[^0-9\.]+/g,"")  : null;
             sessionStorage.setItem(field, value_clean);
             $('.simple_form ' + '#search_' + field + '_val').val(value_clean);   // Ugly hack for autoNumeric sending _val values to server
         }  else {
@@ -311,13 +311,18 @@ $(document).ready(function() {
     });
 
 
-    // #search_form submits the shaodw form #new_search
+    // #search_form submits the shadow form #new_search rather than itself
 
     $('#search_form #search_button').click(function(e) {
         e.preventDefault();
         if (mobile) {$('#exchange_params_change').collapse('toggle');}
         $('#new_search').submit();
      });
+
+    // any click to change params returns to main search page
+    $('#search_form input').click(function() {
+        if (window.location.pathname != '/exchanges/list') setPage('exchanges/list')
+    });
 
 
     // reload refreshes search results & map by re-submiting the form populated from session
