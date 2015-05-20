@@ -308,9 +308,10 @@ $(document).ready(function() {
 
     $('.page-title.navbar-brand').click(function() {  // TODO: bug. Put an href into the icon img
         location.reload()
-    })
+    });
 
 
+    // reload refreshes search results & map by re-submiting the form populated from session
 
     var homepage = $('body').hasClass('homepage');
     if (!homepage) $('#new_search').submit();
@@ -321,9 +322,13 @@ $(document).ready(function() {
 
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
         updatePage(data);
-        setPage(current_url())
+        setPage(current_url());
         // TODO: re-highlight selected exchange map marker
-    })
+    });
 
+    $('#exchanges').on('ajax:success', '#new_order', (function(evt, data, status, xhr) {
+         order = data;
+         model_populate('order', order);
+    }))
 
 }); 

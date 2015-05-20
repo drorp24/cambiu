@@ -124,7 +124,7 @@ $(document).ready(function() {
 
     function bindBehavior() {
 
-        // TODO: move to any of the .js files, with delegate, to save re-binding every time search is made (ajax:success may not be delegatable)
+        // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
          $('.directions').click(function() {
             var from =  production ? new google.maps.LatLng(sessionStorage.user_lat, sessionStorage.user_lng) : new google.maps.LatLng(sessionStorage.test_lat, sessionStorage.test_lng);
@@ -132,12 +132,6 @@ $(document).ready(function() {
             calcRoute(from, to);
             return false;  
         });
-
-        $('#exchanges').on('ajax:success', '#new_order', (function(evt, data, status, xhr) {
-            order = data;
-            model_populate('order', order);
-       }))
-
     }
     
 

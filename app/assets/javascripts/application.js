@@ -5,7 +5,7 @@
 //
 
 //= require jquery
-//= require jquery.form
+//= require jquery_ujs
 //= require autonumeric
 
 //= require pageload
@@ -15,7 +15,6 @@
 //= require search
 //= require pages
 
-//= require jquery_ujs
 //= require bootstrap/transition
 //= require bootstrap/collapse
 //= require bootstrap/carousel

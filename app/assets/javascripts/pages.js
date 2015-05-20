@@ -133,7 +133,16 @@ $(document).ready(function() {
                     console.log('unpopulating ' + $(this).attr('id'));
                     unpopulate($(this))
                 }
-            })
+            });
+            var voucher     = sessionStorage.order_voucher;
+            var expiry_s    = sessionStorage.order_expiry_s;
+            if (voucher && expiry_s) {
+                var order = {voucher: voucher, expiry_s: expiry_s};
+                model_populate('order', order)
+            } else {
+                // check if order form populated or populate it and submit it; the ajax:success will populate the order fields
+                // required when user wants to access voucher directly, without clicking the Get it button
+            }
         });
 
         // don't push state if invoked from popstate or page reloads
@@ -184,7 +193,8 @@ $(document).ready(function() {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     if (!sessionStorage.location) getLocation();
 
-/*
+
+/*   trying to understand what changes the data-href-id on the #email_form when button is clicked
     $('#email_form').on('ajax:before', function(event, data, status, xhr) {
         alert('email form ajax before. value of session id: ' + sessionStorage.id + ' data-href-id now: ' + $('#email_form .email_submit').data('href-id'))
     })
