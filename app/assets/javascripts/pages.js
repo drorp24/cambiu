@@ -136,9 +136,14 @@ $(document).ready(function() {
             })
         });
 
-        var new_state = window.location.origin + '/' + url;
-        history.pushState(new_state, 'cambiu', new_state);
-        console.log('pushing state: ' + new_state);
+        // don't push state if invoked from popstate or page reloads
+        var new_state =  '/' + url;
+        if (window.location.pathname != new_state) {
+            history.pushState(new_state, 'cambiu', new_state);
+            console.log('>>>>>>>>>>>>>>>>>> pushing state: ' + new_state);
+        } else {
+            console.log('>>>>>>>>>>>>>>>>>> current pathname matches the url; not pushing');
+        }
 
     };
 
@@ -163,8 +168,9 @@ $(document).ready(function() {
 
     window.addEventListener("popstate", function(e) {
 
-        console.log('pop. e.state: ' + e.state);
-        setPage(e.state);
+        console.log('>>>>>>>>>>>>>> pop. e.state: ' + e.state);
+        var url = e.state.slice(1);
+        setPage(url);
 
     });
 
