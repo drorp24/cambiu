@@ -31,16 +31,16 @@ $(document).ready(function() {
 
     }
 
-    setPage = function(url) {
+    setPage = function(url) { // TODO: pass object here with the parts, and push and pop use such object too
 
         var url_a       = url.split('/');
-        if (url_a.length == 3) {
-            var page        = url_a[0];
-            var id          = url_a[1];
-            var pane        = url_a[2];
+        if (url_a.length == 4) {
+            var page        = '/' + url_a[1];
+            var id          = url_a[2];
+            var pane        = url_a[3];
         } else {
-            var page        = url_a[0];
-            var pane        = url_a[1];
+            var page        = '/' + url_a[1];
+            var pane        = url_a[2];
             var id          = null;
         }
         var exchangeid  = id;
@@ -89,7 +89,7 @@ $(document).ready(function() {
         var old_page        = $('.page.active').attr('id');
         var old_page_id     = '#' + old_page;
         var old_page_el     = $(old_page_id);
-        var new_page_id     = '#' + page;
+        var new_page_id     = '#' + page.slice(1);
         var new_page_el     = $(new_page_id);
 
         $('body').removeClass(old_page);
@@ -136,7 +136,7 @@ $(document).ready(function() {
             })
         });
 
-        var new_state = window.location.origin + '/' + url;
+        var new_state = url;
         history.pushState(new_state, 'cambiu', new_state);
         console.log('pushing state: ' + new_state);
 
@@ -164,14 +164,20 @@ $(document).ready(function() {
     window.addEventListener("popstate", function(e) {
 
         console.log('pop. e.state: ' + e.state);
+/*
+        var a = $('<a>', { href: e.state } )[0];
+        var url = a.pathname.slice(1);
+        console.log('settingPage: ' + url);
+*/
         setPage(e.state);
 
     });
 
 
-    var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
+    var reload_path = window.location.pathname == '/' ? '/homepage' : window.location.pathname;
     console.log('at pageload. settingPage to: ' + reload_path);
     setPage(reload_path);
+//    history.replaceState(null, null, reload_path); // use url...
 
 
 
