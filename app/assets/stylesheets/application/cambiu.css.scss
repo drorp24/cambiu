@@ -150,7 +150,9 @@ $inverse-color: #ffffff;
 //
 body#cambiu {
     
+  /*
   padding-top: 50px;
+  */
   font-family: $font-family;
   color: $color;
   .btn {border-radius: $border-radius;}
@@ -167,6 +169,7 @@ body#cambiu {
 
   .navbar {
     background-color: #fff;
+    border: none;
     margin-bottom: 0;
       .navbar-brand {
         margin-top: -10px;
@@ -178,8 +181,6 @@ body#cambiu {
       }
   }
   .section_anchor {
-    display: block;
-    margin-bottom: 100px;
   }
   #new_search {
     input, select {
@@ -231,11 +232,15 @@ body#cambiu {
   }
 
   .how_does_it_work {
-    .row {
-      margin-top: $std-margin;
-    }
     h2 {
       color: $darkgrey;
+    }
+    .hdiw_title {
+      height: 50px;
+      margin-bottom: 40px;
+    }
+    .hdiw_under_title {
+      margin-bottom: 40px;
     }
     .hdiw_text {
       margin-top: 25px;
@@ -243,8 +248,14 @@ body#cambiu {
   }
   
   .getstarted_button_container {
-    margin-top: -10vh;
-    margin-bottom: 20vh;
+    &.a {
+      margin-top: 60px;
+      margin-bottom: 120px;
+    }
+    &.b {
+      margin-top: 70px;
+      margin-bottom: 70px;
+    }
     .getstarted_button {
       background-color: $lightgreen;
       border-bottom: 3px solid $darkgreen;
@@ -359,6 +370,7 @@ body#cambiu {
   }
   .map_heading {
     min-height: 70px;
+    padding: 0 5px;
     @media (max-width: $screen-xs-max){
       line-height: 35px;
     }
@@ -1023,7 +1035,7 @@ body#cambiu {
     &.home  {
       .background {
         @include background-img('header_background.jpg');      
-        height: 75vh;
+        height: 430px;
       }
       .above_fold {
         .main {
@@ -1064,6 +1076,7 @@ body#cambiu {
         right: 14px;
       }
     }
+
 
      
     &.exchanges {
