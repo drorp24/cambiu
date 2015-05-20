@@ -311,6 +311,15 @@ $(document).ready(function() {
     });
 
 
+    // #search_form submits the shaodw form #new_search
+
+    $('#search_form #search_button').click(function(e) {
+        e.preventDefault();
+        if (mobile) {$('#exchange_params_change').collapse('toggle');}
+        $('#new_search').submit();
+     });
+
+
     // reload refreshes search results & map by re-submiting the form populated from session
 
     var homepage = $('body').hasClass('homepage');

@@ -343,8 +343,6 @@ $(document).ready(function() {
 
     }
   
-    
-    
 
      // Before actions
 
@@ -358,42 +356,6 @@ $(document).ready(function() {
 
         startLoader();
     };
-
-
-    // only after this point can #new_search submits be triggered
-    // ajax search if #exchanges pages is refreshed or search_button is clicked
-
-    // TODO: All this should be removed
-/*
-    if(window.location.pathname == '/exchanges/list') {
-    alert('about to submit')
-         $('#new_search').submit();
-    }
-*/
-
-    $('#search_button').click(function() {
-        if (mobile) {$('#exchange_params_change').collapse('toggle');}
-
-        // TODO: Merge with pages (currently not possible due to the return false). This form should be deleted
-        var $this = $(this);
-        if ($this.data('href')) {
-
-            var old_page = $('.active.page');
-            var new_page = $($this.data('href'));
-
-/*
-            if ($this.data('reload')) {         // TODO: Check if reload is still needed
-                location.reload()
-            } else {
-*/
-                pageSwitch(old_page, new_page);
- //           }
-        }
-
-
-        $('#new_search').submit();
-        return false;
-    });
 
 
     
