@@ -3,6 +3,42 @@
 //
 // Prefix input elements with the respective selected currency
 
+// Currencies: initial settings & change events
+bind_currency_to_autonumeric = function() {
+
+    $('[data-autonumeric]').autoNumeric('init');
+    console.log('autoNumeric initialized')
+
+    $('[data-autonumeric]').each(function() {
+        update_currency_symbol($(this));
+    });
+
+    $('.currency_select').change(function() {
+        var $this   = $(this);
+        var field   = $this.data('field');
+        var value   = $this.val();
+        var target  = $this.data('symboltarget');
+        var symbol  = $this.find('option:selected').attr('data-symbol');
+
+        set(field, value, $this);
+
+        $('[data-autonumeric][data-field=' + target + ']').each(function() {
+            update_currency_symbol($(this), symbol);
+        })
+    });
+
+    function update_currency_symbol(el, symbol) {
+        if (symbol === undefined) {
+            currency_select_el = $('#' + el.attr('data-symbolsource'));
+            symbol = currency_select_el.find('option:selected').attr('data-symbol');
+        }
+        el.attr('data-a-sign', symbol);
+        el.autoNumeric('update', {aSign: symbol});
+    }
+
+};
+
+// return the value of a sessionStorage variable
     set = function(field, value, excluded) {
         if (excluded === undefined) excluded = '';
         var elements = '[data-field=' + field + ']';
@@ -48,6 +84,37 @@
         set('location_short', sessionStorage.user_location ? "Nearby" : 'London', excluded);
     }
 
+    value_of = function(key) {
+        var a = sessionStorage.getItem(key);
+        return (a && a != "null") ? a : null;
+    };
+
+    // Restore session values || use defaults
+    set_defaults = function(use_session) {
+
+        console.log('set_defaults');
+
+
+        var session_pay_amount      = use_session ? value_of('pay_amount')      : null;
+        var session_pay_currency    = use_session ? value_of('pay_currency')    : null;
+        var session_buy_amount      = use_session ? value_of('buy_amount')      : null;
+        var session_buy_currency    = use_session ? value_of('buy_currency')    : null;
+        var session_sort            = use_session ? value_of('sort')            : null;
+
+        console.log('session_buy_amount after assignment: ' + session_buy_amount)
+
+        set('pay_amount',   session_pay_amount    ? session_pay_amount          : def_pay_amount);
+        set('pay_currency', session_pay_currency  ? session_pay_currency        : def_pay_currency);
+        set('buy_amount',   session_buy_amount    ? session_buy_amount          : def_buy_amount);
+        set('buy_currency', session_buy_currency  ? session_buy_currency        : def_buy_currency);
+        set('sort',         session_sort          ? session_sort                : def_sort);
+
+        console.log('sessionStorage.buy_amount after assignment: ' + sessionStorage.buy_amount)
+        bind_currency_to_autonumeric();
+    };
+
+
+
 
 $(document).ready(function() {
 
@@ -59,17 +126,8 @@ $(document).ready(function() {
     sessionStorage.page         = window.location.hostname;
     sessionStorage.rest         = window.location.hash;
 
-    // Restore session values || use defaults
-    var session_pay_amount      = value_of('pay_amount');
-    var session_pay_currency    = value_of('pay_currency');
-    var session_buy_amount      = value_of('buy_amount');
-    var session_buy_currency    = value_of('buy_currency');
-    var session_sort            = value_of('sort');
-    sessionStorage.pay_amount   = session_pay_amount    ? session_pay_amount    : def_pay_amount;
-    sessionStorage.pay_currency = session_pay_currency  ? session_pay_currency  : def_pay_currency;
-    sessionStorage.buy_amount   = session_buy_amount    ? session_buy_amount    : def_buy_amount;
-    sessionStorage.buy_currency = session_buy_currency  ? session_buy_currency  : def_buy_currency;
-    sessionStorage.sort         = session_sort          ? session_sort          : def_sort;
+    var use_session = true;
+    set_defaults(use_session);
 
     if (!sessionStorage.location) {
         set_default_location()
@@ -97,47 +155,6 @@ $(document).ready(function() {
         bind(field, 'keyup');
     });
 
-
-/*  // select changes (=currency changes) are handled by autonumeric below
-    $('#homepage form select').each(function() {
-        var field = $(this).data('field');
-        bind(field, 'change');
-    });
-*/
-    // Currencies: initial settings & change events
-    bind_currency_to_autonumeric = function() {
-
-        $('[data-autonumeric]').autoNumeric('init');
-        console.log('autoNumeric initialized')
-
-        $('[data-autonumeric]').each(function() {
-            update_currency_symbol($(this));
-        });
-
-        $('.currency_select').change(function() {
-            var $this   = $(this);
-            var field   = $this.data('field');
-            var value   = $this.val();
-            var target  = $this.data('symboltarget');
-            var symbol  = $this.find('option:selected').attr('data-symbol');
-
-            set(field, value, $this);
-
-            $('[data-autonumeric][data-field=' + target + ']').each(function() {
-                update_currency_symbol($(this), symbol);
-            })
-        });
-
-        function update_currency_symbol(el, symbol) {
-            if (symbol === undefined) {
-                currency_select_el = $('#' + el.attr('data-symbolsource'));
-                symbol = currency_select_el.find('option:selected').attr('data-symbol');
-            }
-            el.attr('data-a-sign', symbol);
-            el.autoNumeric('update', {aSign: symbol});
-        }
-
-    };
 
     bind_currency_to_autonumeric();
 
@@ -312,10 +329,6 @@ $(document).ready(function() {
         }
     });
 
-    $('.page-title.navbar-brand').click(function() {  // TODO: bug. Put an href into the icon img
-        location.reload()
-    });
-
 
     // #search_form submits the shadow form #new_search rather than itself
 
@@ -341,6 +354,7 @@ $(document).ready(function() {
     });
 
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
+        console.log('#new_search ajax:success. Starting to updatePage...');
         updatePage(data);
         setPage(current_url());
         // TODO: re-highlight selected exchange map marker
@@ -351,4 +365,9 @@ $(document).ready(function() {
          model_populate('order', order);
     }))
 
+    // clicking on certain elements rests params to default values
+    $('[data-set-default]').click(function() {
+         var use_session = false;
+         set_defaults(use_session);
+     })
 }); 

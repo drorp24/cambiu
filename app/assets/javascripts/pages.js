@@ -4,6 +4,7 @@
 
 $(document).ready(function() {
 
+
     // TODO: Make it a loop
     function populate(el, exchange) {
 
@@ -14,6 +15,16 @@ $(document).ready(function() {
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', exchange.name);
 
         if (el.data('field'))                   el.html(exchange[el.data('field')]);
+
+        var voucher     = sessionStorage.order_voucher;
+        var expiry_s    = sessionStorage.order_expiry_s;
+        if (voucher && expiry_s) {
+            var order = {voucher: voucher, expiry_s: expiry_s};
+            model_populate('order', order)
+        } else {
+            // check if order form populated or populate it and submit it; the ajax:success will populate the order fields
+            // required when user wants to access voucher directly, without clicking the Get it button
+        }
 
     };
 
@@ -28,6 +39,8 @@ $(document).ready(function() {
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', '');
 
         if (el.data('field'))                   el.html('');
+
+        $('[data-model=order]').html("");
 
     }
 
@@ -134,15 +147,6 @@ $(document).ready(function() {
                     unpopulate($(this))
                 }
             });
-            var voucher     = sessionStorage.order_voucher;
-            var expiry_s    = sessionStorage.order_expiry_s;
-            if (voucher && expiry_s) {
-                var order = {voucher: voucher, expiry_s: expiry_s};
-                model_populate('order', order)
-            } else {
-                // check if order form populated or populate it and submit it; the ajax:success will populate the order fields
-                // required when user wants to access voucher directly, without clicking the Get it button
-            }
         });
 
         // don't push state if invoked from popstate or page reloads

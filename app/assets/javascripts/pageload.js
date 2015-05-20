@@ -37,13 +37,10 @@ var def_buy_amount      = 1000;
 var def_buy_currency    = "EUR";
 var def_sort            = 'quote';
 var value_of;
+var set_defaults;
 
 
-// return the value of a sessionStorage variable
-value_of = function(key) {
-    var a = sessionStorage.getItem(key);
-    return (a && a != "null") ? a : null;
-};
+
 
 
 // intended to base on session values rather than window.location
