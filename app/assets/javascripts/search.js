@@ -360,10 +360,15 @@ $(document).ready(function() {
         // TODO: re-highlight selected exchange map marker
     });
 
+    $('#exchanges').on('ajax:before', '#new_order', (function(evt, xhr, settings) {
+        order_id = value_of('order_id');
+        if (order_id) {$('.confirmation_form #order_id').val(order_id)}
+    }));
+
     $('#exchanges').on('ajax:success', '#new_order', (function(evt, data, status, xhr) {
          order = data;
          model_populate('order', order);
-    }))
+    }));
 
     // clicking on certain elements rests params to default values
     $('[data-set-default]').click(function() {

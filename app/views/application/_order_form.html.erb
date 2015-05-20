@@ -1,7 +1,8 @@
-<%= simple_form_for Order.new, validate: false, remote: true, html: {data: {type: :json } } do |f| %>
+<%= simple_form_for Order.new, method: status == 'produced' ? :post : :put, url: {action: status == 'produced' ? :create : :update, controller: :orders}, validate: false, remote: true, html: {data: {type: :json} } do |f| %>
 
 
     <div class="hidden_fields">
+      <%= f.input_field :id, 	            as: :hidden, data: {field: 'id'} %>
       <%= f.input_field :exchange_id, 	    as: :hidden, data: {field: 'exchange_id'} %>
       <%= f.input_field :email, 		    as: :hidden, data: {field: 'email'} %>
       <%= f.input_field :pay, 	            as: :hidden, data: {field: 'pay_amount'} %>
