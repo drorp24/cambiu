@@ -59,11 +59,17 @@ $(document).ready(function() {
     sessionStorage.page         = window.location.hostname;
     sessionStorage.rest         = window.location.hash;
 
-    // TODO: All these || dont work!
-    sessionStorage.pay_currency = sessionStorage.pay_currency   || 'GBP';
-    sessionStorage.buy_currency = sessionStorage.buy_currency   || 'EUR';
-//    sessionStorage.sort         = sessionStorage.sort || 'quote';
-    sessionStorage.sort         = sessionStorage.sort || 'quote';
+    // Restore session values || use defaults
+    var session_pay_amount      = value_of('pay_amount');
+    var session_pay_currency    = value_of('pay_currency');
+    var session_buy_amount      = value_of('buy_amount');
+    var session_buy_currency    = value_of('buy_currency');
+    var session_sort            = value_of('sort');
+    sessionStorage.pay_amount   = session_pay_amount    ? session_pay_amount    : def_pay_amount;
+    sessionStorage.pay_currency = session_pay_currency  ? session_pay_currency  : def_pay_currency;
+    sessionStorage.buy_amount   = session_buy_amount    ? session_buy_amount    : def_buy_amount;
+    sessionStorage.buy_currency = session_buy_currency  ? session_buy_currency  : def_buy_currency;
+    sessionStorage.sort         = session_sort          ? session_sort          : def_sort;
 
     if (!sessionStorage.location) {
         set_default_location()

@@ -184,32 +184,10 @@ $(document).ready(function() {
     });
 
 
+    // first entry, reloads, direct linking
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
-    console.log('at pageload. settingPage to: ' + reload_path);
+    console.log('full page re/load. settingPage to: ' + reload_path);
     setPage(reload_path);
 
 
-
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
-    if (!sessionStorage.location) getLocation();
-
-
-/*   trying to understand what changes the data-href-id on the #email_form when button is clicked
-    $('#email_form').on('ajax:before', function(event, data, status, xhr) {
-        alert('email form ajax before. value of session id: ' + sessionStorage.id + ' data-href-id now: ' + $('#email_form .email_submit').data('href-id'))
-    })
-
-
-    window.addEventListener("storage", function(event) {
-        var key = event.key;
-        var newValue = event.newValue;
-        var oldValue = event.oldValue;
-        var url = event.url;
-        var storageArea = event.storageArea;
-
-        alert(key + ' was cahnged from ' + oldValue + ' to ' + newValue + ' in ' + url)
-
-        // handle the event
-    });
-*/
 });
