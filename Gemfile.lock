@@ -194,6 +194,8 @@ GEM
     pg (0.18.1-x86-mingw32)
     polyamorous (1.2.0)
       activerecord (>= 3.0)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.5.3)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -315,6 +317,7 @@ DEPENDENCIES
   nokogiri
   omniauth-facebook
   pg
+  quiet_assets
   rack-timeout
   rails (= 4.1.6)
   rails_12factor
