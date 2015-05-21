@@ -362,7 +362,10 @@ $(document).ready(function() {
 
     $('#exchanges').on('ajax:before', '#new_order', (function(evt, xhr, settings) {
         order_id = value_of('order_id');
-        if (order_id) {$('.confirmation_form #order_id').val(order_id)}
+        if (order_id) {
+            $('.confirmation_form form').attr('action', '/orders/' + order_id);
+            $('.confirmation_form #order_id').val(order_id);
+          }
     }));
 
     $('#exchanges').on('ajax:success', '#new_order', (function(evt, data, status, xhr) {

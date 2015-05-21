@@ -1,4 +1,4 @@
-<%= simple_form_for Order.new, method: status == 'produced' ? :post : :put, url: {action: status == 'produced' ? :create : :update, controller: :orders}, validate: false, remote: true, html: {data: {type: :json} } do |f| %>
+<%= simple_form_for Order.new, method: status == 'produced' ? :post : :put, url: orders_path, validate: false, remote: true, html: {data: {type: :json} } do |f| %>
 
 
     <div class="hidden_fields">
