@@ -5,7 +5,7 @@
 
 // Variables
 $font-family: 'Lato', sans-serif;
-
+$navbar-height: 80px;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
@@ -161,7 +161,7 @@ $inverse-color: #ffffff;
 //
 body#cambiu {
     
-  padding-top: 80px;
+  padding-top: $navbar-height;
   font-family: $font-family;
   color: $color;
   .btn {border-radius: $border-radius;}
@@ -178,7 +178,7 @@ body#cambiu {
 
   .navbar {
     background-color: #fff;
-    height: 80px;
+    height: $navbar-height;
     border: none;
     margin-bottom: 0;
     padding-top: 10px;
@@ -192,7 +192,10 @@ body#cambiu {
       }
   }
   .section_anchor {
-  }
+    display: block;
+    margin-top: $navbar-height * -1;        /* Size of fixed header */
+    padding-bottom: $navbar-height;
+    display: block;   }
   #new_search {
     .homepage_search_button {
       margin-top: -15px;
