@@ -182,9 +182,7 @@ $(document).ready(function() {
     window.addEventListener("popstate", function(e) {
 
         console.log('>>>>>>>>>>>>>> pop. e.state: ' + e.state);
-        var url = e.state.slice(1);
-        setPage(url);
-
+        if (e.state && e.state.length > 0) setPage(e.state.slice(1));
     });
 
 
