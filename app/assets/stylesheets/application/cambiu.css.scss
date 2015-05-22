@@ -166,7 +166,7 @@ body#cambiu {
   color: $color;
   .btn {border-radius: $border-radius;}
   a:not(.carousel-control) {
-    color: $lightgrey;
+    color: $grey73;
   }
   [data-href] {
     cursor: pointer;
@@ -181,6 +181,7 @@ body#cambiu {
     height: 80px;
     border: none;
     margin-bottom: 0;
+    padding-top: 10px;
       .navbar-brand {
         margin-top: -10px;
       }
@@ -261,19 +262,29 @@ body#cambiu {
     }
     .hdiw_title {
       height: 50px;
-      margin-bottom: 40px;
+      margin-bottom: 15px;
+      margin-top: 40px;
+      font-size: 30px;
+      color: $black;
     }
     .hdiw_under_title {
       margin-bottom: 40px;
+      font-weight: $light;
+      color: $grey3c;
     }
     .hdiw_text {
       margin-top: 25px;
+      font-weight: $light;
+      color: $grey3c;
+    }
+    #hand_icon {
+      margin-left: -20px;
     }
   }
   
   .getstarted_button_container {
     &.a {
-      margin-top: 60px;
+      margin-top: 10px;
       margin-bottom: 120px;
     }
     &.b {
@@ -281,14 +292,15 @@ body#cambiu {
       margin-bottom: 70px;
     }
     .getstarted_button {
+      width: 100%;
       background-color: $lightgreen;
       border-bottom: 3px solid $darkgreen;
       color: #fff;
       text-transform: uppercase;
-      font-size: 1.3em;
-      font-weight: 400;
+      font-size: 1.1em;
+      font-weight: $bold;
+      text-indent: 3px;
       height: $button-height;
-      border-radius: 5px;
       &:hover {
         background-color: $darkgreen;
       }
@@ -1094,11 +1106,9 @@ body#cambiu {
 
     .getstarted_button_container {
       .getstarted_button {
-        margin-left: -12.5%;
-        width: 125%;
       }
       img {
-        right: 14px;
+        right: -5px;
       }
     }
 
