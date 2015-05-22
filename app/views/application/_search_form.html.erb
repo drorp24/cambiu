@@ -17,9 +17,10 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="form-group col-md-12 col-xs-12">
+		<div class="location_control form-group col-md-12 col-xs-12">
 			<%= f.input :location, input_html: {data: {field: 'location', searchbox: 'true'}}, placeholder: '  Current location' %>
-		</div>
+            <%= fa_icon "chevron-down" %>
+ 		</div>
 	</div>
 
 	<div class="hidden_fields">
@@ -37,7 +38,7 @@
 
 
 	<div class="row">
-		<div class="form-group col-md-12 col-xs-12">
+		<div class="homepage_search_button form-group col-md-12 col-xs-12">
 			<%= image_tag 'logo_no_text.png' %>
 			<%= f.button :submit, "Get the best rate", data: {href: 'exchanges/list'} %>
 		</div>
