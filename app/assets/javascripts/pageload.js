@@ -38,6 +38,8 @@ var def_buy_currency    = "EUR";
 var def_sort            = 'quote';
 var value_of;
 var set_defaults;
+var current_url;
+var current_hash;
 
 
 
@@ -51,6 +53,12 @@ current_url = function() {
     if (sessionStorage.id != "null") url += ('/' + sessionStorage.id);
     if (sessionStorage.pane != "null") url += ('/' + sessionStorage.pane);
     return url;
+};
+
+current_hash = function() {
+    var hash = value_of('hash');
+    if (hash && hash.length > 1) hash = hash.slice(1);
+    return hash;
 };
 
 
@@ -72,7 +80,7 @@ $(document).on('click','.navbar-collapse.in',function(e) {
 
 $(document).ready(function() {
 
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+//    document.body.scrollTop = document.documentElement.scrollTop = 0;
     if (!sessionStorage.location) getLocation();
 
 

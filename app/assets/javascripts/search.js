@@ -124,7 +124,7 @@ $(document).ready(function() {
     //Default and per-page values
 
     sessionStorage.page         = window.location.hostname;
-    sessionStorage.rest         = window.location.hash;
+    sessionStorage.hash         = window.location.hash;
 
     var use_session = true;
     set_defaults(use_session);
@@ -332,9 +332,9 @@ $(document).ready(function() {
 
     // #search_form submits the shadow form #new_search rather than itself
 
-    $('#search_form #search_button').click(function(e) {
+    $('#search_form #search_button, .getstarted_button').click(function(e) {
         e.preventDefault();
-        if (mobile) {$('#exchange_params_change').collapse('toggle');}
+        if (mobile) {$('#exchange_params_change').collapse('hide');}
         $('#new_search').submit();
      });
 
@@ -354,9 +354,12 @@ $(document).ready(function() {
     });
 
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
-        console.log('#new_search ajax:success. Starting to updatePage...');
+        console.log('#new_search ajax:success. A: Starting to updatePage...');
         updatePage(data);
-        setPage(current_url());
+        var url = current_url();
+        var hash = current_hash();
+        console.log('#new_search ajax:success. B: Calling setPage with: ' + url + ' and ' + String(hash));
+        setPage(url, hash);
         // TODO: re-highlight selected exchange map marker
     });
 

@@ -44,7 +44,23 @@ $(document).ready(function() {
 
     }
 
-    setPage = function(url) {
+    setPage = function(url, hash) {
+
+        // Parse arguments
+
+        console.log('setPage entered');
+        console.log('url argument: ' + url);
+        console.log('hash argument: ' + String(hash));
+        console.log('current_url: ' + current_url());
+        console.log('current_hash: ' + String(current_hash()));
+
+        if (url == current_url() && hash == current_hash() ) {console.log('already on that page. Existing'); return}
+
+        if (hash === undefined) {
+            hash = null;
+        } else if (hash && hash[0] == '#') {
+            hash = hash.slice(1)
+        }
 
         var url_a       = url.split('/');
         if (url_a.length == 3) {
@@ -58,7 +74,8 @@ $(document).ready(function() {
         }
         var exchangeid  = id;
 
-        console.log('setPage. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane);
+        console.log('setPage. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + hash);
+
 
         // update session
         sessionStorage.exchangeid   = exchangeid    ? exchangeid    : null;
@@ -118,7 +135,6 @@ $(document).ready(function() {
         $('.pane.active').hide();
         $('.page.active').removeClass('active');
         $('.pane.active').removeClass('active');
-        console.log('after removing active class there are ' + $('.page.active').length + ' pages active and ' + $('.pane.active').length + ' panes active.');
         if (page) {
             console.log('revealing page: ' + page);
             page_el = $('.page[data-page=' + page + ']');
@@ -134,7 +150,6 @@ $(document).ready(function() {
             pane_el.show();
         }
 
-        console.log('after adding active class to proper page and pane there are ' + $('.page.active').length + ' pages active and ' + $('.pane.active').length + ' panes active.');
 
         // populate/empty exchange
         $('.pane.active').each(function () {
@@ -157,6 +172,9 @@ $(document).ready(function() {
         } else {
             console.log('>>>>>>>>>>>>>>>>>> current pathname matches the url; not pushing');
         }
+
+        // if hash argument was included, go to it
+        if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true)}
 
     };
 
@@ -182,14 +200,23 @@ $(document).ready(function() {
     window.addEventListener("popstate", function(e) {
 
         console.log('>>>>>>>>>>>>>> pop. e.state: ' + e.state);
-        if (e.state && e.state.length > 0) setPage(e.state.slice(1));
+        if (e.state && e.state.length > 0) {
+            setPage(e.state.slice(1));
+        } else
+        if (window.location.hash && window.location.pathname.length > 1) {
+            console.log('>>>>>>>>>>>>>> ... but a hash exists - settingPage according to path');
+            // when user goes to hash it's not pushed to history hence e.state is null in this case
+            // this case is identified by the popstate event and the hash in the location
+            setPage(window.location.pathname.slice(1),window.location.hash.slice(1));
+        }
     });
 
 
     // first entry, reloads, direct linking
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
-    console.log('full page re/load. settingPage to: ' + reload_path);
-    setPage(reload_path);
+    var hash = window.location.hash ? window.location.hash.slice(1) : null;
+    console.log('full page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
+    setPage(reload_path, hash);
 
 
 });

@@ -74,5 +74,13 @@ class Search < ActiveRecord::Base
 
   end
 
+  def hash
+    self.rest
+  end
+
+  def hash=(val)
+    self.rest = val
+  end
+
   
 end
