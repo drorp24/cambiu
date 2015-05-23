@@ -331,12 +331,16 @@ $(document).ready(function() {
 
 
     // #search_form submits the shadow form #new_search rather than itself
+    // not needed
 
+/*
     $('#search_form #search_button, .getstarted_button').click(function(e) {
+        alert('click')
         e.preventDefault();
         if (mobile) {$('#exchange_params_change').collapse('hide');}
         $('#new_search').submit();
      });
+*/
 
     // any click to change params returns to main search page
     $('#search_form input').click(function() {

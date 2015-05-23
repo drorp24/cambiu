@@ -317,7 +317,7 @@ body#cambiu {
       margin-bottom: 120px;
     }
     &.b {
-      margin-top: 70px;
+      margin-top: 20px;
       margin-bottom: 70px;
     }
     .getstarted_button {
@@ -438,13 +438,13 @@ body#cambiu {
     }
   }
   .map_heading {
-    min-height: 70px;
+    min-height: 100px;
     padding: 0 5px;
     @media (max-width: $screen-xs-max){
       line-height: 35px;
     }
     @media (min-width: $screen-sm-min) {
-      line-height: 70px;
+      line-height: 100px;
     }
     background-color: $lightgreen;
     text-transform: uppercase;
