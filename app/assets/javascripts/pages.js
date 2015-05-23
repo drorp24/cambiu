@@ -54,12 +54,24 @@ $(document).ready(function() {
         console.log('current_url: ' + current_url());
         console.log('current_hash: ' + String(current_hash()));
 
-        if (url == current_url() && hash == current_hash() ) {console.log('already on that page. Existing'); return}
-
         if (hash === undefined) {
-            hash = null;
+/*
+            var p = parseUrl(url);
+            if (p.hash) {
+                hash = p.hash.slice(1);
+                url = p.pathname.slice(1);
+              } else {
+*/
+                hash = null;
+ //           }
         } else if (hash && hash[0] == '#') {
             hash = hash.slice(1)
+        }
+
+        if (url == current_url() && hash == current_hash() ) {
+            if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true)}
+            console.log('already on that page. Existing');
+            return;
         }
 
         var url_a       = url.split('/');
@@ -74,7 +86,7 @@ $(document).ready(function() {
         }
         var exchangeid  = id;
 
-        console.log('setPage. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + hash);
+        console.log('setPage parse results - url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + hash);
 
 
         // update session

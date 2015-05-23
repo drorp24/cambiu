@@ -40,6 +40,15 @@ var value_of;
 var set_defaults;
 var current_url;
 var current_hash;
+var parseUrl;
+
+
+
+parseUrl = function(url) {
+    var a = document.createElement('a');
+    a.href = url;
+    return a;
+};
 
 
 
