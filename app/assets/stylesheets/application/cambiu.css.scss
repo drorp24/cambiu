@@ -182,14 +182,40 @@ body#cambiu {
     border: none;
     margin-bottom: 0;
     padding-top: 10px;
-      .navbar-brand {
-        margin-top: -10px;
-      }
-      .navbar-nav > li > a {
+    .navbar-brand {
+      margin-top: -10px;
+    }
+  }
+  .navbar-collapse {
+     &.in {
+      background: rgba(0, 0, 0, 0.7);
+      margin-left: -15px;
+      margin-right: -15px;
+      color: $white;
+      li a {
         line-height: 35px;
         margin-bottom: -20px;
-        color: $grey73;
+        color: $white;
+        margin-bottom: 10px;
+        font-size: 1.3em;
+        &:hover {
+          color: $brand-color;
+          background: none;
+          }
       }
+    }
+    &:not(.in)  li  a {
+      line-height: 35px;
+      margin-bottom: -20px;
+      color: $grey73;
+      &:hover, &:active {
+        color: $brand-color;
+        background: none;
+      }
+      &:visited, &:focus {
+        background: none;
+      }
+    }
   }
   .section_anchor {
     display: block;

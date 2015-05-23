@@ -63,6 +63,13 @@ display = function(term) {
     }
 };
 
+// make the mobile navbar collapse when a link is clicked
+$(document).on('click','.navbar-collapse.in',function(e) {
+    if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+        $(this).collapse('hide');
+    }
+});
+
 $(document).ready(function() {
 
     document.body.scrollTop = document.documentElement.scrollTop = 0;
