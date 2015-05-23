@@ -54,7 +54,9 @@ $(document).ready(function() {
         console.log('current_url: ' + current_url());
         console.log('current_hash: ' + String(current_hash()));
 
-        if (url == current_url() && hash == current_hash() ) {console.log('already on that page. Existing'); return}
+        if (url == current_url() && hash == current_hash() ) {
+            if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true)}
+            console.log('already on that page. Existing'); return}
 
         if (hash === undefined) {
             hash = null;
@@ -74,7 +76,7 @@ $(document).ready(function() {
         }
         var exchangeid  = id;
 
-        console.log('setPage. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + hash);
+        console.log('setPage parsing:. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + hash);
 
 
         // update session
@@ -174,7 +176,7 @@ $(document).ready(function() {
         }
 
         // if hash argument was included, go to it
-        if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true)}
+        if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true);}
 
     };
 
@@ -187,14 +189,17 @@ $(document).ready(function() {
         var pane =        $this.data('href-pane');
         var id =          $this.data('href-id');
         var url =         (page && pane && id) ? page + '/' + id + '/' + pane : href;
+        var hash =        $this.data('href-hash');
 
-        console.log('data-href element clicked. href-id: ' + id);
-        setPage(url);
-        if ($this.is('[data-reload')) location.reload();
+        console.log('data-href element clicked. href: ' + href + ' href-id: ' + id + ' hash: ' + String(hash));
+        setPage(url, hash);
+//        if ($this.is('[data-reload')) location.reload();
 
     }));
 
-
+    $('a[data-href]').click(function(e) {
+        e.preventDefault();
+    });
 
 
     window.addEventListener("popstate", function(e) {
