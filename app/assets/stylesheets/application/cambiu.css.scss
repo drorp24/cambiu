@@ -349,6 +349,7 @@ body#cambiu {
       margin: 10px;
     }
     #testimonials_carousel {
+      margin-top: -10px;
 
       .middle-parent {
         @media (min-width: $screen-sm-min) {
@@ -401,11 +402,13 @@ body#cambiu {
         }
       }
       .testimonial {
+        font-style: italic;
+        color: $black;
         @media (max-width: $screen-xs-max){
-          font-size: 1em;
+          font-size: 1.1em;
         }
         @media (min-width: $screen-sm-min){
-          font-size: 1.1em;
+          font-size: 1.4em;
         }
         font-weight: 400;
         margin-top: 7px;
@@ -416,12 +419,13 @@ body#cambiu {
       }
       .credit {
         color: $lightgreen;
-        margin-top: -15px;
-        @media (min-width: $screen-sm-min) {
+         @media (min-width: $screen-sm-min) {
           margin-left: -20px;
-        }
+          margin-top: -24px;
+         }
         @media (max-width: $screen-xs-max){
           font-size: 0.9em;
+          margin-top: -18px;
         }
       }
     }
