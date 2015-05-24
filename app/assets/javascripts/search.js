@@ -99,7 +99,7 @@ bind_currency_to_autonumeric = function() {
         var session_buy_amount      = value_of('buy_amount');
         var session_buy_currency    = value_of('buy_currency');
         var session_sort            = value_of('sort');
-        
+
         set('pay_amount',   use_session  ? session_pay_amount     || (session_buy_amount ? null : def_pay_amount)   : def_pay_amount);
         set('pay_currency', use_session  ? session_pay_currency   || def_pay_currency                               : def_pay_currency);
         set('buy_amount',   use_session  ? session_buy_amount     || (session_pay_amount ? null : def_buy_amount)   : def_buy_amount);
