@@ -374,6 +374,27 @@ $(document).ready(function() {
          model_populate('order', order);
     }));
 
+    // Record rails validations errors
+    
+    $('#new_search').on('ajax:error', function(event, xhr, status, error) {
+        var errors = $.parseJSON(xhr.responseText).errors;
+        console.log('#new_search submit returned with the following errors:');
+        for (i = 0; i < errors.length; i++) {
+            console.log(errors[i])
+        }
+    });
+
+    $('#email_form').on('ajax:error', function(event, xhr, status, error) {
+        var errors = $.parseJSON(xhr.responseText).errors;
+        console.log('#email_form submit returned with the following errors:');
+        for (i = 0; i < errors.length; i++) {
+            console.log(errors[i])
+        }
+        alert('Not submited due to error: ' + errors[0]);
+    });
+
+
+
     // clicking on certain elements rests params to default values
     $('[data-set-default]').click(function() {
          var use_session = false;

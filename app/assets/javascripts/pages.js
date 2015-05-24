@@ -54,10 +54,11 @@ $(document).ready(function() {
         console.log('current_url: ' + current_url());
         console.log('current_hash: ' + String(current_hash()));
 
-        if (url == current_url() && hash == current_hash() ) {
+        // TODO: Remove: prevents form data from populating if in the same page
+ /*     if (url == current_url() && hash == current_hash() ) {
             if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true)}
             console.log('already on that page. Existing'); return}
-
+*/
         if (hash === undefined) {
             hash = null;
         } else if (hash && hash[0] == '#') {

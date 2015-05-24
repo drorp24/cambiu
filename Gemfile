@@ -38,6 +38,8 @@ gem 'diskcached'
 gem 'active_admin_importable'
 gem 'tod'
 gem 'simple_form'
+gem 'client_side_validations', github: "bcardarella/client_side_validations", :branch => "4-0-beta"
+gem 'client_side_validations-simple_form', git: 'git://github.com/saveritemedical/client_side_validations-simple_form.git'
 gem 'backstretch-rails'
 gem 'money'
 #gem 'eu_central_bank'
