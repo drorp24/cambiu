@@ -603,6 +603,14 @@ body#cambiu {
       text-align: center;
       text-transform: uppercase;
       border: none;
+
+      #search_form {
+        .bootstrap-switch .bootstrap-switch-container {
+          .bootstrap-switch-handle-on, .bootstrap-handle-off, .bbostrap-switch-label {
+            font-size: 0.9em;
+          }
+        }
+      }
     }
     #exchanges_content {
       z-index: -1;
@@ -1166,9 +1174,9 @@ body#cambiu {
 // OLD SEARCH PAGE
 
     .bootstrap-switch {
-      border-radius: $border-radius;      
+      border-radius: $border-radius;
         .bootstrap-switch-label, .bootstrap-switch-handle-off, .bootstrap-switch-handle-on {
-          padding-top: 0;
+           padding-top: 0;
           padding-bottom: 0;
         }     
       .bootstrap-switch-container {
