@@ -375,7 +375,7 @@ $(document).ready(function() {
     }));
 
     // Record rails validations errors
-    
+
     $('#new_search').on('ajax:error', function(event, xhr, status, error) {
         var errors = $.parseJSON(xhr.responseText).errors;
         console.log('#new_search submit returned with the following errors:');
