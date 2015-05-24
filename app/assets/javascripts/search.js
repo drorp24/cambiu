@@ -94,22 +94,19 @@ bind_currency_to_autonumeric = function() {
 
         console.log('set_defaults');
 
+        var session_pay_amount      = value_of('pay_amount');
+        var session_pay_currency    = value_of('pay_currency');
+        var session_buy_amount      = value_of('buy_amount');
+        var session_buy_currency    = value_of('buy_currency');
+        var session_sort            = value_of('sort');
+        
+        set('pay_amount',   use_session  ? session_pay_amount     || (session_buy_amount ? null : def_pay_amount)   : def_pay_amount);
+        set('pay_currency', use_session  ? session_pay_currency   || def_pay_currency                               : def_pay_currency);
+        set('buy_amount',   use_session  ? session_buy_amount     || (session_pay_amount ? null : def_buy_amount)   : def_buy_amount);
+        set('buy_currency', use_session  ? session_buy_currency   || def_buy_currency                               : def_buy_currency);
+        set('sort',         use_session  ? session_sort           || def_sort                                       : def_sort);
 
-        var session_pay_amount      = use_session ? value_of('pay_amount')      : null;
-        var session_pay_currency    = use_session ? value_of('pay_currency')    : null;
-        var session_buy_amount      = use_session ? value_of('buy_amount')      : null;
-        var session_buy_currency    = use_session ? value_of('buy_currency')    : null;
-        var session_sort            = use_session ? value_of('sort')            : null;
-
-        console.log('session_buy_amount after assignment: ' + session_buy_amount)
-
-        set('pay_amount',   session_pay_amount    ? session_pay_amount          : def_pay_amount);
-        set('pay_currency', session_pay_currency  ? session_pay_currency        : def_pay_currency);
-        set('buy_amount',   session_buy_amount    ? session_buy_amount          : def_buy_amount);
-        set('buy_currency', session_buy_currency  ? session_buy_currency        : def_buy_currency);
-        set('sort',         session_sort          ? session_sort                : def_sort);
-
-        console.log('sessionStorage.buy_amount after assignment: ' + sessionStorage.buy_amount)
+        console.log('sessionStorage.buy_amount after assignment: ' + sessionStorage.buy_amount);
         bind_currency_to_autonumeric();
     };
 
