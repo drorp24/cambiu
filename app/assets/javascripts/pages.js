@@ -183,6 +183,8 @@ $(document).ready(function() {
 
     $('body').on('click', '[data-href]', (function() {
 
+        if (!$('#email_form').valid()) return;
+
         var $this =       $(this);
         var exchangeid =  $this.data('exchangeid');
         var href =        $this.data('href');

@@ -165,6 +165,15 @@ body#cambiu {
   font-family: $font-family;
   color: $color;
   .btn {border-radius: $border-radius;}
+  .background {
+    @include background-img('header_background.jpg');
+    @media (min-width: $screen-sm-min) {
+      height: 430px;
+    }
+    @media (max-width: $screen-xs-max) {
+      height: 488px;
+    }
+  }
   a:not(.carousel-control) {
     color: $grey73;
   }
@@ -175,6 +184,64 @@ body#cambiu {
     border-radius: 0;
   }
   .form-control {border-radius: $border-radius;}
+  .validation_errors {
+ //   visibility: hidden;
+    height: 2em;
+    line-height: 2em;
+    margin-bottom: 15px;
+    margin-top: -15px;
+    padding-left: 15px;
+  }
+  .error_class {
+    color: $brand-color;
+    &::before {
+      font-family: fontAwesome;
+      content:"\f071";
+      margin-right: 10px;
+    }
+  }
+  .valid_class {
+    color: $lightgreen;
+    &::before {
+      font-family: fontAwesome;
+      content:"\f05d" + '    ';
+      margin-right: 10px;
+    }
+  }
+
+
+  &.home  {
+    .above_fold {
+      .main {
+        margin-top: /*15vh*/45px;
+        margin-bottom: 10vh;
+        .marketing {
+          .pre {
+            font-weight: $normal;
+            color: $black;
+            font-size: 1.2em;
+            margin-top: 10px;
+            margin-bottom: 5px;
+          }
+          .heading {
+            font-weight: $bold;
+            color: $lightgreen;
+            text-transform: uppercase;
+            font-size: 3.2em;
+            line-height: 1.1em;
+            margin-bottom: 40px;
+            margin-top: 15px;
+          }
+          .post {
+            font-weight: 400;
+            color: $black;
+            font-size: 1.1em;
+          }
+        }
+      }
+    }
+  }
+
 
   .navbar {
     background-color: #fff;
@@ -300,11 +367,24 @@ body#cambiu {
       margin-bottom: 40px;
       font-weight: $light;
       color: $grey3c;
+      @media (min-width: $screen-sm-min) {
+        font-size: 1.25em;
+      }
+      @media (max-width: $screen-xs-max) {
+        font-size: 1.1em;
+      }
+
     }
     .hdiw_text {
       margin-top: 25px;
       font-weight: $light;
       color: $grey3c;
+      @media (min-width: $screen-sm-min) {
+        font-size: 1.25em;
+      }
+      @media (max-width: $screen-xs-max) {
+        font-size: 1.1em;
+      }
     }
     #hand_icon {
       margin-left: -20px;
@@ -896,7 +976,7 @@ body#cambiu {
           #search_email {
             @include placeholder-icon("\f0e0");
             @include placeholder-email;
-            text-transform: capitalize;
+            font-size: 1.3em;
             @media (max-width: $screen-xs-max) {
               height: 40px;
               margin-top: 30px;
@@ -1109,41 +1189,6 @@ body#cambiu {
     .mobile_only {
       display: none !important;
     }
-    &.home  {
-      .background {
-        @include background-img('header_background.jpg');      
-        height: 430px;
-      }
-      .above_fold {
-        .main {
-          margin-top: /*15vh*/45px;
-          margin-bottom: 10vh;
-          .marketing {
-            .pre {
-              font-weight: $normal;
-              color: $black;
-              font-size: 1.2em;
-              margin-top: 10px;
-              margin-bottom: 5px;
-            }
-            .heading {
-              font-weight: $bold;
-              color: $lightgreen;
-              text-transform: uppercase;
-              font-size: 3.2em;
-              line-height: 1.1em;
-              margin-bottom: 40px;
-              margin-top: 15px;
-            }
-             .post {
-              font-weight: 400;
-              color: $black;
-              font-size: 1.1em;
-            }
-          }
-        }
-      }
-    }
 
     .getstarted_button_container {
       .getstarted_button {
@@ -1318,9 +1363,7 @@ body#cambiu {
     }
 
     &.home {
-      @include background-img('header_background_mobile.jpg');
-      height: 100vh;
-      .above_fold {
+       .above_fold {
         .main {
           margin-top: 3vh;
           margin-bottom: 3vh;
@@ -1334,8 +1377,9 @@ body#cambiu {
               font-weight: $bold;
               color: $lightgreen;
               text-transform: uppercase;
-              font-size: 2em;
+              font-size: 2.1em;
               line-height: 1.1em;
+              margin-bottom: 20px;
             }
             .post {
               font-weight: $normal;
@@ -1350,7 +1394,7 @@ body#cambiu {
       }
 
     }
-    
+
     .getstarted_button_container {
       .getstarted_button {
          width: 100%;

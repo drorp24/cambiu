@@ -1,6 +1,10 @@
 class SearchesController < ApplicationController 
   skip_before_filter :verify_authenticity_token
 
+  def unique
+    render json: !Search.where(email: search_params[:email]).exists?
+  end
+
   # record the search, return results, no validations
   def create
     @search = Search.create(search_params)
@@ -20,7 +24,7 @@ class SearchesController < ApplicationController
    if @search.errors.any?
      render json: {errors: @search.errors.full_messages}, status: 422
    else
-    render json: {status: 'OK'}
+    render json: @search
    end
 
   end
