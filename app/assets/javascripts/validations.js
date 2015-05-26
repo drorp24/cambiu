@@ -52,7 +52,7 @@ $(document).ready(function() {
     }, "Please select two different currencies");
 
 
-    new_search_validator = $( "#new_search" ).validate({
+    $( "#new_search" ).validate({
         rules: {
             'search[pay_currency]': {
                 unique: true
