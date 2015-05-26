@@ -183,9 +183,13 @@ $(document).ready(function() {
 
     $('body').on('click', '[data-href]', (function() {
 
-        if (!$('#email_form').valid()) return;
-
+        // if clicked element is part of a form, dont move page unless form is valid
         var $this =       $(this);
+        var form  =       $this.closest('form');
+        if (form.length > 0) {
+            if (!form.valid()) return
+        }
+
         var exchangeid =  $this.data('exchangeid');
         var href =        $this.data('href');
         var page =        $this.data('href-page');
