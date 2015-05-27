@@ -8,16 +8,16 @@
 //= require jquery_ujs
 //= require autonumeric
 //= require jquery.validate
-//= require validations
-
-//= require pageload
-//= require models
-//= require findlocation
-//= require exchanges
-//= require search
-//= require pages
 
 //= require bootstrap/transition
 //= require bootstrap/collapse
 //= require bootstrap/carousel
 //= require bootstrap-switch
+
+//= require initialize
+//= require models
+//= require findlocation
+//= require exchanges
+//= require search
+//= require pages
+//= require validations

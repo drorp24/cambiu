@@ -4,6 +4,8 @@
 
 $(document).ready(function() {
 
+    console.log('pages');
+
 
     // TODO: Make it a loop
     function populate(el, exchange) {
@@ -224,11 +226,20 @@ $(document).ready(function() {
     });
 
 
+    //   P A G E     R E / L O A D
     // first entry, reloads, direct linking
+
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
     console.log('full page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
     setPage(reload_path, hash);
+
+    // reload refreshes search results & map by re-submiting the form now populated from session (search.js)
+
+    homepage = $('body').hasClass('homepage');
+    if (!homepage) $('#new_search').submit();
+
+    // validate homepage form only upon click
 
 
 });

@@ -342,14 +342,8 @@ $(document).ready(function() {
     });
 
 
-    // reload refreshes search results & map by re-submiting the form populated from session
-
-    var homepage = $('body').hasClass('homepage');
-    if (!homepage) $('#new_search').submit();
-
-    // validate homepage form only upon click
     $('#homepage #new_search input, #homepage #new_search select').click(function() {
-        new_search_validator.form()
+ //       validate_new_search()
     });
     $('#new_search').on('ajax:before', function() {
         beforeSubmit()

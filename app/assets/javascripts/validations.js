@@ -42,6 +42,7 @@ $(document).ready(function() {
 
      is_currency_unique = function(element) {
         $element = $(element);
+         console.log('checking uniqueness of ' + $element.data('field'));
         if ($element.data('field') == 'pay_currency') { var check = $element.val() != $element.closest('form').find('[data-field=buy_currency]').val()};
         if ($element.data('field') == 'buy_currency') { var check = $element.val() != $element.closest('form').find('[data-field=pay_currency]').val()};
         return check;
@@ -51,17 +52,19 @@ $(document).ready(function() {
         return is_currency_unique(element);
     }, "Please select two different currencies");
 
-
-    $( "#new_search" ).validate({
-        rules: {
-            'search[pay_currency]': {
-                unique: true
-            },
-            'search[buy_currency]': {
-                unique: true
+console.log('before validate');
+    new_search_validator =
+        $( "#new_search" ).validate({
+            rules: {
+                'search[pay_currency]': {
+                    unique: true
+                },
+                'search[buy_currency]': {
+                    unique: true
+                }
             }
-        }
-    });
+        });
+     console.log('after validate')
 
 
 });
