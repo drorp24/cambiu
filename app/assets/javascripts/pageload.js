@@ -38,11 +38,8 @@ var def_buy_currency    = "EUR";
 var def_sort            = 'quote';
 var value_of;
 var set_defaults;
+var current_url;
 var current_hash;
-var validate_new_search;
-var new_search_rules;
-var new_search_messages;
-var new_search_validator;
 
 
 
@@ -82,8 +79,6 @@ $(document).on('click','.navbar-collapse.in',function(e) {
 });
 
 $(document).ready(function() {
-
-    console.log('initialize');
 
 //    document.body.scrollTop = document.documentElement.scrollTop = 0;
     if (!sessionStorage.location) getLocation();
