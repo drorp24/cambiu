@@ -54,7 +54,12 @@ $(document).ready(function() {
         console.log('current_url: ' + current_url());
         console.log('current_hash: ' + String(current_hash()));
 
-         if (hash === undefined) {
+        // TODO: Remove: prevents form data from populating if in the same page
+ /*     if (url == current_url() && hash == current_hash() ) {
+            if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true)}
+            console.log('already on that page. Existing'); return}
+*/
+        if (hash === undefined) {
             hash = null;
         } else if (hash && hash[0] == '#') {
             hash = hash.slice(1)
@@ -74,11 +79,6 @@ $(document).ready(function() {
 
         console.log('setPage parsing:. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + hash);
 
-         if (!id && url == current_url() && hash == current_hash() ) {
-             if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true)}
-             console.log('already on that page. Existing');
-             return
-         };
 
         // update session
         sessionStorage.exchangeid   = exchangeid    ? exchangeid    : null;
