@@ -16,7 +16,10 @@ $(document).ready(function() {
             },
         validClass: 'valid_class',
         success: function(label) {
-            label.removeClass("error_class").addClass("valid_class").text("Thank you!")
+            if (label.hasClass("error_class")) {
+//                console.log('success and label.hasClass(error_class)')
+                label.removeClass("error_class")/*.addClass("valid_class").text("Thank you!")*/
+            }
         }
     });
 
@@ -41,6 +44,7 @@ $(document).ready(function() {
     });
 
      is_currency_unique = function(element) {
+         console.log('is_currency_unique');
         $element = $(element);
         if ($element.data('field') == 'pay_currency') { var check = $element.val() != $element.closest('form').find('[data-field=buy_currency]').val()};
         if ($element.data('field') == 'buy_currency') { var check = $element.val() != $element.closest('form').find('[data-field=pay_currency]').val()};
@@ -50,6 +54,12 @@ $(document).ready(function() {
     jQuery.validator.addMethod("unique", function(value, element) {
         return is_currency_unique(element);
     }, "Please select two different currencies");
+
+    $('[data-field]').tooltipster({
+        trigger: 'custom', // default is 'hover' which is no good here
+        onlyOne: false,    // allow multiple tips to be open at a time
+        position: 'top'
+    });
 
 
     new_search_validator = $( "#new_search" ).validate({
@@ -62,6 +72,36 @@ $(document).ready(function() {
             }
         }
     });
+
+    new_search_validator.form();
+
+    search_form_validator = $( "#search_form" ).validate({
+        errorPlacement: function (error, element) {
+            var lastError = $(element).data('lastError'),
+                newError = $(error).text();
+
+            $(element).data('lastError', newError);
+
+            if(newError !== '' && newError !== lastError){
+                $(element).tooltipster('content', newError);
+                $(element).tooltipster('show');
+            }
+        },
+        success: function (label, element) {
+            $(element).tooltipster('hide');
+        },
+        rules: {
+            'pay_currency': {
+                unique: true
+            },
+            'buy_currency': {
+                unique: true
+            }
+        }
+    });
+
+    search_form_validator.form();
+
 
 
 });

@@ -332,7 +332,7 @@ $(document).ready(function() {
     $('#search_form #search_button').click(function(e) {
         e.preventDefault();
         if (mobile) {$('#exchange_params_change').collapse('hide');}
-        $('#new_search').submit();
+        if ($('#search_form').valid()) {$('#new_search').submit()};
      });
 
     // any click to change params returns to main search page
@@ -342,15 +342,18 @@ $(document).ready(function() {
     });
 
 
+    // TODO: Move to pages.js
     // reload refreshes search results & map by re-submiting the form populated from session
 
     var homepage = $('body').hasClass('homepage');
     if (!homepage) $('#new_search').submit();
 
-    // validate homepage form only upon click
-    $('#homepage #new_search input, #homepage #new_search select').click(function() {
-        new_search_validator.form()
-    });
+ 
+    //
+    // AJAX Callbacks
+    //
+
+
     $('#new_search').on('ajax:before', function() {
         beforeSubmit()
     });
@@ -396,7 +399,6 @@ $(document).ready(function() {
         }
         alert('Not submited due to error: ' + errors[0]);
     });
-
 
 
     // clicking on certain elements rests params to default values

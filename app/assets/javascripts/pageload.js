@@ -40,6 +40,8 @@ var value_of;
 var set_defaults;
 var current_url;
 var current_hash;
+var new_search_validator;
+var is_currency_unique;
 
 
 

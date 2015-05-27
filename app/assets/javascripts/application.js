@@ -8,6 +8,7 @@
 //= require jquery_ujs
 //= require autonumeric
 //= require jquery.validate
+//= require jquery.tooltipster.min.js
 //= require validations
 
 //= require pageload

@@ -181,13 +181,16 @@ $(document).ready(function() {
 
     };
 
-    $('body').on('click', '[data-href]', (function() {
+    $('body').on('click', '[data-href]', (function(e) {
 
         // if clicked element is part of a form, dont move page unless form is valid
         var $this =       $(this);
         var form  =       $this.closest('form');
         if (form.length > 0) {
-            if (!form.valid()) return
+            if (!form.valid()) {
+                e.preventDefault();
+                return
+            }
         }
 
         var exchangeid =  $this.data('exchangeid');
@@ -204,9 +207,11 @@ $(document).ready(function() {
 
     }));
 
+/*
     $('a[data-href]').click(function(e) {
         e.preventDefault();
     });
+*/
 
 
     window.addEventListener("popstate", function(e) {

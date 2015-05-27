@@ -73,6 +73,7 @@ end
 gem "rack-timeout"
 gem 'google_currency'
 gem 'google_currency_rails_cache' # TODO: How to install
+gem 'tooltipster-rails'
 #gem 'cloudinary'
 #gem 'compass-rails'
 #gem 'chosen-rails'
