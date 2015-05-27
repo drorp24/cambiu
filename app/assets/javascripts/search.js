@@ -348,7 +348,7 @@ $(document).ready(function() {
     var homepage = $('body').hasClass('homepage');
     if (!homepage) $('#new_search').submit();
 
- 
+
     //
     // AJAX Callbacks
     //
