@@ -5,7 +5,7 @@
 
 // Variables
 $font-family: 'Lato', sans-serif;
-$navbar-height: 80px;
+$navbar-height: 60px;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
@@ -168,7 +168,7 @@ body#cambiu {
   .background {
     @include background-img('header_background.jpg');
     @media (min-width: $screen-sm-min) {
-      height: 430px;
+      height: 330px;
     }
     @media (max-width: $screen-xs-max) {
       height: 488px;
@@ -216,7 +216,7 @@ body#cambiu {
   &.home  {
     .above_fold {
       .main {
-        margin-top: /*15vh*/45px;
+        margin-top: /*15vh*//*45px*/35px;
         margin-bottom: 10vh;
         .marketing {
           .pre {
@@ -251,7 +251,6 @@ body#cambiu {
     height: $navbar-height;
     border: none;
     margin-bottom: 0;
-    padding-top: 10px;
     .navbar-brand {
       margin-top: -10px;
     }
@@ -426,7 +425,6 @@ body#cambiu {
   
   .testimonials {
     background-color: $lightgreybg;
-    border-top: 3px solid $lightgreen;
     padding: 25px inherit;
     .fivestars {
       margin: 10px;
@@ -1380,14 +1378,14 @@ body#cambiu {
               font-weight: $bold;
               color: $lightgreen;
               text-transform: uppercase;
-              font-size: 2.1em;
+              font-size: 1.8em;
               line-height: 1.1em;
               margin-bottom: 20px;
             }
             .post {
               font-weight: $normal;
               color: $darkgrey;
-              font-size: 0.9em;
+              font-size: 0.8em;
             }
           }
         }
