@@ -1310,8 +1310,6 @@
       <column name="srvversion" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="srvacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
       <column name="srvoptions" sqlType="_text" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_foreign_server_name_index" unique="true" columns="srvname"/>
-      <index name="pg_foreign_server_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_foreign_server_name_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="srvname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -1323,7 +1321,6 @@
       <column name="ftrelid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="ftserver" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="ftoptions" sqlType="_text" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_foreign_table_relid_index" unique="true" columns="ftrelid"/>
     </table>
     <table name="pg_foreign_table_relid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="ftrelid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1352,8 +1349,6 @@
       <column name="indoption" sqlType="int2vector" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="indexprs" sqlType="pg_node_tree" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="indpred" sqlType="pg_node_tree" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
-      <index name="pg_index_indexrelid_index" unique="true" columns="indexrelid"/>
-      <index name="pg_index_indrelid_index" unique="false" columns="indrelid"/>
     </table>
     <table name="pg_index_indexrelid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="indexrelid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1372,8 +1367,6 @@
       <column name="inhrelid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="inhparent" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="inhseqno" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <index name="pg_inherits_relid_seqno_index" unique="true" columns="inhrelid,inhseqno"/>
-      <index name="pg_inherits_parent_index" unique="false" columns="inhparent"/>
     </table>
     <table name="pg_inherits_parent_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="inhparent" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1391,8 +1384,6 @@
       <column name="laninline" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="lanvalidator" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="lanacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_language_name_index" unique="true" columns="lanname"/>
-      <index name="pg_language_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_language_name_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="lanname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -1404,7 +1395,6 @@
       <column name="loid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="pageno" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="data" sqlType="bytea" precision="2147483647" scale="0" nullable="true" jdbcType="-2"/>
-      <index name="pg_largeobject_loid_pn_index" unique="true" columns="loid,pageno"/>
     </table>
     <table name="pg_largeobject_loid_pn_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="loid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1413,7 +1403,6 @@
     <table name="pg_largeobject_metadata" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM TABLE">
       <column name="lomowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="lomacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_largeobject_metadata_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_largeobject_metadata_oid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1448,8 +1437,6 @@
       <column name="nspname" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
       <column name="nspowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="nspacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_namespace_nspname_index" unique="true" columns="nspname"/>
-      <index name="pg_namespace_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_namespace_nspname_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="nspname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -1466,8 +1453,6 @@
       <column name="opcintype" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="opcdefault" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
       <column name="opckeytype" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
-      <index name="pg_opclass_am_name_nsp_index" unique="true" columns="opcmethod,opcname,opcnamespace"/>
-      <index name="pg_opclass_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_opclass_am_name_nsp_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="opcmethod" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1492,8 +1477,6 @@
       <column name="oprcode" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="oprrest" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="oprjoin" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
-      <index name="pg_operator_oid_index" unique="true" columns="oid"/>
-      <index name="pg_operator_oprname_l_r_n_index" unique="true" columns="oprname,oprleft,oprright,oprnamespace"/>
     </table>
     <table name="pg_operator_oid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1509,8 +1492,6 @@
       <column name="opfname" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
       <column name="opfnamespace" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="opfowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
-      <index name="pg_opfamily_am_name_nsp_index" unique="true" columns="opfmethod,opfname,opfnamespace"/>
-      <index name="pg_opfamily_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_opfamily_am_name_nsp_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="opfmethod" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1529,7 +1510,6 @@
       <column name="tmplvalidator" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="tmpllibrary" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="tmplacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_pltemplate_name_index" unique="true" columns="tmplname"/>
     </table>
     <table name="pg_pltemplate_name_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="tmplname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -1576,8 +1556,6 @@
       <column name="probin" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="proconfig" sqlType="_text" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
       <column name="proacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_proc_oid_index" unique="true" columns="oid"/>
-      <index name="pg_proc_proname_args_nsp_index" unique="true" columns="proname,proargtypes,pronamespace"/>
     </table>
     <table name="pg_proc_oid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1594,7 +1572,6 @@
       <column name="rngsubopc" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="rngcanonical" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="rngsubdiff" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
-      <index name="pg_range_rngtypid_index" unique="true" columns="rngtypid"/>
     </table>
     <table name="pg_range_rngtypid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="rngtypid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1608,8 +1585,6 @@
       <column name="is_instead" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
       <column name="ev_qual" sqlType="pg_node_tree" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="ev_action" sqlType="pg_node_tree" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
-      <index name="pg_rewrite_oid_index" unique="true" columns="oid"/>
-      <index name="pg_rewrite_rel_rulename_index" unique="true" columns="ev_class,rulename"/>
     </table>
     <table name="pg_rewrite_oid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1645,7 +1620,6 @@
       <column name="objsubid" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="provider" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="label" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-      <index name="pg_seclabel_object_index" unique="true" columns="objoid,classoid,objsubid,provider"/>
     </table>
     <table name="pg_seclabel_object_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="objoid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1700,8 +1674,6 @@
       <column name="refclassid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="refobjid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="deptype" sqlType="char" precision="1" scale="0" nullable="false" jdbcType="1"/>
-      <index name="pg_shdepend_depender_index" unique="false" columns="dbid,classid,objid,objsubid"/>
-      <index name="pg_shdepend_reference_index" unique="false" columns="refclassid,refobjid"/>
     </table>
     <table name="pg_shdepend_depender_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="dbid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1717,7 +1689,6 @@
       <column name="objoid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="classoid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="description" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-      <index name="pg_shdescription_o_c_index" unique="true" columns="objoid,classoid"/>
     </table>
     <table name="pg_shdescription_o_c_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="objoid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -1728,7 +1699,6 @@
       <column name="classoid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="provider" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="label" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-      <index name="pg_shseclabel_object_index" unique="true" columns="objoid,classoid,provider"/>
     </table>
     <table name="pg_shseclabel_object_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="objoid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -2081,7 +2051,6 @@
       <column name="stavalues3" sqlType="anyarray" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="stavalues4" sqlType="anyarray" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="stavalues5" sqlType="anyarray" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
-      <index name="pg_statistic_relid_att_inh_index" unique="true" columns="starelid,staattnum,stainherit"/>
     </table>
     <table name="pg_statistic_relid_att_inh_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="starelid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -2118,8 +2087,6 @@
       <column name="spcowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="spcacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
       <column name="spcoptions" sqlType="_text" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_tablespace_oid_index" unique="true" columns="oid"/>
-      <index name="pg_tablespace_spcname_index" unique="true" columns="spcname"/>
     </table>
     <table name="pg_tablespace_oid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -2154,9 +2121,6 @@
       <column name="tgattr" sqlType="int2vector" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="tgargs" sqlType="bytea" precision="2147483647" scale="0" nullable="true" jdbcType="-2"/>
       <column name="tgqual" sqlType="pg_node_tree" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
-      <index name="pg_trigger_oid_index" unique="true" columns="oid"/>
-      <index name="pg_trigger_tgrelid_tgname_index" unique="true" columns="tgrelid,tgname"/>
-      <index name="pg_trigger_tgconstraint_index" unique="false" columns="tgconstraint"/>
     </table>
     <table name="pg_trigger_oid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -2173,8 +2137,6 @@
       <column name="cfgnamespace" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="cfgowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="cfgparser" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
-      <index name="pg_ts_config_cfgname_index" unique="true" columns="cfgname,cfgnamespace"/>
-      <index name="pg_ts_config_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_ts_config_cfgname_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="cfgname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -2185,7 +2147,6 @@
       <column name="maptokentype" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="mapseqno" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="mapdict" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
-      <index name="pg_ts_config_map_index" unique="true" columns="mapcfg,maptokentype,mapseqno"/>
     </table>
     <table name="pg_ts_config_map_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="mapcfg" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -2201,8 +2162,6 @@
       <column name="dictowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="dicttemplate" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="dictinitoption" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-      <index name="pg_ts_dict_dictname_index" unique="true" columns="dictname,dictnamespace"/>
-      <index name="pg_ts_dict_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_ts_dict_dictname_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="dictname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -2219,8 +2178,6 @@
       <column name="prsend" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="prsheadline" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="prslextype" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
-      <index name="pg_ts_parser_oid_index" unique="true" columns="oid"/>
-      <index name="pg_ts_parser_prsname_index" unique="true" columns="prsname,prsnamespace"/>
     </table>
     <table name="pg_ts_parser_oid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -2234,8 +2191,6 @@
       <column name="tmplnamespace" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="tmplinit" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="tmpllexize" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
-      <index name="pg_ts_template_oid_index" unique="true" columns="oid"/>
-      <index name="pg_ts_template_tmplname_index" unique="true" columns="tmplname,tmplnamespace"/>
     </table>
     <table name="pg_ts_template_oid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -2275,8 +2230,6 @@
       <column name="typdefaultbin" sqlType="pg_node_tree" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="typdefault" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="typacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_type_oid_index" unique="true" columns="oid"/>
-      <index name="pg_type_typname_nsp_index" unique="true" columns="typname,typnamespace"/>
     </table>
     <table name="pg_type_oid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -2300,8 +2253,6 @@
       <column name="umuser" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="umserver" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="umoptions" sqlType="_text" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_user_mapping_oid_index" unique="true" columns="oid"/>
-      <index name="pg_user_mapping_user_server_index" unique="true" columns="umuser,umserver"/>
     </table>
     <table name="pg_user_mapping_oid_index" schema="pg_catalog" catalog="currency_net_mvp_development" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -2334,10 +2285,6 @@
       <column name="author_type" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
-      <primary-key name="active_admin_comments_pkey" columns="id"/>
-      <index name="index_active_admin_comments_on_author_type_and_author_id" unique="false" columns="author_type,author_id"/>
-      <index name="index_active_admin_comments_on_namespace" unique="false" columns="namespace"/>
-      <index name="index_active_admin_comments_on_resource_type_and_resource_id" unique="false" columns="resource_type,resource_id"/>
     </table>
     <table name="active_admin_comments_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2365,9 +2312,6 @@
       <column name="last_sign_in_ip" sqlType="inet" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
-      <primary-key name="admin_users_pkey" columns="id"/>
-      <index name="index_admin_users_on_email" unique="true" columns="email"/>
-      <index name="index_admin_users_on_reset_password_token" unique="true" columns="reset_password_token"/>
     </table>
     <table name="admin_users_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2391,9 +2335,6 @@
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="open2" sqlType="time" precision="15" scale="6" nullable="true" jdbcType="92"/>
       <column name="close2" sqlType="time" precision="15" scale="6" nullable="true" jdbcType="92"/>
-      <primary-key name="business_hours_pkey" columns="id"/>
-      <index name="index_business_hours_on_exchange_id" unique="false" columns="exchange_id"/>
-      <index name="index_business_hours_on_exchange_id_and_day" unique="false" columns="exchange_id,day"/>
     </table>
     <table name="business_hours_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2417,7 +2358,6 @@
       <column name="prices_published" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
-      <primary-key name="chains_pkey" columns="id"/>
     </table>
     <table name="chains_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2469,12 +2409,6 @@
       <column name="admin_user_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="status" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="message" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="exchanges_pkey" columns="id"/>
-      <index name="index_exchanges_on_chain_id" unique="false" columns="chain_id"/>
-      <index name="index_exchanges_on_latitude" unique="false" columns="latitude"/>
-      <index name="index_exchanges_on_latitude_and_longitude" unique="false" columns="latitude,longitude"/>
-      <index name="index_exchanges_on_longitude" unique="false" columns="longitude"/>
-      <index name="index_exchanges_on_name_and_address" unique="false" columns="name,address"/>
     </table>
     <table name="exchanges_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2501,9 +2435,6 @@
       <column name="buy_currency" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
-      <primary-key name="orders_pkey" columns="id"/>
-      <index name="index_orders_on_exchange_id" unique="false" columns="exchange_id"/>
-      <index name="index_orders_on_user_id" unique="false" columns="user_id"/>
     </table>
     <table name="orders_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2531,9 +2462,6 @@
       <column name="up_to_cents" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="up_to_currency" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="chain_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <primary-key name="rates_pkey" columns="id"/>
-      <index name="index_rates_on_chain_id" unique="false" columns="chain_id"/>
-      <index name="index_rates_on_exchange_id" unique="false" columns="exchange_id"/>
     </table>
     <table name="rates_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2554,8 +2482,6 @@
       <column name="iso_code" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
-      <primary-key name="s_currencies_pkey" columns="id"/>
-      <index name="index_s_currencies_on_source_id" unique="false" columns="source_id"/>
     </table>
     <table name="s_currencies_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2571,7 +2497,6 @@
     </table>
     <table name="schema_migrations" schema="public" catalog="currency_net_mvp_development" type="TABLE">
       <column name="version" sqlType="varchar" precision="255" scale="0" nullable="false" jdbcType="12"/>
-      <index name="unique_schema_migrations" unique="true" columns="version"/>
     </table>
     <table name="searches" schema="public" catalog="currency_net_mvp_development" type="TABLE">
       <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgnc2VhcmNoZXNfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
@@ -2594,8 +2519,6 @@
       <column name="email" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="host" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="exchange_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <primary-key name="searches_pkey" columns="id"/>
-      <index name="index_searches_on_exchange_id" unique="false" columns="exchange_id"/>
     </table>
     <table name="searches_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2614,7 +2537,6 @@
       <column name="url" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
-      <primary-key name="sources_pkey" columns="id"/>
     </table>
     <table name="sources_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2641,8 +2563,6 @@
       <column name="upload_status" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
-      <primary-key name="uploads_pkey" columns="id"/>
-      <index name="index_uploads_on_admin_user_id" unique="false" columns="admin_user_id"/>
     </table>
     <table name="uploads_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2691,9 +2611,6 @@
       <column name="bbox" sqlType="float8" precision="17" scale="17" nullable="true" jdbcType="8"/>
       <column name="location_search" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="geocoded_location" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="users_pkey" columns="id"/>
-      <index name="index_users_on_email" unique="true" columns="email"/>
-      <index name="index_users_on_reset_password_token" unique="true" columns="reset_password_token"/>
     </table>
     <table name="users_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -2716,7 +2633,6 @@
       <column name="created_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="updated_at" sqlType="timestamp" precision="29" scale="6" nullable="true" jdbcType="93"/>
       <column name="email" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <primary-key name="visitors_pkey" columns="id"/>
     </table>
     <table name="visitors_id_seq" schema="public" catalog="currency_net_mvp_development" type="SEQUENCE">
       <column name="sequence_name" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
@@ -20623,8 +20539,6 @@
       <column name="laninline" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="lanvalidator" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="lanacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_language_name_index" unique="true" columns="lanname"/>
-      <index name="pg_language_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_language_name_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="lanname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -20636,7 +20550,6 @@
       <column name="loid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="pageno" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="data" sqlType="bytea" precision="2147483647" scale="0" nullable="true" jdbcType="-2"/>
-      <index name="pg_largeobject_loid_pn_index" unique="true" columns="loid,pageno"/>
     </table>
     <table name="pg_largeobject_loid_pn_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="loid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20645,7 +20558,6 @@
     <table name="pg_largeobject_metadata" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM TABLE">
       <column name="lomowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="lomacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_largeobject_metadata_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_largeobject_metadata_oid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20680,8 +20592,6 @@
       <column name="nspname" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
       <column name="nspowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="nspacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_namespace_nspname_index" unique="true" columns="nspname"/>
-      <index name="pg_namespace_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_namespace_nspname_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="nspname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -20698,8 +20608,6 @@
       <column name="opcintype" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="opcdefault" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
       <column name="opckeytype" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
-      <index name="pg_opclass_am_name_nsp_index" unique="true" columns="opcmethod,opcname,opcnamespace"/>
-      <index name="pg_opclass_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_opclass_am_name_nsp_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="opcmethod" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20724,8 +20632,6 @@
       <column name="oprcode" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="oprrest" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="oprjoin" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
-      <index name="pg_operator_oid_index" unique="true" columns="oid"/>
-      <index name="pg_operator_oprname_l_r_n_index" unique="true" columns="oprname,oprleft,oprright,oprnamespace"/>
     </table>
     <table name="pg_operator_oid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20741,8 +20647,6 @@
       <column name="opfname" sqlType="name" precision="2147483647" scale="0" nullable="false" jdbcType="12"/>
       <column name="opfnamespace" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="opfowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
-      <index name="pg_opfamily_am_name_nsp_index" unique="true" columns="opfmethod,opfname,opfnamespace"/>
-      <index name="pg_opfamily_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_opfamily_am_name_nsp_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="opfmethod" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20761,7 +20665,6 @@
       <column name="tmplvalidator" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="tmpllibrary" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="tmplacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_pltemplate_name_index" unique="true" columns="tmplname"/>
     </table>
     <table name="pg_pltemplate_name_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="tmplname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -20808,8 +20711,6 @@
       <column name="probin" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="proconfig" sqlType="_text" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
       <column name="proacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_proc_oid_index" unique="true" columns="oid"/>
-      <index name="pg_proc_proname_args_nsp_index" unique="true" columns="proname,proargtypes,pronamespace"/>
     </table>
     <table name="pg_proc_oid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20826,7 +20727,6 @@
       <column name="rngsubopc" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="rngcanonical" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="rngsubdiff" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
-      <index name="pg_range_rngtypid_index" unique="true" columns="rngtypid"/>
     </table>
     <table name="pg_range_rngtypid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="rngtypid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20840,8 +20740,6 @@
       <column name="is_instead" sqlType="bool" precision="1" scale="0" nullable="false" jdbcType="-7"/>
       <column name="ev_qual" sqlType="pg_node_tree" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="ev_action" sqlType="pg_node_tree" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
-      <index name="pg_rewrite_oid_index" unique="true" columns="oid"/>
-      <index name="pg_rewrite_rel_rulename_index" unique="true" columns="ev_class,rulename"/>
     </table>
     <table name="pg_rewrite_oid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20877,7 +20775,6 @@
       <column name="objsubid" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="provider" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="label" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-      <index name="pg_seclabel_object_index" unique="true" columns="objoid,classoid,objsubid,provider"/>
     </table>
     <table name="pg_seclabel_object_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="objoid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20932,8 +20829,6 @@
       <column name="refclassid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="refobjid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="deptype" sqlType="char" precision="1" scale="0" nullable="false" jdbcType="1"/>
-      <index name="pg_shdepend_depender_index" unique="false" columns="dbid,classid,objid,objsubid"/>
-      <index name="pg_shdepend_reference_index" unique="false" columns="refclassid,refobjid"/>
     </table>
     <table name="pg_shdepend_depender_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="dbid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20949,7 +20844,6 @@
       <column name="objoid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="classoid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="description" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-      <index name="pg_shdescription_o_c_index" unique="true" columns="objoid,classoid"/>
     </table>
     <table name="pg_shdescription_o_c_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="objoid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -20960,7 +20854,6 @@
       <column name="classoid" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="provider" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="label" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-      <index name="pg_shseclabel_object_index" unique="true" columns="objoid,classoid,provider"/>
     </table>
     <table name="pg_shseclabel_object_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="objoid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -21313,7 +21206,6 @@
       <column name="stavalues3" sqlType="anyarray" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="stavalues4" sqlType="anyarray" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="stavalues5" sqlType="anyarray" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
-      <index name="pg_statistic_relid_att_inh_index" unique="true" columns="starelid,staattnum,stainherit"/>
     </table>
     <table name="pg_statistic_relid_att_inh_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="starelid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -21350,8 +21242,6 @@
       <column name="spcowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="spcacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
       <column name="spcoptions" sqlType="_text" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_tablespace_oid_index" unique="true" columns="oid"/>
-      <index name="pg_tablespace_spcname_index" unique="true" columns="spcname"/>
     </table>
     <table name="pg_tablespace_oid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -21386,9 +21276,6 @@
       <column name="tgattr" sqlType="int2vector" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="tgargs" sqlType="bytea" precision="2147483647" scale="0" nullable="true" jdbcType="-2"/>
       <column name="tgqual" sqlType="pg_node_tree" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
-      <index name="pg_trigger_oid_index" unique="true" columns="oid"/>
-      <index name="pg_trigger_tgrelid_tgname_index" unique="true" columns="tgrelid,tgname"/>
-      <index name="pg_trigger_tgconstraint_index" unique="false" columns="tgconstraint"/>
     </table>
     <table name="pg_trigger_oid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -21405,8 +21292,6 @@
       <column name="cfgnamespace" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="cfgowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="cfgparser" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
-      <index name="pg_ts_config_cfgname_index" unique="true" columns="cfgname,cfgnamespace"/>
-      <index name="pg_ts_config_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_ts_config_cfgname_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="cfgname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -21417,7 +21302,6 @@
       <column name="maptokentype" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="mapseqno" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="mapdict" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
-      <index name="pg_ts_config_map_index" unique="true" columns="mapcfg,maptokentype,mapseqno"/>
     </table>
     <table name="pg_ts_config_map_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="mapcfg" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -21433,8 +21317,6 @@
       <column name="dictowner" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="dicttemplate" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="dictinitoption" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
-      <index name="pg_ts_dict_dictname_index" unique="true" columns="dictname,dictnamespace"/>
-      <index name="pg_ts_dict_oid_index" unique="true" columns="oid"/>
     </table>
     <table name="pg_ts_dict_dictname_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="dictname" sqlType="cstring" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
@@ -21451,8 +21333,6 @@
       <column name="prsend" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="prsheadline" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="prslextype" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
-      <index name="pg_ts_parser_oid_index" unique="true" columns="oid"/>
-      <index name="pg_ts_parser_prsname_index" unique="true" columns="prsname,prsnamespace"/>
     </table>
     <table name="pg_ts_parser_oid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -21466,8 +21346,6 @@
       <column name="tmplnamespace" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="tmplinit" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
       <column name="tmpllexize" sqlType="regproc" precision="2147483647" scale="0" nullable="false" jdbcType="1111"/>
-      <index name="pg_ts_template_oid_index" unique="true" columns="oid"/>
-      <index name="pg_ts_template_tmplname_index" unique="true" columns="tmplname,tmplnamespace"/>
     </table>
     <table name="pg_ts_template_oid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -21507,8 +21385,6 @@
       <column name="typdefaultbin" sqlType="pg_node_tree" precision="2147483647" scale="0" nullable="true" jdbcType="1111"/>
       <column name="typdefault" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="typacl" sqlType="_aclitem" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_type_oid_index" unique="true" columns="oid"/>
-      <index name="pg_type_typname_nsp_index" unique="true" columns="typname,typnamespace"/>
     </table>
     <table name="pg_type_oid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
@@ -21532,8 +21408,6 @@
       <column name="umuser" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="umserver" sqlType="oid" precision="10" scale="0" nullable="false" jdbcType="-5"/>
       <column name="umoptions" sqlType="_text" precision="2147483647" scale="0" nullable="true" jdbcType="2003"/>
-      <index name="pg_user_mapping_oid_index" unique="true" columns="oid"/>
-      <index name="pg_user_mapping_user_server_index" unique="true" columns="umuser,umserver"/>
     </table>
     <table name="pg_user_mapping_oid_index" schema="pg_catalog" catalog="currency_net_mvp_test" type="SYSTEM INDEX">
       <column name="oid" sqlType="oid" precision="10" scale="0" nullable="true" jdbcType="-5"/>
