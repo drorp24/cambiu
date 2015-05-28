@@ -9,13 +9,13 @@
 //= require autonumeric
 //= require jquery.validate
 //= require jquery.tooltipster.min.js
-//= require validations
 
 //= require pageload
 //= require models
 //= require findlocation
 //= require exchanges
 //= require search
+//= require validations
 //= require pages
 
 //= require bootstrap/transition

@@ -117,7 +117,7 @@ $(document).ready(function() {
 
             that_currency_el.find('option').removeAttr('disabled');
             if (that_currency_el.val() == $this_val) {
-                that_currency_el.val($this_val == 'USD' ? 'EUR' : 'USD')
+                set(that_currency, $this_val == 'USD' ? 'EUR' : 'USD')
             } else {
                 that_currency_el.find('option[value=' + $this_val + ']').attr('disabled', 'disabled');
             }
