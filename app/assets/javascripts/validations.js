@@ -34,7 +34,7 @@ $(document).ready(function() {
         },
         messages: {
             'search[email]': {
-                remote: "This email is already taken. Try a different one"
+                remote: "This email is already taken"
             }
         },
         validClass: 'empty_class',
@@ -51,6 +51,7 @@ $(document).ready(function() {
         return check;
     };
 
+/*
     jQuery.validator.addMethod("unique", function(value, element) {
         return is_currency_unique(element);
     }, "Please select two different currencies");
@@ -74,7 +75,9 @@ $(document).ready(function() {
     });
 
     new_search_validator.form();
+*/
 
+/*
     search_form_validator = $( "#search_form" ).validate({
         errorPlacement: function (error, element) {
             var lastError = $(element).data('lastError'),
@@ -101,7 +104,27 @@ $(document).ready(function() {
     });
 
     search_form_validator.form();
+*/
 
+    disable_other_currency = function(this_currency) {
 
+        var that_currency = (this_currency == 'pay_currency') ? 'buy_currency' : 'pay_currency';
+
+        $('[data-field=' + this_currency + ']').change(function() {
+            var $this = $(this);
+            var $this_val = $this.val();
+            var that_currency_el = $this.closest('form').find('[data-field=' + that_currency + ']');
+
+            that_currency_el.find('option').removeAttr('disabled');
+            if (that_currency_el.val() == $this_val) {
+                that_currency_el.val($this_val == 'USD' ? 'EUR' : 'USD')
+            } else {
+                that_currency_el.find('option[value=' + $this_val + ']').attr('disabled', 'disabled');
+            }
+        });
+    };
+
+    disable_other_currency('pay_currency');
+    disable_other_currency('buy_currency');
 
 });

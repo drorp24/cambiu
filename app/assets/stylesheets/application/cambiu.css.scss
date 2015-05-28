@@ -109,6 +109,10 @@ $inverse-color: #ffffff;
   color: #555;
   font-weight: 400;
   text-transform: initial;
+  @media (max-width: $screen-xs-max) {
+    font-size: 0.8em;
+    text-indent: 5px;
+  }
 }
 
 @mixin placeholder-email {
@@ -189,11 +193,18 @@ body#cambiu {
     height: 2em;
     line-height: 2em;
     margin-bottom: 15px;
-    margin-top: -15px;
+
+    @media (min-width: $screen-sm-min) {
+      margin-top: -15px;
+    }
+    @media (max-width: $screen-xs-max) {
+      margin-top: -10px;
+      text-align: center;
+    }
     padding-left: 15px;
   }
   .error_class {
-    color: $brand-color;
+    color: /*$brand-color*/#555;
     &::before {
       font-family: fontAwesome;
       content:"\f071";
@@ -981,6 +992,7 @@ body#cambiu {
             @media (max-width: $screen-xs-max) {
               height: 40px;
               margin-top: 30px;
+              text-align: center;
             }
           }
           .email_submit {
