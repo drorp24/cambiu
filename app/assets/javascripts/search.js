@@ -397,7 +397,7 @@ $(document).ready(function() {
         for (i = 0; i < errors.length; i++) {
             console.log(errors[i])
         }
-        alert('Not submited due to error: ' + errors[0]);
+//        alert('Not submited due to error: ' + errors[0]);
     });
 
 
