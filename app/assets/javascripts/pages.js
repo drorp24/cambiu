@@ -207,11 +207,9 @@ $(document).ready(function() {
 
     }));
 
-/*
     $('a[data-href]').click(function(e) {
         e.preventDefault();
     });
-*/
 
 
     window.addEventListener("popstate", function(e) {
