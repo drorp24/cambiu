@@ -7,7 +7,7 @@
 bind_currency_to_autonumeric = function() {
 
     $('[data-autonumeric]').autoNumeric('init');
-    console.log('autoNumeric initialized')
+    console.log('autoNumeric initialized');
 
     $('[data-autonumeric]').each(function() {
         update_currency_symbol($(this));
@@ -166,13 +166,6 @@ $(document).ready(function() {
     fix('buy_amount');
 
 
-    $('input[data-field=buy_amount]').click(function() {
-        set('pay_amount', null);
-      });
-    $('input[data-field=pay_amount]').click(function() {
-        set('buy_amount', null)
-     });
-
     $('#search_location').click(function() {
         $('#search_location').attr('placeholder', 'Look for deals in...');
     });
@@ -308,8 +301,6 @@ $(document).ready(function() {
         }
     });
 
-    //UI
-
     $('.getstarted_button').click(function(){
         if (sessionStorage.pay_amount != "null" ||sessionStorage.buy_amount != "null" ) {
             $('#new_search').submit();
@@ -324,6 +315,12 @@ $(document).ready(function() {
         } else {
             $('#search_form input[data-field=buy_amount]').focus()
         }
+    });
+
+    // clicking on certain elements rests params to default values
+    $('[data-set-default]').click(function() {
+        var use_session = false;
+        set_defaults(use_session);
     });
 
 
@@ -342,17 +339,12 @@ $(document).ready(function() {
     });
 
 
-    // TODO: Move to pages.js
-    // reload refreshes search results & map by re-submiting the form populated from session
-
-    var homepage = $('body').hasClass('homepage');
-    if (!homepage) $('#new_search').submit();
-
 
     //
     // AJAX Callbacks
     //
 
+    // #new_search
 
     $('#new_search').on('ajax:before', function() {
         beforeSubmit()
@@ -368,6 +360,8 @@ $(document).ready(function() {
         // TODO: re-highlight selected exchange map marker
     });
 
+    // #new_order
+
     $('#exchanges').on('ajax:before', '#new_order', (function(evt, xhr, settings) {
         order_id = value_of('order_id');
         if (order_id) {
@@ -381,29 +375,15 @@ $(document).ready(function() {
          model_populate('order', order);
     }));
 
-    // Record rails validations errors
-
-    $('#new_search').on('ajax:error', function(event, xhr, status, error) {
-        var errors = $.parseJSON(xhr.responseText).errors;
-        console.log('#new_search submit returned with the following errors:');
-        for (i = 0; i < errors.length; i++) {
-            console.log(errors[i])
-        }
-    });
-
-    $('#email_form').on('ajax:error', function(event, xhr, status, error) {
-        var errors = $.parseJSON(xhr.responseText).errors;
-        console.log('#email_form submit returned with the following errors:');
-        for (i = 0; i < errors.length; i++) {
-            console.log(errors[i])
-        }
-//        alert('Not submited due to error: ' + errors[0]);
-    });
 
 
-    // clicking on certain elements rests params to default values
-    $('[data-set-default]').click(function() {
-         var use_session = false;
-         set_defaults(use_session);
-     })
-}); 
+
+    // TODO: Move to pages.js
+    // reload refreshes search results & map by re-submiting the form populated from session
+
+    var homepage = $('body').hasClass('homepage');
+    if (!homepage) $('#new_search').submit();
+
+
+
+});

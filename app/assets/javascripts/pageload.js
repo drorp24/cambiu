@@ -43,6 +43,7 @@ var current_hash;
 var new_search_validator;
 var is_currency_unique;
 var disable_other_currency;
+var link;
 
 
 

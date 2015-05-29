@@ -181,29 +181,46 @@ $(document).ready(function() {
 
     };
 
-    $('body').on('click', '[data-href]', (function(e) {
 
-        // if clicked element is part of a form, dont move page unless form is valid
-        var $this =       $(this);
-        var form  =       $this.closest('form');
-        if (form.length > 0) {
-            if (!form.valid()) {
-                e.preventDefault();
-                return
-            }
-        }
-
-        var exchangeid =  $this.data('exchangeid');
-        var href =        $this.data('href');
-        var page =        $this.data('href-page');
-        var pane =        $this.data('href-pane');
-        var id =          $this.data('href-id');
+    link = function(el) {
+        var exchangeid =  el.data('exchangeid');
+        var href =        el.data('href');
+        var page =        el.data('href-page');
+        var pane =        el.data('href-pane');
+        var id =          el.data('href-id');
         var url =         (page && pane && id) ? page + '/' + id + '/' + pane : href;
-        var hash =        $this.data('href-hash');
+        var hash =        el.data('href-hash');
 
         console.log('data-href element clicked. href: ' + href + ' href-id: ' + id + ' hash: ' + String(hash));
         setPage(url, hash);
-//        if ($this.is('[data-reload')) location.reload();
+//        if (el.is('[data-reload')) location.reload();
+    };
+
+    $('body').on('click', '[data-href]', (function(e) {
+
+        // if clicked element is part of a form, dont move page unless form is valid
+
+        var $this =       $(this);
+        var form  =       $this.closest('form');
+
+        if (form.length > 0) {
+            if (form.data('remote-validation')) {
+                // jquery.validate remote doesn't wait for ajax to complete
+                form.validate();
+                form.on('ajax:complete', (function (evt, data, status, xhr) {
+                    console.log('form remote validation completed. Status: ' + status);
+                    if (form.valid()) {
+                        link($this)
+                    }
+                }));
+            } else {
+                if (form.valid()) {
+                    link($this)
+                }
+            }
+        } else {
+            link($this)
+        }
 
     }));
 
