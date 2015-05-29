@@ -20,16 +20,12 @@ $(document).ready(function() {
         set('buy_amount', null)
     });
 
-    $('input[data-field=buy_amount]').keydown(function (e) {
-
-        if (e.which == 9)
-            set('pay_amount', null);
+    $('input[data-field=buy_amount]').keyup(function () {
+        set('pay_amount', null);
     });
 
-    $('input[data-field=pay_amount]').keydown(function (e) {
-
-        if (e.which == 9)
-            set('buy_amount', null);
+    $('input[data-field=pay_amount]').keyup(function () {
+        set('buy_amount', null);
     });
 
 
@@ -82,7 +78,24 @@ $(document).ready(function() {
     });
 
 
-   $("#email_form").validate({
+    $("#new_search").validate({
+        rules: {
+            'search[buy_amount]': {
+                required: function(element) {
+                    return !$(element).closest('form').find('#search_pay_amount').val();
+                 }
+            }
+        },
+        messages: {
+            'search[buy_amount]': {
+                required: "Please fill-up either amount"
+            }
+        }
+     });
+
+
+
+    $("#email_form").validate({
         rules: {
             'search[email]': {
                 required: true,
