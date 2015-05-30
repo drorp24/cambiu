@@ -200,8 +200,9 @@ $(document).ready(function() {
 
         // if clicked element is part of a form, dont move page unless form is valid
 
-        var $this =       $(this);
-        var form  =       $this.closest('form');
+        var $this           = $(this);
+        var invoked_form    = $this.data('form') ? $($this.data('form')) : null;   // e.g., getstarted_button click invokes #new_search form
+        var form            = invoked_form ? invoked_form : $this.closest('form');
 
         if (form.length > 0) {
             if (form.data('remote-validation')) {
@@ -214,7 +215,7 @@ $(document).ready(function() {
                     }
                 }));
             } else {
-                if (form.valid() && custom_validate($('#new_search'))) {
+                if (form.valid() && custom_validate(form)) {
                     link($this)
                 }
             }

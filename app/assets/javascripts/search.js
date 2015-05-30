@@ -302,7 +302,8 @@ $(document).ready(function() {
     });
 
     $('.getstarted_button').click(function(){
-        if (sessionStorage.pay_amount != "null" ||sessionStorage.buy_amount != "null" ) {
+        var new_search_valid = custom_validate($('#new_search'));
+        if (new_search_valid) {
             $('#new_search').submit();
         } else {
             $('#homepage input[data-field=buy_amount]').focus()

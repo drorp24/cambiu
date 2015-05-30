@@ -131,7 +131,9 @@ $(document).ready(function() {
               }
               return (is_valid);
               break;
-      }
+          default:
+              return true;
+       }
     };
 
 
