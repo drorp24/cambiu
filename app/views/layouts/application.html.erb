@@ -8,6 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<title><%= content_for?(:title) ? yield(:title) : "cambiu" %></title>
+    <%= favicon_link_tag 'logo_no_text.png' %>
 	<%= csrf_meta_tags %>
 
 	<%= stylesheet_link_tag "application", :media => "all" %>
