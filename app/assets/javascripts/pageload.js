@@ -44,7 +44,8 @@ var new_search_validator;
 var is_currency_unique;
 var disable_other_currency;
 var link;
-
+var is_larger_than_zero;
+var custom_validate;
 
 
 

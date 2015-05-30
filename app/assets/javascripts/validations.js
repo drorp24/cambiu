@@ -78,22 +78,67 @@ $(document).ready(function() {
     });
 
 
-    $("#new_search").validate({
+    is_larger_than_zero = function(element) {
+        console.log('is_larger_than_zero');
+        $element = $(element);
+        var amount = Number(String($element.val()).replace(/[^0-9\.]+/g,""));
+        console.log(String(amount) + ' ' + String(amount > 0));
+        return amount > 0;
+    };
+
+
+    jQuery.validator.addMethod("larger_than_zero", function(value, element) {
+        return is_larger_than_zero(element);
+    }, "Please fill either amount");
+
+
+
+
+
+
+
+    new_search_validator = $("#new_search").validate({
+        focusInvalid: false,
         rules: {
             'search[buy_amount]': {
                 required: function(element) {
                     return !$(element).closest('form').find('#search_pay_amount').val();
-                 }
+                },
+                    larger_than_zero: true
             }
         },
         messages: {
             'search[buy_amount]': {
-                required: "Please fill-up either amount"
+                required: "Please fill either amount"
             }
         }
      });
 
+    new_search_validator.form();
 
+    // required since for some reason jquery.validate only validates after reload
+    custom_validate = function(form_el) {
+      switch(form_el.attr('id')) {
+          case 'new_search':
+              var pay_amount =  form_el.find('#search_pay_amount')[0];
+              var buy_amount =  form_el.find('#search_buy_amount')[0];
+              var is_valid =    is_larger_than_zero(pay_amount) || is_larger_than_zero(buy_amount);
+              console.log('custom validate: ' + is_valid);
+              if (is_valid) {
+                  form_el.find('.validation_errors').removeClass('error_class').empty();
+               } else {
+                  form_el.find('.validation_errors').html('Please fill either amount').addClass('error_class');
+              }
+              return (is_valid);
+              break;
+      }
+    };
+
+
+    // Prevent form submission if invalid
+    $('#new_search').submit(function() {
+        return new_search_validator.form() && custom_validate($('#new_search'))
+    });
 
     $("#email_form").validate({
         rules: {

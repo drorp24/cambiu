@@ -214,7 +214,7 @@ $(document).ready(function() {
                     }
                 }));
             } else {
-                if (form.valid()) {
+                if (form.valid() && custom_validate($('#new_search'))) {
                     link($this)
                 }
             }

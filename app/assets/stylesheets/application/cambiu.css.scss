@@ -315,6 +315,12 @@ body#cambiu {
         color: $darkgreen;
       }
     }
+    #search_pay_amount {
+//      color: red;
+      &::before {
+        content: 'I haveee';
+      }
+    }
      input, select {
       @include search-form-def;
       @include search_placeholder;
