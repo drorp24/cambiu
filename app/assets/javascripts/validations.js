@@ -103,8 +103,7 @@ $(document).ready(function() {
             'search[buy_amount]': {
                 required: function(element) {
                     return !$(element).closest('form').find('#search_pay_amount').val();
-                },
-                    larger_than_zero: true
+                }
             }
         },
         messages: {
