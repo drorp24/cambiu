@@ -302,8 +302,7 @@ $(document).ready(function() {
     });
 
     $('.getstarted_button').click(function(){
-        var new_search_valid = custom_validate($('#new_search'));
-        if (new_search_valid) {
+        if ($('#new_search').valid() && custom_validate($('#new_search'))) {
             $('#new_search').submit();
         } else {
             $('#homepage input[data-field=buy_amount]').focus()
