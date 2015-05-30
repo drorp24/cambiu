@@ -303,6 +303,36 @@ body#cambiu {
     padding-bottom: $navbar-height;
     display: block;   }
   #new_search {
+    label {
+      position: absolute;
+      @media (min-width: $screen-sm-min) {
+        top: 13px;
+      }
+      @media (max-width: $screen-xs-max) {
+        top: 14px;
+      }
+      left: 2em;
+      @media (min-width: $screen-sm-min) {
+        font-size: 1.1em;
+      }
+      @media (max-width: $screen-xs-max) {
+        font-size: 0.9em;
+      }
+      color: $darkgreen;
+      text-transform: uppercase;
+    }
+    input {
+      &#search_pay_amount, &#search_buy_amount {
+         @media (min-width: $screen-sm-min) {
+          font-size: 1.1em;
+           text-indent: 4.5em;
+        }
+        @media (max-width: $screen-xs-max) {
+          font-size: 0.9em;
+          text-indent: 3.5em;
+        }
+      }
+    }
     .homepage_search_button {
       margin-top: -15px;
     }
@@ -316,10 +346,6 @@ body#cambiu {
       }
     }
     #search_pay_amount {
-//      color: red;
-      &::before {
-        content: 'I haveee';
-      }
     }
      input, select {
       @include search-form-def;
