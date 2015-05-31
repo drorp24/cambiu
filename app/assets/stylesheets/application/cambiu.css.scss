@@ -243,13 +243,30 @@ body#cambiu {
             text-transform: uppercase;
             font-size: 3.2em;
             line-height: 1.1em;
-            margin-bottom: 40px;
-            margin-top: 15px;
+             margin-top: 15px;
+            margin-bottom: 30px;
           }
-          .post {
-            font-weight: 400;
-            color: $black;
-            font-size: 1.1em;
+          .bullets {
+            @media (min-width: $screen-sm-min) {
+              font-size: 1.7em;
+              line-height: 1.8em;
+            }
+            @media (max-width: $screen-xs-max) {
+              font-size: 1em;
+              line-height: 1.6em;
+            }
+
+           font-weight: 400;
+            color: $darkgreen;
+            margin-left: 1em;
+            li {
+              &::before {
+                font-family: fontAwesome;
+                content:"\f046";
+                margin-right: 0.7em;
+              }
+            }
+
           }
         }
       }
@@ -1422,7 +1439,7 @@ body#cambiu {
               font-weight: $bold;
               color: $lightgreen;
               text-transform: uppercase;
-              font-size: 1.8em;
+              font-size: 1.6em;
               line-height: 1.1em;
               margin-bottom: 20px;
             }
@@ -1431,7 +1448,7 @@ body#cambiu {
               color: $darkgrey;
               font-size: 0.8em;
             }
-          }
+        }
         }
       }
       .rates_banner img {
