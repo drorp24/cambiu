@@ -46,8 +46,13 @@ var disable_other_currency;
 var link;
 var is_larger_than_zero;
 var custom_validate;
+var set_default_location;
 
 
+value_of = function(key) {
+    var a = sessionStorage.getItem(key);
+    return (a && a != "null") ? a : null;
+};
 
 
 // intended to base on session values rather than window.location
@@ -86,8 +91,6 @@ $(document).on('click','.navbar-collapse.in',function(e) {
 $(document).ready(function() {
 
 //    document.body.scrollTop = document.documentElement.scrollTop = 0;
-    if (!sessionStorage.location) getLocation();
-
 
 
     /*   trying to understand what changes the data-href-id on the #email_form when button is clicked

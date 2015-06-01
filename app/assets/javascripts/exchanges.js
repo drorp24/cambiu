@@ -13,8 +13,8 @@ $(document).ready(function() {
         console.log('updatePage');
         exchanges = data;
 
-// real line        drawMap(sessionStorage.location, sessionStorage.user_lat, sessionStorage.user_lng, exchanges);
-        drawMap(sessionStorage.location, sessionStorage.user_lat, sessionStorage.user_lng, exchanges);
+        drawMap(sessionStorage.location, value_of('location_lat') || value_of('user_lat'), value_of('location_lng') || value_of('user_lng'), exchanges);
+
         clearExchanges();
 
         if (exchanges && exchanges.length > 0) {
@@ -176,7 +176,21 @@ $(document).ready(function() {
             addMarker(exchanges[i]);
         }
     }
-    
+
+    function addUserMarker() {
+        var lat = value_of('location_lat') || value_of('user_lat');
+        var lng = value_of('location_lng') || value_of('user_lng');
+        if (!lat || !lng) return;
+
+        var location_marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, lng),
+            disableAutoPan: true,
+            map: map,
+            icon: '/male.png',
+            draggable:true
+        });
+    }
+
     function addMarker(exchange) {
 
         var marker = new google.maps.Marker({
@@ -273,10 +287,11 @@ $(document).ready(function() {
                 console.log('going by selected location. center: ' + center);
                 var mapOptions = {
                     center: center,
-                    zoom: 12
+                    zoom: 17
                 };                      
-                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
-                console.log('map is set now')
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                  addUserMarker();
+                  console.log('map is set now')
               if (exchanges && exchanges.length > 0) {
                   updateMarkers(exchanges);
               }
@@ -293,9 +308,10 @@ $(document).ready(function() {
             center = new google.maps.LatLng(latitude, longitude);
             var mapOptions = {
                 center: center,
-                zoom: 12
+                zoom: 17
             };                  
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            addUserMarker();
             if (exchanges && exchanges.length > 0) {
                 updateMarkers(exchanges);
             }
@@ -310,9 +326,10 @@ $(document).ready(function() {
                 center = results[0].geometry.location;
                 var mapOptions = {
                     center: center,
-                    zoom: 12
+                    zoom: 17
                 };                      
                 map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                  addUserMarker();
                   if (exchanges && exchanges.length > 0) {
                       updateMarkers(exchanges);
                   }

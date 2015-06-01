@@ -51,7 +51,6 @@ bind_currency_to_autonumeric = function() {
             sessionStorage.setItem(field, value);
         }
 
- // Not needed anymore? see location       if (value === 'null' ) value = '';
 
         $(elements).each(function() {
             var $this = $(this);
@@ -79,17 +78,7 @@ bind_currency_to_autonumeric = function() {
         })
     }
 
-    function set_default_location(excluded) {
-        set('location', sessionStorage.user_location ? sessionStorage.user_location : 'London, UK', excluded);
-        set('location_short', sessionStorage.user_location ? "Nearby" : 'London', excluded);
-    }
-
-    value_of = function(key) {
-        var a = sessionStorage.getItem(key);
-        return (a && a != "null") ? a : null;
-    };
-
-    // Restore session values || use defaults
+     // Restore session values || use defaults
     set_defaults = function(use_session) {
 
         console.log('set_defaults');
@@ -126,12 +115,6 @@ $(document).ready(function() {
     var use_session = true;
     set_defaults(use_session);
 
-    if (!sessionStorage.location) {
-        set_default_location()
-    }
-    sessionStorage.test_lat = 51.5144;
-    sessionStorage.test_lng = -0.1354;
-
     sessionStorage.email = '';
 
     // Restore session state
@@ -165,67 +148,12 @@ $(document).ready(function() {
     fix('pay_amount');
     fix('buy_amount');
 
-
-    $('#search_location').click(function() {
-        $('#search_location').attr('placeholder', 'Look for deals in...');
-    });
-
     $('.open_search').click(function() {
         $('#exchange_params_change').collapse('show')
     });
 
-    // Enable location search - Google maps places autocomplete
 
-    function searchbox_addListener(searchBox) {
-        google.maps.event.addListener(searchBox, 'places_changed', function () {
-            var places = searchBox.getPlaces();
-            if (places.length == 0) {
-                set_default_location();
-                return
-            }
-            place = places[0];
-            set('location', place.formatted_address);
-            set('location_short', place.name);
-
-            if (!$('body').hasClass('homepage')) $('#new_search').submit();  // TODO: Consider doing in the search page too
-
-/*          TODO: Remove.
-            if (window.location.hash == '#exchanges') {
-                if (!place.geometry) {
-                    alert('We have an issue with this location. Please try a different one');
-                    return;
-                }
-                place = place.geometry.location;
-                drawMap(null, place.lat(), place.lng());
-            }
-*/
-        });
-    }
-
-    // Complementing searchbox_addListener with an event it won't detece - removing a location
-    $('[data-field=location]').change(function() {
-         var $this = $(this);
-         if (!$this.val()) {
-            set_default_location($this)
-         }
-    });
-
-    $('input[data-field=location]').each(function() {
-        input = $(this).get(0);
-        searchBox = new google.maps.places.SearchBox(input, {
-            types: ['regions']
-        });
-        searchbox_addListener(searchBox);
-    });
-
-    $('input[data-field=location]').click(function() {
-        var $this = $(this);
-        $this.val('');
-        set_default_location($this)
-    });
-
-
-
+    // Location - all handled at findlocation.js
 
     // Sorting
 
@@ -292,14 +220,6 @@ $(document).ready(function() {
         // the width of browser is less then 700px
     }
 
-    // Fix google autocomplete z-index dynamically
-    $('[data-field=location]').keypress(function() {
-        if (!pacContainerInitialized) {
-            $('.pac-container').css('z-index',
-                '9999');
-            pacContainerInitialized = true;
-        }
-    });
 
     $('.getstarted_button').click(function(){
         if ($('#new_search').valid() && custom_validate($('#new_search'))) {
