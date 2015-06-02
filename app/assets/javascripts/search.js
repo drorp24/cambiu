@@ -7,7 +7,6 @@
 bind_currency_to_autonumeric = function() {
 
     $('[data-autonumeric]').autoNumeric('init');
-    console.log('autoNumeric initialized');
 
     $('[data-autonumeric]').each(function() {
         update_currency_symbol($(this));
@@ -81,8 +80,6 @@ bind_currency_to_autonumeric = function() {
      // Restore session values || use defaults
     set_defaults = function(use_session) {
 
-        console.log('set_defaults');
-
         var session_pay_amount      = value_of('pay_amount');
         var session_pay_currency    = value_of('pay_currency');
         var session_buy_amount      = value_of('buy_amount');
@@ -95,16 +92,13 @@ bind_currency_to_autonumeric = function() {
         set('buy_currency', use_session  ? session_buy_currency   || def_buy_currency                               : def_buy_currency);
         set('sort',         use_session  ? session_sort           || def_sort                                       : def_sort);
 
-        console.log('sessionStorage.buy_amount after assignment: ' + sessionStorage.buy_amount);
-        bind_currency_to_autonumeric();
+         bind_currency_to_autonumeric();
     };
 
 
 
 
 $(document).ready(function() {
-
-    console.log('search');
 
 
     //Default and per-page values
@@ -159,8 +153,6 @@ $(document).ready(function() {
 
    sort_ui = function(sort) {
 
-        console.log('sort_ui');
-
         $('#sort_switch').bootstrapSwitch('state', sort == 'quote', true);
         $('.sorted_by').each(function() {
             $this = $(this);
@@ -169,8 +161,6 @@ $(document).ready(function() {
     };
 
     sort_by = function(sort) {
-
-        console.log('sort_by ' + sort);
 
         sort_ui(sort);
 

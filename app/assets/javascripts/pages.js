@@ -48,11 +48,8 @@ $(document).ready(function() {
 
         // Parse arguments
 
-        console.log('setPage entered');
         console.log('url argument: ' + url);
-        console.log('hash argument: ' + String(hash));
         console.log('current_url: ' + current_url());
-        console.log('current_hash: ' + String(current_hash()));
 
         // TODO: Remove: prevents form data from populating if in the same page
  /*     if (url == current_url() && hash == current_hash() ) {
@@ -76,8 +73,6 @@ $(document).ready(function() {
             var id          = null;
         }
         var exchangeid  = id;
-
-        console.log('setPage parsing:. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + hash);
 
 
         // update session
@@ -108,7 +103,6 @@ $(document).ready(function() {
             }
         } else {
 
-            console.log('no id in url');
             //??
             $('[data-current-exchange]').attr('data-exchangeid', '');
             $('[data-field=exchange_id]').val('')
@@ -139,16 +133,12 @@ $(document).ready(function() {
         $('.page.active').removeClass('active');
         $('.pane.active').removeClass('active');
         if (page) {
-            console.log('revealing page: ' + page);
-            page_el = $('.page[data-page=' + page + ']');
-            console.log('page_el id: ' + page_el.attr('id'))
+             page_el = $('.page[data-page=' + page + ']');
             page_el.addClass('active');
             page_el.show();
         }
         if (pane) {
-            console.log('revealing pane: ' + pane);
             pane_el = $('.pane[data-pane=' + pane + ']');
-            console.log('pane_el id: ' + pane_el.attr('id'))
             pane_el.addClass('active');
             pane_el.show();
         }
@@ -158,10 +148,8 @@ $(document).ready(function() {
         $('.pane.active').each(function () {
              $(this).find('[data-model=exchange]').each(function () {
                 if (exchange) {
-                    console.log('populating ' + $(this).attr('id') + ' with exchange id: ' + exchange.id);
                     populate($(this), exchange)
                 } else {
-                    console.log('unpopulating ' + $(this).attr('id'));
                     unpopulate($(this))
                 }
             });
@@ -171,9 +159,9 @@ $(document).ready(function() {
         var new_state =  '/' + url;
         if (window.location.pathname != new_state) {
             history.pushState(new_state, 'cambiu', new_state);
-            console.log('>>>>>>>>>>>>>>>>>> pushing state: ' + new_state);
+            console.log('pushing state: ' + new_state);
         } else {
-            console.log('>>>>>>>>>>>>>>>>>> current pathname matches the url; not pushing');
+            console.log('current pathname matches the url; not pushing');
         }
 
         // if hash argument was included, go to it
@@ -232,12 +220,12 @@ $(document).ready(function() {
 
     window.addEventListener("popstate", function(e) {
 
-        console.log('>>>>>>>>>>>>>> pop. e.state: ' + e.state);
+        console.log('pop. e.state: ' + e.state);
         if (e.state && e.state.length > 0) {
             setPage(e.state.slice(1));
         } else
         if (window.location.hash && window.location.pathname.length > 1) {
-            console.log('>>>>>>>>>>>>>> ... but a hash exists - settingPage according to path');
+            console.log('... but a hash exists - settingPage according to path');
             // when user goes to hash it's not pushed to history hence e.state is null in this case
             // this case is identified by the popstate event and the hash in the location
             setPage(window.location.pathname.slice(1),window.location.hash.slice(1));
@@ -260,7 +248,10 @@ $(document).ready(function() {
 
     // Submit form in order to updatePage, namely retrieve search results & re-draw map
     // Applicable for search page only: homepage awaits user input and will submit only upon clicking the button
-    if (reload_path != 'homepage') $('#new_search').submit();
+    if (reload_path != 'homepage') {
+        console.log('full page re/load: submitting form');
+        $('#new_search').submit();
+    }
 
 
 });
