@@ -3,11 +3,6 @@ $(document).ready(function() {
 //if ($('body').hasClass('exchanges'))   {    
 
 
-    var directionsService = new google.maps.DirectionsService();
-
-    console.log('exchanges');
-
-
     updatePage = function(data) {
 
         console.log('updatePage');
@@ -83,38 +78,6 @@ $(document).ready(function() {
     }
     
 
- 
-   function add_photo(exchange) {
-        var request = {query: exchange.name + ' ' + exchange.address};
-        
-        var service = new google.maps.places.PlacesService(map);
-        service.textSearch(request, gp_ts_callback);
-        
-        function gp_ts_callback(results, status) {
-            console.log('gp_ts_callback');
-            if (status == google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-                          
-                var place = results[0];
-                var place_id = place.place_id;
-                console.log("place_id: " + place_id);
-                  
-                var request = {placeId: place_id};
-    //              service.getDetails(request, gp_pd_callback);
-                  
-                function gp_pd_callback(place, status) {
-                    console.log('gp_pd_callback');
-                    if (status == google.maps.places.PlacesServiceStatus.OK) {
-                        if (place.photos.length > 0) {
-                            photo_url = place.photos[0].getUrl();
-                            console.log("photo_url: " + photo_url);
-                            
-                        }
-                    }           
-                }
-            }
-        }
-    }
- 
     
     clearExchanges = function() {
         console.log('clearExchanges');
@@ -127,7 +90,7 @@ $(document).ready(function() {
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
          $('.directions').click(function() {
-            var from =  production ? new google.maps.LatLng(sessionStorage.user_lat, sessionStorage.user_lng) : new google.maps.LatLng(sessionStorage.test_lat, sessionStorage.test_lng);
+           var from =  production ? new google.maps.LatLng(sessionStorage.user_lat, sessionStorage.user_lng) : new google.maps.LatLng(sessionStorage.test_lat, sessionStorage.test_lng);
             var to =    new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
             calcRoute(from, to);
             return false;  
@@ -350,6 +313,8 @@ $(document).ready(function() {
           travelMode: google.maps.TravelMode.WALKING,
           region: "uk"
       };
+
+      var directionsService = new google.maps.DirectionsService();
 
       directionsService.route(request, function(response, status) {
           console.log(status);

@@ -1,0 +1,18 @@
+<script>
+
+    function initialize() {
+        console.log('google maps finished async loading. Calling location_settings()');
+         location_settings()
+    }
+
+    function loadScript() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp' +
+        '&language=en&key=AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us&libraries=places&callback=initialize';
+        document.body.appendChild(script);
+    }
+
+    window.onload = loadScript;
+
+</script>

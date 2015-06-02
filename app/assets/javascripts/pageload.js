@@ -47,6 +47,7 @@ var link;
 var is_larger_than_zero;
 var custom_validate;
 var set_default_location;
+var location_settings;
 
 
 value_of = function(key) {
@@ -71,45 +72,9 @@ current_hash = function() {
     return hash;
 };
 
-
-display = function(term) {
-    switch (term) {
-        case 'quote':
-            return 'best prices first:';
-        case 'distance':
-            return 'nearest first:';
-    }
-};
-
 // make the mobile navbar collapse when a link is clicked
 $(document).on('click','.navbar-collapse.in',function(e) {
     if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
         $(this).collapse('hide');
     }
-});
-
-$(document).ready(function() {
-
-//    document.body.scrollTop = document.documentElement.scrollTop = 0;
-
-
-    /*   trying to understand what changes the data-href-id on the #email_form when button is clicked
-     $('#email_form').on('ajax:before', function(event, data, status, xhr) {
-     alert('email form ajax before. value of session id: ' + sessionStorage.id + ' data-href-id now: ' + $('#email_form .email_submit').data('href-id'))
-     })
-
-
-     window.addEventListener("storage", function(event) {
-     var key = event.key;
-     var newValue = event.newValue;
-     var oldValue = event.oldValue;
-     var url = event.url;
-     var storageArea = event.storageArea;
-
-     alert(key + ' was cahnged from ' + oldValue + ' to ' + newValue + ' in ' + url)
-
-     // handle the event
-     });
-     */
-
 });

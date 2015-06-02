@@ -3,7 +3,7 @@
 // 2 - upon callback: populate session/forms with user location using google.maps.Geocoder        findPosition
 // 3 - UI & location change event handling
 
-$(document).ready(function() {
+location_settings = function() {
 
 
     // TODO: Remove
@@ -78,10 +78,8 @@ $(document).ready(function() {
 
     function getLocation() {
 
-        console.log('getLocation');
-
         if (navigator.geolocation) {
-            console.log('calling navigator.geolocation (this will take a while)');
+            console.log('calling navigator.geolocation');
             var timeoutVal = 5000;  // setInterval????!
             navigator.geolocation.getCurrentPosition(
                 findPosition,
@@ -155,4 +153,4 @@ $(document).ready(function() {
 
 
 
-});
+}

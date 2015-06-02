@@ -10,12 +10,11 @@
 	<title><%= content_for?(:title) ? yield(:title) : "cambiu" %></title>
     <%= favicon_link_tag 'logo_no_text.png' %>
 	<%= csrf_meta_tags %>
-
 	<%= stylesheet_link_tag "application", :media => "all" %>
-
 	<%= javascript_include_tag "application" %>
-
     <%= render 'inspectlet' %>
+    <%= render 'google_maps_async' %>
+
 </head>
 
 <body id="cambiu" class="<%= "#{params[:controller]} #{Rails.env}" %>">
@@ -26,7 +25,6 @@
 
 	<%= yield %>
 
-   	<%= render 'google_maps' %>
 
 </body>
 
