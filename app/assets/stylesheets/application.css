@@ -12,6 +12,5 @@
  *
  *= require bootstrap3-switch
  *= require font-awesome
- *= require tooltipster
- *= require_tree ./application/
+  *= require_tree ./application/
  */

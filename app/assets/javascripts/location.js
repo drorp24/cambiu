@@ -6,9 +6,20 @@
 $(document).ready(function() {
 
 
-
+    // TODO: Remove
     sessionStorage.test_lat = 51.5144;
     sessionStorage.test_lng = -0.1354;
+
+
+    function refresh_map() {
+        var homepage = $('body').hasClass('homepage');
+        if (!homepage) $('#new_search').submit();
+    }
+
+
+
+
+
 
     // Find user location and set session/forms accordingly
 
@@ -113,9 +124,10 @@ $(document).ready(function() {
         }
     });
 
-    // clear input upon click
+    // clear input upon click, but do not set() anything yet
     $('input[data-field=location]').click(function() {
         var $this = $(this);
+        $this.attr('placeholder', 'Search for offers in...');
         $this.val('');
     });
 
@@ -136,6 +148,7 @@ $(document).ready(function() {
             set('location_lat', place.geometry.location.lat());
             set('location_lng', place.geometry.location.lng());
             set('location_type', 'selected');
+            // homepage anyway requires clicking button to get the search page, which in turn submits the form. This avoids calling submit twice.
             if (!$('body').hasClass('homepage')) $('#new_search').submit();
         });
     }

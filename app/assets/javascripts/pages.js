@@ -245,11 +245,22 @@ $(document).ready(function() {
     });
 
 
+    // P A G E   R E / L O A D
+    //
     // first entry, reloads, direct linking
+    // This should be the only code doing something that's not event-driven
+
+
+    // setPage() to current path
+    // replace '/' with 'homepage' or else pushState will get ''
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
     console.log('full page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
     setPage(reload_path, hash);
+
+    // Submit form in order to updatePage, namely retrieve search results & re-draw map
+    // Applicable for search page only: homepage awaits user input and will submit only upon clicking the button
+    if (reload_path != 'homepage') $('#new_search').submit();
 
 
 });

@@ -267,17 +267,21 @@ $(document).ready(function() {
     // #new_search
 
     $('#new_search').on('ajax:before', function() {
+        console.log('ajax:before: form is submitted');
         beforeSubmit()
     });
 
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
-        console.log('#new_search ajax:success. A: Starting to updatePage...');
+        console.log('#new_search ajax:success. Starting to updatePage...');
         updatePage(data);
+        // TODO: ajax:success should only be concerned with updatePage (list, map) - not with page setting
+        // TODO: page setting should be governed by data-href element clicking only
+/*
         var url = current_url();
         var hash = current_hash();
         console.log('#new_search ajax:success. B: Calling setPage with: ' + url + ' and ' + String(hash));
         setPage(url, hash);
-        // TODO: re-highlight selected exchange map marker
+ */
     });
 
     // #new_order
@@ -295,14 +299,6 @@ $(document).ready(function() {
          model_populate('order', order);
     }));
 
-
-
-
-    // TODO: Move to pages.js
-    // reload refreshes search results & map by re-submiting the form populated from session
-
-    var homepage = $('body').hasClass('homepage');
-    if (!homepage) $('#new_search').submit();
 
 
 
