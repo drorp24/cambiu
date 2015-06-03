@@ -13,13 +13,13 @@
 	<%= stylesheet_link_tag "application", :media => "all" %>
 
 	<%= javascript_include_tag "application" %>
-  <%= render 'google_analytics' %>
 
 </head>
   	
 <body id="cambiu" class="<%= "#{params[:controller]} #{Rails.env}" %>">
 
-	<%= render 'navbar' %>
+	<%= render 'google_tag_manager' %>
+	<%= render 'navbar' %>	
 	<%= bootstrap_flash %>	  
 
 	<%= yield %>
