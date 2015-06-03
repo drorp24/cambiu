@@ -20,7 +20,7 @@ Rails.application.configure do
   # For large-scale production use, consider using a caching reverse proxy like nginx, varnish or squid.
   # config.action_dispatch.rack_cache = true
 
-  # Changed to true for heroku: rails now uses CloudFonrt cdn 
+  # Changed to true for heroku: rails now uses CloudFonrt cdn
   config.serve_static_assets = true
 
   # Compress JavaScripts and CSS.
@@ -33,7 +33,7 @@ Rails.application.configure do
 
   # Generate digests for assets URLs.
   config.assets.digest = true
-  
+
   # Generate two .css compiled files
   config.assets.precompile += ['application.css', 'boots.css']
 
@@ -90,12 +90,12 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-    
+
   config.action_mailer.default_url_options = { host: 'staging.cambiu.com' }
-  
+
   config.fb_app_id = '803314713056637'
-  config.fb_app_secret = 'f8535d022dd9afff4c14e8a8c28b5ab7' 
+  config.fb_app_secret = 'f8535d022dd9afff4c14e8a8c28b5ab7'
 
   config.use_google_geocoding = false
-  
+
 end
