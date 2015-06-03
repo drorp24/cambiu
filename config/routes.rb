@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :searches do
     collection do
       post 'record'
+      get  'unique'
     end
   end
   get 'currency_exchange',  to: 'landing#index', as: :currency_exchange  

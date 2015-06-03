@@ -7,7 +7,7 @@
 bind_currency_to_autonumeric = function() {
 
     $('[data-autonumeric]').autoNumeric('init');
-    console.log('autoNumeric initialized')
+    console.log('autoNumeric initialized');
 
     $('[data-autonumeric]').each(function() {
         update_currency_symbol($(this));
@@ -94,22 +94,19 @@ bind_currency_to_autonumeric = function() {
 
         console.log('set_defaults');
 
+        var session_pay_amount      = value_of('pay_amount');
+        var session_pay_currency    = value_of('pay_currency');
+        var session_buy_amount      = value_of('buy_amount');
+        var session_buy_currency    = value_of('buy_currency');
+        var session_sort            = value_of('sort');
 
-        var session_pay_amount      = use_session ? value_of('pay_amount')      : null;
-        var session_pay_currency    = use_session ? value_of('pay_currency')    : null;
-        var session_buy_amount      = use_session ? value_of('buy_amount')      : null;
-        var session_buy_currency    = use_session ? value_of('buy_currency')    : null;
-        var session_sort            = use_session ? value_of('sort')            : null;
+        set('pay_amount',   use_session  ? session_pay_amount     || (session_buy_amount ? null : def_pay_amount)   : def_pay_amount);
+        set('pay_currency', use_session  ? session_pay_currency   || def_pay_currency                               : def_pay_currency);
+        set('buy_amount',   use_session  ? session_buy_amount     || (session_pay_amount ? null : def_buy_amount)   : def_buy_amount);
+        set('buy_currency', use_session  ? session_buy_currency   || def_buy_currency                               : def_buy_currency);
+        set('sort',         use_session  ? session_sort           || def_sort                                       : def_sort);
 
-        console.log('session_buy_amount after assignment: ' + session_buy_amount)
-
-        set('pay_amount',   session_pay_amount    ? session_pay_amount          : def_pay_amount);
-        set('pay_currency', session_pay_currency  ? session_pay_currency        : def_pay_currency);
-        set('buy_amount',   session_buy_amount    ? session_buy_amount          : def_buy_amount);
-        set('buy_currency', session_buy_currency  ? session_buy_currency        : def_buy_currency);
-        set('sort',         session_sort          ? session_sort                : def_sort);
-
-        console.log('sessionStorage.buy_amount after assignment: ' + sessionStorage.buy_amount)
+        console.log('sessionStorage.buy_amount after assignment: ' + sessionStorage.buy_amount);
         bind_currency_to_autonumeric();
     };
 
@@ -124,7 +121,7 @@ $(document).ready(function() {
     //Default and per-page values
 
     sessionStorage.page         = window.location.hostname;
-    sessionStorage.rest         = window.location.hash;
+    sessionStorage.hash         = window.location.hash;
 
     var use_session = true;
     set_defaults(use_session);
@@ -168,13 +165,6 @@ $(document).ready(function() {
     fix('pay_amount');
     fix('buy_amount');
 
-
-    $('input[data-field=buy_amount]').click(function() {
-        set('pay_amount', null);
-      });
-    $('input[data-field=pay_amount]').click(function() {
-        set('buy_amount', null)
-     });
 
     $('#search_location').click(function() {
         $('#search_location').attr('placeholder', 'Look for deals in...');
@@ -311,10 +301,8 @@ $(document).ready(function() {
         }
     });
 
-    //UI
-
     $('.getstarted_button').click(function(){
-        if (sessionStorage.pay_amount != "null" ||sessionStorage.buy_amount != "null" ) {
+        if ($('#new_search').valid() && custom_validate($('#new_search'))) {
             $('#new_search').submit();
         } else {
             $('#homepage input[data-field=buy_amount]').focus()
@@ -329,36 +317,50 @@ $(document).ready(function() {
         }
     });
 
+    // clicking on certain elements rests params to default values
+    $('[data-set-default]').click(function() {
+        var use_session = false;
+        set_defaults(use_session);
+    });
+
 
     // #search_form submits the shadow form #new_search rather than itself
 
     $('#search_form #search_button').click(function(e) {
         e.preventDefault();
-        if (mobile) {$('#exchange_params_change').collapse('toggle');}
-        $('#new_search').submit();
+        if (mobile) {$('#exchange_params_change').collapse('hide');}
+        if ($('#search_form').valid()) {$('#new_search').submit()};
      });
 
     // any click to change params returns to main search page
+
     $('#search_form input').click(function() {
         if (window.location.pathname != '/exchanges/list') setPage('exchanges/list')
     });
 
 
-    // reload refreshes search results & map by re-submiting the form populated from session
 
-    var homepage = $('body').hasClass('homepage');
-    if (!homepage) $('#new_search').submit();
+    //
+    // AJAX Callbacks
+    //
+
+    // #new_search
 
     $('#new_search').on('ajax:before', function() {
         beforeSubmit()
     });
 
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
-        console.log('#new_search ajax:success. Starting to updatePage...');
+        console.log('#new_search ajax:success. A: Starting to updatePage...');
         updatePage(data);
-        setPage(current_url());
+        var url = current_url();
+        var hash = current_hash();
+        console.log('#new_search ajax:success. B: Calling setPage with: ' + url + ' and ' + String(hash));
+        setPage(url, hash);
         // TODO: re-highlight selected exchange map marker
     });
+
+    // #new_order
 
     $('#exchanges').on('ajax:before', '#new_order', (function(evt, xhr, settings) {
         order_id = value_of('order_id');
@@ -373,9 +375,15 @@ $(document).ready(function() {
          model_populate('order', order);
     }));
 
-    // clicking on certain elements rests params to default values
-    $('[data-set-default]').click(function() {
-         var use_session = false;
-         set_defaults(use_session);
-     })
-}); 
+
+
+
+    // TODO: Move to pages.js
+    // reload refreshes search results & map by re-submiting the form populated from session
+
+    var homepage = $('body').hasClass('homepage');
+    if (!homepage) $('#new_search').submit();
+
+
+
+});

@@ -38,7 +38,14 @@ var def_buy_currency    = "EUR";
 var def_sort            = 'quote';
 var value_of;
 var set_defaults;
-
+var current_url;
+var current_hash;
+var new_search_validator;
+var is_currency_unique;
+var disable_other_currency;
+var link;
+var is_larger_than_zero;
+var custom_validate;
 
 
 
@@ -53,6 +60,12 @@ current_url = function() {
     return url;
 };
 
+current_hash = function() {
+    var hash = value_of('hash');
+    if (hash && hash.length > 1) hash = hash.slice(1);
+    return hash;
+};
+
 
 display = function(term) {
     switch (term) {
@@ -63,9 +76,16 @@ display = function(term) {
     }
 };
 
+// make the mobile navbar collapse when a link is clicked
+$(document).on('click','.navbar-collapse.in',function(e) {
+    if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+        $(this).collapse('hide');
+    }
+});
+
 $(document).ready(function() {
 
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+//    document.body.scrollTop = document.documentElement.scrollTop = 0;
     if (!sessionStorage.location) getLocation();
 
 

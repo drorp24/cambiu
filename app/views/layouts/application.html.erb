@@ -3,28 +3,19 @@
 
 <head>
 
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-	<meta charset="utf-8">
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,400italic,700' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 	<title><%= content_for?(:title) ? yield(:title) : "cambiu" %></title>
+    <%= favicon_link_tag 'logo_no_text.png' %>
 	<%= csrf_meta_tags %>
 
 	<%= stylesheet_link_tag "application", :media => "all" %>
 
 	<%= javascript_include_tag "application" %>
 
-	<!-- Begin Inspectlet Embed Code -->
-	<script type="text/javascript" id="inspectletjs">
-	window.__insp = window.__insp || [];
-	__insp.push(['wid', 226468578]);
-	(function() {
-	function __ldinsp(){var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); }
-	if (window.attachEvent) window.attachEvent('onload', __ldinsp);
-	else window.addEventListener('load', __ldinsp, false);
-	})();
-	</script>
-	<!-- End Inspectlet Embed Code -->
+    <%= render 'inspectlet' %>
 </head>
 
 <body id="cambiu" class="<%= "#{params[:controller]} #{Rails.env}" %>">

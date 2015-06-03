@@ -38,6 +38,9 @@ gem 'diskcached'
 gem 'active_admin_importable'
 gem 'tod'
 gem 'simple_form'
+gem 'jquery-validation-rails'
+#gem 'client_side_validations', github: 'DavyJonesLocker/client_side_validations'
+#gem 'client_side_validations-simple_form', github: 'DavyJonesLocker/client_side_validations-simple_form'
 gem 'backstretch-rails'
 gem 'money'
 #gem 'eu_central_bank'
@@ -70,6 +73,7 @@ end
 gem "rack-timeout"
 gem 'google_currency'
 gem 'google_currency_rails_cache' # TODO: How to install
+gem 'tooltipster-rails'
 #gem 'cloudinary'
 #gem 'compass-rails'
 #gem 'chosen-rails'

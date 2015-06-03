@@ -4,15 +4,26 @@
 @import "font-awesome";
 
 // Variables
-$font-family: 'Roboto', sans-serif;
+$font-family: 'Lato', sans-serif;
+$navbar-height: 60px;
+$white: #fff;
+$black: #000;
 $brand-color: #FF6E3A;
-$color: #888;
 $lightgreen: #5FA531;
 $darkgreen: #34700C;
+$grey73: #737373;
+$grey3b: #3b3b3b;
+$grey3c: #3c3c3c;
+$normal: 400;
+$bold: 700;
+$light: 300;
+
+$color: #888;
 $lightgrey: #999;
 $darkgrey: #333;
-$greybg: #3b3b3b;
 $lightgreybg: #f6f6f6;
+$greybg: #3b3b3b;
+
 $border-radius: 0;
 $form-control-line-height: 35px;
 $form-control-height: 45px;
@@ -98,6 +109,10 @@ $inverse-color: #ffffff;
   color: #555;
   font-weight: 400;
   text-transform: initial;
+  @media (max-width: $screen-xs-max) {
+    font-size: 0.8em;
+    text-indent: 5px;
+  }
 }
 
 @mixin placeholder-email {
@@ -150,12 +165,21 @@ $inverse-color: #ffffff;
 //
 body#cambiu {
     
-  padding-top: 50px;
+  padding-top: $navbar-height;
   font-family: $font-family;
   color: $color;
   .btn {border-radius: $border-radius;}
+  .background {
+    @include background-img('header_background.jpg');
+    @media (min-width: $screen-sm-min) {
+      height: 330px;
+    }
+    @media (max-width: $screen-xs-max) {
+      height: 488px;
+    }
+  }
   a:not(.carousel-control) {
-    color: $lightgrey;
+    color: $grey73;
   }
   [data-href] {
     cursor: pointer;
@@ -164,41 +188,202 @@ body#cambiu {
     border-radius: 0;
   }
   .form-control {border-radius: $border-radius;}
+  .validation_errors {
+ //   visibility: hidden;
+    height: 2em;
+    line-height: 2em;
+    margin-bottom: 15px;
+
+    @media (min-width: $screen-sm-min) {
+      margin-top: -15px;
+    }
+    @media (max-width: $screen-xs-max) {
+      margin-top: -10px;
+      text-align: center;
+    }
+    padding-left: 15px;
+  }
+  .error_class {
+    color: /*$brand-color*/#555;
+    &::before {
+      font-family: fontAwesome;
+      content:"\f071";
+      margin-right: 10px;
+    }
+  }
+  .valid_class {
+    color: $lightgreen;
+    &::before {
+      font-family: fontAwesome;
+      content:"\f05d" + '    ';
+      margin-right: 10px;
+    }
+  }
+  .empty_class {
+
+  }
+
+
+  &.home  {
+    .above_fold {
+      .main {
+        margin-top: /*15vh*//*45px*/35px;
+        margin-bottom: 10vh;
+        .marketing {
+          .pre {
+            font-weight: $normal;
+            color: $black;
+            font-size: 1.2em;
+            margin-top: 10px;
+            margin-bottom: 5px;
+          }
+          .heading {
+            font-weight: $bold;
+            color: $lightgreen;
+            text-transform: uppercase;
+            font-size: 3.2em;
+            line-height: 1.1em;
+             margin-top: 15px;
+            margin-bottom: 30px;
+          }
+          .bullets {
+            @media (min-width: $screen-sm-min) {
+              font-size: 1.7em;
+              line-height: 1.8em;
+            }
+            @media (max-width: $screen-xs-max) {
+              font-size: 1em;
+              line-height: 1.6em;
+            }
+
+           font-weight: 400;
+            color: $darkgreen;
+            margin-left: 1em;
+            li {
+              &::before {
+                font-family: fontAwesome;
+                content:"\f046";
+                margin-right: 0.7em;
+              }
+            }
+
+          }
+        }
+      }
+    }
+  }
+
 
   .navbar {
     background-color: #fff;
+    height: $navbar-height;
     border: none;
     margin-bottom: 0;
-      .navbar-brand {
-        margin-top: -10px;
-      }
-      .navbar-nav > li > a {
+    .navbar-brand {
+      margin-top: -10px;
+    }
+  }
+  .navbar-collapse {
+     &.in {
+      background: rgba(0, 0, 0, 0.7);
+      margin-left: -15px;
+      margin-right: -15px;
+      color: $white;
+      li a {
         line-height: 35px;
         margin-bottom: -20px;
-        color: $lightgrey;
+        color: $white;
+        margin-bottom: 10px;
+        font-size: 1.3em;
+        &:hover {
+          color: $brand-color;
+          background: none;
+          }
       }
+    }
+    &:not(.in)  li  a {
+      line-height: 35px;
+      margin-bottom: -20px;
+      color: $grey73;
+      &:hover, &:active {
+        color: $brand-color;
+        background: none;
+      }
+      &:visited, &:focus {
+        background: none;
+      }
+    }
   }
   .section_anchor {
-  }
+    display: block;
+    margin-top: $navbar-height * -1;        /* Size of fixed header */
+    padding-bottom: $navbar-height;
+    display: block;   }
   #new_search {
-    input, select {
+    label {
+      position: absolute;
+      @media (min-width: $screen-sm-min) {
+        top: 13px;
+      }
+      @media (max-width: $screen-xs-max) {
+        top: 14px;
+      }
+      left: 2em;
+      @media (min-width: $screen-sm-min) {
+        font-size: 1.1em;
+      }
+      @media (max-width: $screen-xs-max) {
+        font-size: 0.9em;
+      }
+      color: $darkgreen;
+      text-transform: uppercase;
+    }
+    input {
+      &#search_pay_amount, &#search_buy_amount {
+         @media (min-width: $screen-sm-min) {
+          font-size: 1.1em;
+           text-indent: 4.5em;
+        }
+        @media (max-width: $screen-xs-max) {
+          font-size: 0.9em;
+          text-indent: 3.5em;
+        }
+      }
+    }
+    .homepage_search_button {
+      margin-top: -15px;
+    }
+    .location_control {
+      i {
+        position: relative;
+        float: right;
+        margin-right: 10px;
+        bottom: 30px;
+        color: $darkgreen;
+      }
+    }
+    #search_pay_amount {
+    }
+     input, select {
       @include search-form-def;
       @include search_placeholder;
       &#search_location {
+        margin-top: -10px;
         @include placeholder-icon("\f041");
 //      @include placeholder-center;
         background: transparent;
         border: none;
         border-bottom: $border-bottom;
-      }
-      &.btn {
+        box-shadow: none;
+        }
+       &.btn {
         background-color: $lightgreen;
         width: 100%;
         line-height: inherit;
         text-align: center;
         color: #fff;
         font-size: 1.3em;
-        font-weight: 400;
+        font-weight: $bold;
         height: $button-height;
         border-bottom: $border-bottom;
         margin-top: -40px;
@@ -235,34 +420,58 @@ body#cambiu {
     }
     .hdiw_title {
       height: 50px;
-      margin-bottom: 40px;
+      margin-bottom: 15px;
+      margin-top: 40px;
+      font-size: 30px;
+      color: $black;
     }
     .hdiw_under_title {
       margin-bottom: 40px;
+      font-weight: $light;
+      color: $grey3c;
+      @media (min-width: $screen-sm-min) {
+        font-size: 1.25em;
+      }
+      @media (max-width: $screen-xs-max) {
+        font-size: 1.1em;
+      }
+
     }
     .hdiw_text {
       margin-top: 25px;
+      font-weight: $light;
+      color: $grey3c;
+      @media (min-width: $screen-sm-min) {
+        font-size: 1.25em;
+      }
+      @media (max-width: $screen-xs-max) {
+        font-size: 1.1em;
+      }
+    }
+    #hand_icon {
+      margin-left: -20px;
     }
   }
   
   .getstarted_button_container {
     &.a {
-      margin-top: 60px;
+      margin-top: 10px;
       margin-bottom: 120px;
     }
     &.b {
-      margin-top: 70px;
+      margin-top: 20px;
       margin-bottom: 70px;
     }
     .getstarted_button {
+      width: 100%;
       background-color: $lightgreen;
       border-bottom: 3px solid $darkgreen;
       color: #fff;
       text-transform: uppercase;
-      font-size: 1.3em;
-      font-weight: 400;
+      font-size: 1.1em;
+      font-weight: $bold;
+      text-indent: 3px;
       height: $button-height;
-      border-radius: 5px;
       &:hover {
         background-color: $darkgreen;
       }
@@ -276,12 +485,12 @@ body#cambiu {
   
   .testimonials {
     background-color: $lightgreybg;
-    border-top: 3px solid $lightgreen;
     padding: 25px inherit;
     .fivestars {
       margin: 10px;
     }
     #testimonials_carousel {
+      margin-top: -10px;
 
       .middle-parent {
         @media (min-width: $screen-sm-min) {
@@ -334,11 +543,13 @@ body#cambiu {
         }
       }
       .testimonial {
+        font-style: italic;
+        color: $black;
         @media (max-width: $screen-xs-max){
-          font-size: 1em;
+          font-size: 1.1em;
         }
         @media (min-width: $screen-sm-min){
-          font-size: 1.1em;
+          font-size: 1.4em;
         }
         font-weight: 400;
         margin-top: 7px;
@@ -349,12 +560,13 @@ body#cambiu {
       }
       .credit {
         color: $lightgreen;
-        margin-top: -15px;
-        @media (min-width: $screen-sm-min) {
+         @media (min-width: $screen-sm-min) {
           margin-left: -20px;
-        }
+          margin-top: -24px;
+         }
         @media (max-width: $screen-xs-max){
           font-size: 0.9em;
+          margin-top: -18px;
         }
       }
     }
@@ -367,13 +579,13 @@ body#cambiu {
     }
   }
   .map_heading {
-    min-height: 70px;
+    min-height: 100px;
     padding: 0 5px;
     @media (max-width: $screen-xs-max){
       line-height: 35px;
     }
     @media (min-width: $screen-sm-min) {
-      line-height: 70px;
+      line-height: 100px;
     }
     background-color: $lightgreen;
     text-transform: uppercase;
@@ -532,6 +744,14 @@ body#cambiu {
       text-align: center;
       text-transform: uppercase;
       border: none;
+
+      #search_form {
+        .bootstrap-switch .bootstrap-switch-container {
+          .bootstrap-switch-handle-on, .bootstrap-handle-off, .bbostrap-switch-label {
+            font-size: 0.9em;
+          }
+        }
+      }
     }
     #exchanges_content {
       z-index: -1;
@@ -817,10 +1037,11 @@ body#cambiu {
           #search_email {
             @include placeholder-icon("\f0e0");
             @include placeholder-email;
-            text-transform: capitalize;
+            font-size: 1.3em;
             @media (max-width: $screen-xs-max) {
               height: 40px;
               margin-top: 30px;
+              text-align: center;
             }
           }
           .email_submit {
@@ -1030,48 +1251,12 @@ body#cambiu {
     .mobile_only {
       display: none !important;
     }
-    &.home  {
-      .background {
-        @include background-img('header_background.jpg');      
-        height: 430px;
-      }
-      .above_fold {
-        .main {
-          margin-top: 15vh;
-          margin-bottom: 10vh;
-          .marketing {
-            .pre {
-              font-weight: 500;
-              color: $darkgrey;
-              font-size: 1.2em;            
-            }
-            .heading {
-              font-weight: 500;
-              color: $lightgreen;
-              text-transform: uppercase;
-              font-size: 3.2em;
-              line-height: 1.1em;
-            }
-            .pre {
-              font-weight: 600;
-            }
-            .post {
-              font-weight: 400;
-              color: $darkgrey;
-              font-size: 1.1em;
-            }
-          }
-        }
-      }
-    }
 
     .getstarted_button_container {
       .getstarted_button {
-        margin-left: -12.5%;
-        width: 125%;
       }
       img {
-        right: 14px;
+        right: -5px;
       }
     }
 
@@ -1096,9 +1281,9 @@ body#cambiu {
 // OLD SEARCH PAGE
 
     .bootstrap-switch {
-      border-radius: $border-radius;      
+      border-radius: $border-radius;
         .bootstrap-switch-label, .bootstrap-switch-handle-off, .bootstrap-switch-handle-on {
-          padding-top: 0;
+           padding-top: 0;
           padding-bottom: 0;
         }     
       .bootstrap-switch-container {
@@ -1240,31 +1425,30 @@ body#cambiu {
     }
 
     &.home {
-      @include background-img('header_background_mobile.jpg');
-      height: 100vh;
-      .above_fold {
+       .above_fold {
         .main {
           margin-top: 3vh;
           margin-bottom: 3vh;
           .marketing {
             .pre {
-              font-weight: 500;
+              font-weight: $normal;
               color: $darkgrey;
               font-size: 1em;            
             }
             .heading {
-              font-weight: 500;
+              font-weight: $bold;
               color: $lightgreen;
               text-transform: uppercase;
-              font-size: 2em;
+              font-size: 1.6em;
               line-height: 1.1em;
+              margin-bottom: 20px;
             }
             .post {
-              font-weight: 400;
+              font-weight: $normal;
               color: $darkgrey;
-              font-size: 0.9em;
+              font-size: 0.8em;
             }
-          }
+        }
         }
       }
       .rates_banner img {
@@ -1272,7 +1456,7 @@ body#cambiu {
       }
 
     }
-    
+
     .getstarted_button_container {
       .getstarted_button {
          width: 100%;

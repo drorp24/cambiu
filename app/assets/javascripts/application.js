@@ -7,12 +7,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require autonumeric
+//= require jquery.validate
 
 //= require pageload
 //= require models
 //= require findlocation
 //= require exchanges
 //= require search
+//= require validations
 //= require pages
 
 //= require bootstrap/transition
