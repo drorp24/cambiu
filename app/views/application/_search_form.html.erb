@@ -1,8 +1,10 @@
 <%= simple_form_for(Search.new, remote: true, defaults: {input_html: {class: 'form-control'}, label: false}, html: {data: {type: :json }, novalidate: true}) do |f| %>
-	
+
+    <div class="validation_errors"></div>
+
 	<div class="row">
 		<div class="form-group col-md-8 col-xs-7">
-			<%= f.input :pay_amount, input_html: {data: {autonumeric: true, symbolsource: 'search_pay_currency', field: 'pay_amount'}, pattern: "\d*"}, placeholder: "  I have:" %>
+			<%= f.input :pay_amount, label: "I have", input_html: {data: {autonumeric: true, symbolsource: 'search_pay_currency', field: 'pay_amount'}, pattern: "\d*"} %>
 		</div>
 		<div class="form-group col-md-4 col-xs-5">
 			<%= f.input :pay_currency, collection: Currency.major_with_symbol, input_html: {class: 'currency_select form-control', data: {field: 'pay_currency', header: 'My currency', style: 'btn-danger', symboltarget: 'pay_amount'}}, selected: "GBP",  include_blank: false %>
@@ -10,16 +12,17 @@
 	</div>
 	<div class="row">
 		<div class="form-group col-md-8 col-xs-7">
-			<%= f.input :buy_amount, input_html: {data: {autonumeric: true, symbolsource: 'search_buy_currency', field:'buy_amount'}, pattern: "\d*"}, placeholder: "  I need:" %>
+			<%= f.input :buy_amount, label: 'I need', input_html: {data: {autonumeric: true, symbolsource: 'search_buy_currency', field:'buy_amount'}, pattern: "\d*"} %>
 		</div>
 		<div class="form-group col-md-4 col-xs-5">
 			<%= f.input :buy_currency, collection: Currency.major_with_symbol, input_html: {class: 'currency_select form-control', data: {header: 'Desired currency', style: 'btn-danger', symboltarget: 'buy_amount', field:'buy_currency'}}, selected: "USD", include_blank: false %>
 		</div>
 	</div>
 	<div class="row">
-		<div class="form-group col-md-12 col-xs-12">
+		<div class="location_control form-group col-md-12 col-xs-12">
 			<%= f.input :location, input_html: {data: {field: 'location', searchbox: 'true'}}, placeholder: '  Current location' %>
-		</div>
+            <%= fa_icon "chevron-down" %>
+ 		</div>
 	</div>
 
 	<div class="hidden_fields">
@@ -30,19 +33,20 @@
 			<%= f.input_field :distance_unit, 	as: :hidden, data: {field: 'distance_unit'} %>
 			<%= f.input_field :sort, 			as: :hidden, data: {field: 'sort'} %>
             <%= f.input_field :page, 			as: :hidden, data: {field: 'page'} %>
-            <%= f.input_field :rest, 			as: :hidden, data: {field: 'rest'} %>
+            <%= f.input_field :hash, 			as: :hidden, data: {field: 'rest'} %>
             <%= f.input_field :location_short, 	as: :hidden, data: {field: 'location_short'} %>
             <%= f.input_field :email, 	        as: :hidden, data: {field: 'email'}, required: false %>
 	</div>
 
 
 	<div class="row">
-		<div class="form-group col-md-12 col-xs-12">
+		<div class="homepage_search_button form-group col-md-12 col-xs-12">
 			<%= image_tag 'logo_no_text.png' %>
 			<%= f.button :submit, "Get the best rate", data: {href: 'exchanges/list'} %>
 		</div>
 	</div>
-	
+
+
 <!--
 	<div class="after_submit">
 		<p>We give users more than 94.6% profit for their money! </p>

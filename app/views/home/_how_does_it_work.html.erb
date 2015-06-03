@@ -7,37 +7,37 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-offset-2 col-md-8 col-xs-12">
-			<div class="row">
-				<div class="col-md-3 col-xs-12">
-					<div class="hdiw_icon text-center">
-						<%= image_tag 'pin_euro.png' %>
-					</div>
-					<div class="hdiw_text text-center">
-						<p>Simply select your preferred currency, amount and location and we'll find the best deals based on value and distance.
-                        </p>
-					</div>
-				</div>
-				<div class="col-md-offset-1 col-md-3 col-xs-12">
-					<div class="hdiw_icon text-center">
-						<%= image_tag 'hand_icon.png' %>
-					</div>
-					<div class="hdiw_text text-center">
-						<p>Choose the best offer for you and get the terms and details for free via an instant voucher.
-                        </p>
-					</div>
-				</div>
-				<div class="col-md-offset-1 col-md-3 col-xs-12">
-					<div class="hdiw_icon text-center">
-						<%= image_tag 'home_with_dollar.png' %>
-					</div>
-					<div class="hdiw_text text-center">
-						<p>Go to the exchange merchant and present your voucher to get the best deal.</p>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div class="col-md-offset-2 col-md-2 col-xs-12">
+            <div class="hdiw_icon text-center">
+                <%= image_tag 'pin_euro.png' %>
+            </div>
+            <div class="hdiw_text text-center">
+                <p>Simply select currency, amount and location and we'll find you deals based on value and distance.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-2 col-xs-12">
+            <div class="hdiw_icon text-center">
+                <%= image_tag 'hand_icon.png', id: 'hand_icon' %>
+            </div>
+            <div class="hdiw_text text-center">
+                <p>Choose the best offer for you and get the terms and details for free via an instant voucher.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-2 col-xs-12">
+            <div class="hdiw_icon text-center">
+                <%= image_tag 'home_with_dollar.png' %>
+            </div>
+            <div class="hdiw_text text-center">
+                <p>Go to the exchange merchant and present your voucher to get the best deal.</p>
+            </div>
+        </div>
 	</div>
-  	<%= render partial: 'getstarted', locals: {seq: 1, cseq: 'a'} %>
+    <div class="row">
+      <div class="col-md-offset-5 col-md-2 col-xs-12">
+        <%= render partial: 'getstarted', locals: {seq: 1, cseq: 'a'} %>
+      </div>
+    </div>
 </div>
 	

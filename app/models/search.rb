@@ -1,5 +1,7 @@
 class Search < ActiveRecord::Base
   belongs_to :exchange
+  validates :email, presence: true#, on: :update #allow_nil: true #unless: Proc.new { |a| a.email.blank? }
+  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   
   def exchanges
      
@@ -72,6 +74,14 @@ class Search < ActiveRecord::Base
         @exchange_quotes.sort_by{|e| e[:distance] }
       end
 
+  end
+
+  def hash
+    self.rest
+  end
+
+  def hash=(val)
+    self.rest = val
   end
 
   

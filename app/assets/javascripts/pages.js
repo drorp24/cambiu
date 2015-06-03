@@ -44,7 +44,26 @@ $(document).ready(function() {
 
     }
 
-    setPage = function(url) {
+    setPage = function(url, hash) {
+
+        // Parse arguments
+
+        console.log('setPage entered');
+        console.log('url argument: ' + url);
+        console.log('hash argument: ' + String(hash));
+        console.log('current_url: ' + current_url());
+        console.log('current_hash: ' + String(current_hash()));
+
+        // TODO: Remove: prevents form data from populating if in the same page
+ /*     if (url == current_url() && hash == current_hash() ) {
+            if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true)}
+            console.log('already on that page. Existing'); return}
+*/
+        if (hash === undefined) {
+            hash = null;
+        } else if (hash && hash[0] == '#') {
+            hash = hash.slice(1)
+        }
 
         var url_a       = url.split('/');
         if (url_a.length == 3) {
@@ -58,7 +77,8 @@ $(document).ready(function() {
         }
         var exchangeid  = id;
 
-        console.log('setPage. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane);
+        console.log('setPage parsing:. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + hash);
+
 
         // update session
         sessionStorage.exchangeid   = exchangeid    ? exchangeid    : null;
@@ -118,7 +138,6 @@ $(document).ready(function() {
         $('.pane.active').hide();
         $('.page.active').removeClass('active');
         $('.pane.active').removeClass('active');
-        console.log('after removing active class there are ' + $('.page.active').length + ' pages active and ' + $('.pane.active').length + ' panes active.');
         if (page) {
             console.log('revealing page: ' + page);
             page_el = $('.page[data-page=' + page + ']');
@@ -134,7 +153,6 @@ $(document).ready(function() {
             pane_el.show();
         }
 
-        console.log('after adding active class to proper page and pane there are ' + $('.page.active').length + ' pages active and ' + $('.pane.active').length + ' panes active.');
 
         // populate/empty exchange
         $('.pane.active').each(function () {
@@ -158,40 +176,80 @@ $(document).ready(function() {
             console.log('>>>>>>>>>>>>>>>>>> current pathname matches the url; not pushing');
         }
 
+        // if hash argument was included, go to it
+        if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true);}
+
     };
 
-    $('body').on('click', '[data-href]', (function() {
 
-        var $this =       $(this);
-        var exchangeid =  $this.data('exchangeid');
-        var href =        $this.data('href');
-        var page =        $this.data('href-page');
-        var pane =        $this.data('href-pane');
-        var id =          $this.data('href-id');
+    link = function(el) {
+        var exchangeid =  el.data('exchangeid');
+        var href =        el.data('href');
+        var page =        el.data('href-page');
+        var pane =        el.data('href-pane');
+        var id =          el.data('href-id');
         var url =         (page && pane && id) ? page + '/' + id + '/' + pane : href;
+        var hash =        el.data('href-hash');
 
-        console.log('data-href element clicked. href-id: ' + id);
-        setPage(url);
-        if ($this.is('[data-reload')) location.reload();
+        console.log('data-href element clicked. href: ' + href + ' href-id: ' + id + ' hash: ' + String(hash));
+        setPage(url, hash);
+//        if (el.is('[data-reload')) location.reload();
+    };
+
+    $('body').on('click', '[data-href]', (function(e) {
+
+        // if clicked element is part of a form, dont move page unless form is valid
+
+        var $this           = $(this);
+        var invoked_form    = $this.data('form') ? $($this.data('form')) : null;   // e.g., getstarted_button click invokes #new_search form
+        var form            = invoked_form ? invoked_form : $this.closest('form');
+
+        if (form.length > 0) {
+            if (form.data('remote-validation')) {
+                // jquery.validate remote doesn't wait for ajax to complete
+                form.validate();
+                form.on('ajax:complete', (function (evt, data, status, xhr) {
+                    console.log('form remote validation completed. Status: ' + status);
+                    if (form.valid()) {
+                        link($this)
+                    }
+                }));
+            } else {
+                if (form.valid() && custom_validate(form)) {
+                    link($this)
+                }
+            }
+        } else {
+            link($this)
+        }
 
     }));
 
-
+    $('a[data-href]').click(function(e) {
+        e.preventDefault();
+    });
 
 
     window.addEventListener("popstate", function(e) {
 
         console.log('>>>>>>>>>>>>>> pop. e.state: ' + e.state);
-        var url = e.state.slice(1);
-        setPage(url);
-
+        if (e.state && e.state.length > 0) {
+            setPage(e.state.slice(1));
+        } else
+        if (window.location.hash && window.location.pathname.length > 1) {
+            console.log('>>>>>>>>>>>>>> ... but a hash exists - settingPage according to path');
+            // when user goes to hash it's not pushed to history hence e.state is null in this case
+            // this case is identified by the popstate event and the hash in the location
+            setPage(window.location.pathname.slice(1),window.location.hash.slice(1));
+        }
     });
 
 
     // first entry, reloads, direct linking
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
-    console.log('full page re/load. settingPage to: ' + reload_path);
-    setPage(reload_path);
+    var hash = window.location.hash ? window.location.hash.slice(1) : null;
+    console.log('full page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
+    setPage(reload_path, hash);
 
 
 });
