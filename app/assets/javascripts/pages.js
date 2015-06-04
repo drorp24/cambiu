@@ -246,12 +246,4 @@ $(document).ready(function() {
     console.log('full page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
     setPage(reload_path, hash);
 
-    // Submit form in order to updatePage, namely retrieve search results & re-draw map
-    // Applicable for search page only: homepage awaits user input and will submit only upon clicking the button
-    if (reload_path != 'homepage') {
-        console.log('full page re/load: submitting form');
-        $('#new_search').submit();
-    }
-
-
 });

@@ -82,7 +82,7 @@ $(document).ready(function() {
     clearExchanges = function() {
         console.log('clearExchanges');
         $('#exchanges_list #exchanges_items').empty();
-    };
+    }
     
 
     function bindBehavior() {
@@ -90,10 +90,10 @@ $(document).ready(function() {
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
          $('.directions').click(function() {
-            var from    =  new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
-            var to      =  new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
+           var from =  production ? new google.maps.LatLng(sessionStorage.user_lat, sessionStorage.user_lng) : new google.maps.LatLng(sessionStorage.test_lat, sessionStorage.test_lng);
+            var to =    new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
             calcRoute(from, to);
-            return false;
+            return false;  
         });
     }
     
@@ -193,21 +193,21 @@ $(document).ready(function() {
    
         // when any row is clicked, pan to respective infoWindow and show details
         if (exchange_window_el) {
-    //        google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
-    //
-    //            $('.exchange_window_det').css('display', 'none');
-    //            $('.exchange_window_sum').css('display', 'block');
-    //            exchange_window_el.find('.exchange_window_sum').css('display', 'none');
-    //            exchange_window_el.find('.exchange_window_det').css('display', 'block');
-    //            exchange_window_el.find('.exchange_window_det').addClass('in');
-    //            infowindow.setContent(exchange_window_el.html());
-    //            infowindow.setZIndex(2000);
-    ////            $('.exchange_window_det.in').parent().parent().parent().parent().children().css('background', "yellow");
-    //
-    //            map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
-    //
-    //         });
-        }
+            google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
+     
+                $('.exchange_window_det').css('display', 'none');
+                $('.exchange_window_sum').css('display', 'block');
+                exchange_window_el.find('.exchange_window_sum').css('display', 'none');
+                exchange_window_el.find('.exchange_window_det').css('display', 'block');
+                exchange_window_el.find('.exchange_window_det').addClass('in');
+                infowindow.setContent(exchange_window_el.html());
+                infowindow.setZIndex(2000);
+    //            $('.exchange_window_det.in').parent().parent().parent().parent().children().css('background', "yellow");
+                
+                map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
+     
+             });            
+        }    
 
     }
     
@@ -221,23 +221,86 @@ $(document).ready(function() {
     
 
 
+    // Events & impacts
+    //
+    
+
+    
+    // TODO: Try again to DRY the code...
     drawMap = function (latitude, longitude, exchanges) {
 
         if (mobile) {return;}
+
         console.log('drawMap');
 
-        center = new google.maps.LatLng(latitude, longitude);
-        var mapOptions = {
-            center: center,
-            zoom: 17
-        };
-        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        addUserMarker();
-        if (exchanges && exchanges.length > 0) {
-            updateMarkers(exchanges);
-        }
 
-    };
+        console.log('before directionsDisplay')
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        console.log('after directionsDisplay')
+        
+        if (place) {
+           geocoder = new google.maps.Geocoder();
+           geocoder.geocode( { 'address': place}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+
+                center = results[0].geometry.location;
+                console.log('going by selected location. center: ' + center);
+                var mapOptions = {
+                    center: center,
+                    zoom: 17
+                };                      
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                  addUserMarker();
+                  console.log('map is set now')
+              if (exchanges && exchanges.length > 0) {
+                  updateMarkers(exchanges);
+              }
+                directionsDisplay.setMap(map);   
+ 
+               } else {
+                alert("Geocode was not successful for the following reason: " + status);
+              }
+            }); 
+
+        } else if (latitude && longitude) {
+
+            console.log('going by user location. lat: ' + String(latitude) + ' lng: ' + String(longitude));
+            center = new google.maps.LatLng(latitude, longitude);
+            var mapOptions = {
+                center: center,
+                zoom: 17
+            };                  
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            addUserMarker();
+            if (exchanges && exchanges.length > 0) {
+                updateMarkers(exchanges);
+            }
+            directionsDisplay.setMap(map);
+
+        } else {
+            console.log('draw: reached the else');
+
+            geocoder = new google.maps.Geocoder();
+           geocoder.geocode( { 'address': 'London, UK'}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                center = results[0].geometry.location;
+                var mapOptions = {
+                    center: center,
+                    zoom: 17
+                };                      
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                  addUserMarker();
+                  if (exchanges && exchanges.length > 0) {
+                      updateMarkers(exchanges);
+                  }
+                  directionsDisplay.setMap(map);
+             } else {
+                alert("Geocode was not successful for the following reason: " + status);
+              }
+            });             
+        }
+ 
+    }
     
     function calcRoute(from, to) {
 
@@ -245,16 +308,13 @@ $(document).ready(function() {
           origin: from,
           destination: to,
           travelMode: google.maps.TravelMode.WALKING,
-          unitSystem: google.maps.UnitSystem.METRIC
+          region: "uk"
       };
 
       var directionsService = new google.maps.DirectionsService();
-      var directionsDisplay = new google.maps.DirectionsRenderer();
-
-      directionsDisplay.setMap(map);
 
       directionsService.route(request, function(response, status) {
-        console.log('directionsService.route returned with status: ' + status);
+          console.log(status);
         if (status == google.maps.DirectionsStatus.OK) {
           directionsDisplay.setDirections(response);
         }
@@ -269,7 +329,7 @@ $(document).ready(function() {
         $('#empty_message').css('display', 'none');
         $('#result_message').css('display', 'none');
         $('#loader_message').css('display', 'block');        
-    };
+    }
     
     beforeSubmit = function() {
 

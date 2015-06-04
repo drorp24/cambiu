@@ -50,6 +50,10 @@ var set_default_location;
 var location_settings;
 
 
+homepage = function() {
+  $('body').hasClass('homepage')
+};
+
 value_of = function(key) {
     var a = sessionStorage.getItem(key);
     return (a && a != "null") ? a : null;
@@ -72,6 +76,14 @@ current_hash = function() {
     return hash;
 };
 
+display = function(term) {
+    switch (term) {
+        case 'quote':
+            return 'best prices first:';
+        case 'distance':
+            return 'nearest first:';
+    }
+};
 // make the mobile navbar collapse when a link is clicked
 $(document).on('click','.navbar-collapse.in',function(e) {
     if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {

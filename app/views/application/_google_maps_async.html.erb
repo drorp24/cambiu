@@ -1,8 +1,19 @@
 <script>
 
     function initialize() {
-        console.log('google maps finished async loading. Calling location_settings()');
-         location_settings()
+        if (!value_of('location')) {
+            console.log('google maps finished async loading. Calling location_settings()');
+            location_settings();
+        } else {
+            console.log('location already exists. Not calling location_settings()')
+        }
+        if (!homepage()) {
+            // Now that google is defined, submit form to re-ajax search results & updatePage (= draw map, place markers & display restuls)
+            // But only for  search page : homepage awaits user input and will submit only upon clicking the button (for performance)
+            // Though getLocation() probably havent yet found the location, this if occurs only upon reload, so session holds the location
+                 console.log('not homepage: submitting form');
+                $('#new_search').submit();
+            }
     }
 
     function loadScript() {
