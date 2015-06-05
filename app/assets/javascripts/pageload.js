@@ -34,11 +34,6 @@ var updatePage;
 var display;
 var bind_currency_to_autonumeric;
 var current_url;
-var def_pay_amount      = null;
-var def_pay_currency    = "GBP";
-var def_buy_amount      = 1000;
-var def_buy_currency    = "EUR";
-var def_sort            = 'quote';
 var value_of;
 var current_url;
 var current_hash;
@@ -49,10 +44,24 @@ var link;
 var is_larger_than_zero;
 var custom_validate;
 var location_settings;
+var def;
+var set_variables;
+var variables_set = false;
 
+
+def = function(variable) {
+    var val = {
+        'pay_amount'    : null,
+        'pay_currency'  : 'GBP',
+        'buy_amount'    : 1000,
+        'buy_currency'  : 'EUR',
+        'sort'          : 'quote'
+    };
+    return val[variable] ? val[variable] : null
+};
 
 homepage = function() {
-  return $('body').hasClass('homepage')
+  return $('body').hasClass('homepage') || window.location.pathname == '/homepage' || window.location.pathname == '/'
 };
 
 value_of = function(key) {

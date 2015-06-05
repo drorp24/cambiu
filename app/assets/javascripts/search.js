@@ -77,7 +77,8 @@
         })
     };
 
-     // Restore session values || use defaults
+/*
+    // Sets 5 basic search variables only.
     set_defaults = function(use_session) {
 
         var session_pay_amount      = value_of('pay_amount');
@@ -92,29 +93,40 @@
         set('buy_currency', use_session  ? session_buy_currency   || def_buy_currency                               : def_buy_currency);
         set('sort',         use_session  ? session_sort           || def_sort                                       : def_sort);
 
+        bind_currency_to_autonumeric();
+
     };
+*/
 
+    // Sets all variables
+    set_variables = function(use_session) {
 
+        console.log('set_variables');
+        variables_set = true;
+        if (use_session === undefined) use_session = true;
+
+        $('#homepage form [data-field]').each(function() {
+
+            var field = $(this).data('field');
+            var def_val = def(field);
+            var value = use_session ? value_of(field) || def_val : def_val;
+
+            if (field == 'pay_amount') {value = use_session ? value_of('pay_amount') || (value_of('buy_amount') ? null : def_val) : def_val}
+            if (field == 'buy_amount') {value = use_session ? value_of('buy_amount') || (value_of('pay_amount') ? null : def_val) : def_val}
+
+            set(field, value);
+
+        });
+
+        bind_currency_to_autonumeric();
+
+    };
 
 
 $(document).ready(function() {
 
 
-    var use_session = true;
-    set_defaults(use_session);
-
-    sessionStorage.email = '';
-
-    // Restore session state
-
-    $('#homepage form [data-field]').each(function() {
-
-        var field = $(this).data('field');
-        var value = sessionStorage.getItem(field);
-
-        set(field, value);
-
-    });
+    set_variables();
 
     // Binding
 
@@ -124,7 +136,6 @@ $(document).ready(function() {
     });
 
 
-    bind_currency_to_autonumeric();
 
     // fix autoNumeric placing "0.00" instead of null
     function fix(field) {
@@ -224,7 +235,7 @@ $(document).ready(function() {
     // clicking on certain elements rests params to default values
     $('[data-set-default]').click(function() {
         var use_session = false;
-        set_defaults(use_session);
+        set_variables(use_session);
     });
 
 
@@ -249,6 +260,19 @@ $(document).ready(function() {
     //
 
     // #new_search
+
+
+    // Before actions
+
+    startLoader = function() {
+        $('#empty_message').css('display', 'none');
+        $('#result_message').css('display', 'none');
+        $('#loader_message').css('display', 'block');
+    };
+
+    beforeSubmit = function() {
+        startLoader();
+    };
 
     $('#new_search').on('ajax:before', function() {
         console.log('ajax:before: form is submitted');

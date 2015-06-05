@@ -36,6 +36,15 @@ $(document).ready(function() {
 
     search_exchanges = function() {
         console.log('After location found, set to default, or changed by user:');
+        // TODO: Remove: once search moved before location, variables are always set by now
+/*
+        if (!variables_set) {
+            console.log('variables have not been set yet. Calling set_variables');
+            variables_set();
+        } else {
+            console.log('variables have been set already. No need to call set_variables');
+        }
+*/
         if (!homepage()) {
             console.log('Not homepage: submitting form');
             $('#new_search').submit();

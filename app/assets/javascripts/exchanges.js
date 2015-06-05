@@ -8,7 +8,7 @@ $(document).ready(function() {
         console.log('updatePage');
         exchanges = data;
 
-        drawMap(value_of('location_lat') || value_of('user_lat'), value_of('location_lng') || value_of('user_lng'), exchanges);
+        drawMap(sessionStorage.location_lat, sessionStorage.location_lng, exchanges);
 
         clearExchanges();
 
@@ -137,7 +137,7 @@ $(document).ready(function() {
         if (mobile) {return;}
         
         clearMarkers();
-        for (var i = 0; i < Math.min(exchanges.length, 30); i++) {
+        for (var i = 0; i < exchanges.length; i++) {
             addMarker(exchanges[i]);
         }
     }
@@ -268,21 +268,6 @@ $(document).ready(function() {
       });
 
     }
-  
-
-     // Before actions
-
-    startLoader = function() {
-        $('#empty_message').css('display', 'none');
-        $('#result_message').css('display', 'none');
-        $('#loader_message').css('display', 'block');        
-    };
-    
-    beforeSubmit = function() {
-
-        startLoader();
-    };
-
 
     
 });
