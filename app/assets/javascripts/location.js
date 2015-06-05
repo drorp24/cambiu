@@ -1,9 +1,18 @@
 // Handle location
 // 1 - find user's location thru browser                                                          navigator.geolocation.getCurrentPosition
 // 2 - upon callback: populate session/forms with user location using google.maps.Geocoder        findPosition
-// 3 - UI & location change event handling
+// 3 - submit form now that location exists, to populate map and exchanges (not applicable to homepage)
+// 4 - UI & location change event handling
 
-location_settings = function() {
+// submit() is called on 3 occasions (only):
+// Non homepage: triggered by location change (here)
+// 1 - location successfully found or otherwise set to default
+// 2 - location is changed by user
+// 3 - location is refreshed upon pageload
+// Homepage: trigger by button click (search.js)
+// 3 - either of the homepage buttons is clicked
+
+$(document).ready(function() {
 
 
     // TODO: Remove
@@ -11,19 +20,11 @@ location_settings = function() {
     sessionStorage.test_lng = -0.1354;
 
 
-    function refresh_map() {
-        var homepage = $('body').hasClass('homepage');
-        if (!homepage) $('#new_search').submit();
-    }
-
-
-
-
-
 
     // Find user location and set session/forms accordingly
 
     set_default_location = function(excluded) {
+        console.log('Since user location could not be found: setting the default location');
         set('location',         'London, UK');
         set('location_short',   'London');
         set('location_lat',     '51.5073509');
@@ -32,7 +33,23 @@ location_settings = function() {
     };
 
 
+
+    search_exchanges = function() {
+        console.log('After location found, set to default, or changed by user:');
+        if (!homepage()) {
+            console.log('Not homepage: submitting form');
+            $('#new_search').submit();
+        } else {
+            console.log('Homepage: not submitting form');
+        }
+    };
+
+    // findPosition is the callback after getLocation has returned
+    // Only at this point can the form be submitted, since location is one of the search criteria
+
     function findPosition(position) {
+
+        console.log('at findPosition: location found');
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
 
@@ -53,14 +70,16 @@ location_settings = function() {
                     set('location_type',    'user');
 
                     console.log('User position found and GeocoderStatus is OK. Session populated');
+                    search_exchanges();
                 } else {
                     console.log('User position found and GeocoderStatus is OK, but no results were found');
                     set_default_location();
+                    search_exchanges();
                 }
             } else {
                 console.log('Geocoder failed due to: ' + status);
-                console.log('Populating the default location');
                 set_default_location();
+                search_exchanges();
             }
         });
     }
@@ -72,14 +91,14 @@ location_settings = function() {
             3: 'Request timeout'
         };
         console.log("navigator.geolocation has an error: " + errors[error.code]);
-        console.log('Populating the default location');
         set_default_location();
+        search_exchanges();
     }
 
     function getLocation() {
 
         if (navigator.geolocation) {
-            console.log('calling navigator.geolocation');
+            console.log('calling navigator.geolocation....');
             var timeoutVal = 5000;  // setInterval????!
             navigator.geolocation.getCurrentPosition(
                 findPosition,
@@ -91,18 +110,42 @@ location_settings = function() {
             console.log('Browser does not support geolocation');
             console.log('Populating the default location');
             set_default_location();
+            search_exchanges();
         }
     }
 
 
-    if (!value_of(location)) getLocation();
+    if (!value_of('location')) {
+        getLocation();
+    } else {
+        search_exchanges()
+    }
 
 
 
 
 
     // UI
+    // Handle user location changes
 
+    function searchbox_addListener(searchBox) {
+        google.maps.event.addListener(searchBox, 'places_changed', function () {
+            console.log('Location changed by user')
+            var places = searchBox.getPlaces();
+            if (places.length == 0) {
+                set_default_location();
+                return
+            }
+            place = places[0];
+            set('location', place.formatted_address);
+            set('location_short', place.name);
+            set('location_lat', place.geometry.location.lat());
+            set('location_lng', place.geometry.location.lng());
+            set('location_type', 'selected');
+
+            search_exchanges();
+        });
+    }
 
     // Turn location fields into google searchBox's
     $('input[data-field=location]').each(function() {
@@ -131,26 +174,4 @@ location_settings = function() {
 
 
 
-    // Handle user location changes
-
-    function searchbox_addListener(searchBox) {
-        google.maps.event.addListener(searchBox, 'places_changed', function () {
-            var places = searchBox.getPlaces();
-            if (places.length == 0) {
-                set_default_location();
-                return
-            }
-            place = places[0];
-            set('location', place.formatted_address);
-            set('location_short', place.name);
-            set('location_lat', place.geometry.location.lat());
-            set('location_lng', place.geometry.location.lng());
-            set('location_type', 'selected');
-            // homepage anyway requires clicking button to get the search page, which in turn submits the form. This avoids calling submit twice.
-            if (!$('body').hasClass('homepage')) $('#new_search').submit();
-        });
-    }
-
-
-
-}
+});

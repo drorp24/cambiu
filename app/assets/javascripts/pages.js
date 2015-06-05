@@ -246,4 +246,10 @@ $(document).ready(function() {
     console.log('full page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
     setPage(reload_path, hash);
 
+    // TODO: Moved here from search.js. Set at setPage. Remove?
+/*
+    sessionStorage.page         = window.location.hostname;
+    sessionStorage.hash         = window.location.hash;
+*/
+
 });

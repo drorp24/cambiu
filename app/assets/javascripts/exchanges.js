@@ -45,12 +45,12 @@ $(document).ready(function() {
     
         var exchange_el =   $('.exchange_row.template').clone().removeClass('template');
         var exchange_sum =  exchange_el.find('.list-group-item');
-         var exchange_det =  exchange_el.find('.collapse');
-        var id = '#exchange_det_' + exchange.id;
-    
-        exchange_sum.attr('href', id);
-        exchange_det.attr('id', id);
-        exchange_det.attr('data-id', exchange.id);
+        //var exchange_det =  exchange_el.find('.collapse');
+        //var id = '#exchange_det_' + exchange.id;
+
+        exchange_sum.attr('data-id', exchange.id);
+        //exchange_det.attr('id', id);
+        //exchange_det.attr('data-id', exchange.id);
 
         exchange_el.find('.distance').html(String(exchange.distance));
         exchange_el.find('.name').html(exchange.name);
@@ -74,7 +74,7 @@ $(document).ready(function() {
 
 
         exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
-        exchange_det.appendTo('#exchanges_list .list-group #exchanges_items');        
+        //exchange_det.appendTo('#exchanges_list .list-group #exchanges_items');
     }
     
 
@@ -85,6 +85,7 @@ $(document).ready(function() {
     };
     
 
+    // TODO: Delegate, don't call after each ajax return
     function bindBehavior() {
 
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
@@ -127,6 +128,7 @@ $(document).ready(function() {
 
  
  
+    // TODO: Update markers within the map boundaries only!
     function updateMarkers(exchanges) {
         
         console.log('updateMarkers');
@@ -190,25 +192,30 @@ $(document).ready(function() {
            $('.list-group-item[href="0"]'.replace("0", id)).toggleClass('active');
         });
     
-   
-        // when any row is clicked, pan to respective infoWindow and show details
-        if (exchange_window_el) {
-    //        google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
-    //
-    //            $('.exchange_window_det').css('display', 'none');
-    //            $('.exchange_window_sum').css('display', 'block');
-    //            exchange_window_el.find('.exchange_window_sum').css('display', 'none');
-    //            exchange_window_el.find('.exchange_window_det').css('display', 'block');
-    //            exchange_window_el.find('.exchange_window_det').addClass('in');
-    //            infowindow.setContent(exchange_window_el.html());
-    //            infowindow.setZIndex(2000);
-    ////            $('.exchange_window_det.in').parent().parent().parent().parent().children().css('background', "yellow");
-    //
-    //            map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
-    //
-    //         });
-        }
 
+
+        // TODO: Delegate, don't call for each marker
+        // TODO: To find the marker, search the markers array using the data-id
+        // when any row is clicked, pan to respective infoWindow and show details
+        console.log($('.list-group-item[data-id=' + exchange.id + ']'));
+/*
+        if (exchange_window_el) {
+        google.maps.event.addDomListener($('.list-group-item[data-id=' + exchange.id + ']')[0], 'click', function() {
+
+                $('.exchange_window_det').css('display', 'none');
+                $('.exchange_window_sum').css('display', 'block');
+                exchange_window_el.find('.exchange_window_sum').css('display', 'none');
+                //exchange_window_el.find('.exchange_window_det').css('display', 'block');
+                //exchange_window_el.find('.exchange_window_det').addClass('in');
+                infowindow.setContent(exchange_window_el.html());
+                infowindow.setZIndex(2000);
+    //            $('.exchange_window_det.in').parent().parent().parent().parent().children().css('background', "yellow");
+
+                map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
+
+             });
+       }
+*/
     }
     
     function clearMarkers() {

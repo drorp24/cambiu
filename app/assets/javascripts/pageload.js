@@ -21,6 +21,9 @@ var updateExchanges;
 var sort_by;
 var sort_ui;
 var set;
+var bind;
+var set_defaults;
+var set_default_location;
 var order = {};
 var model_set;
 var model_populate;
@@ -37,7 +40,6 @@ var def_buy_amount      = 1000;
 var def_buy_currency    = "EUR";
 var def_sort            = 'quote';
 var value_of;
-var set_defaults;
 var current_url;
 var current_hash;
 var new_search_validator;
@@ -46,12 +48,11 @@ var disable_other_currency;
 var link;
 var is_larger_than_zero;
 var custom_validate;
-var set_default_location;
 var location_settings;
 
 
 homepage = function() {
-  $('body').hasClass('homepage')
+  return $('body').hasClass('homepage')
 };
 
 value_of = function(key) {

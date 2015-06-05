@@ -4,40 +4,40 @@
 // Prefix input elements with the respective selected currency
 
 // Currencies: initial settings & change events
-bind_currency_to_autonumeric = function() {
+    bind_currency_to_autonumeric = function() {
 
-    $('[data-autonumeric]').autoNumeric('init');
+        $('[data-autonumeric]').autoNumeric('init');
 
-    $('[data-autonumeric]').each(function() {
-        update_currency_symbol($(this));
-    });
+        $('[data-autonumeric]').each(function() {
+            update_currency_symbol($(this));
+        });
 
-    $('.currency_select').change(function() {
-        var $this   = $(this);
-        var field   = $this.data('field');
-        var value   = $this.val();
-        var target  = $this.data('symboltarget');
-        var symbol  = $this.find('option:selected').attr('data-symbol');
+        $('.currency_select').change(function() {
+            var $this   = $(this);
+            var field   = $this.data('field');
+            var value   = $this.val();
+            var target  = $this.data('symboltarget');
+            var symbol  = $this.find('option:selected').attr('data-symbol');
 
-        set(field, value, $this);
+            set(field, value, $this);
 
-        $('[data-autonumeric][data-field=' + target + ']').each(function() {
-            update_currency_symbol($(this), symbol);
-        })
-    });
+            $('[data-autonumeric][data-field=' + target + ']').each(function() {
+                update_currency_symbol($(this), symbol);
+            })
+        });
 
-    function update_currency_symbol(el, symbol) {
-        if (symbol === undefined) {
-            currency_select_el = $('#' + el.attr('data-symbolsource'));
-            symbol = currency_select_el.find('option:selected').attr('data-symbol');
+        function update_currency_symbol(el, symbol) {
+            if (symbol === undefined) {
+                currency_select_el = $('#' + el.attr('data-symbolsource'));
+                symbol = currency_select_el.find('option:selected').attr('data-symbol');
+            }
+            el.attr('data-a-sign', symbol);
+            el.autoNumeric('update', {aSign: symbol});
         }
-        el.attr('data-a-sign', symbol);
-        el.autoNumeric('update', {aSign: symbol});
-    }
 
-};
+    };
 
-// return the value of a sessionStorage variable
+    // return the value of a sessionStorage variable
     set = function(field, value, excluded) {
         if (excluded === undefined) excluded = '';
         var elements = '[data-field=' + field + ']';
@@ -63,7 +63,7 @@ bind_currency_to_autonumeric = function() {
         })
     };
 
-    function bind(field, event) {
+    bind = function(field, event) {
         var elements = '[data-field=' + field + ']';
         $(elements).on(event, function() {
 
@@ -75,7 +75,7 @@ bind_currency_to_autonumeric = function() {
             set(field, value, changed_el);
             if (field=='location') set('location_short', value, changed_el);
         })
-    }
+    };
 
      // Restore session values || use defaults
     set_defaults = function(use_session) {
@@ -92,7 +92,6 @@ bind_currency_to_autonumeric = function() {
         set('buy_currency', use_session  ? session_buy_currency   || def_buy_currency                               : def_buy_currency);
         set('sort',         use_session  ? session_sort           || def_sort                                       : def_sort);
 
-         bind_currency_to_autonumeric();
     };
 
 
@@ -100,11 +99,6 @@ bind_currency_to_autonumeric = function() {
 
 $(document).ready(function() {
 
-
-    //Default and per-page values
-
-    sessionStorage.page         = window.location.hostname;
-    sessionStorage.hash         = window.location.hash;
 
     var use_session = true;
     set_defaults(use_session);
@@ -264,15 +258,7 @@ $(document).ready(function() {
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
         console.log('#new_search ajax:success. Starting to updatePage...');
         updatePage(data);
-        // TODO: ajax:success should only be concerned with updatePage (list, map) - not with page setting
-        // TODO: page setting should be governed by data-href element clicking only
-/*
-        var url = current_url();
-        var hash = current_hash();
-        console.log('#new_search ajax:success. B: Calling setPage with: ' + url + ' and ' + String(hash));
-        setPage(url, hash);
- */
-    });
+     });
 
     // #new_order
 
