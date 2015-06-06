@@ -87,20 +87,10 @@ $(document).ready(function() {
 
             //??
             $('[data-current-exchange]').attr('data-exchangeid', exchangeid);
-            $('[data-field=exchange_id]').val(exchangeid)
+            $('[data-field=exchange_id]').val(exchangeid);
 
-            if (exchanges && exchanges.length > 0) {
-                var results = $.grep(exchanges, function(e){ return e.id == exchangeid; });
-                if (results[0]) {
-                    console.log('exchange with that id found in exchanges array');
-                    var exchange = results[0];
-                } else {
-                    console.log('exchange with this id was not found in exchanges array');
-                    // bring it from the server
-                }
-            } else {
-                console.log('exchanges is empty');
-            }
+            var exchange = findExchange(id);
+
         } else {
 
             //??

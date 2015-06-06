@@ -83,21 +83,61 @@ $(document).ready(function() {
         console.log('clearExchanges');
         $('#exchanges_list #exchanges_items').empty();
     };
-    
+
+    closeInfowindows = function() {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i]['infowindow'].close();
+        }
+    };
+
 
     // TODO: Delegate, don't call after each ajax return
     function bindBehavior() {
 
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
-         $('.directions').click(function() {
-            var from    =  new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
-            var to      =  new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
+        $('.directions').click(function () {
+            var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
+            var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
             calcRoute(from, to);
             return false;
         });
+
+
+        // Open infowindows of markers that are within the map bounds. This is reactivated whenever user zooms out!
+        // Comment if no infowindows should be opened by default, then use 'mouseover' event below to open them manually
+        google.maps.event.addListener(map, 'bounds_changed', function () {
+
+            if (!zoom_changed_by_user) return;
+
+            var mapBounds = map.getBounds();
+            for (var i = 0; i < markers.length; i++) {
+
+                var marker_position = markers[i].getPosition();
+
+                if (mapBounds.contains(marker_position)) {
+                    markers[i]['infowindow'].open(map, markers[i]);
+                }
+            }
+
+        });
+
+        $('.list-group-item[data-id]').click(function() {
+            var id              = $(this).data('id');
+            var exchange        = findExchange(id);
+            var exchange_html   = exchange_el(exchange).det;
+            var marker          = findMarker(id);
+
+            closeInfowindows();
+            marker['infowindow'].setContent(exchange_html[0]);
+            marker['infowindow'].open(map, marker);
+            map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
+
+        })
+
+
     }
-    
+
 
     function updateResults(exchanges) {
 
@@ -160,72 +200,51 @@ $(document).ready(function() {
 
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(exchange.latitude, exchange.longitude),
-            disableAutoPan: true,
             title: exchange.name,
             map: map,
-            icon: '/logo32.png'
+            icon: '/logo32.png',
+            exchange_id: exchange.id
         });
-        
-        var infowindow;
-        var exchange_window_el;
-        
-        if (exchange.edited_quote) {
-            exchange_window_el =   $('.exchange_window.template').clone().removeClass('template');
-            exchange_window_el.find('.exchange_window_quote').html(exchange.edited_quote);
-            exchange_window_el.find('.exchange_window_name').html(exchange.name);
-            exchange_window_el.find('.exchange_window_address').html(exchange.address);
-            exchange_window_el.find('.exchange_window_open').html(exchange.todays_hours);
-            exchange_window_el.attr('id', 'exchange_window_' + exchange.id);
-            
-            infowindow = new google.maps.InfoWindow({
-                content: exchange_window_el.html() 
-            });
-            infowindow.open(map,marker);
-        }
-        
-        markers.push(marker);
-        infowindows.push(infowindow);
-        
-        // when any infoWindow is clicked, make the respective row active
-        var id = "#exchange_det_" + String(exchange.id);    
-        google.maps.event.addListener(marker, 'click', function() {
-           $('.list-group-item[href="0"]'.replace("0", id)).toggleClass('active');
+
+
+        // associate the marker's infowindow by storing the infowindow object as a property of the marker
+
+        var exchange_html = exchange_el(exchange);
+        var exchange_window_sum = exchange_html.sum;
+        var exchange_window_det = exchange_html.det;
+
+
+        marker['infowindow'] = new google.maps.InfoWindow({
+            content: exchange_window_sum[0],
+            disableAutoPan: true
         });
-    
 
+/*      // Uncomment if no infowindows should be opened by default, then this will open them manually
+        google.maps.event.addListener(marker, 'mouseover', function() {
+            this['infowindow'].setContent(exchange_window_sum[0]);
+            this['infowindow'].open(map, this);
+        });
 
-        // TODO: Delegate, don't call for each marker
-        // TODO: To find the marker, search the markers array using the data-id
-        // when any row is clicked, pan to respective infoWindow and show details
-        console.log($('.list-group-item[data-id=' + exchange.id + ']'));
-/*
-        if (exchange_window_el) {
-        google.maps.event.addDomListener($('.list-group-item[data-id=' + exchange.id + ']')[0], 'click', function() {
-
-                $('.exchange_window_det').css('display', 'none');
-                $('.exchange_window_sum').css('display', 'block');
-                exchange_window_el.find('.exchange_window_sum').css('display', 'none');
-                //exchange_window_el.find('.exchange_window_det').css('display', 'block');
-                //exchange_window_el.find('.exchange_window_det').addClass('in');
-                infowindow.setContent(exchange_window_el.html());
-                infowindow.setZIndex(2000);
-    //            $('.exchange_window_det.in').parent().parent().parent().parent().children().css('background', "yellow");
-
-                map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
-
-             });
-       }
 */
-    }
+        google.maps.event.addListener(marker, 'click', function() {
+            closeInfowindows();
+            this['infowindow'].setContent(exchange_window_det[0]);
+            this['infowindow'].open(map, this);
+            setPage('exchanges/' + exchange.id + '/summary');
+        });
+
+
+        markers.push(marker);
+
+
+     }
     
     function clearMarkers() {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
         markers = [];
-        infowindows = [];
     }
-    
 
 
     drawMap = function (latitude, longitude, exchanges) {
@@ -243,8 +262,7 @@ $(document).ready(function() {
         if (exchanges && exchanges.length > 0) {
             updateMarkers(exchanges);
         }
-
-    };
+     };
     
     function calcRoute(from, to) {
 
@@ -257,6 +275,7 @@ $(document).ready(function() {
 
       var directionsService = new google.maps.DirectionsService();
       var directionsDisplay = new google.maps.DirectionsRenderer();
+      zoom_changed_by_user = false;
 
       directionsDisplay.setMap(map);
 
@@ -269,5 +288,5 @@ $(document).ready(function() {
 
     }
 
-    
+
 });
