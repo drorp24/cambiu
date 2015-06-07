@@ -131,6 +131,8 @@ $(document).ready(function() {
             closeInfowindows();
             marker['infowindow'].setContent(exchange_html[0]);
             marker['infowindow'].open(map, marker);
+            zoom_changed_by_user = false;
+            map_center_changed = true;
             map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
 
         })
@@ -191,7 +193,7 @@ $(document).ready(function() {
             position: new google.maps.LatLng(lat, lng),
             disableAutoPan: true,
             map: map,
-            icon: '/male.png',
+            icon: '/dot-circle-o.png',
             draggable:true
         });
     }
@@ -255,7 +257,9 @@ $(document).ready(function() {
         center = new google.maps.LatLng(latitude, longitude);
         var mapOptions = {
             center: center,
-            zoom: 17
+            zoom: map_initial_zoom,
+            scaleControl: true
+
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
         addUserMarker();

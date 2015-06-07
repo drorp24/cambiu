@@ -163,6 +163,9 @@ $inverse-color: #ffffff;
 // CROSS-MEDIA
 // Attempt to define things here 
 //
+html, body {
+  height: 100%;
+}
 body#cambiu {
     
   padding-top: $navbar-height;
@@ -853,7 +856,6 @@ body#cambiu {
 //      margin-right: -15px;
     }
     #exchange_summary {
-       min-height: 100vh;
       background-color: #fff;
       .exchange_summary_title {
         display: none;
@@ -1399,11 +1401,11 @@ body#cambiu {
         position: fixed;
         margin-left: 31.1%;
         width: 70%;
-        height: 100vh;
         top: 125px;  /// ?????????
         padding-right: 0;
         #map-canvas {
           height: 100vh;
+//          bottom: $navbar-height + $parameters-height - 10px;
         }
       }
     }

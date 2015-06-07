@@ -147,11 +147,22 @@ $(document).ready(function() {
 
         // don't push state if invoked from popstate or page reloads
         var new_state =  '/' + url;
+        console.log('end of setPage: deciding whether to push state');
+        console.log('new_state: ' + new_state);
+        console.log('window.location.pathname: ' + window.location.pathname);
         if (window.location.pathname != new_state) {
             history.pushState(new_state, 'cambiu', new_state);
             console.log('pushing state: ' + new_state);
         } else {
             console.log('current pathname matches the url; not pushing');
+        }
+
+        if (url == 'exchanges/list' && map_center_changed) {
+            console.log('Moved to exchanges/list and map center has been changed: resetting map center & zoom to original');
+            map_center_changed = false;
+            zoom_changed_by_user = true; // retain infowindows too
+            map.panTo(new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng));
+            map.setZoom(map_initial_zoom);
         }
 
         // if hash argument was included, go to it
