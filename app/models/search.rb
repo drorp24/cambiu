@@ -6,12 +6,13 @@ class Search < ActiveRecord::Base
   def exchanges
      
     return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
+    return if         location_lat.blank? or location_lng.blank?
     pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
     buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)   
     distance      ||=  20
     distance_unit ||= "km" 
     sort          ||= "quote"
-    center          = location.present? ? location : ((user_lat.present? and user_lng.present?) ? [user_lat, user_lng] : 'London')  
+    center          = [location_lat, location_lng]
     box             = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.bounding_box(center, distance) : nil      # TODO: overcome failures, return all exchanges from DB # TODO: use requested unit
 
     # TODO: Important: expire cache key when applicable rate updated_at changes (check if possible: fresh_when @applicable_rate)
@@ -54,7 +55,7 @@ class Search < ActiveRecord::Base
         exchange_quote[:latitude] = exchange.latitude
         exchange_quote[:longitude] = exchange.longitude
         exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : rand(27..2789)
-        exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"  
+#        exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"
         exchange_quote[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(0.67..0.99)).format
         exchange_quote[:pay_currency] = pay.currency.iso_code
         exchange_quote[:buy_amount] = buy.amount > 0 ? buy.format : (Bank.exchange(pay.amount, pay.currency.iso_code, buy.currency.iso_code) * rand(1.03..1.37)).format

@@ -141,7 +141,7 @@ $(document).ready(function() {
     }
 
 
-    function updateResults(exchanges) {
+     updateResults = function(exchanges) {
 
         console.log('updateResults');
 

@@ -26,6 +26,10 @@
 	</div>
 
 	<div class="hidden_fields">
+            <%= f.input_field :location_lat, 	as: :hidden, data: {field: 'location_lat'} %>
+            <%= f.input_field :location_lng, 	as: :hidden, data: {field: 'location_lng'} %>
+            <%= f.input_field :location_type, 	as: :hidden, data: {field: 'location_type'} %>
+            <%= f.input_field :location_short, 	as: :hidden, data: {field: 'location_short'} %>
 			<%= f.input_field :user_lat, 		as: :hidden, data: {field: 'user_lat'} %>
 			<%= f.input_field :user_lng, 		as: :hidden, data: {field: 'user_lng'} %>
 			<%= f.input_field :user_location, 	as: :hidden, data: {field: 'user_location'} %>
@@ -34,8 +38,6 @@
 			<%= f.input_field :sort, 			as: :hidden, data: {field: 'sort'} %>
             <%= f.input_field :page, 			as: :hidden, data: {field: 'page'} %>
             <%= f.input_field :hash, 			as: :hidden, data: {field: 'rest'} %>
-            <%= f.input_field :location_short, 	as: :hidden, data: {field: 'location_short'} %>
-            <%= f.input_field :email, 	        as: :hidden, data: {field: 'email'}, required: false %>
 	</div>
 
 

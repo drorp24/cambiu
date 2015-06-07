@@ -52,8 +52,9 @@ var findMarker;
 var exchange_el;
 var closeInfowindows;
 var zoom_changed_by_user = true;
-var map_initial_zoom = 16;
+var map_initial_zoom = 18;
 var map_center_changed = false;
+var updateResults;
 
 findExchange = function(id) {
     if (exchanges && exchanges.length > 0) {

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150509143508) do
+ActiveRecord::Schema.define(version: 20150607121044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,6 +184,9 @@ ActiveRecord::Schema.define(version: 20150509143508) do
     t.string   "email"
     t.string   "host"
     t.integer  "exchange_id"
+    t.float    "location_lat"
+    t.float    "location_lng"
+    t.string   "location_type"
   end
 
   add_index "searches", ["exchange_id"], :name => "index_searches_on_exchange_id"

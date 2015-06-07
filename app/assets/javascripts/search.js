@@ -285,6 +285,13 @@ $(document).ready(function() {
         setPage(current_url());
      });
 
+    $('#new_search').on('ajax:error', function(event, xhr, status, error) {
+        console.log('#new_search ajax:error. Error: ' + error);
+        alert('We are unable to process your request at this time. Please try again in a few moments');
+        updateResults(null);
+    });
+
+
     // #new_order
 
     $('#exchanges').on('ajax:before', '#new_order', (function(evt, xhr, settings) {
