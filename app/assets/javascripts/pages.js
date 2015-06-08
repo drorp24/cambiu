@@ -164,7 +164,7 @@ $(document).ready(function() {
             console.log('Moved to exchanges/list and map center has been changed: resetting map center & zoom to original');
             map_center_changed = false;
             zoom_changed_by_user = true; // retain infowindows too
-            directionsDisplay.set('directions', null);
+            if (directionsDisplay) directionsDisplay.set('directions', null);
             map.panTo(new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng));
             map.setZoom(map_initial_zoom);
         }
@@ -176,13 +176,13 @@ $(document).ready(function() {
 
 
     link = function(el) {
-        var exchangeid =  el.data('exchangeid');
-        var href =        el.data('href');
-        var page =        el.data('href-page');
-        var pane =        el.data('href-pane');
-        var id =          el.data('href-id');
+        var exchangeid =  el.attr('data-exchangeid');
+        var href =        el.attr('data-href');
+        var page =        el.attr('data-href-page');
+        var pane =        el.attr('data-href-pane');
+        var id =          el.attr('data-href-id');
         var url =         (page && pane && id) ? page + '/' + id + '/' + pane : href;
-        var hash =        el.data('href-hash');
+        var hash =        el.attr('data-href-hash');
 
         console.log('data-href element clicked. href: ' + href + ' href-id: ' + id + ' hash: ' + String(hash));
         setPage(url, hash);
