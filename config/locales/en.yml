@@ -20,6 +20,13 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  number:
+      format:
+        delimiter: ","
+        precision: 3
+        separator: "."
+        significant: false
+        strip_insignificant_zeros: false
   app:
     development:
       ga_tracking_id: "UA-60776239-1"

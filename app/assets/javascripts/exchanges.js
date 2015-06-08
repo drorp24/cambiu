@@ -18,7 +18,7 @@ $(document).ready(function() {
             bindBehavior();
          }
         updateResults(exchanges);
-        updateParamsDisplay();
+//        updateParamsDisplay();
         document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     };
@@ -52,7 +52,7 @@ $(document).ready(function() {
         //exchange_det.attr('id', id);
         //exchange_det.attr('data-id', exchange.id);
 
-        exchange_el.find('.distance').html(String(exchange.distance));
+        exchange_el.find('.distance').html((exchange.distance * 1000).toFixed(0));
         exchange_el.find('.name').html(exchange.name);
         exchange_el.find('.quote').html(exchange.edited_quote);
         if (exchange.quote > 0) {
@@ -159,6 +159,7 @@ $(document).ready(function() {
     }
     
 
+/*
     function updateParamsDisplay() {
 
         console.log('updateParamsDisplay');
@@ -166,7 +167,8 @@ $(document).ready(function() {
         $('#buy_amount_display').html(sessionStorage.edited_buy_amount);
         $('#searched_location_display').html('in ' + sessionStorage.location);
     }
-    
+*/
+
 
  
  
