@@ -1,6 +1,7 @@
 model_set = function(model, field, value) {
 
     var elements = $('[data-model=' + model + ']' + '[data-field=' + field + ']');
+    if (field == 'distance') value = (value * 1000).toFixed(0);
 
     elements.each(function() {
 

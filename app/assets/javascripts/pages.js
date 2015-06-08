@@ -14,7 +14,10 @@ $(document).ready(function() {
         if (el.is('[data-lng]'))                el.attr('data-lng', exchange.longitude);
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', exchange.name);
 
-        if (el.data('field'))                   el.html(exchange[el.data('field')]);
+        if (el.data('field'))                   {
+            var value = el.data('field') == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[el.data('field')];
+            el.html(value);
+        }
 
         var voucher     = sessionStorage.order_voucher;
         var expiry_s    = sessionStorage.order_expiry_s;
