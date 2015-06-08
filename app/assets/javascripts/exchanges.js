@@ -277,8 +277,8 @@ $(document).ready(function() {
           unitSystem: google.maps.UnitSystem.METRIC
       };
 
-      var directionsService = new google.maps.DirectionsService();
-      var directionsDisplay = new google.maps.DirectionsRenderer();
+      directionsService = new google.maps.DirectionsService();
+      directionsDisplay = new google.maps.DirectionsRenderer();
       zoom_changed_by_user = false;
 
       directionsDisplay.setMap(map);
@@ -286,7 +286,8 @@ $(document).ready(function() {
       directionsService.route(request, function(response, status) {
         console.log('directionsService.route returned with status: ' + status);
         if (status == google.maps.DirectionsStatus.OK) {
-          directionsDisplay.setDirections(response);
+            map_center_changed = true;
+            directionsDisplay.setDirections(response);
         }
       });
 

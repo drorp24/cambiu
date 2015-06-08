@@ -161,6 +161,7 @@ $(document).ready(function() {
             console.log('Moved to exchanges/list and map center has been changed: resetting map center & zoom to original');
             map_center_changed = false;
             zoom_changed_by_user = true; // retain infowindows too
+            directionsDisplay.set('directions', null);
             map.panTo(new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng));
             map.setZoom(map_initial_zoom);
         }

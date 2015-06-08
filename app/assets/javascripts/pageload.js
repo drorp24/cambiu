@@ -55,6 +55,8 @@ var zoom_changed_by_user = true;
 var map_initial_zoom = 18;
 var map_center_changed = false;
 var updateResults;
+var directionsService;
+var directionsDisplay;
 
 findExchange = function(id) {
     if (exchanges && exchanges.length > 0) {
