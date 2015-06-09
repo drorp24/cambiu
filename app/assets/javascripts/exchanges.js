@@ -15,7 +15,7 @@ $(document).ready(function() {
         if (exchanges && exchanges.length > 0) {
 
             updateExchanges(exchanges);
-            bindBehavior();
+            if (desktop) bindBehavior();
          }
         updateResults(exchanges);
 //        updateParamsDisplay();
@@ -106,6 +106,8 @@ $(document).ready(function() {
 
     function bindBehavior() {
 
+        console.log('bindBehavior');
+
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
         $('body').on('click', '.directions', (function() {
@@ -136,7 +138,6 @@ $(document).ready(function() {
         });
 
         $('body').on('click', '.list-group-item[data-id]', (function() {
-  console.log('click')
             var id              = $(this).data('id');
             var exchange        = findExchange(id);
             big_marker(id);
