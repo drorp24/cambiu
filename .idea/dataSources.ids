@@ -1797,6 +1797,9 @@
       <column name="email" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="host" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="exchange_id" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="location_lat" sqlType="float8" precision="17" scale="17" nullable="true" jdbcType="8"/>
+      <column name="location_lng" sqlType="float8" precision="17" scale="17" nullable="true" jdbcType="8"/>
+      <column name="location_type" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="searches_pkey" columns="id"/>
       <index name="index_searches_on_exchange_id" unique="false" columns="exchange_id"/>
     </table>

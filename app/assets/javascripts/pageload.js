@@ -57,6 +57,7 @@ var map_center_changed = false;
 var updateResults;
 var directionsService;
 var directionsDisplay;
+var big_marker;
 
 findExchange = function(id) {
     if (exchanges && exchanges.length > 0) {

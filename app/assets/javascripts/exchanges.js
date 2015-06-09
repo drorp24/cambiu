@@ -91,17 +91,30 @@ $(document).ready(function() {
     };
 
 
-    // TODO: Delegate, don't call after each ajax return
+    big_marker = function(id) {
+        if (!id) return;
+        var exchange        = findExchange(id);
+        var exchange_html   = exchange_el(exchange).det;
+        var marker          = findMarker(id);
+
+        closeInfowindows();
+        marker['infowindow'].setContent(exchange_html[0]);
+        marker['infowindow'].open(map, marker);
+        zoom_changed_by_user = false;
+        map_center_changed = true;
+    };
+
     function bindBehavior() {
 
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
-        $('.directions').click(function () {
+        $('body').on('click', '.directions', (function() {
             var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
             var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
+            big_marker(sessionStorage.id);
             calcRoute(from, to);
             return false;
-        });
+        }));
 
 
         // Open infowindows of markers that are within the map bounds. This is reactivated whenever user zooms out!
@@ -122,20 +135,14 @@ $(document).ready(function() {
 
         });
 
-        $('.list-group-item[data-id]').click(function() {
+        $('body').on('click', '.list-group-item[data-id]', (function() {
+  console.log('click')
             var id              = $(this).data('id');
             var exchange        = findExchange(id);
-            var exchange_html   = exchange_el(exchange).det;
-            var marker          = findMarker(id);
-
-            closeInfowindows();
-            marker['infowindow'].setContent(exchange_html[0]);
-            marker['infowindow'].open(map, marker);
-            zoom_changed_by_user = false;
-            map_center_changed = true;
+            big_marker(id);
             map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
 
-        })
+        }));
 
 
     }
