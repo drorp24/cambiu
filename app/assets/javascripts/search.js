@@ -4,41 +4,40 @@
 // Prefix input elements with the respective selected currency
 
 // Currencies: initial settings & change events
-bind_currency_to_autonumeric = function() {
+    bind_currency_to_autonumeric = function() {
 
-    $('[data-autonumeric]').autoNumeric('init');
-    console.log('autoNumeric initialized');
+        $('[data-autonumeric]').autoNumeric('init');
 
-    $('[data-autonumeric]').each(function() {
-        update_currency_symbol($(this));
-    });
+        $('[data-autonumeric]').each(function() {
+            update_currency_symbol($(this));
+        });
 
-    $('.currency_select').change(function() {
-        var $this   = $(this);
-        var field   = $this.data('field');
-        var value   = $this.val();
-        var target  = $this.data('symboltarget');
-        var symbol  = $this.find('option:selected').attr('data-symbol');
+        $('.currency_select').change(function() {
+            var $this   = $(this);
+            var field   = $this.data('field');
+            var value   = $this.val();
+            var target  = $this.data('symboltarget');
+            var symbol  = $this.find('option:selected').attr('data-symbol');
 
-        set(field, value, $this);
+            set(field, value, $this);
 
-        $('[data-autonumeric][data-field=' + target + ']').each(function() {
-            update_currency_symbol($(this), symbol);
-        })
-    });
+            $('[data-autonumeric][data-field=' + target + ']').each(function() {
+                update_currency_symbol($(this), symbol);
+            })
+        });
 
-    function update_currency_symbol(el, symbol) {
-        if (symbol === undefined) {
-            currency_select_el = $('#' + el.attr('data-symbolsource'));
-            symbol = currency_select_el.find('option:selected').attr('data-symbol');
+        function update_currency_symbol(el, symbol) {
+            if (symbol === undefined) {
+                currency_select_el = $('#' + el.attr('data-symbolsource'));
+                symbol = currency_select_el.find('option:selected').attr('data-symbol');
+            }
+            el.attr('data-a-sign', symbol);
+            el.autoNumeric('update', {aSign: symbol});
         }
-        el.attr('data-a-sign', symbol);
-        el.autoNumeric('update', {aSign: symbol});
-    }
 
-};
+    };
 
-// return the value of a sessionStorage variable
+    // return the value of a sessionStorage variable
     set = function(field, value, excluded) {
         if (excluded === undefined) excluded = '';
         var elements = '[data-field=' + field + ']';
@@ -51,7 +50,6 @@ bind_currency_to_autonumeric = function() {
             sessionStorage.setItem(field, value);
         }
 
- // Not needed anymore? see location       if (value === 'null' ) value = '';
 
         $(elements).each(function() {
             var $this = $(this);
@@ -65,7 +63,7 @@ bind_currency_to_autonumeric = function() {
         })
     };
 
-    function bind(field, event) {
+    bind = function(field, event) {
         var elements = '[data-field=' + field + ']';
         $(elements).on(event, function() {
 
@@ -77,22 +75,11 @@ bind_currency_to_autonumeric = function() {
             set(field, value, changed_el);
             if (field=='location') set('location_short', value, changed_el);
         })
-    }
-
-    function set_default_location(excluded) {
-        set('location', sessionStorage.user_location ? sessionStorage.user_location : 'London, UK', excluded);
-        set('location_short', sessionStorage.user_location ? "Nearby" : 'London', excluded);
-    }
-
-    value_of = function(key) {
-        var a = sessionStorage.getItem(key);
-        return (a && a != "null") ? a : null;
     };
 
-    // Restore session values || use defaults
+/*
+    // Sets 5 basic search variables only.
     set_defaults = function(use_session) {
-
-        console.log('set_defaults');
 
         var session_pay_amount      = value_of('pay_amount');
         var session_pay_currency    = value_of('pay_currency');
@@ -106,44 +93,40 @@ bind_currency_to_autonumeric = function() {
         set('buy_currency', use_session  ? session_buy_currency   || def_buy_currency                               : def_buy_currency);
         set('sort',         use_session  ? session_sort           || def_sort                                       : def_sort);
 
-        console.log('sessionStorage.buy_amount after assignment: ' + sessionStorage.buy_amount);
         bind_currency_to_autonumeric();
+
     };
+*/
 
+    // Sets all variables
+    set_variables = function(use_session) {
 
+        console.log('set_variables');
+        variables_set = true;
+        if (use_session === undefined) use_session = true;
+
+        $('#homepage form [data-field]').each(function() {
+
+            var field = $(this).data('field');
+            var def_val = def(field);
+            var value = use_session ? value_of(field) || def_val : def_val;
+
+            if (field == 'pay_amount') {value = use_session ? value_of('pay_amount') || (value_of('buy_amount') ? null : def_val) : def_val}
+            if (field == 'buy_amount') {value = use_session ? value_of('buy_amount') || (value_of('pay_amount') ? null : def_val) : def_val}
+
+            set(field, value);
+
+        });
+
+        bind_currency_to_autonumeric();
+
+    };
 
 
 $(document).ready(function() {
 
-    console.log('search');
 
-
-    //Default and per-page values
-
-    sessionStorage.page         = window.location.hostname;
-    sessionStorage.hash         = window.location.hash;
-
-    var use_session = true;
-    set_defaults(use_session);
-
-    if (!sessionStorage.location) {
-        set_default_location()
-    }
-    sessionStorage.test_lat = 51.5144;
-    sessionStorage.test_lng = -0.1354;
-
-    sessionStorage.email = '';
-
-    // Restore session state
-
-    $('#homepage form [data-field]').each(function() {
-
-        var field = $(this).data('field');
-        var value = sessionStorage.getItem(field);
-
-        set(field, value);
-
-    });
+    set_variables();
 
     // Binding
 
@@ -153,7 +136,6 @@ $(document).ready(function() {
     });
 
 
-    bind_currency_to_autonumeric();
 
     // fix autoNumeric placing "0.00" instead of null
     function fix(field) {
@@ -165,73 +147,16 @@ $(document).ready(function() {
     fix('pay_amount');
     fix('buy_amount');
 
-
-    $('#search_location').click(function() {
-        $('#search_location').attr('placeholder', 'Look for deals in...');
-    });
-
     $('.open_search').click(function() {
         $('#exchange_params_change').collapse('show')
     });
 
-    // Enable location search - Google maps places autocomplete
 
-    function searchbox_addListener(searchBox) {
-        google.maps.event.addListener(searchBox, 'places_changed', function () {
-            var places = searchBox.getPlaces();
-            if (places.length == 0) {
-                set_default_location();
-                return
-            }
-            place = places[0];
-            set('location', place.formatted_address);
-            set('location_short', place.name);
-
-            if (!$('body').hasClass('homepage')) $('#new_search').submit();  // TODO: Consider doing in the search page too
-
-/*          TODO: Remove.
-            if (window.location.hash == '#exchanges') {
-                if (!place.geometry) {
-                    alert('We have an issue with this location. Please try a different one');
-                    return;
-                }
-                place = place.geometry.location;
-                drawMap(null, place.lat(), place.lng());
-            }
-*/
-        });
-    }
-
-    // Complementing searchbox_addListener with an event it won't detece - removing a location
-    $('[data-field=location]').change(function() {
-         var $this = $(this);
-         if (!$this.val()) {
-            set_default_location($this)
-         }
-    });
-
-    $('input[data-field=location]').each(function() {
-        input = $(this).get(0);
-        searchBox = new google.maps.places.SearchBox(input, {
-            types: ['regions']
-        });
-        searchbox_addListener(searchBox);
-    });
-
-    $('input[data-field=location]').click(function() {
-        var $this = $(this);
-        $this.val('');
-        set_default_location($this)
-    });
-
-
-
+    // Location - all handled at findlocation.js
 
     // Sorting
 
    sort_ui = function(sort) {
-
-        console.log('sort_ui');
 
         $('#sort_switch').bootstrapSwitch('state', sort == 'quote', true);
         $('.sorted_by').each(function() {
@@ -241,8 +166,6 @@ $(document).ready(function() {
     };
 
     sort_by = function(sort) {
-
-        console.log('sort_by ' + sort);
 
         sort_ui(sort);
 
@@ -292,14 +215,6 @@ $(document).ready(function() {
         // the width of browser is less then 700px
     }
 
-    // Fix google autocomplete z-index dynamically
-    $('[data-field=location]').keypress(function() {
-        if (!pacContainerInitialized) {
-            $('.pac-container').css('z-index',
-                '9999');
-            pacContainerInitialized = true;
-        }
-    });
 
     $('.getstarted_button').click(function(){
         if ($('#new_search').valid() && custom_validate($('#new_search'))) {
@@ -320,7 +235,7 @@ $(document).ready(function() {
     // clicking on certain elements rests params to default values
     $('[data-set-default]').click(function() {
         var use_session = false;
-        set_defaults(use_session);
+        set_variables(use_session);
     });
 
 
@@ -346,19 +261,36 @@ $(document).ready(function() {
 
     // #new_search
 
+
+    // Before actions
+
+    startLoader = function() {
+        $('#empty_message').css('display', 'none');
+        $('#result_message').css('display', 'none');
+        $('#loader_message').css('display', 'block');
+    };
+
+    beforeSubmit = function() {
+        startLoader();
+    };
+
     $('#new_search').on('ajax:before', function() {
+        console.log('ajax:before: form is submitted');
         beforeSubmit()
     });
 
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
-        console.log('#new_search ajax:success. A: Starting to updatePage...');
+        console.log('#new_search ajax:success. Starting to updatePage...');
         updatePage(data);
-        var url = current_url();
-        var hash = current_hash();
-        console.log('#new_search ajax:success. B: Calling setPage with: ' + url + ' and ' + String(hash));
-        setPage(url, hash);
-        // TODO: re-highlight selected exchange map marker
+        setPage(current_url());
+     });
+
+    $('#new_search').on('ajax:error', function(event, xhr, status, error) {
+        console.log('#new_search ajax:error. Error: ' + error);
+        alert('We are unable to process your request at this time. Please try again in a few moments');
+        updateResults(null);
     });
+
 
     // #new_order
 
@@ -375,14 +307,6 @@ $(document).ready(function() {
          model_populate('order', order);
     }));
 
-
-
-
-    // TODO: Move to pages.js
-    // reload refreshes search results & map by re-submiting the form populated from session
-
-    var homepage = $('body').hasClass('homepage');
-    if (!homepage) $('#new_search').submit();
 
 
 

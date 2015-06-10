@@ -3,27 +3,22 @@ $(document).ready(function() {
 //if ($('body').hasClass('exchanges'))   {    
 
 
-    var directionsService = new google.maps.DirectionsService();
-
-    console.log('exchanges');
-
-
     updatePage = function(data) {
 
         console.log('updatePage');
         exchanges = data;
 
-// real line        drawMap(sessionStorage.location, sessionStorage.user_lat, sessionStorage.user_lng, exchanges);
-        drawMap(sessionStorage.location, sessionStorage.user_lat, sessionStorage.user_lng, exchanges);
+        drawMap(sessionStorage.location_lat, sessionStorage.location_lng, exchanges);
+
         clearExchanges();
 
         if (exchanges && exchanges.length > 0) {
 
             updateExchanges(exchanges);
-            bindBehavior();
+            if (desktop) bindBehavior();
          }
         updateResults(exchanges);
-        updateParamsDisplay();
+//        updateParamsDisplay();
         document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     };
@@ -50,14 +45,14 @@ $(document).ready(function() {
     
         var exchange_el =   $('.exchange_row.template').clone().removeClass('template');
         var exchange_sum =  exchange_el.find('.list-group-item');
-         var exchange_det =  exchange_el.find('.collapse');
-        var id = '#exchange_det_' + exchange.id;
-    
-        exchange_sum.attr('href', id);
-        exchange_det.attr('id', id);
-        exchange_det.attr('data-id', exchange.id);
+        //var exchange_det =  exchange_el.find('.collapse');
+        //var id = '#exchange_det_' + exchange.id;
 
-        exchange_el.find('.distance').html(String(exchange.distance));
+        exchange_sum.attr('data-id', exchange.id);
+        //exchange_det.attr('id', id);
+        //exchange_det.attr('data-id', exchange.id);
+
+        exchange_el.find('.distance').html((exchange.distance * 1000).toFixed(0));
         exchange_el.find('.name').html(exchange.name);
         exchange_el.find('.quote').html(exchange.edited_quote);
         if (exchange.quote > 0) {
@@ -79,63 +74,82 @@ $(document).ready(function() {
 
 
         exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
-        exchange_det.appendTo('#exchanges_list .list-group #exchanges_items');        
+        //exchange_det.appendTo('#exchanges_list .list-group #exchanges_items');
     }
     
 
- 
-   function add_photo(exchange) {
-        var request = {query: exchange.name + ' ' + exchange.address};
-        
-        var service = new google.maps.places.PlacesService(map);
-        service.textSearch(request, gp_ts_callback);
-        
-        function gp_ts_callback(results, status) {
-            console.log('gp_ts_callback');
-            if (status == google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-                          
-                var place = results[0];
-                var place_id = place.place_id;
-                console.log("place_id: " + place_id);
-                  
-                var request = {placeId: place_id};
-    //              service.getDetails(request, gp_pd_callback);
-                  
-                function gp_pd_callback(place, status) {
-                    console.log('gp_pd_callback');
-                    if (status == google.maps.places.PlacesServiceStatus.OK) {
-                        if (place.photos.length > 0) {
-                            photo_url = place.photos[0].getUrl();
-                            console.log("photo_url: " + photo_url);
-                            
-                        }
-                    }           
-                }
-            }
-        }
-    }
- 
     
     clearExchanges = function() {
         console.log('clearExchanges');
         $('#exchanges_list #exchanges_items').empty();
-    }
-    
+    };
+
+    closeInfowindows = function() {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i]['infowindow'].close();
+        }
+    };
+
+
+    big_marker = function(id) {
+        if (!id) return;
+        var exchange        = findExchange(id);
+        var exchange_html   = exchange_el(exchange).det;
+        var marker          = findMarker(id);
+
+        closeInfowindows();
+        marker['infowindow'].setContent(exchange_html[0]);
+        marker['infowindow'].open(map, marker);
+        zoom_changed_by_user = false;
+        map_center_changed = true;
+    };
 
     function bindBehavior() {
 
+        console.log('bindBehavior');
+
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
-         $('.directions').click(function() {
-            var from =  production ? new google.maps.LatLng(sessionStorage.user_lat, sessionStorage.user_lng) : new google.maps.LatLng(sessionStorage.test_lat, sessionStorage.test_lng);
-            var to =    new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
+        $('body').on('click', '.directions', (function() {
+            var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
+            var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
+            big_marker(sessionStorage.id);
             calcRoute(from, to);
-            return false;  
-        });
-    }
-    
+            return false;
+        }));
 
-    function updateResults(exchanges) {
+
+        // Open infowindows of markers that are within the map bounds. This is reactivated whenever user zooms out!
+        // Comment if no infowindows should be opened by default, then use 'mouseover' event below to open them manually
+        google.maps.event.addListener(map, 'bounds_changed', function () {
+
+            if (!zoom_changed_by_user) return;
+
+            var mapBounds = map.getBounds();
+            for (var i = 0; i < markers.length; i++) {
+
+                var marker_position = markers[i].getPosition();
+
+                if (mapBounds.contains(marker_position)) {
+                    markers[i]['infowindow'].open(map, markers[i]);
+                }
+            }
+
+        });
+
+        $('body').on('click', '.list-group-item[data-id]', (function() {
+            var id              = $(this).data('id');
+            var exchange        = findExchange(id);
+            big_marker(id);
+            map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
+
+        }));
+
+
+    }
+
+
+     updateResults = function(exchanges) {
 
         console.log('updateResults');
 
@@ -153,6 +167,7 @@ $(document).ready(function() {
     }
     
 
+/*
     function updateParamsDisplay() {
 
         console.log('updateParamsDisplay');
@@ -160,10 +175,12 @@ $(document).ready(function() {
         $('#buy_amount_display').html(sessionStorage.edited_buy_amount);
         $('#searched_location_display').html('in ' + sessionStorage.location);
     }
-    
+*/
+
 
  
  
+    // TODO: Update markers within the map boundaries only!
     function updateMarkers(exchanges) {
         
         console.log('updateMarkers');
@@ -172,158 +189,94 @@ $(document).ready(function() {
         if (mobile) {return;}
         
         clearMarkers();
-        for (var i = 0; i < Math.min(exchanges.length, 30); i++) {
+        for (var i = 0; i < exchanges.length; i++) {
             addMarker(exchanges[i]);
         }
     }
-    
+
+    function addUserMarker() {
+        var lat = value_of('location_lat') || value_of('user_lat');
+        var lng = value_of('location_lng') || value_of('user_lng');
+        if (!lat || !lng) return;
+
+        var location_marker = new google.maps.Marker({
+            position: new google.maps.LatLng(lat, lng),
+            disableAutoPan: true,
+            map: map,
+            icon: '/dot-circle-o.png',
+            draggable:true
+        });
+    }
+
     function addMarker(exchange) {
 
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(exchange.latitude, exchange.longitude),
-            disableAutoPan: true,
             title: exchange.name,
             map: map,
-            icon: '/logo32.png'
+            icon: '/logo32.png',
+            exchange_id: exchange.id
         });
-        
-        var infowindow;
-        var exchange_window_el;
-        
-        if (exchange.edited_quote) {
-            exchange_window_el =   $('.exchange_window.template').clone().removeClass('template');
-            exchange_window_el.find('.exchange_window_quote').html(exchange.edited_quote);
-            exchange_window_el.find('.exchange_window_name').html(exchange.name);
-            exchange_window_el.find('.exchange_window_address').html(exchange.address);
-            exchange_window_el.find('.exchange_window_open').html(exchange.todays_hours);
-            exchange_window_el.attr('id', 'exchange_window_' + exchange.id);
-            
-            infowindow = new google.maps.InfoWindow({
-                content: exchange_window_el.html() 
-            });
-            infowindow.open(map,marker);
-        }
-        
-        markers.push(marker);
-        infowindows.push(infowindow);
-        
-        // when any infoWindow is clicked, make the respective row active
-        var id = "#exchange_det_" + String(exchange.id);    
-        google.maps.event.addListener(marker, 'click', function() {
-           $('.list-group-item[href="0"]'.replace("0", id)).toggleClass('active');
-        });
-    
-   
-        // when any row is clicked, pan to respective infoWindow and show details
-        if (exchange_window_el) {
-            google.maps.event.addDomListener(document.querySelector('.list-group-item[href="0"]'.replace("0", id)), 'click', function() {
-     
-                $('.exchange_window_det').css('display', 'none');
-                $('.exchange_window_sum').css('display', 'block');
-                exchange_window_el.find('.exchange_window_sum').css('display', 'none');
-                exchange_window_el.find('.exchange_window_det').css('display', 'block');
-                exchange_window_el.find('.exchange_window_det').addClass('in');
-                infowindow.setContent(exchange_window_el.html());
-                infowindow.setZIndex(2000);
-    //            $('.exchange_window_det.in').parent().parent().parent().parent().children().css('background', "yellow");
-                
-                map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
-     
-             });            
-        }    
 
-    }
+
+        // associate the marker's infowindow by storing the infowindow object as a property of the marker
+
+        var exchange_html = exchange_el(exchange);
+        var exchange_window_sum = exchange_html.sum;
+        var exchange_window_det = exchange_html.det;
+
+
+        marker['infowindow'] = new google.maps.InfoWindow({
+            content: exchange_window_sum[0],
+            disableAutoPan: true
+        });
+
+/*      // Uncomment if no infowindows should be opened by default, then this will open them manually
+        google.maps.event.addListener(marker, 'mouseover', function() {
+            this['infowindow'].setContent(exchange_window_sum[0]);
+            this['infowindow'].open(map, this);
+        });
+
+*/
+        google.maps.event.addListener(marker, 'click', function() {
+            closeInfowindows();
+            this['infowindow'].setContent(exchange_window_det[0]);
+            this['infowindow'].open(map, this);
+            setPage('exchanges/' + exchange.id + '/summary');
+        });
+
+
+        markers.push(marker);
+
+
+     }
     
     function clearMarkers() {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
         markers = [];
-        infowindows = [];
     }
-    
 
 
-    // Events & impacts
-    //
-    
+    drawMap = function (latitude, longitude, exchanges) {
 
-    
-    // TODO: Try again to DRY the code...
-    drawMap = function (place, latitude, longitude, exchanges) {
- 
- 
-        console.log('drawMap');
-        console.log('place: ' + place);
-        console.log('latitude: ' + String(latitude));
-        console.log('longitude: ' + String(longitude));
-        
         if (mobile) {return;}
+        console.log('drawMap');
 
-        console.log('before directionsDisplay')
-        directionsDisplay = new google.maps.DirectionsRenderer();
-        console.log('after directionsDisplay')
-        
-        if (place) {
-           geocoder = new google.maps.Geocoder();
-           geocoder.geocode( { 'address': place}, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
+        center = new google.maps.LatLng(latitude, longitude);
+        var mapOptions = {
+            center: center,
+            zoom: map_initial_zoom,
+            scaleControl: true
 
-                center = results[0].geometry.location;
-                console.log('going by selected location. center: ' + center);
-                var mapOptions = {
-                    center: center,
-                    zoom: 12
-                };                      
-                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); 
-                console.log('map is set now')
-              if (exchanges && exchanges.length > 0) {
-                  updateMarkers(exchanges);
-              }
-                directionsDisplay.setMap(map);   
- 
-               } else {
-                alert("Geocode was not successful for the following reason: " + status);
-              }
-            }); 
-
-        } else if (latitude && longitude) {
-
-            console.log('going by user location. lat: ' + String(latitude) + ' lng: ' + String(longitude));
-            center = new google.maps.LatLng(latitude, longitude);
-            var mapOptions = {
-                center: center,
-                zoom: 12
-            };                  
-            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-            if (exchanges && exchanges.length > 0) {
-                updateMarkers(exchanges);
-            }
-            directionsDisplay.setMap(map);
-
-        } else {
-            console.log('draw: reached the else');
-
-            geocoder = new google.maps.Geocoder();
-           geocoder.geocode( { 'address': 'London, UK'}, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
-                center = results[0].geometry.location;
-                var mapOptions = {
-                    center: center,
-                    zoom: 12
-                };                      
-                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-                  if (exchanges && exchanges.length > 0) {
-                      updateMarkers(exchanges);
-                  }
-                  directionsDisplay.setMap(map);
-             } else {
-                alert("Geocode was not successful for the following reason: " + status);
-              }
-            });             
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        addUserMarker();
+        if (exchanges && exchanges.length > 0) {
+            updateMarkers(exchanges);
         }
- 
-    }
+     };
     
     function calcRoute(from, to) {
 
@@ -331,32 +284,24 @@ $(document).ready(function() {
           origin: from,
           destination: to,
           travelMode: google.maps.TravelMode.WALKING,
-          region: "uk"
+          unitSystem: google.maps.UnitSystem.METRIC
       };
 
+      directionsService = new google.maps.DirectionsService();
+      directionsDisplay = new google.maps.DirectionsRenderer();
+      zoom_changed_by_user = false;
+
+      directionsDisplay.setMap(map);
+
       directionsService.route(request, function(response, status) {
-          console.log(status);
+        console.log('directionsService.route returned with status: ' + status);
         if (status == google.maps.DirectionsStatus.OK) {
-          directionsDisplay.setDirections(response);
+            map_center_changed = true;
+            directionsDisplay.setDirections(response);
         }
       });
 
     }
-  
-
-     // Before actions
-
-    startLoader = function() {
-        $('#empty_message').css('display', 'none');
-        $('#result_message').css('display', 'none');
-        $('#loader_message').css('display', 'block');        
-    }
-    
-    beforeSubmit = function() {
-
-        startLoader();
-    };
 
 
-    
 });

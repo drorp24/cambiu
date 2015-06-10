@@ -3,15 +3,13 @@ var new_search_validator;
 
 $(document).ready(function() {
 
-    console.log('validations');
-
 
     //
     // Prevention
     //
 
 
- // Enforce unique amount
+    // Enforce unique amount
 
     $('input[data-field=buy_amount]').click(function() {
         set('pay_amount', null);
@@ -27,7 +25,6 @@ $(document).ready(function() {
     $('input[data-field=pay_amount]').keyup(function () {
         set('buy_amount', null);
     });
-
 
 
     // Enforce unique currency
@@ -52,6 +49,12 @@ $(document).ready(function() {
 
     disable_other_currency('pay_currency');
     disable_other_currency('buy_currency');
+
+
+    // Prevent form submission if invalid
+    $('#new_search').submit(function() {
+        return new_search_validator.form() && custom_validate($('#new_search'))
+    });
 
 
 
@@ -79,10 +82,8 @@ $(document).ready(function() {
 
 
     is_larger_than_zero = function(element) {
-        console.log('is_larger_than_zero');
         $element = $(element);
         var amount = Number(String($element.val()).replace(/[^0-9\.]+/g,""));
-        console.log(String(amount) + ' ' + String(amount > 0));
         return amount > 0;
     };
 
@@ -90,10 +91,6 @@ $(document).ready(function() {
     jQuery.validator.addMethod("larger_than_zero", function(value, element) {
         return is_larger_than_zero(element);
     }, "Please fill either amount");
-
-
-
-
 
 
 
@@ -122,7 +119,6 @@ $(document).ready(function() {
               var pay_amount =  form_el.find('#search_pay_amount')[0];
               var buy_amount =  form_el.find('#search_buy_amount')[0];
               var is_valid =    is_larger_than_zero(pay_amount) || is_larger_than_zero(buy_amount);
-              console.log('custom validate: ' + is_valid);
               if (is_valid) {
                   form_el.find('.validation_errors').removeClass('error_class').empty();
                } else {
@@ -135,11 +131,6 @@ $(document).ready(function() {
        }
     };
 
-
-    // Prevent form submission if invalid
-    $('#new_search').submit(function() {
-        return new_search_validator.form() && custom_validate($('#new_search'))
-    });
 
     $("#email_form").validate({
         rules: {
@@ -160,71 +151,6 @@ $(document).ready(function() {
         }
     });
 
-
-
-    /*
-     is_currency_unique = function(element) {
-         console.log('is_currency_unique');
-        $element = $(element);
-        if ($element.data('field') == 'pay_currency') { var check = $element.val() != $element.closest('form').find('[data-field=buy_currency]').val()};
-        if ($element.data('field') == 'buy_currency') { var check = $element.val() != $element.closest('form').find('[data-field=pay_currency]').val()};
-        return check;
-    };
-
-
-    jQuery.validator.addMethod("unique", function(value, element) {
-        return is_currency_unique(element);
-    }, "Please select two different currencies");
-
-    $('[data-field]').tooltipster({
-        trigger: 'custom', // default is 'hover' which is no good here
-        onlyOne: false,    // allow multiple tips to be open at a time
-        position: 'top'
-    });
-
-
-    new_search_validator = $( "#new_search" ).validate({
-        rules: {
-            'search[pay_currency]': {
-                unique: true
-            },
-            'search[buy_currency]': {
-                unique: true
-            }
-        }
-    });
-
-    new_search_validator.form();
-*/
-
-/*
-    search_form_validator = $( "#search_form" ).validate({
-        errorPlacement: function (error, element) {
-            var lastError = $(element).data('lastError'),
-                newError = $(error).text();
-
-            $(element).data('lastError', newError);
-
-            if(newError !== '' && newError !== lastError){
-                $(element).tooltipster('content', newError);
-                $(element).tooltipster('show');
-            }
-        },
-        success: function (label, element) {
-            $(element).tooltipster('hide');
-        },
-        rules: {
-            'pay_currency': {
-                unique: true
-            },
-            'buy_currency': {
-                unique: true
-            }
-        }
-    });
-
-    search_form_validator.form();
-*/
 
     //
     // Server errors

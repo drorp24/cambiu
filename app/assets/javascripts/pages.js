@@ -14,7 +14,10 @@ $(document).ready(function() {
         if (el.is('[data-lng]'))                el.attr('data-lng', exchange.longitude);
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', exchange.name);
 
-        if (el.data('field'))                   el.html(exchange[el.data('field')]);
+        if (el.data('field'))                   {
+            var value = el.data('field') == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[el.data('field')];
+            el.html(value);
+        }
 
         var voucher     = sessionStorage.order_voucher;
         var expiry_s    = sessionStorage.order_expiry_s;
@@ -48,11 +51,8 @@ $(document).ready(function() {
 
         // Parse arguments
 
-        console.log('setPage entered');
         console.log('url argument: ' + url);
-        console.log('hash argument: ' + String(hash));
         console.log('current_url: ' + current_url());
-        console.log('current_hash: ' + String(current_hash()));
 
         // TODO: Remove: prevents form data from populating if in the same page
  /*     if (url == current_url() && hash == current_hash() ) {
@@ -77,8 +77,6 @@ $(document).ready(function() {
         }
         var exchangeid  = id;
 
-        console.log('setPage parsing:. url: ' + url + ' page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + hash);
-
 
         // update session
         sessionStorage.exchangeid   = exchangeid    ? exchangeid    : null;
@@ -92,23 +90,12 @@ $(document).ready(function() {
 
             //??
             $('[data-current-exchange]').attr('data-exchangeid', exchangeid);
-            $('[data-field=exchange_id]').val(exchangeid)
+            $('[data-field=exchange_id]').val(exchangeid);
 
-            if (exchanges && exchanges.length > 0) {
-                var results = $.grep(exchanges, function(e){ return e.id == exchangeid; });
-                if (results[0]) {
-                    console.log('exchange with that id found in exchanges array');
-                    var exchange = results[0];
-                } else {
-                    console.log('exchange with this id was not found in exchanges array');
-                    // bring it from the server
-                }
-            } else {
-                console.log('exchanges is empty');
-            }
+            var exchange = findExchange(id);
+
         } else {
 
-            console.log('no id in url');
             //??
             $('[data-current-exchange]').attr('data-exchangeid', '');
             $('[data-field=exchange_id]').val('')
@@ -139,16 +126,12 @@ $(document).ready(function() {
         $('.page.active').removeClass('active');
         $('.pane.active').removeClass('active');
         if (page) {
-            console.log('revealing page: ' + page);
-            page_el = $('.page[data-page=' + page + ']');
-            console.log('page_el id: ' + page_el.attr('id'))
+             page_el = $('.page[data-page=' + page + ']');
             page_el.addClass('active');
             page_el.show();
         }
         if (pane) {
-            console.log('revealing pane: ' + pane);
             pane_el = $('.pane[data-pane=' + pane + ']');
-            console.log('pane_el id: ' + pane_el.attr('id'))
             pane_el.addClass('active');
             pane_el.show();
         }
@@ -158,10 +141,8 @@ $(document).ready(function() {
         $('.pane.active').each(function () {
              $(this).find('[data-model=exchange]').each(function () {
                 if (exchange) {
-                    console.log('populating ' + $(this).attr('id') + ' with exchange id: ' + exchange.id);
                     populate($(this), exchange)
                 } else {
-                    console.log('unpopulating ' + $(this).attr('id'));
                     unpopulate($(this))
                 }
             });
@@ -169,11 +150,23 @@ $(document).ready(function() {
 
         // don't push state if invoked from popstate or page reloads
         var new_state =  '/' + url;
+        console.log('end of setPage: deciding whether to push state');
+        console.log('new_state: ' + new_state);
+        console.log('window.location.pathname: ' + window.location.pathname);
         if (window.location.pathname != new_state) {
             history.pushState(new_state, 'cambiu', new_state);
-            console.log('>>>>>>>>>>>>>>>>>> pushing state: ' + new_state);
+            console.log('pushing state: ' + new_state);
         } else {
-            console.log('>>>>>>>>>>>>>>>>>> current pathname matches the url; not pushing');
+            console.log('current pathname matches the url; not pushing');
+        }
+
+        if (url == 'exchanges/list' && map_center_changed) {
+            console.log('Moved to exchanges/list and map center has been changed: resetting map center & zoom to original');
+            map_center_changed = false;
+            zoom_changed_by_user = true; // retain infowindows too
+            if (directionsDisplay) directionsDisplay.set('directions', null);
+            map.panTo(new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng));
+            map.setZoom(map_initial_zoom);
         }
 
         // if hash argument was included, go to it
@@ -183,13 +176,13 @@ $(document).ready(function() {
 
 
     link = function(el) {
-        var exchangeid =  el.data('exchangeid');
-        var href =        el.data('href');
-        var page =        el.data('href-page');
-        var pane =        el.data('href-pane');
-        var id =          el.data('href-id');
+        var exchangeid =  el.attr('data-exchangeid');
+        var href =        el.attr('data-href');
+        var page =        el.attr('data-href-page');
+        var pane =        el.attr('data-href-pane');
+        var id =          el.attr('data-href-id');
         var url =         (page && pane && id) ? page + '/' + id + '/' + pane : href;
-        var hash =        el.data('href-hash');
+        var hash =        el.attr('data-href-hash');
 
         console.log('data-href element clicked. href: ' + href + ' href-id: ' + id + ' hash: ' + String(hash));
         setPage(url, hash);
@@ -232,12 +225,12 @@ $(document).ready(function() {
 
     window.addEventListener("popstate", function(e) {
 
-        console.log('>>>>>>>>>>>>>> pop. e.state: ' + e.state);
+        console.log('pop. e.state: ' + e.state);
         if (e.state && e.state.length > 0) {
             setPage(e.state.slice(1));
         } else
         if (window.location.hash && window.location.pathname.length > 1) {
-            console.log('>>>>>>>>>>>>>> ... but a hash exists - settingPage according to path');
+            console.log('... but a hash exists - settingPage according to path');
             // when user goes to hash it's not pushed to history hence e.state is null in this case
             // this case is identified by the popstate event and the hash in the location
             setPage(window.location.pathname.slice(1),window.location.hash.slice(1));
@@ -245,11 +238,23 @@ $(document).ready(function() {
     });
 
 
+    // P A G E   R E / L O A D
+    //
     // first entry, reloads, direct linking
+    // This should be the only code doing something that's not event-driven
+
+
+    // setPage() to current path
+    // replace '/' with 'homepage' or else pushState will get ''
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
     console.log('full page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
     setPage(reload_path, hash);
 
+    // TODO: Moved here from search.js. Set at setPage. Remove?
+/*
+    sessionStorage.page         = window.location.hostname;
+    sessionStorage.hash         = window.location.hash;
+*/
 
 });

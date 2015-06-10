@@ -21,6 +21,9 @@ var updateExchanges;
 var sort_by;
 var sort_ui;
 var set;
+var bind;
+var set_defaults;
+var set_default_location;
 var order = {};
 var model_set;
 var model_populate;
@@ -31,13 +34,7 @@ var updatePage;
 var display;
 var bind_currency_to_autonumeric;
 var current_url;
-var def_pay_amount      = null;
-var def_pay_currency    = "GBP";
-var def_buy_amount      = 1000;
-var def_buy_currency    = "EUR";
-var def_sort            = 'quote';
 var value_of;
-var set_defaults;
 var current_url;
 var current_hash;
 var new_search_validator;
@@ -46,8 +43,74 @@ var disable_other_currency;
 var link;
 var is_larger_than_zero;
 var custom_validate;
+var location_settings;
+var def;
+var set_variables;
+var variables_set = false;
+var findExchange;
+var findMarker;
+var exchange_el;
+var closeInfowindows;
+var zoom_changed_by_user = true;
+var map_initial_zoom = 18;
+var map_center_changed = false;
+var updateResults;
+var directionsService;
+var directionsDisplay;
+var big_marker;
 
+findExchange = function(id) {
+    if (exchanges && exchanges.length > 0) {
+        var results = $.grep(exchanges, function(e){ return e.id == id; });
+        if (results[0]) {
+            console.log('exchange with that id found in exchanges array');
+            var exchange = results[0];
+        } else {
+            console.log('exchange with this id was not found in exchanges array');
+            // bring it from the server
+        }
+    } else {
+        console.log('exchanges is empty');
+    }
 
+    return exchange;
+};
+
+findMarker = function(id) {
+    if (markers && markers.length > 0) {
+        var results = $.grep(markers, function(m){ return m.exchange_id == id; });
+        if (results[0]) {
+            console.log('marker with that exchange_id found in markers array');
+            var marker = results[0];
+        } else {
+            console.log('marker with this exchange_id was not found in markers array');
+        }
+    } else {
+        console.log('markers is empty');
+    }
+
+    return marker;
+};
+
+def = function(variable) {
+    var val = {
+        'pay_amount'    : null,
+        'pay_currency'  : 'GBP',
+        'buy_amount'    : 1000,
+        'buy_currency'  : 'EUR',
+        'sort'          : 'quote'
+    };
+    return val[variable] ? val[variable] : null
+};
+
+homepage = function() {
+  return $('body').hasClass('homepage') || window.location.pathname == '/homepage' || window.location.pathname == '/'
+};
+
+value_of = function(key) {
+    var a = sessionStorage.getItem(key);
+    return (a && a != "null") ? a : null;
+};
 
 
 // intended to base on session values rather than window.location
@@ -66,7 +129,6 @@ current_hash = function() {
     return hash;
 };
 
-
 display = function(term) {
     switch (term) {
         case 'quote':
@@ -75,38 +137,23 @@ display = function(term) {
             return 'nearest first:';
     }
 };
-
 // make the mobile navbar collapse when a link is clicked
 $(document).on('click','.navbar-collapse.in',function(e) {
     if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
         $(this).collapse('hide');
     }
 });
+    exchange_el = function(exchange) {
 
-$(document).ready(function() {
+        var exchange_el  = $('.exchange_window.template').clone().removeClass('template');
+        exchange_el.find('.exchange_window_quote').html(exchange.edited_quote);
+        exchange_el.find('.exchange_window_name').html(exchange.name);
+        exchange_el.find('.exchange_window_address').html(exchange.address);
+        exchange_el.find('.exchange_window_open').html(exchange.todays_hours);
+        exchange_el.attr('id', 'exchange_window_' + exchange.id);
 
-//    document.body.scrollTop = document.documentElement.scrollTop = 0;
-    if (!sessionStorage.location) getLocation();
-
-
-
-    /*   trying to understand what changes the data-href-id on the #email_form when button is clicked
-     $('#email_form').on('ajax:before', function(event, data, status, xhr) {
-     alert('email form ajax before. value of session id: ' + sessionStorage.id + ' data-href-id now: ' + $('#email_form .email_submit').data('href-id'))
-     })
-
-
-     window.addEventListener("storage", function(event) {
-     var key = event.key;
-     var newValue = event.newValue;
-     var oldValue = event.oldValue;
-     var url = event.url;
-     var storageArea = event.storageArea;
-
-     alert(key + ' was cahnged from ' + oldValue + ' to ' + newValue + ' in ' + url)
-
-     // handle the event
-     });
-     */
-
-});
+        return {
+            sum: exchange_el.find('.exchange_window_sum'),
+            det: exchange_el.find('.exchange_window_det')
+        };
+    };

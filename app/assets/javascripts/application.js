@@ -10,10 +10,10 @@
 //= require jquery.validate
 
 //= require pageload
-//= require models
-//= require findlocation
-//= require exchanges
 //= require search
+//= require location
+//= require models
+//= require exchanges
 //= require validations
 //= require pages
 
