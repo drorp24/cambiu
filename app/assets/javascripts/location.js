@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 
     search_exchanges = function() {
-        console.log('After location found, set to default, or changed by user:');
+        console.log('After location found, set to default, changed by user, or page was reloaded:');
         // TODO: Remove: once search moved before location, variables are always set by now
 /*
         if (!variables_set) {

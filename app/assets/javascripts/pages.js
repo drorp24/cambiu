@@ -70,10 +70,12 @@ $(document).ready(function() {
             var page        = url_a[0];
             var id          = url_a[1];
             var pane        = url_a[2];
-        } else {
+        } else if (url_a.length == 2) {
             var page        = url_a[0];
             var pane        = url_a[1];
             var id          = null;
+        } else if (url_a.length == 1) {
+            var page        = url_a[0]
         }
         var exchangeid  = id;
 
@@ -248,8 +250,12 @@ $(document).ready(function() {
     // replace '/' with 'homepage' or else pushState will get ''
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
-    console.log('full page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
-    setPage(reload_path, hash);
+     if (reload_path == 'homepage') {
+         console.log('page re/load and reload_path == homepage. settingPage to: ' + reload_path + ' hash: ' + hash);
+         setPage(reload_path, hash);
+     } else {
+         console.log('page re/load but reload_path != homepage. Page need not be set');
+     }
 
     // TODO: Moved here from search.js. Set at setPage. Remove?
 /*
