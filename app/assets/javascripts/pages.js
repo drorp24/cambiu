@@ -250,13 +250,8 @@ $(document).ready(function() {
     // replace '/' with 'homepage' or else pushState will get ''
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
-     if (reload_path == 'homepage') {
-         console.log('page re/load and reload_path == homepage. settingPage to: ' + reload_path + ' hash: ' + hash);
-         setPage(reload_path, hash);
-     } else {
-         console.log('page re/load but reload_path != homepage. Page need not be set');
-     }
-
+    console.log('page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
+    setPage(reload_path, hash);
     // TODO: Moved here from search.js. Set at setPage. Remove?
 /*
     sessionStorage.page         = window.location.hostname;
