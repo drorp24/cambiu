@@ -17,6 +17,32 @@ class Exchange < ActiveRecord::Base
   geocoded_by :address
 
 
+  def offer(center, pay, buy)
+
+    exchange_hash = {}
+
+    exchange_hash[:id] = self.id
+    exchange_hash[:name] = self.name
+    exchange_hash[:address] = self.address
+    exchange_hash[:open_today] = self.todays_hours
+    exchange_hash[:phone] = self.phone
+    exchange_hash[:website] = self.website
+    exchange_hash[:latitude] = self.latitude
+    exchange_hash[:longitude] = self.longitude
+    exchange_hash[:distance] = Rails.application.config.use_google_geocoding ?  self.distance_from(center) : rand(27..2789)
+    exchange_hash[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(0.67..0.99)).format
+    exchange_hash[:pay_currency] = pay.currency.iso_code
+    exchange_hash[:buy_amount] = buy.amount > 0 ? buy.format : (Bank.exchange(pay.amount, pay.currency.iso_code, buy.currency.iso_code) * rand(1.03..1.37)).format
+    exchange_hash[:buy_currency] = buy.currency.iso_code
+    exchange_hash[:edited_quote] = pay.amount > 0 ? exchange_hash[:buy_amount] : exchange_hash[:pay_amount]
+    exchange_hash[:quote] = Monetize.parse(exchange_hash[:edited_quote]).amount
+    exchange_hash[:gain_amount] =  pay.amount > 0 ? ((exchange_hash[:quote] * 0.127).to_money(buy.currency.iso_code)).format : ((exchange_hash[:quote] * 0.127).to_money(pay.currency.iso_code)).format
+    exchange_hash[:gain_currency] = pay.amount > 0 ? buy.currency.iso_code : pay.currency.iso_code
+
+    exchange_hash
+
+  end
+
   # TODO: Write anew
   def quote(pay, buy)
     return nil unless rates
