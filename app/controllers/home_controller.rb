@@ -4,6 +4,7 @@ class HomeController < ApplicationController
   caches_action :index, expires_in: 2.hours, :race_condition_ttl => 20.seconds                                      # quicker first rendering (pick-up ready page from cache)
 
   def index
+    @exchange = Exchange.new
   end
 
 end
