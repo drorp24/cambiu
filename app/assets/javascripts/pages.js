@@ -61,7 +61,6 @@ $(document).ready(function() {
         // Parse arguments
 
         console.log('url argument: ' + url);
-        console.log('current_url: ' + current_url());
 
         // TODO: Remove: prevents form data from populating if in the same page
  /*     if (url == current_url() && hash == current_hash() ) {
@@ -79,21 +78,26 @@ $(document).ready(function() {
             var page        = url_a[0];
             var id          = url_a[1];
             var pane        = url_a[2];
-        } else if (url_a.length == 2) {
+        } else if (url_a.length == 2 && (url_a[1] == 'list')) {
             var page        = url_a[0];
             var pane        = url_a[1];
             var id          = null;
+        } else if (url_a.length == 2 && (url_a[1] != 'list')) {
+            var page        = url_a[0];
+            var id          = url_a[1];
         } else if (url_a.length == 1) {
             var page        = url_a[0]
         }
         var exchangeid  = id;
 
+        console.log('pages.js, result of url parsing: page: ' + page + ' id: ' + String(id) + ' pane: ' + String(pane));
+
 
         // update session
-        sessionStorage.exchangeid   = exchangeid    ? exchangeid    : null;
+        sessionStorage.exchangeid   = exchangeid    ? exchangeid    : value_of('exchangeid');
         sessionStorage.page         = page  ? page  : null;
         sessionStorage.pane         = pane  ? pane  : null;
-        sessionStorage.id           = id    ? id    : null;
+        sessionStorage.id           = id    ? id    : value_of('id');
 
 
         // find exchange
@@ -214,7 +218,7 @@ $(document).ready(function() {
                 form.validate();
                 form.on('ajax:complete', (function (evt, data, status, xhr) {
                     console.log('form remote validation completed. Status: ' + status);
-                    if (form.valid()) {
+                    if (form.valid() && custom_validate(form)) {
                         link($this)
                     }
                 }));
@@ -270,8 +274,10 @@ $(document).ready(function() {
 
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
-    console.log('page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
-    setPage(reload_path, hash);
+     if (reload_path == 'homepage') {
+        console.log('hompage re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
+        setPage(reload_path, hash);
+    }
 
 
 });

@@ -1,7 +1,9 @@
 //
-// Search params, search form fields and the impact of their changes
+// S E A R C H
 //
-// Prefix input elements with the respective selected currency
+// Maintain 2-way sync b/w sessionStorage and search form variable values (incl. initialization upon re/load and event handlers)
+// Handle ajax calls
+// Forms  UI
 
 // Currencies: initial settings & change events
     bind_currency_to_autonumeric = function() {
@@ -84,18 +86,29 @@
         variables_set = true;
         if (use_session === undefined) use_session = true;
 
-        $('#homepage form [data-field]').each(function() {
+        $('#new_search [data-field]').each(function() {
 
             var field = $(this).data('field');
-            var def_val = def(field);
-            var value = use_session ? value_of(field) || def_val : def_val;
 
-            if (field == 'pay_amount') {value = use_session ? value_of('pay_amount') || (value_of('buy_amount') ? null : def_val) : def_val}
-            if (field == 'buy_amount') {value = use_session ? value_of('buy_amount') || (value_of('pay_amount') ? null : def_val) : def_val}
+            var url_val = urlParameter(field);
+            if (url_val) {
+                var value = url_val;
+             } else {
+                var def_val = def(field);
+                var value = (use_session ? value_of(field) || def_val : def_val);
+                if (field == 'pay_amount') {value = use_session ? value_of('pay_amount') || (value_of('buy_amount') ? null : def_val) : def_val}
+                if (field == 'buy_amount') {value = use_session ? value_of('buy_amount') || (value_of('pay_amount') ? null : def_val) : def_val}
+            }
 
             set(field, value);
 
         });
+
+        var url_id = urlId();
+        if (url_id) {
+            set('id', url_id);
+            set('exchangeid', url_id);
+        }
 
         bind_currency_to_autonumeric();
 

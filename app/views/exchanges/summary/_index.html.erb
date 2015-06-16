@@ -1,4 +1,4 @@
-<div id="exchange_summary" class="pane" data-pane="summary" data-model="exchange" data-id=''>
+<div id="exchange_summary" class="pane <%= params[:controller] == 'exchanges' ? 'active' : '' %>" data-pane="summary" data-model="exchange" data-id='' style="display: <%= params[:controller] == 'exchanges' ? 'block' : 'none' %>">
 
   <div class="exchange_summary_bg">
     <div class="row">
@@ -22,7 +22,7 @@
       </div>
       <div class="col-md-10 col-xs-10">
         <div class="right">
-          <div class="es_name" data-model="exchange" data-field="name"><%= @exchange.name %></div>
+          <div class="es_name" data-model="exchange" data-field="name"></div>
           <div class="es_address" data-model="exchange" data-field="address"></div>
           <div class="es_opening_hours" data-model="exchange" data-field="open_today"></div>
         </div>

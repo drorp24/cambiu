@@ -1,3 +1,13 @@
+//
+//  E X C H A N G E S
+//
+//  Populates the exchanges search results following a successful search ajax call (updatePage)
+//
+//  Uses the exchanges buffer returned from the server to:
+//  Either render a list of exchange DIVs, or populate a single exchange info depending on the number of exchanges returned,
+//  Draw map and place dynamic markers
+//  Update results banner
+
 $(document).ready(function() {
     
 //if ($('body').hasClass('exchanges'))   {    
@@ -14,16 +24,17 @@ $(document).ready(function() {
 
         if (exchanges && exchanges.length > 0) {
 
-            updateExchanges(exchanges);
+            if (exchanges.length > 1) {
+                updateExchanges(exchanges);
+            } else {
+                model_populate('exchange', exchanges[0]);
+            }
             if (desktop) bindBehavior();
-         }
+        }
+
         updateResults(exchanges);
-//        updateParamsDisplay();
-        document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     };
-    
-
 
     updateExchanges = function(exchanges) {
 
@@ -167,19 +178,7 @@ $(document).ready(function() {
     }
     
 
-/*
-    function updateParamsDisplay() {
 
-        console.log('updateParamsDisplay');
-
-        $('#buy_amount_display').html(sessionStorage.edited_buy_amount);
-        $('#searched_location_display').html('in ' + sessionStorage.location);
-    }
-*/
-
-
- 
- 
     // TODO: Update markers within the map boundaries only!
     function updateMarkers(exchanges) {
         

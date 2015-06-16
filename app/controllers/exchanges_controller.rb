@@ -6,7 +6,6 @@ class ExchangesController < ApplicationController
 
 =end
   def show
-    @exchange = Exchange.new
   end
 
 

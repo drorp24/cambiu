@@ -20,11 +20,7 @@
 $(document).ready(function() {
 
     locationCallback = function() {
-        if (search()) {
-            search_exchanges()
-        } else if (direct()) {
-
-        }
+        search_exchanges()
     };
 
     // Find user location and set session/forms accordingly
