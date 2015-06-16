@@ -1,8 +1,13 @@
-// Handle location
-// 1 - find user's location thru browser                                                          navigator.geolocation.getCurrentPosition
-// 2 - upon callback: populate session/forms with user location using google.maps.Geocoder        findPosition
-// 3 - submit form now that location exists, to populate map and exchanges (not applicable to homepage)
-// 4 - UI & location change event handling
+// L O C A T I O N
+// service
+//
+// 1 - find user's location thru browser                                                            navigator.geolocation.getCurrentPosition
+// 2 - upon callback:
+//     2.1 populate session/forms with user location using google.maps.Geocoder                     findPosition
+//     2.2 perform passed callback
+//          search SPA  - submit form now that user's location is known, to populate map and exchanges (not applicable to homepage)
+//          direct      - complete missing data that depends on user's location
+//3 - define UI & location change event handler
 
 // submit() is called on 3 occasions (only):
 // Non homepage: triggered by location change (here)
@@ -14,49 +19,20 @@
 
 $(document).ready(function() {
 
+    locationCallback = function() {
+        if (search()) {
+            search_exchanges()
+        } else if (direct()) {
 
-    // TODO: Remove
-    sessionStorage.test_lat = 51.5144;
-    sessionStorage.test_lng = -0.1354;
-
-
+        }
+    };
 
     // Find user location and set session/forms accordingly
 
-    set_default_location = function(excluded) {
-        console.log('Since user location could not be found: setting the default location');
-        set('location',         'London, UK');
-        set('location_short',   'London');
-        set('location_lat',     '51.5073509');
-        set('location_lng',     '-0.12775829999998223');
-        set('location_type',    'default');
-    };
-
-
-
-    search_exchanges = function() {
-        console.log('After location found, set to default, changed by user, or page was reloaded:');
-        // TODO: Remove: once search moved before location, variables are always set by now
-/*
-        if (!variables_set) {
-            console.log('variables have not been set yet. Calling set_variables');
-            variables_set();
-        } else {
-            console.log('variables have been set already. No need to call set_variables');
-        }
-*/
-        if (!homepage()) {
-            console.log('Not homepage: submitting form');
-            $('#new_search').submit();
-        } else {
-            console.log('Homepage: not submitting form');
-        }
-    };
-
-    // findPosition is the callback after getLocation has returned
+     // findPosition is the callback after getLocation has returned
     // Only at this point can the form be submitted, since location is one of the search criteria
 
-    function findPosition(position) {
+    findPosition = function(position) {
 
         console.log('at findPosition: location found');
         var lat = position.coords.latitude;
@@ -79,21 +55,21 @@ $(document).ready(function() {
                     set('location_type',    'user');
 
                     console.log('User position found and GeocoderStatus is OK. Session populated');
-                    search_exchanges();
+                    locationCallback();
                 } else {
                     console.log('User position found and GeocoderStatus is OK, but no results were found');
                     set_default_location();
-                    search_exchanges();
+                    locationCallback();
                 }
             } else {
                 console.log('Geocoder failed due to: ' + status);
                 set_default_location();
-                search_exchanges();
+                locationCallback();
             }
         });
-    }
+    };
 
-    function displayError(error) {
+    displayError = function(error) {
         var errors = {
             1: 'Permission denied',
             2: 'Position unavailable',
@@ -101,10 +77,10 @@ $(document).ready(function() {
         };
         console.log("navigator.geolocation has an error: " + errors[error.code]);
         set_default_location();
-        search_exchanges();
-    }
+        locationCallback();
+    };
 
-    function getLocation() {
+    getLocation = function() {
 
         if (navigator.geolocation) {
             console.log('calling navigator.geolocation....');
@@ -119,16 +95,11 @@ $(document).ready(function() {
             console.log('Browser does not support geolocation');
             console.log('Populating the default location');
             set_default_location();
-            search_exchanges();
+            locationCallback();
         }
-    }
+    };
 
 
-    if (!value_of('location')) {
-        getLocation();
-    } else {
-        search_exchanges()
-    }
 
 
 

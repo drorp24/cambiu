@@ -1,5 +1,14 @@
-// Switch to a different pane according to href
-// If href element also includes data-id then populate model data before switching panes
+//
+// P A G E S
+//
+// Respond to data-href as if they were real links to the server
+// Instead of calling server to fetch results from DB and return populated html, do:
+//   -  Route and manipulate browser history            (link),
+//   -  replace active html                             (setPage),
+//   -  populate pages from in-memory exchanges buffer  (populate, unpopulate)
+//
+// Since PAGES is part of the SPA package (i.e., calls home#index always), it handles page re/load as well:
+// getLocation (unless location exists) and submit form (unless in homepage)
 
 
 $(document).ready(function() {
@@ -246,16 +255,23 @@ $(document).ready(function() {
     // This should be the only code doing something that's not event-driven
 
 
+
+    // Find user's location and define which callback to perform once location is identified
+
+    if (!value_of('location')) {
+        getLocation();
+    } else {
+        search_exchanges()
+    }
+
+
     // setPage() to current path
     // replace '/' with 'homepage' or else pushState will get ''
+
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
     console.log('page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
     setPage(reload_path, hash);
-    // TODO: Moved here from search.js. Set at setPage. Remove?
-/*
-    sessionStorage.page         = window.location.hostname;
-    sessionStorage.hash         = window.location.hash;
-*/
+
 
 });

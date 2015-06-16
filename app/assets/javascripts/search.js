@@ -77,27 +77,6 @@
         })
     };
 
-/*
-    // Sets 5 basic search variables only.
-    set_defaults = function(use_session) {
-
-        var session_pay_amount      = value_of('pay_amount');
-        var session_pay_currency    = value_of('pay_currency');
-        var session_buy_amount      = value_of('buy_amount');
-        var session_buy_currency    = value_of('buy_currency');
-        var session_sort            = value_of('sort');
-
-        set('pay_amount',   use_session  ? session_pay_amount     || (session_buy_amount ? null : def_pay_amount)   : def_pay_amount);
-        set('pay_currency', use_session  ? session_pay_currency   || def_pay_currency                               : def_pay_currency);
-        set('buy_amount',   use_session  ? session_buy_amount     || (session_pay_amount ? null : def_buy_amount)   : def_buy_amount);
-        set('buy_currency', use_session  ? session_buy_currency   || def_buy_currency                               : def_buy_currency);
-        set('sort',         use_session  ? session_sort           || def_sort                                       : def_sort);
-
-        bind_currency_to_autonumeric();
-
-    };
-*/
-
     // Sets all variables
     set_variables = function(use_session) {
 
@@ -121,6 +100,29 @@
         bind_currency_to_autonumeric();
 
     };
+
+    set_default_location = function(excluded) {
+        console.log('Since user location could not be found: setting the default location');
+        set('location',         'London, UK');
+        set('location_short',   'London');
+        set('location_lat',     '51.5073509');
+        set('location_lng',     '-0.12775829999998223');
+        set('location_type',    'default');
+    };
+
+
+
+    search_exchanges = function() {
+        console.log('After location found, set to default, changed by user, or page was reloaded:');
+         if (!homepage()) {
+            console.log('Not homepage: submitting form');
+            $('#new_search').submit();
+        } else {
+            console.log('Homepage: not submitting form');
+        }
+    };
+
+
 
 
 $(document).ready(function() {

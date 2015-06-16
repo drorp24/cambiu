@@ -1,8 +1,10 @@
 var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
-var production = $('body').hasClass('production');
 var homepage;
+var production;
+var search;
+var direct;
 var params = {};
 var pacContainerInitialized = false;
 var searchBoxes = [];
@@ -58,6 +60,11 @@ var updateResults;
 var directionsService;
 var directionsDisplay;
 var big_marker;
+var search_exchanges;
+var findPosition;
+var displayError;
+var getLocation;
+var locationCallback;
 
 findExchange = function(id) {
     if (exchanges && exchanges.length > 0) {
@@ -156,4 +163,14 @@ $(document).on('click','.navbar-collapse.in',function(e) {
             sum: exchange_el.find('.exchange_window_sum'),
             det: exchange_el.find('.exchange_window_det')
         };
+    };
+
+    production = function() {
+        return $('body').hasClass('production');
+    };
+    search = function() {
+        return $('body').hasClass('search');
+    };
+    direct = function() {
+        return $('body').hasClass('direct');
     };
