@@ -62,8 +62,8 @@
   <div class="email_form">
     <div class="row">
         <div class="col-xs-12">
-            <%= render 'email_form' %>
-            <p class="no_thanks text-center">
+          <%= render partial: 'order_form', locals: {status: 'produced'} %>
+          <p class="no_thanks text-center">
                 <a  data-href="exchanges/list">No thanks, I'll keep searching</a>
             </p>
         </div>

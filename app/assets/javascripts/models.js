@@ -12,8 +12,14 @@
 
         elements.each(function() {
 
+            var $this = $(this);
+
             sessionStorage.setItem(model + '_' + field, value);     // update in session only used fields (if potnetially several times)
-            $(this).html(value);                                    // no need for input at the moment
+            if ($this.is('input, select')) {
+                $this.val(value);
+            } else {
+                $this.html(value);
+            }
         });
 
         if (field == 'id') {

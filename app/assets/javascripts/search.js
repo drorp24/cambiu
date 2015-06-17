@@ -88,7 +88,9 @@
 
         $('#new_search [data-field]').each(function() {
 
-            var field = $(this).data('field');
+            var $this = $(this);
+            var model = $this.data('model');
+            var field = model ? model + '_' + $this.data('field') : $this.data('field');
 
             var url_val = urlParameter(field);
             if (url_val) {
@@ -100,17 +102,11 @@
                 if (field == 'buy_amount') {value = use_session ? value_of('buy_amount') || (value_of('pay_amount') ? null : def_val) : def_val}
             }
 
-            set(field, value);
+            set(field, value, '#order_id');
 
         });
 
-        var url_id = urlId();
-        if (url_id) {
-            set('id', url_id);
-            set('exchangeid', url_id);
-        }
-
-        bind_currency_to_autonumeric();
+       bind_currency_to_autonumeric();
 
     };
 
@@ -309,17 +305,25 @@ $(document).ready(function() {
 
     // #new_order
 
-    $('#exchanges').on('ajax:before', '#new_order', (function(evt, xhr, settings) {
+/*
+    $('#exchanges').on('ajax:before', 'form.new_order', (function(evt, xhr, settings) {
         order_id = value_of('order_id');
         if (order_id) {
-            $('.confirmation_form form').attr('action', '/orders/' + order_id);
-            $('.confirmation_form #order_id').val(order_id);
+            $('#new_order').attr('action', '/orders/' + order_id);
+            $('#new_order #order_id').val(order_id);
           }
     }));
+*/
 
-    $('#exchanges').on('ajax:success', '#new_order', (function(evt, data, status, xhr) {
-         order = data;
-         model_populate('order', order);
+    $('#exchanges').on('ajax:success', 'form.new_order', (function(evt, data, status, xhr) {
+        console.log('#new_order ajax:success');
+        order = data;
+        if (xhr.status == 201) {
+            console.log('#new_order status is 201: populating order attributes');
+            $('form.new_order').attr('action', '/orders/' + order.id);
+            $('form.new_order').attr('method', 'put');
+            model_populate('order', order);
+        }
     }));
 
 

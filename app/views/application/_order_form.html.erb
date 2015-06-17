@@ -1,10 +1,16 @@
-<%= simple_form_for Order.new, method: status == 'produced' ? :post : :put, url: orders_path, validate: false, remote: true, html: {data: {type: :json} } do |f| %>
+<%= simple_form_for Order.new, url: orders_path, validate: false, remote: true, html: {data: {type: :json} } do |f| %>
 
+
+    <% if status == 'produced' %>
+        <%= f.input_field :email, data: {field: 'email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
+        <div class="validation_errors"></div>
+    <% else %>
+        <%= f.input_field :email, 		    as: :hidden, data: {field: 'email'} %>
+    <% end %>
 
     <div class="hidden_fields">
-      <%= f.input_field :id, 	            as: :hidden, data: {field: 'id'} %>
+      <%= f.input_field :id, 	            as: :hidden, data: {model: 'order', field: 'id'} %>
       <%= f.input_field :exchange_id, 	    as: :hidden, data: {field: 'exchange_id'} %>
-      <%= f.input_field :email, 		    as: :hidden, data: {field: 'email'} %>
       <%= f.input_field :pay, 	            as: :hidden, data: {field: 'pay_amount'} %>
       <%= f.input_field :pay_currency, 	    as: :hidden, data: {field: 'pay_currency'} %>
       <%= f.input_field :buy, 	            as: :hidden, data: {field: 'buy_amount'} %>
@@ -12,10 +18,13 @@
       <%= f.input_field :status, 	        as: :hidden, data: {field: 'status'}, value: status %>
     </div>
 
-    <% if status == 'produced' %>
+    <% if status == 'offer' %>
         <%= f.button :submit, 'Get it',
              data: {href: 'exchanges/summary', href_page: 'exchanges', href_id: '', href_pane: 'summary', exchange_selection: 'true', exchangeid: '', voucher: 'true', voucher_status: status, exchange_name: "filler"},
              id: 'getit_button', class: 'btn btn-mini btn-default' %>
+    <% elsif status == 'produced' %>
+            <%= f.button :submit, 'Guarantee this deal!',
+             data: {href: 'exchanges/voucher', href_page: 'exchanges', href_id: '', href_pane: 'voucher', model: 'exchange', current_exchange: 'true', exchangeid: '', event: 'Leaving email'}, class: "middle-child email_submit btn btn-mini btn-default rounded" %>
     <% elsif status == 'used' %>
         <%= f.button :submit, 'Got the money, thank you!',
              data: {

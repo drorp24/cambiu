@@ -132,16 +132,16 @@ $(document).ready(function() {
     };
 
 
-    $("#email_form").validate({
+    $("#new_order").validate({
         rules: {
-            'search[email]': {
+            'order[email]': {
                 required: true,
-                email: true,
-                remote: '/searches/unique'
+                email: true
+//                remote: '/searches/unique'
             }
         },
         messages: {
-            'search[email]': {
+            'order[email]': {
                 remote: "This email is already taken"
             }
         },

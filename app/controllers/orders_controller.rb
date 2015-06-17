@@ -8,7 +8,8 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order = Order.find(order_params[:id]).update!(order_params)
+    @order = Order.find(order_params[:id])
+    @order.update!(order_params)
     respond_with @order
   end
 

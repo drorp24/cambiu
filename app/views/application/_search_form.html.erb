@@ -38,7 +38,7 @@
 			<%= f.input_field :sort, 			as: :hidden, data: {field: 'sort'} %>
             <%= f.input_field :page, 			as: :hidden, data: {field: 'page'} %>
             <%= f.input_field :hash, 			as: :hidden, data: {field: 'rest'} %>
-            <%= f.input_field :id, 			    as: :hidden, data: {field: 'id'}, value: params[:id] %>
+            <%= f.input_field :id, 			    as: :hidden, data: {model: 'exchange', field: 'exchange_id'}, value: params[:id] %>
 	</div>
 
 

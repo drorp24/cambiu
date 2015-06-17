@@ -74,29 +74,39 @@ urlParameters = function() {
     return window.location.search.length > 0
 };
 
-urlParameter = function(sParam)
-{
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++)
-    {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam)
-        {
-            return sParameterName[1];
-        }
+
+urlId = function() {
+    var path = window.location.pathname;
+    if (!path) return null;
+    var path_split = path.split('/');
+    if (path_split.length == 3 && path_split[1] == 'exchanges' && isNumber(path_split[2])) {
+        return path_split[2]
+    } else {
+        return null
     }
 };
 
-urlId = function() {
-  var path = window.location.pathname;
-  if (!path) return null;
-  var path_split = path.split('/');
-  if (path_split.length == 3 && path_split[1] == 'exchanges' && isNumber(path_split[2])) {
-      return path_split[2]
-  } else {
-      return null
-  }
+urlParameter = function(sParam)
+{
+
+    if (sParam == 'exchange_id') {
+
+        return urlId()
+
+    } else {
+
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+
 };
 
 findExchange = function(id) {
