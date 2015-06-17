@@ -7,10 +7,10 @@
 
     model_set = function(model, field, value) {
 
-        var elements = $('[data-model=' + model + ']' + '[data-field=' + field + ']');
+        var field_elements = $('[data-model=' + model + ']' + '[data-field=' + field + ']');
         if (field == 'distance') value = (value * 1000).toFixed(0);
 
-        elements.each(function() {
+        field_elements.each(function() {
 
             var $this = $(this);
 
@@ -23,8 +23,13 @@
         });
 
         if (field == 'id') {
-            $('[data-exchangeid]').attr('data-exchangeid',value);
-            $('[data-href-id]').attr('data-href-id', value);
+            var data_elements = $('[data-model=' + model + ']' + '[data-href]');
+
+            data_elements.each(function () {
+
+                $(this).attr('data-href-id', value);
+
+            })
         }
     };
 
