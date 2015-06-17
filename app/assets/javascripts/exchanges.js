@@ -1,12 +1,12 @@
 //
 //  E X C H A N G E S
 //
-//  Populates the exchanges search results following a successful search ajax call (updatePage)
+//  Responsible to reflect exchanges search results in View (updatePage)
 //
-//  Uses the exchanges buffer returned from the server to:
-//  Either render a list of exchange DIVs, or populate a single exchange info depending on the number of exchanges returned,
-//  Draw map and place dynamic markers
-//  Update results banner
+//  Uses the exchanges buffer passed by the ajax callback, to:
+//  -  Draw map and place dynamic markers, centering map by selected exchange or searched location (depending on the number of exchanges returned)
+//  -  Render a list of exchange DIVs, or populate a single exchange info (depending on the number of exchanges returned),
+//  -  Update results banner
 
 $(document).ready(function() {
     
@@ -18,7 +18,14 @@ $(document).ready(function() {
         console.log('updatePage');
         exchanges = data;
 
-        drawMap(sessionStorage.location_lat, sessionStorage.location_lng, exchanges);
+        if (exchanges && exchanges.length == 1) {
+            var mapCenterLat = exchanges[0].latitude;
+            var mapCenterLng = exchanges[0].longitude;
+        } else {
+            var mapCenterLat = sessionStorage.location_lat;
+            var mapCenterLng = sessionStorage.location_lng;
+        }
+        drawMap(mapCenterLat, mapCenterLng, exchanges);
 
         clearExchanges();
 

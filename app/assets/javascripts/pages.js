@@ -1,15 +1,16 @@
 //
 // P A G E S
 //
-// Respond to data-href as if they were real links to the server
-// Instead of calling server to fetch results from DB and return populated html, do:
-//   -  Route and manipulate browser history            (link),
-//   -  replace active html                             (setPage),
-//   -  populate pages from in-memory exchanges buffer  (populate, unpopulate)
+// Include all logic required to handle data-href as if they were real links to the server
+// and page re/loads as if they were getting relevant html (and not always getting home#index)
 //
-// Since PAGES is part of the SPA package (i.e., calls home#index always), it handles page re/load as well:
-// getLocation (unless location exists) and submit form (unless in homepage)
-
+// Instead of calling server to fetch results from DB and return relevant, populated html, do:
+//   -  Parse url                                       (link),
+//   -  replace active html, manipulate browser history (setPage),
+//   -  populate pages from in-memory exchanges buffer  (populate, unpopulate) relevant for spa that has all exchanges in buffer; single-result searches use updatePage
+//
+// Pages.js is also where the technical flow begins
+// It is here that getLocation() is called (location.js), triggering a search (search.js) that in turn updatesPage (exchanges.js)
 
 $(document).ready(function() {
 
@@ -274,8 +275,8 @@ $(document).ready(function() {
 
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
-     if (reload_path == 'homepage') {
-        console.log('hompage re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
+     if (spa()) {
+        console.log('spa re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
         setPage(reload_path, hash);
     }
 

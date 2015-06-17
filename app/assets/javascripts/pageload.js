@@ -202,9 +202,6 @@ $(document).on('click','.navbar-collapse.in',function(e) {
     production = function() {
         return $('body').hasClass('production');
     };
-    search = function() {
-        return $('body').hasClass('search');
-    };
-    direct = function() {
-        return $('body').hasClass('direct');
+    spa = function() {
+        return $('body').hasClass('home');
     };
