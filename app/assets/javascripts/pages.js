@@ -85,6 +85,7 @@ $(document).ready(function() {
             var id          = null;
         } else if (url_a.length == 2 && (url_a[1] != 'list')) {
             var page        = url_a[0];
+            var pane        = 'summary';
             var id          = url_a[1];
         } else if (url_a.length == 1) {
             var page        = url_a[0]
@@ -278,7 +279,11 @@ $(document).ready(function() {
      if (spa()) {
         console.log('spa re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
         setPage(reload_path, hash);
-    }
+    } else {
+         var new_state = window.location.pathname;
+         console.log('Not spa. Just pushingState ' + new_state);
+         history.pushState(new_state, 'cambiu', new_state);
+     }
 
 
 });
