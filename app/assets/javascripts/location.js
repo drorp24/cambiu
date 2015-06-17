@@ -68,15 +68,21 @@ $(document).ready(function() {
             if (status == google.maps.GeocoderStatus.OK) {
                 if (results[1]) {
 
-                    set('user_location',    results[1].formatted_address);
+                    var formatted_address = results[1].formatted_address;
+
+                    set('user_location',    formatted_address);
                     set('user_lat',         lat);
                     set('user_lng',         lng);
 
-                    set('location',         results[1].formatted_address);
-                    set('location_short',   results[1].address_components[1].short_name);
-                    set('location_lat',     lat);
-                    set('location_lng',     lng);
-                    set('location_type',    'user');
+                    if (formatted_address.indexOf("London") > -1) {
+                        set('location',         formatted_address);
+                        set('location_short',   results[1].address_components[1].short_name);
+                        set('location_lat',     lat);
+                        set('location_lng',     lng);
+                        set('location_type',    'user');
+                    } else {
+                        set_default_location();
+                    }
 
                     console.log('User position found and GeocoderStatus is OK. Session populated');
                     search_exchanges();
