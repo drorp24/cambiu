@@ -5,6 +5,7 @@ class ExchangesController < ApplicationController
 
   # Just return html; client will populate
   def show
+    @mode = 'exchange'
   end
 
 

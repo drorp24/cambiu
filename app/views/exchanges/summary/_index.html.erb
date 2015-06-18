@@ -63,9 +63,11 @@
     <div class="row">
         <div class="col-xs-12">
           <%= render partial: 'order_form', locals: {status: 'produced'} %>
-          <p class="no_thanks text-center">
-                <a  data-href="exchanges/list">No thanks, I'll keep searching</a>
-            </p>
+          <% if @mode == 'search' %>
+              <p class="no_thanks text-center">
+                    <a  data-href="exchanges/list">No thanks, I'll keep searching</a>
+              </p>
+              <% end %>
         </div>
     </div>
   </div>

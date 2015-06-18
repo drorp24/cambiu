@@ -34,6 +34,8 @@ $std-margin: 5vh;
 $parameters-height: 75px;
 $parameters-bg-color: rgba(0,0,0,0.7);
 $exchange_summary_banner_relative_top: -10px;
+$exchange_summary_bg_img_height: 100px;
+$exchange_summary_bg_img_height_mobile: 75px;
 
 // OLD SEARCH PAGE
 $search-input-height: 40px;
@@ -225,6 +227,106 @@ body#cambiu {
   .empty_class {
 
   }
+
+  .parameters {
+    background-color: #fff;
+    width: 100%;
+    z-index: 1;
+    .well {
+      margin-bottom: 0;
+    }
+  }
+
+  &.search {
+    .exchange_summary_bg img {
+        width: 100%;
+        height: $exchange_summary_bg_img_height;
+    }
+    #exchanges_content {
+      @media (max-width: $screen-xs-max) {
+        margin-top: 0;
+      }
+      @media (min-width: $screen-sm-min) {
+        margin-top: $parameters-height;
+      }
+    }
+
+    .parameters {
+      position: fixed;
+      @media (max-width: $screen-xs-max) {
+        height: 0;
+      }
+      @media (min-width: $screen-sm-min) {
+        height: $parameters-height;
+      }
+    }
+  }
+  &.exchange {
+    .exchange_summary_bg img {
+      @media (max-width: $screen-xs-max) {
+        width: 100%;
+        height: $exchange_summary_bg_img_height_mobile;
+      }
+      @media (min-width: $screen-sm-min) {
+        width: 100%;
+        height: $exchange_summary_bg_img_height;
+      }
+    }
+
+    .parameters {
+      min-height: $parameters-height;
+    }
+  }
+
+  #exchange_search {
+    @media (min-width: $screen-sm-min) {
+      padding-left: 5px;
+      padding-top: 10px;
+    }
+  }
+
+  .exchange_search_form_title {
+    color: #333;
+    font-weight: 400;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    @media (max-width: $screen-xs-max) {
+      margin-top: -10px;
+    }
+  }
+
+  .exchange_serach_form_gain {
+    color: #333;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    line-height: 34px;
+    font-weight: 700;
+    color: $darkgreen;
+    text-align: center;
+    @media (max-width: $screen-xs-max) {
+      margin-top: 10px;
+      margin-bottom: -15px;
+    }
+
+  }
+
+  .delivery_method button {
+    width: 100%;
+  }
+
+  .reach-out-left {
+    padding-left: 0;
+    input, select, button {
+      border-left: none;
+    }
+  }
+  .reach-out-right {
+    padding-right: 0;
+    input, select {
+      border-right: none;
+    }
+  }
+
 
 
   &.home  {
@@ -725,18 +827,6 @@ body#cambiu {
       .badge {
         background-color: $brand-color;
       }
-    .parameters {
-      position: fixed;
-      background-color: #fff;
-      width: 100%;
-      z-index: 1;
-      @media (max-width: $screen-xs-max) {
-        height: 0;
-      }
-      @media (min-width: $screen-sm-min) {
-        height: $parameters-height;
-      }
-    }
     #exchange_params_wrapper {
       @media (max-width: $screen-xs-max) {
         background-color: $parameters-bg-color;
@@ -759,12 +849,6 @@ body#cambiu {
     }
     #exchanges_content {
       z-index: -1;
-      @media (max-width: $screen-xs-max) {
-        margin-top: 0;
-      }
-      @media (min-width: $screen-sm-min) {
-        margin-top: $parameters-height;
-      }
       font-family: $font-family;
       .distance {
         font-size: 0.8em;
@@ -882,11 +966,7 @@ body#cambiu {
           color: $lightgreen;
         }
       }
-      .exchange_summary_bg img {
-        width: 100%;
-        height: 165px;
-      }
-       .exchange_summary_banner {
+        .exchange_summary_banner {
         background-color: $lightgreen;
         color: #fff;
         position: relative;
@@ -1263,8 +1343,31 @@ body#cambiu {
       }
     }
 
+     #map_container {
+      position: fixed;
+      margin-left: 31.1%;
+      width: 70%;
+      padding-right: 0;
+      top: 125px;
+      #map-canvas {
+        height: 100vh;
+       }
+    }
 
-     
+    &.search {
+      #map_container {
+        top: 125px;
+        z-index: 0;
+      }
+    }
+    &.exchange {
+      #map_container {
+        top: 60px;
+        z-index: 1;
+      }
+    }
+
+
     &.exchanges {
       
       #exchanges {
@@ -1395,21 +1498,7 @@ body#cambiu {
       
       
       
-      #map_container {
-        /*
-        z-index: -2;
-        */
-        position: fixed;
-        margin-left: 31.1%;
-        width: 70%;
-        top: 125px;  /// ?????????
-        padding-right: 0;
-        #map-canvas {
-          height: 100vh;
-//          bottom: $navbar-height + $parameters-height - 10px;
-        }
-      }
-    }
+     }
 
   }
 }

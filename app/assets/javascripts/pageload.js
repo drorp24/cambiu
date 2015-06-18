@@ -215,3 +215,7 @@ $(document).on('click','.navbar-collapse.in',function(e) {
     spa = function() {
         return $('body').hasClass('home');
     };
+
+$(document).ready(function() {
+   $('body').addClass(media)
+});
