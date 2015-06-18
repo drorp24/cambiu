@@ -1,13 +1,9 @@
 //
 // S E A R C H
 //
-//  Search variables
-//
-// 2-way sync b/w sessionStorage and search form variable values:
-//  -  Initialization upon page re/load
-//  -  UI & event handlers
-//  -  Search ajax calls: before & after (success & failure)
-
+// Maintain 2-way sync b/w sessionStorage and search form variable values (incl. initialization upon re/load and event handlers)
+// Handle ajax calls
+// Forms  UI
 
 // Currencies: initial settings & change events
     bind_currency_to_autonumeric = function() {
@@ -222,10 +218,13 @@ $(document).ready(function() {
 
     // UI
 
-
-    $('form.new_search input.btn[type=submit]').click(function() {
-       $(this).closest('.collapse').removeClass('in')
-    });
+    // open parameters collapsed form in desktops only
+    var mq = window.matchMedia('(min-width: 768px)');
+    if(mq.matches) {
+        $('.parameters .collapse').addClass('in');
+    } else {
+        // the width of browser is less then 700px
+    }
 
 
     $('.getstarted_button').click(function(){
@@ -251,6 +250,21 @@ $(document).ready(function() {
     });
 
 
+    // #search_form submits the shadow form #new_search rather than itself
+
+    $('#search_form #search_button').click(function(e) {
+        e.preventDefault();
+        if (mobile) {$('#exchange_params_change').collapse('hide');}
+        if ($('#search_form').valid()) {$('#new_search').submit()};
+     });
+
+    // any click to change params returns to main search page
+
+    $('#search_form input').click(function() {
+        if (window.location.pathname != '/exchanges/list') setPage('exchanges/list')
+    });
+
+
 
     //
     // AJAX Callbacks
@@ -271,19 +285,19 @@ $(document).ready(function() {
         startLoader();
     };
 
-    $('form.new_search').on('ajax:before', function() {
+    $('#new_search').on('ajax:before', function() {
         console.log('ajax:before: form is submitted');
         beforeSubmit()
     });
 
-    $('form.new_search').on('ajax:success', function(event, data, status, xhr) {
-        console.log('form.new_search ajax:success. Starting to updatePage...');
+    $('#new_search').on('ajax:success', function(event, data, status, xhr) {
+        console.log('#new_search ajax:success. Starting to updatePage...');
         updatePage(data);
 //        setPage(current_url());
      });
 
-    $('form.new_search').on('ajax:error', function(event, xhr, status, error) {
-        console.log('form.new_search ajax:error. Error: ' + error);
+    $('#new_search').on('ajax:error', function(event, xhr, status, error) {
+        console.log('#new_search ajax:error. Error: ' + error);
         alert('We are unable to process your request at this time. Please try again in a few moments');
         updateResults(null);
     });
