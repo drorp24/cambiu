@@ -1,63 +1,90 @@
-<div id="exchange_params_wrapper" class="well clearfix">
+<form id="search_form" action="/exchanges/search" class="form-inline" novalidate>
+	<div class="mobile_only middle_wrapper help_text col-xs-12">
+		<div class="middle">
+			I need
+		</div>
+	</div>
+	<div class="form-group col-md-1 col-xs-6">
+		<input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control"
+		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
+  	</div>
+  <div class="form-group col-md-1 col-xs-6">
+    <select id="buy_currency" data-field="buy_currency" data-symboltarget="buy_amount" name="buy_currency" class="currency_select select optional text-center form-control"
+            data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="foreign" data-key3="currency">
+      <option selected disabled hidden value=''></option>
+      <option data-symbol="$ "  value="USD">USD</option>
+      <option data-symbol="€ "  value="EUR">EUR</option>
+      <option data-symbol="￡ " value="GBP">GBP</option>
+      <option data-symbol="$ "  value="AUD">AUD</option>
+      <option data-symbol="$ "  value="CAD">CAD</option>
+      <option data-symbol="￥ " value="JPY">JPY</option>
+    </select>
+  </div>
+ 	<div class="mobile_only middle_wrapper help_text col-md-1 col-xs-12">
+		<div class="middle">
+			I have
+		</div>
+	</div>
+  <div class="form-group col-md-1 col-xs-6">
+    <input type="text" pattern="\d*" id="pay_amount" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="pay_amount" class="form-control"
+           data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
+  </div>
+  <div class="form-group col-md-1 col-xs-6">
+    <select id="pay_currency" data-field="pay_currency" data-symboltarget="pay_amount" name="pay_currency" class="currency_select select optional text-center form-control"
+            data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
+      <option selected disabled hidden value=''></option>
+      <option data-symbol="￡ " value="GBP">GBP</option>
+      <option data-symbol="€ " value="EUR">EUR</option>
+      <option data-symbol="$ " value="USD">USD</option>
+      <option data-symbol="$ " value="AUD">AUD</option>
+      <option data-symbol="$ " value="CAD">CAD</option>
+      <option data-symbol="￥ " value="JPY">JPY</option>
+    </select>
+  </div>
+	<div class="mobile_only middle_wrapper help_text col-xs-12">
+		<div class="middle">
+			Search in
+		</div>
+	</div>
+	<div class="form-group col-md-3 col-md-push-2 col-xs-12">
+		<input type="text" id="location_search" data-field="location" data-searchbox="true" name="location_search" class="location search form-control" placeholder="   Change location"
+		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="location" data-key2="type" data-val2="search" data-key3="location">
+  	</div>
+  	<!-- Bootstrap original radio in button
+  	<div class="form-group col-md-4 col-md-offset-4 col-xs-12">
+		<div class="btn-group" data-toggle="buttons">
+		  <label class="btn btn-primary active">
+		    <input type="checkbox" autocomplete="off" checked> Best price
+		  </label>
+		  <label class="btn btn-success">
+		    <input type="checkbox" autocomplete="off"> Nearest
+		  </label>
+		</div>
+	-->
+	<div class="mobile_only middle_wrapper help_text  col-xs-12">
+		<div class="middle">
+			Order by
+		</div>
+	</div>
+	<div class="form-group col-md-2 col-md-pull-3 col-xs-12">
+		<input id="sort_switch" name="sort_switch" class="make-switch" type="checkbox" data-on-text="Best price" data-on-color="default" data-off-text="Nearest" data-off-color="default">
+	</div>
 
-  <div class="row">
-    <div class="row desktop_only">
-      <div class="col-md-2 params_title">
-        Pay
-      </div>
-      <div class="col-md-2 params_title">
-        Get
-      </div>
-    </div>
+  	<div class="hidden" style="display:none">
+  		<input type="hidden" name="latitude" class="location" id="latitude" data-field="user_lat">
+  		<input type="hidden" name="longitude" class="location" id="longitude" data-field="user_lng">
+  		<input type="hidden" name="geocoded_location" id="geocoded_location" data-field="location">
+  		<input type="hidden" name="distance" data-field="distance">
+  		<input type="hidden" name="sort" id="sort" data-field="sort">
+  		<input type="hidden" name="searched_location" id="searched_location" data-field="location">
+  		<input type="hidden" name="actual_pay_amount" id="actual_pay_amount" data-field="actual_pay_amount">
+	</div>
 
+  	<div id="search_div" class="form-group col-md-2 col-xs-12" class="form-group">
+		<button id="search_button" data-href="exchanges/list" data-href-page="exchanges" data-herf-id='' data-href-pane="summary" class="form-control btn btn-cambiu" type="submit">Find offers</button>
+	</div>
+
+  <div class="validation_errors">
   </div>
 
-  <div class="row">
-    <form id="search_form" action="/exchanges/search" class="form-inline" novalidate>
-
-
-
-       <div class="form-group col-md-1 reach-out-right col-xs-6">
-        <input type="text" pattern="\d*" id="pay_amount" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="pay_amount" class="form-control"
-               data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
-      </div>
-      <div class="form-group col-md-1 reach-out-left col-xs-6">
-        <select id="pay_currency" data-field="pay_currency" data-symboltarget="pay_amount" name="pay_currency" class="currency_select select optional text-center form-control"
-                data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
-          <option selected disabled hidden value=''></option>
-          <option data-symbol="￡ " value="GBP">GBP</option>
-          <option data-symbol="€ " value="EUR">EUR</option>
-          <option data-symbol="$ " value="USD">USD</option>
-          <option data-symbol="$ " value="AUD">AUD</option>
-          <option data-symbol="$ " value="CAD">CAD</option>
-          <option data-symbol="￥ " value="JPY">JPY</option>
-        </select>
-      </div>
-
-      <div class="form-group col-md-1 col-xs-6">
-        <input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control"
-               data-analyze="change" data-activity="Search" data-key1="searched" data-val1="amount" data-key2="type" data-val2="local" data-key3="amount">
-      </div>
-      <div class="form-group col-md-1 col-xs-6">
-        <select id="buy_currency" data-field="buy_currency" data-symboltarget="buy_amount" name="buy_currency" class="currency_select select optional text-center form-control"
-                data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="foreign" data-key3="currency">
-          <option selected disabled hidden value=''></option>
-          <option data-symbol="$ "  value="USD">USD</option>
-          <option data-symbol="€ "  value="EUR">EUR</option>
-          <option data-symbol="￡ " value="GBP">GBP</option>
-          <option data-symbol="$ "  value="AUD">AUD</option>
-          <option data-symbol="$ "  value="CAD">CAD</option>
-          <option data-symbol="￥ " value="JPY">JPY</option>
-        </select>
-      </div>
-
-
-      <div class="validation_errors">
-      </div>
-
-    </form>
-
-  </div>
-
-
-</div>
+</form>

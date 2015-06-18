@@ -637,29 +637,7 @@ body#cambiu {
   }
   
   &.exchanges {
-    .params_title {
-      text-align: center;
-    }
-    #search_form {
-      @media (min-width: $screen-sm-min) {
-        margin-left: 15px;
-      }
-    }
-    @media (min-width: $screen-sm-min) {
-      .reach-out-left {
-        padding-left: 0;
-        input, select {
-          border-left: none;
-        }
-      }
-      .reach-out-right {
-        padding-right: 0;
-        input, select {
-          border-right: none;
-        }
-      }
-    }
-    #location_search {
+      #location_search {
         @include placeholder-icon("\f041");
       }
       #search_button {
@@ -678,7 +656,7 @@ body#cambiu {
           padding-right: 0;
           padding-left: 0;
         }
-           #exchanges_search_params {
+        #exchanges_search_params {
           background-color: $lightgreen;
           border: 1px solid $lightgreen;
           .exchanges_search_params_title {
