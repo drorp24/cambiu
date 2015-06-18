@@ -1,9 +1,13 @@
 //
-// S E A R C H
+//  S E A R C H
 //
-// Maintain 2-way sync b/w sessionStorage and search form variable values (incl. initialization upon re/load and event handlers)
-// Handle ajax calls
-// Forms  UI
+//  Search variables
+//
+//  2-way sync b/w sessionStorage and search form variable values:
+//  -  Initialization upon page re/load
+//  -  UI & event handlers
+//  -  Search ajax calls: before & after (success & failure)
+
 
 // Currencies: initial settings & change events
     bind_currency_to_autonumeric = function() {
@@ -218,6 +222,7 @@ $(document).ready(function() {
 
     // UI
 
+/*
     // open parameters collapsed form in desktops only
     var mq = window.matchMedia('(min-width: 768px)');
     if(mq.matches) {
@@ -225,6 +230,7 @@ $(document).ready(function() {
     } else {
         // the width of browser is less then 700px
     }
+*/
 
 
     $('.getstarted_button').click(function(){
