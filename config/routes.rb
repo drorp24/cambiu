@@ -1,21 +1,24 @@
 Rails.application.routes.draw do
 
-  # landing pages
   root 'home#index'
-  get 'homepage',           to: 'home#index'
-  get 'exchanges',              to: 'home#index'
-  get 'exchanges/list',          to: 'home#index'
-  get 'exchanges/:id/:view',          to: 'home#index'
+
+  get 'homepage',               to: 'home#index'
+  get 'exchanges/list',         to: 'home#index'
+  get 'exchanges/:id/summary',  to: 'home#index'
+  get 'exchanges/:id/voucher',  to: 'home#index'
+  get 'exchanges/:id',          to: 'exchanges#show'
+  get 'exchanges/:id/quote',    to: 'exchanges#quote'
+
   resources :searches do
     collection do
       post 'record'
       get  'unique'
     end
   end
-  get 'currency_exchange',  to: 'landing#index', as: :currency_exchange  
+
+  get 'currency_exchange',  to: 'landing#index', as: :currency_exchange
   get 'save_money',         to: 'landing#index', as: :save_money
   get 'best_rates',         to: 'landing#index', as: :best_rates
-  # landing pages
 
   # non-devise route: post users, routed here to users#create to create guest users
   post 'users', to: 'users#create', as: :users
@@ -27,15 +30,7 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :orders
-  resources :exchanges do
-    member do
-      get 'quote'
-    end
-    collection do
-      get 'search'
-  end
-  end
-  
+
   resources :currencies do
     collection do
       get 'rates', 'exchange'

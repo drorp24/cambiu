@@ -11,18 +11,18 @@ $(document).ready(function() {
 
     // Enforce unique amount
 
-    $('input[data-field=buy_amount]').click(function() {
+    $('input[data-field=buy_amount]:not([data-single=false])').click(function() {
         set('pay_amount', null);
     });
-    $('input[data-field=pay_amount]').click(function() {
+    $('input[data-field=pay_amount]:not([data-single=false])').click(function() {
         set('buy_amount', null)
     });
 
-    $('input[data-field=buy_amount]').keyup(function () {
+    $('input[data-field=buy_amount]:not([data-single=false])').keyup(function () {
         set('pay_amount', null);
     });
 
-    $('input[data-field=pay_amount]').keyup(function () {
+    $('input[data-field=pay_amount]:not([data-single=false])').keyup(function () {
         set('buy_amount', null);
     });
 

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'tod'
 
 class Exchange < ActiveRecord::Base
@@ -30,7 +32,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:latitude] = self.latitude
     exchange_hash[:longitude] = self.longitude
     exchange_hash[:distance] = Rails.application.config.use_google_geocoding ?  self.distance_from(center) : rand(27..2789)
-    exchange_hash[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(0.67..0.99)).format
+    exchange_hash[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(1.03..1.37)).format
     exchange_hash[:pay_currency] = pay.currency.iso_code
     exchange_hash[:buy_amount] = buy.amount > 0 ? buy.format : (Bank.exchange(pay.amount, pay.currency.iso_code, buy.currency.iso_code) * rand(1.03..1.37)).format
     exchange_hash[:buy_currency] = buy.currency.iso_code
@@ -43,6 +45,54 @@ class Exchange < ActiveRecord::Base
 
   end
 
+  def quote(params, rate)
+
+    puts ""
+    puts ""
+    puts "rate:"
+    puts rate
+    puts ""
+    puts ""
+
+    pay_amount = params[:pay_amount].to_i
+    pay_currency = params[:pay_currency]
+    buy_amount = params[:buy_amount].to_i
+    buy_currency = params[:buy_currency]
+    field = params[:field]
+
+    if rate
+      if field == 'pay_amount'
+        buy_amount = buy_amount / pay_amount * rate
+      elsif field == 'buy_amount'
+        pay_amount = pay_amount / buy_amount * rate
+      end
+    else
+      rate = Bank.exchange(1, pay_currency, buy_currency).amount * rand(1.03..1.37)
+      if field == 'pay_amount'
+         buy_amount = buy_amount * rate
+      elsif field == 'buy_amount'
+         pay_amount = pay_amount * rate
+      end
+    end
+
+    gain_amount = pay_amount * 1.13
+    gain_currency = field == pay_amount ? buy_currency : pay_currency
+
+    result = {}
+
+    result[:buy_amount] = Monetize.parse(buy_amount, buy_currency).format
+    result[:buy_currency] = buy_currency
+    result[:pay_amount] = Monetize.parse(pay_amount, pay_currency).format
+    result[:pay_currency] = pay_currency
+    result[:gain_amount] = Monetize.parse(gain_amount, gain_currency).format
+    result[:gain_currency] = gain_currency
+    result[:rate] = rate
+
+    result
+
+  end
+
+=begin
   # TODO: Write anew
   def quote(pay, buy)
     return nil unless rates
@@ -59,6 +109,7 @@ class Exchange < ActiveRecord::Base
     end
     Money.new(buy_cents, buy_currency)
   end
+=end
 
 
 

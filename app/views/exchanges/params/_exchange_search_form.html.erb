@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+<form>
+
 <div class="col-md-4 col-xs-12">
   <div class="row">
 
@@ -11,10 +13,10 @@
     </div>
 
     <div class="form-group col-md-3 col-xs-6 reach-out-right">
-        <input type="text" pattern="\d*" id="pay_amount" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="pay_amount" class="form-control">
+        <input data-single="false" type="text" pattern="\d*" id="pay_amount" data-model="exchange" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="pay_amount" class="form-control">
     </div>
     <div class="form-group col-md-3 col-xs-6 reach-out-left">
-      <select id="pay_currency" data-field="pay_currency" data-symboltarget="pay_amount" name="pay_currency" class="currency_select select optional text-center form-control"
+      <select id="pay_currency" data-model="exchange" data-field="pay_currency" data-symboltarget="pay_amount" name="pay_currency" class="currency_select select optional text-center form-control"
               data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
         <option selected disabled hidden value=''></option>
         <option data-symbol="￡ " value="GBP">GBP</option>
@@ -30,10 +32,10 @@
       Get
     </div>
     <div class="form-group col-md-3 col-xs-6 reach-out-right">
-      <input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control">
+      <input  data-single="false" type="text" pattern="\d*" id="buy_amount" data-model="exchange" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control">
      </div>
     <div class="form-group col-md-3 col-xs-6 reach-out-left">
-      <select id="buy_currency" data-field="buy_currency" data-symboltarget="buy_amount" name="buy_currency" class="currency_select select optional text-center form-control"
+      <select id="buy_currency" data-model="exchange" data-field="buy_currency" data-symboltarget="buy_amount" name="buy_currency" class="currency_select select optional text-center form-control"
               data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="foreign" data-key3="currency">
         <option selected disabled hidden value=''></option>
         <option data-symbol="$ "  value="USD">USD</option>
@@ -59,9 +61,11 @@
       Your gain:
     </div>
     <div class="exchange_serach_form_gain col-md-3 col-xs-6">
-      <span data-field="gain">$123.45</span>
+      <span data-model="exchange" data-field="gain_amount"></span>
     </div>
 
 
     </div>
 </div>
+
+</form>

@@ -229,6 +229,7 @@ $(document).ready(function() {
 
     $('.getstarted_button').click(function(){
         if ($('#new_search').valid() && custom_validate($('#new_search'))) {
+            console.log('getstarted button clicked: submitting search form')
             $('#new_search').submit();
         } else {
             $('#homepage input[data-field=buy_amount]').focus()
@@ -325,6 +326,21 @@ $(document).ready(function() {
             model_populate('order', order);
         }
     }));
+
+
+    // Real-time exchange quotes
+
+    $('#exchange_search form input').on('keyup', function() {
+
+        var exchange_id = value_of('exchange_id');  if (!exchange_id) return;
+        var url = '/exchanges/' + exchange_id + '/quote';
+        var field = $(this).data('field');
+        var params = $('#exchange_search form').serialize() + '&field=' + field;
+
+        $.getJSON(url, params, function(data, status) {
+        })
+
+     });
 
 
 
