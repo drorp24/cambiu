@@ -10,8 +10,20 @@ class ExchangesController < ApplicationController
 
   def quote
     @exchange = Exchange.find(params[:id])
-    sessionKey = params[:field] + '_' + params[:pay_currency] + '_' + params[:buy_currency]
-    result = @exchange.quote(params, session[sessionKey])
+    if params[:field] == 'pay_amount'
+      amount = Monetize.parse(params[:pay_amount]).amount
+      from_currency = params[:pay_currency]
+      to_currency = params[:buy_currency]
+    elsif params[:field] == 'buy_amount'
+      amount = Monetize.parse(params[:buy_amount]).amount
+      from_currency = params[:buy_currency]
+      to_currency = params[:pay_currency]
+    end
+
+    sessionKey = params[:field] + '_' + from_currency + '_' + to_currency
+    rate = session[sessionKey] ||= Bank.exchange(1, from_currency, to_currency).amount * rand(1.03..1.15)
+
+    result = @exchange.quote(rate, params,sessionKey)
     session[sessionKey] = result[:rate]
     render json: result
   end

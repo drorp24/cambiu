@@ -332,12 +332,23 @@ $(document).ready(function() {
 
     $('#exchange_search form input').on('keyup', function() {
 
+        var $this = $(this);
         var exchange_id = value_of('exchange_id');  if (!exchange_id) return;
         var url = '/exchanges/' + exchange_id + '/quote';
-        var field = $(this).data('field');
-        var params = $('#exchange_search form').serialize() + '&field=' + field;
+        var field = $this.data('field');
+        var params = {
+            pay_amount:     $('#exchange_search #pay_amount').val(),
+            pay_currency:   $('#exchange_search #pay_currency').val(),
+            buy_amount:     $('#exchange_search #buy_amount').val(),
+            buy_currency:   $('#exchange_search #buy_currency').val(),
+            field:          field
+        };
 
         $.getJSON(url, params, function(data, status) {
+            var result = data;
+            set('buy_amount', result.buy_amount, $this);
+            set('pay_amount', result.pay_amount, $this);
+            set('gain_amount', result.gain_amount)
         })
 
      });

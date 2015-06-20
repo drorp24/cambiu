@@ -45,38 +45,21 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  def quote(params, rate)
+  def quote(rate, params, sessionKey)
 
-    puts ""
-    puts ""
-    puts "rate:"
-    puts rate
-    puts ""
-    puts ""
-
-    pay_amount = params[:pay_amount].to_i
+    pay_amount = Monetize.parse(params[:pay_amount]).amount
     pay_currency = params[:pay_currency]
-    buy_amount = params[:buy_amount].to_i
+    buy_amount = Monetize.parse(params[:buy_amount]).amount
     buy_currency = params[:buy_currency]
     field = params[:field]
-
-    if rate
-      if field == 'pay_amount'
-        buy_amount = buy_amount / pay_amount * rate
-      elsif field == 'buy_amount'
-        pay_amount = pay_amount / buy_amount * rate
-      end
-    else
-      rate = Bank.exchange(1, pay_currency, buy_currency).amount * rand(1.03..1.37)
-      if field == 'pay_amount'
-         buy_amount = buy_amount * rate
-      elsif field == 'buy_amount'
-         pay_amount = pay_amount * rate
-      end
+    if field == 'pay_amount'
+      buy_amount = pay_amount * rate
+    elsif field == 'buy_amount'
+      pay_amount = buy_amount * rate
     end
 
-    gain_amount = pay_amount * 1.13
-    gain_currency = field == pay_amount ? buy_currency : pay_currency
+    gain_amount = field == 'pay_amount' ? buy_amount * 0.13 : pay_amount * 0.13
+    gain_currency = field == 'pay_amount' ? buy_currency : pay_currency
 
     result = {}
 
@@ -86,7 +69,9 @@ class Exchange < ActiveRecord::Base
     result[:pay_currency] = pay_currency
     result[:gain_amount] = Monetize.parse(gain_amount, gain_currency).format
     result[:gain_currency] = gain_currency
+    result[:field] = field
     result[:rate] = rate
+    result[:sessionKey] = sessionKey
 
     result
 
