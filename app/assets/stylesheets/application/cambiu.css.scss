@@ -31,7 +31,7 @@ $button-height: 50px;
 $form-text-transform: uppercase;
 $border-bottom: 3px solid $darkgreen;
 $std-margin: 5vh;
-$parameters-height: 75px;
+$parameters-height: 100px;
 $parameters-bg-color: rgba(0,0,0,0.7);
 $exchange_summary_banner_relative_top: -10px;
 $exchange_summary_bg_img_height: 100px;
@@ -280,19 +280,25 @@ body#cambiu {
 
   #exchange_search {
     @media (min-width: $screen-sm-min) {
-      padding-left: 5px;
+      padding-left: 15px;
       padding-top: 10px;
+      padding-bottom: 0px;
     }
+    margin-bottom: 0;
   }
 
-  .exchange_search_form_title {
+  .exchange_search_form_title, .general_search_form_title {
     color: #333;
     font-weight: 400;
     font-size: 0.8em;
     text-transform: uppercase;
-    @media (max-width: $screen-xs-max) {
-      margin-top: -10px;
-    }
+   }
+  .exchange_search_form_title {
+    margin-top: -10px;
+  }
+  .general_search_form_title {
+    margin-top: 10px;
+    margin-bottom: -20px;
   }
 
   .exchange_serach_form_gain {
@@ -754,10 +760,10 @@ body#cambiu {
       }
       #exchanges {
         z-index: 0;
+        padding-left: 0;
         @media (max-width: $screen-xs-max){
           padding-right: 0;
-          padding-left: 0;
-        }
+         }
         #exchanges_search_params {
           background-color: $lightgreen;
           border: 1px solid $lightgreen;
@@ -830,8 +836,14 @@ body#cambiu {
     #exchange_params_wrapper {
       @media (max-width: $screen-xs-max) {
         background-color: $parameters-bg-color;
+        height: 100vh;
       }
-       color: #fff;
+       @media (min-width: $screen-sm-min) {
+         height: $parameters-height;
+       }
+
+
+      color: #fff;
       font-size: 1em;
       font-weight: 400;
       line-height: 2.5em;
@@ -940,6 +952,64 @@ body#cambiu {
       min-height: 100vh;
 //      margin-right: -15px;
     }
+
+    .parameters > .exchange_summary_banner .es_name {
+      font-size: 1.5em;
+      margin-top: 7px;
+    }
+
+    .exchange_summary_banner {
+      &.well {
+        padding-bottom: 0;
+        padding-top: 0;
+        background-color: $lightgreen;
+        border: none;
+      }
+      color: #fff;
+      .left {
+        margin-left: 15px;
+      }
+      @media (max-width: $screen-xs-max) {
+        .right {
+          margin-left: 15px;
+        }
+      }
+      .es_icon {
+        font-size: 2.5em;
+        text-align: center;
+        margin-top: 15px;
+      }
+      .es_distance {
+        font-size: 0.7em;
+        text-align: center;
+        &::after {
+          content: "m";
+        }
+      }
+      .es_name {
+        @media (max-width: $screen-xs-max) {
+          font-size: 0.9em;
+        }
+        @media (min-width: $screen-sm-min) {
+          font-size: 1.5em;
+        }
+        font-weight: 400;
+        margin-top: 15px;
+        margin-bottom: 5px;
+      }
+      .es_address {
+        font-size: 1em;
+        font-weight: 200;
+        margin-top: 12px;
+      }
+      .es_opening_hours {
+        font-size: 0.8em;
+        font-weight: 200;
+        margin-bottom: 10px;
+        margin-top: 5px;
+      }
+    }
+
     #exchange_summary {
       background-color: #fff;
       .exchange_summary_title {
@@ -966,54 +1036,12 @@ body#cambiu {
           color: $lightgreen;
         }
       }
-        .exchange_summary_banner {
-        background-color: $lightgreen;
-        color: #fff;
-        position: relative;
-        top: $exchange_summary_banner_relative_top;
-        .left {
-          margin-left: 15px;
-        }
-        @media (max-width: $screen-xs-max) {
-          .right {
-            margin-left: 15px;
-          }
-        }
-         .es_icon {
-          font-size: 2.5em;
-          text-align: center;
-          margin-top: 15px;
-        }
-        .es_distance {
-          font-size: 0.7em;
-          text-align: center;
-          &::after {
-            content: "m";
-          }
-        }
-        .es_name {
-          @media (max-width: $screen-xs-max) {
-            font-size: 0.9em;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 1.1em;
-          }
-         font-weight: 400;
-          margin-top: 15px;
-          margin-bottom: 5px;
-        }
-        .es_address {
-          font-size: 1em;
-          font-weight: 200;
-          margin-top: 12px;
-        }
-        .es_opening_hours {
-          font-size: 0.8em;
-          font-weight: 200;
-          margin-bottom: 10px;
-          margin-top: 5px;
-        }
+
+      .fess_are_included {
+        font-size: 0.8em;
+        color: $darkgreen;
       }
+
       .order {
         margin-top: $exchange_summary_banner_relative_top + 25px;
         .buy_amount {
@@ -1153,7 +1181,16 @@ body#cambiu {
       }
     }
     #exchange_voucher {
-      i {
+      background-image: image_url('voucher_bg.png');
+      width: 90%;
+      margin-left: 4%;
+      margin-top: 10px;
+      filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12,Color='#444')";
+      filter: url(#drop-shadow);
+      -webkit-filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));
+      filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));
+      height: 90vh;
+    i {
         margin-right: 5px;
       }
       padding-right: 15px;
@@ -1162,17 +1199,6 @@ body#cambiu {
         margin-left: 0;
         margin-right: 0;
       }
-       .exchange_voucher_bg img {
-        position: absolute;
-        top: 20px;
-        width: 100%;
-        max-height: 500px;
-        left: 0;
-        z-index: 0;
-         filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12,Color='#444')";
-         filter: url(#drop-shadow);
-         -webkit-filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));
-         filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));     }
       .voucher_heading {
         padding-top: 10vh;
         font-weight: 500;
@@ -1205,6 +1231,7 @@ body#cambiu {
         margin-bottom: 20px;
       }
       .exchange_voucher_banner {
+        height: 15vh;
         margin-top: 15px;
         margin-bottom: 20px;
         .es_name {
@@ -1249,6 +1276,7 @@ body#cambiu {
         }
       }
       .exchange_voucher_order {
+        height: 15vh;
         .order {
           @media (min-width: $screen-sm-min) {
             font-size: 1.3em;
@@ -1345,15 +1373,17 @@ body#cambiu {
 
      #map_container {
       position: fixed;
-      margin-left: 31.1%;
+      margin-left: 32.3%;
       width: 70%;
       padding-right: 0;
-      top: 125px;
+      padding-left: 0;
+      top: 160px;
       #map-canvas {
         height: 100vh;
        }
     }
 
+    /*
     &.search {
       #map_container {
         top: 125px;
@@ -1366,13 +1396,10 @@ body#cambiu {
         z-index: 1;
       }
     }
+    */
 
 
     &.exchanges {
-      
-      #exchanges {
-        padding-left: 0;
-      }
       
       .name {
         font-size: 1.2em;
@@ -1405,7 +1432,10 @@ body#cambiu {
       }
       #exchange_params_wrapper {
         margin: 0;
-        padding: 0;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 0;
+        padding-bottom: 0;
       }
       form {
         padding-top: 15px;

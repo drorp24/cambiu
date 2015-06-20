@@ -7,10 +7,9 @@
             <%= render 'exchanges/params/general_search_form' %>
           </div>
         </div>
-    <% else %>
-        <div class="row well clearfix" id="exchange_search">
-          <%= render 'exchanges/params/exchange_search_form' %>
-        </div>
+    <% end %>
+    <% if @mode == 'exchange' %>
+        <%= render 'exchange_banner' %>
     <% end %>
 
   </div>

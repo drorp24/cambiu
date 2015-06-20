@@ -1,5 +1,11 @@
 <div id="exchange_summary" class="pane <%= params[:controller] == 'exchanges' ? 'active' : '' %>" data-pane="summary" data-model="exchange" data-id='' style="display: <%= params[:controller] == 'exchanges' ? 'block' : 'none' %>">
 
+  <% if @mode == 'exchange' %>
+      <div class="well clearfix" id="exchange_search">
+        <%= render 'exchanges/summary/exchange_search_form' %>
+      </div>
+  <% end %>
+
   <div class="exchange_summary_bg">
     <div class="row">
       <div class="col-md-12 col-xs-12">
@@ -12,23 +18,9 @@
     </div>
   </div>
 
-  <div class="exchange_summary_banner">
-    <div class="row">
-      <div class="col-md-2 col-xs-2">
-        <div class="left">
-          <div class="es_icon"><%= fa_icon 'map-marker inverse' %></div>
-          <div class="es_distance" data-model="exchange" data-field="distance"></div>
-        </div>
-      </div>
-      <div class="col-md-10 col-xs-10">
-        <div class="right">
-          <div class="es_name" data-model="exchange" data-field="name"></div>
-          <div class="es_address" data-model="exchange" data-field="address"></div>
-          <div class="es_opening_hours" data-model="exchange" data-field="open_today"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <% if @mode != 'exchange' %>
+    <%= render 'exchanges/exchange_banner' %>
+  <% end %>
 
   <div class="order">
     <div class="row">
@@ -50,9 +42,12 @@
             <span class="buy_amount" data-model="exchange" data-field="buy_amount"></span>
             <span class="buy_currency" data-model="exchange" data-field="buy_currency"></span>
         </div>
-         <div class="sum">
+        <div class="sum">
             <span class="gain_amount" data-model="exchange" data-field="gain_amount"></span>
             <span class="gain_currency" data-model="exchange" data-field="gain_currency"></span>
+        </div>
+        <div class="sum">
+          <span class="fess_are_included">All fees are included</span>
         </div>
       </div>
     </div>
