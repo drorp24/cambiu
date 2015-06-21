@@ -223,13 +223,13 @@ $(document).ready(function() {
         if (service_type == 'collection') {
             $('button[data-service-type=delivery]').removeClass('active');
             $('button[data-service-type=collection]').addClass('active');
-            $('.order .sum .fees').html('All fees are included');
+            $('.fees').html('All fees are included');
             $('.voucher_title .delivery_ind').html('');
         } else
         if (service_type == 'delivery') {
             $('button[data-service-type=collection]').removeClass('active');
             $('button[data-service-type=delivery]').addClass('active');
-            $('.order .sum .fees').html('Add &pound;20 for delivery');
+            $('.fees').html('Add &pound;20 for delivery');
             $('.voucher_title .delivery_ind').html('Delivery');
         }
     };

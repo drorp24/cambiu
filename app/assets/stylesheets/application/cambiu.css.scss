@@ -310,11 +310,11 @@ body#cambiu {
     margin-bottom: -20px;
   }
 
-  .exchange_serach_form_gain {
+  .exchange_search_form_gain {
     color: #333;
-    font-size: 0.9em;
+    font-size: 1em;
     text-transform: uppercase;
-    line-height: 40px;
+    line-height: 23px;
     font-weight: 500;
     color: $darkgreen;
     text-align: center;
@@ -323,6 +323,10 @@ body#cambiu {
       margin-bottom: -15px;
     }
 
+  }
+
+  .exchange_search_form_gain .gain_amount {
+    font-weight: 700;
   }
 
   .delivery_method button {
@@ -1085,6 +1089,7 @@ body#cambiu {
       .fees {
         font-size: 0.8em;
         color: $darkgreen;
+        text-transform: none;
       }
 
       button[data-service-type] {

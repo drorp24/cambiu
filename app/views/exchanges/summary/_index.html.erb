@@ -22,36 +22,38 @@
     <%= render 'exchanges/exchange_banner' %>
   <% end %>
 
-  <div class="order">
-    <div class="row">
-      <div class="buy col-xs-4 col-xs-offset-1 col-md-4 col-md-offset-2">
-        <div class="you_chose">
-          <div>
-            <span>Pay:</span>
+  <% if @mode != 'exchange' %>
+      <div class="order">
+        <div class="row">
+          <div class="buy col-xs-4 col-xs-offset-1 col-md-4 col-md-offset-2">
+            <div class="you_chose">
+              <div>
+                <span>Pay:</span>
+              </div>
+              <div>Get:</div>
+              <div>Your gain:</div>
+            </div>
           </div>
-          <div>Get:</div>
-          <div>Your gain:</div>
+          <div class="pay col-xs-5 col-md-4">
+            <div class="sum">
+              <span class="pay_amount" data-model="exchange" data-field="pay_amount"></span>
+              <span class="pay_currency" data-model="exchange" data-field="pay_currency"></span>
+            </div>
+            <div class="sum">
+                <span class="buy_amount" data-model="exchange" data-field="buy_amount"></span>
+                <span class="buy_currency" data-model="exchange" data-field="buy_currency"></span>
+            </div>
+            <div class="sum">
+                <span class="gain_amount" data-model="exchange" data-field="gain_amount"></span>
+                <span class="gain_currency" data-model="exchange" data-field="gain_currency"></span>
+            </div>
+            <div class="sum">
+              <span class="fees">All fees are included</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="pay col-xs-5 col-md-4">
-        <div class="sum">
-          <span class="pay_amount" data-model="exchange" data-field="pay_amount"></span>
-          <span class="pay_currency" data-model="exchange" data-field="pay_currency"></span>
-        </div>
-        <div class="sum">
-            <span class="buy_amount" data-model="exchange" data-field="buy_amount"></span>
-            <span class="buy_currency" data-model="exchange" data-field="buy_currency"></span>
-        </div>
-        <div class="sum">
-            <span class="gain_amount" data-model="exchange" data-field="gain_amount"></span>
-            <span class="gain_currency" data-model="exchange" data-field="gain_currency"></span>
-        </div>
-        <div class="sum">
-          <span class="fees">All fees are included</span>
-        </div>
-      </div>
-    </div>
-  </div>
+  <% end %>
 
   <div class="email_form">
     <div class="row">
