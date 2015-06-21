@@ -218,6 +218,39 @@ $(document).ready(function() {
 
     // UI
 
+    // service_type button
+    service_type_ui = function(service_type) {
+        if (service_type == 'collection') {
+            $('button[data-service-type=delivery]').removeClass('active');
+            $('button[data-service-type=collection]').addClass('active');
+            $('.order .sum .fees').html('All fees are included');
+            $('.voucher_title .delivery_ind').html('');
+        } else
+        if (service_type == 'delivery') {
+            $('button[data-service-type=collection]').removeClass('active');
+            $('button[data-service-type=delivery]').addClass('active');
+            $('.order .sum .fees').html('Add &pound;20 for delivery');
+            $('.voucher_title .delivery_ind').html('Delivery');
+        }
+    };
+    if (sessionStorage.service_type == 'collection') {
+        service_type_ui('collection')
+    } else
+    if (sessionStorage.service_type == 'delivery') {
+        service_type_ui('delivery')
+    }
+
+    $('button[data-service-type=collection]').click(function() {
+        service_type_ui('collection');
+        sessionStorage.service_type = 'collection';
+    });
+
+    $('button[data-service-type=delivery]').click(function() {
+         service_type_ui('delivery');
+         sessionStorage.service_type = 'delivery';
+    });
+
+
     // open parameters collapsed form in desktops only
     var mq = window.matchMedia('(min-width: 768px)');
     if(mq.matches) {

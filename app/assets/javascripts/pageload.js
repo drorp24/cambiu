@@ -148,7 +148,8 @@ def = function(variable) {
         'pay_currency'  : 'GBP',
         'buy_amount'    : 1000,
         'buy_currency'  : 'EUR',
-        'sort'          : 'quote'
+        'sort'          : 'quote',
+        'service_type'  : 'collection'
     };
     return val[variable] ? val[variable] : null
 };

@@ -2,7 +2,8 @@ class Search < ActiveRecord::Base
   belongs_to :exchange
 #  validates :email, presence: true#, on: :update #allow_nil: true #unless: Proc.new { |a| a.email.blank? }
 #  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
-  
+  enum service_type: [ :collection, :delivery ]
+
   def exchanges
      
     return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
