@@ -32,6 +32,12 @@ $(document).ready(function() {
         if (exchanges && exchanges.length > 0) {
 
             if (exchanges.length > 1) {
+                // if url contains exchange_id then now is the time to update the page
+                var id = urlId();
+                if (id) {
+                    var exchange = findExchange(id);
+                    if (exchange) model_populate('exchange', exchange);
+                }
                 updateExchanges(exchanges);
             } else {
                 model_populate('exchange', exchanges[0]);

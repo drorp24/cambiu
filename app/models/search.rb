@@ -35,7 +35,7 @@ class Search < ActiveRecord::Base
   def exchange_offers(id, location, center, box, pay, buy, sort)
   
       # TODO: Like open_today, try if possible to define 'applicable_rate' scope that yields *one* rate record according to from & to currencies
-      if exchange_id
+      if exchange_id and @mode == 'exchange'
         exchanges = Array(Exchange.find_by_id(exchange_id))
       elsif Rails.application.config.use_google_geocoding
         exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(:open_today, :rates)

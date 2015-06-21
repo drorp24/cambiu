@@ -79,9 +79,9 @@ urlId = function() {
     var path = window.location.pathname;
     if (!path) return null;
     var path_split = path.split('/');
-    if (path_split.length == 3 && path_split[1] == 'exchanges' && isNumber(path_split[2])) {
+    if ((path_split.length == 3 || path_split.length == 4) && path_split[1] == 'exchanges' && isNumber(path_split[2])) {
         return path_split[2]
-    } else {
+     } else {
         return null
     }
 };
