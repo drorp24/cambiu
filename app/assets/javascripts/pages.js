@@ -209,7 +209,6 @@ $(document).ready(function() {
     };
 
     $('body').on('click', '[data-href]', (function(e) {
-
         // if clicked element is part of a form, dont move page unless form is valid
 
         var $this           = $(this);

@@ -131,6 +131,11 @@ $(document).ready(function() {
        }
     };
 
+    jQuery.validator.addMethod('phoneUK', function(phone_number, element) {
+         return this.optional(element) || phone_number.length > 9 &&
+            phone_number.match(/^(((\+44)? ?(\(0\))? ?)|(0))( ?[0-9]{3,4}){3}$/);
+    }, 'Please specify a valid phone number');
+
 
     $("#new_order").validate({
         rules: {
@@ -141,14 +146,21 @@ $(document).ready(function() {
             }
         },
         messages: {
+/*
             'order[email]': {
                 remote: "This email is already taken"
+            },
+*/
+ /*           'order[phone]': {
+                phoneUK: "bla bla"
             }
-        },
-        validClass: 'empty_class',
+*/        }
+ /*       validClass: 'empty_class',
+*//*
         success: function(label) {
             label.removeClass("error_class").text("")
         }
+*/
     });
 
 

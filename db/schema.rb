@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150621161858) do
+ActiveRecord::Schema.define(version: 20150621190509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 20150621161858) do
     t.string   "buy_currency"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "phone"
   end
 
   add_index "orders", ["exchange_id"], :name => "index_orders_on_exchange_id"

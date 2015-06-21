@@ -3,6 +3,7 @@
 
     <% if status == 'produced' %>
         <%= f.input_field :email, data: {field: 'email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
+        <%= f.input_field :phone, class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone to coordinate delivery", label: false %>
         <div class="validation_errors"></div>
     <% else %>
         <%= f.input_field :email, 		    as: :hidden, data: {field: 'email'} %>

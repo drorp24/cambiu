@@ -107,10 +107,10 @@ $inverse-color: #ffffff;
   }
 }
 
-@mixin placeholder-email-def {
+@mixin placeholder-general-def {
   text-align: left;
   text-indent: 10px;
-  color: #555;
+  color: #888;
   font-weight: 400;
   text-transform: initial;
   @media (max-width: $screen-xs-max) {
@@ -119,18 +119,18 @@ $inverse-color: #ffffff;
   }
 }
 
-@mixin placeholder-email {
+@mixin placeholder-general {
   &::-webkit-input-placeholder {
-    @include placeholder-email-def;
+    @include placeholder-general-def;
   }
   &:-moz-placeholder {
-    @include placeholder-email-def;
+    @include placeholder-general-def;
   }
   &::-moz-placeholder {
-    @include placeholder-email-def;
+    @include placeholder-general-def;
   }
   &:-ms-input-placeholder {
-    @include placeholder-email-def;
+    @include placeholder-general-def;
   }
 }
 
@@ -1200,8 +1200,18 @@ body#cambiu {
             }
           }
           #order_email {
+            @include placeholder-general;
             @include placeholder-icon("\f0e0");
-            @include placeholder-email;
+             font-size: 1.3em;
+            @media (max-width: $screen-xs-max) {
+              height: 40px;
+              margin-top: 30px;
+              text-align: center;
+            }
+          }
+          #order_phone {
+            @include placeholder-general;
+            @include placeholder-icon("\f095");
             font-size: 1.3em;
             @media (max-width: $screen-xs-max) {
               height: 40px;
