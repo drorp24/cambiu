@@ -17,6 +17,7 @@ $grey3c: #3c3c3c;
 $normal: 400;
 $bold: 700;
 $light: 300;
+$cn-brand-color: #F8C70A;
 
 $color: #888;
 $lightgrey: #999;
@@ -169,6 +170,12 @@ html, body {
   height: 100%;
 }
 body#cambiu {
+
+  &.exchange {
+      .es_icon, .es_distance {
+        color: $cn-brand-color;
+      }
+    }
     
   padding-top: $navbar-height;
   font-family: $font-family;
@@ -285,6 +292,7 @@ body#cambiu {
       padding-bottom: 0px;
     }
     margin-bottom: 0;
+    border: none;
   }
 
   .exchange_search_form_title, .general_search_form_title {
@@ -424,6 +432,15 @@ body#cambiu {
         background: none;
       }
     }
+  }
+  #cn_navbar_logo img {
+    height: 50px;
+    width: auto;
+  }
+  .pseudo_nav_link {
+    margin-left: 70px;
+    position: relative;
+    top: 22px;
   }
   .section_anchor {
     display: block;
@@ -953,19 +970,42 @@ body#cambiu {
 //      margin-right: -15px;
     }
 
-    .parameters > .exchange_summary_banner .es_name {
-      font-size: 1.5em;
-      margin-top: 7px;
+    .parameters > .exchange_summary_banner {
+      .es_name {
+        @media (max-width: $screen-xs-max) {
+          font-size: 1.2em;
+        }
+        @media (min-width: $screen-sm-min) {
+          font-size: 1.5em;
+        }
+      }
     }
 
+
     .exchange_summary_banner {
+      color: #fff;
+      background-color: #888;
+      border-left: none;
+      border-right: none;
+      border-bottom: 2px solid #fff;
+      border-top: 3px solid #555;
+      height: $parameters-height;
+      .open_now {
+        font-size: 1.7em;
+        line-height: 96px;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: lightgrey;
+      }
+      .exchange_phone {
+        font-size: 2em;
+        color: $cn-brand-color;
+        line-height: 96px;
+      }
       &.well {
         padding-bottom: 0;
         padding-top: 0;
-        background-color: $lightgreen;
-        border: none;
       }
-      color: #fff;
       .left {
         margin-left: 15px;
       }
@@ -994,7 +1034,7 @@ body#cambiu {
           font-size: 1.5em;
         }
         font-weight: 400;
-        margin-top: 15px;
+        margin-top: 7px;
         margin-bottom: 5px;
       }
       .es_address {
@@ -1008,6 +1048,10 @@ body#cambiu {
         margin-bottom: 10px;
         margin-top: 5px;
       }
+    }
+
+    .exchange_logo {
+      margin-top: 9px;
     }
 
     #exchange_summary {
@@ -1232,7 +1276,7 @@ body#cambiu {
       }
       .exchange_voucher_banner {
         height: 15vh;
-        margin-top: 15px;
+        margin-top: 10px;
         margin-bottom: 20px;
         .es_name {
           @media (min-width: $screen-sm-min) {
