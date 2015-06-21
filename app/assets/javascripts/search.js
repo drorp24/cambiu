@@ -90,7 +90,7 @@
 
             var $this = $(this);
             var model = $this.data('model');
-            var field = model ? model + '_' + $this.data('field') : $this.data('field');
+            var field = /*model ? model + '_' + $this.data('field') :*/ $this.data('field');
 
             var url_val = urlParameter(field);
             if (url_val) {
