@@ -1,3 +1,13 @@
+//
+//  E X C H A N G E S
+//
+//  Responsible to reflect exchanges search results in View (updatePage)
+//
+//  Uses the exchanges buffer passed by the ajax callback, to:
+//  -  Draw map and place dynamic markers, centering map by selected exchange or searched location (depending on the number of exchanges returned)
+//  -  Render a list of exchange DIVs, or populate a single exchange info (depending on the number of exchanges returned),
+//  -  Update results banner
+
 $(document).ready(function() {
     
 //if ($('body').hasClass('exchanges'))   {    
@@ -8,22 +18,30 @@ $(document).ready(function() {
         console.log('updatePage');
         exchanges = data;
 
-        drawMap(sessionStorage.location_lat, sessionStorage.location_lng, exchanges);
+        if (exchanges && exchanges.length == 1) {
+            var mapCenterLat = exchanges[0].latitude;
+            var mapCenterLng = exchanges[0].longitude;
+        } else {
+            var mapCenterLat = sessionStorage.location_lat;
+            var mapCenterLng = sessionStorage.location_lng;
+        }
+        drawMap(mapCenterLat, mapCenterLng, exchanges);
 
         clearExchanges();
 
         if (exchanges && exchanges.length > 0) {
 
-            updateExchanges(exchanges);
+            if (exchanges.length > 1) {
+                updateExchanges(exchanges);
+            } else {
+                model_populate('exchange', exchanges[0]);
+            }
             if (desktop) bindBehavior();
-         }
+        }
+
         updateResults(exchanges);
-//        updateParamsDisplay();
-        document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     };
-    
-
 
     updateExchanges = function(exchanges) {
 
@@ -167,19 +185,7 @@ $(document).ready(function() {
     }
     
 
-/*
-    function updateParamsDisplay() {
 
-        console.log('updateParamsDisplay');
-
-        $('#buy_amount_display').html(sessionStorage.edited_buy_amount);
-        $('#searched_location_display').html('in ' + sessionStorage.location);
-    }
-*/
-
-
- 
- 
     // TODO: Update markers within the map boundaries only!
     function updateMarkers(exchanges) {
         

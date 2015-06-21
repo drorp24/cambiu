@@ -5,7 +5,7 @@ class Order < ActiveRecord::Base
   monetize :pay_cents, with_model_currency: :pay_currency, :allow_nil => true
   monetize :buy_cents, with_model_currency: :buy_currency, :allow_nil => true
 
-  enum status: [ :produced, :used ]
+  enum status: [:offer, :produced, :used ]
 
   # This is the way to include any non-model I want in the JSON response
   def attributes

@@ -11,18 +11,18 @@ $(document).ready(function() {
 
     // Enforce unique amount
 
-    $('input[data-field=buy_amount]').click(function() {
+    $('input[data-field=buy_amount]:not([data-single=false])').click(function() {
         set('pay_amount', null);
     });
-    $('input[data-field=pay_amount]').click(function() {
+    $('input[data-field=pay_amount]:not([data-single=false])').click(function() {
         set('buy_amount', null)
     });
 
-    $('input[data-field=buy_amount]').keyup(function () {
+    $('input[data-field=buy_amount]:not([data-single=false])').keyup(function () {
         set('pay_amount', null);
     });
 
-    $('input[data-field=pay_amount]').keyup(function () {
+    $('input[data-field=pay_amount]:not([data-single=false])').keyup(function () {
         set('buy_amount', null);
     });
 
@@ -132,16 +132,16 @@ $(document).ready(function() {
     };
 
 
-    $("#email_form").validate({
+    $("#new_order").validate({
         rules: {
-            'search[email]': {
+            'order[email]': {
                 required: true,
-                email: true,
-                remote: '/searches/unique'
+                email: true
+//                remote: '/searches/unique'
             }
         },
         messages: {
-            'search[email]': {
+            'order[email]': {
                 remote: "This email is already taken"
             }
         },

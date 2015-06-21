@@ -1,6 +1,16 @@
-// Switch to a different pane according to href
-// If href element also includes data-id then populate model data before switching panes
-
+//
+// P A G E S
+//
+// Include all logic required to handle data-href as if they were real links to the server
+// and page re/loads as if they were getting relevant html (and not always getting home#index)
+//
+// Instead of calling server to fetch results from DB and return relevant, populated html, do:
+//   -  Parse url                                       (link),
+//   -  replace active html, manipulate browser history (setPage),
+//   -  populate pages from in-memory exchanges buffer  (populate, unpopulate) relevant for spa that has all exchanges in buffer; single-result searches use updatePage
+//
+// Pages.js is also where the technical flow begins
+// It is here that getLocation() is called (location.js), triggering a search (search.js) that in turn updatesPage (exchanges.js)
 
 $(document).ready(function() {
 
@@ -52,7 +62,6 @@ $(document).ready(function() {
         // Parse arguments
 
         console.log('url argument: ' + url);
-        console.log('current_url: ' + current_url());
 
         // TODO: Remove: prevents form data from populating if in the same page
  /*     if (url == current_url() && hash == current_hash() ) {
@@ -70,19 +79,27 @@ $(document).ready(function() {
             var page        = url_a[0];
             var id          = url_a[1];
             var pane        = url_a[2];
-        } else {
+        } else if (url_a.length == 2 && (url_a[1] == 'list')) {
             var page        = url_a[0];
             var pane        = url_a[1];
             var id          = null;
+        } else if (url_a.length == 2 && (url_a[1] != 'list')) {
+            var page        = url_a[0];
+            var pane        = 'summary';
+            var id          = url_a[1];
+        } else if (url_a.length == 1) {
+            var page        = url_a[0]
         }
         var exchangeid  = id;
 
+        console.log('pages.js, result of url parsing: page: ' + page + ' id: ' + String(id) + ' pane: ' + String(pane));
+
 
         // update session
-        sessionStorage.exchangeid   = exchangeid    ? exchangeid    : null;
+        sessionStorage.exchangeid   = exchangeid    ? exchangeid    : value_of('exchangeid');
         sessionStorage.page         = page  ? page  : null;
         sessionStorage.pane         = pane  ? pane  : null;
-        sessionStorage.id           = id    ? id    : null;
+        sessionStorage.id           = id    ? id    : value_of('id');
 
 
         // find exchange
@@ -203,7 +220,7 @@ $(document).ready(function() {
                 form.validate();
                 form.on('ajax:complete', (function (evt, data, status, xhr) {
                     console.log('form remote validation completed. Status: ' + status);
-                    if (form.valid()) {
+                    if (form.valid() && custom_validate(form)) {
                         link($this)
                     }
                 }));
@@ -244,17 +261,29 @@ $(document).ready(function() {
     // This should be the only code doing something that's not event-driven
 
 
+
+    // Find user's location and define which callback to perform once location is identified
+
+    if (!value_of('location')) {
+        getLocation();
+    } else {
+        search_exchanges()
+    }
+
+
     // setPage() to current path
     // replace '/' with 'homepage' or else pushState will get ''
+
     var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
-    console.log('full page re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
-    setPage(reload_path, hash);
+     if (spa()) {
+        console.log('spa re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
+        setPage(reload_path, hash);
+    } else {
+         var new_state = window.location.pathname;
+         console.log('Not spa. Just pushingState ' + new_state);
+         history.pushState(new_state, 'cambiu', new_state);
+     }
 
-    // TODO: Moved here from search.js. Set at setPage. Remove?
-/*
-    sessionStorage.page         = window.location.hostname;
-    sessionStorage.hash         = window.location.hash;
-*/
 
 });

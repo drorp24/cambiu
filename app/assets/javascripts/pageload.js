@@ -1,8 +1,10 @@
 var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
-var production = $('body').hasClass('production');
 var homepage;
+var production;
+var search;
+var direct;
 var params = {};
 var pacContainerInitialized = false;
 var searchBoxes = [];
@@ -35,7 +37,6 @@ var display;
 var bind_currency_to_autonumeric;
 var current_url;
 var value_of;
-var current_url;
 var current_hash;
 var new_search_validator;
 var is_currency_unique;
@@ -56,8 +57,57 @@ var map_initial_zoom = 18;
 var map_center_changed = false;
 var updateResults;
 var directionsService;
-var directionsDisplay;
 var big_marker;
+var search_exchanges;
+var findPosition;
+var displayError;
+var getLocation;
+var locationCallback;
+var urlParameter;
+var urlParameters;
+var urlId;
+var isNumber;
+
+isNumber = function (obj) { return !isNaN(parseFloat(obj)) };
+
+urlParameters = function() {
+    return window.location.search.length > 0
+};
+
+
+urlId = function() {
+    var path = window.location.pathname;
+    if (!path) return null;
+    var path_split = path.split('/');
+    if (path_split.length == 3 && path_split[1] == 'exchanges' && isNumber(path_split[2])) {
+        return path_split[2]
+    } else {
+        return null
+    }
+};
+
+urlParameter = function(sParam)
+{
+
+    if (sParam == 'exchange_id') {
+
+        return urlId()
+
+    } else {
+
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+
+};
 
 findExchange = function(id) {
     if (exchanges && exchanges.length > 0) {
@@ -114,6 +164,7 @@ value_of = function(key) {
 
 
 // intended to base on session values rather than window.location
+// TODO: Remove
 current_url = function() {
     var url;
 
@@ -157,3 +208,14 @@ $(document).on('click','.navbar-collapse.in',function(e) {
             det: exchange_el.find('.exchange_window_det')
         };
     };
+
+    production = function() {
+        return $('body').hasClass('production');
+    };
+    spa = function() {
+        return $('body').hasClass('home');
+    };
+
+$(document).ready(function() {
+   $('body').addClass(media)
+});

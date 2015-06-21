@@ -1,7 +1,9 @@
 //
-// Search params, search form fields and the impact of their changes
+// S E A R C H
 //
-// Prefix input elements with the respective selected currency
+// Maintain 2-way sync b/w sessionStorage and search form variable values (incl. initialization upon re/load and event handlers)
+// Handle ajax calls
+// Forms  UI
 
 // Currencies: initial settings & change events
     bind_currency_to_autonumeric = function() {
@@ -77,27 +79,6 @@
         })
     };
 
-/*
-    // Sets 5 basic search variables only.
-    set_defaults = function(use_session) {
-
-        var session_pay_amount      = value_of('pay_amount');
-        var session_pay_currency    = value_of('pay_currency');
-        var session_buy_amount      = value_of('buy_amount');
-        var session_buy_currency    = value_of('buy_currency');
-        var session_sort            = value_of('sort');
-
-        set('pay_amount',   use_session  ? session_pay_amount     || (session_buy_amount ? null : def_pay_amount)   : def_pay_amount);
-        set('pay_currency', use_session  ? session_pay_currency   || def_pay_currency                               : def_pay_currency);
-        set('buy_amount',   use_session  ? session_buy_amount     || (session_pay_amount ? null : def_buy_amount)   : def_buy_amount);
-        set('buy_currency', use_session  ? session_buy_currency   || def_buy_currency                               : def_buy_currency);
-        set('sort',         use_session  ? session_sort           || def_sort                                       : def_sort);
-
-        bind_currency_to_autonumeric();
-
-    };
-*/
-
     // Sets all variables
     set_variables = function(use_session) {
 
@@ -105,22 +86,52 @@
         variables_set = true;
         if (use_session === undefined) use_session = true;
 
-        $('#homepage form [data-field]').each(function() {
+        $('#new_search [data-field]').each(function() {
 
-            var field = $(this).data('field');
-            var def_val = def(field);
-            var value = use_session ? value_of(field) || def_val : def_val;
+            var $this = $(this);
+            var model = $this.data('model');
+            var field = model ? model + '_' + $this.data('field') : $this.data('field');
 
-            if (field == 'pay_amount') {value = use_session ? value_of('pay_amount') || (value_of('buy_amount') ? null : def_val) : def_val}
-            if (field == 'buy_amount') {value = use_session ? value_of('buy_amount') || (value_of('pay_amount') ? null : def_val) : def_val}
+            var url_val = urlParameter(field);
+            if (url_val) {
+                var value = url_val;
+             } else {
+                var def_val = def(field);
+                var value = (use_session ? value_of(field) || def_val : def_val);
+                if (field == 'pay_amount') {value = use_session ? value_of('pay_amount') || (value_of('buy_amount') ? null : def_val) : def_val}
+                if (field == 'buy_amount') {value = use_session ? value_of('buy_amount') || (value_of('pay_amount') ? null : def_val) : def_val}
+            }
 
-            set(field, value);
+            set(field, value, '#order_id');
 
         });
 
-        bind_currency_to_autonumeric();
+       bind_currency_to_autonumeric();
 
     };
+
+    set_default_location = function(excluded) {
+        console.log('Since user location could not be found: setting the default location');
+        set('location',         'London, UK');
+        set('location_short',   'London');
+        set('location_lat',     '51.5073509');
+        set('location_lng',     '-0.12775829999998223');
+        set('location_type',    'default');
+    };
+
+
+
+    search_exchanges = function() {
+        console.log('After location found, set to default, changed by user, or page was reloaded:');
+         if (!homepage()) {
+            console.log('Not homepage: submitting form');
+            $('#new_search').submit();
+        } else {
+            console.log('Homepage: not submitting form');
+        }
+    };
+
+
 
 
 $(document).ready(function() {
@@ -218,6 +229,7 @@ $(document).ready(function() {
 
     $('.getstarted_button').click(function(){
         if ($('#new_search').valid() && custom_validate($('#new_search'))) {
+            console.log('getstarted button clicked: submitting search form')
             $('#new_search').submit();
         } else {
             $('#homepage input[data-field=buy_amount]').focus()
@@ -282,7 +294,7 @@ $(document).ready(function() {
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
         console.log('#new_search ajax:success. Starting to updatePage...');
         updatePage(data);
-        setPage(current_url());
+//        setPage(current_url());
      });
 
     $('#new_search').on('ajax:error', function(event, xhr, status, error) {
@@ -294,18 +306,52 @@ $(document).ready(function() {
 
     // #new_order
 
-    $('#exchanges').on('ajax:before', '#new_order', (function(evt, xhr, settings) {
+/*
+    $('#exchanges').on('ajax:before', 'form.new_order', (function(evt, xhr, settings) {
         order_id = value_of('order_id');
         if (order_id) {
-            $('.confirmation_form form').attr('action', '/orders/' + order_id);
-            $('.confirmation_form #order_id').val(order_id);
+            $('#new_order').attr('action', '/orders/' + order_id);
+            $('#new_order #order_id').val(order_id);
           }
     }));
+*/
 
-    $('#exchanges').on('ajax:success', '#new_order', (function(evt, data, status, xhr) {
-         order = data;
-         model_populate('order', order);
+    $('#exchanges').on('ajax:success', 'form.new_order', (function(evt, data, status, xhr) {
+        console.log('#new_order ajax:success');
+        order = data;
+        if (xhr.status == 201) {
+            console.log('#new_order status is 201: populating order attributes');
+            $('form.new_order').attr('action', '/orders/' + order.id);
+            $('form.new_order').attr('method', 'put');
+            model_populate('order', order);
+        }
     }));
+
+
+    // Real-time exchange quotes
+
+    $('#exchange_search form input').on('keyup', function() {
+
+        var $this = $(this);
+        var exchange_id = value_of('exchange_id');  if (!exchange_id) return;
+        var url = '/exchanges/' + exchange_id + '/quote';
+        var field = $this.data('field');
+        var params = {
+            pay_amount:     $('#exchange_search #pay_amount').val(),
+            pay_currency:   $('#exchange_search #pay_currency').val(),
+            buy_amount:     $('#exchange_search #buy_amount').val(),
+            buy_currency:   $('#exchange_search #buy_currency').val(),
+            field:          field
+        };
+
+        $.getJSON(url, params, function(data, status) {
+            var result = data;
+            set('buy_amount', result.buy_amount, $this);
+            set('pay_amount', result.pay_amount, $this);
+            set('gain_amount', result.gain_amount)
+        })
+
+     });
 
 
 

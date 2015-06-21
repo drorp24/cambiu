@@ -1,0 +1,30 @@
+<div class="exchange_summary_banner well">
+  <div class="row">
+    <div class="col-md-2 col-xs-2">
+      <div class="left">
+        <div class="es_icon"><%= fa_icon 'map-marker' %></div>
+        <div class="es_distance" data-model="exchange" data-field="distance"></div>
+      </div>
+    </div>
+    <div class="<%= @mode == 'exchange' ? 'col-md-3' : 'col-md-10' %> col-xs-10">
+      <div class="right">
+        <div class="es_name" data-model="exchange" data-field="name"></div>
+        <div class="es_address" data-model="exchange" data-field="address"></div>
+        <div class="es_opening_hours" data-model="exchange" data-field="open_today"></div>
+      </div>
+    </div>
+
+    <% if @mode == 'exchange' %>
+        <div class="open_now desktop_only col-md-2">
+          Open now
+        </div>
+        <div class="exchange_phone  desktop_only col-md-3">
+          0208 886 4488
+        </div>
+        <div class="exchange_logo  desktop_only col-md-2">
+          <%= image_tag 'ice.png' %>
+        </div>
+    <% end %>
+
+  </div>
+</div>

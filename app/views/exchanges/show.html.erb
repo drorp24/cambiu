@@ -4,8 +4,7 @@
     <%= render 'exchanges/params/index' %>
     <div class="row" id="exchanges_content">
       <div id="exchanges" class="col-md-4 col-xs-12">
-        <%= render 'exchanges/list/index' %>
-        <%= render 'exchanges/summary/index' %>
+         <%= render 'exchanges/summary/index' %>
         <%= render 'exchanges/voucher/index' %>
       </div>
       <div id="map_container" class="col-md-8">
@@ -15,6 +14,14 @@
   </div>
 
 
+  <!--   Search form  for ajax calls-->
+  <div style="display: none;">
+    <%= render 'search_form' %>
+  </div>
+
+
+
 </div>
+
 
 <%= render 'exchanges/templates' %>

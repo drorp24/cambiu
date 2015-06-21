@@ -1,0 +1,69 @@
+# encoding: UTF-8
+
+
+<div class="row">
+  <form>
+
+
+  <div class="exchange_search_form_title col-md-6 col-xs-12 text-center">
+      Pay
+    </div>
+    <div class="exchange_search_form_title desktop_only col-md-6 text-center">
+      Get
+    </div>
+
+    <div class="form-group col-md-3 col-xs-6 reach-out-right">
+        <input data-single="false" type="text" pattern="\d*" id="pay_amount" data-model="exchange" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="pay_amount" class="form-control">
+    </div>
+    <div class="form-group col-md-3 col-xs-6 reach-out-left">
+      <select id="pay_currency" data-model="exchange" data-field="pay_currency" data-symboltarget="pay_amount" name="pay_currency" class="currency_select select optional text-center form-control"
+              data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="local" data-key3="currency">
+        <option selected disabled hidden value=''></option>
+        <option data-symbol="￡ " value="GBP">GBP</option>
+        <option data-symbol="€ " value="EUR">EUR</option>
+        <option data-symbol="$ " value="USD">USD</option>
+        <option data-symbol="$ " value="AUD">AUD</option>
+        <option data-symbol="$ " value="CAD">CAD</option>
+        <option data-symbol="￥ " value="JPY">JPY</option>
+      </select>
+    </div>
+
+    <div class="exchange_search_form_title mobile_only col-xs-12 text-center">
+      Get
+    </div>
+    <div class="form-group col-md-3 col-xs-6 reach-out-right">
+      <input  data-single="false" type="text" pattern="\d*" id="buy_amount" data-model="exchange" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control">
+     </div>
+    <div class="form-group col-md-3 col-xs-6 reach-out-left">
+      <select id="buy_currency" data-model="exchange" data-field="buy_currency" data-symboltarget="buy_amount" name="buy_currency" class="currency_select select optional text-center form-control"
+              data-analyze="change" data-activity="Search" data-key1="searched" data-val1="currency" data-key2="type" data-val2="foreign" data-key3="currency">
+        <option selected disabled hidden value=''></option>
+        <option data-symbol="$ "  value="USD">USD</option>
+        <option data-symbol="€ "  value="EUR">EUR</option>
+        <option data-symbol="￡ " value="GBP">GBP</option>
+        <option data-symbol="$ "  value="AUD">AUD</option>
+        <option data-symbol="$ "  value="CAD">CAD</option>
+        <option data-symbol="￥ " value="JPY">JPY</option>
+      </select>
+    </div>
+
+    <div class="exchange_search_form_title mobile_only col-xs-12 text-center">
+      By
+    </div>
+    <div class="delivery_method col-md-3 col-xs-6 reach-out-right">
+           <button type="button" class="btn btn-default">Collection</button>
+    </div>
+    <div class="delivery_method col-md-3 col-xs-6 reach-out-left">
+          <button type="button" class="btn btn-default">Delivery</button>
+    </div>
+
+    <div class="exchange_serach_form_gain col-md-3 col-xs-6">
+      Your gain:
+    </div>
+    <div class="exchange_serach_form_gain col-md-3 col-xs-6">
+      <span data-model="exchange" data-field="gain_amount"></span>
+    </div>
+
+
+    </form>
+</div>
