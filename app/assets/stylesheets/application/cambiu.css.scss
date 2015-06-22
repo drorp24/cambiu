@@ -1246,13 +1246,15 @@ body#cambiu {
     }
     #exchange_voucher {
       background-image: image_url('voucher_bg.png');
-      width: 90%;
-      margin-left: 4%;
+      width: 94%;
+      margin-left: 3%;
       margin-top: 10px;
+      /*
       filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12,Color='#444')";
       filter: url(#drop-shadow);
       -webkit-filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));
       filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));
+      */
       height: 90vh;
     i {
         margin-right: 5px;
@@ -1270,16 +1272,18 @@ body#cambiu {
         color: #333;
         .printer_icon {
           color: #888;
-          font-size: 2em;
+          font-size: 1.5em;
           margin-top: 0.2em;
+          position: relative;
+          right: 1em;
         }
       }
       .voucher_title {
         @media (min-width: $screen-sm-min) {
-          font-size: 1.4em;
+          font-size: 1.3em;
         }
         @media (max-width: $screen-xs-max) {
-          font-size: 1.1em;
+          font-size: 1em;
         }
          font-weight: 700;
         text-transform: uppercase;

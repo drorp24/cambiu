@@ -224,13 +224,11 @@ $(document).ready(function() {
             $('button[data-service-type=delivery]').removeClass('active');
             $('button[data-service-type=collection]').addClass('active');
             $('.fees').html('All fees are included');
-            $('.voucher_title .delivery_ind').html('');
-        } else
+         } else
         if (service_type == 'delivery') {
             $('button[data-service-type=collection]').removeClass('active');
             $('button[data-service-type=delivery]').addClass('active');
             $('.fees').html('Add &pound;20 for delivery');
-            $('.voucher_title .delivery_ind').html('Delivery');
         }
     };
     if (sessionStorage.service_type == 'collection') {
@@ -242,12 +240,12 @@ $(document).ready(function() {
 
     $('button[data-service-type=collection]').click(function() {
         service_type_ui('collection');
-        sessionStorage.service_type = 'collection';
+        set('service_type', 'collection');
     });
 
     $('button[data-service-type=delivery]').click(function() {
          service_type_ui('delivery');
-         sessionStorage.service_type = 'delivery';
+         set('service_type', 'delivery');
     });
 
 

@@ -10,13 +10,14 @@
     <% end %>
 
     <div class="hidden_fields">
-      <%= f.input_field :id, 	            as: :hidden, data: {model: 'order', field: 'id'} %>
+      <%= f.input_field :id, 	            as: :hidden, data: {model: 'order', field: 'order_id'} %>
       <%= f.input_field :exchange_id, 	    as: :hidden, data: {field: 'exchange_id'} %>
       <%= f.input_field :pay, 	            as: :hidden, data: {field: 'pay_amount'} %>
       <%= f.input_field :pay_currency, 	    as: :hidden, data: {field: 'pay_currency'} %>
       <%= f.input_field :buy, 	            as: :hidden, data: {field: 'buy_amount'} %>
       <%= f.input_field :buy_currency, 	    as: :hidden, data: {field: 'buy_currency'} %>
       <%= f.input_field :status, 	        as: :hidden, data: {field: 'status'}, value: status %>
+      <%= f.input_field :service_type, 	    as: :hidden, data: {field: 'service_type'} %>
     </div>
 
     <% if status == 'offer' %>
