@@ -23,19 +23,19 @@ class Search < ActiveRecord::Base
       cache_key += exchange_id.to_s if exchange_id
       Rails.logger.info("Using cache " + cache_key)
       Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
-        exchange_offers(id, location, center, box, pay, buy, sort)
+        exchange_offers(exchange_id, location, center, box, pay, buy, sort)
       end
     else
       Rails.logger.info("Not using cache")
-      exchange_offers(id, location, center, box, pay, buy, sort)
+      exchange_offers(exchange_id, location, center, box, pay, buy, sort)
     end
    
   end
     
-  def exchange_offers(id, location, center, box, pay, buy, sort)
+  def exchange_offers(exchange_id, location, center, box, pay, buy, sort)
   
       # TODO: Like open_today, try if possible to define 'applicable_rate' scope that yields *one* rate record according to from & to currencies
-      if exchange_id and @mode == 'exchange'
+      if exchange_id
         exchanges = Array(Exchange.find_by_id(exchange_id))
       elsif Rails.application.config.use_google_geocoding
         exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(:open_today, :rates)

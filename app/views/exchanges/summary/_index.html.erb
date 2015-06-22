@@ -1,11 +1,5 @@
 <div id="exchange_summary" class="pane <%= params[:controller] == 'exchanges' ? 'active' : '' %>" data-pane="summary" data-model="exchange" data-id='' style="display: <%= params[:controller] == 'exchanges' ? 'block' : 'none' %>">
 
-  <% if @mode == 'exchange' %>
-      <div class="well clearfix" id="exchange_search">
-        <%= render 'exchanges/summary/exchange_search_form' %>
-      </div>
-  <% end %>
-
   <div class="exchange_summary_bg">
     <div class="row">
       <div class="col-md-12 col-xs-12">
@@ -17,6 +11,12 @@
       </div>
     </div>
   </div>
+
+  <% if @mode == 'exchange' %>
+      <div class="well clearfix" id="exchange_search">
+        <%= render 'exchanges/summary/exchange_search_form' %>
+      </div>
+  <% end %>
 
   <% if @mode != 'exchange' %>
     <%= render 'exchanges/exchange_banner' %>
@@ -55,7 +55,7 @@
       </div>
   <% end %>
 
-  <div class="email_form">
+  <div class="email_form well">
     <div class="row">
         <div class="col-xs-12">
           <%= render partial: 'order_form', locals: {status: 'produced'} %>
