@@ -8,13 +8,18 @@
           </div>
         </div>
     <% end %>
-    <div class="<%= @mode == 'exchange' ? 'col-md-4' : 'col-md-10' %> col-xs-12">
+    <div class="<%= @mode == 'exchange' ? 'col-md-2' : 'col-md-10' %> col-xs-6">
       <div class="right">
         <div class="es_name" data-model="exchange" data-field="name"></div>
         <div class="es_address" data-model="exchange" data-field="address"></div>
         <div class="es_opening_hours" data-model="exchange" data-field="open_today"></div>
       </div>
     </div>
+    <% if @mode == 'exchange' %>
+        <div class="exchange_logo text-center col-md-2 col-xs-6">
+          <%= image_tag 'ice.png' %>
+        </div>
+    <% end %>
 
     <% if @mode == 'exchange' %>
         <div class="open_now desktop_only col-md-1 col-md-offset-3">

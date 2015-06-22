@@ -6,7 +6,7 @@
 // Variables
 $stam: red;
 $font-family: 'Lato', sans-serif;
-$navbar-height: 60px;
+$navbar-height: 80px;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
@@ -171,6 +171,9 @@ html, body {
 }
 body#cambiu {
 
+  border-style: inset;
+  border-color: #ccc;
+
   &.exchange {
       .es_icon, .es_distance {
         color: $cn-brand-color;
@@ -202,9 +205,16 @@ body#cambiu {
   .form-control {border-radius: $border-radius;}
   .validation_errors {
  //   visibility: hidden;
-    height: 2em;
-    line-height: 2em;
-    margin-bottom: 15px;
+      height: 5vh;
+    line-height: 5vh;
+    @media (min-width: $screen-sm-min) {
+      font-size: 2vh;
+    }
+    @media (max-width: $screen-xs-max) {
+      font-size: 2.5vh;
+    }
+
+     margin-bottom: 15px;
 
     @media (min-width: $screen-sm-min) {
       margin-top: -15px;
@@ -311,7 +321,15 @@ body#cambiu {
 
   .exchange_search_form_gain {
     color: #333;
-    font-size: 2.5vh;
+    @media (max-width: $screen-xs-max) {
+      font-size: 3.5vh;
+      position: relative;
+      top: 1em;
+    }
+    @media (min-width: $screen-sm-min) {
+      font-size: 2.5vh;
+    }
+
     text-transform: uppercase;
     line-height: 3.5vh;
     font-weight: 500;
@@ -398,9 +416,12 @@ body#cambiu {
 
   .navbar {
     background-color: #fff;
+    box-shadow: 0 0 5px #888;
     height: $navbar-height;
     border: none;
     margin-bottom: 0;
+    font-size: 2.7vh;
+    font-weight: 300;
     .navbar-brand {
       margin-top: -10px;
     }
@@ -437,13 +458,13 @@ body#cambiu {
     }
   }
   #cn_navbar_logo img {
-    height: 50px;
+    height: $navbar-height - 4px;
     width: auto;
   }
   .pseudo_nav_link {
     margin-left: 70px;
     position: relative;
-    top: 22px;
+    top: 28px;
   }
   .section_anchor {
     display: block;
@@ -766,8 +787,19 @@ body#cambiu {
   
   &.exchanges {
     input, select, button, .email_submit {
-      height: 6vh;
-      font-size: 2.5vh;
+
+      @media (max-width: $screen-xs-max) {
+        height: 8vh;
+        font-size: 3vh;
+      }
+      @media (min-width: $screen-sm-min) {
+        height: 6vh;
+        font-size: 2.5vh;
+      }
+   }
+    #order_email, #order_phone {
+      border-style: inset;
+      border-color: #ccc;
     }
 
     #location_search {
@@ -786,6 +818,7 @@ body#cambiu {
       #exchanges {
         z-index: 0;
         padding-left: 0;
+        padding-right: 0;
         @media (max-width: $screen-xs-max){
           padding-right: 0;
          }
@@ -999,7 +1032,8 @@ body#cambiu {
       border-left: none;
       border-right: none;
       border-bottom: 1px solid #fff;
-      border-top: 3px solid #000;
+      border-top: 3px solid #888;
+      margin-top: -3px;
       min-height: $parameters-height;
       .open_now {
         font-size: 1.5em;
@@ -1099,8 +1133,16 @@ body#cambiu {
       }
 
       .fees {
-        font-size: 1.8vh;
-        color: $darkgreen;
+        @media (max-width: $screen-xs-max) {
+          font-size: 2.5vh;
+          position: relative;
+          top: 2em;
+        }
+        @media (min-width: $screen-sm-min) {
+          font-size: 1.8vh;
+        }
+
+         color: $darkgreen;
         text-transform: none;
       }
 
@@ -1233,7 +1275,13 @@ body#cambiu {
             }
           }
           .email_submit {
-            height: 8vh;
+            @media (min-width: $screen-sm-min) {
+              height: 8vh;
+            }
+            @media (max-width: $screen-xs-max) {
+              height: 10vh;
+            }
+
             margin-top: -5px;
             &.search {
               background-color: $lightgreen;
@@ -1465,7 +1513,7 @@ body#cambiu {
 
      #map_container {
       position: fixed;
-      margin-left: 32.2%;
+      margin-left: 33.2%;
       width: 70%;
       padding-right: 0;
       padding-left: 0;
@@ -1474,10 +1522,10 @@ body#cambiu {
        }
     }
     &.search #map_container {
-      top: 170px;
+      top: $navbar-height + 110px;
     }
     &.exchange #map_container {
-      top: 60px;
+      top: $navbar-height;
     }
 
     /*
