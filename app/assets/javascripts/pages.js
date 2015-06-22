@@ -18,6 +18,7 @@ $(document).ready(function() {
 
 
     // TODO: Make it a loop
+    // TODO: Replace with model_populate
     function populate(el, exchange) {
 
         if (el.is('[data-id]'))                 el.attr('data-id', exchange.id);
@@ -28,7 +29,11 @@ $(document).ready(function() {
 
         if (el.data('field'))                   {
             var value = el.data('field') == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[el.data('field')];
-            el.html(value);
+            if ($this.is('input, select')) {
+                $this.val(value);
+            } else {
+                $this.html(value);
+            }
         }
 
         var voucher     = sessionStorage.order_voucher;
