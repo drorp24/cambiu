@@ -29,13 +29,10 @@ $(document).ready(function() {
 
         if (el.data('field'))                   {
             var value = el.data('field') == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[el.data('field')];
-            if ($this.is('input, select')) {
-                $this.val(value);
-            } else {
-                $this.html(value);
-            }
+            el.html(value);
         }
 
+/*
         var voucher     = sessionStorage.order_voucher;
         var expiry_s    = sessionStorage.order_expiry_s;
         if (voucher && expiry_s) {
@@ -45,6 +42,7 @@ $(document).ready(function() {
             // check if order form populated or populate it and submit it; the ajax:success will populate the order fields
             // required when user wants to access voucher directly, without clicking the Get it button
         }
+*/
 
     };
 
@@ -109,23 +107,6 @@ $(document).ready(function() {
         sessionStorage.id           = id    ? id    : value_of('id');
 
 
-        // find exchange
-        if (id) {
-
-            //??
-            $('[data-current-exchange]').attr('data-exchangeid', exchangeid);
-            $('[data-field=exchange_id]').val(exchangeid);
-
-            var exchange = findExchange(id);
-
-        } else {
-
-            //??
-            $('[data-current-exchange]').attr('data-exchangeid', '');
-            $('[data-field=exchange_id]').val('')
-
-        }
-
 
         // Order is important below this point
 
@@ -160,17 +141,22 @@ $(document).ready(function() {
             pane_el.show();
         }
 
+        // populate exchange data in exchange pages (spa only)
+        if (id && spa()) {
+            console.log('pages.js: spa mode and page contains id: populate exchange fields');
+            var exchange = findExchange(id);
 
-        // populate/empty exchange
-        $('.pane.active').each(function () {
-             $(this).find('[data-model=exchange]').each(function () {
-                if (exchange) {
-                    populate($(this), exchange)
-                } else {
-                    unpopulate($(this))
-                }
+            // TODO: Populate across the board, not only in active pane - store/check which exchange is currently populated
+            $('.pane.active').each(function () {
+                $(this).find('[data-model=exchange]').each(function () {
+                    if (exchange) {
+                        populate($(this), exchange)
+                    } else {
+                        unpopulate($(this))
+                    }
+                });
             });
-        });
+         }
 
         // don't push state if invoked from popstate or page reloads
         var new_state =  '/' + url;

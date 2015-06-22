@@ -67,6 +67,7 @@ var urlParameter;
 var urlParameters;
 var urlId;
 var isNumber;
+var spa;
 
 isNumber = function (obj) { return !isNaN(parseFloat(obj)) };
 
@@ -210,6 +211,9 @@ $(document).on('click','.navbar-collapse.in',function(e) {
         };
     };
 
+
+$(document).ready(function() {
+   $('body').addClass(media);
     production = function() {
         return $('body').hasClass('production');
     };
@@ -217,6 +221,4 @@ $(document).on('click','.navbar-collapse.in',function(e) {
         return $('body').hasClass('home');
     };
 
-$(document).ready(function() {
-   $('body').addClass(media)
 });

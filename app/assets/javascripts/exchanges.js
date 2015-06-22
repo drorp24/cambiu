@@ -33,9 +33,9 @@ $(document).ready(function() {
 
             if (exchanges.length > 1) {
                 // if url contains exchange_id then now is the time to update the page
-                var id = urlId();
-                if (id) {
-                    var exchange = findExchange(id);
+                var exchange_id = urlId();
+                if (exchange_id) {
+                    var exchange = findExchange(exchange_id);
                     if (exchange) model_populate('exchange', exchange);
                 }
                 updateExchanges(exchanges);
