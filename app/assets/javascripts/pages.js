@@ -148,21 +148,21 @@ $(document).ready(function() {
 
             // TODO: Populate across the board, not only in active pane - store/check which exchange is currently populated
             $('.pane.active').each(function () {
-                $(this).find('[data-model=exchange]').each(function () {
+                var $this = $(this);
+                $this.find('[data-model=exchange]').each(function () {
                     if (exchange) {
                         populate($(this), exchange)
                     } else {
                         unpopulate($(this))
                     }
                 });
+                // One extra update is required for exchange foreign keys which exist in other models
+                $this.find('[data-field=exchange_id]').val(exchange.id);
             });
          }
 
         // don't push state if invoked from popstate or page reloads
         var new_state =  '/' + url;
-        console.log('end of setPage: deciding whether to push state');
-        console.log('new_state: ' + new_state);
-        console.log('window.location.pathname: ' + window.location.pathname);
         if (window.location.pathname != new_state) {
             history.pushState(new_state, 'cambiu', new_state);
             console.log('pushing state: ' + new_state);

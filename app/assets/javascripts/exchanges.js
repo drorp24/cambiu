@@ -32,7 +32,7 @@ $(document).ready(function() {
         if (exchanges && exchanges.length > 0) {
 
             if (exchanges.length > 1) {
-                // if url contains exchange_id then now is the time to update the page
+                // spa mode after refresh requires populating exchange data here
                 var exchange_id = urlId();
                 if (exchange_id) {
                     var exchange = findExchange(exchange_id);
