@@ -1,7 +1,7 @@
 class ExchangesController < ApplicationController
 
   caches_action :index, expires_in: 2.hours, :race_condition_ttl => 20.seconds    # quicker first rendering (pick-up ready page from cache)
-  before_action :set_http_cache_headers, only: [:show]                           # quicker next rendering  (return 304 instead of page)
+ # before_action :set_http_cache_headers, only: [:show]                           # quicker next rendering  (return 304 instead of page)
 
   # Just return html; client will populate
   def show
