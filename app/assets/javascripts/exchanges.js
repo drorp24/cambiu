@@ -194,15 +194,17 @@ $(document).ready(function() {
 
     // TODO: Update markers within the map boundaries only!
     function updateMarkers(exchanges) {
-        
-        console.log('updateMarkers');
-
 
         if (mobile) {return;}
-        
+        console.log('updateMarkers');
+
         clearMarkers();
-        for (var i = 0; i < exchanges.length; i++) {
+        var length = exchanges.length;
+        for (var i = 0; i < length; i++) {
             addMarker(exchanges[i]);
+        }
+        if (length == 1) {
+             big_marker(exchanges[0].id)
         }
     }
 
