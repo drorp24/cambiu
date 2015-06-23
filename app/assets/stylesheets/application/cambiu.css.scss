@@ -1017,10 +1017,10 @@ body#cambiu {
         text-transform: uppercase;
         color: $cn-brand-color;
         @media (max-width: $screen-xs-max) {
-          font-size: 1.2em;
+          font-size: 2.5vh;
         }
         @media (min-width: $screen-sm-min) {
-          font-size: 1.8em;
+          font-size: 1.8vh;
         }
       }
     }
@@ -1073,10 +1073,10 @@ body#cambiu {
       }
       .es_name {
         @media (max-width: $screen-xs-max) {
-          font-size: 1.6em;
+          font-size: 2.5vh;
         }
         @media (min-width: $screen-sm-min) {
-          font-size: 1.5em;
+          font-size: 1.8vh;
         }
         font-weight: 700;
         margin-top: 12px;
@@ -1084,16 +1084,16 @@ body#cambiu {
       }
       .es_address {
         @media (max-width: $screen-xs-max) {
-          font-size: 1em;
+          font-size: 1.8vh;
         }
         @media (min-width: $screen-sm-min) {
-          font-size: 1.2em;
+          font-size: 1.8vh;
         }
         font-weight: 400;
         margin-top: 12px;
       }
       .es_opening_hours {
-        font-size: 1.2em;
+        font-size: 1.8vh;
         font-weight: 400;
         margin-bottom: 10px;
         margin-top: 5px;
@@ -1371,10 +1371,10 @@ body#cambiu {
           font-weight: 900;
           text-transform: uppercase;
           @media (min-width: $screen-sm-min) {
-            font-size: 1.3em;
+            font-size: 2.5vh;
           }
           @media (max-width: $screen-xs-max) {
-            font-size: 1.1em;
+            font-size: 1.8vh;
           }
           color: #333;
           font-weight: 500;
@@ -1382,10 +1382,10 @@ body#cambiu {
         }
         .es_address {
           @media (min-width: $screen-sm-min) {
-            font-size: 1.2em;
+            font-size: 1.8vh;
           }
           @media (max-width: $screen-xs-max) {
-            font-size: 1em;
+            font-size: 1.8vh;
           }
           font-weight: 400;
           color: #555;
