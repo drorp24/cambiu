@@ -110,7 +110,7 @@ $inverse-color: #ffffff;
 @mixin placeholder-general-def {
   text-align: left;
   text-indent: 10px;
-  color: #888;
+  color: #bbb;
   font-weight: 400;
   text-transform: initial;
   @media (max-width: $screen-xs-max) {

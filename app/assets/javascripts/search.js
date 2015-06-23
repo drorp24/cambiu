@@ -224,13 +224,15 @@ $(document).ready(function() {
             $('button[data-service-type=delivery]').removeClass('active');
             $('button[data-service-type=collection]').addClass('active');
             $('#order_phone').removeAttr('required');
-             $('.fees').html('All fees are included');
+            $('#order_phone').attr('placeholder', 'Leave phone if you need help');
+            $('.fees').html('All fees are included');
          } else
         if (service_type == 'delivery') {
             $('button[data-service-type=collection]').removeClass('active');
             $('button[data-service-type=delivery]').addClass('active');
             $('#order_phone').attr('required', 'true');
-             $('.fees').html('Add &pound;20 for delivery');
+            $('#order_phone').attr('placeholder', 'Leave phone to coordinate delivery');
+            $('.fees').html('Add &pound;20 for delivery');
         }
     };
     if (sessionStorage.service_type == 'collection') {
