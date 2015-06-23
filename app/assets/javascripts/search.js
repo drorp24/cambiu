@@ -231,7 +231,7 @@ $(document).ready(function() {
             $('button[data-service-type=collection]').removeClass('active');
             $('button[data-service-type=delivery]').addClass('active');
             $('#order_phone').attr('required', 'true');
-            $('#order_phone').attr('placeholder', 'Leave phone to coordinate delivery');
+            $('#order_phone').attr('placeholder', 'Leave phone for delivery');
             $('.fees').html('Add &pound;20 for delivery');
         }
     };
