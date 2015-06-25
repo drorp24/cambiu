@@ -40,6 +40,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:quote] = Monetize.parse(exchange_hash[:edited_quote]).amount
     exchange_hash[:gain_amount] =  pay.amount > 0 ? ((exchange_hash[:quote] * 0.127).to_money(buy.currency.iso_code)).format : ((exchange_hash[:quote] * 0.127).to_money(pay.currency.iso_code)).format
     exchange_hash[:gain_currency] = pay.amount > 0 ? buy.currency.iso_code : pay.currency.iso_code
+    exchange_hash[:logo] = self.logo ? ActionController::Base.helpers.image_path(self.logo) : ActionController::Base.helpers.image_path('ice.png')
 
     exchange_hash
 

@@ -6,7 +6,7 @@
 // Variables
 $stam: red;
 $font-family: 'Lato', sans-serif;
-$navbar-height: 80px;
+$navbar-height: 60px;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
@@ -423,7 +423,6 @@ body#cambiu {
     font-size: 2.7vh;
     font-weight: 300;
     .navbar-brand {
-      margin-top: -12px;
     }
   }
   .navbar-collapse {
@@ -457,14 +456,20 @@ body#cambiu {
       }
     }
   }
-  #cn_navbar_logo img {
-    height: $navbar-height - 4px;
-    width: auto;
+  #cn_navbar_logo {
+    img {
+      height: $navbar-height/2;
+      width: auto;
+      display: inline;
+    }
+    span {
+      font-size: 2vh;
+    }
   }
   .pseudo_nav_link {
     margin-left: 70px;
     position: relative;
-    top: 28px;
+    top: -30px;
   }
   .section_anchor {
     display: block;
@@ -1101,8 +1106,8 @@ body#cambiu {
     }
 
     .exchange_logo img{
-      margin-top: 20px;
-      width: 65%;
+      margin-top: 17px;
+      width: 90%;
     }
 
     #exchange_summary {

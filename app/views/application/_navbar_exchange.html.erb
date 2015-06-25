@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="row">
-      <div class="col-xs-12 col-md-1">
+      <div class="col-xs-12 col-md-4">
         <div class="navbar-header">
  <!--         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#cambiu_menu">
             <span class="sr-only">Toggle navigation</span>
@@ -10,12 +10,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
--->          <div data-clicked="page logo" class="page-title navbar-brand text-center" id="cn_navbar_logo"><%= image_tag 'cn_logo.jpg' %></div>
+-->          <div data-clicked="page logo" class="page-title navbar-brand text-center" id="cn_navbar_logo">
+                <span>Powered by</span>
+                <%= image_tag 'cn_logo.jpg' %></div>
+            </div>
         </div>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="navbar_background col-xs-12 col-md-4 col-md-offset-6">
+      <div class="navbar_background col-xs-12 col-md-4 col-md-offset-8">
         <div class="collapse navbar-collapse" id="cambiu_menu">
           <ul class="nav navbar-nav navbar-right">
             <span class="pseudo_nav_link">About us</span>

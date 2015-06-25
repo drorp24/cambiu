@@ -7,6 +7,11 @@
 
     model_set = function(model, field, value) {
 
+        if (field == 'logo') {
+            $('[data-field=logo]').attr('src', value)
+            return
+        }
+
         var field_no_model = field;
         if (field == 'id') field = model + '_id';
         var field_elements = $('[data-model=' + model + ']' + '[data-field=' + field + ']');
