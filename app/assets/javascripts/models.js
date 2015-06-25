@@ -8,7 +8,13 @@
     model_set = function(model, field, value) {
 
         if (field == 'logo') {
-            $('[data-field=logo]').attr('src', value)
+            if (value) {
+                $('[data-field=logo]').attr('src', value);
+                $('img#exchange_logo').css('display', 'block');
+            } else {
+                $('[data-field=logo]').attr('src', value);
+                $('img#exchange_logo').css('display', 'none');
+            }
             return
         }
 
