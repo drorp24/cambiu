@@ -1,6 +1,8 @@
 //= require active_admin/base
 //= require jquery
 //= require best_in_place
+//= require jquery-ui
+//= require best_in_place.jquery-ui
 //= require jquery.purr.js
 //= require best_in_place.purr
 $(document).ready(function() {
@@ -28,7 +30,7 @@ $(document).ready(function() {
       var $this = $(this);
       var message = xhr.responseText.substr(2,xhr.responseText.length -4 );
       $this.closest('td').effect('highlight');
-      $('.flashes').html(message );
+      $('.flashes').html('<div class=purr>' +  message +'</div>');
   });
 
     /*

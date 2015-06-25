@@ -141,7 +141,7 @@ ActiveAdmin.register Exchange do
         best_in_place rate, :service_type, as: :select, collection: {:"collection"=>"Collection", :"delivery"=>"Delivery"}
       end  
       column :currency           do |rate|
-        best_in_place rate, :currency, as: :select, collection: {:"EUR"=>"EUR", :"USD"=>"USD"}
+        best_in_place rate, :currency, as: :select, collection: Currency.select
       end 
       column :buy           do |rate|
         best_in_place rate, :buy, :as => :input
