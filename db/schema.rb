@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150624134455) do
+ActiveRecord::Schema.define(version: 20150625165128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 20150624134455) do
     t.string   "status"
     t.text     "message"
     t.string   "logo"
+    t.string   "currency"
   end
 
   add_index "exchanges", ["chain_id"], :name => "index_exchanges_on_chain_id"
@@ -140,22 +141,18 @@ ActiveRecord::Schema.define(version: 20150624134455) do
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
 
   create_table "rates", force: true do |t|
-    t.integer  "exchange_id"
-    t.integer  "buy_cents"
-    t.string   "buy_currency"
-    t.integer  "pay_cents"
-    t.string   "pay_currency"
     t.integer  "source"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "category"
-    t.integer  "up_to_cents"
-    t.string   "up_to_currency"
-    t.integer  "chain_id"
+    t.integer  "ratable_id"
+    t.string   "ratable_type"
+    t.integer  "service_type"
+    t.string   "currency"
+    t.float    "buy"
+    t.float    "sell"
   end
 
-  add_index "rates", ["chain_id"], :name => "index_rates_on_chain_id"
-  add_index "rates", ["exchange_id"], :name => "index_rates_on_exchange_id"
+  add_index "rates", ["ratable_id", "ratable_type"], :name => "index_rates_on_ratable_id_and_ratable_type"
 
   create_table "s_currencies", force: true do |t|
     t.integer  "source_id"

@@ -10,7 +10,7 @@ class Exchange < ActiveRecord::Base
   has_many    :business_hours
   has_one     :open_today, -> {where(day: Date.today.wday)}, class_name: "BusinessHour"
   accepts_nested_attributes_for :business_hours
-  has_many    :rates
+  has_many :rates, as: :ratable
   accepts_nested_attributes_for :rates
   belongs_to  :upload
   belongs_to  :admin_user

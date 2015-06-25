@@ -91,10 +91,10 @@ ActiveAdmin.register Exchange do
 
   sidebar "Rates", only: [:show, :edit] do
     table_for exchange.rates do |r|
-      r.column("For")    { |rate| status_tag rate.category }
-      r.column("Cur")    { |rate| rate.buy_currency }
-      r.column("Buy")     { |rate| humanized_money_with_symbol rate.buy}
-      r.column("Pay")    { |rate| humanized_money_with_symbol rate.pay }
+      r.column("For")    { |rate| status_tag rate.service_type }
+      r.column("Cur")    { |rate| rate.currency }
+      r.column("Buy")     { |rate|  rate.buy}
+      r.column("Sell")    { |rate|  rate.sell }
     end
     link_to "Update rates",    admin_exchange_rates_path(exchange)
   end
@@ -123,49 +123,49 @@ ActiveAdmin.register Exchange do
 
     belongs_to :exchange
 
-    permit_params :id, :exchange_id, :category, :up_to_cents, :up_to_currency, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :source
-  
-    scope :walkin
-    scope :pickup
+    permit_params :id, :ratable_id, :ratable_type, :service_type, :currency, :buy, :sell
+
+    before_filter :skip_sidebar!, :only => :index
+
+=begin
+    scope :collection
     scope :delivery
+=end
 
     index do
       id_column
       column :source        do |rate|
         best_in_place rate, :source, as: :select, collection: {:"phone"=>"Phone", :"api"=>"API", :"scraping"=>"Scraping"}
       end
-      column :category      do |rate|
-        best_in_place rate, :category, as: :select, collection: {:"walkin"=>"Walk-in", :"pickup"=>"Pickup", :"delivery"=>"Delivery"}
+      column :service_type     do |rate|
+        best_in_place rate, :service_type, as: :select, collection: {:"collection"=>"Collection", :"delivery"=>"Delivery"}
       end  
+      column :currency           do |rate|
+        best_in_place rate, :currency, as: :select, collection: {:"EUR"=>"EUR", :"USD"=>"USD"}
+      end 
       column :buy           do |rate|
         best_in_place rate, :buy, :as => :input
-      end 
-      column :buy_currency  do |rate|
-        best_in_place rate, :buy_currency, as: :select, collection: Currency.select
-      end 
-      column :pay           do |rate|
-        best_in_place rate, :pay, :as => :input
-      end 
-      column :pay_currency  do |rate|
-        best_in_place rate, :pay_currency, as: :select, collection: Currency.select
-      end 
+      end
+      column :sell           do |rate|
+        best_in_place rate, :sell, :as => :input
+      end
       actions defaults: false do |post|
         link_to "Add another rate", new_admin_exchange_rate_path(params[:exchange_id])
   end
     end
 
+=begin
     filter :buy_currency
     filter :pay_currency
+=end
 
     form do |f|
       f.inputs 'Rates' do
-        f.input :category
-        f.input :up_to_cents
-        f.input :up_to_currency
-        f.input :buy_cents
-        f.input :buy_currency
-        f.input :pay_cents
-        f.input :pay_currency
+        f.input :source
+        f.input :service_type
+        f.input :currency
+        f.input :buy
+        f.input :sell
       end
       f.actions
     end
@@ -173,12 +173,11 @@ ActiveAdmin.register Exchange do
     controller do
  
       def new
-        @rate = Rate.create_template(params[:exchange_id])
+        @rate = Rate.create!(ratable_type: 'Exchange', ratable_id: params[:exchange_id])
         notice = @rate.errors.any? ? @rate.errors.full_messages : nil
         redirect_to admin_exchange_rates_path(params[:exchange_id]), notice: notice
       end
-
-    end
+     end
 
   end
 end
