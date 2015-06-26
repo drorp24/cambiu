@@ -43,4 +43,6 @@ Rails.application.configure do
   config.fb_app_secret = '90ce76e38c01f6a7eae41c6f37a1bb9a' 
   
   config.use_google_geocoding = true
+
 end
+Rails.application.routes.default_url_options[:host] = 'localhost:3000'

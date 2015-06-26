@@ -79,6 +79,26 @@ class Exchange < ActiveRecord::Base
 
   end
 
+  def direct_link
+    Rails.application.routes.url_helpers.exchange_url(self.id)
+  end
+
+  def direct_link=(link)
+  end
+
+  # TODO: Maintain a true source
+  def tmp_source
+    if admin_user
+      @source = admin_user.email || 'Manual keying'
+    else
+      @source = 'Excell feed'
+    end
+    @source
+  end
+
+  def source=(email)
+  end
+
 =begin
   # TODO: Write anew
   def quote(pay, buy)

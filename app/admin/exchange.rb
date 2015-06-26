@@ -69,6 +69,7 @@ ActiveAdmin.register Exchange do
     actions
   end
   
+=begin
   show do
     attributes_table do
       row :name
@@ -80,7 +81,8 @@ ActiveAdmin.register Exchange do
     end
     active_admin_comments
   end
-  
+
+=end
   sidebar "Opening hours", only: [:show, :edit] do
     table_for exchange.business_hours.order("day") do |b|
       b.column("Day")    { |bh| status_tag (Date::DAYNAMES[bh.day]), (bh.open1.present? ? :ok : :error) }
@@ -91,8 +93,7 @@ ActiveAdmin.register Exchange do
 
   sidebar "Rates", only: [:show, :edit] do
     table_for exchange.rates do |r|
-      r.column("For")    { |rate| status_tag rate.service_type }
-      r.column("Cur")    { |rate| rate.currency }
+      r.column("Currency")    { |rate| status_tag rate.currency }
       r.column("Buy")     { |rate|  rate.buy}
       r.column("Sell")    { |rate|  rate.sell }
     end
@@ -100,30 +101,63 @@ ActiveAdmin.register Exchange do
   end
 
   form do |f|
+
     f.inputs 'Details' do
-      f.input :name
-      f.input :address
-      f.input :phone
-      f.input :website
-      f.inputs do
-      f.has_many :rates, new_record: 'Add' do |b|
-        b.input :buy_cents
-      end
+
+      f.semantic_errors *f.object.errors.keys
+      f.input     :created_at, as: :string, input_html: { :disabled => true }
+      f.input     :updated_at, as: :string, input_html: { :disabled => true }
+      f.input     :tmp_source, as: :string, label: "By", input_html: { :disabled => true }
+      f.input     :direct_link, input_html: { :disabled => true }, hint: 'Link to exchange used by search engines'
+      f.input     :name
+      f.input     :address
+      f.input     :logo, as: :file
+      f.input     :latitude
+      f.input     :longitude
+ #     f.input     :country, as: :country
+      f.input     :currency, as: :select, collection: Currency.select, label: "Local currency", value: "GBP"
+      f.input     :opens, hint: "Fill if opening time is the same across week"
+      f.input     :closes, hint: "Fill if closing time is the same across week"
+      f.input     :website, as: :url
+      f.input     :email, as: :email
+      f.input     :phone, as: :phone
+      f.input     :osm_id, input_html: { :disabled => true }
+      f.input     :atm
+      f.input     :business_type
+      f.input     :chain_id
+      f.input     :city
+      f.input     :region
+      f.input     :rating
+      f.input     :nearest_station
+      f.input     :airport
+      f.input     :directory
+      f.input     :accessible
+      f.input     :upload_id
+      f.input     :status
+      f.input     :note
     end
-    end
+
     f.actions
+
   end
-  
-  permit_params :id, :name, :address, :phone, :website, 
+
+  permit_params :id, :name, :address, :email, :phone, :website, :opens, :closes,:note, :atm, :source, :business_type, :chain_id, :city, :region, :rating, :nearest_station,
+                :airport, :directory, :accessible, :status, :logo, :currency
+=begin
     rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
     business_hours_attributes: [:id, :day, :open1, :close1, :open2, :close2]
+=end
 
   # rates page (nested reousrce)
   ActiveAdmin.register Rate do
 
     belongs_to :exchange
 
-    permit_params :id, :ratable_id, :ratable_type, :service_type, :currency, :buy, :sell
+    permit_params :id, :ratable_id, :ratable_type, :service_type, :currency, :buy, :sell, :admin_user
+
+    after_build do |rate|
+      rate.admin_user = current_admin_user
+    end
 
     before_filter :skip_sidebar!, :only => :index
 
@@ -149,6 +183,8 @@ ActiveAdmin.register Exchange do
       column :sell           do |rate|
         best_in_place rate, :sell, :as => :input
       end
+      column :updated_at
+      column :admin_user, label: "By"
       actions defaults: false do |post|
         link_to "Add another rate", new_admin_exchange_rate_path(params[:exchange_id])
   end
@@ -173,7 +209,7 @@ ActiveAdmin.register Exchange do
     controller do
  
       def new
-        @rate = Rate.create!(ratable_type: 'Exchange', ratable_id: params[:exchange_id])
+        @rate = Rate.create!(ratable_type: 'Exchange', ratable_id: params[:exchange_id], admin_user_id: current_admin_user.id)
         notice = @rate.errors.any? ? @rate.errors.full_messages : nil
         redirect_to admin_exchange_rates_path(params[:exchange_id]), notice: notice
       end

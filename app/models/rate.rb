@@ -1,5 +1,6 @@
 class Rate < ActiveRecord::Base
   belongs_to :ratable, polymorphic: true
+  belongs_to :admin_user
   enum service_type: [ :collection, :delivery ]
   enum source: [ :phone, :api, :scraping ]
   validates :sell, numericality: true, allow_nil: true
@@ -24,5 +25,6 @@ class Rate < ActiveRecord::Base
   def initialize_default_values
     self.service_type     ||= 0
     self.source           ||= 0
+#    self.admin_user = current_admin_user if current_admin_user
   end
 end

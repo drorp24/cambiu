@@ -99,3 +99,5 @@ Rails.application.configure do
 
   config.use_google_geocoding = true
 end
+Rails.application.routes.default_url_options[:host] = 'testing.cambiu.com'
+
