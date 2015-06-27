@@ -381,7 +381,7 @@ $(document).ready(function() {
 
         $.getJSON(url, params, function(data, status) {
             var result = data;
-            set('get_amount', result.get_amount, $this);
+            set('buy_amount', result.get_amount, $this);
             set('pay_amount', result.pay_amount, $this);
             set('gain_amount', result.gain_amount)
         }).done(function(data) {

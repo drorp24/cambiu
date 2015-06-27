@@ -21,8 +21,6 @@ class Exchange < ActiveRecord::Base
   # TODO: Currently returns error unless either of the currencies is local. Generalize.
   def quote(params)
 
-    logger.info("hi")
-
     errors = []
     pay_currency        =   params[:pay_currency]
     get_currency        =   params[:get_currency]
@@ -59,13 +57,11 @@ class Exchange < ActiveRecord::Base
       get_amount          =   Monetize.parse(params[:get_amount]).amount
       field               =   params[:field]
 
-      calculate           = field == 'pay_amount' or field == 'pay_currency'  ? 'get'  : 'pay'
+      calculate           = (field == 'pay_amount' or field == 'pay_currency')  ? 'get'  : 'pay'
       transaction         = pay_currency == local_currency                    ? 'sell' : 'buy'
 
       if    calculate == 'get' and transaction == 'sell'
         get_amount  =   pay_amount * rate.sell
-        puts "just changed get_amount"
-        puts "its new value is: " + get_amount.to_s
       elsif calculate == 'get' and transaction == 'buy'
         get_amount  =   pay_amount / rate.buy
       elsif calculate == 'pay' and transaction == 'sell'
