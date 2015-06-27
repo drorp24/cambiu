@@ -5,7 +5,16 @@ class Rate < ActiveRecord::Base
   enum source: [ :phone, :api, :scraping ]
   validates :sell, numericality: true, allow_nil: true
   validates :buy, numericality: true, allow_nil: true
-  before_create :initialize_default_values
+  validates :currency, uniqueness: { scope: :ratable_id,
+                                 message: "has already been defined" }
+  validate :currency_is_not_local
+#  before_create :initialize_default_values
+
+  def currency_is_not_local
+    if currency == ratable.currency
+      errors.add(:currency, "can't be the exchange's local currency")
+    end
+  end
 
 =begin
   def self.refresh(chain_id, buy_currency, buy_cents, pay_currency, pay_cents)
@@ -22,9 +31,11 @@ class Rate < ActiveRecord::Base
 
   protected
 
+=begin
   def initialize_default_values
     self.service_type     ||= 0
     self.source           ||= 0
 #    self.admin_user = current_admin_user if current_admin_user
   end
+=end
 end

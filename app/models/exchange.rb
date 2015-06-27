@@ -18,6 +18,9 @@ class Exchange < ActiveRecord::Base
   
   geocoded_by :address
 
+  def admin_user
+    AdminUser.find_by_id(admin_user_id).email if admin_user_id
+  end
 
   def offer(center, pay, buy)
 
@@ -80,7 +83,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def direct_link
-    Rails.application.routes.url_helpers.exchange_url(self.id)
+    Rails.application.routes.url_helpers.exchange_url(self.id) if self.id
   end
 
   def direct_link=(link)
@@ -96,7 +99,7 @@ class Exchange < ActiveRecord::Base
     @source
   end
 
-  def source=(email)
+  def tmp_source=(email)
   end
 
 =begin
@@ -336,6 +339,8 @@ class Exchange < ActiveRecord::Base
       end 
     end
   end
-   
+
+  protected
+
 
 end

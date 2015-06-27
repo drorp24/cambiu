@@ -28,13 +28,15 @@ $(document).ready(function() {
   });
   jQuery('.best_in_place').on("ajax:error", function (event, xhr, status, error) {
       var $this = $(this);
-      var message = xhr.responseText.substr(2,xhr.responseText.length -4 );
+      var response = $.parseJSON(xhr.responseText);
+      var message = "";
+      $.each(response, function(index, value) {
+          message += value + '  ';
+      });
       $this.closest('td').effect('highlight');
       $('.flashes').html('<div class=purr>' +  message +'</div>');
   });
-
-    /*
-      $(document).on('best_in_place:error', function(event, request, error) {
+ /*     $(document).on('best_in_place:error', function(event, request, error) {
         // Display all error messages from server side validation
         response = $.parseJSON(request.responseText);
         $.each(response['errors'], function(index, value) {
@@ -45,8 +47,7 @@ $(document).ready(function() {
           }
         });
       });
-    */
-
+*/
 
 
 });

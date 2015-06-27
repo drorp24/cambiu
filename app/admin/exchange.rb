@@ -1,5 +1,12 @@
 ActiveAdmin.register Exchange do
-  
+
+  permit_params :id, :name, :address, :email, :phone, :website, :opens, :closes,:note, :atm, :source, :business_type, :chain_id, :city, :region, :rating, :nearest_station,
+                :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id
+=begin
+    rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
+    business_hours_attributes: [:id, :day, :open1, :close1, :open2, :close2]
+=end
+
   includes :chain
 
   # csv import
@@ -100,14 +107,26 @@ ActiveAdmin.register Exchange do
     link_to "Update rates",    admin_exchange_rates_path(exchange)
   end
 
-  form do |f|
+  controller do
+
+    def new
+      @exchange = Exchange.new(admin_user_id: current_admin_user.id, currency: "GBP")
+    end
+
+  end
+
+
+
+
+form do |f|
 
     f.inputs 'Details' do
 
       f.semantic_errors *f.object.errors.keys
       f.input     :created_at, as: :string, input_html: { :disabled => true }
       f.input     :updated_at, as: :string, input_html: { :disabled => true }
-      f.input     :tmp_source, as: :string, label: "By", input_html: { :disabled => true }
+      f.input     :admin_user, as: :string, label: "By", input_html: { :disabled => true }
+      f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
       f.input     :direct_link, input_html: { :disabled => true }, hint: 'Link to exchange used by search engines'
       f.input     :name
       f.input     :address
@@ -141,12 +160,6 @@ ActiveAdmin.register Exchange do
 
   end
 
-  permit_params :id, :name, :address, :email, :phone, :website, :opens, :closes,:note, :atm, :source, :business_type, :chain_id, :city, :region, :rating, :nearest_station,
-                :airport, :directory, :accessible, :status, :logo, :currency
-=begin
-    rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
-    business_hours_attributes: [:id, :day, :open1, :close1, :open2, :close2]
-=end
 
   # rates page (nested reousrce)
   ActiveAdmin.register Rate do
@@ -184,7 +197,7 @@ ActiveAdmin.register Exchange do
         best_in_place rate, :sell, :as => :input
       end
       column :updated_at
-      column :admin_user, label: "By"
+      column "By", :admin_user
       actions defaults: false do |post|
         link_to "Add another rate", new_admin_exchange_rate_path(params[:exchange_id])
   end
