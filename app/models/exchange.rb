@@ -18,6 +18,77 @@ class Exchange < ActiveRecord::Base
   
   geocoded_by :address
 
+  # TODO: Currently returns error unless either of the currencies is local. Generalize.
+  def quote(params)
+
+    logger.info("hi")
+
+    errors = []
+    pay_currency        =   params[:pay_currency]
+    get_currency        =   params[:get_currency]
+
+    if currency.nil?
+      errors           <<   'No local currency defined for that exchange'
+    elsif pay_currency == currency and get_currency != pay_currency
+      local_currency    =   pay_currency
+      foreign_currency  =   get_currency
+    elsif get_currency == currency and get_currency != pay_currency
+      local_currency    =   get_currency
+      foreign_currency  =   pay_currency
+    else
+      errors           <<  'Either of the currencies must be local (and only one)'
+    end
+
+    unless errors.any?
+      rate = rates.where(currency: foreign_currency).first
+      if rate
+        unless rate.buy
+          errors         <<   foreign_currency + ' buy rate is missing'
+        end
+        unless rate.sell
+          errors         <<   foreign_currency + ' sell rate is missing'
+        end
+      else
+        errors           <<  'No rate defined for ' + foreign_currency
+      end
+    end
+
+    unless errors.any?
+
+      pay_amount          =   Monetize.parse(params[:pay_amount]).amount
+      get_amount          =   Monetize.parse(params[:get_amount]).amount
+      field               =   params[:field]
+
+      calculate           = field == 'pay_amount' or field == 'pay_currency'  ? 'get'  : 'pay'
+      transaction         = pay_currency == local_currency                    ? 'sell' : 'buy'
+
+      if    calculate == 'get' and transaction == 'sell'
+        get_amount  =   pay_amount * rate.sell
+        puts "just changed get_amount"
+        puts "its new value is: " + get_amount.to_s
+      elsif calculate == 'get' and transaction == 'buy'
+        get_amount  =   pay_amount / rate.buy
+      elsif calculate == 'pay' and transaction == 'sell'
+        pay_amount  =   get_amount / rate.sell
+      elsif calculate == 'pay' and transaction == 'buy'
+        pay_amount  =   get_amount / rate.buy
+      end
+
+    end
+
+    puts "get_amount is...: " + get_amount.to_s
+
+    result = {
+        pay_amount:   pay_amount,
+        pay_currency: pay_currency,
+        get_amount:   get_amount,
+        get_currency: get_currency,
+        errors: errors
+    }
+    result
+
+  end
+
   def admin_user
     AdminUser.find_by_id(admin_user_id).email if admin_user_id
   end
@@ -50,6 +121,7 @@ class Exchange < ActiveRecord::Base
 
   end
 
+=begin
   def quote(rate, params, sessionKey)
 
     pay_amount = Monetize.parse(params[:pay_amount]).amount
@@ -81,6 +153,7 @@ class Exchange < ActiveRecord::Base
     result
 
   end
+=end
 
   def direct_link
     Rails.application.routes.url_helpers.exchange_url(self.id) if self.id

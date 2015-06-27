@@ -365,6 +365,40 @@ $(document).ready(function() {
 
     // Real-time exchange quotes
 
+    $('#exchange_search form input, #exchange_search form select').on('keyup click', function() {
+
+        var $this = $(this);
+        var exchange_id = value_of('exchange_id');  if (!exchange_id) return;
+        var url = '/exchanges/' + exchange_id + '/quote';
+        var field = $this.data('field');
+        var params = {
+            pay_amount:     $('#exchange_search #pay_amount').val(),
+            pay_currency:   $('#exchange_search #pay_currency').val(),
+            get_amount:     $('#exchange_search #buy_amount').val(),
+            get_currency:   $('#exchange_search #buy_currency').val(),
+            field:          field
+        };
+
+        $.getJSON(url, params, function(data, status) {
+            var result = data;
+            set('get_amount', result.get_amount, $this);
+            set('pay_amount', result.pay_amount, $this);
+            set('gain_amount', result.gain_amount)
+        }).done(function(data) {
+            var errors = data.errors;
+            if (errors.length > 0) {
+                var text = '';
+                for (var i = 0; i < errors.length; i++) {
+                    text += '<p class=error_class>' + errors[i] + '</p>'
+                }
+                $('.exchange_search_form_error').html(text);
+            } else {
+                $('.exchange_search_form_error').empty();
+            }
+        })
+    });
+
+/*
     $('#exchange_search form input').on('keyup', function() {
 
         var $this = $(this);
@@ -387,6 +421,7 @@ $(document).ready(function() {
         })
 
      });
+*/
 
 
 
