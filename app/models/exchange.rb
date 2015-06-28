@@ -35,6 +35,12 @@ class Exchange < ActiveRecord::Base
         errors:           []
     }
 
+    unless rates.any?
+      return ficticious_result(result)
+    else
+      result[:real] = true
+    end
+
     if currency.nil?
       result[:errors]           <<   'No local currency defined for that exchange'
       return result
@@ -50,8 +56,9 @@ class Exchange < ActiveRecord::Base
         result[:errors]           <<   rates[:error]
         return result
       end
-      result[:get_amount]     =   pay_amount * rates[transaction.to_sym]
-      result[:gain_amount]    =   Monetize.parse(result[:get_amount] * 0.13, get_currency).format
+      get_amount              =   pay_amount * rates[transaction.to_sym]
+      result[:get_amount]     =   get_amount.to_money(get_currency).format
+      result[:gain_amount]    =   (get_amount * 0.13).to_money(get_currency).format
       result[:gain_currency]  =   get_currency
     else
       rates = result[:rates] = rate(pay_currency, get_currency)
@@ -59,8 +66,9 @@ class Exchange < ActiveRecord::Base
         result[:errors]           <<   rates[:error]
         return result
       end
-      result[:pay_amount]     =   get_amount * rates[transaction.to_sym]
-      result[:gain_amount]    =   Monetize.parse(result[:pay_amount] * 0.13, pay_currency).format
+      pay_amount              =   get_amount * rates[transaction.to_sym]
+      result[:pay_amount]     =   pay_amount.to_money(pay_currency).format
+      result[:gain_amount]    =   (pay_amount * 0.13).to_money(pay_currency).format
       result[:gain_currency]  =   pay_currency
     end
 
@@ -133,7 +141,25 @@ class Exchange < ActiveRecord::Base
   end
 
 
-
+  def ficticious_result(result)
+    pay_amount = result[:pay_amount]
+    result[:pay_amount] = result[:pay_amount] > 0 ? (result[:pay_amount].to_money(result[:pay_currency])).format : (Bank.exchange(result[:get_amount], result[:get_currency], result[:pay_currency]) * rand(1.03..1.37)).format
+    result[:get_amount] = result[:get_amount] > 0 ? (result[:get_amount].to_money(result[:get_currency])).format : (Bank.exchange(result[:pay_amount], result[:pay_currency], result[:get_currency]) * rand(1.03..1.37)).format
+    result[:edited_quote] = pay_amount > 0 ? (result[:get_amount].to_money(result[:get_currency])).format : (result[:pay_amount].to_money(result[:pay_currency])).format
+    result[:quote] = Monetize.parse(result[:edited_quote]).amount
+    result[:gain_amount] =  pay_amount > 0 ? ((result[:quote] * 0.127).to_money(result[:get_currency])).format : ((result[:quote] * 0.127).to_money(result[:pay_currency])).format
+    result[:gain_currency] = pay_amount > 0 ? result[:get_currency] : result[:pay_currency]
+    result[:real] = false
+    puts ""
+    puts ""
+    puts "ficiticious result:"
+    puts ""
+    puts result.inspect
+    puts ""
+    puts ""
+    puts ""
+    return result
+  end
 
   def admin_user
     AdminUser.find_by_id(admin_user_id).email if admin_user_id
@@ -152,6 +178,19 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:latitude] = self.latitude
     exchange_hash[:longitude] = self.longitude
     exchange_hash[:distance] = Rails.application.config.use_google_geocoding ?  self.distance_from(center) : rand(27..2789)
+
+    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount')
+    exchange_hash[:pay_amount] = quotes[:pay_amount]
+    exchange_hash[:pay_currency] = quotes[:pay_currency]
+    exchange_hash[:buy_amount] = quotes[:get_amount]
+    exchange_hash[:buy_currency] = quotes[:get_currency]
+    exchange_hash[:gain_amount] = quotes[:gain_amount]
+    exchange_hash[:gain_currency] = quotes[:gain_currency]
+    exchange_hash[:quote] = quotes[:quote]
+    exchange_hash[:edited_quote] = quotes[:edited_quote]
+
+
+=begin
     exchange_hash[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(1.03..1.37)).format
     exchange_hash[:pay_currency] = pay.currency.iso_code
     exchange_hash[:buy_amount] = buy.amount > 0 ? buy.format : (Bank.exchange(pay.amount, pay.currency.iso_code, buy.currency.iso_code) * rand(1.03..1.37)).format
@@ -160,6 +199,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:quote] = Monetize.parse(exchange_hash[:edited_quote]).amount
     exchange_hash[:gain_amount] =  pay.amount > 0 ? ((exchange_hash[:quote] * 0.127).to_money(buy.currency.iso_code)).format : ((exchange_hash[:quote] * 0.127).to_money(pay.currency.iso_code)).format
     exchange_hash[:gain_currency] = pay.amount > 0 ? buy.currency.iso_code : pay.currency.iso_code
+=end
     exchange_hash[:logo] = self.logo ? ActionController::Base.helpers.image_path(self.logo) : nil
     exchange_hash[:logo_ind] = self.logo
 
