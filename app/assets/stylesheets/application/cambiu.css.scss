@@ -275,6 +275,7 @@ body#cambiu {
       }
       @media (min-width: $screen-sm-min) {
         height: $parameters-height;
+        margin-top: -3px;
       }
     }
   }
@@ -291,7 +292,7 @@ body#cambiu {
     }
 
     .parameters {
-      min-height: $parameters-height;
+      display: none;
     }
   }
 
@@ -1016,7 +1017,7 @@ body#cambiu {
 //      margin-right: -15px;
     }
 
-    .parameters > .exchange_summary_banner {
+    .params > .exchange_summary_banner {
       .es_name {
         font-weight: 400;
         text-transform: uppercase;
@@ -1039,6 +1040,7 @@ body#cambiu {
       border-bottom: 1px solid #fff;
       border-top: 3px solid #888;
       margin-top: -3px;
+      margin-bottom: 0;
       min-height: $parameters-height;
       .open_now {
         font-size: 1.5em;
@@ -1107,7 +1109,8 @@ body#cambiu {
 
     .exchange_logo img{
       margin-top: 17px;
-      width: 90%;
+      width: auto;
+      height: 6vh;
     }
 
     #exchange_summary {

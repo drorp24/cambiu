@@ -1,3 +1,5 @@
+<div class="params">
+
 <div class="exchange_summary_banner well">
   <div class="row">
     <% if @mode != 'exchange' %>
@@ -8,30 +10,19 @@
           </div>
         </div>
     <% end %>
-    <div class="<%= @mode == 'exchange' ? 'col-md-2' : 'col-md-10' %> col-xs-6">
+    <div class="col-md-5 col-xs-6">
       <div class="right">
         <div class="es_name" data-model="exchange" data-field="name"></div>
         <div class="es_address" data-model="exchange" data-field="address"></div>
         <div class="es_opening_hours" data-model="exchange" data-field="open_today"></div>
       </div>
     </div>
-    <% if @mode == 'exchange' %>
-        <div class="exchange_logo text-center col-md-2 col-xs-6">
-          <%= image_tag 'ice.png', id: 'exchange_logo', data: {model: 'exchange', field: 'logo'}, style: 'display: none' %>
-        </div>
-    <% end %>
-
-    <% if @mode == 'exchange' %>
-        <div class="open_now desktop_only col-md-1 col-md-offset-3">
-          Open
-        </div>
-        <div class="exchange_phone  desktop_only col-md-2">
-          0208 886 4488
-        </div>
-        <div class="exchange_logo  desktop_only col-md-2">
-          <%= image_tag 'ice.png' %>
-        </div>
-    <% end %>
+    <div class="exchange_logo text-center col-md-5 col-xs-6">
+      <%= image_tag 'ice.png', id: 'exchange_logo', data: {model: 'exchange', field: 'logo'}, style: 'display: none' %>
+    </div>
 
   </div>
+</div>
+
+
 </div>
