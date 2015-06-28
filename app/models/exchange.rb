@@ -27,10 +27,10 @@ class Exchange < ActiveRecord::Base
         get_amount:       get_amount    = Monetize.parse(params[:get_amount]).amount,
         get_currency:     get_currency  = params[:get_currency],
         field:            field         = params[:field],
+        transaction:      transaction   = get_currency != currency ? 'sell' : 'buy',
+        rates:            {},
         gain_amount:      gain_amount   = 0,
         gain_currency:    gain_currency = "ABC",
-        pay_local:        nil,
-        foreign_rate:     nil,
         real:             real          = nil,
         errors:           []
     }
@@ -44,111 +44,75 @@ class Exchange < ActiveRecord::Base
       return result
     end
 
-    if    pay_currency == currency
-      foreign_currency  = get_currency
-      transaction = 'sell'
-      pay_local = pay_amount
-    elsif get_currency == currency
-      foreign_currency  = pay_currency
-      transaction = 'buy'
-      pay_local = pay_amount
-    else
-      pay_rates = rate(pay_currency)
-      if pay_rates[:error]
-        result[:errors]           <<   pay_rates[:error]
+    if field == 'pay_amount' or field == 'pay_currency'
+      rates = result[:rates] = rate(get_currency, pay_currency)
+      if rates[:error]
+        result[:errors]           <<   rates[:error]
         return result
-      else
-        pay_local = pay_amount / pay_rates[:buy]
       end
+      result[:get_amount]     =   pay_amount * rates[transaction.to_sym]
+      result[:gain_amount]    =   Monetize.parse(result[:get_amount] * 0.13, get_currency).format
+      result[:gain_currency]  =   get_currency
+    else
+      rates = result[:rates] = rate(pay_currency, get_currency)
+      if rates[:error]
+        result[:errors]           <<   rates[:error]
+        return result
+      end
+      result[:pay_amount]     =   get_amount * rates[transaction.to_sym]
+      result[:gain_amount]    =   Monetize.parse(result[:pay_amount] * 0.13, pay_currency).format
+      result[:gain_currency]  =   pay_currency
     end
 
-    foreign_rate      = rate(foreign_currency)
-    if foreign_rate[:error]
-      result[:errors]           <<   foreign_rate[:error]
-      return result
-    end
-
-
-
-
-    calculate = (field == 'pay_amount' or field == 'pay_currency') ? 'get' : 'pay'
-    transaction = get_currency == foreign_currency ? 'sell' : 'buy'
-
-    if calculate == 'get' and transaction == 'sell'
-      get_amount = pay_local * foreign_rate[:sell]
-    elsif calculate == 'get' and transaction == 'buy'
-      get_amount = pay_local / foreign_rate[:buy]
-    elsif calculate == 'pay' and transaction == 'sell'
-      pay_amount = get_amount / foreign_rate[:sell]
-    elsif calculate == 'pay' and transaction == 'buy'
-      pay_amount = get_amount * foreign_rate[:buy]
-    end
-
-    result = {
-        pay_amount:       pay_amount,
-        pay_currency:     pay_currency,
-        get_amount:       get_amount,
-        get_currency:     get_currency,
-        field:            field,
-        gain_amount:      gain_amount,
-        gain_currency:    gain_currency,
-        pay_local:        pay_local,
-        foreign_rate:     foreign_rate,
-        real:             real,
-        errors: errors
-    }
     return result
 
   end
 
-  # returns effective rates relative to local currency
-  def rate(to_currency, from_currency = self.currency)
+  # TODO: Important: This is where the cross-rates will take effect. 'quote' method would not be affected
+  def rate(rated_currency, base_currency)
 
     result = {
-        foreign_currency: foreign_currency,
-        local_currency: local_currency,
+        rated_currency: rated_currency,
+        base_currency: base_currency,
         buy: nil,
         sell: nil,
         error: nil
     }
 
-    if from_currency == to_currency
-      from_buy  = 1
-      from_sell = 1
-    else
-      from_rec = find_rates(from_currency)
-      if from_rec[:error]
-        result[:error] = 'No rates defined for ' + currency
-        return result
-      else
-        from_buy = from_rec[:buy]
-        from_sell = from_rec[:sell]
-      end
-    end
-
-    to_rec = find_rates(to_currency)
-    if to_rec[:error]
-      result[:error] = 'No rates defined for ' + currency
+    rated_rates = find_rates(rated_currency)
+    if rated_rates[:error]
+      result[:error] = rated_rates[:error]
       return result
-    else
-      to_buy = to_rec[:buy]
-      to_sell = to_rec[:sell]
     end
 
-    result[:buy] = from_buy * to_buy
-    result[:sell] = to_buy * to_sell
+    base_rates = find_rates(base_currency)
+    if base_rates[:error]
+      result[:error] = base_rates[:error]
+      return result
+    end
+
+    result[:buy]  = rated_rates[:buy]   /   base_rates[:buy]
+    result[:sell] = rated_rates[:sell]  /   base_rates[:sell]
 
     return result
 
   end
 
   def find_rates(currency)
+
     result = {
         buy: nil,
         sell: nil,
         error: nil
     }
+    if currency == self.currency
+      result[:buy]  = 1
+      result[:sell] = 1
+      return result
+    end
+
     rec = rates.where(currency: currency).first
+
     if rec
       ['buy', 'sell'].each do |kind|
         value = rec.send(kind)
@@ -163,6 +127,9 @@ class Exchange < ActiveRecord::Base
       result[:error] = 'No rates defined for ' + currency
       return result
     end
+
+    return result
+
   end
 
 
