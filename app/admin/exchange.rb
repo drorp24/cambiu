@@ -60,6 +60,7 @@ ActiveAdmin.register Exchange do
     link_to 'Scraping', scraping_admin_exchanges_path, method: :post
   end
 
+  filter :rates_source, as: :select, collection: [['Fictitious', 'fictitious'], ['Manual', 'manual'], ['Exchange', 'exchange_input'], ['Scraping', 'scraping']]
   filter :chain
   filter :name
   filter :address
@@ -127,16 +128,17 @@ form do |f|
       f.input     :updated_at, as: :string, input_html: { :disabled => true }
       f.input     :admin_user, as: :string, label: "By", input_html: { :disabled => true }
       f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
-      f.input     :direct_link, input_html: { :disabled => true }, hint: 'Link to exchange used by search engines'
+      f.input     :direct_link, input_html: { :disabled => true }, hint: '  Direct link for search engines and ads'
       f.input     :name
       f.input     :address
       f.input     :logo, as: :file
+      f.input     :rates_source, input_html: { :disabled => true }
       f.input     :latitude
       f.input     :longitude
  #     f.input     :country, as: :country
       f.input     :currency, as: :select, collection: Currency.select, label: "Local currency", value: "GBP"
-      f.input     :opens, hint: "Fill if opening time is the same across week"
-      f.input     :closes, hint: "Fill if closing time is the same across week"
+      f.input     :opens, hint: "Fill if opening hours are the same all over the week"
+      f.input     :closes, hint: "Fill if closing hours are the same all over the week"
       f.input     :website, as: :url
       f.input     :email, as: :email
       f.input     :phone, as: :phone
@@ -164,15 +166,25 @@ form do |f|
   # rates page (nested reousrce)
   ActiveAdmin.register Rate do
 
-    belongs_to :exchange
+ #   belongs_to :exchange, class_name: 'Exchange', foreign_key: 'ratable_id'
 
-    permit_params :id, :ratable_id, :ratable_type, :service_type, :currency, :buy, :sell, :admin_user
+    permit_params :id, :ratable_id, :ratable_type, :service_type, :currency, :buy, :sell, :admin_user, :rates_source
 
+=begin
     after_build do |rate|
       rate.admin_user = current_admin_user
     end
+=end
+
+    config.batch_actions = true
 
     before_filter :skip_sidebar!, :only => :index
+
+    config.clear_action_items!
+
+    action_item :add_rate, only: :index do
+      link_to 'Add Rate', new_admin_exchange_rate_path(params[:exchange_id])
+    end
 
 =begin
     scope :collection
@@ -180,6 +192,7 @@ form do |f|
 =end
 
     index do
+      selectable_column
       id_column
       column :source        do |rate|
         best_in_place rate, :source, as: :select, collection: {:"phone"=>"Phone", :"api"=>"API", :"scraping"=>"Scraping"}
@@ -223,9 +236,18 @@ form do |f|
  
       def new
         @rate = Rate.create!(ratable_type: 'Exchange', ratable_id: params[:exchange_id], admin_user_id: current_admin_user.id, source: 0, service_type: 0)
+        @rate.ratable.update(rates_source: 'manual')
         notice = @rate.errors.any? ? @rate.errors.full_messages : nil
         redirect_to admin_exchange_rates_path(params[:exchange_id]), notice: notice
       end
+
+      def batch_action
+        rate_id = params[:collection_selection][0]
+        puts rate_id
+        exchange_id = Rate.find_by_id(rate_id).ratable_id
+        redirect_to admin_exchange_rates_path(exchange_id), notice: 'Over and done with!'
+      end
+
      end
 
   end

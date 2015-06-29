@@ -15,7 +15,8 @@ class Exchange < ActiveRecord::Base
   belongs_to  :upload
   belongs_to  :admin_user
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
-  
+  enum rates_source: [ :fictitious, :manual, :exchange_input, :scraping ]
+
   geocoded_by :address
 
   # TODO: Currently returns error unless either of the currencies is local. Generalize.
