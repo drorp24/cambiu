@@ -169,7 +169,7 @@ form do |f|
   # rates page (nested reousrce)
   ActiveAdmin.register Rate do
 
- #   belongs_to :exchange, class_name: 'Exchange', foreign_key: 'ratable_id'
+ #   belongs_to :exchange
 
     permit_params :id, :ratable_id, :ratable_type, :service_type, :currency, :buy, :sell, :admin_user, :rates_source
 
@@ -230,7 +230,11 @@ form do |f|
     end
     
     controller do
- 
+
+      def scoped_collection
+        super.includes :admin_user
+      end
+
       def index
         @rates = Rate.where(ratable_id: params[:exchange_id])
         @collection = @rates.page(params[:page]).per(10)

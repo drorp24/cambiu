@@ -1,6 +1,6 @@
-namespace :dbset do
+namespace :rates do
   desc "populate rates"
-  task :rates => :environment do
+  task :populate => :environment do
 
     sell_low  = 0.85
     sell_high = 0.90
