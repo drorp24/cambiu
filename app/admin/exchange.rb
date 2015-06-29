@@ -60,7 +60,7 @@ ActiveAdmin.register Exchange do
     link_to 'Scraping', scraping_admin_exchanges_path, method: :post
   end
 
-  filter :rates_source, as: :select, collection: [['Fictitious', 'fictitious'], ['Manual', 'manual'], ['Exchange', 'exchange_input'], ['Scraping', 'scraping']]
+  filter :rates_source, as: :select, collection: [['Fake', 'fake'], ['Manual', 'manual'], ['Exchange', 'exchange_input'], ['Scraping', 'scraping']]
   filter :chain
   filter :name
   filter :address
@@ -70,6 +70,9 @@ ActiveAdmin.register Exchange do
     id_column
     column :name do |exchange|
       link_to exchange.name, admin_exchange_path(exchange)
+    end
+    column :rates do |exchange|
+      link_to exchange.rates_source, admin_exchange_rates_path(exchange)
     end
     column :chain 
     column :address
@@ -132,7 +135,7 @@ form do |f|
       f.input     :name
       f.input     :address
       f.input     :logo, as: :file
-      f.input     :rates_source, input_html: { :disabled => true }
+      f.input     :rates_source,input_html: { :disabled => true }, as: :select, collection: {:"Fake"=>"fake", :"Manual"=>"manual", :"Exchange"=>"exchange_input", :"Scraping"=>"scraping"}
       f.input     :latitude
       f.input     :longitude
  #     f.input     :country, as: :country
@@ -195,11 +198,8 @@ form do |f|
       selectable_column
       id_column
       column :source        do |rate|
-        best_in_place rate, :source, as: :select, collection: {:"phone"=>"Phone", :"api"=>"API", :"scraping"=>"Scraping"}
+        best_in_place rate, :source, as: :select, collection: {:"phone"=>"Phone", :"api"=>"API", :"scraping"=>"Scraping", :"fake"=>"Fake"}
       end
-      column :service_type     do |rate|
-        best_in_place rate, :service_type, as: :select, collection: {:"collection"=>"Collection", :"delivery"=>"Delivery"}
-      end  
       column :currency           do |rate|
         best_in_place rate, :currency, as: :select, collection: Currency.select
       end 
@@ -211,9 +211,7 @@ form do |f|
       end
       column :updated_at
       column "By", :admin_user
-      actions defaults: false do |post|
-        link_to "Add another rate", new_admin_exchange_rate_path(params[:exchange_id])
-  end
+      actions defaults: false
     end
 
 =begin
@@ -224,7 +222,6 @@ form do |f|
     form do |f|
       f.inputs 'Rates' do
         f.input :source
-        f.input :service_type
         f.input :currency
         f.input :buy
         f.input :sell
@@ -234,6 +231,11 @@ form do |f|
     
     controller do
  
+      def index
+        @rates = Rate.where(ratable_id: params[:exchange_id])
+        @collection = @rates.page(params[:page]).per(10)
+      end
+
       def new
         @rate = Rate.create!(ratable_type: 'Exchange', ratable_id: params[:exchange_id], admin_user_id: current_admin_user.id, source: 0, service_type: 0)
         @rate.ratable.update(rates_source: 'manual')

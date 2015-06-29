@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   resources :rates
   resources :visitors
   namespace :admin do
-    resources :rates
+ #   resources :rates
     resources :exchanges do
       resources :rates
     end

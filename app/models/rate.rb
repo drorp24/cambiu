@@ -2,7 +2,7 @@ class Rate < ActiveRecord::Base
   belongs_to :ratable, polymorphic: true
   belongs_to :admin_user
   enum service_type: [ :collection, :delivery ]
-  enum source: [ :phone, :api, :scraping ]
+  enum source: [ :phone, :api, :scraping, :fake ]
   validates :sell, numericality: true, allow_nil: true
   validates :buy, numericality: true, allow_nil: true
   validates :currency, uniqueness: { scope: :ratable_id,
@@ -11,7 +11,7 @@ class Rate < ActiveRecord::Base
 #  before_create :initialize_default_values
 
   def currency_is_not_local
-    if currency == ratable.currency
+    if currency and currency == ratable.currency
       errors.add(:currency, "can't be the exchange's local currency")
     end
   end

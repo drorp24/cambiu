@@ -15,10 +15,13 @@ class Exchange < ActiveRecord::Base
   belongs_to  :upload
   belongs_to  :admin_user
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
-  enum rates_source: [ :fictitious, :manual, :exchange_input, :scraping ]
+  enum rates_source: [ :fake, :manual, :exchange_input, :scraping ]
 
   geocoded_by :address
 
+  def has_real_rates?
+    rates_source.present? && !fake?
+  end
   # TODO: Currently returns error unless either of the currencies is local. Generalize.
   def quote(params)
 
