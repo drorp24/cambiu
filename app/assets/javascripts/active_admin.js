@@ -30,6 +30,7 @@ $(document).ready(function() {
         tr.effect('highlight');
       tr.find('.col-updated_at').html(rate.updated_at);
       tr.find('.col-by').html(rate.admin_user_s);
+      tr.find('.col-source').html(rate.source_s);
       $('.flashes').empty();
   });
   jQuery('.best_in_place').on("ajax:error", function (event, xhr, status, error) {

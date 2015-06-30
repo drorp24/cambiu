@@ -2,7 +2,7 @@ class Rate < ActiveRecord::Base
   belongs_to :ratable, polymorphic: true
   belongs_to :admin_user
   enum service_type: [ :collection, :delivery ]
-  enum source: [ :phone, :api, :scraping, :fake ]
+  enum source: [ :manual, :api, :scraping, :fake ]
   validates :sell, numericality: true, allow_nil: true
   validates :buy, numericality: true, allow_nil: true
   validates :currency, uniqueness: { scope: :ratable_id,
@@ -16,8 +16,23 @@ class Rate < ActiveRecord::Base
     end
   end
 
+  def source_s
+    source.capitalize
+  end
+
   def admin_user_s
-    admin_user_id ? AdminUser.find_by_id(admin_user_id).email : nil
+
+    result = 'System'
+    if admin_user_id
+      if admin_user_rec = AdminUser.find_by_id(admin_user_id)
+       result = admin_user_rec.email
+      end
+    end
+    result
+
+  end
+  def admin_user_s=(val)
+    self.admin_user_id=val
   end
 
   def buy_s
@@ -34,12 +49,6 @@ class Rate < ActiveRecord::Base
     self.sell=val
   end
 
-  def admin_user_s
-    admin_user_id ? AdminUser.find_by_id(admin_user_id).email : 'System'
-  end
-  def admin_user_s=(val)
-    self.admin_user_id=val
-  end
 
 =begin
   def self.refresh(chain_id, buy_currency, buy_cents, pay_currency, pay_cents)

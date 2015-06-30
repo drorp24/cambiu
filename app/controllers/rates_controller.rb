@@ -3,8 +3,8 @@ class RatesController < ApplicationController
 
   def update
     rate = Rate.find(params[:id])
-    if rate.update(rates_params.merge(admin_user_id: current_admin_user.id))
-      render json: rate.as_json.merge(updated_at_s: I18n.l(Time.now, format: :short), admin_user_s: rate.admin_user_s)
+    if rate.update(rates_params.merge(admin_user_id: current_admin_user.id, source: :manual))
+      render json: rate.as_json.merge(updated_at_s: I18n.l(Time.now, format: :short), admin_user_s: rate.admin_user_s, source_s: rate.source_s)
     else
       render json: rate.errors.full_messages, status: :unprocessable_entity
     end
