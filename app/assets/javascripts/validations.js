@@ -27,13 +27,13 @@ $(document).ready(function() {
     });
 
 
-    // Enforce unique currency
+    // Enforce unique currency in one-sided forms
 
     disable_other_currency = function(this_currency) {
 
         var that_currency = (this_currency == 'pay_currency') ? 'buy_currency' : 'pay_currency';
 
-        $('[data-field=' + this_currency + ']').change(function() {
+        $('[data-field=' + this_currency + ']:not([data-single=false]').change(function() {
             var $this = $(this);
             var $this_val = $this.val();
             var that_currency_el = $this.closest('form').find('[data-field=' + that_currency + ']');
@@ -49,8 +49,7 @@ $(document).ready(function() {
 
     disable_other_currency('pay_currency');
     disable_other_currency('buy_currency');
-
-
+    
     // Prevent form submission if invalid
     $('#new_search').submit(function() {
         return new_search_validator.form() && custom_validate($('#new_search'))
