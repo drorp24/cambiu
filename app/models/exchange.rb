@@ -19,7 +19,7 @@ class Exchange < ActiveRecord::Base
 
   geocoded_by :address
 
-  def has_real_rates?
+   def has_real_rates?
     rates_source.present? && !fake?
   end
   # TODO: Currently returns error unless either of the currencies is local. Generalize.
@@ -33,18 +33,20 @@ class Exchange < ActiveRecord::Base
         field:            field         = params[:field],
         transaction:      transaction   = get_currency != currency ? 'sell' : 'buy',
         rates:            {},
+        quote:            nil,
+        edited_quote:     nil,
         gain_amount:      gain_amount   = 0,
         gain_currency:    gain_currency = "ABC",
         real:             real          = nil,
         errors:           []
     }
 
-    unless rates.any?
-      return ficticious_result(result)
-    else
-      result[:real] = true
-    end
+    result[:real] = has_real_rates?
 
+    unless rates.any?
+      result[:errors]           <<   'No rates defined for that exchange'
+      return result
+    end
     if currency.nil?
       result[:errors]           <<   'No local currency defined for that exchange'
       return result
@@ -60,20 +62,20 @@ class Exchange < ActiveRecord::Base
         result[:errors]           <<   rates[:error]
         return result
       end
-      get_amount              =   pay_amount * rates[transaction.to_sym]
-      result[:get_amount]     =   get_amount.to_money(get_currency).format
-      result[:gain_amount]    =   (get_amount * 0.13).to_money(get_currency).format
-      result[:gain_currency]  =   get_currency
+      get_amount              =   result[:quote]        = pay_amount * rates[transaction.to_sym]
+      result[:get_amount]     =   result[:edited_quote] = get_amount.to_money(get_currency).format
+      result[:gain_amount]                              = (get_amount * 0.13).to_money(get_currency).format
+      result[:gain_currency]                            = get_currency
     else
       rates = result[:rates] = rate(pay_currency, get_currency)
       if rates[:error]
         result[:errors]           <<   rates[:error]
         return result
       end
-      pay_amount              =   get_amount * rates[transaction.to_sym]
-      result[:pay_amount]     =   pay_amount.to_money(pay_currency).format
-      result[:gain_amount]    =   (pay_amount * 0.13).to_money(pay_currency).format
-      result[:gain_currency]  =   pay_currency
+      pay_amount              =   result[:quote]        = get_amount * rates[transaction.to_sym]
+      result[:pay_amount]     =   result[:edited_quote] = pay_amount.to_money(pay_currency).format
+      result[:gain_amount]                              =   (pay_amount * 0.13).to_money(pay_currency).format
+      result[:gain_currency]                            =   pay_currency
     end
 
     return result
@@ -91,13 +93,13 @@ class Exchange < ActiveRecord::Base
         error: nil
     }
 
-    rated_rates = find_rates(rated_currency)
+    rated_rates = find_rate(rated_currency)
     if rated_rates[:error]
       result[:error] = rated_rates[:error]
       return result
     end
 
-    base_rates = find_rates(base_currency)
+    base_rates = find_rate(base_currency)
     if base_rates[:error]
       result[:error] = base_rates[:error]
       return result
@@ -110,7 +112,7 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  def find_rates(currency)
+  def find_rate(currency)
 
     result = {
         buy: nil,
@@ -144,26 +146,6 @@ class Exchange < ActiveRecord::Base
 
   end
 
-
-  def ficticious_result(result)
-    pay_amount = result[:pay_amount]
-    result[:pay_amount] = result[:pay_amount] > 0 ? (result[:pay_amount].to_money(result[:pay_currency])).format : (Bank.exchange(result[:get_amount], result[:get_currency], result[:pay_currency]) * rand(1.03..1.37)).format
-    result[:get_amount] = result[:get_amount] > 0 ? (result[:get_amount].to_money(result[:get_currency])).format : (Bank.exchange(result[:pay_amount], result[:pay_currency], result[:get_currency]) * rand(1.03..1.37)).format
-    result[:edited_quote] = pay_amount > 0 ? (result[:get_amount].to_money(result[:get_currency])).format : (result[:pay_amount].to_money(result[:pay_currency])).format
-    result[:quote] = Monetize.parse(result[:edited_quote]).amount
-    result[:gain_amount] =  pay_amount > 0 ? ((result[:quote] * 0.127).to_money(result[:get_currency])).format : ((result[:quote] * 0.127).to_money(result[:pay_currency])).format
-    result[:gain_currency] = pay_amount > 0 ? result[:get_currency] : result[:pay_currency]
-    result[:real] = false
-    puts ""
-    puts ""
-    puts "ficiticious result:"
-    puts ""
-    puts result.inspect
-    puts ""
-    puts ""
-    puts ""
-    return result
-  end
 
   def admin_user
     AdminUser.find_by_id(admin_user_id).email if admin_user_id

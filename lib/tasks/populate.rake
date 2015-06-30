@@ -6,11 +6,11 @@ namespace :rates do
     sell_high = 0.90
     buy_low   = 1.05
     buy_high  = 1.10
-    eur = Bank.exchange(1, 'GBP', 'EUR')
-    usd = Bank.exchange(1, 'GBP', 'USD')
-    aud = Bank.exchange(1, 'GBP', 'AUD')
-    cad = Bank.exchange(1, 'GBP', 'CAD')
-    jpy = Bank.exchange(1, 'GBP', 'JPY')
+    eur = Bank.exchange(1, 'GBP', 'EUR').amount
+    usd = Bank.exchange(1, 'GBP', 'USD').amount
+    aud = Bank.exchange(1, 'GBP', 'AUD').amount
+    cad = Bank.exchange(1, 'GBP', 'CAD').amount
+    jpy = Bank.exchange(1, 'GBP', 'JPY').amount
 
     Exchange.find_each do |exchange|
       next if exchange.has_real_rates?

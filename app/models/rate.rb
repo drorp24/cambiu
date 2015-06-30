@@ -16,6 +16,31 @@ class Rate < ActiveRecord::Base
     end
   end
 
+  def admin_user_s
+    admin_user_id ? AdminUser.find_by_id(admin_user_id).email : nil
+  end
+
+  def buy_s
+    '%.2f' % buy if buy
+  end
+  def buy_s=(val)
+    self.buy=val
+  end
+
+  def sell_s
+    '%.2f' % sell if sell
+  end
+  def sell_s=(val)
+    self.sell=val
+  end
+
+  def admin_user_s
+    admin_user_id ? AdminUser.find_by_id(admin_user_id).email : 'System'
+  end
+  def admin_user_s=(val)
+    self.admin_user_id=val
+  end
+
 =begin
   def self.refresh(chain_id, buy_currency, buy_cents, pay_currency, pay_cents)
     rate = self.find_or_initialize_by(chain_id: chain_id, buy_currency: buy_currency, pay_currency: pay_currency)

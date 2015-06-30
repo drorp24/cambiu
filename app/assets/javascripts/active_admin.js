@@ -22,8 +22,14 @@ $(document).ready(function() {
 
   /* Activating Best In Place */
   jQuery(".best_in_place").best_in_place();
-  jQuery('.best_in_place').bind("ajax:success", function () {
-      jQuery(this).closest('tr').effect('highlight');
+  jQuery('.best_in_place').bind("ajax:success", function (evt, data, status, xhr) {
+      var $this = $(this);
+      var tr =  $this.closest('tr');
+//      var response = $.parseJSON(xhr.responseText);
+      var rate = $.parseJSON(data);
+        tr.effect('highlight');
+      tr.find('.col-updated_at').html(rate.updated_at);
+      tr.find('.col-by').html(rate.admin_user_s);
       $('.flashes').empty();
   });
   jQuery('.best_in_place').on("ajax:error", function (event, xhr, status, error) {

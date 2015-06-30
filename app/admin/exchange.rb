@@ -169,6 +169,8 @@ form do |f|
   # rates page (nested reousrce)
   ActiveAdmin.register Rate do
 
+    menu false
+
  #   belongs_to :exchange
 
     permit_params :id, :ratable_id, :ratable_type, :service_type, :currency, :buy, :sell, :admin_user, :rates_source
@@ -204,13 +206,13 @@ form do |f|
         best_in_place rate, :currency, as: :select, collection: Currency.select
       end 
       column :buy           do |rate|
-        best_in_place rate, :buy, :as => :input
+        best_in_place rate, :buy_s, :as => :input
       end
       column :sell           do |rate|
-        best_in_place rate, :sell, :as => :input
+        best_in_place rate, :sell_s, :as => :input
       end
       column :updated_at
-      column "By", :admin_user
+      column "By", :admin_user_s
       actions defaults: false
     end
 
@@ -247,7 +249,9 @@ form do |f|
         redirect_to admin_exchange_rates_path(params[:exchange_id]), notice: notice
       end
 
-      def batch_action
+      # since best_in_place automatically goes to the regular exchange#update, the update controller method is defined there not here
+
+       def batch_action
         rate_id = params[:collection_selection][0]
         puts rate_id
         exchange_id = Rate.find_by_id(rate_id).ratable_id
