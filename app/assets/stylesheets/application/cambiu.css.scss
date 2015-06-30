@@ -233,6 +233,14 @@ body#cambiu {
       margin-right: 10px;
     }
   }
+  .info_class {
+    color: /*$brand-color*/#555;
+    &::before {
+      font-family: fontAwesome;
+      content:"\f05a";
+      margin-right: 10px;
+    }
+  }
   .valid_class {
     color: $lightgreen;
     &::before {

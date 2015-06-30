@@ -38,6 +38,8 @@ class Exchange < ActiveRecord::Base
         gain_amount:      gain_amount   = 0,
         gain_currency:    gain_currency = "ABC",
         real:             real          = nil,
+        pay_rounded:      nil,
+        get_rounded:      nil,
         errors:           []
     }
 
@@ -52,7 +54,7 @@ class Exchange < ActiveRecord::Base
       return result
     end
     if pay_currency == get_currency
-      result[:errors]           <<   'Currencies should differ'
+      result[:errors]           <<   'Please select two different currencies'
       return result
     end
 
@@ -67,7 +69,15 @@ class Exchange < ActiveRecord::Base
       result[:gain_amount]                              = (get_amount * 0.13).to_money(get_currency).format
       result[:gain_currency]                            = get_currency
       result[:pay_amount]                               = pay_amount.to_money(pay_currency).format
+
+      if get_currency != currency and (get_subtract = get_amount.modulo(1)) > 0
+        pay_subtract                                    = get_subtract / rates[transaction.to_sym]
+        result[:pay_rounded]                            = (pay_amount - pay_subtract).to_money(pay_currency).format
+        result[:get_rounded]                            = (get_amount - get_subtract).to_money(get_currency).format
+      end
+
     else
+
       rates = result[:rates] = rate(pay_currency, get_currency)
       if rates[:error]
         result[:errors]           <<   rates[:error]
@@ -78,6 +88,12 @@ class Exchange < ActiveRecord::Base
       result[:gain_amount]                              = (pay_amount * 0.13).to_money(pay_currency).format
       result[:gain_currency]                            = pay_currency
       result[:get_amount]                               = get_amount.to_money(get_currency).format
+
+      if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
+        get_subtract                                    = pay_subtract / rates[transaction.to_sym]
+        result[:get_rounded]                            = (get_amount - get_subtract).to_money(get_currency).format
+        result[:pay_rounded]                            = (pay_amount - pay_subtract).to_money(pay_currency).format
+      end
     end
 
     return result
@@ -131,7 +147,7 @@ class Exchange < ActiveRecord::Base
 
     if rec
       ['buy', 'sell'].each do |kind|
-        value = rec.send(kind)
+        value = rec.send(kind + '_s')
         if value
           result[kind.to_sym] = value
         else

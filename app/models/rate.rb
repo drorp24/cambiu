@@ -36,14 +36,14 @@ class Rate < ActiveRecord::Base
   end
 
   def buy_s
-    '%.2f' % buy if buy
+    ('%.2f' % buy).to_f if buy
   end
   def buy_s=(val)
     self.buy=val
   end
 
   def sell_s
-    '%.2f' % sell if sell
+    ('%.2f' % sell).to_f if sell
   end
   def sell_s=(val)
     self.sell=val

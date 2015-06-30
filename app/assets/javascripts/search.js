@@ -394,6 +394,10 @@ $(document).ready(function() {
                 $('.exchange_search_form_error').html(text);
             } else {
                 $('.exchange_search_form_error').empty();
+                if (data.pay_rounded || data.get_rounded) {
+                    text = '<p class=info_class>You may pay ' + data.pay_rounded + ' and get ' + data.get_rounded + ' to round</p>'
+                    $('.exchange_search_form_error').html(text);
+                }
             }
         })
     });
