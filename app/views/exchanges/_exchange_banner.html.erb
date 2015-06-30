@@ -2,6 +2,11 @@
 
 <div class="exchange_summary_banner well">
   <div class="row">
+    <div class="col-md-12 col-xs-12">
+      <div class="es_name" data-model="exchange" data-field="name"></div>
+    </div>
+   </div>
+  <div class="row">
     <% if @mode != 'exchange' %>
         <div class="col-md-2 col-xs-2">
           <div class="left">
@@ -12,8 +17,7 @@
     <% end %>
     <div class="col-md-5 col-xs-6">
       <div class="right">
-        <div class="es_name" data-model="exchange" data-field="name"></div>
-        <div class="es_address" data-model="exchange" data-field="address"></div>
+         <div class="es_address" data-model="exchange" data-field="address"></div>
         <div class="es_opening_hours" data-model="exchange" data-field="open_today"></div>
       </div>
     </div>

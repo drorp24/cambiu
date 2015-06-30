@@ -171,6 +171,10 @@ html, body {
 }
 body#cambiu {
 
+  .form-control {
+    padding: 6px 6px;
+  }
+
   border-style: inset;
   border-color: #ccc;
 
@@ -320,6 +324,13 @@ body#cambiu {
     font-size: 1.8vh;
     text-transform: uppercase;
    }
+  .exchange_search_form_error {
+    @media (max-width: $screen-xs-max) {
+      margin-top: 7vh;
+      font-size: 2vh;
+    }
+
+  }
   .exchange_search_form_title {
     margin-top: -10px;
   }
@@ -397,7 +408,7 @@ body#cambiu {
           }
           .bullets {
             @media (min-width: $screen-sm-min) {
-              font-size: 1.7em;
+              font-size: 1.3em;
               line-height: 1.8em;
             }
             @media (max-width: $screen-xs-max) {
@@ -809,7 +820,7 @@ body#cambiu {
       }
       @media (min-width: $screen-sm-min) {
         height: 6vh;
-        font-size: 2.5vh;
+        font-size: 2vh;
       }
    }
     #order_email, #order_phone {
@@ -841,7 +852,7 @@ body#cambiu {
           background-color: $lightgreen;
           border: 1px solid $lightgreen;
           .exchanges_search_params_title {
-            font-size: 1.2em;
+            font-size: 1em;
             color: #fff;
             font-weight: 300;
             [data-field] {
@@ -894,7 +905,7 @@ body#cambiu {
                 font-size: 0.7em;
               }
               @media (min-width: $screen-sm-min) {
-                font-size: 1em;
+                font-size: 0.8em;
               }
             &.active {
               background-color: $lightgreen;
@@ -949,7 +960,7 @@ body#cambiu {
         }
       }
       .name {
-        font-weight: 400;
+        font-weight: 900;
         color: #333;
       }
       .list-group-item .name {
@@ -974,6 +985,7 @@ body#cambiu {
         margin-top: 17px;
       }
         .quote {
+        margin-left: -15px;
         font-weight: 600;
         line-height: 25px;
         color: #111;
@@ -981,6 +993,7 @@ body#cambiu {
       }
       .comparison {
         text-align: center;
+        margin-left: -15px;
       }
       .comparison-d {
         line-height: 25px;
@@ -1013,6 +1026,7 @@ body#cambiu {
       border-color: $lightgreen;
       color: $lightgreen;
       text-transform: uppercase;
+      margin-left: -10px;
     }
     .exchange_row {
       .middle-parent {
@@ -1028,14 +1042,14 @@ body#cambiu {
 
     .params > .exchange_summary_banner {
       .es_name {
+        text-shadow: 0 3px 0 rgba(0, 0, 0, 0.6);
         font-weight: 400;
-        text-transform: uppercase;
         color: $cn-brand-color;
         @media (max-width: $screen-xs-max) {
-          font-size: 3vh;
+          font-size: 3.5vh;
         }
         @media (min-width: $screen-sm-min) {
-          font-size: 3vh;
+          font-size: 3.5vh;
         }
       }
     }
@@ -1078,7 +1092,7 @@ body#cambiu {
       .es_icon {
         font-size: 2.5em;
         text-align: center;
-        margin-top: 15px;
+        margin-top: 1vh;
       }
       .es_distance {
         font-size: 0.7em;
@@ -1090,9 +1104,11 @@ body#cambiu {
       .es_name {
         @media (max-width: $screen-xs-max) {
           font-size: 3vh;
+          margin-bottom: 0.2vh;
         }
         @media (min-width: $screen-sm-min) {
           font-size: 3vh;
+          margin-bottom: 0.2vh;
         }
         font-weight: 700;
         margin-top: 12px;
@@ -1101,6 +1117,7 @@ body#cambiu {
       .es_address {
         @media (max-width: $screen-xs-max) {
           font-size: 1.8vh;
+          margin-left: -15px;
         }
         @media (min-width: $screen-sm-min) {
           font-size: 1.8vh;
@@ -1109,6 +1126,9 @@ body#cambiu {
         margin-top: 12px;
       }
       .es_opening_hours {
+        @media (max-width: $screen-xs-max) {
+          margin-left: -15px;
+        }
         font-size: 1.8vh;
         font-weight: 400;
         margin-bottom: 10px;
@@ -1118,7 +1138,7 @@ body#cambiu {
 
     .exchange_logo img{
       margin-top: 17px;
-      width: 25vh;
+      width: 22vh;
       height: auto;
     }
 
@@ -1307,7 +1327,7 @@ body#cambiu {
             }
             &.exchange {
               font-size: 3vh;
-              font-weight: 300;
+              font-weight: 400;
             }
             @media (min-width: $screen-sm-min) {
             }
@@ -1565,10 +1585,10 @@ body#cambiu {
     &.exchanges {
       
       .name {
-        font-size: 1.2em;
+        font-size: 1em;
       }
       .quote {
-        font-size: 1.2em;
+        font-size: 1em;
       }
       #exchanges_items {        
 //        box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
