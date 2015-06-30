@@ -325,11 +325,13 @@ body#cambiu {
     text-transform: uppercase;
    }
   .exchange_search_form_error {
+    font-size: 2vh;
     @media (max-width: $screen-xs-max) {
       margin-top: 7vh;
-      font-size: 2vh;
     }
-
+    @media (min-width: $screen-sm-min) {
+      margin-top: 1vh;
+    }
   }
   .exchange_search_form_title {
     margin-top: -10px;
