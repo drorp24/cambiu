@@ -66,6 +66,7 @@ class Exchange < ActiveRecord::Base
       result[:get_amount]     =   result[:edited_quote] = get_amount.to_money(get_currency).format
       result[:gain_amount]                              = (get_amount * 0.13).to_money(get_currency).format
       result[:gain_currency]                            = get_currency
+      result[:pay_amount]                               = pay_amount.to_money(pay_currency).format
     else
       rates = result[:rates] = rate(pay_currency, get_currency)
       if rates[:error]
@@ -74,8 +75,9 @@ class Exchange < ActiveRecord::Base
       end
       pay_amount              =   result[:quote]        = get_amount * rates[transaction.to_sym]
       result[:pay_amount]     =   result[:edited_quote] = pay_amount.to_money(pay_currency).format
-      result[:gain_amount]                              =   (pay_amount * 0.13).to_money(pay_currency).format
-      result[:gain_currency]                            =   pay_currency
+      result[:gain_amount]                              = (pay_amount * 0.13).to_money(pay_currency).format
+      result[:gain_currency]                            = pay_currency
+      result[:get_amount]                               = get_amount.to_money(get_currency).format
     end
 
     return result
