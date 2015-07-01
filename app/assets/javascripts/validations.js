@@ -33,7 +33,7 @@ $(document).ready(function() {
 
         var that_currency = (this_currency == 'pay_currency') ? 'buy_currency' : 'pay_currency';
 
-        $('[data-field=' + this_currency + ']:not([data-single=false]').change(function() {
+        $('[data-field=' + this_currency + ']:not([data-single=false])').change(function() {
             var $this = $(this);
             var $this_val = $this.val();
             var that_currency_el = $this.closest('form').find('[data-field=' + that_currency + ']');
