@@ -163,7 +163,6 @@ form do |f|
       f.input     :directory
       f.input     :accessible
       f.input     :upload_id
-      f.input     :status
       f.input     :note
     end
 
