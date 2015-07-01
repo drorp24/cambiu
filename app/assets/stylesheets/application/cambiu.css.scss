@@ -1030,6 +1030,7 @@ body#cambiu {
       color: $lightgreen;
       text-transform: uppercase;
       margin-left: -10px;
+      padding-right: 20px;
     }
     .exchange_row {
       .middle-parent {
@@ -1406,10 +1407,9 @@ body#cambiu {
       .exchange_voucher_banner {
         height: 15vh;
         margin-top: 10px;
-        margin-bottom: 20px;
         .es_name {
           font-weight: 900;
-          text-transform: uppercase;
+          text-transform: initial;
           @media (min-width: $screen-sm-min) {
             font-size: 3vh;
           }
