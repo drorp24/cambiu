@@ -1099,8 +1099,7 @@ body#cambiu {
       .es_icon {
         font-size: 2.5em;
         text-align: center;
-        margin-top: 1vh;
-      }
+       }
       .es_distance {
         font-size: 0.7em;
         text-align: center;
@@ -1437,19 +1436,14 @@ body#cambiu {
       .exchange_voucher_directions {
         color: #333;
         @media (min-width: $screen-sm-min) {
-          font-size: 1.1em;
+         margin-bottom: 30px;
+         font-size: 1.1em;
         }
         @media (max-width: $screen-xs-max) {
-          font-size: 1em;
+          display: none;
         }
         font-weight: 400;
-        @media (min-width: $screen-sm-min) {
-          margin-bottom: 30px;
-        }
-        @media (max-width: $screen-xs-max) {
-          margin-bottom: 20px;
-        }
-        a.directions {
+         a.directions {
           color: $lightgreen !important;
         }
       }

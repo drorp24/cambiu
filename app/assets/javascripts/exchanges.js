@@ -80,7 +80,7 @@ $(document).ready(function() {
         exchange_el.find('.name').html(exchange.name);
         exchange_el.find('.quote').html(exchange.edited_quote);
         if (exchange.quote > 0) {
-            exchange_el.find('.comparison').css('display', 'block');
+//            exchange_el.find('.comparison').css('display', 'block');
             exchange_el.find('[data-field=gain_amount]').html(exchange.gain_amount);
         }
         exchange_el.find('.address').html(exchange.address);
