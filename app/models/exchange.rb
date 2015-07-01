@@ -147,7 +147,7 @@ class Exchange < ActiveRecord::Base
 
     if rec
       ['buy', 'sell'].each do |kind|
-        value = rec.send(kind + '_s')
+        value = rec.send(kind)
         if value
           result[kind.to_sym] = value
         else
