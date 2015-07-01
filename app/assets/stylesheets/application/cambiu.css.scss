@@ -997,6 +997,9 @@ body#cambiu {
       .comparison {
         text-align: center;
         margin-left: -15px;
+        @media (max-width: $screen-xs-max) {
+          display: none;
+        }
       }
       .comparison-d {
         line-height: 25px;
@@ -1046,11 +1049,11 @@ body#cambiu {
 
     .params > .exchange_summary_banner {
       .es_name {
-        text-shadow: 0 3px 0 rgba(0, 0, 0, 0.6);
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
         font-weight: 400;
         color: $cn-brand-color;
         @media (max-width: $screen-xs-max) {
-          font-size: 3.5vh;
+          font-size: 5vh;
         }
         @media (min-width: $screen-sm-min) {
           font-size: 3.5vh;
@@ -1389,7 +1392,7 @@ body#cambiu {
           font-size: 1.3em;
         }
         @media (max-width: $screen-xs-max) {
-          font-size: 1em;
+          font-size: 0.9em;
         }
          font-weight: 700;
         text-transform: uppercase;
