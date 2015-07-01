@@ -99,6 +99,7 @@ $(document).ready(function() {
             set_default_location();
             locationCallback();
         }
+/*
         var t = setTimeout(function () {
             if (!value_of('location')) {
                 console.log('Geocoder timeout, firefox bug: setting default location');
@@ -106,6 +107,7 @@ $(document).ready(function() {
                 locationCallback();
             }
         }, 3000);
+*/
     };
 
 
