@@ -142,7 +142,7 @@ ActiveAdmin.setup do |config|
 
   # == Setting a Favicon
   #
-   config.favicon = '/assets/logo32.png'
+   config.favicon = 'logo32.png'
 
   # == Removing Breadcrumbs
   #

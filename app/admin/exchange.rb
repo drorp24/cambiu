@@ -60,6 +60,12 @@ ActiveAdmin.register Exchange do
     link_to 'Scraping', scraping_admin_exchanges_path, method: :post
   end
 
+  scope :manual
+  scope :exchange_input
+  scope :scraping
+  scope :fake
+
+
   filter :rates_source, as: :select, collection: [['Fake', 'fake'], ['Manual', 'manual'], ['Exchange', 'exchange_input'], ['Scraping', 'scraping']]
   filter :chain
   filter :name
@@ -105,8 +111,8 @@ ActiveAdmin.register Exchange do
   sidebar "Rates", only: [:show, :edit] do
     table_for exchange.rates do |r|
       r.column("Currency")    { |rate| status_tag rate.currency }
-      r.column("Buy")     { |rate|  rate.buy}
-      r.column("Sell")    { |rate|  rate.sell }
+      r.column("Buy")     { |rate|  rate.buy_s}
+      r.column("Sell")    { |rate|  rate.sell_s }
     end
     link_to "Update rates",    admin_exchange_rates_path(exchange)
   end

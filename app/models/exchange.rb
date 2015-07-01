@@ -165,8 +165,16 @@ class Exchange < ActiveRecord::Base
   end
 
 
-  def admin_user
-    AdminUser.find_by_id(admin_user_id).email if admin_user_id
+  def admin_user_s
+
+    result = 'System'
+    if admin_user_id
+      if admin_user_rec = AdminUser.find_by_id(admin_user_id)
+        result = admin_user_rec.email
+      end
+    end
+    result
+
   end
 
   def offer(center, pay, buy)

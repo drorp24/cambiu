@@ -13,6 +13,7 @@ namespace :rates do
     jpy = Bank.exchange(1, 'GBP', 'JPY').amount
 
     Exchange.find_each do |exchange|
+      exchange.update(currency: 'GBP  ')
       next if exchange.has_real_rates?
       e_eur_sell  = eur * rand(sell_low..sell_high)
       e_eur_buy   = eur * rand(buy_low..buy_high)
