@@ -257,9 +257,11 @@ form do |f|
       # since best_in_place automatically goes to the regular exchange#update, the update controller method is defined there not here
 
        def batch_action
+        return unless params[:batch_action] == 'destroy'
         rate_id = params[:collection_selection][0]
-        puts rate_id
+        rate = Rate.find_by_id(rate_id)
         exchange_id = Rate.find_by_id(rate_id).ratable_id
+        rate.delete
         redirect_to admin_exchange_rates_path(exchange_id), notice: 'Over and done with!'
       end
 
