@@ -381,6 +381,9 @@ $(document).ready(function() {
 
         $.getJSON(url, params, function(data, status) {
             var result = data;
+            var marker = markers[0];
+            var marker_content = marker['infowindow'].getContent();
+            $(marker_content).find('.exchange_window_quote').html(result.edited_quote);
             set('buy_amount', result.get_amount, $this);
             set('pay_amount', result.pay_amount, $this);
             set('gain_amount', result.gain_amount)
