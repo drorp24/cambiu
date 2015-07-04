@@ -404,8 +404,13 @@ class Exchange < ActiveRecord::Base
   end 
 =end
 
-  def todays_hours 
-    @todays_hours ||= make_hour(rand(7..10)) + " - " + make_hour(rand(17..20))
+  def todays_hours
+    return @todays_hours if @todays_hours
+    if opens and closes
+      @todays_hours = opens.strftime("%H:%M") + ' - ' + closes.strftime("%H:%M")
+    else
+      @todays_hours = make_hour(rand(7..10)) + " - " + make_hour(rand(17..20))
+    end
   end
   
   def make_hour(int)
