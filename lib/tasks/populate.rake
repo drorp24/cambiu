@@ -2,10 +2,10 @@ namespace :rates do
   desc "populate rates"
   task :populate => :environment do
 
-    sell_low  = 0.85
-    sell_high = 0.90
-    buy_low   = 1.05
-    buy_high  = 1.10
+    sell_low  = 0.95
+    sell_high = 0.98
+    buy_low   = 1.02
+    buy_high  = 1.150
     eur = Bank.exchange(1, 'GBP', 'EUR').amount
     usd = Bank.exchange(1, 'GBP', 'USD').amount
     aud = Bank.exchange(1, 'GBP', 'AUD').amount
