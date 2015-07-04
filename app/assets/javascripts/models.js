@@ -71,7 +71,7 @@
         $.each(obj, function(field, value) {
             model_set(model, field, value)
         })
-        if (obj.pay_rounded || obj.get_rounded) {
+        if (obj.rounded) {
             text = '<p class=info_class>You may pay ' + obj.pay_rounded + ' and get ' + obj.get_rounded + ' to round</p>'
             $('.exchange_search_form_error').html(text);
             var marker = markers[0];

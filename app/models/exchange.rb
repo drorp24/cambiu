@@ -38,13 +38,14 @@ class Exchange < ActiveRecord::Base
         edited_quote_rounded: nil,
         gain_amount:      gain_amount   = 0,
         gain_currency:    gain_currency = "ABC",
-        real:             real          = nil,
-        pay_rounded:      nil,
-        get_rounded:      nil,
+        real_rates:       real_rates    = nil,
+        rounded:          false,
+        pay_rounded:      params[:pay_amount],
+        get_rounded:      params[:get_amount],
         errors:           []
     }
 
-    result[:real] = has_real_rates?
+    result[:real_rates] = has_real_rates?
 
     unless rates.any?
       result[:errors]           <<   'No rates defined for that exchange'
@@ -65,18 +66,19 @@ class Exchange < ActiveRecord::Base
         result[:errors]           <<   rates[:error]
         return result
       end
-      get_amount              =   result[:quote]        = pay_amount * rates[transaction.to_sym]
-      result[:get_amount]                               = get_amount.to_money(get_currency).format
+      get_amount =   result[:quote]                         = pay_amount * rates[transaction.to_sym]
+      result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format
       result[:edited_quote] = result[:edited_quote_rounded] = result[:get_amount]
-      result[:gain_amount]                              = (get_amount * 0.13).to_money(get_currency).format
-      result[:gain_currency]                            = get_currency
-      result[:pay_amount]                               = pay_amount.to_money(pay_currency).format
+      result[:gain_amount]                                  = (get_amount * 0.13).to_money(get_currency).format
+      result[:gain_currency]                                = get_currency
+      result[:pay_amount]                                   = pay_amount.to_money(pay_currency).format
 
       if get_currency != currency and (get_subtract = get_amount.modulo(1)) > 0
-        pay_subtract                                    = get_subtract / rates[transaction.to_sym]
-        result[:pay_rounded]                            = (pay_amount - pay_subtract).to_money(pay_currency).format
-        result[:get_rounded]                            = (get_amount - get_subtract).to_money(get_currency).format
-        result[:edited_quote_rounded]                   = result[:get_rounded]
+        result[:rounded]                                    = true
+        pay_subtract                                        = get_subtract / rates[transaction.to_sym]
+        result[:pay_rounded]                                = (pay_amount - pay_subtract).to_money(pay_currency).format
+        result[:get_rounded]                                = (get_amount - get_subtract).to_money(get_currency).format
+        result[:edited_quote_rounded]                       = result[:get_rounded]
       end
 
     else
@@ -86,18 +88,19 @@ class Exchange < ActiveRecord::Base
         result[:errors]           <<   rates[:error]
         return result
       end
-      pay_amount              =   result[:quote]        = get_amount * rates[transaction.to_sym]
-      result[:pay_amount]                               = pay_amount.to_money(pay_currency).format
+      pay_amount              =   result[:quote]            = get_amount * rates[transaction.to_sym]
+      result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format
       result[:edited_quote] = result[:edited_quote_rounded] = result[:pay_amount]
-      result[:gain_amount]                              = (pay_amount * 0.13).to_money(pay_currency).format
-      result[:gain_currency]                            = pay_currency
-      result[:get_amount]                               = get_amount.to_money(get_currency).format
+      result[:gain_amount]                                  = (pay_amount * 0.13).to_money(pay_currency).format
+      result[:gain_currency]                                = pay_currency
+      result[:get_amount]                                   = get_amount.to_money(get_currency).format
 
       if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
-        get_subtract                                    = pay_subtract / rates[transaction.to_sym]
-        result[:get_rounded]                            = (get_amount - get_subtract).to_money(get_currency).format
-        result[:pay_rounded]                            = (pay_amount - pay_subtract).to_money(pay_currency).format
-        result[:edited_quote_rounded]                   = result[:pay_rounded]
+        result[:rounded]                                    = true
+        get_subtract                                        = pay_subtract / rates[transaction.to_sym]
+        result[:get_rounded]                                = (get_amount - get_subtract).to_money(get_currency).format
+        result[:pay_rounded]                                = (pay_amount - pay_subtract).to_money(pay_currency).format
+        result[:edited_quote_rounded]                       = result[:pay_rounded]
       end
     end
 
@@ -205,7 +208,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:gain_currency] = quotes[:gain_currency]
     exchange_hash[:quote] = quotes[:quote]
     exchange_hash[:edited_quote] = quotes[:edited_quote]
-    exchange_hash[:real_rates] = has_real_rates?
+    exchange_hash[:real_rates] = quotes[:real_rates]
     exchange_hash[:pay_rounded] = quotes[:pay_rounded]
     exchange_hash[:get_rounded] = quotes[:get_rounded]
     exchange_hash[:edited_quote_rounded] = quotes[:edited_quote_rounded]
