@@ -96,6 +96,9 @@ $(document).ready(function() {
         exchange_sum.find('[data-href-id]').attr('data-href-id', exchange.id);
         exchange_sum.find('[data-exchange-name]').attr('data-exchange-name', exchange.name);
 
+        exchange_sum.find('.subject_to_change').html(exchange.real_rates ? '' : 'This rate is subject to change and is regularly updated by our staff');
+
+
 
         exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
         //exchange_det.appendTo('#exchanges_list .list-group #exchanges_items');

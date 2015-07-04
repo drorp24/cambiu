@@ -1177,17 +1177,13 @@ body#cambiu {
       }
 
       .fees {
+        text-transform: uppercase;
+        font-size: 2vh;
         @media (max-width: $screen-xs-max) {
-          font-size: 2.5vh;
-          position: relative;
-          top: 2em;
         }
         @media (min-width: $screen-sm-min) {
-          font-size: 1.8vh;
+          line-height: 40px;
         }
-
-         color: $darkgreen;
-        text-transform: none;
       }
 
       button[data-service-type] {

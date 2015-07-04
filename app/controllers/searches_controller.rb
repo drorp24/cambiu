@@ -8,12 +8,11 @@ class SearchesController < ApplicationController
   # record the search, return results, no validations
   def create
     @search = Search.create(search_params)
- #   uncomment if error checking would be required
- #   if @search.errors.any?
- #     render json: {errors: @search.errors.full_messages}, status: 422
- #   else
+    if @search.errors.any?
+      render json: {errors: @search.errors.full_messages}, status: 422
+    else
       render json: @search.exchanges
- #   end
+    end
   end
 
   # record the search, dont return results, check validations

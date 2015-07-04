@@ -225,7 +225,7 @@ $(document).ready(function() {
             $('button[data-service-type=collection]').addClass('active');
             $('#order_phone').removeAttr('required');
             $('#order_phone').attr('placeholder', 'Leave phone if you need help');
-            $('.fees').html('All fees are included');
+            $('.fees').html('');
          } else
         if (service_type == 'delivery') {
             $('button[data-service-type=collection]').removeClass('active');
@@ -383,10 +383,12 @@ $(document).ready(function() {
             var result = data;
             var marker = markers[0];
             var marker_content = marker['infowindow'].getContent();
-            $(marker_content).find('.exchange_window_quote').html(result.edited_quote);
+            $(marker_content).find('.exchange_window_quote').html(result.edited_quote_rounded);
             set('buy_amount', result.get_amount, $this);
             set('pay_amount', result.pay_amount, $this);
-            set('gain_amount', result.gain_amount)
+            set('get_rounded', result.get_rounded, $this);
+            set('pay_rounded', result.pay_rounded, $this);
+//            set('gain_amount', result.gain_amount);
         }).done(function(data) {
             var errors = data.errors;
             if (errors.length > 0) {
@@ -404,33 +406,6 @@ $(document).ready(function() {
             }
         })
     });
-
-/*
-    $('#exchange_search form input').on('keyup', function() {
-
-        var $this = $(this);
-        var exchange_id = value_of('exchange_id');  if (!exchange_id) return;
-        var url = '/exchanges/' + exchange_id + '/quote';
-        var field = $this.data('field');
-        var params = {
-            pay_amount:     $('#exchange_search #pay_amount').val(),
-            pay_currency:   $('#exchange_search #pay_currency').val(),
-            buy_amount:     $('#exchange_search #buy_amount').val(),
-            buy_currency:   $('#exchange_search #buy_currency').val(),
-            field:          field
-        };
-
-        $.getJSON(url, params, function(data, status) {
-            var result = data;
-            set('buy_amount', result.buy_amount, $this);
-            set('pay_amount', result.pay_amount, $this);
-            set('gain_amount', result.gain_amount)
-        })
-
-     });
-*/
-
-
 
 
 });

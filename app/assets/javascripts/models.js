@@ -18,6 +18,19 @@
             return
         }
 
+        if (field == 'real_rates') {
+            $('.subject_to_change').html(value ? '' : 'This rate is subject to change and is regularly updated by our staff');
+            return
+        }
+
+        if (field == 'latitude') {
+            $('[data-lat]').attr('data-lat', value);
+        }
+
+        if (field == 'longitude') {
+            $('[data-lng]').attr('data-lng', value);
+        }
+
         var field_no_model = field;
         if (field == 'id') field = model + '_id';
         var field_elements = $('[data-model=' + model + ']' + '[data-field=' + field + ']');
@@ -36,6 +49,8 @@
                 $this.html(value);
             }
         });
+
+
 
         // TODO: Replace 'href-id' and 'exchangeid' with just 'exchange_id' and save all these extra assignments. pages.js will then look for exchange_id iso href-id.
         if (field == model + '_id') {
@@ -56,4 +71,11 @@
         $.each(obj, function(field, value) {
             model_set(model, field, value)
         })
+        if (obj.pay_rounded || obj.get_rounded) {
+            text = '<p class=info_class>You may pay ' + obj.pay_rounded + ' and get ' + obj.get_rounded + ' to round</p>'
+            $('.exchange_search_form_error').html(text);
+            var marker = markers[0];
+            var marker_content = marker['infowindow'].getContent();
+            $(marker_content).find('.exchange_window_quote').html(obj.edited_quote_rounded);
+         }
     };
