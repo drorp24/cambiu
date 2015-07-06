@@ -1,6 +1,6 @@
 ActiveAdmin.register Exchange do
 
-  permit_params :id, :name, :address, :email, :phone, :website, :opens, :closes,:note, :atm, :source, :business_type, :chain_id, :city, :region, :rating, :nearest_station,
+  permit_params :id, :name, :address, :email, :latitude, :longitude, :country, :opens, :closes,:website, :email, :note, :phone, :atm, :source, :business_type, :chain_id, :city, :region, :rating, :nearest_station,
                 :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id
 =begin
     rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
