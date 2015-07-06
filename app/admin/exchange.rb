@@ -248,10 +248,11 @@ form do |f|
       end
 
       def new
-        @rate = Rate.create!(ratable_type: 'Exchange', ratable_id: params[:exchange_id], admin_user_id: current_admin_user.id, source: 0, service_type: 0)
+        exchange_id = params[:exchange_id] ? params[:exchange_id] : Exchange.last.id
+        @rate = Rate.create!(ratable_type: 'Exchange', ratable_id: exchange_id, admin_user_id: current_admin_user.id, source: 0, service_type: 0)
         @rate.ratable.update(rates_source: 'manual')
         notice = @rate.errors.any? ? @rate.errors.full_messages : nil
-        redirect_to admin_exchange_rates_path(params[:exchange_id]), notice: notice
+        redirect_to admin_exchange_rates_path(exchange_id), notice: notice
       end
 
       # since best_in_place automatically goes to the regular exchange#update, the update controller method is defined there not here
