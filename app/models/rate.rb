@@ -6,7 +6,7 @@ class Rate < ActiveRecord::Base
   validates :sell, numericality: true, allow_nil: true
   validates :buy, numericality: true, allow_nil: true
   validates :currency, uniqueness: { scope: :ratable_id,
-                                 message: "has already been defined" }, allow_nil: true
+                                 message: "has already been defined" }, allow_nil: true, on: :create
   before_update :currency_is_not_local
 #  before_create :initialize_default_values
 

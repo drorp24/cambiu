@@ -18,9 +18,8 @@ class Search < ActiveRecord::Base
 
     # TODO: Important: expire cache key when applicable rate updated_at changes (check if possible: fresh_when @applicable_rate)
     #       If not possible, don't use cache, or rates will be stale
-    if Rails.application.config.action_controller.perform_caching
+    if exchange_id.blank? and Rails.application.config.action_controller.perform_caching
       cache_key = "#{center.to_s}.#{distance} #{distance_unit}.#{pay_amount} #{pay_currency}.#{buy_amount} #{buy_currency}.#{sort}"
-      cache_key += exchange_id.to_s if exchange_id
       Rails.logger.info("Using cache " + cache_key)
       Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
         exchange_offers(exchange_id, location, center, box, pay, buy, sort)
