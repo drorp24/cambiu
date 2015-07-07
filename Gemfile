@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.6'
+gem 'rails', '4.2.3'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use Uglifier as compressor for JavaScript assets
@@ -25,9 +25,9 @@ gem 'quiet_assets',        group: :development
 
 gem 'rails_12factor', group: :production
 
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin', '~> 1.0.0.pre1'
 gem 'devise'
-gem 'activerecord-postgis-adapter'
+gem 'activerecord-postgis-adapter', '~> 3.0.0'
 gem 'geocoder'
 gem 'country-select'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
@@ -42,7 +42,7 @@ gem 'jquery-validation-rails'
 #gem 'client_side_validations', github: 'DavyJonesLocker/client_side_validations'
 #gem 'client_side_validations-simple_form', github: 'DavyJonesLocker/client_side_validations-simple_form'
 gem 'backstretch-rails'
-gem 'money'
+gem 'money', '~> 6.5.1'
 #gem 'eu_central_bank'
 gem 'thin'
 gem 'money-rails'
@@ -51,7 +51,7 @@ gem 'font_assets'
 #gem 'newrelic_rpm'
 gem 'actionpack-page_caching'
 gem 'omniauth-facebook'
-gem 'best_in_place', github: 'bernat/best_in_place'
+gem 'best_in_place', '~> 3.0.3'
 group :test, :staging, :production do
   gem 'le'
 end
@@ -59,7 +59,7 @@ gem "bootstrap-switch-rails"
 gem 'actionpack-action_caching'
 gem 'dalli'
 gem 'memcachier'
-gem "responders"
+gem 'responders', '~> 2.1.0'
 gem 'monetize'
 
 #gem 'twitter-bootstrap-rails'      # dont use it
@@ -71,9 +71,11 @@ group :test, :staging, :production do
   gem 'unicorn'
 end
 gem "rack-timeout"
-gem 'google_currency'
-gem 'google_currency_rails_cache' # TODO: How to install
+gem 'google_currency', '~> 3.2.0'
+#gem 'google_currency_rails_cache', '~> 1.2' # TODO: How to install
 gem 'tooltipster-rails'
+gem 'ransack', '~> 1.6.6'
+gem 'i18n', '~> 0.7.0'
 #gem 'cloudinary'
 #gem 'compass-rails'
 #gem 'chosen-rails'
