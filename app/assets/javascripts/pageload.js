@@ -4,6 +4,7 @@ var desktop = media == 'desktop';
 var homepage;
 var production;
 var search;
+var exchangePage;
 var direct;
 var params = {};
 var pacContainerInitialized = false;
@@ -219,6 +220,12 @@ $(document).ready(function() {
     };
     spa = function() {
         return $('body').hasClass('home');
+    };
+    search = function() {
+        return $('body').hasClass('search');
+    };
+    exchangePage = function() {
+        return $('body').hasClass('exchange');
     };
 
 });

@@ -39,15 +39,13 @@ class Exchange < ActiveRecord::Base
         edited_quote:     nil,
         edited_quote_rounded: nil,
         gain_amount:      gain_amount   = 0,
-        gain_currency:    gain_currency = "ABC",
-        real_rates:       real_rates    = nil,
+        gain_currency:    gain_currency = nil,
+        real_rates:       has_real_rates?,
         rounded:          false,
         pay_rounded:      params[:pay_amount],
         get_rounded:      params[:get_amount],
         errors:           []
     }
-
-    result[:real_rates] = has_real_rates?
 
     unless rates.any?
       result[:errors]           <<   'No rates defined for that exchange'
@@ -214,6 +212,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:pay_rounded] = quotes[:pay_rounded]
     exchange_hash[:get_rounded] = quotes[:get_rounded]
     exchange_hash[:edited_quote_rounded] = quotes[:edited_quote_rounded]
+    exchange_hash[:errors] = quotes[:errors]
 
 
 =begin
@@ -420,7 +419,7 @@ class Exchange < ActiveRecord::Base
 
   def todays_hours
     return @todays_hours if @todays_hours
-    if opens and closes
+    if opens and closes and opens.strftime("%H") != "00" 
       @todays_hours = opens.strftime("%H:%M") + ' - ' + closes.strftime("%H:%M")
     else
       @todays_hours = make_hour(rand(7..10)) + " - " + make_hour(rand(17..20))

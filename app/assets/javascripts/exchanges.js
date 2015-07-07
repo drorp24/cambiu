@@ -18,7 +18,7 @@ $(document).ready(function() {
         console.log('updatePage');
         exchanges = data;
 
-        if (exchanges && exchanges.length == 1) {
+        if (exchangePage()) {
             var mapCenterLat = exchanges[0].latitude;
             var mapCenterLng = exchanges[0].longitude;
         } else {
@@ -27,21 +27,23 @@ $(document).ready(function() {
         }
         drawMap(mapCenterLat, mapCenterLng, exchanges);
 
-        clearExchanges();
+        if (search()) {
+            clearExchanges();
+            updateExchanges(exchanges);
+        }
 
         if (exchanges && exchanges.length > 0) {
 
-            if (exchanges.length > 1) {
-                // spa mode after refresh requires populating exchange data here
+            if (search()) {
                 var exchange_id = urlId();
-                if (exchange_id) {
+                if (exchange_id) {   // Refresh of *specific exchange page* even in search requires model_populate like in exchange mode
                     var exchange = findExchange(exchange_id);
                     if (exchange) model_populate('exchange', exchange);
                 }
-                updateExchanges(exchanges);
             } else {
                 model_populate('exchange', exchanges[0]);
             }
+
             if (desktop) bindBehavior();
         }
 
