@@ -21,7 +21,7 @@ Rails.application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Changed to true for heroku: rails now uses CloudFonrt cdn 
-  config.serve_static_assets = true
+  config.serve_static_files = true
 
   # Compress JavaScripts and CSS.
   config.assets.compress = true
