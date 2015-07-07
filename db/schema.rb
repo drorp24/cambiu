@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629095833) do
+ActiveRecord::Schema.define(version: 20150707125829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "active_admin_comments", force: true do |t|
+  create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
     t.text     "body"
     t.string   "resource_id",   null: false
@@ -27,11 +27,11 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.datetime "updated_at"
   end
 
-  add_index "active_admin_comments", ["author_type", "author_id"], :name => "index_active_admin_comments_on_author_type_and_author_id"
-  add_index "active_admin_comments", ["namespace"], :name => "index_active_admin_comments_on_namespace"
-  add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_active_admin_comments_on_resource_type_and_resource_id"
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "admin_users", force: true do |t|
+  create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -46,10 +46,10 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.datetime "updated_at"
   end
 
-  add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
-  add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
+  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "business_hours", force: true do |t|
+  create_table "business_hours", force: :cascade do |t|
     t.integer  "exchange_id"
     t.integer  "day"
     t.time     "open1"
@@ -60,10 +60,10 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.time     "close2"
   end
 
-  add_index "business_hours", ["exchange_id", "day"], :name => "index_business_hours_on_exchange_id_and_day"
-  add_index "business_hours", ["exchange_id"], :name => "index_business_hours_on_exchange_id"
+  add_index "business_hours", ["exchange_id", "day"], name: "index_business_hours_on_exchange_id_and_day", using: :btree
+  add_index "business_hours", ["exchange_id"], name: "index_business_hours_on_exchange_id", using: :btree
 
-  create_table "chains", force: true do |t|
+  create_table "chains", force: :cascade do |t|
     t.text     "name"
     t.string   "email"
     t.string   "url"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.datetime "updated_at"
   end
 
-  create_table "exchanges", force: true do |t|
+  create_table "exchanges", force: :cascade do |t|
     t.string   "name"
     t.string   "address"
     t.datetime "created_at"
@@ -114,15 +114,16 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.string   "logo"
     t.string   "currency"
     t.integer  "rates_source"
+    t.boolean  "contract"
   end
 
-  add_index "exchanges", ["chain_id"], :name => "index_exchanges_on_chain_id"
-  add_index "exchanges", ["latitude", "longitude"], :name => "index_exchanges_on_latitude_and_longitude"
-  add_index "exchanges", ["latitude"], :name => "index_exchanges_on_latitude"
-  add_index "exchanges", ["longitude"], :name => "index_exchanges_on_longitude"
-  add_index "exchanges", ["name", "address"], :name => "index_exchanges_on_name_and_address"
+  add_index "exchanges", ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
+  add_index "exchanges", ["latitude", "longitude"], name: "index_exchanges_on_latitude_and_longitude", using: :btree
+  add_index "exchanges", ["latitude"], name: "index_exchanges_on_latitude", using: :btree
+  add_index "exchanges", ["longitude"], name: "index_exchanges_on_longitude", using: :btree
+  add_index "exchanges", ["name", "address"], name: "index_exchanges_on_name_and_address", using: :btree
 
-  create_table "orders", force: true do |t|
+  create_table "orders", force: :cascade do |t|
     t.integer  "exchange_id"
     t.integer  "user_id"
     t.string   "email"
@@ -138,10 +139,10 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.integer  "service_type"
   end
 
-  add_index "orders", ["exchange_id"], :name => "index_orders_on_exchange_id"
-  add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
+  add_index "orders", ["exchange_id"], name: "index_orders_on_exchange_id", using: :btree
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
-  create_table "rates", force: true do |t|
+  create_table "rates", force: :cascade do |t|
     t.integer  "source"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -154,10 +155,10 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.integer  "admin_user_id"
   end
 
-  add_index "rates", ["admin_user_id"], :name => "index_rates_on_admin_user_id"
-  add_index "rates", ["ratable_id", "ratable_type"], :name => "index_rates_on_ratable_id_and_ratable_type"
+  add_index "rates", ["admin_user_id"], name: "index_rates_on_admin_user_id", using: :btree
+  add_index "rates", ["ratable_id", "ratable_type"], name: "index_rates_on_ratable_id_and_ratable_type", using: :btree
 
-  create_table "s_currencies", force: true do |t|
+  create_table "s_currencies", force: :cascade do |t|
     t.integer  "source_id"
     t.string   "name"
     t.string   "iso_code"
@@ -165,9 +166,9 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.datetime "updated_at"
   end
 
-  add_index "s_currencies", ["source_id"], :name => "index_s_currencies_on_source_id"
+  add_index "s_currencies", ["source_id"], name: "index_s_currencies_on_source_id", using: :btree
 
-  create_table "searches", force: true do |t|
+  create_table "searches", force: :cascade do |t|
     t.string   "pay_currency"
     t.string   "buy_currency"
     t.string   "pay_amount"
@@ -193,15 +194,15 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.integer  "service_type",   default: 0
   end
 
-  add_index "searches", ["exchange_id"], :name => "index_searches_on_exchange_id"
+  add_index "searches", ["exchange_id"], name: "index_searches_on_exchange_id", using: :btree
 
-  create_table "sources", force: true do |t|
+  create_table "sources", force: :cascade do |t|
     t.text     "url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "uploads", force: true do |t|
+  create_table "uploads", force: :cascade do |t|
     t.integer  "source_type"
     t.string   "file_location"
     t.string   "file_name"
@@ -215,9 +216,9 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.datetime "updated_at"
   end
 
-  add_index "uploads", ["admin_user_id"], :name => "index_uploads_on_admin_user_id"
+  add_index "uploads", ["admin_user_id"], name: "index_uploads_on_admin_user_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -253,10 +254,10 @@ ActiveRecord::Schema.define(version: 20150629095833) do
     t.string   "geocoded_location"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "visitors", force: true do |t|
+  create_table "visitors", force: :cascade do |t|
     t.integer  "buy_cents"
     t.string   "buy_currency"
     t.integer  "pay_cents"

@@ -15,9 +15,11 @@ class Exchange < ActiveRecord::Base
   belongs_to  :upload
   belongs_to  :admin_user
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
-  enum rates_source: [ :fake, :manual, :exchange_input, :scraping ]
+  enum rates_source: [ :no_rates, :fake, :manual, :exchange_input, :scraping ]
 
   geocoded_by :address
+
+  scope :with_contract, -> { where(contract: true) }
 
    def has_real_rates?
     rates_source.present? && !fake?

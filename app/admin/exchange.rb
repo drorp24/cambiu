@@ -1,7 +1,7 @@
 ActiveAdmin.register Exchange do
 
   permit_params :id, :name, :address, :email, :latitude, :longitude, :country, :opens, :closes,:website, :email, :note, :phone, :atm, :source, :business_type, :chain_id, :city, :region, :rating, :nearest_station,
-                :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id
+                :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id, :rates_source, :contract
 =begin
     rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
     business_hours_attributes: [:id, :day, :open1, :close1, :open2, :close2]
@@ -66,7 +66,7 @@ ActiveAdmin.register Exchange do
   scope :fake
 
 
-  filter :rates_source, as: :select, collection: [['Fake', 'fake'], ['Manual', 'manual'], ['Exchange', 'exchange_input'], ['Scraping', 'scraping']]
+  filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Fake', 'fake'], ['Manual', 'manual'], ['Exchange', 'exchange_input'], ['Scraping', 'scraping']]
   filter :chain
   filter :name
   filter :address
@@ -77,6 +77,7 @@ ActiveAdmin.register Exchange do
     column :name do |exchange|
       link_to exchange.name, admin_exchange_path(exchange)
     end
+    column :contract
     column :rates do |exchange|
       link_to exchange.rates_source, admin_exchange_rates_path(exchange)
     end
@@ -120,8 +121,28 @@ ActiveAdmin.register Exchange do
   controller do
 
     def new
-      @exchange = Exchange.new(admin_user_id: current_admin_user.id, currency: "GBP")
+      @exchange = Exchange.new(admin_user_id: current_admin_user.id, currency: "GBP", rates_source: 0, contract: true)
     end
+
+    def show
+      redirect_to edit_admin_exchange_path(params[:id])
+    end
+
+    def update
+      exchange = Exchange.find_by_id(params[:id])
+      if exchange.update(exchange_params)
+        redirect_to admin_exchanges_path, notice: 'Exchange Updated!'
+      else
+        render edit_admin_exchange_path(params[:id])
+      end
+    end
+
+    protected
+
+    def exchange_params
+      params.require(:exchange).permit!
+    end
+
 
   end
 
@@ -137,11 +158,12 @@ form do |f|
       f.input     :updated_at, as: :string, input_html: { :disabled => true }
       f.input     :admin_user, as: :string, label: "By", input_html: { :disabled => true }
       f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
-      f.input     :direct_link, input_html: { :disabled => true }, hint: '  Direct link for search engines and ads'
       f.input     :name
       f.input     :address
+      f.input     :contract, label: 'Contract', as: :radio
+      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Fake"=>"fake", :"Manual"=>"manual", :"Exchange"=>"exchange_input", :"Scraping"=>"scraping"}
+      f.input     :direct_link, input_html: { :disabled => true }, hint: '  Direct link for search engines and ads'
       f.input     :logo, as: :file
-      f.input     :rates_source,input_html: { :disabled => true }, as: :select, collection: {:"Fake"=>"fake", :"Manual"=>"manual", :"Exchange"=>"exchange_input", :"Scraping"=>"scraping"}
       f.input     :latitude
       f.input     :longitude
  #     f.input     :country, as: :country
@@ -250,7 +272,7 @@ form do |f|
       def new
         exchange_id = params[:exchange_id] ? params[:exchange_id] : Exchange.last.id
         @rate = Rate.create!(ratable_type: 'Exchange', ratable_id: exchange_id, admin_user_id: current_admin_user.id, source: 0, service_type: 0)
-        @rate.ratable.update(rates_source: 'manual')
+        @rate.ratable.update(rates_source: 'manual', contract: true)
         notice = @rate.errors.any? ? @rate.errors.full_messages : nil
         redirect_to admin_exchange_rates_path(exchange_id), notice: notice
       end
