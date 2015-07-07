@@ -419,7 +419,7 @@ class Exchange < ActiveRecord::Base
 
   def todays_hours
     return @todays_hours if @todays_hours
-    if opens and closes and opens.strftime("%H") != "00" 
+    if opens and closes and opens.strftime("%H") != "00"
       @todays_hours = opens.strftime("%H:%M") + ' - ' + closes.strftime("%H:%M")
     else
       @todays_hours = make_hour(rand(7..10)) + " - " + make_hour(rand(17..20))
