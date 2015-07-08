@@ -97,6 +97,10 @@ Rails.application.configure do
   config.fb_app_secret = 'bb6127ea9108606b581b1fb288fd08e1' 
 
   config.use_google_geocoding = true
+
+  config.action_mailer.default_url_options = { host: 'www.currency-net.com' }
+
+  config.action_mailer.raise_delivery_errors = true
 end
 Rails.application.routes.default_url_options[:host] = 'www.cambiu.com'
 

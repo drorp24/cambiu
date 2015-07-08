@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  roduct: MyString
+  order_id: 
+  order_type: Order
+  from: MyString
+  to: MyString
+  status: MyString
+  mandrill_id: MyString
+  reject_reason: MyString
+
+two:
+  roduct: MyString
+  order_id: 
+  order_type: Order
+  from: MyString
+  to: MyString
+  status: MyString
+  mandrill_id: MyString
+  reject_reason: MyString

@@ -106,6 +106,7 @@ GEM
     diskcached (1.1.2)
     erubis (2.7.0)
     eventmachine (1.0.7)
+    excon (0.45.3)
     execjs (2.5.2)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
@@ -156,6 +157,9 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    mandrill-api (1.0.53)
+      excon (>= 0.16.0, < 1.0)
+      json (>= 1.7.7, < 2.0)
     memcachier (0.0.2)
     mime-types (2.6.1)
     mini_portile (0.6.2)
@@ -323,6 +327,7 @@ DEPENDENCIES
   jquery-rails
   jquery-validation-rails
   le
+  mandrill-api (~> 1.0.53)
   memcachier
   monetize
   money (~> 6.5.1)

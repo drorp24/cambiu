@@ -2,11 +2,11 @@
 
 
     <% if status == 'produced' %>
-        <%= f.input_field :email, data: {field: 'email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
+        <%= f.input_field :email, data: {model: 'order', field: 'email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
         <%= f.input_field :phone, class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone to coordinate delivery", label: false %>
         <div class="validation_errors"></div>
     <% else %>
-        <%= f.input_field :email, 		    as: :hidden, data: {field: 'email'} %>
+        <%= f.input_field :email, 		    as: :hidden, data: {model: 'order', field: 'email'} %>
     <% end %>
 
     <div class="hidden_fields">
@@ -16,6 +16,8 @@
       <%= f.input_field :pay_currency, 	    as: :hidden, data: {field: 'pay_currency'} %>
       <%= f.input_field :buy, 	            as: :hidden, data: {field: 'buy_amount'} %>
       <%= f.input_field :buy_currency, 	    as: :hidden, data: {field: 'buy_currency'} %>
+      <%= f.input_field :get, 	            as: :hidden, data: {field: 'get_amount'} %>
+      <%= f.input_field :get_currency, 	    as: :hidden, data: {field: 'get_currency'} %>
       <%= f.input_field :status, 	        as: :hidden, data: {field: 'status'}, value: status %>
       <%= f.input_field :service_type, 	    as: :hidden, data: {field: 'service_type'} %>
     </div>

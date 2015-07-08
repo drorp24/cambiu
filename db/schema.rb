@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707125829) do
+ActiveRecord::Schema.define(version: 20150708193122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,21 @@ ActiveRecord::Schema.define(version: 20150707125829) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "emails", force: :cascade do |t|
+    t.integer  "emailable_id"
+    t.string   "emailable_type"
+    t.string   "from"
+    t.string   "to"
+    t.string   "status"
+    t.string   "mandrill_id"
+    t.string   "reject_reason"
+    t.integer  "order_status"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "emails", ["emailable_type", "emailable_id"], name: "index_emails_on_emailable_type_and_emailable_id", using: :btree
 
   create_table "exchanges", force: :cascade do |t|
     t.string   "name"
@@ -137,6 +152,8 @@ ActiveRecord::Schema.define(version: 20150707125829) do
     t.datetime "updated_at"
     t.string   "phone"
     t.integer  "service_type"
+    t.integer  "get_cents"
+    t.string   "get_currency"
   end
 
   add_index "orders", ["exchange_id"], name: "index_orders_on_exchange_id", using: :btree

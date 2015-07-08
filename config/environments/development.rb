@@ -44,5 +44,8 @@ Rails.application.configure do
   
   config.use_google_geocoding = true
 
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.raise_delivery_errors = true
+
 end
 Rails.application.routes.default_url_options[:host] = 'localhost:3000'
