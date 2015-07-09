@@ -27,9 +27,11 @@ $(document).ready(function() {
         if (el.is('[data-lng]'))                el.attr('data-lng', exchange.longitude);
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', exchange.name);
 
-        if (el.data('field'))                   {
-            var value = el.data('field') == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[el.data('field')];
+        var field = el.data('field');
+        if (field)                   {
+            var value = field == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[field];
             el.html(value);
+            sessionStorage.setItem('exchange_' + field, value);
         }
 
 /*
@@ -141,26 +143,24 @@ $(document).ready(function() {
             pane_el.show();
         }
 
-        // populate exchange data in exchange pages (spa only)
+        // populate exchange data in exchange pages (spa only, at page transition)
         if (id && spa()) {
-            console.log('pages.js: spa mode and page contains id: populate exchange fields');
+
+            console.log('pages.js: spa mode and page contains id: populate?');
             var exchange = findExchange(id);
 
-            // TODO: Populate across the board, not only in active pane - store/check which exchange is currently populated
-            $('.pane.active').each(function () {
-                var $this = $(this);
-                $this.find('[data-model=exchange]').each(function () {
-                    if (exchange) {
-                        populate($(this), exchange)
-                    } else {
-                        unpopulate($(this))
-                    }
+            if (exchange) {
+                console.log('Yes. exchange has values. This means someone just clicked on one of the getit buttons');
+                $('[data-model=exchange]').each(function () {
+                    populate($(this), exchange);        // TODO: Replace pages 'populate' with 'model_populate'
                 });
-                // One extra update is required for exchange foreign keys which exist in other models
-                $this.find('[data-field=exchange_id]').val(exchange.id);
-            });
-         }
+                 // One extra update is required for exchange foreign keys which exist in other models
+                $('[data-field=exchange_id]').val(exchange.id);
+            } else {
+                console.log('No. exchange is empty. This means we are in a page reload. updatePage will do it soon')
+            }
 
+         }
         // don't push state if invoked from popstate or page reloads
         var new_state =  '/' + url;
         if (window.location.pathname != new_state) {

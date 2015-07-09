@@ -382,8 +382,10 @@ $(document).ready(function() {
         $.getJSON(url, params, function(data, status) {
             var result = data;
             var marker = markers[0];
-            var marker_content = marker['infowindow'].getContent();
-            $(marker_content).find('.exchange_window_quote').html(result.edited_quote_rounded);
+            if (marker && marker['infowindow']) {
+                var marker_content = marker['infowindow'].getContent();
+                $(marker_content).find('.exchange_window_quote').html(result.edited_quote_rounded);
+            }
             set('buy_amount', result.get_amount, $this);
             set('pay_amount', result.pay_amount, $this);
             set('get_rounded', result.get_rounded, $this);

@@ -25,7 +25,7 @@ class OrderMailer < ApplicationMailer
       message = {
           to: [{email: order.email}],
           subject: "Order #{order.voucher}",
-          from_name: @mode == 'exchange' ? "cambiu" : "cambiu",     # TODO: Change to cn once confirmed by mandrill
+          from_name: @mode == 'search' ? "cambiu" : "cambiu",     # TODO: Change to cn once confirmed by mandrill
           from_email: "team@cambiu.com",                            # TODO: Same
           google_analytics_domains: ["cambiu.com"],                 # TODO: change
           merge_vars: [
@@ -33,12 +33,15 @@ class OrderMailer < ApplicationMailer
                vars: [
                    {name: 'SERVICE_TYPE',     content: order.service_type.upcase},
                    {name: 'VOUCHER_NUMBER',   content: order.voucher},
-                   {name: 'EXPIRY_DATE',      content: order.expiry.strftime('%e %b')},
+                   {name: 'EXPIRY_DATE',      content: order.expiry.strftime('%e %b, %Y')},
                    {name: 'EXPIRY_TIME',      content: order.expiry.strftime('%H:%M')},
                    {name: 'EXCHANGE_NAME',    content: order.exchange.name},
                    {name: 'EXCHANGE_ADDRESS', content: order.exchange.address},
                    {name: 'PAY_AMOUNT',       content: Money.new(order.pay_cents, order.pay_currency).format},
-                   {name: 'BUY_AMOUNT',       content: Money.new(order.buy_cents, order.buy_currency).format}
+                   {name: 'BUY_AMOUNT',       content: Money.new(order.buy_cents, order.buy_currency).format},
+                   {name: 'COMPANY_NAME',     content: @mode == 'search' ? 'cambiu' : 'Currency-net'},
+                   {name: 'COMPANY_ADDRESS',  content: @mode == 'search' ? 'cambiu address' : 'Currency-net address'},
+                   {name: 'CURRENT_YEAR',     content: Date.today.strftime('%Y')}
                ]}
           ]
       }
