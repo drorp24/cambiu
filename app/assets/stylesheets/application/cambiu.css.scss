@@ -967,7 +967,9 @@ body#cambiu {
         color: #333;
       }
       .list-group-item .name {
-        padding-top: 10px;
+        @media (min-width: $screen-sm-min) {
+          padding-top: 10px;
+        }
       }
       .units-d {
         font-size: 0.9em;
@@ -987,12 +989,14 @@ body#cambiu {
       .middle-child.email_submit { // Temporary
         margin-top: 17px;
       }
-        .quote {
-        margin-left: -15px;
+        .quote, .quote_currency {
         font-weight: 600;
         line-height: 25px;
         color: #111;
           padding-top: 10px;
+      }
+      .quote_currency {
+        font-size: 0.85em;
       }
       .comparison {
         text-align: center;
@@ -1032,9 +1036,14 @@ body#cambiu {
       border-color: $lightgreen;
       color: $lightgreen;
       text-transform: uppercase;
-      margin-left: -10px;
-      padding-right: 20px;
-    }
+      @media (min-width: $screen-sm-min) {
+        padding-left: 10px;
+        padding-right: 25px;
+      }
+      margin-left: -15px;
+      padding-left: 5px;
+      padding-right: 15px;
+      }
     .exchange_row {
       .middle-parent {
         @include middle-parent(70px, 0)

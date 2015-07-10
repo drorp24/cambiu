@@ -47,7 +47,8 @@ class Search < ActiveRecord::Base
 
       @exchange_offers = []
       exchanges.each do |exchange|
-        @exchange_offers << exchange.offer(center, pay, buy)
+        exchange_offer = exchange.offer(center, pay, buy)
+        @exchange_offers << exchange_offer unless exchange_offer[:errors].any?
       end
       
       if sort == "quote"
