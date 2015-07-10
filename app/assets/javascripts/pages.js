@@ -30,9 +30,13 @@ $(document).ready(function() {
         var field = el.data('field');
         if (field == 'exchange_id') {field = 'id'}
         var value = field == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[field];
-        if (field)                   {
-            el.html(value);
-             sessionStorage.setItem('exchange_' + field, value);
+        if (field)  {
+            if (el.is('input, select')) {
+                el.val(value);
+            } else {
+                el.html(value);
+            }
+            sessionStorage.setItem('exchange_' + field, value);
         }
 
 /*
@@ -163,7 +167,7 @@ $(document).ready(function() {
 
         // reset all 'exchange_' and '_order' sessionStorage vars if moving to a non exchange-specific page (e.g., /list)
         if (!id) {
-             console.log('moving to a non exchange-specific page: clearing all exchange-specific html fields and session vars')
+             console.log('moving to a non exchange-specific page: clearing all exchange-specific html fields and session vars');
              $('[data-model=exchange][data-field]').each(function() {
                 var $this = $(this);
                 if ($this.is('input, select')) {
@@ -172,7 +176,7 @@ $(document).ready(function() {
                     $this.html('');
                 }
             });
-            $('[data-model=order][data-field]').not('[data-field=status]').not('[data-field=service_type]').each(function() {
+            $('[data-model=order][data-field]').not('[data-field=status]').not('[data-field=service_type]').not('[data-field=order_email]').each(function() {
                 var $this = $(this);
                 if ($this.is('input, select')) {
                     $this.val('');
@@ -185,7 +189,8 @@ $(document).ready(function() {
                 var value = sessionStorage.getItem(key);
                 console.log('key: ' + key + ' value: ' + value);
                 if (key) {
-                    if ((key.indexOf('exchange_') > -1) || (key.indexOf('order_') > -1)) {
+                    if  (((key.indexOf('exchange_') > -1) || (key.indexOf('order_') > -1)) &&
+                         ((key.indexOf('status') == -1) && (key.indexOf('service_type') == -1) && (key.indexOf('order_email') == -1)))  {
                         console.log('removing it');
                         sessionStorage.setItem(key, null)
                     } else
@@ -197,6 +202,8 @@ $(document).ready(function() {
                     }
                 }
             }
+            $('form.new_order').attr('action', '/orders');
+            $('form.new_order').attr('method', 'post');
         }
         // don't push state if invoked from popstate or page reloads
         var new_state =  '/' + url;
