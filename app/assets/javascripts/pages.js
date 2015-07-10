@@ -28,10 +28,11 @@ $(document).ready(function() {
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', exchange.name);
 
         var field = el.data('field');
+        var value = field == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[field];
+        if (field == 'exchange_id') {field = 'id'; console.log('populating id with: ' + value)}
         if (field)                   {
-            var value = field == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[field];
             el.html(value);
-            sessionStorage.setItem('exchange_' + field, value);
+             sessionStorage.setItem('exchange_' + field, value);
         }
 
 /*
@@ -59,8 +60,6 @@ $(document).ready(function() {
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', '');
 
         if (el.data('field'))                   el.html('');
-
-        $('[data-model=order]').html("");
 
     }
 
@@ -161,6 +160,44 @@ $(document).ready(function() {
             }
 
          }
+
+        // reset all 'exchange_' and '_order' sessionStorage vars if moving to a non exchange-specific page (e.g., /list)
+        if (!id) {
+             console.log('moving to a non exchange-specific page: clearing all exchange-specific html fields and session vars')
+             $('[data-model=exchange][data-field]').each(function() {
+                var $this = $(this);
+                if ($this.is('input, select')) {
+                    $this.val('');
+                } else {
+                    $this.html('');
+                }
+            });
+            $('[data-model=order][data-field]').not('[data-field=status]').not('[data-field=service_type]').each(function() {
+                var $this = $(this);
+                if ($this.is('input, select')) {
+                    $this.val('');
+                } else {
+                    $this.html('');
+                }
+            });
+             for (var i=0, len = sessionStorage.length; i  <  len; i++){
+                var key = sessionStorage.key(i);
+                var value = sessionStorage.getItem(key);
+                console.log('key: ' + key + ' value: ' + value);
+                if (key) {
+                    if ((key.indexOf('exchange_') > -1) || (key.indexOf('order_') > -1)) {
+                        console.log('removing it');
+                        sessionStorage.setItem(key, null)
+                    } else
+                    if ((key == 'exchangeid') || (key == 'id')) {
+                        console.log('removing other forms of id vars');
+                        sessionStorage.setItem(key, null)
+                    } else {
+                        {console.log('not removing it')}
+                    }
+                }
+            }
+        }
         // don't push state if invoked from popstate or page reloads
         var new_state =  '/' + url;
         if (window.location.pathname != new_state) {

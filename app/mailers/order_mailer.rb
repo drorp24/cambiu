@@ -14,36 +14,94 @@ class OrderMailer < ApplicationMailer
   # mandrill api based. All smtp definitions ignored
   def notify(order)
 
-    puts "thats the order i received"
-    puts order.inspect
+    logger.info "At notify. thats the order i received"
+    logger.info  order.inspect
 
     response = {}
+    error = nil
+    exchange = order.exchange
+    if !exchange
+      error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not exist"
+    elsif exchange.email.blank?
+      error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not have an email"
+    elsif !order.offer? and order.email.blank?
+      error = "Order has no email"
+    end
+
+    if error
+      logger.info error
+      response[:error] = error
+      return response
+    end
+
+    if order.offer?
+      subject = "Someone just clicked Get it..."
+      to =  [
+                  {
+                      email:  'dror@cambiu.com',
+                      type:   'to'
+                  }
+            ]
+    elsif order.produced?
+      subject = "Order #{order.voucher} is ready"
+      to =  [
+                  {
+                      email:  order.email,
+                      type:   'to'
+                  },
+                  {
+
+                      email:  Rails.env.production? ? exchange.email : 'dror@cambiu.com',
+                      name:   exchange.name,
+                      type:   'to'
+                  },
+                  {
+                      email:  'dror@cambiu.com',
+                      type:   'bcc'
+                  }
+            ]
+      elsif order.used?
+      subject = "Order #{order.voucher} has been fulfilled"
+      to =  [
+                  {
+                      email:  order.email,
+                      type:   'to'
+                  },
+                  {
+                      email:  'dror@cambiu.com',
+                      type:   'bcc'
+                  }
+            ]
+    end
+
     begin
 
-      template_name = 'order_2'
+      template_name = 'order_' + order.status
       template_content = []
       message = {
-          to: [{email: order.email}],
-          subject: "Order #{order.voucher}",
-          from_name: @mode == 'search' ? "cambiu" : "cambiu",     # TODO: Change to cn once confirmed by mandrill
+          to:   to,
+          subject: subject,
+          from_name: @mode == 'search' ? "cambiu" : "cambiu",       # TODO: Change to cn once confirmed by mandrill
           from_email: "team@cambiu.com",                            # TODO: Same
+          headers: {
+              "Reply-To": "support@currency-net.com"
+          },
+          track_opens: true,
+          track_clicks: true,
           google_analytics_domains: ["cambiu.com"],                 # TODO: change
-          merge_vars: [
-              {rcpt: order.email,
-               vars: [
-                   {name: 'SERVICE_TYPE',     content: order.service_type.upcase},
-                   {name: 'VOUCHER_NUMBER',   content: order.voucher},
-                   {name: 'EXPIRY_DATE',      content: order.expiry.strftime('%e %b, %Y')},
-                   {name: 'EXPIRY_TIME',      content: order.expiry.strftime('%H:%M')},
-                   {name: 'EXCHANGE_NAME',    content: order.exchange.name},
-                   {name: 'EXCHANGE_ADDRESS', content: order.exchange.address},
-                   {name: 'PAY_AMOUNT',       content: Money.new(order.pay_cents, order.pay_currency).format},
-                   {name: 'BUY_AMOUNT',       content: Money.new(order.buy_cents, order.buy_currency).format},
-                   {name: 'COMPANY_NAME',     content: @mode == 'search' ? 'cambiu' : 'Currency-net'},
-                   {name: 'COMPANY_ADDRESS',  content: @mode == 'search' ? 'cambiu address' : 'Currency-net address'},
-                   {name: 'CURRENT_YEAR',     content: Date.today.strftime('%Y')}
-               ]}
-          ]
+          global_merge_vars: [
+             {name: 'SERVICE_TYPE',     content: order.service_type.upcase},
+             {name: 'VOUCHER_NUMBER',   content: order.voucher},
+             {name: 'EXPIRY_DATE',      content: order.expiry.strftime('%e %b, %Y')},
+             {name: 'EXPIRY_TIME',      content: order.expiry.strftime('%H:%M')},
+             {name: 'EXCHANGE_NAME',    content: order.exchange.name},
+             {name: 'EXCHANGE_ADDRESS', content: order.exchange.address},
+             {name: 'PAY_AMOUNT',       content: Money.new(order.pay_cents, order.pay_currency).format},
+             {name: 'BUY_AMOUNT',       content: Money.new(order.buy_cents, order.buy_currency).format},
+             {name: 'COMPANY_NAME',     content: @mode == 'search' ? 'cambiu' : 'Currency-net'},
+             {name: 'COMPANY_ADDRESS',  content: @mode == 'search' ? 'cambiu address' : 'Currency-net address'},
+             {name: 'CURRENT_YEAR',     content: Date.today.strftime('%Y')}
+           ]
       }
 
       async = false

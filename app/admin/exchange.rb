@@ -83,6 +83,7 @@ ActiveAdmin.register Exchange do
     end
     column :chain 
     column :address
+    column :email
     column :phone
     actions
   end
