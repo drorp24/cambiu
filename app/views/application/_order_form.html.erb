@@ -2,11 +2,11 @@
 
 
     <% if status == 'produced' %>
-        <%= f.input_field :email, data: {model: 'order', field: 'email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
+        <%= f.input_field :email, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
         <%= f.input_field :phone, class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone to coordinate delivery", label: false %>
         <div class="validation_errors"></div>
     <% else %>
-        <%= f.input_field :email, 		    as: :hidden, data: {model: 'order', field: 'email'} %>
+        <%= f.input_field :email, 		    as: :hidden, data: {model: 'order', field: 'order_email'} %>
     <% end %>
 
     <div class="hidden_fields">

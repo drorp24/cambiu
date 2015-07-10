@@ -20,6 +20,8 @@
             return
         }
 
+        if (field == 'distance') value = (value * 1000).toFixed(0);
+
         if (field == 'real_rates') {
             $('.subject_to_change').html(value ? '' : 'This rate is subject to change and is regularly updated by our staff');
             return
@@ -45,9 +47,9 @@
 
         var field_no_model = field;
         if (field == 'id') field = model + '_id';
+
         var field_elements = $('[data-model=' + model + ']' + '[data-field=' + field + ']');
 
-        if (field == 'distance') value = (value * 1000).toFixed(0);
 
         field_elements.each(function() {
 
@@ -66,6 +68,8 @@
 
 
         if (field == model + '_id') {
+            console.log('field = '+ model + '_id');
+            console.log('value is: ' + value);
             var data_elements = $('[data-model=' + model + ']' + '[data-href]');
 
             // TODO: Replace 'href-id' and 'exchangeid' with just 'exchange_id' and save all these extra assignments. pages.js will then look for exchange_id iso href-id.
@@ -78,6 +82,7 @@
 
             // Now do one assignment without the [data-model=model] filter to populate foreign keys in other models (e.g., exchange_id on model=order)
             $('[data-field=' + model + '_id]').val(value);
+            console.log('setting all [data-field=' + model + '_id] val() to: ' + value);
         }
     };
 

@@ -28,8 +28,8 @@ $(document).ready(function() {
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', exchange.name);
 
         var field = el.data('field');
+        if (field == 'exchange_id') {field = 'id'}
         var value = field == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[field];
-        if (field == 'exchange_id') {field = 'id'; console.log('populating id with: ' + value)}
         if (field)                   {
             el.html(value);
              sessionStorage.setItem('exchange_' + field, value);

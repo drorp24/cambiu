@@ -74,6 +74,12 @@ class OrderMailer < ApplicationMailer
             ]
     end
 
+    if order.collection?
+      service_type_message = 'Please pick it up at the above address'
+    elsif order.delivery?
+      service_type_message = "Please specify your desired delivery details if you haven't done so already"
+    end
+
     begin
 
       template_name = 'order_' + order.status
@@ -90,17 +96,18 @@ class OrderMailer < ApplicationMailer
           track_clicks: true,
           google_analytics_domains: ["cambiu.com"],                 # TODO: change
           global_merge_vars: [
-             {name: 'SERVICE_TYPE',     content: order.service_type.upcase},
-             {name: 'VOUCHER_NUMBER',   content: order.voucher},
-             {name: 'EXPIRY_DATE',      content: order.expiry.strftime('%e %b, %Y')},
-             {name: 'EXPIRY_TIME',      content: order.expiry.strftime('%H:%M')},
-             {name: 'EXCHANGE_NAME',    content: order.exchange.name},
-             {name: 'EXCHANGE_ADDRESS', content: order.exchange.address},
-             {name: 'PAY_AMOUNT',       content: Money.new(order.pay_cents, order.pay_currency).format},
-             {name: 'BUY_AMOUNT',       content: Money.new(order.buy_cents, order.buy_currency).format},
-             {name: 'COMPANY_NAME',     content: @mode == 'search' ? 'cambiu' : 'Currency-net'},
-             {name: 'COMPANY_ADDRESS',  content: @mode == 'search' ? 'cambiu address' : 'Currency-net address'},
-             {name: 'CURRENT_YEAR',     content: Date.today.strftime('%Y')}
+             {name: 'SERVICE_TYPE',             content: order.service_type.upcase},
+             {name: 'SERVICE_TYPE_MESSAGE',     content: service_type_message},
+             {name: 'VOUCHER_NUMBER',           content: order.voucher},
+             {name: 'EXPIRY_DATE',              content: order.expiry.strftime('%e %b, %Y')},
+             {name: 'EXPIRY_TIME',              content: order.expiry.strftime('%H:%M')},
+             {name: 'EXCHANGE_NAME',            content: order.exchange.name},
+             {name: 'EXCHANGE_ADDRESS',         content: order.exchange.address},
+             {name: 'PAY_AMOUNT',               content: Money.new(order.pay_cents, order.pay_currency).format},
+             {name: 'GET_AMOUNT',               content: Money.new(order.buy_cents, order.buy_currency).format},
+             {name: 'COMPANY_NAME',             content: @mode == 'search' ? 'cambiu' : 'Currency-net'},
+             {name: 'COMPANY_ADDRESS',          content: @mode == 'search' ? 'cambiu address' : 'Currency-net address'},
+             {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')}
            ]
       }
 
