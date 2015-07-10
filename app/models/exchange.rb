@@ -22,7 +22,7 @@ class Exchange < ActiveRecord::Base
   scope :with_contract, -> { where(contract: true) }
 
    def has_real_rates?
-    rates_source.present? && !fake?
+    !fake? && !no_rates?
   end
   # TODO: Currently returns error unless either of the currencies is local. Generalize.
   def quote(params)

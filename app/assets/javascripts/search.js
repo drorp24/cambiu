@@ -185,18 +185,10 @@ $(document).ready(function() {
         if (exchanges.length == 0) return;
 
         if (sort == 'distance') {
-            if (exchanges_by_distance.length > 0) {
-                exchanges = exchanges_by_distance
-            } else {
-                exchanges_by_distance = exchanges.sort(function(a, b){return a.distance-b.distance;}).slice(0);
-            }
+            exchanges_by_distance = exchanges.sort(function(a, b){return a.distance-b.distance;}).slice(0);
         }
         else if (sort == 'quote') {
-            if (exchanges_by_quote.length > 0) {
-                exchanges = exchanges_by_quote
-            } else {
-                exchanges_by_quote = exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)}).slice(0);
-            }
+            exchanges_by_quote = exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)}).slice(0);
         }
         clearExchanges();
         updateExchanges(exchanges);
