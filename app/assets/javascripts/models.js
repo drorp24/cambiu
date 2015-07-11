@@ -45,6 +45,15 @@
             }
         }
 
+        if (field == 'errors' && value.length > 0) {
+            var text = '';
+            for (var i = 0; i < value.length; i++) {
+                text += '<p class=error_class>' + value[i] + '</p>'
+            }
+            $('.exchange_search_form_error').html(text);
+        }
+
+
         var field_no_model = field;
         if (field == 'id') field = model + '_id';
 

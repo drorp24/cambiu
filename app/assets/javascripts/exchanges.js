@@ -68,7 +68,9 @@ $(document).ready(function() {
 
     // TODO: Remove det, replace classes with data- attributes, do it in a loop over the data fields
     function addExchange(exchange, index) {
-    
+
+        if (exchange.errors.length > 0) return;
+
         var exchange_el =   $('.exchange_row.template').clone().removeClass('template');
         var exchange_sum =  exchange_el.find('.list-group-item');
         //var exchange_det =  exchange_el.find('.collapse');

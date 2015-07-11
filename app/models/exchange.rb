@@ -167,7 +167,7 @@ class Exchange < ActiveRecord::Base
         end
       end
     else
-      result[:error] = 'No rates defined for ' + currency
+      result[:error] = 'Sorry, no offers for ' + currency + ' currently'
       return result
     end
 
