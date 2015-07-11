@@ -1132,8 +1132,7 @@ body#cambiu {
       .es_address {
         @media (max-width: $screen-xs-max) {
           font-size: 1.8vh;
-          margin-left: -15px;
-        }
+         }
         @media (min-width: $screen-sm-min) {
           font-size: 1.8vh;
         }
@@ -1142,7 +1141,6 @@ body#cambiu {
       }
       .es_opening_hours {
         @media (max-width: $screen-xs-max) {
-          margin-left: -15px;
         }
         font-size: 1.8vh;
         font-weight: 400;
@@ -1151,10 +1149,16 @@ body#cambiu {
       }
     }
 
-    .exchange_logo img{
-      margin-top: 17px;
-      width: 22vh;
-      height: auto;
+    #exchange_banner {
+      #exchange_address_oh.middle-parent, #exchange_logo.middle-parent {
+        @include middle-parent(15vh, 7vh);
+        img {
+          background-color: #fff;
+          width: 100%;
+        }
+      }
+      #exchange_logo_img_wrapper {
+       }
     }
 
     #exchange_summary {

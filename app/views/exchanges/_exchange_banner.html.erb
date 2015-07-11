@@ -1,31 +1,30 @@
-<div class="params">
+<div id="exchange_banner" class="params">
 
 <div class="exchange_summary_banner well">
+
   <div class="row">
     <div class="col-md-12 col-xs-12">
       <div class="es_name" data-model="exchange" data-field="name"></div>
     </div>
    </div>
-  <div class="row">
-    <% if @mode != 'exchange' %>
-        <div class="col-md-2 col-xs-2">
-          <div class="left">
-            <div class="es_icon"><%= fa_icon 'map-marker' %></div>
-            <div class="es_distance" data-model="exchange" data-field="distance"></div>
-          </div>
-        </div>
-    <% end %>
-    <div class="col-md-5 col-xs-6">
-      <div class="right">
-         <div class="es_address" data-model="exchange" data-field="address"></div>
+
+  <div class="under_name row">
+
+    <div id="exchange_address_oh" class="middle-parent col-md-6 col-xs-6">
+      <div id="exchange_address_oh_wrapper" class="middle-child">
+        <div class="es_address" data-model="exchange" data-field="address"></div>
         <div class="es_opening_hours" data-model="exchange" data-field="open_today"></div>
       </div>
-    </div>
-    <div class="exchange_logo text-center col-md-5 col-xs-6">
-      <%= image_tag 'ice.png', id: 'exchange_logo', data: {model: 'exchange', field: 'logo'}, style: 'display: none' %>
+     </div>
+
+    <div id="exchange_logo" class="middle-parent col-md-6 col-xs-6">
+      <div id="exchange_logo_img_wrapper" class="middle-child">
+        <%= image_tag 'ice.png', class: 'img-responsive img-rounded', id: 'exchange_logo', data: {model: 'exchange', field: 'logo'}, style: 'display: none' %>
+      </div>
     </div>
 
   </div>
+
 </div>
 
 
