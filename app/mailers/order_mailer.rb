@@ -107,8 +107,9 @@ class OrderMailer < ApplicationMailer
              {name: 'GET_AMOUNT',               content: Money.new(order.buy_cents, order.buy_currency).format},
              {name: 'COMPANY_NAME',             content: @mode == 'search' ? 'cambiu' : 'Currency-net'},
              {name: 'COMPANY_ADDRESS',          content: @mode == 'search' ? 'cambiu address' : 'Currency-net address'},
-             {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')}
-           ]
+             {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')},
+             {name: 'USER_LOCATION',            content: order.user_location}
+      ]
       }
 
       async = false

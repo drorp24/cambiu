@@ -10,7 +10,7 @@
     <% end %>
 
     <div class="hidden_fields">
-      <%= f.input_field :id, 	            as: :hidden, data: {model: 'order',    field: 'order_id'} %>
+      <%= f.input_field :id, 	            as: :hidden, data: {model: 'order',     field: 'order_id'} %>
       <%= f.input_field :exchange_id, 	    as: :hidden, data: {model: 'exchange', field: 'exchange_id'} %>
       <%= f.input_field :pay, 	            as: :hidden, data: {model: 'exchange', field: 'pay_amount'} %>
       <%= f.input_field :pay_currency, 	    as: :hidden, data: {model: 'exchange', field: 'pay_currency'} %>
@@ -20,6 +20,7 @@
       <%= f.input_field :get_currency, 	    as: :hidden, data: {model: 'exchange', field: 'get_currency'} %>
       <%= f.input_field :status, 	        as: :hidden, data: {model: 'order',    field: 'status'}, value: status %>
       <%= f.input_field :service_type, 	    as: :hidden, data: {model: 'order',    field: 'service_type'} %>
+      <%= f.input_field :user_location, 	as: :hidden, data: {model: 'exchange', field: 'user_location'} %>
     </div>
 
     <% if status == 'offer' %>

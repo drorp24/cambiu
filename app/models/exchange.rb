@@ -188,7 +188,7 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  def offer(center, pay, buy)
+  def offer(center, pay, buy, user_location)
 
     exchange_hash = {}
 
@@ -217,7 +217,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:edited_quote_rounded] = quotes[:edited_quote_rounded]
     exchange_hash[:quote_currency] = quotes[:quote_currency]
     exchange_hash[:errors] = quotes[:errors]
-
+    exchange_hash[:user_location] = user_location
 
 =begin
     exchange_hash[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(1.03..1.37)).format

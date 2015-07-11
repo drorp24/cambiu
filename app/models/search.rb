@@ -22,16 +22,16 @@ class Search < ActiveRecord::Base
       cache_key = "#{center.to_s}.#{distance} #{distance_unit}.#{pay_amount} #{pay_currency}.#{buy_amount} #{buy_currency}.#{sort}"
       Rails.logger.info("Using cache " + cache_key)
       Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
-        exchange_offers(exchange_id, location, center, box, pay, buy, sort)
+        exchange_offers(exchange_id, location, center, box, pay, buy, sort, user_location)
       end
     else
       Rails.logger.info("Not using cache")
-      exchange_offers(exchange_id, location, center, box, pay, buy, sort)
+      exchange_offers(exchange_id, location, center, box, pay, buy, sort, user_location)
     end
    
   end
     
-  def exchange_offers(exchange_id, location, center, box, pay, buy, sort)
+  def exchange_offers(exchange_id, location, center, box, pay, buy, sort, user_location)
   
       # TODO: Like open_today, try if possible to define 'applicable_rate' scope that yields *one* rate record according to from & to currencies
       if exchange_id
@@ -47,7 +47,7 @@ class Search < ActiveRecord::Base
 
       @exchange_offers = []
       exchanges.each do |exchange|
-        exchange_offer = exchange.offer(center, pay, buy)
+        exchange_offer = exchange.offer(center, pay, buy, user_location)
         @exchange_offers << exchange_offer unless exchange_offer[:errors].any?
       end
       
