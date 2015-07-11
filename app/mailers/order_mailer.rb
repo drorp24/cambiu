@@ -77,7 +77,7 @@ class OrderMailer < ApplicationMailer
     if order.collection?
       service_type_message = 'Please pick it up at the above address'
     elsif order.delivery?
-      service_type_message = "Please specify your desired delivery details if you haven't done so already"
+      service_type_message = "Please specify delivery details if you haven't done so already"
     end
 
     begin
