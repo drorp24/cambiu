@@ -18,9 +18,9 @@
       <%= f.input_field :buy_currency, 	    as: :hidden, data: {model: 'exchange', field: 'buy_currency'} %>
       <%= f.input_field :get, 	            as: :hidden, data: {model: 'exchange', field: 'get_amount'} %>
       <%= f.input_field :get_currency, 	    as: :hidden, data: {model: 'exchange', field: 'get_currency'} %>
-      <%= f.input_field :status, 	        as: :hidden, data: {model: 'order',    field: 'status'}, value: status %>
       <%= f.input_field :service_type, 	    as: :hidden, data: {model: 'order',    field: 'service_type'} %>
       <%= f.input_field :user_location, 	as: :hidden, data: {model: 'exchange', field: 'user_location'} %>
+      <%= f.input_field :status, 	        as: :hidden, data: {                   field: 'status'}, value: status %>  <!--static value, comes with the server-->
     </div>
 
     <% if status == 'offer' %>
