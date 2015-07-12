@@ -8,11 +8,13 @@ class Search < ActiveRecord::Base
      
     return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
     return if         location_lat.blank? or location_lng.blank?
+
+    self.distance      ||=  20
+    self.distance_unit ||= "km"
+    self.sort          ||= "quote"
+
     pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
     buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)   
-    distance      ||=  20
-    distance_unit ||= "km" 
-    sort          ||= "quote"
     center          = [location_lat, location_lng]
     box             = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.bounding_box(center, distance) : nil      # TODO: overcome failures, return all exchanges from DB # TODO: use requested unit
 
@@ -51,12 +53,13 @@ class Search < ActiveRecord::Base
         @exchange_offers << exchange_offer #unless exchange_offer[:errors].any?
       end
       
-      if sort == "quote"
-        @exchange_offers.sort_by{|e| e[:quote] || 1000000}
+       if self.sort == "quote"
+        @exchange_offers = @exchange_offers.sort_by{|e| e[:quote] || 1000000}
       else
-        @exchange_offers.sort_by{|e| e[:distance] }
+        @exchange_offers = @exchange_offers.sort_by{|e| e[:distance] }
       end
 
+      @exchange_offers
   end
 
   def hash
