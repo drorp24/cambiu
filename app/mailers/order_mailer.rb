@@ -29,7 +29,9 @@ class OrderMailer < ApplicationMailer
     end
 
     if error
-      logger.info error
+      logger.warn 'Cannot send any email:'
+      logger.warn error
+      logger.warn ""
       response[:error] = error
       return response
     end
@@ -133,8 +135,10 @@ class OrderMailer < ApplicationMailer
 
     end
 
+    logger.info ""
     logger.info "Mandrill response:"
     logger.info response.inspect
+    logger.info ""
     response                               # TODO: Returns ActionMailer::Base::NullEmail if called with no .deliver, or nil if called with .deliver_now
 
   end
