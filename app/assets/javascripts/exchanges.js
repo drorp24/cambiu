@@ -232,6 +232,8 @@ $(document).ready(function() {
 
     function addMarker(exchange) {
 
+        if (exchange.errors.length > 0) return;
+
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(exchange.latitude, exchange.longitude),
             title: exchange.name,
