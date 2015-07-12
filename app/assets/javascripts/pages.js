@@ -22,7 +22,7 @@ $(document).ready(function() {
     function populate(el, exchange) {
 
         if (el.is('[data-id]'))                 el.attr('data-id', exchange.id);
-        if (el.is('.pain.active [data-href-id]'))            {el.attr('data-href-id', exchange.id); console.log('el with data-href-id. value ater set: ' + el.attr('data-href-id'))}
+        if (el.is('[data-href-id]:not([data-exchange-selection])'))            {el.attr('data-href-id', exchange.id); console.log('el with data-href-id. value ater set: ' + el.attr('data-href-id'))}
         if (el.is('[data-lat]'))                el.attr('data-lat', exchange.latitude);
         if (el.is('[data-lng]'))                el.attr('data-lng', exchange.longitude);
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', exchange.name);
