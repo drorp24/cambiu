@@ -29,28 +29,47 @@ class OrderMailer < ApplicationMailer
     end
 
     if error
-      logger.warn 'Cannot send any email:'
+      logger.warn 'Missing details in exchange or order:'
       logger.warn error
       logger.warn ""
-      response[:error] = error
-      return response
     end
+
+    development_bcc = [
+        {
+            email:  'dror@cambiu.com',
+            type:   'bcc'
+        }
+    ]
+
+    test_bcc = [
+        {
+            email:  'sharon@cambiu.com',
+            type:   'bcc'
+        },
+        {
+            email:  'arnon@cambiu.com',
+            type:   'bcc'
+        },
+        {
+            email:  'dror@cambiu.com',
+            type:   'bcc'
+        }
+    ]
+
+    production_bcc = [
+        {
+            email:  'arnon@cambiu.com',
+            type:   'bcc'
+        },
+        {
+            email:  'sharon@cambiu.com',
+            type:   'bcc'
+        }
+    ]
 
     if order.offer?
       subject = "Someone just clicked Get it..."
       to =  [
-                  {
-                      email:  'sharon@cambiu.com',
-                      type:   'to'
-                  },
-                  {
-                      email:  'arnon@cambiu.com',
-                      type:   'cc'
-                  },
-                  {
-                      email:  'dror@cambiu.com',
-                      type:   'bcc'
-                  }
             ]
     elsif order.produced?
       subject = "Order #{order.voucher} is ready"
@@ -64,10 +83,6 @@ class OrderMailer < ApplicationMailer
                       email:  Rails.env.production? ? exchange.email : 'dror@cambiu.com',
                       name:   exchange.name,
                       type:   'to'
-                  },
-                  {
-                      email:  'dror@cambiu.com',
-                      type:   'bcc'
                   }
             ]
       elsif order.used?
@@ -76,12 +91,16 @@ class OrderMailer < ApplicationMailer
                   {
                       email:  order.email,
                       type:   'to'
-                  },
-                  {
-                      email:  'dror@cambiu.com',
-                      type:   'bcc'
                   }
             ]
+    end
+
+    if Rails.env.development?
+      to += development_bcc
+    elsif Rails.env.test?
+      to += test_bcc
+    elsif Rails.env.production?
+      to += production_bcc
     end
 
     if order.collection?
@@ -144,7 +163,8 @@ class OrderMailer < ApplicationMailer
     end
 
     logger.info ""
-    logger.info "Mandrill response:"
+    logger.info "Mandrill response and errors"
+#    response[:error] = error
     logger.info response.inspect
     logger.info ""
     response                               # TODO: Returns ActionMailer::Base::NullEmail if called with no .deliver, or nil if called with .deliver_now
