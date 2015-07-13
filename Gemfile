@@ -23,7 +23,9 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 gem 'quiet_assets',        group: :development
 
-gem 'rails_12factor', group: :production
+group :test, :staging, :production do
+  gem "rails_12factor"
+end
 
 gem 'activeadmin', '~> 1.0.0.pre1'
 gem 'devise'
