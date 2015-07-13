@@ -21,11 +21,11 @@ $(document).ready(function() {
     // TODO: Replace with model_populate
     function populate(el, exchange) {
 
-        if (el.is('[data-id]'))                 el.attr('data-id', exchange.id);
-        if (el.is('[data-href-id]:not([data-exchange-selection])'))            {el.attr('data-href-id', exchange.id); console.log('el with data-href-id. value ater set: ' + el.attr('data-href-id'))}
-        if (el.is('[data-lat]'))                el.attr('data-lat', exchange.latitude);
-        if (el.is('[data-lng]'))                el.attr('data-lng', exchange.longitude);
-        if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', exchange.name);
+        if (el.is('[data-id]'))                                                 el.attr('data-id', exchange.id);
+        if (el.is('[data-href-id]:not([data-exchange-selection])'))             el.attr('data-href-id', exchange.id);
+        if (el.is('[data-lat]'))                                                el.attr('data-lat', exchange.latitude);
+        if (el.is('[data-lng]'))                                                el.attr('data-lng', exchange.longitude);
+        if (el.is('[data-exchange-name]'))                                      el.attr('data-exchange-name', exchange.name);
 
         var field = el.data('field');
         if (field == 'exchange_id') {field = 'id'}
@@ -153,7 +153,7 @@ $(document).ready(function() {
             var exchange = findExchange(id);
 
             if (exchange) {
-                console.log('Yes. exchange has values. This means someone just clicked on one of the getit buttons');
+                console.log('Yes. exchange has values. This means someone just clicked on one of the exchange-specific pane switching buttons');
                 $('[data-model=exchange]').each(function () {
                     populate($(this), exchange);        // TODO: Replace pages 'populate' with 'model_populate'
                 });
@@ -187,18 +187,14 @@ $(document).ready(function() {
              for (var i=0, len = sessionStorage.length; i  <  len; i++){
                 var key = sessionStorage.key(i);
                 var value = sessionStorage.getItem(key);
-                console.log('key: ' + key + ' value: ' + value);
-                if (key) {
+                 if (key) {
                     if  (((key.indexOf('exchange_') > -1) || (key.indexOf('order_') > -1)) &&
                          ((key.indexOf('status') == -1) && (key.indexOf('service_type') == -1) && (key.indexOf('order_email') == -1)))  {
-                        console.log('removing it');
-                        sessionStorage.setItem(key, null)
+                         sessionStorage.setItem(key, null)
                     } else
                     if ((key == 'exchangeid') || (key == 'id')) {
-                        console.log('removing other forms of id vars');
                         sessionStorage.setItem(key, null)
                     } else {
-                        {console.log('not removing it')}
                     }
                 }
             }
