@@ -40,8 +40,16 @@ class OrderMailer < ApplicationMailer
       subject = "Someone just clicked Get it..."
       to =  [
                   {
-                      email:  'dror@cambiu.com',
+                      email:  'sharon@cambiu.com',
                       type:   'to'
+                  },
+                  {
+                      email:  'arnon@cambiu.com',
+                      type:   'cc'
+                  },
+                  {
+                      email:  'dror@cambiu.com',
+                      type:   'bcc'
                   }
             ]
     elsif order.produced?
