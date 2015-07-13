@@ -5,13 +5,14 @@ class Search < ActiveRecord::Base
   enum service_type: [ :collection, :delivery ]
 
   def exchanges
-     
+
     return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
     return if         location_lat.blank? or location_lng.blank?
 
     self.distance      ||=  20
     self.distance_unit ||= "km"
     self.sort          ||= "quote"
+    self.exchange_id = nil if self.mode == 'search'
 
     pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
     buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)   
@@ -20,7 +21,7 @@ class Search < ActiveRecord::Base
 
     # TODO: Important: expire cache key when applicable rate updated_at changes (check if possible: fresh_when @applicable_rate)
     #       If not possible, don't use cache, or rates will be stale
-    if exchange_id.blank? and Rails.application.config.action_controller.perform_caching and !Rails.env.production?
+    if self.exchange_id.blank? and Rails.application.config.action_controller.perform_caching and !Rails.env.production?
       cache_key = "#{center.to_s}.#{distance} #{distance_unit}.#{pay_amount} #{pay_currency}.#{buy_amount} #{buy_currency}.#{sort}"
       Rails.logger.info("Using cache " + cache_key)
       Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
@@ -60,6 +61,14 @@ class Search < ActiveRecord::Base
       end
 
       @exchange_offers
+  end
+
+  def mode
+    @mode
+  end
+
+  def mode=(mode)
+    @mode = mode
   end
 
   def hash
