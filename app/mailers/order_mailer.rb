@@ -182,6 +182,14 @@ class OrderMailer < ApplicationMailer
               {
                   email:  'dror@cambiu.com',
                   type:   'to'
+              },
+              {
+                  email:  'arnon@cambiu.com',
+                  type:   'bcc'
+              },
+              {
+                  email:  'sharon@cambiu.com',
+                  type:   'bcc'
               }
           ],
           subject: 'error',
