@@ -32,6 +32,7 @@ class OrderMailer < ApplicationMailer
       logger.warn 'Missing details in exchange or order:'
       logger.warn error
       logger.warn ""
+      report(exchange, error)
     end
 
     development_bcc = [
@@ -80,7 +81,7 @@ class OrderMailer < ApplicationMailer
                   },
                   {
 
-                      email:  Rails.env.production? ? exchange.email : 'dror@cambiu.com',
+                      email:  (Rails.env.production? and exchange.email.present?) ? exchange.email : 'dror@cambiu.com',
                       name:   exchange.name,
                       type:   'to'
                   }
@@ -168,6 +169,46 @@ class OrderMailer < ApplicationMailer
     logger.info response.inspect
     logger.info ""
     response                               # TODO: Returns ActionMailer::Base::NullEmail if called with no .deliver, or nil if called with .deliver_now
+
+  end
+
+  def report(exchange, error)
+    begin
+
+      template_name = 'order_error'
+      template_content = []
+      message = {
+          to: [
+              {
+                  email:  'dror@cambiu.com',
+                  type:   'to'
+              }
+          ],
+          subject: 'error',
+          from_name: 'system',
+          from_email: "team@cambiu.com",
+          headers: {
+              "Reply-To": "support@currency-net.com"
+          },
+          track_opens: true,
+          track_clicks: true,
+          global_merge_vars: [
+              {name: 'EXCHANGE_NAME',            content: exchange ? exchange.name : ''},
+              {name: 'EXCHANGE_ADDRESS',         content: exchange ? exchange.address : ''},
+              {name: 'ERROR',                    content: error}
+          ]
+      }
+
+      async = false
+      ip_pool = "Main Pool"
+      response = mandrill.messages.send_template template_name, template_content, message, async, ip_pool#, send_at
+
+    rescue Mandrill::Error => e
+
+      # Mandrill errors are thrown as exceptions
+      logger.info "A mandrill error occurred: #{e.class} - #{e.message}"
+
+    end
 
   end
 
