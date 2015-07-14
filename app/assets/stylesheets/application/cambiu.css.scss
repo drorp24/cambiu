@@ -813,17 +813,23 @@ body#cambiu {
       }
     }
   }
+
+  .parameters #exchange_params_wrapper {
+    input, select {
+      font-size: 1.6vh;
+    }
+  }
   
   &.exchanges {
     input, select, button, .email_submit {
 
       @media (max-width: $screen-xs-max) {
         height: 8vh;
-        font-size: 1.8vh;
+        font-size: 2vh;
       }
       @media (min-width: $screen-sm-min) {
         height: 6vh;
-        font-size: 1.5vh;
+        font-size: 2vh;
       }
    }
     #order_email, #order_phone {
