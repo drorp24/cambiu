@@ -110,21 +110,36 @@ class OrderMailer < ApplicationMailer
       service_type_message = "Please specify delivery details if you haven't done so already"
     end
 
+    if $request.domain == 'cambiu.com'
+      from_name = 'cambiu'
+      from_email = 'support@cambiu.com'
+    elsif $request.domain == 'currency-net.com'
+      from_name = 'currency-net'
+      from_email = 'support@currency-net.com'
+    elsif $request.domain == 'localhost'
+      from_name = 'currency-net'
+      from_email = 'support@currency-net.com'
+    end
+
+    company_address = "5 long street, E2 8HJ, london"
+
     begin
 
       template_name = 'order_' + order.status
+      if order.produced? or order.used?
+        template_name += '_' + $request.domain.split('.')[0]
+      end
       template_content = []
       message = {
-          to:   to,
-          subject: subject,
-          from_name: @mode == 'search' ? "cambiu" : "cambiu",       # TODO: Change to cn once confirmed by mandrill
-          from_email: "team@cambiu.com",                            # TODO: Same
+          to:             to,
+          subject:        subject,
+          from_name:      from_name,
+          from_email:     from_email,
           headers: {
-              "Reply-To": "support@currency-net.com"
+              "Reply-To": from_email
           },
           track_opens: true,
           track_clicks: true,
-          google_analytics_domains: ["cambiu.com"],                 # TODO: change
           global_merge_vars: [
              {name: 'SERVICE_TYPE',             content: order.service_type.upcase},
              {name: 'SERVICE_TYPE_MESSAGE',     content: service_type_message},
@@ -135,8 +150,8 @@ class OrderMailer < ApplicationMailer
              {name: 'EXCHANGE_ADDRESS',         content: order.exchange.address},
              {name: 'PAY_AMOUNT',               content: Money.new(order.pay_cents, order.pay_currency).format},
              {name: 'GET_AMOUNT',               content: Money.new(order.buy_cents, order.buy_currency).format},
-             {name: 'COMPANY_NAME',             content: @mode == 'search' ? 'cambiu' : 'Currency-net'},
-             {name: 'COMPANY_ADDRESS',          content: @mode == 'search' ? 'cambiu address' : 'Currency-net address'},
+             {name: 'COMPANY_NAME',             content: from_name},
+             {name: 'COMPANY_ADDRESS',          content: company_address},
              {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')},
              {name: 'USER_LOCATION',            content: order.user_location}
       ]

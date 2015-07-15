@@ -12,8 +12,12 @@ class ApplicationController < ActionController::Base
   before_action :set_landing
 #  before_action :authenticate_user!
 
+  before_action :pass_request
 
-  
+  def pass_request
+    $request = request
+  end
+
   protected
   
   def set_http_cache_headers
