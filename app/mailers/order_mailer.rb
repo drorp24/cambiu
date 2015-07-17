@@ -98,7 +98,7 @@ class OrderMailer < ApplicationMailer
 
     if Rails.env.development?
       to += development_bcc
-    elsif Rails.env.test?
+    elsif Rails.env.test? or Rails.env.staging?
       to += test_bcc
     elsif Rails.env.production?
       to += production_bcc
