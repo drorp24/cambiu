@@ -2,22 +2,25 @@
 
 
     <% if status == 'produced' %>
-        <%= f.input_field :email, data: {field: 'email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
+        <%= f.input_field :email, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
         <%= f.input_field :phone, class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone to coordinate delivery", label: false %>
         <div class="validation_errors"></div>
     <% else %>
-        <%= f.input_field :email, 		    as: :hidden, data: {field: 'email'} %>
+        <%= f.input_field :email, 		    as: :hidden, data: {model: 'order', field: 'order_email'} %>
     <% end %>
 
     <div class="hidden_fields">
-      <%= f.input_field :id, 	            as: :hidden, data: {model: 'order', field: 'order_id'} %>
-      <%= f.input_field :exchange_id, 	    as: :hidden, data: {field: 'exchange_id'} %>
-      <%= f.input_field :pay, 	            as: :hidden, data: {field: 'pay_amount'} %>
-      <%= f.input_field :pay_currency, 	    as: :hidden, data: {field: 'pay_currency'} %>
-      <%= f.input_field :buy, 	            as: :hidden, data: {field: 'buy_amount'} %>
-      <%= f.input_field :buy_currency, 	    as: :hidden, data: {field: 'buy_currency'} %>
-      <%= f.input_field :status, 	        as: :hidden, data: {field: 'status'}, value: status %>
-      <%= f.input_field :service_type, 	    as: :hidden, data: {field: 'service_type'} %>
+      <%= f.input_field :id, 	            as: :hidden, data: {model: 'order',     field: 'order_id'} %>
+      <%= f.input_field :exchange_id, 	    as: :hidden, data: {model: 'exchange', field: 'exchange_id'} %>
+      <%= f.input_field :pay, 	            as: :hidden, data: {model: 'exchange', field: 'pay_amount'} %>
+      <%= f.input_field :pay_currency, 	    as: :hidden, data: {model: 'exchange', field: 'pay_currency'} %>
+      <%= f.input_field :buy, 	            as: :hidden, data: {model: 'exchange', field: 'buy_amount'} %>
+      <%= f.input_field :buy_currency, 	    as: :hidden, data: {model: 'exchange', field: 'buy_currency'} %>
+      <%= f.input_field :get, 	            as: :hidden, data: {model: 'exchange', field: 'get_amount'} %>
+      <%= f.input_field :get_currency, 	    as: :hidden, data: {model: 'exchange', field: 'get_currency'} %>
+      <%= f.input_field :service_type, 	    as: :hidden, data: {model: 'order',    field: 'service_type'} %>
+      <%= f.input_field :user_location, 	as: :hidden, data: {model: 'exchange', field: 'user_location'} %>
+      <%= f.input_field :status, 	        as: :hidden, data: {                   field: 'status'}, value: status %>  <!--static value, comes with the server-->
     </div>
 
     <% if status == 'offer' %>
@@ -35,7 +38,7 @@
                      model: 'exchange', href: 'exchanges/list',  href_page: 'exchanges', href_id: '', href_pane: 'list', reload: 'true',
 =end
 
-                     voucher: 'true', voucher_status: status, exchange_name: "filler"},
+model: 'exchange', voucher: 'true', voucher_status: status, exchange_name: "filler"},
              class: 'btn btn-warning confirmation_button #{@mode}' %>
     <% end %>
 

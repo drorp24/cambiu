@@ -15,12 +15,14 @@ class Exchange < ActiveRecord::Base
   belongs_to  :upload
   belongs_to  :admin_user
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
-  enum rates_source: [ :fake, :manual, :exchange_input, :scraping ]
+  enum rates_source: [ :no_rates, :fake, :manual, :exchange_input, :scraping ]
 
   geocoded_by :address
 
+  scope :with_contract, -> { where(contract: true) }
+
    def has_real_rates?
-    rates_source.present? && !fake?
+    !fake? && !no_rates?
   end
   # TODO: Currently returns error unless either of the currencies is local. Generalize.
   def quote(params)
@@ -34,18 +36,17 @@ class Exchange < ActiveRecord::Base
         transaction:      transaction   = get_currency != currency ? 'sell' : 'buy',
         rates:            {},
         quote:            nil,
+        quote_currency:   nil,
         edited_quote:     nil,
         edited_quote_rounded: nil,
         gain_amount:      gain_amount   = 0,
-        gain_currency:    gain_currency = "ABC",
-        real_rates:       real_rates    = nil,
+        gain_currency:    gain_currency = nil,
+        real_rates:       has_real_rates?,
         rounded:          false,
         pay_rounded:      params[:pay_amount],
         get_rounded:      params[:get_amount],
         errors:           []
     }
-
-    result[:real_rates] = has_real_rates?
 
     unless rates.any?
       result[:errors]           <<   'No rates defined for that exchange'
@@ -69,6 +70,7 @@ class Exchange < ActiveRecord::Base
       get_amount =   result[:quote]                         = pay_amount * rates[transaction.to_sym]
       result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format
       result[:edited_quote] = result[:edited_quote_rounded] = result[:get_amount]
+      result[:quote_currency]                               = get_currency
       result[:gain_amount]                                  = (get_amount * 0.13).to_money(get_currency).format
       result[:gain_currency]                                = get_currency
       result[:pay_amount]                                   = pay_amount.to_money(pay_currency).format
@@ -91,6 +93,7 @@ class Exchange < ActiveRecord::Base
       pay_amount              =   result[:quote]            = get_amount * rates[transaction.to_sym]
       result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format
       result[:edited_quote] = result[:edited_quote_rounded] = result[:pay_amount]
+      result[:quote_currency]                               = pay_currency
       result[:gain_amount]                                  = (pay_amount * 0.13).to_money(pay_currency).format
       result[:gain_currency]                                = pay_currency
       result[:get_amount]                                   = get_amount.to_money(get_currency).format
@@ -164,7 +167,7 @@ class Exchange < ActiveRecord::Base
         end
       end
     else
-      result[:error] = 'No rates defined for ' + currency
+      result[:error] = 'Sorry, no offers for ' + currency + ' currently'
       return result
     end
 
@@ -185,7 +188,7 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  def offer(center, pay, buy)
+  def offer(center, pay, buy, user_location)
 
     exchange_hash = {}
 
@@ -212,7 +215,9 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:pay_rounded] = quotes[:pay_rounded]
     exchange_hash[:get_rounded] = quotes[:get_rounded]
     exchange_hash[:edited_quote_rounded] = quotes[:edited_quote_rounded]
-
+    exchange_hash[:quote_currency] = quotes[:quote_currency]
+    exchange_hash[:errors] = quotes[:errors]
+    exchange_hash[:user_location] = user_location
 
 =begin
     exchange_hash[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(1.03..1.37)).format
@@ -418,7 +423,7 @@ class Exchange < ActiveRecord::Base
 
   def todays_hours
     return @todays_hours if @todays_hours
-    if opens and closes
+    if opens and closes and opens.strftime("%H") != "00"
       @todays_hours = opens.strftime("%H:%M") + ' - ' + closes.strftime("%H:%M")
     else
       @todays_hours = make_hour(rand(7..10)) + " - " + make_hour(rand(17..20))

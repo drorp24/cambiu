@@ -39,7 +39,7 @@
 
     };
 
-    // return the value of a sessionStorage variable
+    // populate a field's value in all relevant html tags and in sessionStorage
     set = function(field, value, excluded) {
         if (excluded === undefined) excluded = '';
         var elements = '[data-field=' + field + ']';
@@ -65,6 +65,7 @@
         })
     };
 
+    // bind an event handler to a field's all relevant html tags so that when either of them change, all the other tags change to match
     bind = function(field, event) {
         var elements = '[data-field=' + field + ']';
         $(elements).on(event, function() {
@@ -185,18 +186,10 @@ $(document).ready(function() {
         if (exchanges.length == 0) return;
 
         if (sort == 'distance') {
-            if (exchanges_by_distance.length > 0) {
-                exchanges = exchanges_by_distance
-            } else {
-                exchanges_by_distance = exchanges.sort(function(a, b){return a.distance-b.distance;}).slice(0);
-            }
+            exchanges_by_distance = exchanges.sort(function(a, b){return a.distance-b.distance;}).slice(0);
         }
         else if (sort == 'quote') {
-            if (exchanges_by_quote.length > 0) {
-                exchanges = exchanges_by_quote
-            } else {
-                exchanges_by_quote = exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)}).slice(0);
-            }
+            exchanges_by_quote = exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)}).slice(0);
         }
         clearExchanges();
         updateExchanges(exchanges);
@@ -351,6 +344,13 @@ $(document).ready(function() {
     }));
 */
 
+    // Rails doesn't return the object back after PUT. Instead, it sends 204 No Content with an empty json
+    // That means that, in search mode, when the getit_button is the one creating the order, by the time email is user populated, nothing would be returned (email included)
+    // the email of the current_user is therefore not populated from the returned json (as no json is returned in search mode)
+    // Instead, it is populated as pay_*/buy_* fields are: as the user keys them anywhere, with keyup/change event handler
+
+    // The code below is used after create: it will populate the returned order_id of the newly created order, and will also replace the POST with PUT
+
     $('#exchanges').on('ajax:success', 'form.new_order', (function(evt, data, status, xhr) {
         console.log('#new_order ajax:success');
         order = data;
@@ -361,6 +361,16 @@ $(document).ready(function() {
             model_populate('order', order);
         }
     }));
+
+    // The code below will see that any change in the order's email field will propagate to the other forms and recorded in sessionStorage
+    // For instance, it will populate the email on the 'thank you' ('used' status form), so email could be sent
+    // It will also populate the email of the other 'getit' buttons, so no need to ask the user to populate his email again during the session
+
+    $('[data-model=order][data-field=order_email]').keyup(function() {
+        var $this = $(this);
+        var value = $this.val();
+        set('order_email', value, $this);
+    });
 
 
     // Real-time exchange quotes
@@ -382,8 +392,10 @@ $(document).ready(function() {
         $.getJSON(url, params, function(data, status) {
             var result = data;
             var marker = markers[0];
-            var marker_content = marker['infowindow'].getContent();
-            $(marker_content).find('.exchange_window_quote').html(result.edited_quote_rounded);
+            if (marker && marker['infowindow']) {
+                var marker_content = marker['infowindow'].getContent();
+                $(marker_content).find('.exchange_window_quote').html(result.edited_quote_rounded);
+            }
             set('buy_amount', result.get_amount, $this);
             set('pay_amount', result.pay_amount, $this);
             set('get_rounded', result.get_rounded, $this);

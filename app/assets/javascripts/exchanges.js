@@ -18,7 +18,7 @@ $(document).ready(function() {
         console.log('updatePage');
         exchanges = data;
 
-        if (exchanges && exchanges.length == 1) {
+        if (exchangePage()) {
             var mapCenterLat = exchanges[0].latitude;
             var mapCenterLng = exchanges[0].longitude;
         } else {
@@ -27,21 +27,23 @@ $(document).ready(function() {
         }
         drawMap(mapCenterLat, mapCenterLng, exchanges);
 
-        clearExchanges();
+        if (search()) {
+            clearExchanges();
+            updateExchanges(exchanges);
+        }
 
         if (exchanges && exchanges.length > 0) {
 
-            if (exchanges.length > 1) {
-                // spa mode after refresh requires populating exchange data here
+            if (search()) {
                 var exchange_id = urlId();
-                if (exchange_id) {
+                if (exchange_id) {   // Refresh of *specific exchange page* even in search requires model_populate like in exchange mode
                     var exchange = findExchange(exchange_id);
                     if (exchange) model_populate('exchange', exchange);
                 }
-                updateExchanges(exchanges);
             } else {
                 model_populate('exchange', exchanges[0]);
             }
+
             if (desktop) bindBehavior();
         }
 
@@ -66,7 +68,9 @@ $(document).ready(function() {
 
     // TODO: Remove det, replace classes with data- attributes, do it in a loop over the data fields
     function addExchange(exchange, index) {
-    
+
+        if (exchange.errors.length > 0) return;
+
         var exchange_el =   $('.exchange_row.template').clone().removeClass('template');
         var exchange_sum =  exchange_el.find('.list-group-item');
         //var exchange_det =  exchange_el.find('.collapse');
@@ -79,6 +83,7 @@ $(document).ready(function() {
         exchange_el.find('.distance').html((exchange.distance * 1000).toFixed(0));
         exchange_el.find('.name').html(exchange.name);
         exchange_el.find('.quote').html(exchange.edited_quote);
+        exchange_el.find('.quote_currency').html(exchange.quote_currency);
         if (exchange.quote > 0) {
 //            exchange_el.find('.comparison').css('display', 'block');
             exchange_el.find('[data-field=gain_amount]').html(exchange.gain_amount);
@@ -226,6 +231,8 @@ $(document).ready(function() {
     }
 
     function addMarker(exchange) {
+
+        if (exchange.errors.length > 0) return;
 
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(exchange.latitude, exchange.longitude),

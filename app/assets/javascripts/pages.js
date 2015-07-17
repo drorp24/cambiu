@@ -21,15 +21,22 @@ $(document).ready(function() {
     // TODO: Replace with model_populate
     function populate(el, exchange) {
 
-        if (el.is('[data-id]'))                 el.attr('data-id', exchange.id);
-        if (el.is('[data-href-id]'))            {el.attr('data-href-id', exchange.id); console.log('el with data-href-id. value ater set: ' + el.attr('data-href-id'))}
-        if (el.is('[data-lat]'))                el.attr('data-lat', exchange.latitude);
-        if (el.is('[data-lng]'))                el.attr('data-lng', exchange.longitude);
-        if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', exchange.name);
+        if (el.is('[data-id]'))                                                 el.attr('data-id', exchange.id);
+        if (el.is('[data-href-id]:not([data-exchange-selection])'))             el.attr('data-href-id', exchange.id);
+        if (el.is('[data-lat]'))                                                el.attr('data-lat', exchange.latitude);
+        if (el.is('[data-lng]'))                                                el.attr('data-lng', exchange.longitude);
+        if (el.is('[data-exchange-name]'))                                      el.attr('data-exchange-name', exchange.name);
 
-        if (el.data('field'))                   {
-            var value = el.data('field') == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[el.data('field')];
-            el.html(value);
+        var field = el.data('field');
+        if (field == 'exchange_id') {field = 'id'}
+        var value = field == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[field];
+        if (field)  {
+            if (el.is('input, select')) {
+                el.val(value);
+            } else {
+                el.html(value);
+            }
+            sessionStorage.setItem('exchange_' + field, value);
         }
 
 /*
@@ -57,8 +64,6 @@ $(document).ready(function() {
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', '');
 
         if (el.data('field'))                   el.html('');
-
-        $('[data-model=order]').html("");
 
     }
 
@@ -141,26 +146,61 @@ $(document).ready(function() {
             pane_el.show();
         }
 
-        // populate exchange data in exchange pages (spa only)
+        // populate exchange data in exchange pages (spa only, at page transition)
         if (id && spa()) {
-            console.log('pages.js: spa mode and page contains id: populate exchange fields');
+
+            console.log('pages.js: spa mode and page contains id: populate?');
             var exchange = findExchange(id);
 
-            // TODO: Populate across the board, not only in active pane - store/check which exchange is currently populated
-            $('.pane.active').each(function () {
-                var $this = $(this);
-                $this.find('[data-model=exchange]').each(function () {
-                    if (exchange) {
-                        populate($(this), exchange)
-                    } else {
-                        unpopulate($(this))
-                    }
+            if (exchange) {
+                console.log('Yes. exchange has values. This means someone just clicked on one of the exchange-specific pane switching buttons');
+                $('[data-model=exchange]').each(function () {
+                    populate($(this), exchange);        // TODO: Replace pages 'populate' with 'model_populate'
                 });
-                // One extra update is required for exchange foreign keys which exist in other models
-                $this.find('[data-field=exchange_id]').val(exchange.id);
-            });
+                 // One extra update is required for exchange foreign keys which exist in other models
+                $('[data-field=exchange_id]').val(exchange.id);
+            } else {
+                console.log('No. exchange is empty. This means we are in a page reload. updatePage will do it soon')
+            }
+
          }
 
+        // reset all 'exchange_' and '_order' sessionStorage vars if moving to a non exchange-specific page (e.g., /list)
+        if (!id) {
+             console.log('moving to a non exchange-specific page: clearing all exchange-specific html fields and session vars');
+             $('[data-model=exchange][data-field]').each(function() {
+                var $this = $(this);
+                if ($this.is('input, select')) {
+                    $this.val('');
+                } else {
+                    $this.html('');
+                }
+            });
+            $('[data-model=order][data-field]').not('[data-field=status]').not('[data-field=service_type]').not('[data-field=order_email]').each(function() {
+                var $this = $(this);
+                if ($this.is('input, select')) {
+                    $this.val('');
+                } else {
+                    $this.html('');
+                }
+            });
+             for (var i=0, len = sessionStorage.length; i  <  len; i++){
+                var key = sessionStorage.key(i);
+                var value = sessionStorage.getItem(key);
+                 if (key) {
+                    if  (((key.indexOf('exchange_') > -1) || (key.indexOf('order_') > -1)) &&
+                         ((key.indexOf('status') == -1) && (key.indexOf('service_type') == -1) && (key.indexOf('order_email') == -1)))  {
+                         sessionStorage.setItem(key, null)
+                    } else
+                    if ((key == 'exchangeid') || (key == 'id')) {
+                        sessionStorage.setItem(key, null)
+                    } else {
+                    }
+                }
+            }
+            $('form.new_order').attr('action', '/orders');
+            $('form.new_order').attr('method', 'post');
+        }
         // don't push state if invoked from popstate or page reloads
         var new_state =  '/' + url;
         if (window.location.pathname != new_state) {

@@ -40,6 +40,7 @@
             <%= f.input_field :hash, 			as: :hidden, data: {field: 'rest'} %>
             <%= f.input_field :exchange_id, 	as: :hidden, data: {model: 'exchange', field: 'exchange_id'}, value: params[:id] %>
             <%= f.input_field :service_type, 	as: :hidden, data: {field: 'service_type'} %>
+            <%= f.input_field :mode, 	        as: :hidden, value: @mode %>
 	</div>
 
 

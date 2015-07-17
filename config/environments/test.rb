@@ -12,7 +12,7 @@ Rails.application.configure do
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
-  config.action_controller.perform_caching = true
+  config.action_controller.perform_caching = false
   config.static_cache_control = "public, s-maxage=31536000, max-age=31536000"
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
@@ -21,7 +21,7 @@ Rails.application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Changed to true for heroku: rails now uses CloudFonrt cdn 
-  config.serve_static_assets = true
+  config.serve_static_files = true
 
   # Compress JavaScripts and CSS.
   config.assets.compress = true
@@ -98,6 +98,10 @@ Rails.application.configure do
   config.fb_app_secret = 'a29bf9274ee952ba90a09f2354f871b2' 
 
   config.use_google_geocoding = true
+
+  config.action_mailer.default_url_options = { host: 'testing.currency-net.com' }
+  config.action_mailer.raise_delivery_errors = true
+
 end
 Rails.application.routes.default_url_options[:host] = 'testing.cambiu.com'
 

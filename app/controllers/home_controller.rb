@@ -4,7 +4,11 @@ class HomeController < ApplicationController
   caches_action :index, expires_in: 2.hours, :race_condition_ttl => 20.seconds                                      # quicker first rendering (pick-up ready page from cache)
 
   def index
-    @mode = 'search'
-  end
+    if request.domain == 'currency-net.com'
+      render 'comingsoon', layout: 'background'
+    else
+      @mode = 'search'
+    end
+   end
 
 end
