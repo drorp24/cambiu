@@ -4,6 +4,8 @@ logfile
 .idea\*
 .idea/
 .idea/*.*
+logfile
+*.dump
 #################
 ## Eclipse
 #################
