@@ -102,6 +102,8 @@ $(document).ready(function() {
         exchange_sum.find('[data-exchange-name]').attr('data-exchange-name', exchange.name);
 
         exchange_sum.find('.subject_to_change').html(exchange.real_rates ? '' : 'This rate is subject to change and is regularly updated by our staff');
+        var delivery_icon = exchange_sum.find('.service_type_icon.delivery');
+        exchange.delivery_tracking ? delivery_icon.show() : delivery_icon.hide();
 
 
 

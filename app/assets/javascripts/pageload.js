@@ -228,4 +228,9 @@ $(document).ready(function() {
         return $('body').hasClass('exchange');
     };
 
+    $(function () {
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+        $("body").popover({ selector: '[data-toggle=popover]', trigger: 'hover', placement: 'top' });
+    })
+
 });

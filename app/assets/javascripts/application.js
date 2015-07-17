@@ -17,7 +17,8 @@
 //= require validations
 //= require pages
 
+//= require bootstrap/tooltip
+//= require bootstrap/popover
 //= require bootstrap/transition
 //= require bootstrap/collapse
 //= require bootstrap/carousel
-//= require bootstrap-switch

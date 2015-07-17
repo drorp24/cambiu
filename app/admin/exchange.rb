@@ -85,6 +85,7 @@ ActiveAdmin.register Exchange do
     column :address
     column :email
     column :phone
+    column :delivery?
     actions
   end
   
@@ -134,7 +135,7 @@ ActiveAdmin.register Exchange do
       if exchange.update(exchange_params)
         redirect_to admin_exchanges_path, notice: 'Exchange Updated!'
       else
-        render edit_admin_exchange_path(params[:id])
+        redirect_to edit_admin_exchange_path(exchange), alert: exchange.errors.full_messages.first
       end
     end
 
@@ -163,6 +164,7 @@ form do |f|
       f.input     :address
       f.input     :contract, label: 'Contract', as: :radio
       f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Fake"=>"fake", :"Manual"=>"manual", :"Exchange"=>"exchange_input", :"Scraping"=>"scraping"}
+      f.input     :delivery_tracking, as: :url
       f.input     :direct_link, input_html: { :disabled => true }, hint: '  Direct link for search engines and ads'
       f.input     :logo, as: :file
       f.input     :latitude

@@ -2,9 +2,9 @@
 
 
     <% if status == 'produced' %>
-        <%= f.input_field :email, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
-        <%= f.input_field :phone, class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone to coordinate delivery", label: false %>
-        <div class="validation_errors"></div>
+        <%= f.input_field :email, required: true, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email to guarantee deal", label: false, type: "email" %>
+        <%= f.input_field :phone, as: :hidden, class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone to coordinate delivery", label: false %>
+        <div class="validation_errors text-center"></div>
     <% else %>
         <%= f.input_field :email, 		    as: :hidden, data: {model: 'order', field: 'order_email'} %>
     <% end %>
@@ -29,7 +29,7 @@
              id: 'getit_button', class: 'btn btn-mini btn-default' %>
     <% elsif status == 'produced' %>
             <%= f.button :submit, 'Guarantee this deal!',
-             data: {model: 'exchange', href: 'exchanges/voucher', href_page: 'exchanges', href_id: '', href_pane: 'voucher', model: 'exchange', current_exchange: 'true', exchangeid: '', event: 'Leaving email'}, class: "middle-child email_submit btn btn-mini btn-warning rounded #{@mode}" %>
+             data: {model: 'exchange', href: 'exchanges/voucher', href_page: 'exchanges', href_id: '', href_pane: 'voucher', delivery_tracking: 'null', model: 'exchange', current_exchange: 'true', exchangeid: '', event: 'Leaving email'}, class: "middle-child email_submit btn btn-mini btn-warning rounded #{@mode}" %>
     <% elsif status == 'used' %>
         <%= f.button :submit, 'Got the money, thank you!',
              data: {

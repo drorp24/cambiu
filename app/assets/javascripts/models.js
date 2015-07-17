@@ -9,6 +9,11 @@
 
         // Populate data fields
         // TODO: prefix model=<modelName> and match data-X so that X is the name used in the ajax returned model obj, to save having to all these 'custom' cases
+
+       if (field == 'delivery_tracking' && value) {
+         $('[data-delivery-tracking]').attr('data-delivery-tracking', value)
+       }
+
        if (field == 'logo') {
             if (value) {
                 $('[data-field=logo]').attr('src', value);
@@ -66,6 +71,8 @@
 
             // TODO: Use model in all fields and concatenate model to field. Then change here (no special case for 'id') and in populate.
             // TODO: Then merge pages' 'populate' into model_set
+            // TODO: sessionStorage setting should be outside the loop, else it will populate only for those fields which has html tags
+            // TODO: Do it with set() and the following logic will be done by set. This is not DRY...
             sessionStorage.setItem(model + '_' + field_no_model, value);     // update in session only used fields (if potnetially several times)
             if ($this.is('input, select')) {
                 $this.val(value);
@@ -79,7 +86,7 @@
         if (field == model + '_id') {
             console.log('field = '+ model + '_id');
             console.log('value is: ' + value);
-            var data_elements = $('[data-model=' + model + ']' + '[data-href]');
+            var data_elements = $('[data-model=' + model + ']' + '[data-href]:not([data-exchange-selection])');
 
             // TODO: Replace 'href-id' and 'exchangeid' with just 'exchange_id' and save all these extra assignments. pages.js will then look for exchange_id iso href-id.
             data_elements.each(function () {
@@ -92,6 +99,17 @@
             // Now do one assignment without the [data-model=model] filter to populate foreign keys in other models (e.g., exchange_id on model=order)
             $('[data-field=' + model + '_id]').val(value);
             console.log('setting all [data-field=' + model + '_id] val() to: ' + value);
+        }
+
+        if (field == 'delivery_tracking') {
+            sessionStorage.setItem('exchange_delivery_tracking', value)
+            if (!value) {
+                $('button[data-service-type=delivery]').attr('disabled', 'disabled');
+                $('.delivery_method.delivery').attr('data-content', 'Sorry, no delivery');
+            } else {
+                $('button[data-service-type=delivery]').removeAttr('disabled');
+                $('button[data-service-type=delivery]').removeAttr('title');
+            }
         }
     };
 

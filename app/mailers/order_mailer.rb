@@ -174,7 +174,20 @@ class OrderMailer < ApplicationMailer
     rescue Mandrill::Error => e
 
       # Mandrill errors are thrown as exceptions
-      logger.info "A mandrill error occurred: #{e.class} - #{e.message}"
+      error = "A mandrill error occurred: #{e.class} - #{e.message}"
+      console.log(error)
+      report(exchange, error)
+
+    # TODO: Happens, since async = false. Consider moving to async.
+    rescue Rack::Timeout::RequestTimeoutError => e
+      error = "Timeout error: #{e.class} - #{e.message}"
+      console.log(error)
+      report(exchange, error)
+
+    rescue => e
+      error = "Standard error: #{e}"
+      console.log(error)
+      report(exchange, error)
 
     end
 
@@ -229,7 +242,8 @@ class OrderMailer < ApplicationMailer
     rescue Mandrill::Error => e
 
       # Mandrill errors are thrown as exceptions
-      logger.info "A mandrill error occurred: #{e.class} - #{e.message}"
+      error = "A mandrill error occurred: #{e.class} - #{e.message}"
+      console.log(error)
 
     end
 

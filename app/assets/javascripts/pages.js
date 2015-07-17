@@ -17,8 +17,10 @@
 $(document).ready(function() {
 
 
-    // TODO: Make it a loop
-    // TODO: Replace with model_populate
+     // TODO: Replace with model_populate!
+     // TODO: model_populate iterates over the returned exchange json, populating for each variable all relevant fields at once. This one goes over the html tags instead
+     // TODO: This means that if there is no html tag for a variable, sessionStorage won't be populated
+     // TODO: This prevents every variable to propage to sessionStorag, plus In the case of something like delivery_tracking, that doesn't need to sit anywhere in the html, this is a problem
     function populate(el, exchange) {
 
         if (el.is('[data-id]'))                                                 el.attr('data-id', exchange.id);
@@ -33,6 +35,15 @@ $(document).ready(function() {
         if (field)  {
             if (el.is('input, select')) {
                 el.val(value);
+            } else
+            if (el.is('img')) {
+                if (value) {
+                    el.attr('src', value);
+                    el.css('display', 'block');
+                } else {
+                     el.attr('src', value);
+                    el.css('display', 'none');
+                }
             } else {
                 el.html(value);
             }
@@ -153,14 +164,24 @@ $(document).ready(function() {
             var exchange = findExchange(id);
 
             if (exchange) {
-                console.log('Yes. exchange has values. This means someone just clicked on one of the exchange-specific pane switching buttons');
+                console.log('Exchange has values, i.e., someone clicked href button in spa mode');
                 $('[data-model=exchange]').each(function () {
                     populate($(this), exchange);        // TODO: Replace pages 'populate' with 'model_populate'
                 });
                  // One extra update is required for exchange foreign keys which exist in other models
                 $('[data-field=exchange_id]').val(exchange.id);
+                // another extra assignment for delivery_tracking, that has no html tag
+                sessionStorage.setItem('exchange_delivery_tracking', exchange.delivery_tracking);
+                $('[data-delivery-tracking]').attr('data-delivery-tracking', String(exchange.delivery_tracking));
+                if (!value_of('exchange_delivery_tracking')) {
+                    $('button[data-service-type=delivery]').attr('disabled', 'disabled');
+                    $('.delivery_method.delivery').attr('data-content', 'Sorry, no delivery');
+                } else {
+                    $('button[data-service-type=delivery]').removeAttr('disabled');
+                    $('button[data-service-type=delivery]').removeAttr('title');
+                }
             } else {
-                console.log('No. exchange is empty. This means we are in a page reload. updatePage will do it soon')
+                console.log('Exchange is empty, i.e., page reload. pages will not populate, updatePage will soon')
             }
 
          }
@@ -226,6 +247,15 @@ $(document).ready(function() {
 
 
     link = function(el) {
+
+        if (value_of('service_type') == 'delivery' && el.is('[data-delivery-tracking]')) {
+            var delivery_tracking = el.attr('data-delivery-tracking');
+            if (delivery_tracking != 'null') {
+                window.location = delivery_tracking;
+                return
+            }
+        }
+
         var exchangeid =  el.attr('data-exchangeid');
         var href =        el.attr('data-href');
         var page =        el.attr('data-href-page');

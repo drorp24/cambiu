@@ -1,8 +1,6 @@
 <div id="exchange_summary" class="pane <%= params[:controller] == 'exchanges' ? 'active' : '' %>" data-pane="summary" data-model="exchange" data-id='' style="display: <%= params[:controller] == 'exchanges' ? 'block' : 'none' %>">
 
-  <% if @mode == 'exchange' %>
-      <%= render 'exchange_banner' %>
-  <% end %>
+  <%= render 'exchanges/exchange_banner' %>
 
   <div class="exchange_summary_bg">
     <div class="row">
@@ -16,47 +14,11 @@
     </div>
   </div>
 
-  <% if @mode == 'exchange' %>
-      <div class="well clearfix" id="exchange_search">
-        <%= render 'exchanges/summary/exchange_search_form' %>
-      </div>
-  <% end %>
+   <div class="well clearfix" id="exchange_search">
+    <%= render 'exchanges/summary/exchange_search_form' %>
+  </div>
 
-  <% if @mode != 'exchange' %>
-    <%= render 'exchanges/exchange_banner' %>
-  <% end %>
-
-  <% if @mode != 'exchange' %>
-      <div class="order">
-        <div class="row">
-          <div class="buy col-xs-4 col-xs-offset-1 col-md-4 col-md-offset-2">
-            <div class="you_chose">
-              <div>
-                <span>Pay:</span>
-              </div>
-              <div>Get:</div>
-              <div>Your gain:</div>
-            </div>
-          </div>
-          <div class="pay col-xs-5 col-md-4">
-            <div class="sum">
-              <span class="pay_amount" data-model="exchange" data-field="pay_amount"></span>
-              <span class="pay_currency" data-model="exchange" data-field="pay_currency"></span>
-            </div>
-            <div class="sum">
-                <span class="buy_amount" data-model="exchange" data-field="buy_amount"></span>
-                <span class="buy_currency" data-model="exchange" data-field="buy_currency"></span>
-            </div>
-            <div class="sum">
-                <span class="gain_amount" data-model="exchange" data-field="gain_amount"></span>
-                <span class="gain_currency" data-model="exchange" data-field="gain_currency"></span>
-            </div>
-           </div>
-        </div>
-      </div>
-  <% end %>
-
-  <div class="email_form well">
+   <div class="email_form well">
     <div class="row">
         <div class="col-xs-12">
           <%= render partial: 'order_form', locals: {status: 'produced'} %>

@@ -56,6 +56,7 @@ class Search < ActiveRecord::Base
       
        if self.sort == "quote"
         @exchange_offers = @exchange_offers.sort_by{|e| e[:quote] || 1000000}
+        @exchange_offers.reverse! if pay.amount > 0
       else
         @exchange_offers = @exchange_offers.sort_by{|e| e[:distance] }
       end

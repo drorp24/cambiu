@@ -19,6 +19,8 @@ class Exchange < ActiveRecord::Base
 
   geocoded_by :address
 
+  validates :delivery_tracking, allow_blank: true, :format => {:with => URI.regexp}
+
   scope :with_contract, -> { where(contract: true) }
 
    def has_real_rates?
@@ -218,6 +220,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:quote_currency] = quotes[:quote_currency]
     exchange_hash[:errors] = quotes[:errors]
     exchange_hash[:user_location] = user_location
+    exchange_hash[:delivery_tracking] = delivery_tracking
 
 =begin
     exchange_hash[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(1.03..1.37)).format
@@ -531,6 +534,14 @@ class Exchange < ActiveRecord::Base
         exchange.source             = osm_rec[:source]
       end 
     end
+  end
+
+  def collection?
+    true
+  end
+
+  def delivery?
+    self.delivery_tracking.present?
   end
 
   protected

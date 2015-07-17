@@ -181,6 +181,7 @@ $(document).ready(function() {
 
         sort_ui(sort);
 
+        $('[data-field=sort]').val(sort);
         sessionStorage.sort = sort;
 
         if (exchanges.length == 0) return;
@@ -190,6 +191,7 @@ $(document).ready(function() {
         }
         else if (sort == 'quote') {
             exchanges_by_quote = exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)}).slice(0);
+            if (value_of('pay_amount') > 0) { exchanges.reverse()}
         }
         clearExchanges();
         updateExchanges(exchanges);
@@ -211,21 +213,35 @@ $(document).ready(function() {
 
     // UI
 
-    // service_type button
+     // service_type button
     service_type_ui = function(service_type) {
         if (service_type == 'collection') {
             $('button[data-service-type=delivery]').removeClass('active');
             $('button[data-service-type=collection]').addClass('active');
+            $('#exchange_summary #order_email').attr('placeholder', '  Enter email to guarantee deal');
+            $('#exchange_summary #order_email').attr('required', 'required');
+/*
             $('#order_phone').removeAttr('required');
-            $('#order_phone').attr('placeholder', 'Leave phone if you need help');
+            $('#order_phone').css('display', 'none');
+*/
             $('.fees').html('');
          } else
         if (service_type == 'delivery') {
+            $('.validation_errors').empty();
+            $('.exchange_search_form_error').empty();
             $('button[data-service-type=collection]').removeClass('active');
             $('button[data-service-type=delivery]').addClass('active');
+            $('#exchange_summary #order_email').attr('placeholder', '  Leave us your email if you wish');
+            $('#exchange_summary #order_email').removeAttr('required');
+            $('#exchange_summary #order_email').removeAttr('aria-required');
+            $('#exchange_summary #order_email').removeClass('required');
+
+/*
+            $('#order_phone').css('display', 'block');
             $('#order_phone').attr('required', 'true');
             $('#order_phone').attr('placeholder', 'Leave phone for delivery');
             $('.fees').html('Add &pound;20 for delivery');
+*/
         }
     };
     if (sessionStorage.service_type == 'collection') {
@@ -241,9 +257,9 @@ $(document).ready(function() {
     });
 
     $('button[data-service-type=delivery]').click(function() {
-         service_type_ui('delivery');
-         set('service_type', 'delivery');
-    });
+        service_type_ui('delivery');
+        set('service_type', 'delivery');
+     });
 
 
     // open parameters collapsed form in desktops only

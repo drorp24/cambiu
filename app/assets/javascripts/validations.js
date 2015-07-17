@@ -139,8 +139,7 @@ $(document).ready(function() {
     $("#new_order").validate({
         rules: {
             'order[email]': {
-                required: true,
-                email: true
+                 email: true
 //                remote: '/searches/unique'
             }
         },
