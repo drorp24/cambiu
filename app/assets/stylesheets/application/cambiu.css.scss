@@ -281,7 +281,7 @@ body#cambiu {
     }
   }
   .valid_class {
-    color: $lightgreen;
+    color: #555;
     &::before {
       font-family: fontAwesome;
       content:"\f05d" + '    ';
@@ -544,6 +544,7 @@ body#cambiu {
     padding-bottom: $navbar-height;
     display: block;   }
   #new_search {
+    color: #555;
     label {
       position: absolute;
       @media (min-width: $screen-sm-min) {
@@ -554,18 +555,18 @@ body#cambiu {
       }
       left: 2em;
       @media (min-width: $screen-sm-min) {
-        font-size: 1.1em;
+        font-size: 1em;
       }
       @media (max-width: $screen-xs-max) {
         font-size: 0.9em;
       }
-      color: $darkgreen;
       text-transform: uppercase;
-    }
+     }
     input {
+      text-align: right;
       &#search_pay_amount, &#search_buy_amount {
          @media (min-width: $screen-sm-min) {
-          font-size: 1.1em;
+          font-size: 1em;
            text-indent: 4.5em;
         }
         @media (max-width: $screen-xs-max) {
@@ -595,6 +596,7 @@ body#cambiu {
      input, select {
       @include search-form-def;
       @include search_placeholder;
+       text-align: center;
       &#search_location {
         text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
         color: #fff;
