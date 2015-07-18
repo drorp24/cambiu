@@ -188,10 +188,15 @@ body#cambiu {
     box-shadow: 0 0 5px #888;
   }
 
+  .popover {
+    border-radius: 4px;
+  }
+
   .popover-content {
     color: #888;
     font-size: 0.8em;
     padding: 0.3em 0.7em;
+    border-radius: 4px;
   }
 
 
@@ -311,18 +316,21 @@ body#cambiu {
         margin-top: 0;
       }
       @media (min-width: $screen-sm-min) {
-        margin-top: $parameters-height - 3px;
+//        margin-top: $parameters-height - 3px;
       }
     }
 
     .parameters {
       position: fixed;
+//      display: none;
       @media (max-width: $screen-xs-max) {
         height: 0;
       }
-      @media (min-width: $screen-sm-min) {
-        height: $parameters-height;
-        margin-top: -3px;
+      &.in {
+        @media (min-width: $screen-sm-min) {
+          height: $parameters-height;
+          margin-top: -3px;
+        }
       }
     }
   }
@@ -598,7 +606,7 @@ body#cambiu {
       @include search_placeholder;
        text-align: center;
       &#search_location {
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
+//        text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
         color: #fff;
          margin-top: -10px;
         @include placeholder-icon("\f041");
@@ -608,6 +616,9 @@ body#cambiu {
         border-bottom: $border-bottom;
         box-shadow: none;
         text-align: center;
+        text-transform: capitalize;
+        font-size: 1.2em;
+        font-weight: 400;
         }
        &.btn {
         background-color: $lightgreen;
@@ -914,6 +925,7 @@ body#cambiu {
         }
       }
       #exchanges {
+        margin-top: -3px;
         z-index: 0;
         padding-left: 0;
         padding-right: 0;
@@ -921,6 +933,12 @@ body#cambiu {
           padding-right: 0;
          }
         #exchanges_search_params {
+          @media (min-width: $screen-sm-min) {
+            height: $parameters-height + 3px;
+            .exchanges_search_params_title {
+              margin-top: 20px;
+            }
+          }
           background-color: $lightgreen;
           border: 1px solid $lightgreen;
           .exchanges_search_params_title {
@@ -938,12 +956,13 @@ body#cambiu {
         #exchanges_search_search {
           padding-right: 30px;
           padding-left: 30px;
-          border: 8px solid $lightgreen;
+          border: 6px solid $lightgreen;
           bordeer-top: none;
           .exchanges_search_search_title {
             font-size: 1em;
-            color: $lightgrey;
-            font-weight: 100;
+            color: #333;
+            line-height: 15px;
+            font-weight: 300;
             text-transform: uppercase;
             [data-field] {
               font-weight: 500;
@@ -1629,7 +1648,7 @@ body#cambiu {
        }
     }
     &.search #map_container {
-      top: $navbar-height + $parameters-height;
+      top: $navbar-height /*+ $parameters-height*/;
     }
     &.exchange #map_container {
       top: $navbar-height;

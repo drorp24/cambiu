@@ -148,7 +148,7 @@ def = function(variable) {
     var val = {
         'pay_amount'    : null,
         'pay_currency'  : 'GBP',
-        'buy_amount'    : 1000,
+        'buy_amount'    : 700,
         'buy_currency'  : 'EUR',
         'sort'          : 'quote',
         'service_type'  : 'collection'

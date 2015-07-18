@@ -160,7 +160,7 @@ $(document).ready(function() {
     fix('buy_amount');
 
     $('.open_search').click(function() {
-        $('#exchange_params_change').collapse('show')
+        $('#exchange_params_change').collapse('toggle')
     });
 
 
@@ -263,12 +263,14 @@ $(document).ready(function() {
 
 
     // open parameters collapsed form in desktops only
+/*
     var mq = window.matchMedia('(min-width: 768px)');
     if(mq.matches) {
         $('.parameters .collapse').addClass('in');
     } else {
         // the width of browser is less then 700px
     }
+*/
 
 
     $('.getstarted_button').click(function(){
