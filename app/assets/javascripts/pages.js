@@ -175,10 +175,10 @@ $(document).ready(function() {
                 $('[data-delivery-tracking]').attr('data-delivery-tracking', String(exchange.delivery_tracking));
                 if (!value_of('exchange_delivery_tracking')) {
                     $('button[data-service-type=delivery]').attr('disabled', 'disabled');
-                    $('.delivery_method.delivery').attr('data-content', 'Sorry, no delivery');
+//                    $('.delivery_method.delivery').attr('data-content', 'Sorry, no delivery');
                 } else {
                     $('button[data-service-type=delivery]').removeAttr('disabled');
-                    $('button[data-service-type=delivery]').removeAttr('title');
+//                    $('.delivery_method.delivery').removeAttr('data-content');
                 }
             } else {
                 console.log('Exchange is empty, i.e., page reload. pages will not populate, updatePage will soon')

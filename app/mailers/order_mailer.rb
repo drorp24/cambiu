@@ -24,7 +24,7 @@ class OrderMailer < ApplicationMailer
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not exist"
     elsif exchange.email.blank?
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not have an email"
-    elsif !order.offer? and order.email.blank? and order.collection?
+    elsif !order.offer? and order.collection? and order.email.blank?
       error = "Order has no email"
     end
 
@@ -35,26 +35,31 @@ class OrderMailer < ApplicationMailer
       report(exchange, error)
     end
 
-    development_bcc = [
-         {
-             email:  order.collection? ? exchange.email : 'dror@cambiu.com',
+
+    to_user =
+    [
+        {
+            email:  order.email,
+            type:   'to'
+        }
+    ]
+
+    bcc_exchange =
+    [
+        {
+            email:  Rails.env.production? ? exchange.email : 'dror@cambiu.com',
             name:   exchange.name,
             type:   'bcc'
-        },
+        }
+    ]
+
+    bcc_me = [
         {
             email:  'dror@cambiu.com',
             type:   'bcc'
         }
     ]
-
-    test_bcc = [
-        {
-
-            email:  order.collection? ? exchange.email : 'dror@cambiu.com',
-            email:  exchange.email,
-            name:   exchange.name,
-            type:   'bcc'
-        },
+    bcc_us = [
         {
             email:  'sharon@cambiu.com',
             type:   'bcc'
@@ -68,61 +73,28 @@ class OrderMailer < ApplicationMailer
             type:   'bcc'
         }
     ]
-
-    production_bcc = [
-        {
-
-            email:  order.collection? ? exchange.email : 'dror@cambiu.com',
-            name:   exchange.name,
-            type:   'bcc'
-        },
-        {
-            email:  'arnon@cambiu.com',
-            type:   'bcc'
-        },
-        {
-            email:  'sharon@cambiu.com',
-            type:   'bcc'
-        },
-        {
-            email:  'dror@cambiu.com',
-            type:   'bcc'
-        },
-        {
-            email:  'eyal@cambiu.com',
-            type:   'bcc'
-        }
+    bcc_eyal =
+    [
+        email:  'eyal@cambiu.com',
+        type:   'bcc'
     ]
+    bcc_us += bcc_eyal if Rails.env.production?
+    bcc_us = bcc_me if Rails.env.development?
+
 
     if order.offer?
+      to = bcc_us
       subject = "Someone just clicked Get it..."
-      to =  [
-            ]
     elsif order.produced?
+      to = bcc_us
+      to +=  (to_user + bcc_exchange) if order.collection?
       subject = "Order #{order.voucher}"
-      to =  [
-                  {
-                      email:  order.email,
-                      type:   'to'
-                  }
-            ]
-      elsif order.used?
+    elsif order.used?
+      to = to_user + bcc_us
       subject = "Order #{order.voucher} has been fulfilled"
-      to =  [
-                  {
-                      email:  order.email,
-                      type:   'to'
-                  }
-            ]
     end
+    subject += " (#{Rails.env})" unless Rails.env.production?
 
-    if Rails.env.development?
-      to += development_bcc
-    elsif Rails.env.test? or Rails.env.staging?
-      to += test_bcc
-    elsif Rails.env.production?
-      to += production_bcc
-    end
 
     if order.collection?
       service_type_message = 'Please pick it up at the above address'

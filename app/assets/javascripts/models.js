@@ -105,10 +105,10 @@
             sessionStorage.setItem('exchange_delivery_tracking', value)
             if (!value) {
                 $('button[data-service-type=delivery]').attr('disabled', 'disabled');
-                $('.delivery_method.delivery').attr('data-content', 'Sorry, no delivery');
+//                $('.delivery_method.delivery').attr('data-content', 'Sorry, no delivery');
             } else {
                 $('button[data-service-type=delivery]').removeAttr('disabled');
-                $('button[data-service-type=delivery]').removeAttr('title');
+//                $('.delivery_method.delivery').removeAttr('data-content');
             }
         }
     };
