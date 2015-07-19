@@ -22,9 +22,9 @@ class OrderMailer < ApplicationMailer
     exchange = order.exchange
     if !exchange
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not exist"
-    elsif exchange.email.blank? and order.collection?
+    elsif exchange.email.blank?
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not have an email"
-    elsif !order.offer? and order.email.blank?
+    elsif !order.offer? and order.email.blank? and order.collection?
       error = "Order has no email"
     end
 
