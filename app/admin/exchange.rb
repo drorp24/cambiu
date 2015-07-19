@@ -1,7 +1,7 @@
 ActiveAdmin.register Exchange do
 
-  permit_params :id, :name, :address, :email, :latitude, :longitude, :country, :opens, :closes,:website, :email, :note, :phone, :atm, :source, :business_type, :chain_id, :city, :region, :rating, :nearest_station,
-                :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id, :rates_source, :contract
+  permit_params :id, :name, :address, :email, :latitude, :longitude, :country, :opens, :closes,:website, :email, :note, :phone, :atm, :source, :business_type, :chain, :city, :region, :rating, :nearest_station,
+                :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id, :rates_source, :contract, :rates_policy
 =begin
     rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
     business_hours_attributes: [:id, :day, :open1, :close1, :open2, :close2]
@@ -61,12 +61,12 @@ ActiveAdmin.register Exchange do
   end
 
   scope :manual
-  scope :exchange_input
+  scope :xml
   scope :scraping
   scope :fake
 
 
-  filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Fake', 'fake'], ['Manual', 'manual'], ['Exchange', 'exchange_input'], ['Scraping', 'scraping']]
+  filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Fake', 'fake'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']]
   filter :chain
   filter :name
   filter :address
@@ -79,12 +79,18 @@ ActiveAdmin.register Exchange do
     end
     column :contract
     column :rates do |exchange|
-      link_to exchange.rates_source, admin_exchange_rates_path(exchange)
+      if    exchange.individual_policy?
+        link_to exchange.rates_source, admin_exchange_rates_path(exchange)
+      elsif exchange.chain_policy?
+        link_to exchange.chain.rates_source, admin_chain_rates_path(exchange.chain_id)
+      end
     end
-    column :chain 
+    column :chain
+    column :rates_policy do |exchange|
+      exchange.rates_policy ? exchange.rates_policy.titleize : ''
+    end
     column :address
     column :email
-    column :phone
     column :delivery?
     actions
   end
@@ -160,10 +166,12 @@ form do |f|
       f.input     :updated_at, as: :string, input_html: { :disabled => true }
       f.input     :admin_user, as: :string, label: "By", input_html: { :disabled => true }
       f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
+      f.input     :chain_name, label: 'Chain'
+      f.input     :rates_policy, as: :select, collection: {:"Individual policy"=>"individual_policy", :"Chain Policy"=>"chain_policy"}, include_blank: false
       f.input     :name
       f.input     :address
       f.input     :contract, label: 'Contract', as: :radio
-      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Fake"=>"fake", :"Manual"=>"manual", :"Exchange"=>"exchange_input", :"Scraping"=>"scraping"}
+      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Fake"=>"fake", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping"}
       f.input     :delivery_tracking, as: :url
       f.input     :direct_link, input_html: { :disabled => true }, hint: '  Direct link for search engines and ads'
       f.input     :logo, as: :file
@@ -179,7 +187,6 @@ form do |f|
       f.input     :osm_id, input_html: { :disabled => true }
       f.input     :atm
       f.input     :business_type
-      f.input     :chain_id
       f.input     :city
       f.input     :region
       f.input     :rating
@@ -218,8 +225,12 @@ form do |f|
     config.clear_action_items!
 
     action_item :add_rate, only: :index do
-      link_to 'Add Rate', new_admin_exchange_rate_path(params[:exchange_id])
-    end
+      if    params[:exchange_id]
+        link_to 'Add Rate', new_admin_exchange_rate_path(params[:exchange_id])
+      elsif params[:chain_id]
+        link_to 'Add Rate', new_admin_chain_rate_path(params[:chain_id])
+      end
+      end
 
 =begin
     scope :collection
@@ -230,10 +241,10 @@ form do |f|
       selectable_column
       id_column
       column :source        do |rate|
-        best_in_place rate, :source, as: :select, collection: {:"manual"=>"Manual", :"api"=>"API", :"scraping"=>"Scraping", :"fake"=>"Fake"}
+        best_in_place rate, :source, as: :select, collection: {:"manual"=>"Manual", :"xml"=>"XML", :"scraping"=>"Scraping", :"fake"=>"Fake"}
       end
       column :currency           do |rate|
-        best_in_place rate, :currency, as: :select, collection: Currency.select
+        best_in_place rate, :currency #, as: :select, collection: Currency.select
       end 
       column :buy           do |rate|
         best_in_place rate, :buy_s, :as => :input
@@ -268,16 +279,41 @@ form do |f|
       end
 
       def index
-        @rates = Rate.where(ratable_id: params[:exchange_id])
-        @collection = @rates.page(params[:page]).per(10)
+
+        if params[:exchange_id]
+          @rates = Rate.where(ratable_type: 'Exchange', ratable_id: params[:exchange_id])
+        elsif params[:chain_id]
+          @rates = Rate.where(ratable_type: 'Chain', ratable_id: params[:chain_id])
+        else
+          return
+        end
+
+        @collection = @rates.order(id: :desc).page(params[:page]).per(10)
+
       end
 
       def new
-        exchange_id = params[:exchange_id] ? params[:exchange_id] : Exchange.last.id
-        @rate = Rate.create!(ratable_type: 'Exchange', ratable_id: exchange_id, admin_user_id: current_admin_user.id, source: 0, service_type: 0)
-        @rate.ratable.update(rates_source: 'manual', contract: true)
+
+        if params[:exchange_id]
+          ratable_type = 'Exchange'
+          ratable_id = params[:exchange_id]
+        elsif params[:chain_id]
+          ratable_type = 'Chain'
+          ratable_id = params[:chain_id]
+        else
+          return
+        end
+
+        @rate = Rate.create!(ratable_type: ratable_type, ratable_id: ratable_id, admin_user_id: current_admin_user.id, source: 0, service_type: 0)
+        @rate.ratable.update(rates_source: 'manual')
         notice = @rate.errors.any? ? @rate.errors.full_messages : nil
-        redirect_to admin_exchange_rates_path(exchange_id), notice: notice
+
+        if params[:exchange_id]
+          redirect_to admin_exchange_rates_path(ratable_id), notice: notice
+        elsif params[:chain_id]
+          redirect_to admin_chain_rates_path(ratable_id), notice: notice
+        end
+
       end
 
       # since best_in_place automatically goes to the regular exchange#update, the update controller method is defined there not here

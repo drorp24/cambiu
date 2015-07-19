@@ -15,7 +15,8 @@ class Exchange < ActiveRecord::Base
   belongs_to  :upload
   belongs_to  :admin_user
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
-  enum rates_source: [ :no_rates, :fake, :manual, :exchange_input, :scraping ]
+  enum rates_source: [ :no_rates, :fake, :manual, :xml, :scraping ]
+  enum rates_policy: [:individual_policy, :chain_policy]
 
   geocoded_by :address
 
@@ -542,6 +543,22 @@ class Exchange < ActiveRecord::Base
 
   def delivery?
     self.delivery_tracking.present?
+  end
+
+  def chain_name
+    self.chain.name.titleize if self.chain
+  end
+  def chain_name=(name)
+    chain = Chain.where(name: name).first_or_create
+    self.update(chain_id: chain.id, currency: 'GBP')
+  end
+
+  def rates
+    if self.chain_policy?
+      self.chain.rates
+    else
+      super
+    end
   end
 
   protected

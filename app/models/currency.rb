@@ -25,9 +25,9 @@ class Currency
    Money::Currency.table.inject([]) do |array, (id, attributes)|
     priority = attributes[:priority]
     iso_code = attributes[:iso_code]
-    if ['HKD', 'CNY'].include?(iso_code) or (priority && priority < 10)
+ #   if ['HKD', 'CNY'].include?(iso_code) or (priority && priority < 10)
       hash[attributes[:iso_code].to_sym] = attributes[:iso_code]
-    end
+ #   end
    end 
    hash
   end

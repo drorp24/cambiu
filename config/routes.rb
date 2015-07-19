@@ -45,6 +45,9 @@ Rails.application.routes.draw do
     resources :exchanges do
       resources :rates
     end
+    resources :chains do
+      resources :rates
+    end
   end
   namespace :api do
     namespace :v1 do

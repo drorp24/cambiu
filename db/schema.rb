@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716113853) do
+ActiveRecord::Schema.define(version: 20150719201336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,9 +69,11 @@ ActiveRecord::Schema.define(version: 20150716113853) do
     t.string   "url"
     t.integer  "plan"
     t.string   "phone"
-    t.string   "prices_published"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rates_source"
+    t.datetime "rates_update"
+    t.string   "currency"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -131,6 +133,7 @@ ActiveRecord::Schema.define(version: 20150716113853) do
     t.integer  "rates_source"
     t.boolean  "contract"
     t.string   "delivery_tracking"
+    t.integer  "rates_policy"
   end
 
   add_index "exchanges", ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
