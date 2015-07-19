@@ -9,7 +9,7 @@ ActiveAdmin.register Chain do
     column :url
     column :currency
     column :rates_source do |chain|
-      chain.rates_source.titleize
+      chain.rates_source.titleize if chain.rates_source
     end
     column :rates_update
   end
