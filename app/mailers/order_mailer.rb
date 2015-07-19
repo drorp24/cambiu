@@ -22,7 +22,7 @@ class OrderMailer < ApplicationMailer
     exchange = order.exchange
     if !exchange
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not exist"
-    elsif exchange.email.blank?
+    elsif exchange.email.blank? and order.collection?
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not have an email"
     elsif !order.offer? and order.email.blank?
       error = "Order has no email"
@@ -99,7 +99,7 @@ class OrderMailer < ApplicationMailer
       to =  [
             ]
     elsif order.produced?
-      subject = "Order #{order.voucher} is ready"
+      subject = "Order #{order.voucher}"
       to =  [
                   {
                       email:  order.email,
