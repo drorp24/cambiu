@@ -18,7 +18,7 @@ $(document).ready(function() {
         console.log('updatePage');
         exchanges = data;
 
-        if (exchangePage()) {
+        if (exchangePage() && exchanges && exchanges.length > 0) {
             var mapCenterLat = exchanges[0].latitude;
             var mapCenterLng = exchanges[0].longitude;
         } else {

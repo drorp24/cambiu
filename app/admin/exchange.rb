@@ -78,6 +78,10 @@ ActiveAdmin.register Exchange do
       link_to exchange.name, admin_exchange_path(exchange)
     end
     column :contract
+    column :chain
+    column :rates_policy do |exchange|
+      exchange.rates_policy ? exchange.rates_policy.titleize : ''
+    end
     column :rates do |exchange|
       if    exchange.individual_policy?
         link_to exchange.rates_source, admin_exchange_rates_path(exchange)
@@ -85,11 +89,7 @@ ActiveAdmin.register Exchange do
         link_to exchange.chain.rates_source, admin_chain_rates_path(exchange.chain_id)
       end
     end
-    column :chain
-    column :rates_policy do |exchange|
-      exchange.rates_policy ? exchange.rates_policy.titleize : ''
-    end
-    column :address
+     column :address
     column :email
     column :delivery?
     actions
