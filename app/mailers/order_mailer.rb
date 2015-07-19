@@ -51,7 +51,7 @@ class OrderMailer < ApplicationMailer
     test_bcc = [
         {
 
-            email:  (Rails.env.production? and exchange.email.present?) ? exchange.email : 'dror@cambiu.com',
+            email:  (Rails.env.production? and exchange.email.present?) ? exchange.email : 'arnon@cambiu.com',
             name:   exchange.name,
             type:   'bcc'
         },
