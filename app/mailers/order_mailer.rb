@@ -36,6 +36,12 @@ class OrderMailer < ApplicationMailer
     end
 
     development_bcc = [
+         {
+
+            email:  (Rails.env.production? and exchange.email.present?) ? exchange.email : 'dror@cambiu.com',
+            name:   exchange.name,
+            type:   'bcc'
+        },
         {
             email:  'dror@cambiu.com',
             type:   'bcc'
@@ -43,6 +49,12 @@ class OrderMailer < ApplicationMailer
     ]
 
     test_bcc = [
+        {
+
+            email:  (Rails.env.production? and exchange.email.present?) ? exchange.email : 'dror@cambiu.com',
+            name:   exchange.name,
+            type:   'bcc'
+        },
         {
             email:  'sharon@cambiu.com',
             type:   'bcc'
@@ -58,6 +70,12 @@ class OrderMailer < ApplicationMailer
     ]
 
     production_bcc = [
+        {
+
+            email:  (Rails.env.production? and exchange.email.present?) ? exchange.email : 'dror@cambiu.com',
+            name:   exchange.name,
+            type:   'bcc'
+        },
         {
             email:  'arnon@cambiu.com',
             type:   'bcc'
@@ -77,12 +95,6 @@ class OrderMailer < ApplicationMailer
       to =  [
                   {
                       email:  order.email,
-                      type:   'to'
-                  },
-                  {
-
-                      email:  (Rails.env.production? and exchange.email.present?) ? exchange.email : 'dror@cambiu.com',
-                      name:   exchange.name,
                       type:   'to'
                   }
             ]
@@ -132,6 +144,7 @@ class OrderMailer < ApplicationMailer
       template_content = []
       message = {
           to:             to,
+          preserve_recipients: true,
           subject:        subject,
           from_name:      from_name,
           from_email:     from_email,
