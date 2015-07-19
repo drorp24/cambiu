@@ -37,8 +37,7 @@ class OrderMailer < ApplicationMailer
 
     development_bcc = [
          {
-
-            email:  exchange.email,
+             email:  order.collection? ? exchange.email : 'dror@cambiu.com',
             name:   exchange.name,
             type:   'bcc'
         },
@@ -51,6 +50,7 @@ class OrderMailer < ApplicationMailer
     test_bcc = [
         {
 
+            email:  order.collection? ? exchange.email : 'dror@cambiu.com',
             email:  exchange.email,
             name:   exchange.name,
             type:   'bcc'
@@ -72,7 +72,7 @@ class OrderMailer < ApplicationMailer
     production_bcc = [
         {
 
-            email:  exchange.email,
+            email:  order.collection? ? exchange.email : 'dror@cambiu.com',
             name:   exchange.name,
             type:   'bcc'
         },
