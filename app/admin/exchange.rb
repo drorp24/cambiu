@@ -139,6 +139,12 @@ ActiveAdmin.register Exchange do
       redirect_to edit_admin_exchange_path(params[:id])
     end
 
+    def create
+      super do |success,failure|
+        success.html { redirect_to admin_exchanges_path }
+      end
+    end
+
     def update
       exchange = Exchange.find_by_id(params[:id])
       if exchange.update(exchange_params)
@@ -260,10 +266,6 @@ form do |f|
       actions defaults: false
     end
 
-=begin
-    filter :buy_currency
-    filter :pay_currency
-=end
 
     form do |f|
       f.inputs 'Rates' do
@@ -311,7 +313,6 @@ form do |f|
 
       def new
 
-        if params[:exchange_id]
           ratable_type = 'Exchange'
           ratable_id = params[:exchange_id]
         elsif params[:chain_id]
