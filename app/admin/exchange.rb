@@ -266,6 +266,7 @@ form do |f|
       actions defaults: false
     end
 
+ #   filter :currency
 
     form do |f|
       f.inputs 'Rates' do
@@ -313,6 +314,7 @@ form do |f|
 
       def new
 
+        if params[:exchange_id]
           ratable_type = 'Exchange'
           ratable_id = params[:exchange_id]
         elsif params[:chain_id]
