@@ -84,9 +84,9 @@ ActiveAdmin.register Exchange do
     end
     column :rates do |exchange|
       if    exchange.individual_policy?
-        link_to exchange.rates_source, admin_exchange_rates_path(exchange)
+        link_to exchange.rates_source ? exchange.rates_source.titleize : '', admin_exchange_rates_path(exchange)
       elsif exchange.chain_policy?
-        link_to exchange.chain.rates_source, admin_chain_rates_path(exchange.chain_id)
+        link_to exchange.chain.rates_source ? exchange.chain.rates_source.titleize : '', admin_chain_rates_path(exchange.chain_id)
       end
     end
      column :address
@@ -109,14 +109,6 @@ ActiveAdmin.register Exchange do
   end
 
 =end
-  sidebar "Opening hours", only: [:show, :edit] do
-    table_for exchange.business_hours.order("day") do |b|
-      b.column("Day")    { |bh| status_tag (Date::DAYNAMES[bh.day]), (bh.open1.present? ? :ok : :error) }
-      b.column("Open")     { |bh| bh.open1.to_s[0..4]}
-      b.column("Close")    { |bh| bh.close1.to_s[0..4] }
-    end
-  end
-
   sidebar "Rates", only: [:show, :edit] do
     table_for exchange.rates do |r|
       r.column("Currency")    { |rate| status_tag rate.currency }
@@ -124,6 +116,14 @@ ActiveAdmin.register Exchange do
       r.column("Sell")    { |rate|  rate.sell_s }
     end
     link_to "Update rates",    admin_exchange_rates_path(exchange)
+  end
+
+  sidebar "Opening hours", only: [:show, :edit] do
+    table_for exchange.business_hours.order("day") do |b|
+      b.column("Day")    { |bh| status_tag (Date::DAYNAMES[bh.day]), (bh.open1.present? ? :ok : :error) }
+      b.column("Open")     { |bh| bh.open1.to_s[0..4]}
+      b.column("Close")    { |bh| bh.close1.to_s[0..4] }
+    end
   end
 
   controller do
@@ -167,7 +167,7 @@ form do |f|
       f.input     :admin_user, as: :string, label: "By", input_html: { :disabled => true }
       f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
       f.input     :chain_name, label: 'Chain'
-      f.input     :rates_policy, as: :select, collection: {:"Individual policy"=>"individual_policy", :"Chain Policy"=>"chain_policy"}, include_blank: false
+      f.input     :rates_policy, as: :select, collection: {:"Individual policy"=>"individual", :"Chain"=>"chain_policy"}, include_blank: false
       f.input     :name
       f.input     :address
       f.input     :contract, label: 'Contract', as: :radio
@@ -252,7 +252,7 @@ form do |f|
       column :sell           do |rate|
         best_in_place rate, :sell_s, :as => :input
       end
-      column :updated_at
+      column :last_update
       column "By", :admin_user_s
       actions defaults: false
     end
@@ -281,14 +281,28 @@ form do |f|
       def index
 
         if params[:exchange_id]
-          @rates = Rate.where(ratable_type: 'Exchange', ratable_id: params[:exchange_id])
+          ratable_type = 'Exchange'
+          ratable_id = params[:exchange_id]
         elsif params[:chain_id]
-          @rates = Rate.where(ratable_type: 'Chain', ratable_id: params[:chain_id])
+          ratable_type = 'Chain'
+          ratable_id = params[:chain_id]
         else
           return
         end
 
-        @collection = @rates.order(id: :desc).page(params[:page]).per(10)
+        @rates = Rate.where(ratable_type: ratable_type, ratable_id: ratable_id)
+        if @rates.any?
+          @collection = @rates.order(id: :desc).page(params[:page]).per(10)
+          return
+        else
+
+          if params[:exchange_id]
+            redirect_to new_admin_exchange_rate_path(ratable_id) and return
+          elsif params[:chain_id]
+            redirect_to new_admin_chain_rate_path(ratable_id) and return
+          end
+
+        end
 
       end
 

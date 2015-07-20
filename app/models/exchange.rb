@@ -550,7 +550,10 @@ class Exchange < ActiveRecord::Base
   end
   def chain_name=(name)
     chain = Chain.where(name: name).first_or_create
-    self.update(chain_id: chain.id, currency: 'GBP')
+    currency = chain.currency || 'GBP'
+    rates_source = chain.rates_source || 'no_rates'
+    chain.update(currency: currency, rates_source: rates_source)
+    self.update(chain_id: chain.id)
   end
 
   def rates
