@@ -164,10 +164,10 @@ form do |f|
       f.semantic_errors *f.object.errors.keys
       f.input     :created_at, as: :string, input_html: { :disabled => true }
       f.input     :updated_at, as: :string, input_html: { :disabled => true }
-      f.input     :admin_user, as: :string, label: "By", input_html: { :disabled => true }
+      f.input     :admin_user_s, as: :string, label: "By", input_html: { :disabled => true }
       f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
       f.input     :chain_name, label: 'Chain'
-      f.input     :rates_policy, as: :select, collection: {:"Individual policy"=>"individual", :"Chain"=>"chain_policy"}, include_blank: false
+      f.input     :rates_policy, as: :select, collection: {:"Individual policy"=>"individual_policy", :"Chain"=>"chain_policy"}, include_blank: false
       f.input     :name
       f.input     :address
       f.input     :contract, label: 'Contract', as: :radio
@@ -208,7 +208,7 @@ form do |f|
 
     menu false
 
- #   belongs_to :exchange
+#    belongs_to :ratable, polymorphic: true
 
     permit_params :id, :ratable_id, :ratable_type, :service_type, :currency, :buy, :sell, :admin_user, :rates_source
 
@@ -334,11 +334,19 @@ form do |f|
 
        def batch_action
         return unless params[:batch_action] == 'destroy'
-        rate_id = params[:collection_selection][0]
-        rate = Rate.find_by_id(rate_id)
-        exchange_id = Rate.find_by_id(rate_id).ratable_id
-        rate.delete
-        redirect_to admin_exchange_rates_path(exchange_id), notice: 'Over and done with!'
+        params[:collection_selection].each do |rate_id|
+          rate = Rate.find_by_id(rate_id)
+          @ratable_id = rate.ratable_id
+          @ratable_type = rate.ratable_type
+          rate.delete
+        end
+
+        if @ratable_type == 'Exchange'
+          redirect_to admin_exchange_rates_path(@ratable_id), notice: 'Over and done with!'
+        elsif @ratable_type == 'Chain'
+          redirect_to admin_chain_rates_path(@ratable_id), notice: 'Over and done with!'
+        end
+
       end
 
      end

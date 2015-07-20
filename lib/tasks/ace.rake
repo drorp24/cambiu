@@ -1,19 +1,23 @@
 namespace :rates do
-  desc "pupdate ace rates"
+  desc "Update ace rates"
   task :ace => :environment do
 
     require 'nokogiri'
     require 'open-uri'
     doc = Nokogiri::XML(open("http://www.ace-fx.com/feed/affrates"))
 
-    exchange = Exchange.find(5)
-    exchange.update(rates_source: 'xml')
+    chain = Chain.find_by(name: 'Ace-FX')
+    chain.update(rates_source: 'xml')
+    chain.exchanges.each do |exchange|
+      exchange.update(rates_source: 'xml')
+    end
 
     doc.css('rate').each do |rate|
       currency  = rate['code']
       buy       = rate['buyrate']
       sell      = rate['sellrate']
-      exchange.rates.where(currency: currency).first_or_create.update(source: 'xml', currency: currency, buy: buy, sell: sell)
+
+      chain.rates.where(currency: currency).first_or_create.update(source: 'xml', currency: currency, buy: buy, sell: sell, last_update: DateTime.current)
     end
 
   end

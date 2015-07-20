@@ -4,6 +4,7 @@ ActiveAdmin.register Chain do
   config.filters = false
 
   index do
+    selectable_column
     id_column
     column :name do |chain|
       link_to chain.name, admin_chain_path(chain)
@@ -25,6 +26,8 @@ ActiveAdmin.register Chain do
     link_to "Update rates",    admin_chain_rates_path(chain)
   end
 
+  config.batch_actions = true
+
   form do |f|
 
     f.inputs 'Details' do
@@ -36,7 +39,7 @@ ActiveAdmin.register Chain do
       f.input     :phone
       f.input     :url
       f.input     :currency
-      f.input     :rates_source, input_html: { :disabled => true }
+      f.input     :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Fake', 'fake'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']], include_blank: false
       f.input     :rates_update, input_html: { :disabled => true }
     end
     f.actions

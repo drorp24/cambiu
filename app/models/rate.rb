@@ -10,6 +10,7 @@ class Rate < ActiveRecord::Base
   before_update :currency_is_not_local
 #  before_create :initialize_default_values
 
+
   def currency_is_not_local
     if self.currency and self.ratable and self.currency == self.ratable.currency
       errors.add(:currency, "can't be the local currency")
