@@ -3,7 +3,7 @@ namespace :rates do
   task :xml => :environment do
 
     Exchange.find_each do |exchange|
-      exchange.update(rates_policy: 'individual_policy')
+      exchange.update(rates_policy: 'individual')
     end
 
     Chain.find_each do |chain|
@@ -14,7 +14,7 @@ namespace :rates do
     ace.update(currency: 'GBP', rates_source: 'no_rates')
 
     [4,5,6].each do |id|
-      Exchange.find(id).update(chain_id: ace.id, rates_policy: 'chain_policy')
+      Exchange.find(id).update(chain_id: ace.id, rates_policy: 'chain')
     end
 
   end

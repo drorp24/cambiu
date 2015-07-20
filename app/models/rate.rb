@@ -10,6 +10,14 @@ class Rate < ActiveRecord::Base
   before_update :currency_is_not_local
 #  before_create :initialize_default_values
 
+  def display_name
+    split = $request.path.split('/')
+    if split[2] == 'exchanges'
+      return Exchange.find_by_id(split[3]).name
+    elsif split[2] == 'chains'
+      return Chain.find_by_id(split[3]).name
+    end
+  end
 
   def currency_is_not_local
     if self.currency and self.ratable and self.currency == self.ratable.currency

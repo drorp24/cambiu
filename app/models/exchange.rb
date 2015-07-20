@@ -16,7 +16,7 @@ class Exchange < ActiveRecord::Base
   belongs_to  :admin_user
   enum business_type: [ :exchange, :post_office, :supermarket, :other ]
   enum rates_source: [ :no_rates, :fake, :manual, :xml, :scraping ]
-  enum rates_policy: [:individual_policy, :chain_policy]
+  enum rates_policy: [:individual, :chain]
 
   geocoded_by :address
 
@@ -557,7 +557,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def rates
-    if self.chain_policy?
+    if self.chain?
       self.chain.rates
     else
       super

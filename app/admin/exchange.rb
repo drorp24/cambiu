@@ -72,26 +72,29 @@ ActiveAdmin.register Exchange do
   filter :address
   filter :region
 
+  config.batch_actions = true
+
   index do
+    selectable_column
     id_column
     column :name do |exchange|
       link_to exchange.name, admin_exchange_path(exchange)
     end
-    column :contract
     column :chain
     column :rates_policy do |exchange|
       exchange.rates_policy ? exchange.rates_policy.titleize : ''
     end
     column :rates do |exchange|
-      if    exchange.individual_policy?
+      if    exchange.individual?
         link_to exchange.rates_source ? exchange.rates_source.titleize : '', admin_exchange_rates_path(exchange)
-      elsif exchange.chain_policy?
+      elsif exchange.chain?
         link_to exchange.chain.rates_source ? exchange.chain.rates_source.titleize : '', admin_chain_rates_path(exchange.chain_id)
       end
     end
-     column :address
-    column :email
+    column :contract
     column :delivery?
+    column :address
+    column :email
     actions
   end
   
@@ -167,7 +170,7 @@ form do |f|
       f.input     :admin_user_s, as: :string, label: "By", input_html: { :disabled => true }
       f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
       f.input     :chain_name, label: 'Chain'
-      f.input     :rates_policy, as: :select, collection: {:"Individual policy"=>"individual_policy", :"Chain"=>"chain_policy"}, include_blank: false
+      f.input     :rates_policy, as: :select, collection: {:"Individual"=>"individual", :"Chain"=>"chain"}, include_blank: false
       f.input     :name
       f.input     :address
       f.input     :contract, label: 'Contract', as: :radio
