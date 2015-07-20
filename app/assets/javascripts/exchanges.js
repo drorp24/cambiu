@@ -70,6 +70,7 @@ $(document).ready(function() {
     function addExchange(exchange, index) {
 
         if (exchange.errors.length > 0) return;
+        exchange_list_count += 1;
 
         var exchange_el =   $('.exchange_row.template').clone().removeClass('template');
         var exchange_sum =  exchange_el.find('.list-group-item');
@@ -115,6 +116,7 @@ $(document).ready(function() {
     
     clearExchanges = function() {
         console.log('clearExchanges');
+        exchange_list_count = 0;
         $('#exchanges_list #exchanges_items').empty();
     };
 
@@ -128,6 +130,7 @@ $(document).ready(function() {
     big_marker = function(id) {
         if (!id) return;
         var exchange        = findExchange(id);
+        if (exchange.errors.length > 0) return;
         var exchange_html   = exchange_el(exchange).det;
         var marker          = findMarker(id);
 
@@ -191,7 +194,7 @@ $(document).ready(function() {
          if (exchanges && exchanges.length) {
             $('#empty_message').css('display', 'none');
             $('#result_message').css('display', 'block');
-            $('#exchanges_count').html(exchanges.length);
+            $('#exchanges_count').html(exchange_list_count);
             $('#sort_order').html(display(sessionStorage.sort));
         } else {
             $('#result_message').css('display', 'none');

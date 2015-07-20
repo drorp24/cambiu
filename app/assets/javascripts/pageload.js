@@ -69,6 +69,7 @@ var urlParameters;
 var urlId;
 var isNumber;
 var spa;
+var exchange_list_count;
 
 isNumber = function (obj) { return !isNaN(parseFloat(obj)) };
 
