@@ -17,7 +17,8 @@ namespace :rates do
       buy       = rate['buyrate']
       sell      = rate['sellrate']
 
-      chain.rates.where(currency: currency).first_or_create.update(source: 'xml', currency: currency, buy: buy, sell: sell, last_update: DateTime.current)
+      rate = chain.rates.where(currency: currency).first_or_create!
+      rate.update(source: 'xml', currency: currency, buy: buy, sell: sell, last_update: DateTime.current)
     end
 
   end

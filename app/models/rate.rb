@@ -5,7 +5,7 @@ class Rate < ActiveRecord::Base
   enum source: [ :manual, :xml, :scraping, :fake ]
   validates :sell, numericality: true, allow_nil: true
   validates :buy, numericality: true, allow_nil: true
-  validates :currency, uniqueness: { scope: :ratable_id,
+  validates :currency, uniqueness: { scope: [:ratable_type, :ratable_id],
                                  message: "has already been defined" }, allow_nil: true, on: :create
   before_update :currency_is_not_local
 #  before_create :initialize_default_values
