@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'currencyco',             to: 'exchanges#show'
   get 'mercuryfx',              to: 'exchanges#show'
   get 'homepage',               to: 'home#index'
+  get 'exchanges',              to: 'home#index'
   get 'exchanges/list',         to: 'home#index'
   get 'exchanges/:id/summary',  to: 'home#index'
   get 'exchanges/:id/voucher',  to: 'home#index'

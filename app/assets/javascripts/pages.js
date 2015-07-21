@@ -336,7 +336,15 @@ $(document).ready(function() {
     // setPage() to current path
     // replace '/' with 'homepage' or else pushState will get ''
 
-    var reload_path = window.location.pathname == '/' ? 'homepage' : window.location.pathname.slice(1);
+    if (window.location.pathname == '/') {
+        var reload_path = 'homepage'
+    } else
+    if (window.location.pathname == '/exchanges') {
+        var reload_path = 'exchanges/list'
+    }
+    else {
+        var reload_path = window.location.pathname.slice(1)
+    }
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
      if (spa()) {
         console.log('spa re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
