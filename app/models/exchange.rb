@@ -546,7 +546,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def chain_name
-    self.chain.name.titleize if self.chain
+    self.chain.name if self.chain
   end
   def chain_name=(name)
     chain = Chain.where(name: name).first_or_create
