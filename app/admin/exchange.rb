@@ -66,11 +66,15 @@ ActiveAdmin.register Exchange do
   scope :fake
 
 
+  before_filter :skip_sidebar!, :only => :index
+
+=begin
   filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Fake', 'fake'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']]
   filter :chain
   filter :name
   filter :address
   filter :region
+=end
 
   config.batch_actions = true
 
