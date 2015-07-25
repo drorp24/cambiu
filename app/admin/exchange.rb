@@ -122,7 +122,11 @@ ActiveAdmin.register Exchange do
       r.column("Buy")     { |rate|  rate.buy_s}
       r.column("Sell")    { |rate|  rate.sell_s }
     end
-    link_to "Update rates",    admin_exchange_rates_path(exchange)
+    if exchange.individual?
+      link_to "Update rates",    admin_exchange_rates_path(exchange)
+    elsif exchange.chain?
+      link_to "Update rates",    admin_chain_rates_path(exchange.chain_id)
+    end
   end
 
   sidebar "Opening hours", only: [:show, :edit] do

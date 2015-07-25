@@ -11,7 +11,9 @@ $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
 $lightgreen: #5FA531;
+$lightgreen: #777;
 $darkgreen: #34700C;
+$darkgreen: #555;
 $grey73: #737373;
 $grey3b: #3b3b3b;
 $grey3c: #3c3c3c;
@@ -36,7 +38,7 @@ $std-margin: 5vh;
 $parameters-height: 70px;
 $parameters-bg-color: rgba(0,0,0,0.7);
 $exchange_summary_banner_relative_top: -10px;
-$exchange_summary_bg_img_height: 18vh;
+$exchange_summary_bg_img_height: 30vh;
 $exchange_summary_bg_img_height_mobile: 75px;
 
 // OLD SEARCH PAGE
@@ -109,8 +111,8 @@ $inverse-color: #ffffff;
 @mixin placeholder-general-def {
   text-align: left;
   text-indent: 10px;
-  color: #bbb;
-  font-weight: 400;
+  color: #888;
+  font-weight: 300;
   text-transform: initial;
   @media (max-width: $screen-xs-max) {
     text-indent: 5px;
@@ -174,6 +176,11 @@ html, body {
 
 body#cambiu {
 
+  .btn-warning {
+    background-color: $brand-color;
+    border: none;
+  }
+
   .tooltip.top .tooltip-arrow {
     bottom: 0;
     left: 50%;
@@ -228,7 +235,7 @@ body#cambiu {
   font-family: $font-family;
   color: $color;
   .btn {border-radius: $border-radius;}
-  .background {
+  .homepage_background {
     @include background-img('header_background.jpg');
     margin-top: -5px;
     @media (min-width: $screen-sm-min) {
@@ -271,6 +278,7 @@ body#cambiu {
   }
   .error_class {
     color: /*$brand-color*/#555;
+    font-weight: 300;
     &::before {
       font-family: fontAwesome;
       content:"\f071";
@@ -279,6 +287,7 @@ body#cambiu {
   }
   .info_class {
     color: /*$brand-color*/#555;
+    font-weight: 300;
     &::before {
       font-family: fontAwesome;
       content:"\f05a";
@@ -309,6 +318,8 @@ body#cambiu {
   &.search {
     .exchange_summary_bg img {
         width: 100%;
+      position: relative;
+      top: 6px;
         height: $exchange_summary_bg_img_height;
     }
     #exchanges_content {
@@ -359,6 +370,7 @@ body#cambiu {
     }
     margin-bottom: 0;
     border: none;
+    box-shadow: none;
   }
 
   .exchange_search_form_title, .general_search_form_title {
@@ -374,12 +386,12 @@ body#cambiu {
   }
   .exchange_search_form_error {
     height: 4vh;
-    font-size: 2vh;
+    font-size: 1.8vh;
     @media (max-width: $screen-xs-max) {
-      margin-top: 7vh;
+//      margin-top: 7vh;
     }
     @media (min-width: $screen-sm-min) {
-      margin-top: 2vh;
+//      margin-top: 2vh;
     }
   }
   .exchange_search_form_title {
@@ -621,7 +633,7 @@ body#cambiu {
         font-weight: 400;
         }
        &.btn {
-        background-color: $lightgreen;
+        background-color: $darkgreen;
         width: 100%;
         line-height: inherit;
         text-align: center;
@@ -633,16 +645,19 @@ body#cambiu {
         margin-top: -40px;
         text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
         &:hover {
-          background-color: $darkgreen;
+          background-color: darken($darkgreen, 20%);
         }
       }
     }
     select {
-      margin-left: -25%;
-      width: 125%;
-/*      text-indent: 15%; */
-      background-color: $brand-color;
-      color: #fff;
+      background-color: #fff;
+      &.brand_background {
+        /*      text-indent: 15%; */
+        margin-left: -25%;
+        width: 125%;
+        background-color: $brand-color;
+        color: #fff;
+      }
     }
     img {
       position: relative;
@@ -878,33 +893,38 @@ body#cambiu {
   }
 
   .parameters #exchange_params_wrapper {
-    input, select, button {
-      height: 4vh;
-      font-size: 1.6vh;
+    input:not(#getit_button), select, button {
+      @media (max-width: $screen-xs-max) {
+        height: 8vh;
+        font-size: 2.5vh;
+      }
+      @media (min-width: $screen-sm-min) {
+        height: 4vh;
+        font-size: 1.6vh;
+      }
     }
   }
   
   &.exchanges {
-    input, select, button, .email_submit {
+    input:not(#getit_button), select, button, .email_submit {
+      font-weight: 700;
 
       @media (max-width: $screen-xs-max) {
         height: 8vh;
-        font-size: 2vh;
+        font-size: 2.5vh;
       }
       @media (min-width: $screen-sm-min) {
-        height: 5vh;
-        font-size: 1.6vh;
+        height: 6.5vh;
+        font-size: 2vh;
       }
    }
     #order_email, #order_phone {
       @media (max-width: $screen-xs-max) {
-        font-size: 2.7vh;
+        font-size: 2.5vh;
       }
       @media (min-width: $screen-sm-min) {
-        font-size: 2.3vh;
+        font-size: 2.2vh;
       }
-      border-style: inset;
-      border-color: #ccc;
     }
 
     #order_phone {
@@ -915,13 +935,18 @@ body#cambiu {
         @include placeholder-icon("\f041");
       }
       #search_button {
-        background-color: $brand-color;
+         background-color: $brand-color;
         color: #fff;
-        font-weight: 300;
-        font-size: 1em;
+        text-transform: uppercase;
+        font-weight: 900;
         @media (max-width: $screen-xs-max) {
+          font-size: 1.5em !important;
           height: 50px;
           margin-top: 20px;
+        }
+        @media (min-width: $screen-sm-min) {
+          font-size: 2.3vh !important;
+          padding-top: 3px;
         }
       }
       #exchanges {
@@ -933,20 +958,29 @@ body#cambiu {
           padding-right: 0;
          }
         #exchanges_search_params {
+          background-color: $lightgreen;
           @media (min-width: $screen-sm-min) {
             height: $parameters-height + 3px;
             .exchanges_search_params_title {
               margin-top: 20px;
             }
           }
-          background-color: $lightgreen;
-          border: 1px solid $lightgreen;
           .exchanges_search_params_title {
             font-size: 1em;
             color: #fff;
-            font-weight: 300;
+            font-weight: 400;
             [data-field] {
-              font-weight: 500;
+//              font-weight: 500;
+            }
+            .change_link {
+               font-size: 0.9em;
+              font-style: italic;
+              margin-left: 2em;
+              margin-right: 0.5em;
+            }
+            &::after {
+              content: "\f002";
+              font-family: fontAwesome;
             }
           }
           #comma {
@@ -963,7 +997,6 @@ body#cambiu {
             color: #333;
             line-height: 15px;
             font-weight: 300;
-            text-transform: uppercase;
             [data-field] {
               font-weight: 500;
             }
@@ -1009,9 +1042,11 @@ body#cambiu {
         background-color: $brand-color;
       }
     #exchange_params_wrapper {
+      box-shadow: 0 0 5px #888;
       @media (max-width: $screen-xs-max) {
         background-color: $parameters-bg-color;
         height: 100vh;
+        margin-top: 85px;
       }
        @media (min-width: $screen-sm-min) {
          height: $parameters-height;
@@ -1038,10 +1073,11 @@ body#cambiu {
       z-index: -1;
       font-family: $font-family;
       .distance {
-        font-size: 0.8em;
+        font-size: 0.7em;
         display: inline;
-        position: relative;
-        top: 0.3em;
+        position: absolute;
+        top: 3.7em;
+        font-weight: 300;
         &::before {
           font-family: fontAwesome;
           content: "\f041" + '    ';
@@ -1077,13 +1113,20 @@ body#cambiu {
         margin-top: 17px;
       }
         .quote, .quote_currency {
-        font-weight: 600;
+        font-weight: 900;
         line-height: 25px;
-        color: #111;
           padding-top: 10px;
+          color: #111;
+          font-size: 1em;
       }
       .quote_currency {
         font-size: 0.85em;
+        @media (min-width: $screen-sm-min) {
+          display: none;
+        }
+        @media (max-width: $screen-xs-max) {
+          display: none;
+        }
       }
       .comparison {
         text-align: center;
@@ -1107,6 +1150,28 @@ body#cambiu {
       .rounded {
         border-radius: 4px;
       }
+      .service_type {
+        text-transform: uppercase;
+        color: #333;
+        font-weight: 400;
+
+        @media (min-width: $screen-sm-min) {
+          font-size: 0.7em;
+        }
+        @media (max-width: $screen-xs-max) {
+          font-size: 0.7em;
+        }
+      }
+      .you {
+        font-size: 0.65em;
+        position: absolute;
+        text-transform: uppercase;
+        text-align: center;
+        bottom: 2.5em;
+        color: #555;
+        font-weight: 300;
+        text-indent: 0.5em;
+      }
 
     }
     .getit_parent {
@@ -1123,11 +1188,13 @@ body#cambiu {
       border-color: $lightgreen;
       color: $lightgreen;
       text-transform: uppercase;
+      font-size: 1.7vh;
       @media (min-width: $screen-sm-min) {
-        margin-top: -15px;
+//        margin-top: -15px;
+
       }
       @media (max-width: $screen-xs-max) {
-        margin-left: -22px;
+//        margin-left: -22px;
       }
     }
     .exchange_row {
@@ -1143,27 +1210,30 @@ body#cambiu {
     }
 
     .params > .exchange_summary_banner {
+      color: #555;
+      font-weight: 400;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+
       .es_name {
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
-        font-weight: 400;
-        color: $cn-brand-color;
-        @media (max-width: $screen-xs-max) {
-          font-size: 5vh;
+//        color: darken($brand-color, 15%);
+        font-weight: 300;
+         @media (max-width: $screen-xs-max) {
+          font-size: 3.5vh;
         }
         @media (min-width: $screen-sm-min) {
-          font-size: 3.5vh;
+          font-size: 3vh;
         }
       }
     }
 
 
     .exchange_summary_banner {
-      color: #fff;
-      background-color: #777;
+       background: linear-gradient(#a8a8ab, #f5f5f5);
+      background: linear-gradient(#ffffff, #f5f5f5);
       border-left: none;
       border-right: none;
-      border-bottom: 1px solid #fff;
-      border-top: 3px solid #888;
+      border-bottom: /*1px solid #fff*/none;
+      border-top: /*3px solid #888*/none;
       margin-top: -3px;
       margin-bottom: 0;
       min-height: $parameters-height;
@@ -1180,8 +1250,10 @@ body#cambiu {
         line-height: 108px;
       }
       &.well {
+        padding-top: 20px;
+        padding-left: 9%;
+        padding-right: 9%;
         padding-bottom: 0;
-        padding-top: 0;
       }
       .left {
         margin-left: 15px;
@@ -1211,7 +1283,6 @@ body#cambiu {
           font-size: 3vh;
           margin-bottom: 0.2vh;
         }
-        font-weight: 700;
         margin-top: 5px;
         margin-bottom: -10px;
       }
@@ -1248,6 +1319,10 @@ body#cambiu {
     }
 
     #exchange_summary {
+      .deal {
+        margin-top: 20px;
+       }
+
       background-color: rgb(245, 245, 245);
       height: 100vh;
       .exchange_summary_title {
@@ -1273,6 +1348,14 @@ body#cambiu {
         &:hover {
           color: $lightgreen;
         }
+      }
+
+      .exchange_summary_marketing_title {
+        margin-bottom: 30px;
+        font-style: italic;
+        font-size: 2.5vh;
+        font-weight: 300;
+        color: #555;
       }
 
       .fees {
@@ -1376,10 +1459,13 @@ body#cambiu {
         }
       }
       .email_form {
+        box-shadow: none;
         padding: 3%;
         padding-top: 0;
         border: none;
         form {
+          padding-left: 5%;
+          padding-right: 1.5%;
 //          padding-top: 25vh;
           /*
           img, p, select, input:not([data-email-part]) {
@@ -1390,8 +1476,8 @@ body#cambiu {
    //       }
           @media (max-width: $screen-xs-max) {
             input {
-              width: 90%;
-              margin-left: 5%;
+              width: 102%;
+              margin-left: -3%;
               margin-bottom: 10px;
             }
           }
@@ -1399,7 +1485,7 @@ body#cambiu {
             @include placeholder-general;
             @include placeholder-icon("\f0e0");
             @media (max-width: $screen-xs-max) {
-               margin-top: 30px;
+//               margin-top: 30px;
               text-align: center;
             }
           }
@@ -1412,13 +1498,14 @@ body#cambiu {
             }
           }
           .email_submit {
-            font-size: 3vh;
-            font-weight: 400;
+             font-weight: 400;
             @media (min-width: $screen-sm-min) {
-              height: 8vh;
+              height: 7vh;
+              font-size: 2.5vh;
             }
             @media (max-width: $screen-xs-max) {
               height: 10vh;
+              font-size: 3.5vh;
             }
 
             margin-top: -5px;
@@ -1430,11 +1517,12 @@ body#cambiu {
             color: #fff;
             text-transform: uppercase;
             font-weight: 400;
-            border-radius: 4px;
+            border-radius: 0;
           }
         }
         .no_thanks {
           margin-top: 7px;
+          font-weight: 300;
           @media (min-width: $screen-sm-min) {
           }
         }
@@ -1676,7 +1764,8 @@ body#cambiu {
         font-size: 1em;
       }
       .quote {
-        font-size: 1em;
+        color: $darkgreen;
+        font-weight: 900;
       }
       #exchanges_items {        
 //        box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
@@ -1713,7 +1802,7 @@ body#cambiu {
         input, select, button, #location, .bootstrap-switch {
           width: 100%;
           text-align: center;
-          font-weight: 400;
+          font-weight: 700;
           &.part {
             width: 50%;
             font-size: 21px;
@@ -1732,7 +1821,6 @@ body#cambiu {
           }
         }*/
         button#search_button.btn.btn-success {
-          font-size: 1.3em;
         }
         .icon {
           margin-top: -60px;
@@ -1790,6 +1878,9 @@ body#cambiu {
             color: $brand-color;
           }
         }
+      }
+      form#new_order {
+        padding-top: 0;
       }
 // OLD SEARCH PAGE
 

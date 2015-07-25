@@ -203,7 +203,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:website] = self.website
     exchange_hash[:latitude] = self.latitude
     exchange_hash[:longitude] = self.longitude
-    exchange_hash[:distance] = Rails.application.config.use_google_geocoding ?  self.distance_from(center) : rand(27..2789)
+    exchange_hash[:distance] = self.delivery? ?  0 : self.distance_from(center)
 
     quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount')
     exchange_hash[:pay_amount] = quotes[:pay_amount]
@@ -220,8 +220,10 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:edited_quote_rounded] = quotes[:edited_quote_rounded]
     exchange_hash[:quote_currency] = quotes[:quote_currency]
     exchange_hash[:errors] = quotes[:errors]
+    exchange_hash[:rounded] = quotes[:rounded]
     exchange_hash[:user_location] = user_location
     exchange_hash[:delivery_tracking] = delivery_tracking
+    exchange_hash[:service_type] = service_type
 
 =begin
     exchange_hash[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(1.03..1.37)).format
@@ -544,6 +546,11 @@ class Exchange < ActiveRecord::Base
   def delivery?
     self.delivery_tracking.present?
   end
+
+  def service_type
+    self.delivery_tracking.present? ? 'delivery' : 'collection'
+  end
+
 
   def chain_name
     self.chain.name if self.chain

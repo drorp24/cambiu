@@ -40,15 +40,6 @@
             $('[data-lng]').attr('data-lng', value);
         }
 
-        if (field == 'rounded') {
-            text = '<p class=info_class>You may pay ' + obj.pay_rounded + ' and get ' + obj.get_rounded + ' to round</p>'
-            $('.exchange_search_form_error').html(text);
-            var marker = findMarker[obj.id];
-            if (marker) {
-                var marker_content = marker['infowindow'].getContent();
-                $(marker_content).find('.exchange_window_quote').html(obj.edited_quote_rounded);
-            }
-        }
 
         if (field == 'errors' && value.length > 0) {
             var text = '';
@@ -121,4 +112,9 @@
         $.each(obj, function(field, value) {
             model_set(model, field, value)
         });
-     };
+        if (obj.rounded) {
+            text = '<p class=info_class>You may pay ' + obj.pay_rounded + ' and get ' + obj.get_rounded + ' to round</p>'
+            $('.exchange_search_form_error').html(text);
+        }
+
+    };

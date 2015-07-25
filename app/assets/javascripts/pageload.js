@@ -151,7 +151,7 @@ def = function(variable) {
         'pay_currency'  : 'GBP',
         'buy_amount'    : 700,
         'buy_currency'  : 'EUR',
-        'sort'          : 'quote',
+        'sort'          : 'distance',
         'service_type'  : 'collection'
     };
     return val[variable] ? val[variable] : null
@@ -215,7 +215,9 @@ $(document).on('click','.navbar-collapse.in',function(e) {
 
 
 $(document).ready(function() {
-   $('body').addClass(media);
+    if (mobile) {$('#exchange_params_change').removeClass('in');}
+
+    $('body').addClass(media);
     production = function() {
         return $('body').hasClass('production');
     };

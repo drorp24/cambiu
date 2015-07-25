@@ -103,12 +103,19 @@ $(document).ready(function() {
         exchange_sum.find('[data-exchange-name]').attr('data-exchange-name', exchange.name);
 
         exchange_sum.find('.subject_to_change').html(exchange.real_rates ? '' : 'This rate is subject to change and is regularly updated by our staff');
+/*
         var delivery_icon = exchange_sum.find('.service_type_icon.delivery');
         exchange.delivery_tracking ? delivery_icon.show() : delivery_icon.hide();
-
+*/
+        exchange_sum.find('.service_type').html(exchange.service_type);
+        if (exchange.service_type == 'delivery') {
+            exchange_sum.addClass('well');
+            exchange_sum.find('[data-delivery-tracking]').attr('data-delivery-tracking', exchange.delivery_tracking);
+        }
 
 
         exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
+        exchange_sum.find('.you').html(exchange.pay_amount == exchange.edited_quote ? 'you pay' : 'you get');
         //exchange_det.appendTo('#exchanges_list .list-group #exchanges_items');
     }
     
@@ -174,9 +181,15 @@ $(document).ready(function() {
 
         });
 
-        $('body').on('click', '.list-group-item[data-id]', (function() {
-            var id              = $(this).data('id');
+        $('body').on('click', '.list-group-item [data-href-id]', (function() {
+
+            var $this = $(this);
+            var delivery_tracking =  $this.attr('data-delivery-tracking');
+            if (delivery_tracking && delivery_tracking != 'null') return;
+
+            var id              = $this.attr('data-href-id');
             var exchange        = findExchange(id);
+
             big_marker(id);
             map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
 

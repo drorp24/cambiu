@@ -168,18 +168,18 @@ class OrderMailer < ApplicationMailer
 
       # Mandrill errors are thrown as exceptions
       error = "A mandrill error occurred: #{e.class} - #{e.message}"
-      console.log(error)
+      logger.info(error)
       report(exchange, error)
 
     # TODO: Happens, since async = false. Consider moving to async.
     rescue Rack::Timeout::RequestTimeoutError => e
       error = "Timeout error: #{e.class} - #{e.message}"
-      console.log(error)
+      logger.info(error)
       report(exchange, error)
 
     rescue => e
       error = "Standard error: #{e}"
-      console.log(error)
+      logger.info(error)
       report(exchange, error)
 
     end
@@ -196,6 +196,8 @@ class OrderMailer < ApplicationMailer
   def report(exchange, error)
     begin
 
+      subject = 'error'
+      subject += " (#{Rails.env})" unless Rails.env.production?
       template_name = 'order_error'
       template_content = []
       message = {
@@ -203,14 +205,6 @@ class OrderMailer < ApplicationMailer
               {
                   email:  'dror@cambiu.com',
                   type:   'to'
-              },
-              {
-                  email:  'arnon@cambiu.com',
-                  type:   'bcc'
-              },
-              {
-                  email:  'sharon@cambiu.com',
-                  type:   'bcc'
               }
           ],
           subject: 'error',
@@ -236,7 +230,7 @@ class OrderMailer < ApplicationMailer
 
       # Mandrill errors are thrown as exceptions
       error = "A mandrill error occurred: #{e.class} - #{e.message}"
-      console.log(error)
+      logger.info(error)
 
     end
 

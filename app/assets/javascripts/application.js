@@ -23,3 +23,4 @@
 //= require bootstrap/collapse
 //= require bootstrap/carousel
 //= require bootstrap-switch
+//= require jquery.freeow.min

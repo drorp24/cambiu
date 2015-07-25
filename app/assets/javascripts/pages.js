@@ -180,6 +180,11 @@ $(document).ready(function() {
                     $('button[data-service-type=delivery]').removeAttr('disabled');
 //                    $('.delivery_method.delivery').removeAttr('data-content');
                 }
+                // another setting for rounded results, that no explicit html tag either
+                if (exchange.rounded) {
+                    text = '<p class=info_class>You may pay ' + exchange.pay_rounded + ' and get ' + exchange.get_rounded + ' to round</p>'
+                    $('.exchange_search_form_error').html(text);
+               }
             } else {
                 console.log('Exchange is empty, i.e., page reload. pages will not populate, updatePage will soon')
             }
@@ -248,11 +253,21 @@ $(document).ready(function() {
 
     link = function(el) {
 
-        if (value_of('service_type') == 'delivery' && el.is('[data-delivery-tracking]')) {
-            var delivery_tracking = el.attr('data-delivery-tracking');
-            if (delivery_tracking != 'null') {
-                window.location = delivery_tracking;
-                return
+        if (el.is('[data-delivery-tracking]')) {
+            if ((el.attr('data-delivery-redirect-if-selected') == 'true' && value_of('service_type') == 'delivery') || el.attr('data-delivery-redirect-if-selected') == 'null') {
+                var delivery_tracking = el.attr('data-delivery-tracking');
+                if (delivery_tracking && delivery_tracking != 'null') {
+
+                    var id = el.attr('data-href-id');
+                    var exchange = findExchange(id);
+                    $('[data-model=exchange]').each(function () {
+                        populate($(this), exchange);        // TODO: Replace pages 'populate' with 'model_populate'
+                    });
+
+                    $("#freeow").freeow("Preparing to take your order", "Please hold on for a few moments", {classes: ["smokey"], autoHide: false});
+                    window.location = delivery_tracking;
+                    return false
+                }
             }
         }
 
@@ -271,6 +286,9 @@ $(document).ready(function() {
 
     $('body').on('click', '[data-href]', (function(e) {
         // if clicked element is part of a form, dont move page unless form is valid
+
+        // Avoids getting into exchange page when 'getit' is clicked even if redirection takes place, probably due to validation
+        e.stopPropagation();
 
         var $this           = $(this);
         var invoked_form    = $this.data('form') ? $($this.data('form')) : null;   // e.g., getstarted_button click invokes #new_search form
