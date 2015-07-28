@@ -1619,7 +1619,7 @@ body#cambiu {
           font-size: 3vh;
         }
         @media (max-width: $screen-xs-max) {
-          font-size: 3vh;
+          font-size: 3.5vh;
         }
          font-weight: 900;
         text-transform: uppercase;
@@ -2027,6 +2027,9 @@ body#cambiu {
       }
       .quote {
         font-size: 0.9em;
+      }
+      input {
+        width: 100%;
       }
     }
   
