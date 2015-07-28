@@ -25,7 +25,7 @@
 
     <% if status == 'offer' %>
         <%= f.button :submit, 'Get it',
-             data: {model: 'exchange', href: 'exchanges/summary', href_page: 'exchanges', href_id: '', href_pane: 'summary', delivery_tracking: 'null', delivery_redirect_if_selected: 'null', exchange_selection: 'true', exchangeid: '', voucher: 'true', voucher_status: status, exchange_name: "filler"},
+             data: {model: 'exchange', href: 'exchanges/voucher', href_page: 'exchanges', href_id: '', href_pane: 'voucher', delivery_tracking: 'null', delivery_redirect_if_selected: 'null', exchange_selection: 'true', exchangeid: '', voucher: 'true', voucher_status: status, exchange_name: "filler"},
              id: 'getit_button', class: 'btn btn-mini btn-default' %>
     <% elsif status == 'produced' %>
             <%= f.button :submit, 'Guarantee this deal',
