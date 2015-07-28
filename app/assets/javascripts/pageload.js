@@ -236,4 +236,21 @@ $(document).ready(function() {
         $("body").popover({ selector: '[data-toggle=popover]', trigger: 'hover', placement: 'top' });
     })
 
+    $('[data-inform-title]').click(function() {
+
+        var $this = $(this);
+        var invoked_form    = $this.data('form') ? $($this.data('form')) : null;   // e.g., getstarted_button click invokes #new_search form
+        var form = invoked_form ? invoked_form : $this.closest('form');
+
+        if (form.length > 0 && form.valid() && custom_validate(form)) {
+            $("#freeow").freeow($this.attr('data-inform-title'), $this.attr('data-inform-text'), {
+                classes: ["smokey", "slide"],
+                autoHide: false,
+                showStyle: {opacity: 1, left: 0},
+                hideStyle: {opacity: 0, left: '400px'}
+            });
+        }
+    });
+
+
 });

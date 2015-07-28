@@ -29,7 +29,7 @@
              id: 'getit_button', class: 'btn btn-mini btn-default' %>
     <% elsif status == 'produced' %>
             <%= f.button :submit, 'Lock this rate for me', id: 'email_submit',
-             data: {
+             data: {inform_title: 'Thank you!', inform_text: 'This voucher was sent to you by email. <br>Present it to merchant to get this excellent deal!',
 
 =begin
                      model: 'exchange', href: 'exchanges/voucher', href_page: 'exchanges', href_id: '', href_pane: 'voucher', delivery_tracking: 'null', delivery_redirect_if_selected: 'true', current_exchange: 'true', exchangeid: '',
