@@ -46,8 +46,8 @@ class Exchange < ActiveRecord::Base
         gain_currency:    gain_currency = nil,
         real_rates:       has_real_rates?,
         rounded:          false,
-        pay_rounded:      params[:pay_amount],
-        get_rounded:      params[:get_amount],
+        pay_rounded:      params[:pay_amount].to_money(pay_currency).format,
+        get_rounded:      params[:get_amount].to_money(get_currency).format,
         errors:           []
     }
 
