@@ -161,6 +161,8 @@ $(document).ready(function() {
         if (id && spa()) {
 
             console.log('pages.js: spa mode and page contains id: populate?');
+            // collapse params bar if moving to an exchange-specific page
+            $('#exchange_params_change').collapse('hide');
             var exchange = findExchange(id);
 
             if (exchange) {
