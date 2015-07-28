@@ -192,6 +192,7 @@ $(document).ready(function() {
          }
 
         // reset all 'exchange_' and '_order' sessionStorage vars if moving to a non exchange-specific page (e.g., /list)
+/*
         if (!id) {
              console.log('moving to a non exchange-specific page: clearing all exchange-specific html fields and session vars');
              $('[data-model=exchange][data-field]').each(function() {
@@ -227,6 +228,7 @@ $(document).ready(function() {
             $('form.new_order').attr('action', '/orders');
             $('form.new_order').attr('method', 'post');
         }
+*/
         // don't push state if invoked from popstate or page reloads
         var new_state =  '/' + url;
         if (window.location.pathname != new_state) {
