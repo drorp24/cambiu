@@ -159,7 +159,6 @@ $(document).ready(function() {
             var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
             big_marker(sessionStorage.id);
             calcRoute(from, to);
-            return false;
         }));
 
 
