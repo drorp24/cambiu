@@ -54,7 +54,7 @@ var findMarker;
 var exchange_el;
 var closeInfowindows;
 var zoom_changed_by_user = true;
-var map_initial_zoom = 17;
+var map_initial_zoom = 15;
 var map_center_changed = false;
 var updateResults;
 var directionsService;
@@ -147,9 +147,9 @@ findMarker = function(id) {
 
 def = function(variable) {
     var val = {
-        'pay_amount'    : null,
+        'pay_amount'    : 300,
         'pay_currency'  : 'GBP',
-        'buy_amount'    : 700,
+        'buy_amount'    : null,
         'buy_currency'  : 'EUR',
         'sort'          : 'distance',
         'service_type'  : 'collection'
