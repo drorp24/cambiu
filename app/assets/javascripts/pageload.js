@@ -70,6 +70,7 @@ var urlId;
 var isNumber;
 var spa;
 var exchange_list_count;
+var inform;
 
 isNumber = function (obj) { return !isNaN(parseFloat(obj)) };
 
@@ -234,6 +235,17 @@ $(document).ready(function() {
     $(function () {
         $("body").tooltip({ selector: '[data-toggle=tooltip]' });
         $("body").popover({ selector: '[data-toggle=popover]', trigger: 'hover', placement: 'top' });
-    })
+    });
 
-});
+    inform = function(title, text, hide) {
+        if (hide === undefined) hide = false;
+        $("#freeow").freeow(title, text, {
+            classes: ["smokey", "slide"],
+            autoHide: false,
+            showStyle: {opacity: 1, left: 0},
+            hideStyle: {opacity: 0, left: '400px'},
+            autoHide: hide
+        });
+    };
+
+ });
