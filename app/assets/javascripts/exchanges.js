@@ -324,7 +324,7 @@ $(document).ready(function() {
       var request = {
           origin: from,
           destination: to,
-          travelMode: google.maps.TravelMode.WALKING,
+          travelMode: google.maps.TravelMode.TRANSIT,
           unitSystem: google.maps.UnitSystem.METRIC
       };
 
@@ -333,11 +333,13 @@ $(document).ready(function() {
       zoom_changed_by_user = false;
 
       directionsDisplay.setMap(map);
+      directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
       directionsService.route(request, function(response, status) {
         console.log('directionsService.route returned with status: ' + status);
         if (status == google.maps.DirectionsStatus.OK) {
             map_center_changed = true;
+            $('#directions-panel').css('display', 'block');
             directionsDisplay.setDirections(response);
         }
       });

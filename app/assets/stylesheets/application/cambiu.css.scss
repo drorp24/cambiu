@@ -42,7 +42,7 @@ $exchange_summary_bg_img_height: 30vh;
 $exchange_summary_bg_img_height_mobile: 75px;
 
 // OLD SEARCH PAGE
-$search-input-height: 40px;
+$search-input-height: 44px;
 $input-height-mobile: 40px;
 $help-text-color: #888;
 $inverse-color: #ffffff;
@@ -176,6 +176,11 @@ html, body {
 
 body#cambiu {
 
+  #directions-panel.panel {
+    float: right;
+    width: 30%;
+    height: 100%;
+  }
   .strike {
     display: block;
     text-align: center;
@@ -290,6 +295,9 @@ body#cambiu {
   }
   .list-group-item, .well {
     border-radius: 0;
+  }
+  .list-group-item.delivery {
+//    background-color: lighten($brand-color, 30%);
   }
   .form-control {border-radius: $border-radius;}
   .validation_errors {
@@ -483,6 +491,15 @@ body#cambiu {
 
   &.home  {
     .above_fold {
+      .or {
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
+        margin-top: -5px;
+        margin-bottom: -5px;
+        font-size: 1.5em;
+      }
       .main {
         margin-top: /*15vh*//*45px*/15vh;
         margin-bottom: 10vh;
@@ -928,14 +945,15 @@ body#cambiu {
   }
 
   .parameters #exchange_params_wrapper {
-    input:not(#getit_button), select, button {
+    input:not(#getit_button), select, button:not(#search_button) {
+      font-weight: 400;
       @media (max-width: $screen-xs-max) {
         height: 8vh;
         font-size: 2.5vh;
       }
       @media (min-width: $screen-sm-min) {
-        height: 4vh;
-        font-size: 1.6vh;
+        height: 42px;
+        font-size: 1em;
       }
     }
   }
@@ -992,8 +1010,9 @@ body#cambiu {
           margin-top: 20px;
         }
         @media (min-width: $screen-sm-min) {
-          font-size: 2.3vh !important;
-          padding-top: 3px;
+          height: 40px;
+          margin-top: 1px;
+          font-size: 1em !important;
         }
       }
       #exchanges {
@@ -1118,7 +1137,7 @@ body#cambiu {
       border: none;
 
       #search_form {
-        .bootstrap-switch .bootstrap-switch-container {
+         .bootstrap-switch .bootstrap-switch-container {
           .bootstrap-switch-handle-on, .bootstrap-handle-off, .bbostrap-switch-label {
             font-size: 0.9em;
           }
@@ -1129,11 +1148,11 @@ body#cambiu {
       z-index: -1;
       font-family: $font-family;
       .distance {
-        font-size: 0.7em;
+        font-size: 0.8em;
         display: inline;
         position: absolute;
-        top: 4.2em;
-        font-weight: 300;
+        top: 4em;
+        font-weight: 400;
         &::before {
           font-family: fontAwesome;
           content: "\f041" + '    ';
@@ -1871,6 +1890,12 @@ body#cambiu {
         padding-right: 15px;
         padding-top: 0;
         padding-bottom: 0;
+        color: #555;
+        background-color: #ddd;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+        .help_text {
+          font-weight: 700;
+        }
       }
       form {
         padding-top: 15px;
