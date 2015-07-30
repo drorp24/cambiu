@@ -176,6 +176,12 @@ html, body {
 
 body#cambiu {
 
+  .free {
+    position: absolute;
+    left: 78%;
+    top: 50%;
+    width: 14%;
+  }
   #directions-panel.panel {
     float: right;
     width: 30%;
@@ -979,6 +985,8 @@ body#cambiu {
     }
     #email_submit.email_submit {
       font-size: 3vh;
+      font-weight: 700;
+      text-transform: none;
       @include placeholder-icon("\f0e0");
       &:hover {
         background-color: darken($brand-color, 15%);
@@ -1355,6 +1363,7 @@ body#cambiu {
         @media (min-width: $screen-sm-min) {
           font-size: 3vh;
           margin-bottom: 0.2vh;
+          font-weight: 400;
         }
         margin-top: 5px;
         margin-bottom: -10px;
@@ -1364,7 +1373,7 @@ body#cambiu {
           font-size: 1.8vh;
          }
         @media (min-width: $screen-sm-min) {
-          font-size: 1.5vh;
+          font-size: 2vh;
         }
         font-weight: 400;
         margin-top: 12px;
@@ -1571,10 +1580,10 @@ body#cambiu {
             }
           }
           .email_submit {
-             font-weight: 400;
+             font-weight: 700;
             @media (min-width: $screen-sm-min) {
               height: 7vh;
-              font-size: 2.5vh;
+              font-size: 3vh;
             }
             @media (max-width: $screen-xs-max) {
               height: 10vh;
@@ -1588,8 +1597,6 @@ body#cambiu {
               margin-top: 20px;
             }
             color: #fff;
-            text-transform: uppercase;
-            font-weight: 400;
             border-radius: 0;
           }
         }
@@ -1766,12 +1773,6 @@ body#cambiu {
         }
       }
       .confirmation_form {
-        .free {
-          position: absolute;
-          left: 78%;
-          top: 50%;
-          width: 14%;
-        }
         margin-top: 2vh;
         .confirmation_button {
           width: 100%;
