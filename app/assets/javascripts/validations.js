@@ -140,7 +140,7 @@ $(document).ready(function() {
             email.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i);
     }, 'Please enter a valid email address');
 
-    $("#new_order").validate({
+    $("form.new_order").validate({
         rules: {
             'order[email]': {
                  email_for_real: true
@@ -165,6 +165,11 @@ $(document).ready(function() {
 */
     });
 
+    $('form.new_order').submit(function() {
+        if (!$(this).valid()) {
+            return false
+        }
+    });
 
     //
     // Server errors

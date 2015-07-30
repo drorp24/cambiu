@@ -31,7 +31,7 @@ member of the options object when calling freeow().
 
 .freeow {
     position: fixed;
-    width: 400px;
+    width: 450px;
     z-index: 9999;
 }
 .freeow-top-right {
@@ -63,7 +63,7 @@ member of the options object when calling freeow().
     display: block;
     width: 56px;
     height: 56px;
-    top: 33px;
+    top: 32px;
     left: 22px;
     background: transparent image-url('order.png') no-repeat 0 0;
     z-index: 1;
@@ -115,16 +115,17 @@ member of the options object when calling freeow().
 .freeow .smokey h2 {
     font-family: 'Lato', sans-serif;
     font-weight: normal;
-    font-size: 1.2em;
+    font-size: 1.3em;
     line-height: 16px;
   font-weight: 400;
+  line-height: 1.5em;
 }
 .freeow .smokey p {
     padding-top: 0.5em;
     font-family: Helvetica, arial, sans-serif;
     font-weight: normal;
-    font-size: 1em;
-    line-height: 1.5em;
+    font-size: 1.2em;
+    line-height: 1.4em;
     font-weight: 300;
 }
 

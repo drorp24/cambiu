@@ -346,14 +346,13 @@ $(document).ready(function() {
 
 
 
-    // Find user's location and define which callback to perform once location is identified
+    // Upon re/load, search exchanges. Either triggered by getLocation if missing, or directly.
 
     if (!value_of('location')) {
         getLocation();
     } else {
         search_exchanges()
     }
-
 
     // setPage() to current path
     // replace '/' with 'homepage' or else pushState will get ''

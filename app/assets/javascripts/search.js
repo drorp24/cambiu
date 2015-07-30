@@ -373,12 +373,20 @@ $(document).ready(function() {
         console.log('#new_order ajax:success');
         order = data;
         if (xhr.status == 201) {
-            console.log('#new_order status is 201: populating order attributes');
+            var title = 'Order is ready and waiting for you!';
+            var text = 'Voucher ' + order.voucher + ' was sent to you by email. <br>Present it to merchant to secure this rate!';
+            $("#freeow").freeow(title, text, {
+                classes: ["smokey", "slide"],
+                autoHide: false,
+                showStyle: {opacity: 1, left: 0},
+                hideStyle: {opacity: 0, left: '400px'}
+            });
+            console.log('order ajax returned and status is 201: populating order attributes');
+            model_populate('order', order);
             $('form.new_order').attr('action', '/orders/' + order.id);
             $('form.new_order').attr('method', 'put');
-            model_populate('order', order);
         }
-    }));
+     }));
 
     // The code below will see that any change in the order's email field will propagate to the other forms and recorded in sessionStorage
     // For instance, it will populate the email on the 'thank you' ('used' status form), so email could be sent

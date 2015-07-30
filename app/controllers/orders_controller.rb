@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
   respond_to :json
 
   def create
+    render json: {} and return if order_params[:status] == 'offer'
     @order = Order.create!(order_params)
     respond_with @order
   end
