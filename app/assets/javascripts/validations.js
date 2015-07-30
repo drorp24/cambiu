@@ -171,7 +171,7 @@ $(document).ready(function() {
             return false
         } else
         if ($this.find('[data-field=status]').val() != 'offer') {
-            var title = 'Preparing your order...';
+            var title = 'Your order is being prepared ...';
             var text = 'Please hold on';
             var hide = true;
             inform(title, text, hide);

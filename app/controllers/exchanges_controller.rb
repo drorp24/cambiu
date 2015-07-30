@@ -40,7 +40,7 @@ class ExchangesController < ApplicationController
   protected
 
   def exchange_params
-    params.require(:exchange).permit!
+    params.permit!
   end
       
 end

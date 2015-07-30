@@ -371,7 +371,7 @@ $(document).ready(function() {
         console.log('spa re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
         setPage(reload_path, hash);
     } else {
-         var new_state = window.location.pathname;
+         var new_state = window.location.pathname + window.location.search;
          console.log('Not spa. Just pushingState ' + new_state);
          history.pushState(new_state, 'cambiu', new_state);
      }
