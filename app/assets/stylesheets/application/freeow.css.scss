@@ -32,6 +32,9 @@ member of the options object when calling freeow().
 .freeow {
     position: fixed;
     width: 450px;
+  @media (max-width: 767px) {
+    width: 300px;
+  }
     z-index: 9999;
 }
 .freeow-top-right {
@@ -116,6 +119,9 @@ member of the options object when calling freeow().
     font-family: 'Lato', sans-serif;
     font-weight: normal;
     font-size: 1.3em;
+  @media (max-width: 767px) {
+    font-size: 1em;
+  }
     line-height: 16px;
   font-weight: 700;
   line-height: 1.5em;
@@ -125,6 +131,9 @@ member of the options object when calling freeow().
     font-family: Helvetica, arial, sans-serif;
     font-weight: normal;
     font-size: 1em;
+  @media (max-width: 767px) {
+    font-size: 0.8em;
+  }
     line-height: 1.4em;
     font-weight: 300;
 }

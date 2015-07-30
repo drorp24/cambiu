@@ -135,6 +135,7 @@ $(document).ready(function() {
 
 
     big_marker = function(id) {
+        console.log('big_marker');
         if (!id) return;
         var exchange        = findExchange(id);
         if (exchange.errors.length > 0) return;
