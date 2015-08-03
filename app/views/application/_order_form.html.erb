@@ -1,9 +1,8 @@
 <%= simple_form_for Order.new, url: orders_path, validate: false, remote: true, html: {data: {type: :json} } do |f| %>
 
 
-    <% if status == 'produced' %>
+    <% if email == 'required' %>
         <%= f.input_field :email, required: true, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email to lock this rate!", label: false, type: "email" %>
-        <%= f.input_field :phone, as: :hidden, class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone to coordinate delivery", label: false %>
         <div class="validation_errors text-center"></div>
     <% else %>
         <%= f.input_field :email, 		    as: :hidden, data: {model: 'order', field: 'order_email'} %>
@@ -20,52 +19,11 @@
       <%= f.input_field :get_currency, 	    as: :hidden, data: {model: 'exchange', field: 'get_currency'} %>
       <%= f.input_field :service_type, 	    as: :hidden, data: {model: 'order',    field: 'service_type'} %>
       <%= f.input_field :user_location, 	as: :hidden, data: {model: 'exchange', field: 'user_location'} %>
-      <%= f.input_field :status, 	        as: :hidden, data: {                   field: 'status'}, value: status %>  <!--static value, comes with the server-->
+      <%= f.input_field :phone,             as: :hidden, class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone to coordinate delivery", label: false %>
+      <%= f.input_field :status, 	        as: :hidden, data: {                   field: 'status'}, value: 'produced' %>
     </div>
 
-    <% if status == 'offer' %>
-        <%= f.button :submit, 'Get it',
-
-=begin
-             data: {
-                     model: 'exchange',
-                     href: 'exchanges/voucher',
-                     href_page: 'exchanges',
-                     href_id: '',
-                     href_pane: 'voucher',
-                     delivery_tracking: 'null',
-                     delivery_redirect_if_selected: 'null',
-                     exchange_selection: 'true',
-                     exchangeid: '',
-                     voucher: 'true',
-                     voucher_status: status,
-                     exchange_name: "filler",
-                     lat: '',
-                     lng: ''
-             },
-=end
-
-             id: 'getit_button', class: 'directions btn btn-mini btn-default' %>
-    <% elsif status == 'produced' %>
-            <%= f.button :submit, 'Lock this rate for me', id: 'email_submit',
-             data: {
-
-=begin
-                     model: 'exchange', href: 'exchanges/voucher', href_page: 'exchanges', href_id: '', href_pane: 'voucher', delivery_tracking: 'null', delivery_redirect_if_selected: 'true', current_exchange: 'true', exchangeid: '',
-=end
-
-                     event: 'Leaving email'}, class: "middle-child email_submit btn btn-mini btn-warning #{@mode}" %>
-    <% elsif status == 'used' %>
-        <%= f.button :submit, 'Got the money, thank you!',
-             data: {
-
-=begin
-                     model: 'exchange', href: 'exchanges/list',  href_page: 'exchanges', href_id: '', href_pane: 'list', reload: 'true',
-=end
-
-model: 'exchange', voucher: 'true', voucher_status: status, exchange_name: "filler"},
-             class: 'btn btn-warning confirmation_button #{@mode}' %>
-    <% end %>
-
+    <%= f.button :submit, 'Lock this rate for me', id: 'email_submit',
+     data: {event: 'Leaving email'}, class: "middle-child email_submit btn btn-mini btn-warning #{@mode}" %>
 
 <% end %>
