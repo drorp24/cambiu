@@ -59,10 +59,7 @@ $(document).ready(function() {
             addExchange(exchanges[i], i);
         }
         
-        $('.list-group-item').click(function() {
-            $(this).next().toggleClass('in');
-        });    
-    }
+    };
     
 
 
@@ -74,12 +71,21 @@ $(document).ready(function() {
 
         var exchange_el =   $('.exchange_row.template').clone().removeClass('template');
         var exchange_sum =  exchange_el.find('.list-group-item');
-        //var exchange_det =  exchange_el.find('.collapse');
-        //var id = '#exchange_det_' + exchange.id;
 
         exchange_sum.attr('data-id', exchange.id);
-        //exchange_det.attr('id', id);
-        //exchange_det.attr('data-id', exchange.id);
+        exchange_sum.attr('data-exchangeid', exchange.id);
+        exchange_sum.attr('data-href-id', exchange.id);
+        exchange_sum.attr('data-exchange-name', exchange.name);
+/*
+        exchange_sum.attr('lat', exchange.latitude);
+        exchange_sum.attr('lng', exchange.longitude);
+*/
+        exchange_sum.attr('data-service-type', exchange.service_type);
+        if (exchange.service_type == 'delivery') {
+            exchange_sum.addClass('well');
+            exchange_sum.attr('data-delivery-tracking', exchange.delivery_tracking);
+        }
+
 
         exchange_el.find('.distance').html((exchange.distance * 1000).toFixed(0));
         exchange_el.find('.name').html(exchange.name);
@@ -98,25 +104,22 @@ $(document).ready(function() {
         exchange_el.find('.directions').attr('data-lng', exchange.longitude);
 
 
+/*
         exchange_sum.find('[data-exchangeid]').attr('data-exchangeid', exchange.id);
         exchange_sum.find('[data-href-id]').attr('data-href-id', exchange.id);
         exchange_sum.find('[data-exchange-name]').attr('data-exchange-name', exchange.name);
-
+*/
         exchange_sum.find('.subject_to_change').html(exchange.real_rates ? '' : 'This rate is subject to change and is regularly updated by our staff');
 /*
         var delivery_icon = exchange_sum.find('.service_type_icon.delivery');
         exchange.delivery_tracking ? delivery_icon.show() : delivery_icon.hide();
 */
         exchange_sum.find('.service_type').html(exchange.service_type);
-        if (exchange.service_type == 'delivery') {
-            exchange_sum.addClass('well');
-            exchange_sum.find('[data-delivery-tracking]').attr('data-delivery-tracking', exchange.delivery_tracking);
-        }
 
+        exchange_sum.find('.you').html(exchange.pay_amount == exchange.edited_quote ? 'you pay' : 'you get');
 
         exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
-        exchange_sum.find('.you').html(exchange.pay_amount == exchange.edited_quote ? 'you pay' : 'you get');
-        //exchange_det.appendTo('#exchanges_list .list-group #exchanges_items');
+
     }
     
 

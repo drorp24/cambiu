@@ -25,6 +25,8 @@
 
     <% if status == 'offer' %>
         <%= f.button :submit, 'Get it',
+
+=begin
              data: {
                      model: 'exchange',
                      href: 'exchanges/voucher',
@@ -41,6 +43,8 @@
                      lat: '',
                      lng: ''
              },
+=end
+
              id: 'getit_button', class: 'directions btn btn-mini btn-default' %>
     <% elsif status == 'produced' %>
             <%= f.button :submit, 'Lock this rate for me', id: 'email_submit',
