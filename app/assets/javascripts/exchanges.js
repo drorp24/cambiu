@@ -81,8 +81,8 @@ $(document).ready(function() {
         exchange_sum.attr('lng', exchange.longitude);
 */
         exchange_sum.attr('data-service-type', exchange.service_type);
+        exchange_sum.addClass(exchange.service_type);
         if (exchange.service_type == 'delivery') {
-            exchange_sum.addClass('well');
             exchange_sum.attr('data-delivery-tracking', exchange.delivery_tracking);
         }
 
@@ -150,6 +150,7 @@ $(document).ready(function() {
         marker['infowindow'].open(map, marker);
         zoom_changed_by_user = false;
         map_center_changed = true;
+        marker_highlighted = true;
     };
 
     function bindBehavior() {
@@ -161,7 +162,7 @@ $(document).ready(function() {
         $('body').on('click', '.directions', (function() {
             var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
             var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
-            big_marker(sessionStorage.id);
+            big_marker(sessionStorage.id);   // TODO: Read from html tag, don't count on it being on the sessionStorage
             calcRoute(from, to);
         }));
 
@@ -222,7 +223,7 @@ $(document).ready(function() {
 
 
     // TODO: Update markers within the map boundaries only!
-    function updateMarkers(exchanges) {
+    updateMarkers = function(exchanges) {
 
         if (mobile) {return;}
         console.log('updateMarkers');
@@ -350,6 +351,43 @@ $(document).ready(function() {
 
     }
 
-    var a = 1;
+    $(document)
+        .on('mouseenter', '.list-group-item', function() {
+
+            var id          =   $(this).attr('data-id');
+            var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
+            var big_parent  =   iw_content.parent().parent().parent();
+            var l           =   big_parent.find('*');
+
+            for (var i = 0; i < l.length; i++) {
+
+               e = $(l[i]);
+                 if (e.css('position') == 'absolute' && e.css('overflow') == 'hidden' && e.css('height') == '30px' && e.css('top') == '-1px' && e.css('width') == '16px') {
+                    e.css('background-color', 'rgba(0,0,0,0)');
+                } else
+                     e.css('background-color', '#999').css('z-index', '10001');
+                    iw_content.css('color', '#fff').css('text-shadow', '0px 1px 0px rgba(0, 0, 0, 0.5)');
+                }
+                big_parent.find('[style*="width: 0px; height: 0px"]').css('background-color', 'rgba(0,0,0,0)')
+       })
+        .on('mouseleave', '.list-group-item', function() {
+
+            var id          =   $(this).attr('data-id');
+            var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
+            var big_parent  =   iw_content.parent().parent().parent();
+            var l           =   big_parent.find('*');
+
+            for (var i = 0; i < l.length; i++) {
+
+                 e = $(l[i]);
+                if (e.css('position') == 'absolute' && e.css('overflow') == 'hidden' && e.css('height') == '30px' && e.css('top') == '-1px' && e.css('width') == '16px') {
+                    e.css('background-color', 'rgba(0,0,0,0)');
+                } else
+                    e.css('background-color', '#fff');
+                iw_content.css('color', '#555').css('text-shadow', 'none');
+            }
+            big_parent.find('[style*="width: 0px; height: 0px"]').css('background-color', 'rgba(0,0,0,0)')
+
+    })
 
 });

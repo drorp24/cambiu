@@ -247,6 +247,10 @@ $(document).ready(function() {
             if (directionsDisplay) directionsDisplay.set('directions', null);
             map.panTo(new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng));
             map.setZoom(map_initial_zoom);
+            if (marker_highlighted && exchanges && exchanges.length > 0) {
+                updateMarkers(exchanges);
+            }
+
         }
 
         // if hash argument was included, go to it

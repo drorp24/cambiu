@@ -194,6 +194,12 @@ body#cambiu {
     white-space: nowrap;
   }
 
+  .exchange_window_sum, .exchange_window_det {
+    color: #555;
+    font-weight: 400;
+    font-size: 1.2em;
+  }
+
   .strike > span {
     position: relative;
     display: inline-block;
@@ -303,7 +309,7 @@ body#cambiu {
     border-radius: 0;
   }
   .list-group-item.delivery {
-//    background-color: lighten($brand-color, 30%);
+    background-color: lighten($brand-color, 10%);
   }
   .form-control {border-radius: $border-radius;}
   .validation_errors {
@@ -1156,6 +1162,14 @@ body#cambiu {
     #exchanges_content {
       z-index: -1;
       font-family: $font-family;
+      .list-group-item {
+        &:hover {
+          background-color: #eee;
+        }
+      }
+      .list_icon {
+        font-size: 1.2em;
+      }
       .distance {
         font-size: 0.8em;
         display: inline;

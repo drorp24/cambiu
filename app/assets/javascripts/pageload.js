@@ -54,7 +54,7 @@ var findMarker;
 var exchange_el;
 var closeInfowindows;
 var zoom_changed_by_user = true;
-var map_initial_zoom = 15;
+var map_initial_zoom = 11;
 var map_center_changed = false;
 var updateResults;
 var directionsService;
@@ -71,6 +71,8 @@ var isNumber;
 var spa;
 var exchange_list_count;
 var inform;
+var updateMarkers;
+var marker_highlighted = false;
 
 isNumber = function (obj) { return !isNaN(parseFloat(obj)) };
 
@@ -207,6 +209,7 @@ $(document).on('click','.navbar-collapse.in',function(e) {
         exchange_el.find('.exchange_window_address').html(exchange.address);
         exchange_el.find('.exchange_window_open').html(exchange.todays_hours);
         exchange_el.attr('id', 'exchange_window_' + exchange.id);
+        exchange_el.find('[data-id]').attr('data-id', exchange.id);
 
         return {
             sum: exchange_el.find('.exchange_window_sum'),
