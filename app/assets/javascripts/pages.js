@@ -25,9 +25,9 @@ $(document).ready(function() {
 
         if (el.is('[data-id]:not([data-exchange-selection])'))                                                 el.attr('data-id', exchange.id);
         if (el.is('[data-href-id]:not([data-exchange-selection])'))             el.attr('data-href-id', exchange.id);
-        if (el.is('[data-lat]'))                                                el.attr('data-lat', exchange.latitude);
-        if (el.is('[data-lng]'))                                                el.attr('data-lng', exchange.longitude);
-        if (el.is('[data-exchange-name]'))                                      el.attr('data-exchange-name', exchange.name);
+        if (el.is('[data-lat]:not([data-exchange-selection])'))                                                el.attr('data-lat', exchange.latitude);
+        if (el.is('[data-lng]:not([data-exchange-selection])'))                                                el.attr('data-lng', exchange.longitude);
+        if (el.is('[data-exchange-name]:not([data-exchange-selection])'))                                      el.attr('data-exchange-name', exchange.name);
 
         var field = el.data('field');
         if (field == 'exchange_id') {field = 'id'}
