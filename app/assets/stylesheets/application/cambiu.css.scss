@@ -1070,6 +1070,7 @@ body#cambiu {
          }
         #exchanges_search_params {
           background-color: $lightgreen;
+          border: none;
           @media (min-width: $screen-sm-min) {
             height: $parameters-height + 3px;
             .exchanges_search_params_title {
@@ -1216,7 +1217,8 @@ body#cambiu {
         position: absolute;
         right: 0px;
         transform: rotate(45deg);
-        text-indent: 1em;
+        text-indent: 0.5em;
+        font-size: 0.85em;
         @media (max-width: $screen-xs-max) {
           text-indent: 0em;
           font-size: 0.7em;
@@ -1901,7 +1903,7 @@ body#cambiu {
 
      #map_container {
       position: fixed;
-      margin-left: 33.2%;
+      margin-left: 33.0%;
       width: 70%;
       padding-right: 0;
       padding-left: 0;
