@@ -242,7 +242,7 @@ $(document).ready(function() {
         if (length == 1) {
             big_marker(exchanges[0].id)
         }
-    }
+     };
 
     function addUserMarker() {
         var lat = value_of('location_lat') || value_of('user_lat');
@@ -330,6 +330,12 @@ $(document).ready(function() {
         if (exchanges && exchanges.length > 0) {
             updateMarkers(exchanges);
         }
+        // This will fire when map has finished loading
+        google.maps.event.addListenerOnce(map, 'idle', function(){
+            $('.gm-style-iw').next().css('display', 'none'); // remove 'x's
+        });
+
+
     };
 
     function calcRoute(from, to) {
