@@ -174,7 +174,7 @@ $(document).ready(function() {
                 $('[data-field=exchange_id]').val(exchange.id);
                 // another extra assignment for delivery_tracking, that has no html tag
                 sessionStorage.setItem('exchange_delivery_tracking', exchange.delivery_tracking);
-                $('[data-delivery-tracking]').attr('data-delivery-tracking', String(exchange.delivery_tracking));
+                $('[data-delivery-tracking]:not([data-exchange-selection])').attr('data-delivery-tracking', String(exchange.delivery_tracking));
                 if (!value_of('exchange_delivery_tracking')) {
                     $('button[data-service-type=delivery]').attr('disabled', 'disabled');
 //                    $('.delivery_method.delivery').attr('data-content', 'Sorry, no delivery');
