@@ -1217,6 +1217,10 @@ body#cambiu {
         right: 0px;
         transform: rotate(45deg);
         text-indent: 1em;
+        @media (max-width: $screen-xs-max) {
+          text-indent: 0em;
+          font-size: 0.7em;
+        }
       }
       .list_icon {
         font-size: 1.2em;
