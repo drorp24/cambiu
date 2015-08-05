@@ -54,7 +54,7 @@ var findMarker;
 var exchange_el;
 var closeInfowindows;
 var zoom_changed_by_user = true;
-var map_initial_zoom = 13;
+var map_initial_zoom = 12;
 var map_center_changed = false;
 var updateResults;
 var directionsService;
@@ -81,8 +81,10 @@ highlight = function(id) {
 
     var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
     var big_parent  =   iw_content.parent().parent().parent();
+    var o_z_index   =   big_parent.css('z-index');
 
     big_parent.find('[style*="background-color: rgb(255, 255, 255)"]').css('background-color', '#FF6E3A').addClass('highlight_bg');
+    big_parent.attr('data-o-z-index', o_z_index).css('z-index', '1000');
     iw_content.css('color', '#fff').css('text-shadow', '0px 1px 0px rgba(0, 0, 0, 1)');
 
 };
@@ -96,8 +98,10 @@ unhighlight = function(id) {
 
     var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
     var big_parent  =   iw_content.parent().parent().parent();
+    var o_z_index   =   big_parent.data('o-z-index');
 
     big_parent.find('.highlight_bg').css('background-color', 'rgb(255, 255, 255)').removeClass('highlight_bg');
+    big_parent.css('z-index', o_z_index);
     iw_content.css('color', '#444').css('text-shadow', 'none');
 
 };

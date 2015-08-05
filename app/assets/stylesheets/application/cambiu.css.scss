@@ -1195,7 +1195,7 @@ body#cambiu {
     #exchanges_content {
       z-index: -1;
       font-family: $font-family;
-      .list-group-item {
+      .list-group-item:not(#exchanges_search_results) {
         &:hover {
           background-color: lighten($brand-color, 35%);
         }
