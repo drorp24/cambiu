@@ -269,9 +269,11 @@ $(document).ready(function() {
 
                     var id = el.attr('data-href-id');
                     var exchange = findExchange(id);
+/*
                     $('[data-model=exchange]').each(function () {
                         populate($(this), exchange);        // TODO: Replace pages 'populate' with 'model_populate'
                     });
+*/
 
                     $("#freeow").freeow("Preparing to take your order", "Please hold on for a few moments", {classes: ["smokey"], autoHide: false});
                     window.location = delivery_tracking;

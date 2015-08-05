@@ -159,6 +159,7 @@ $(document).ready(function() {
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
         $('body').on('click', '.directions', (function () {
+            if ($(this).data('delivery-tracking')) return;
             var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
             var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
             var id = sessionStorage.id;   // TODO: Get id from html tag, don't count on it being on the sessionStorage
@@ -186,6 +187,8 @@ $(document).ready(function() {
 
         });
 
+
+        // TODO: Remove?
         $('body').on('click', '.list-group-item [data-href-id]', (function () {
 
             var $this = $(this);

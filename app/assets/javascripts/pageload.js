@@ -147,7 +147,7 @@ findExchange = function(id) {
     if (exchanges && exchanges.length > 0) {
         var results = $.grep(exchanges, function(e){ return e.id == id; });
         if (results[0]) {
-            console.log('exchange with that id found in exchanges array');
+            console.log('exchange with id ' + id + ' was found in exchanges array');
             var exchange = results[0];
         } else {
             console.log('exchange with this id was not found in exchanges array');
