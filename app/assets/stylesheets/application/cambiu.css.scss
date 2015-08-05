@@ -1327,6 +1327,11 @@ body#cambiu {
         font-weight: 300;
         text-indent: 0.5em;
       }
+      .delivery .service_type {
+        @media (max-width: $screen-xs-max) {
+          color: darken($brand-color, 10%);
+        }
+      }
 
     }
     .getit_parent {

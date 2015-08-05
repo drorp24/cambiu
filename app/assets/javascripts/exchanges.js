@@ -83,7 +83,7 @@ $(document).ready(function() {
         exchange_sum.addClass(exchange.service_type);
         if (exchange.service_type == 'delivery') {
             exchange_sum.attr('data-delivery-tracking', exchange.delivery_tracking);
-            exchange_sum.find('.delivery_ind').css('display', 'block');
+            if (!mobile) exchange_sum.find('.delivery_ind').css('display', 'block');
         }
 
 
