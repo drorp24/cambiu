@@ -73,6 +73,34 @@ var exchange_list_count;
 var inform;
 var updateMarkers;
 var marker_highlighted = false;
+var highlight;
+var unhighlight;
+
+
+highlight = function(id) {
+
+    var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
+    var big_parent  =   iw_content.parent().parent().parent();
+
+    big_parent.find('[style*="background-color: rgb(255, 255, 255)"]').css('background-color', '#FF6E3A').addClass('highlight_bg');
+    iw_content.css('color', '#fff').css('text-shadow', '0px 1px 0px rgba(0, 0, 0, 1)');
+
+};
+
+unhighlight = function(id) {
+
+    if (id == 'all') {
+        $('.highlight_bg').css('background-color', 'rgb(255, 255, 255)');
+        return
+    }
+
+    var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
+    var big_parent  =   iw_content.parent().parent().parent();
+
+    big_parent.find('.highlight_bg').css('background-color', 'rgb(255, 255, 255)').removeClass('highlight_bg');
+    iw_content.css('color', '#444').css('text-shadow', 'none');
+
+};
 
 isNumber = function (obj) { return !isNaN(parseFloat(obj)) };
 

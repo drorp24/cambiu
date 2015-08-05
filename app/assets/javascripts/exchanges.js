@@ -55,12 +55,11 @@ $(document).ready(function() {
 
         console.log('updateExchanges');
 
-         for (var i = 0; i < exchanges.length; i++) {
+        for (var i = 0; i < exchanges.length; i++) {
             addExchange(exchanges[i], i);
         }
-        
+
     };
-    
 
 
     // TODO: Remove det, replace classes with data- attributes, do it in a loop over the data fields
@@ -69,17 +68,17 @@ $(document).ready(function() {
         if (exchange.errors.length > 0) return;
         exchange_list_count += 1;
 
-        var exchange_el =   $('.exchange_row.template').clone().removeClass('template');
-        var exchange_sum =  exchange_el.find('.list-group-item');
+        var exchange_el = $('.exchange_row.template').clone().removeClass('template');
+        var exchange_sum = exchange_el.find('.list-group-item');
 
         exchange_sum.attr('data-id', exchange.id);
         exchange_sum.attr('data-exchangeid', exchange.id);
         exchange_sum.attr('data-href-id', exchange.id);
         exchange_sum.attr('data-exchange-name', exchange.name);
-/*
-        exchange_sum.attr('lat', exchange.latitude);
-        exchange_sum.attr('lng', exchange.longitude);
-*/
+        /*
+         exchange_sum.attr('lat', exchange.latitude);
+         exchange_sum.attr('lng', exchange.longitude);
+         */
         exchange_sum.attr('data-service-type', exchange.service_type);
         exchange_sum.addClass(exchange.service_type);
         if (exchange.service_type == 'delivery') {
@@ -100,20 +99,20 @@ $(document).ready(function() {
         exchange_el.find('.open_today').attr('href', exchange.website ? exchange.website : "#");
         exchange_el.find('.phone').attr('href', exchange.phone ? 'tel:+44' + exchange.phone.substring(1) : "#");
         exchange_el.find('.website').attr('href', exchange.website);
-        exchange_el.find('.directions').attr('data-lat', exchange.latitude); 
+        exchange_el.find('.directions').attr('data-lat', exchange.latitude);
         exchange_el.find('.directions').attr('data-lng', exchange.longitude);
 
 
-/*
-        exchange_sum.find('[data-exchangeid]').attr('data-exchangeid', exchange.id);
-        exchange_sum.find('[data-href-id]').attr('data-href-id', exchange.id);
-        exchange_sum.find('[data-exchange-name]').attr('data-exchange-name', exchange.name);
-*/
+        /*
+         exchange_sum.find('[data-exchangeid]').attr('data-exchangeid', exchange.id);
+         exchange_sum.find('[data-href-id]').attr('data-href-id', exchange.id);
+         exchange_sum.find('[data-exchange-name]').attr('data-exchange-name', exchange.name);
+         */
         exchange_sum.find('.subject_to_change').html(exchange.real_rates ? '' : 'This rate is subject to change and is regularly updated by our staff');
-/*
-        var delivery_icon = exchange_sum.find('.service_type_icon.delivery');
-        exchange.delivery_tracking ? delivery_icon.show() : delivery_icon.hide();
-*/
+        /*
+         var delivery_icon = exchange_sum.find('.service_type_icon.delivery');
+         exchange.delivery_tracking ? delivery_icon.show() : delivery_icon.hide();
+         */
         exchange_sum.find('.service_type').html(exchange.service_type);
 
         exchange_sum.find('.you').html(exchange.pay_amount == exchange.edited_quote ? 'you pay' : 'you get');
@@ -121,29 +120,28 @@ $(document).ready(function() {
         exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
 
     }
-    
 
-    
-    clearExchanges = function() {
+
+    clearExchanges = function () {
         console.log('clearExchanges');
         exchange_list_count = 0;
         $('#exchanges_list #exchanges_items').empty();
     };
 
-    closeInfowindows = function() {
+    closeInfowindows = function () {
         for (var i = 0; i < markers.length; i++) {
             markers[i]['infowindow'].close();
         }
     };
 
 
-    big_marker = function(id) {
+    big_marker = function (id) {
         console.log('big_marker');
         if (!id) return;
-        var exchange        = findExchange(id);
+        var exchange = findExchange(id);
         if (exchange.errors.length > 0) return;
-        var exchange_html   = exchange_el(exchange).det;
-        var marker          = findMarker(id);
+        var exchange_html = exchange_el(exchange).det;
+        var marker = findMarker(id);
 
         closeInfowindows();
         marker['infowindow'].setContent(exchange_html[0]);
@@ -159,10 +157,12 @@ $(document).ready(function() {
 
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
-        $('body').on('click', '.directions', (function() {
+        $('body').on('click', '.directions', (function () {
             var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
             var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
-            big_marker(sessionStorage.id);   // TODO: Read from html tag, don't count on it being on the sessionStorage
+            var id = sessionStorage.id;   // TODO: Get id from html tag, don't count on it being on the sessionStorage
+            unhighlight(id);
+            big_marker(id);
             calcRoute(from, to);
         }));
 
@@ -185,14 +185,14 @@ $(document).ready(function() {
 
         });
 
-        $('body').on('click', '.list-group-item [data-href-id]', (function() {
+        $('body').on('click', '.list-group-item [data-href-id]', (function () {
 
             var $this = $(this);
-            var delivery_tracking =  $this.attr('data-delivery-tracking');
+            var delivery_tracking = $this.attr('data-delivery-tracking');
             if (delivery_tracking && delivery_tracking != 'null') return;
 
-            var id              = $this.attr('data-href-id');
-            var exchange        = findExchange(id);
+            var id = $this.attr('data-href-id');
+            var exchange = findExchange(id);
 
             big_marker(id);
             map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
@@ -203,12 +203,12 @@ $(document).ready(function() {
     }
 
 
-     updateResults = function(exchanges) {
+    updateResults = function (exchanges) {
 
         console.log('updateResults');
 
         $('#loader_message').css('display', 'none');
-         if (exchanges && exchanges.length) {
+        if (exchanges && exchanges.length) {
             $('#empty_message').css('display', 'none');
             $('#result_message').css('display', 'block');
             $('#exchanges_count').html(exchange_list_count);
@@ -219,13 +219,14 @@ $(document).ready(function() {
             $('#empty_location').html(sessionStorage.location);
         }
     }
-    
 
 
     // TODO: Update markers within the map boundaries only!
-    updateMarkers = function(exchanges) {
+    updateMarkers = function (exchanges) {
 
-        if (mobile) {return;}
+        if (mobile) {
+            return;
+        }
         console.log('updateMarkers');
 
         clearMarkers();
@@ -234,7 +235,7 @@ $(document).ready(function() {
             addMarker(exchanges[i]);
         }
         if (length == 1) {
-             big_marker(exchanges[0].id)
+            big_marker(exchanges[0].id)
         }
     }
 
@@ -248,7 +249,7 @@ $(document).ready(function() {
             disableAutoPan: true,
             map: map,
             icon: '/dot-circle-o.png',
-            draggable:true
+            draggable: true
         });
     }
 
@@ -277,14 +278,14 @@ $(document).ready(function() {
             disableAutoPan: true
         });
 
-/*      // Uncomment if no infowindows should be opened by default, then this will open them manually
-        google.maps.event.addListener(marker, 'mouseover', function() {
-            this['infowindow'].setContent(exchange_window_sum[0]);
-            this['infowindow'].open(map, this);
-        });
+        /*      // Uncomment if no infowindows should be opened by default, then this will open them manually
+         google.maps.event.addListener(marker, 'mouseover', function() {
+         this['infowindow'].setContent(exchange_window_sum[0]);
+         this['infowindow'].open(map, this);
+         });
 
-*/
-        google.maps.event.addListener(marker, 'click', function() {
+         */
+        google.maps.event.addListener(marker, 'click', function () {
             closeInfowindows();
             this['infowindow'].setContent(exchange_window_det[0]);
             this['infowindow'].open(map, this);
@@ -295,8 +296,8 @@ $(document).ready(function() {
         markers.push(marker);
 
 
-     }
-    
+    }
+
     function clearMarkers() {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
@@ -307,7 +308,9 @@ $(document).ready(function() {
 
     drawMap = function (latitude, longitude, exchanges) {
 
-        if (mobile) {return;}
+        if (mobile) {
+            return;
+        }
         console.log('drawMap');
 
         center = new google.maps.LatLng(latitude, longitude);
@@ -322,74 +325,41 @@ $(document).ready(function() {
         if (exchanges && exchanges.length > 0) {
             updateMarkers(exchanges);
         }
-     };
-    
+    };
+
     function calcRoute(from, to) {
 
-      var request = {
-          origin: from,
-          destination: to,
-          travelMode: google.maps.TravelMode.TRANSIT,
-          unitSystem: google.maps.UnitSystem.METRIC
-      };
+        var request = {
+            origin: from,
+            destination: to,
+            travelMode: google.maps.TravelMode.TRANSIT,
+            unitSystem: google.maps.UnitSystem.METRIC
+        };
 
-      directionsService = new google.maps.DirectionsService();
-      directionsDisplay = new google.maps.DirectionsRenderer();
-      zoom_changed_by_user = false;
+        directionsService = new google.maps.DirectionsService();
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        zoom_changed_by_user = false;
 
-      directionsDisplay.setMap(map);
-      directionsDisplay.setPanel(document.getElementById('directions-panel'));
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
-      directionsService.route(request, function(response, status) {
-        console.log('directionsService.route returned with status: ' + status);
-        if (status == google.maps.DirectionsStatus.OK) {
-            map_center_changed = true;
-            $('#directions-panel').css('display', 'block');
-            directionsDisplay.setDirections(response);
-        }
-      });
+        directionsService.route(request, function (response, status) {
+            console.log('directionsService.route returned with status: ' + status);
+            if (status == google.maps.DirectionsStatus.OK) {
+                map_center_changed = true;
+                $('#directions-panel').css('display', 'block');
+                directionsDisplay.setDirections(response);
+            }
+        });
 
     }
 
     $(document)
-        .on('mouseenter', '.list-group-item', function() {
-
-            var id          =   $(this).attr('data-id');
-            var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
-            var big_parent  =   iw_content.parent().parent().parent();
-            var big_brother =   iw_content.parent().parent().next();
-            var l           =   big_parent.find('*');
-
-            for (var i = 0; i < l.length; i++) {
-
-               e = $(l[i]);
-                 if (e.css('position') == 'absolute' && e.css('overflow') == 'hidden' && e.css('height') == '30px' && e.css('top') == '-1px' && e.css('width') == '16px') {
-                    e.css('background-color', 'rgba(0,0,0,0)');
-                } else
-                     e.css('background-color', '#FF6E3A').css('z-index', '10002');
-                    iw_content.css('color', '#fff').css('text-shadow', '0px 1px 0px rgba(0, 0, 0, 0.7)');
-                }
-                big_parent.find('[style*="width: 0px; height: 0px"]').css('background-color', 'rgba(0,0,0,0)');
-                big_brother.find('img').css('display', 'none');
-       })
-        .on('mouseleave', '.list-group-item', function() {
-
-            var id          =   $(this).attr('data-id');
-            var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
-            var big_parent  =   iw_content.parent().parent().parent();
-            var l           =   big_parent.find('*');
-
-            for (var i = 0; i < l.length; i++) {
-
-                 e = $(l[i]);
-                if (e.css('position') == 'absolute' && e.css('overflow') == 'hidden' && e.css('height') == '30px' && e.css('top') == '-1px' && e.css('width') == '16px') {
-                    e.css('background-color', 'rgba(0,0,0,0)');
-                } else
-                    e.css('background-color', '#fff');
-                iw_content.css('color', '#444').css('text-shadow', 'none');
-            }
-            big_parent.find('[style*="width: 0px; height: 0px"]').css('background-color', 'rgba(0,0,0,0)').css('border', '1px solid pink')
-
-    })
+        .on('mouseenter', '.list-group-item', function () {
+            highlight($(this).attr('data-id'));
+        })
+        .on('mouseleave', '.list-group-item', function () {
+            unhighlight($(this).attr('data-id'));
+        })
 
 });
