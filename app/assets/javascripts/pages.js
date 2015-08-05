@@ -23,7 +23,7 @@ $(document).ready(function() {
      // TODO: This prevents every variable to propage to sessionStorag, plus In the case of something like delivery_tracking, that doesn't need to sit anywhere in the html, this is a problem
     function populate(el, exchange) {
 
-        if (el.is('[data-id]'))                                                 el.attr('data-id', exchange.id);
+        if (el.is('[data-id]:not([data-exchange-selection])'))                                                 el.attr('data-id', exchange.id);
         if (el.is('[data-href-id]:not([data-exchange-selection])'))             el.attr('data-href-id', exchange.id);
         if (el.is('[data-lat]'))                                                el.attr('data-lat', exchange.latitude);
         if (el.is('[data-lng]'))                                                el.attr('data-lng', exchange.longitude);

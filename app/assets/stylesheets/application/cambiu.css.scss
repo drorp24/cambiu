@@ -195,9 +195,16 @@ body#cambiu {
   }
 
   .exchange_window_sum, .exchange_window_det {
-    color: #555;
+    color: #444;
     font-weight: 400;
-    font-size: 1.2em;
+    font-size: 1em;
+    .exchange_window_name {
+      font-size: 1.1em;
+      font-weight: 700;
+    }
+    .exchange_window_quote {
+      margin-top: 0.5em;
+    }
   }
 
   .strike > span {
@@ -309,7 +316,7 @@ body#cambiu {
     border-radius: 0;
   }
   .list-group-item.delivery {
-    background-color: lighten($brand-color, 10%);
+    background-color: darken($brand-color, 10%);
   }
   .form-control {border-radius: $border-radius;}
   .validation_errors {
@@ -508,7 +515,7 @@ body#cambiu {
         text-transform: uppercase;
         font-weight: 700;
         color: #fff;
-        text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
+        ow: 0px 1px 0px rgba(0, 0, 0, 1);
         margin-top: -5px;
         margin-bottom: -5px;
         font-size: 1.5em;
@@ -1054,23 +1061,25 @@ body#cambiu {
               font-size: 1.1em;
             }
             color: #fff;
+            text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
             font-weight: 400;
             [data-field] {
 //              font-weight: 500;
             }
             .change_link {
 //               font-size: 0.9em;
-//              font-style: italic;
+              font-style: italic;
               margin-left: 2em;
               margin-right: 0.5em;
-              text-decoration: underline;
               cursor: pointer;
-              color: $brand-color;
+              color: #fff;
+              font-size: 1.2em;
             }
             &::after {
               content: "\f002";
               font-family: fontAwesome;
-              color: $brand-color;
+              color: #fff;
+              font-size: 1.2em;
             }
           }
           #comma {

@@ -357,6 +357,7 @@ $(document).ready(function() {
             var id          =   $(this).attr('data-id');
             var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
             var big_parent  =   iw_content.parent().parent().parent();
+            var big_brother =   iw_content.parent().parent().next();
             var l           =   big_parent.find('*');
 
             for (var i = 0; i < l.length; i++) {
@@ -365,10 +366,11 @@ $(document).ready(function() {
                  if (e.css('position') == 'absolute' && e.css('overflow') == 'hidden' && e.css('height') == '30px' && e.css('top') == '-1px' && e.css('width') == '16px') {
                     e.css('background-color', 'rgba(0,0,0,0)');
                 } else
-                     e.css('background-color', '#999').css('z-index', '10001');
-                    iw_content.css('color', '#fff').css('text-shadow', '0px 1px 0px rgba(0, 0, 0, 0.5)');
+                     e.css('background-color', '#FF6E3A').css('z-index', '10002');
+                    iw_content.css('color', '#fff').css('text-shadow', '0px 1px 0px rgba(0, 0, 0, 0.7)');
                 }
-                big_parent.find('[style*="width: 0px; height: 0px"]').css('background-color', 'rgba(0,0,0,0)')
+                big_parent.find('[style*="width: 0px; height: 0px"]').css('background-color', 'rgba(0,0,0,0)');
+                big_brother.find('img').css('display', 'none');
        })
         .on('mouseleave', '.list-group-item', function() {
 
@@ -384,9 +386,9 @@ $(document).ready(function() {
                     e.css('background-color', 'rgba(0,0,0,0)');
                 } else
                     e.css('background-color', '#fff');
-                iw_content.css('color', '#555').css('text-shadow', 'none');
+                iw_content.css('color', '#444').css('text-shadow', 'none');
             }
-            big_parent.find('[style*="width: 0px; height: 0px"]').css('background-color', 'rgba(0,0,0,0)')
+            big_parent.find('[style*="width: 0px; height: 0px"]').css('background-color', 'rgba(0,0,0,0)').css('border', '1px solid pink')
 
     })
 
