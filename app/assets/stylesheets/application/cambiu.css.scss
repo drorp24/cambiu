@@ -176,6 +176,25 @@ html, body {
 
 body#cambiu {
 
+  @-webkit-keyframes pulse {
+    0% { -webkit-transform: scale(1); }
+    50% { -webkit-transform: scale(1.2); }
+    100% { -webkit-transform: scale(1); }
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  .pulse {
+    -webkit-animation-name: pulse;
+    animation-name: pulse;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+
   .free {
     position: absolute;
     left: 78%;
@@ -316,7 +335,7 @@ body#cambiu {
     border-radius: 0;
   }
   .list-group-item.delivery {
-    background-color: darken($brand-color, 10%);
+//    background-color: darken($brand-color, 10%);
   }
   .form-control {border-radius: $border-radius;}
   .validation_errors {
@@ -1173,18 +1192,40 @@ body#cambiu {
       font-family: $font-family;
       .list-group-item {
         &:hover {
-          background-color: #eee;
+          background-color: lighten($brand-color, 35%);
         }
+      }
+      .delivery_bg {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 14%;
+        min-height: 70px;
+        background-color: darken($brand-color, 10%);
+        transform: skewX(45deg);
+        transform-origin: 0px 0px 0px;
+        color: #fff;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+       }
+      .delivery_text {
+        color: white;
+        position: absolute;
+        right: 0px;
+        transform: rotate(45deg);
+        text-indent: 1em;
       }
       .list_icon {
         font-size: 1.2em;
+        font-weight: 900;
+        color: #888;
       }
       .distance {
         font-size: 0.8em;
         display: inline;
         position: absolute;
         top: 4em;
-        font-weight: 400;
+        font-weight: 300;
+        color: #333;
         &::before {
           font-family: fontAwesome;
           content: "\f041" + '    ';
@@ -1256,8 +1297,8 @@ body#cambiu {
       }
       .service_type {
         text-transform: uppercase;
-        color: #333;
-        font-weight: 400;
+        color: #888;
+        font-weight: 900;
 
         @media (min-width: $screen-sm-min) {
           font-size: 0.7em;

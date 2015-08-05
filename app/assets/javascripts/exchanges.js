@@ -9,7 +9,7 @@
 //  -  Update results banner
 
 $(document).ready(function() {
-    
+
 //if ($('body').hasClass('exchanges'))   {    
 
 
@@ -83,6 +83,7 @@ $(document).ready(function() {
         exchange_sum.addClass(exchange.service_type);
         if (exchange.service_type == 'delivery') {
             exchange_sum.attr('data-delivery-tracking', exchange.delivery_tracking);
+            exchange_sum.find('.delivery_ind').css('display', 'block');
         }
 
 
@@ -356,10 +357,14 @@ $(document).ready(function() {
 
     $(document)
         .on('mouseenter', '.list-group-item', function () {
-            highlight($(this).attr('data-id'));
+            var $this = $(this);
+            highlight($this.attr('data-id'));
+            $this.find('.list_icon').addClass('pulse');
         })
         .on('mouseleave', '.list-group-item', function () {
-            unhighlight($(this).attr('data-id'));
+            var $this = $(this);
+            unhighlight($this.attr('data-id'));
+            $this.find('.list_icon').removeClass('pulse');
         })
 
 });
