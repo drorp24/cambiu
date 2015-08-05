@@ -197,8 +197,8 @@ body#cambiu {
 
   .free {
     position: absolute;
-    left: 78%;
-    top: 50%;
+    left: 80%;
+    top: 56%;
     width: 14%;
   }
   #directions-panel.panel {
@@ -339,6 +339,10 @@ body#cambiu {
   }
   .form-control {border-radius: $border-radius;}
   .validation_errors {
+    .email_msg {
+      color: darken($brand-color, 20%);
+      font-size: 0.9em;
+    }
  //   visibility: hidden;
       height: 5vh;
     line-height: 5vh;
