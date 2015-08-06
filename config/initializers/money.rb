@@ -28,3 +28,14 @@ Money::Currency.register({
     :thousands_separator => ",",
     :decimal_mark        => "."
 })
+Money::Currency.register({
+   :priority            => 1,
+   :iso_code            => "ILS",
+   :name                => "New Isralie Sheqel",
+   :symbol              => "₪",
+   :symbol_first        => true,
+   :subunit             => "Agorot",
+   :subunit_to_unit     => 100,
+   :thousands_separator => ",",
+   :decimal_mark        => "."
+})

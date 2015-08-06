@@ -27,7 +27,7 @@ $(document).ready(function() {
         }
         drawMap(mapCenterLat, mapCenterLng, exchanges);
 
-        if (search()) {
+        if (search() && exchanges && exchanges.length > 0) {
             clearExchanges();
             updateExchanges(exchanges);
         }
