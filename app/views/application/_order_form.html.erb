@@ -3,7 +3,7 @@
 
     <% if email == 'required' %>
         <%= f.input_field :email, required: true, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email to lock this rate!", label: false, type: "email" %>
-        <div class="validation_errors text-center"><span class="email_msg">We will never give your email to anyone!</span></div>
+        <div class="validation_errors text-center"><span class="email_msg">We promise not to send you any spam and we won't share your details</span></div>
     <% else %>
         <%= f.input_field :email, 		    as: :hidden, data: {model: 'order', field: 'order_email'} %>
     <% end %>
