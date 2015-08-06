@@ -158,6 +158,8 @@ $(document).ready(function() {
             if (!transition) pane_el.show();
         }
 
+        $('[data-active-pane=' + pane + ']').addClass('active');
+
         // populate exchange data in exchange pages (spa only, at page transition)
         if (id && spa()) {
 

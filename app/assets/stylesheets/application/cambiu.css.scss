@@ -4,7 +4,8 @@
 @import "font-awesome";
 
 // Variables
-$stam: red;
+$green: #27AE60;
+$progress-color: #fff;
 $font-family: 'Lato', sans-serif;
 $navbar-height: 60px;
 $white: #fff;
@@ -176,6 +177,75 @@ html, body {
 
 body#cambiu {
 
+  @import url(http://fonts.googleapis.com/css?family=Montserrat);
+  /*progressbar*/
+  #progressbar {
+    font-family: montserrat, arial, verdana;
+    font-weight: 400 !important;
+    text-align: center;
+    margin-top: 20px;
+    overflow: hidden;
+    /*CSS counters to number the steps*/
+    counter-reset: step;
+    @media (max-width: $screen-xs-max) {
+      position: relative;
+      bottom: 40px;
+      left: -25px;
+    }
+  }
+  #progressbar li {font-family: montserrat, arial, verdana;
+    list-style-type: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 10px;
+    width: 33.33%;
+    float: left;
+    position: relative;
+  }
+  #progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 20px;
+    line-height: 20px;
+    display: block;
+    font-size: 10px;
+    color: #333;
+    background: white;
+    border-radius: 3px;
+    margin: 0 auto 5px auto;
+  }
+  /*progressbar connectors*/
+  #progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: -50%;
+    top: 9px;
+    z-index: -1; /*put it behind the numbers*/
+  }
+  #progressbar li:first-child:after {
+    /*connector not needed before the first step*/
+    content: none;
+  }
+  /*marking active/completed steps green*/
+  /*The number of the step and the connector before it = green*/
+  #progressbar li.active:before,  #progressbar li.active:after{
+    background: $green;
+    color: white;
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   /* entire container, keeps perspective */
   .flip-container {
@@ -194,7 +264,7 @@ body#cambiu {
 
   /* flip speed goes here */
   .flipper {
-    transition: 0.6s;
+    transition: 1.5s;
     transform-style: preserve-3d;
 
     position: relative;
@@ -643,13 +713,25 @@ body#cambiu {
 
 
   .navbar {
-    background-color: #fff;
-    box-shadow: 0 0 5px #888;
+    #navbar_logo {
+      position: absolute;
+      @media (max-width: $screen-xs-max) {
+        left: 0;
+      }
+
+      img {
+        height: 36px;
+        margin-top: 9px;
+      }
+    }
+    background-color: #777;
+    box-shadow: 0 0 10px #888;
     height: $navbar-height;
     border: none;
     margin-bottom: 0;
-    font-size: 2vh;
+    font-size: 11px;
     font-weight: 300;
+    text-transform: uppercase;
     .navbar-brand {
       padding-top: 4px;
     }
@@ -675,9 +757,10 @@ body#cambiu {
     &:not(.in)  li  a {
       line-height: 35px;
       margin-bottom: -20px;
-      color: $grey73;
+      color: white;
       &:hover, &:active {
-        color: $brand-color;
+        color: lighten($brand-color, 10%);
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
         background: none;
       }
       &:visited, &:focus {
@@ -1116,12 +1199,13 @@ body#cambiu {
           padding-right: 0;
          }
         #exchanges_search_params {
+          margin-top: 10px;
           background-color: $lightgreen;
           border: none;
           @media (min-width: $screen-sm-min) {
-            height: $parameters-height + 3px;
+            min-height: $parameters-height -5px;
             .exchanges_search_params_title {
-              margin-top: 20px;
+              line-height: 40px;
             }
           }
           .exchanges_search_params_title {
@@ -1129,11 +1213,11 @@ body#cambiu {
               font-size: 1em;
             }
             @media (min-width: $screen-sm-min) {
-              font-size: 1.1em;
+              font-size: 1em;
             }
             color: #fff;
-            text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
-            font-weight: 400;
+//            text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
+            font-weight: 300;
             [data-field] {
 //              font-weight: 500;
             }
@@ -1144,15 +1228,22 @@ body#cambiu {
               margin-right: 0.5em;
               cursor: pointer;
               color: #fff;
-              font-size: 1.2em;
+              font-size: 1.1em;
+              font-weight: 300;
+              &:hover {
+                color: $brand-color;
+              }
             }
             &::after {
               content: "\f002";
               font-family: fontAwesome;
               color: #fff;
-              font-size: 1.2em;
+              font-size: 1.1em;
+              &:hover {
+                color: $brand-color;
+              }
             }
-          }
+           }
           #comma {
 //            margin-left: -0.2em;
           }
@@ -1202,8 +1293,7 @@ body#cambiu {
                 font-size: 0.8em;
               }
             &.active {
-              background-color: $lightgreen;
-              color: #fff;
+              color: $brand-color;
             }
           }
         }
@@ -2014,7 +2104,7 @@ body#cambiu {
         background-color: #ddd;
         text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
         .help_text {
-          font-weight: 700;
+          font-weight: 900;
         }
       }
       form {
@@ -2120,6 +2210,9 @@ body#cambiu {
 
     .desktop_only {
       display: none !important;
+    }
+    .navbar-toggle.collapsed {
+      margin-right: -15px;
     }
     .navbar-toggle .icon-bar {
       background-color: $brand-color;
