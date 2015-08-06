@@ -78,7 +78,7 @@ $(document).ready(function() {
 
     }
 
-    setPage = function(url, hash) {
+    setPage = function(url, hash, transition) {
 
         // Parse arguments
 
@@ -89,6 +89,7 @@ $(document).ready(function() {
             if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true)}
             console.log('already on that page. Existing'); return}
 */
+
         if (hash === undefined) {
             hash = null;
         } else if (hash && hash[0] == '#') {
@@ -142,19 +143,19 @@ $(document).ready(function() {
         // activate/hide components
 
         // TODO: function
-        $('.page.active').hide();
-        $('.pane.active').hide();
+        if (!transition) $('.page.active').hide();
+        if (!transition) $('.pane.active').hide();
         $('.page.active').removeClass('active');
         $('.pane.active').removeClass('active');
         if (page) {
-             page_el = $('.page[data-page=' + page + ']');
+            page_el = $('.page[data-page=' + page + ']');
             page_el.addClass('active');
-            page_el.show();
+            if (!transition) page_el.show();
         }
         if (pane) {
             pane_el = $('.pane[data-pane=' + pane + ']');
             pane_el.addClass('active');
-            pane_el.show();
+            if (!transition) pane_el.show();
         }
 
         // populate exchange data in exchange pages (spa only, at page transition)
@@ -291,8 +292,10 @@ $(document).ready(function() {
         var hash =        el.attr('data-href-hash');
 
         console.log('data-href element clicked. href: ' + href + ' href-id: ' + id + ' hash: ' + String(hash));
-        setPage(url, hash);
-//        if (el.is('[data-reload')) location.reload();
+        var transition = $('.pane.active').is('.transition');
+        setPage(url, hash, transition);
+        if (transition)  $('.flip-container').removeClass('flop').addClass('flip');
+
     };
 
     $('body').on('click', '[data-href]', (function(e) {
@@ -335,7 +338,17 @@ $(document).ready(function() {
 
         console.log('pop. e.state: ' + e.state);
         if (e.state && e.state.length > 0) {
-            setPage(e.state.slice(1));
+
+            var curr_pane = $('.pane.active');
+            var transition  = curr_pane.is('.transition') && e.state != '/exchanges/list';
+
+            if (transition) {
+                var from    = curr_pane.hasClass('flip') ? 'flip' : 'flop';
+                var to      = from == 'flip' ? 'flop' : 'flip';
+            }
+
+            setPage(e.state.slice(1), null, transition);
+            if (transition)  $('.flip-container').removeClass(from).addClass(to);
         } else
         if (window.location.hash && window.location.pathname.length > 1) {
             console.log('... but a hash exists - settingPage according to path');

@@ -182,13 +182,14 @@ body#cambiu {
     perspective: 1000;
   }
   /* flip the pane when hovered */
-  .flip-container:hover .flipper, .flip-container.hover .flipper {
+  .flip-container.flip .flipper {
     transform: rotateY(180deg);
   }
 
+  .flip-container.flop .flipper {
+    transform: rotateY(0deg);
+  }
   .flip-container, .front, .back {
-    width: 320px;
-    height: 480px;
   }
 
   /* flip speed goes here */
@@ -210,7 +211,7 @@ body#cambiu {
 
   /* front pane, placed above back */
   .front {
-    z-index: 2;
+//    z-index: 2;
     /* for firefox 31 */
     transform: rotateY(0deg);
   }
