@@ -24,6 +24,13 @@
     </div>
 
     <%= f.button :submit, 'Lock this rate for me', id: 'email_submit',
-     data: {event: 'Leaving email'}, class: "middle-child email_submit btn btn-mini btn-warning #{@mode}" %>
+     data: {
+             model:     'exchange',
+             href:      '',
+             href_page: 'exchanges',
+             href_id:   '',
+             href_pane: 'voucher',
+             event: 'Leaving email'
+     }, class: "middle-child email_submit btn btn-mini btn-warning #{@mode}" %>
 
 <% end %>

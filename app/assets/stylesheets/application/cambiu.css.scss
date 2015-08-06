@@ -1685,7 +1685,7 @@ body#cambiu {
         }
       }
     }
-    #exchange_voucher {
+    #exchange_voucher, #exchange_deal {
       background-image: image_url('voucher_bg.png');
       width: 94%;
       margin-left: 3%;
@@ -1743,7 +1743,7 @@ body#cambiu {
         font-weight: 300;
         margin-bottom: 20px;
       }
-      .exchange_voucher_banner {
+      .exchange_banner {
         height: 15vh;
         margin-top: 10px;
         .pickup_title {
@@ -1775,21 +1775,7 @@ body#cambiu {
           color: #888;
         }
       }
-      .exchange_voucher_directions {
-        color: #333;
-        @media (min-width: $screen-sm-min) {
-         margin-bottom: 30px;
-         font-size: 1.1em;
-        }
-        @media (max-width: $screen-xs-max) {
-          display: none;
-        }
-        font-weight: 400;
-         a.directions {
-          color: $lightgreen !important;
-        }
-      }
-      .exchange_voucher_bullets {
+       .exchange_bullets {
         margin-bottom: 4vh;
         margin-top: 1vh;
         .bullet {
@@ -1806,7 +1792,7 @@ body#cambiu {
         padding-left: 0;
         padding-right: 0;
       }
-      .exchange_voucher_order {
+      .exchange_order {
         font-size: 2.5vh;
         font-weight: 900;
         .order {
@@ -1827,7 +1813,7 @@ body#cambiu {
           text-align: center;
         }
       }
-      .exchange_voucher_identification {
+      .exchange_identification {
         margin-top: 5vh;
         font-size: 0.9em;
         .identification {

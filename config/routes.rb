@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'exchanges/list',         to: 'home#index'
   get 'exchanges/:id/summary',  to: 'home#index'
   get 'exchanges/:id/voucher',  to: 'home#index'
+  get 'exchanges/:id/deal',     to: 'home#index'
   resources :exchanges
   get 'exchanges/:id/quote',    to: 'exchanges#quote'
 
