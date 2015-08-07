@@ -13,21 +13,16 @@
 <!--
           <div data-clicked="page logo" class="page-title navbar-brand text-center" id="navbar_logo" data-href="homepage"><%= image_tag 'logo.png' %></div>
 -->
-          <a data-clicked="page logo" class="page-title navbar-brand text-center" id="navbar_logo" href="/"><%= image_tag 'logo_no_text.png' %></a>
+          <a data-clicked="page logo" class="clearfix page-title navbar-brand text-center" id="navbar_logo" href="/">
+            <span class="pull-left"><%= image_tag 'logo_no_text.png' %></span>
+            <span class="pull-right logo_word">cambiu</span>
+          </a>
         </div>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class=" col-md-4">
-        <ul id="progressbar">
-          <li data-active-pane='list' class="active"><span class="desktop_only">Select Exchange</span></li>
-          <li data-active-pane='deal'><span class="desktop_only">Get Special Deal</span></li>
-          <li data-active-pane='voucher'><span class="desktop_only">Guarantee price</span></li>
-        </ul>
-      </div>
 
-
-      <div class="navbar_background col-xs-12 col-md-5 col-md-offset-3">
+      <div class="navbar_background col-xs-12 col-md-5 col-md-offset-7">
         <div class="collapse navbar-collapse" id="cambiu_menu">
           <ul class="nav navbar-nav navbar-right">
             <li><%= link_to "How does it work", "/#how_does_it_work" %></li>

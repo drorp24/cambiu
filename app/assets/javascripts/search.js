@@ -330,6 +330,7 @@ $(document).ready(function() {
 
     beforeSubmit = function() {
         startLoader();
+        $('.logo_word').css('display', 'none');
     };
 
     $('#new_search').on('ajax:before', function() {

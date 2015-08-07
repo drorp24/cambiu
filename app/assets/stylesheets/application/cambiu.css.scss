@@ -5,6 +5,7 @@
 
 // Variables
 $green: #27AE60;
+$bg_green: #6db61e;
 $progress-color: #fff;
 $font-family: 'Lato', sans-serif;
 $navbar-height: 60px;
@@ -180,6 +181,10 @@ body#cambiu {
   @import url(http://fonts.googleapis.com/css?family=Montserrat);
   /*progressbar*/
   #progressbar {
+    position: fixed;
+    width: 35%;
+    top: 0;
+    z-index: 1030;
     font-family: montserrat, arial, verdana;
     font-weight: 400 !important;
     text-align: center;
@@ -188,9 +193,9 @@ body#cambiu {
     /*CSS counters to number the steps*/
     counter-reset: step;
     @media (max-width: $screen-xs-max) {
-      position: relative;
       bottom: 40px;
-      left: -25px;
+      left: -5.5%;
+      width: 100%;
     }
   }
   #progressbar li {font-family: montserrat, arial, verdana;
@@ -713,6 +718,14 @@ body#cambiu {
 
 
   .navbar {
+    .logo_word {
+      color: white;
+      font-style: italic;
+      font-size: 1.5em;
+      text-transform: initial;
+      line-height: 50px;
+      margin-left: 10px;
+    }
     #navbar_logo {
       position: absolute;
       @media (max-width: $screen-xs-max) {
@@ -730,7 +743,7 @@ body#cambiu {
     border: none;
     margin-bottom: 0;
     font-size: 11px;
-    font-weight: 300;
+    font-weight: 400;
     text-transform: uppercase;
     .navbar-brand {
       padding-top: 4px;
@@ -1199,14 +1212,14 @@ body#cambiu {
           padding-right: 0;
          }
         #exchanges_search_params {
-          margin-top: 10px;
-          background-color: $lightgreen;
+          margin-top: 15px;
+          background-color: #ccc;
           border: none;
           @media (min-width: $screen-sm-min) {
-            min-height: $parameters-height -5px;
+            min-height: 60px;
+            padding-top: 20px;
             .exchanges_search_params_title {
-              line-height: 40px;
-            }
+             }
           }
           .exchanges_search_params_title {
             @media (max-width: $screen-xs-max) {
@@ -1215,9 +1228,9 @@ body#cambiu {
             @media (min-width: $screen-sm-min) {
               font-size: 1em;
             }
-            color: #fff;
+            color: #333;
 //            text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
-            font-weight: 300;
+            font-weight: 400;
             [data-field] {
 //              font-weight: 500;
             }
@@ -1343,7 +1356,7 @@ body#cambiu {
         top: 0px;
         width: 14%;
         min-height: 70px;
-        background-color: darken($brand-color, 10%);
+        background-color: $brand-color;
         transform: skewX(45deg);
         transform-origin: 0px 0px 0px;
         color: #fff;

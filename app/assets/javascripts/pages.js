@@ -342,7 +342,7 @@ $(document).ready(function() {
         if (e.state && e.state.length > 0) {
 
             var curr_pane = $('.pane.active');
-            var transition  = curr_pane.is('.transition') && e.state != '/exchanges/list';
+            var transition  = curr_pane.is('.transition') && e.state != '/exchanges/list' && e.state != '/homepage';
 
             if (transition) {
                 var from    = curr_pane.hasClass('flip') ? 'flip' : 'flop';
