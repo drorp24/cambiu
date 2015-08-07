@@ -179,7 +179,8 @@ html, body {
 body#cambiu {
 
   @import url(http://fonts.googleapis.com/css?family=Montserrat);
-  /*progressbar*/
+  @import url(http://fonts.googleapis.com/css?family=Pacifico);
+    /*progressbar*/
   #progressbar {
     position: fixed;
     width: 35%;
@@ -245,13 +246,6 @@ body#cambiu {
 
 
 
-
-
-
-
-
-
-
   /* entire container, keeps perspective */
   .flip-container {
     perspective: 1000;
@@ -269,7 +263,7 @@ body#cambiu {
 
   /* flip speed goes here */
   .flipper {
-    transition: 1.5s;
+    transition: 1s;
     transform-style: preserve-3d;
 
     position: relative;
@@ -279,13 +273,13 @@ body#cambiu {
   .front, .back {
     backface-visibility: hidden;
 
-    position: absolute;
     top: 0;
     left: 0;
   }
 
-  /* front pane, placed above back */
+  /*  pane, placed above back */
   .front {
+    position: absolute;
 //    z-index: 2;
     /* for firefox 31 */
     transform: rotateY(0deg);
@@ -468,7 +462,7 @@ body#cambiu {
       font-size: 0.9em;
     }
  //   visibility: hidden;
-      height: 7vh;
+      height: 4vh;
     margin-bottom: 1vh;
     @media (min-width: $screen-sm-min) {
       font-size: 2vh;
@@ -1837,9 +1831,15 @@ body#cambiu {
         }
       }
     }
-    #exchange_voucher, #exchange_deal {
-      background-image: image_url('voucher_bg.png');
+    #exchange_voucher {
       width: 94%;
+    }
+    #exchange_deal {
+//         width: 100%;
+    }
+    #exchange_voucher, #exchange_deal {
+      width: 94%;
+      background-image: image_url('voucher_bg.png');
       margin-left: 3%;
       margin-top: 10px;
       /*
@@ -1874,6 +1874,15 @@ body#cambiu {
       .voucher_expiry {
         color: $brand-color;
       }
+      .deal_title {
+        font-family: 'Patrick Hand', cursive;
+        color: #888;
+        font-size: 4.5vh;
+        text-transform: uppercase;
+      }
+      .bullet {
+        color: #555;
+      }
       .voucher_title {
         color: #888;
         @media (min-width: $screen-sm-min) {
@@ -1897,7 +1906,7 @@ body#cambiu {
       }
       .exchange_banner {
         height: 15vh;
-        margin-top: 10px;
+        margin-top: 5vh;
         .pickup_title {
           font-size: 2.3vh;
           font-weight: 300;
@@ -1927,11 +1936,26 @@ body#cambiu {
           color: #888;
         }
       }
+        .rate_expiry {
+          font-size: 2vh;
+          text-transform: uppercase;
+          font-weight: 900;
+          text-align: center;
+          margin-top: 2vh;
+        }
        .exchange_bullets {
         margin-bottom: 4vh;
         margin-top: 1vh;
+         .bullets_title {
+           font-size: 2vh;
+           color: $brand-color;
+           text-transform: uppercase;
+           margin-top: 3vh;
+           margin-bottom: 1vh;
+           font-weight: 900;
+         }
         .bullet {
-          font-size: 2.2vh;
+          font-size: 2vh;
           color: #555;
           &::before {
             margin-right: 0.8em;
