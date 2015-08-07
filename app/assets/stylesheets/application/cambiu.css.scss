@@ -272,6 +272,7 @@ body#cambiu {
   /* hide back of pane during swap */
   .front, .back {
     backface-visibility: hidden;
+    position: absolute;
 
     top: 0;
     left: 0;
@@ -279,7 +280,6 @@ body#cambiu {
 
   /*  pane, placed above back */
   .front {
-    position: absolute;
 //    z-index: 2;
     /* for firefox 31 */
     transform: rotateY(0deg);
@@ -1832,10 +1832,15 @@ body#cambiu {
       }
     }
     #exchange_voucher {
-      width: 94%;
+//      width: 94%;
+      #voucher_bullets.exchange_bullets {
+        font-weight: 300;
+        color: #333;
+        margin-top: 15vh;
+      }
     }
     #exchange_deal {
-//         width: 100%;
+         width: 100%;
     }
     #exchange_voucher, #exchange_deal {
       width: 94%;
@@ -1904,6 +1909,13 @@ body#cambiu {
         font-weight: 300;
         margin-bottom: 20px;
       }
+      .order_title {
+        font-size: 5vh;
+        color: #888;
+        font-weight: 700;
+        margin-top: 3vh;
+        margin-bottom: 3vh;
+      }
       .exchange_banner {
         height: 15vh;
         margin-top: 5vh;
@@ -1947,7 +1959,8 @@ body#cambiu {
         margin-bottom: 4vh;
         margin-top: 1vh;
          .bullets_title {
-           font-size: 2vh;
+           font-family: 'Patrick Hand', cursive;
+           font-size: 2.5vh;
            color: $brand-color;
            text-transform: uppercase;
            margin-top: 3vh;
@@ -1956,7 +1969,7 @@ body#cambiu {
          }
         .bullet {
           font-size: 2vh;
-          color: #555;
+          color: #333;
           &::before {
             margin-right: 0.8em;
             font-family: fontAwesome;

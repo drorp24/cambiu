@@ -4,10 +4,10 @@
     <div class="voucher_heading clearfix">
       <div class="col-xs-12 col-md-12">
         <div class="voucher_title">
-          <span data-model="order" data-field="service_type"></span>
+          <span data-model="order" data-field="service_type" style="display: none"></span>
           <span>Voucher</span>
           <span data-model="order" data-field="id" style="display: none"></span>
-          <span class="voucher_number" data-model="order" data-field="voucher" style="display: none"></span>
+          <span class="voucher_number" data-model="order" data-field="voucher"></span>
         </div>
         <div class="voucher_validity" style="display: none">
           <span><%= fa_icon "clock-o", text: "  Valid until", left: true %></span>
@@ -57,20 +57,22 @@
     </div>
   </div>
 
-<!--
-  <div class="exchange_bullets">
+  <div id="voucher_bullets" class="voucher exchange_bullets">
     <div class="row">
       <div class="col-md-12 col-xs-12">
-        <div>
-          <span class="bullet">Pay at counter upon pickup</span>
+ <!--       <div class="order_title text-center">
+          <span>Order</span>
+          <span data-model="order" data-field="voucher"></span>
         </div>
-        <div>
-          <span class="bullet">Price is final! No additional fees!</span>
+-->        <div class="text-center">
+          <span>Pay at counter upon pickup</span>
+        </div>
+        <div class="text-center">
+          <span>Price is final! No additional fees!</span>
         </div>
       </div>
     </div>
   </div>
--->
 
   <div class="exchange_identification">
     <div class="row">
