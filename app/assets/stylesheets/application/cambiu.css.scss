@@ -1918,12 +1918,13 @@ body#cambiu {
       }
       .exchange_banner {
         height: 15vh;
-        margin-top: 5vh;
+//        margin-top: 5vh;
         .pickup_title {
           font-size: 2.3vh;
           font-weight: 300;
           color: #333;
           margin-bottom: 1vh;
+          margin-top: 9vh;
         }
         .es_name {
           text-transform: initial;
@@ -1933,7 +1934,7 @@ body#cambiu {
           @media (max-width: $screen-xs-max) {
             font-size: 2.5vh;
           }
-          color: #333;
+          color: #777;
           font-weight: 700;
           margin-bottom: 0px;
         }
@@ -1956,11 +1957,13 @@ body#cambiu {
           margin-top: 2vh;
         }
        .exchange_bullets {
-        margin-bottom: 4vh;
-        margin-top: 1vh;
+          margin-bottom: 4vh;
+          margin-top: 1vh;
+          text-align: center;
+         color: #333;
          .bullets_title {
            font-family: 'Patrick Hand', cursive;
-           font-size: 2.5vh;
+           font-size: 4.5vh;
            color: $brand-color;
            text-transform: uppercase;
            margin-top: 3vh;
