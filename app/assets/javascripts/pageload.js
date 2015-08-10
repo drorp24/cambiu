@@ -76,6 +76,8 @@ var marker_highlighted = false;
 var highlight;
 var unhighlight;
 
+var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
+var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 
 highlight = function(id) {
 
