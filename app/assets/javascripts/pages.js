@@ -28,6 +28,7 @@ $(document).ready(function() {
         if (el.is('[data-lat]:not([data-exchange-selection])'))                                                el.attr('data-lat', exchange.latitude);
         if (el.is('[data-lng]:not([data-exchange-selection])'))                                                el.attr('data-lng', exchange.longitude);
         if (el.is('[data-exchange-name]:not([data-exchange-selection])'))                                      el.attr('data-exchange-name', exchange.name);
+        if (el.is('[data-service-type]:not([data-exchange-selection])'))                                      el.attr('data-service-type', exchange.service_type);
 
         var field = el.data('field');
         if (field == 'exchange_id') {field = 'id'}

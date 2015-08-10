@@ -14,6 +14,7 @@ class OrderMailer < ApplicationMailer
   # mandrill api based. All smtp definitions ignored
   def notify(order)
 
+    return if Rails.env.development?
     logger.info "At notify. thats the order i received"
     logger.info  order.inspect
 

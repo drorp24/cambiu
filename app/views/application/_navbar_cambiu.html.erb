@@ -3,7 +3,7 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="row">
       <div class="col-xs-12">
-        <div class="navbar-header">
+        <span class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#cambiu_menu">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -14,8 +14,13 @@
           <div data-clicked="page logo" class="page-title navbar-brand text-center" id="navbar_logo" data-href="homepage"><%= image_tag 'logo.png' %></div>
 -->
           <a data-clicked="page logo" class="clearfix page-title navbar-brand text-center" id="navbar_logo" href="/">
-            <span class="pull-left"><%= image_tag 'logo_no_text.png' %></span>
-            <span class="pull-right logo_word">cambiu</span>
+            <% if logo == 'cn' %>
+                <span class="pull-left powered_by">Powered by</span>
+                <span class="pull-right"><%= image_tag 'cn_logo.jpg' %></span>
+            <% else %>
+                <span class="pull-left"><%= image_tag 'logo_no_text.png' %></span>
+                <span class="pull-right logo_word">cambiu</span>
+            <% end %>
           </a>
         </div>
       </div>

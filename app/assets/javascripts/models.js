@@ -49,6 +49,13 @@
             $('.exchange_search_form_error').html(text);
         }
 
+        if (field == 'name') {
+            $('[data-model=exchange][data-exchange-name]').attr('data-exchange-name', value);
+        }
+
+        if (field == 'service_type') {
+            $('[data-model=exchange][data-service-type]').attr('data-service-type', value);
+        }
 
         var field_no_model = field;
         if (field == 'id') field = model + '_id';
@@ -102,6 +109,7 @@
 //                $('.delivery_method.delivery').removeAttr('data-content');
             }
         }
+
     };
 
     // One-way population after ajax:success (only used field)

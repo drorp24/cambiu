@@ -199,6 +199,14 @@ body#cambiu {
       width: 100%;
     }
   }
+
+  .powered_by {
+    color: #fff;
+    font-size: 11px;
+    margin-right: 15px;
+    line-height: 50px;
+    text-transform: initial;
+  }
   #progressbar li {font-family: montserrat, arial, verdana;
     list-style-type: none;
     color: #fff;
@@ -1842,6 +1850,10 @@ body#cambiu {
     #exchange_deal {
          width: 100%;
     }
+    .calming_msg {
+      text-align: center;
+      color: $brand-color;
+    }
     #exchange_voucher, #exchange_deal {
       width: 94%;
       background-image: image_url('voucher_bg.png');
@@ -1884,6 +1896,9 @@ body#cambiu {
         color: #888;
         font-size: 4.5vh;
         text-transform: uppercase;
+        .above_line {
+          font-size: 3vh;
+        }
       }
       .bullet {
         color: #555;
@@ -1917,7 +1932,7 @@ body#cambiu {
         margin-bottom: 3vh;
       }
       .exchange_banner {
-        height: 15vh;
+        height: 13vh;
 //        margin-top: 5vh;
         .pickup_title {
           font-size: 2.3vh;
@@ -1959,7 +1974,7 @@ body#cambiu {
        .exchange_bullets {
           margin-bottom: 4vh;
           margin-top: 1vh;
-          text-align: center;
+//          text-align: center;
          color: #333;
          .bullets_title {
            font-family: 'Patrick Hand', cursive;
