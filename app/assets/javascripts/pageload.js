@@ -239,7 +239,7 @@ $(document).on('click','.navbar-collapse.in',function(e) {
 
         var exchange_el  = $('.exchange_window.template').clone().removeClass('template');
         exchange_el.find('.exchange_window_quote').html(exchange.edited_quote);
-        exchange_el.find('.exchange_window_name').html(exchange.name);
+        exchange_el.find('.exchange_window_name').html(exchange.name_s);
         exchange_el.find('.exchange_window_address').html(exchange.address);
         exchange_el.find('.exchange_window_open').html(exchange.todays_hours);
         exchange_el.attr('id', 'exchange_window_' + exchange.id);
