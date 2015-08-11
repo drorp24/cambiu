@@ -88,7 +88,7 @@ $(document).ready(function() {
 
 
         exchange_el.find('.distance').html((exchange.distance * 1000).toFixed(0));
-        exchange_el.find('.name').html(exchange.name);
+        exchange_el.find('.name').html(exchange.name_s);
         exchange_el.find('.quote').html(exchange.edited_quote);
         exchange_el.find('.quote_currency').html(exchange.quote_currency);
         if (exchange.quote > 0) {

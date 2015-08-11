@@ -186,6 +186,7 @@ form do |f|
       f.input     :chain_name, label: 'Chain'
       f.input     :rates_policy, as: :select, collection: {:"Individual"=>"individual", :"Chain"=>"chain"}, include_blank: false
       f.input     :name
+      f.input     :caption, hint: 'Optional: populate if you want to override the exchange name shown to user'
       f.input     :address
       f.input     :contract, label: 'Contract', as: :radio
       f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Fake"=>"fake", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping"}
