@@ -186,7 +186,7 @@ def = function(variable) {
         'pay_currency'  : 'GBP',
         'buy_amount'    : null,
         'buy_currency'  : 'EUR',
-        'sort'          : 'distance',
+        'sort'          : 'quote',
         'service_type'  : 'collection'
     };
     return val[variable] ? val[variable] : null
