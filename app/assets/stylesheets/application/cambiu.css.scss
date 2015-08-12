@@ -180,6 +180,23 @@ body#cambiu {
 
   @import url(http://fonts.googleapis.com/css?family=Montserrat);
   @import url(http://fonts.googleapis.com/css?family=Pacifico);
+
+  .popover {
+    z-index:  100000;
+    color: #333;
+    font-size: 0.9em;
+    max-width: 49%;
+//    margin-top: 12px;
+    background-color: #f7f7f7;
+    /*
+    background-color: rgba(0,0,0,0.6);
+    color: #fff;
+    */
+  }
+  .popover.top .arrow:after {
+    border-top-color: #f7f7f7;
+  }
+
     /*progressbar*/
   #progressbar {
     position: fixed;
@@ -407,17 +424,6 @@ body#cambiu {
     background: #ddd;
     border: solid 1px #fff;
     box-shadow: 0 0 5px #888;
-  }
-
-  .popover {
-    border-radius: 4px;
-  }
-
-  .popover-content {
-    color: #888;
-    font-size: 0.8em;
-    padding: 0.3em 0.7em;
-    border-radius: 4px;
   }
 
 

@@ -271,7 +271,7 @@ $(document).ready(function() {
 
     $(function () {
         $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-        $("body").popover({ selector: '[data-toggle=popover]', trigger: 'hover', placement: 'top' });
+        $("body").popover({ selector: '[data-toggle=popover]' });
     });
 
     inform = function(title, text, hide) {

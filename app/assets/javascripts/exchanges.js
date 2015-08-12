@@ -223,7 +223,11 @@ $(document).ready(function() {
             $('#empty_message').css('display', 'block');
             $('#empty_location').html(sessionStorage.location);
         }
-    }
+
+        var firstline = $('#exchanges_items .list-group-item').first();
+        firstline.popover('show');
+        setTimeout(function() {firstline.popover('hide')}, 4000);
+    };
 
 
     // TODO: Update markers within the map boundaries only!
