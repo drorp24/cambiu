@@ -2,7 +2,7 @@
 
 
     <% if email == 'required' %>
-        <%= f.input_field :email, required: true, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email to get voucher", label: false, type: "email" %>
+        <%= f.input_field :email, required: true, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email to get £3 off", label: false, type: "email" %>
         <div class="validation_errors text-center"></div>
     <% else %>
         <%= f.input_field :email, 		    as: :hidden, data: {model: 'order', field: 'order_email'} %>
@@ -23,7 +23,7 @@
       <%= f.input_field :status, 	        as: :hidden, data: {                   field: 'status'}, value: 'produced' %>
     </div>
 
-    <%= f.button :submit, 'Get voucher', id: 'email_submit',
+    <%= f.button :submit, 'I want to get £3 off', id: 'email_submit',
      data: {
              model:     'exchange',
              href:      '',
