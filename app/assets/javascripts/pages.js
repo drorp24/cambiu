@@ -143,11 +143,17 @@ $(document).ready(function() {
 
         // activate/hide components
 
+
+        var active_pane = $('.pane.active');
+        var active_page = $('.page.active');
+
+
+
         // TODO: function
-        if (!transition) $('.page.active').hide();
-        if (!transition) $('.pane.active').hide();
-        $('.page.active').removeClass('active');
-        $('.pane.active').removeClass('active');
+        if (!transition) active_page.hide();
+        if (!transition) active_pane.hide();
+        active_page.removeClass('active');
+        active_pane.removeClass('active');
         if (page) {
             page_el = $('.page[data-page=' + page + ']');
             page_el.addClass('active');
@@ -158,6 +164,23 @@ $(document).ready(function() {
             pane_el.addClass('active');
             if (!transition) pane_el.show();
         }
+
+
+        if (active_pane.is('.flop')) {
+            active_pane.closest('.front').css('backface-visibility', 'initial');
+            pane_el.css('display', 'block');
+            if (iOS || Safari) active_pane.hide();
+        }
+
+        if (active_pane.is('.flip')) {
+            active_pane.closest('.back').css('backface-visibility', 'initial');
+            pane_el.css('display', 'block');
+            active_pane.hide();
+        }
+
+
+
+
 
         $('[data-active-pane=' + pane + ']').addClass('active');
 
@@ -344,6 +367,7 @@ $(document).ready(function() {
 
             var curr_pane = $('.pane.active');
             var transition  = curr_pane.is('.transition') && e.state != '/exchanges/list' && e.state != '/homepage';
+//            if (pane == 'deal' && e.state == '/exchanges/deal') transition = false;
 
             if (transition) {
                 var from    = curr_pane.hasClass('flip') ? 'flip' : 'flop';
