@@ -367,6 +367,7 @@ $(document).ready(function() {
 
             var curr_pane = $('.pane.active');
             var transition  = curr_pane.is('.transition') && e.state != '/exchanges/list' && e.state != '/homepage';
+//            if (pane == 'deal' && e.state == '/exchanges/deal') transition = false;
 
             if (transition) {
                 var from    = curr_pane.hasClass('flip') ? 'flip' : 'flop';

@@ -290,12 +290,14 @@ $(document).ready(function() {
          });
 
          */
+/*
         google.maps.event.addListener(marker, 'click', function () {
             closeInfowindows();
             this['infowindow'].setContent(exchange_window_det[0]);
             this['infowindow'].open(map, this);
             setPage('exchanges/' + exchange.id + '/deal');
         });
+*/
 
 
         markers.push(marker);
