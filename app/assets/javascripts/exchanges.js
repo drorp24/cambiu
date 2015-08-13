@@ -226,7 +226,7 @@ $(document).ready(function() {
 
         var firstline = $('#exchanges_items .list-group-item').first();
         firstline.popover('show');
-        setTimeout(function() {firstline.popover('hide')}, 5000);
+//        setTimeout(function() {firstline.popover('hide')}, 5000);
     };
 
 
