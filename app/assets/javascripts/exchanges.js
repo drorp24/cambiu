@@ -227,6 +227,11 @@ $(document).ready(function() {
         var firstline = $('#exchanges_items .list-group-item').first();
         firstline.popover('show');
 //        setTimeout(function() {firstline.popover('hide')}, 5000);
+
+//        $('#exchanges_search_params')[0].scrollIntoView();
+        var myScroll = new IScroll('#exchanges_list');
+//        myScroll.scrollTo(0,70);
+
     };
 
 
