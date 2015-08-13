@@ -230,7 +230,7 @@ $(document).ready(function() {
 
 //        $('#exchanges_search_params')[0].scrollIntoView();
         var myScroll = new IScroll('#exchanges_list');
-//        myScroll.scrollTo(0,70);
+        if (mobile) myScroll.scrollTo(0,70);
 
     };
 
