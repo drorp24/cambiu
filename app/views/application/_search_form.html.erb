@@ -2,7 +2,10 @@
 
     <div class="validation_errors"></div>
 
-	<div class="row">
+	<div class="instructions desktop_only">
+      1) Tell us how much you have or want
+    </div>
+    <div class="row">
 		<div class="form-group col-md-8 col-xs-7">
 			<%= f.input :pay_amount, label: "I have  ", input_html: {data: {autonumeric: true, symbolsource: 'search_pay_currency', field: 'pay_amount'}, pattern: "\d*", value: params[:pay_amount]}%>
 		</div>
@@ -25,6 +28,9 @@
 			<%= f.input :buy_currency, collection: Currency.major_with_symbol, input_html: {class: 'brand_background currency_select form-control', data: {header: 'Desired currency', style: 'btn-danger', symboltarget: 'buy_amount', field:'buy_currency'}}, selected: params[:buy_currency] || "USD", include_blank: false %>
 		</div>
 	</div>
+    <div class="instructions desktop_only">
+      2) Tell us where you want it
+    </div>
 	<div class="row">
 		<div class="location_control form-group col-md-12 col-xs-12">
 			<%= f.input :location, input_html: {data: {field: 'location', searchbox: 'true'}}, placeholder: '  Finding your location...' %>

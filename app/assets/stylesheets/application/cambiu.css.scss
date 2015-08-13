@@ -462,7 +462,7 @@ body#cambiu {
       height: 65vh;
     }
     @media (max-width: $screen-xs-max) {
-      height: 488px;
+      height: 510px;
     }
   }
   a:not(.carousel-control) {
@@ -685,7 +685,10 @@ body#cambiu {
         margin-top: /*15vh*//*45px*/15vh;
         margin-bottom: 10vh;
         .marketing {
-          .pre {
+          @media (min-width: $screen-sm-min) {
+            margin-top: 2em;
+          }
+           .pre {
             font-weight: $normal;
             color: $black;
             font-size: 1.2em;
@@ -695,13 +698,29 @@ body#cambiu {
           .heading {
             font-weight: $bold;
             color: $lightgreen;
-            text-transform: uppercase;
-            font-size: 3.5em;
+            font-size:2.5em;
             line-height: 1.1em;
              margin-top: 15px;
             margin-bottom: 30px;
             color: #fff;
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
+          }
+          .flow {
+            color: #fff;
+            text-align: center;
+            margin-top: 2em;
+            margin-bottom: 2em;
+            .middle-parent {
+              @media (min-width: $screen-sm-min) {
+                font-size: 1.5em;
+                @include middle-parent(60px, 60px);
+              }
+              @media (max-width: $screen-xs-max) {
+                font-size: 1em;
+                @include middle-parent(60px, 60px);
+              }
+            }
+
           }
           .bullets {
             text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
@@ -728,6 +747,16 @@ body#cambiu {
 
           }
         }
+        .instructions {
+          /*
+          color: #333;
+          text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+          */
+          color: #fff;
+          text-align: center;
+          margin-bottom: 0.5em;
+        }
+
       }
     }
   }
@@ -896,7 +925,7 @@ body#cambiu {
         font-weight: $bold;
         height: $button-height;
         border-bottom: $border-bottom;
-        margin-top: -40px;
+        margin-top: -53px;
         text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
         &:hover {
           background-color: darken($darkgreen, 20%);
@@ -915,7 +944,7 @@ body#cambiu {
     }
     img {
       position: relative;
-      top: 0px;
+      top: -9px;
       right: -10px;
     }
     .after_submit {
@@ -2314,8 +2343,7 @@ body#cambiu {
             .heading {
               text-align: center;
               font-weight: $bold;
-              text-transform: uppercase;
-              font-size: 2em;
+              font-size: 1.5em;
               line-height: 1.1em;
               margin-bottom: 20px;
             }
