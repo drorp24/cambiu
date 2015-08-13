@@ -4,22 +4,18 @@
     <div class="voucher_heading clearfix">
       <div class="col-xs-12 col-md-12">
         <div class="deal_title">
-<!--
           <div class="above_line">Final step</div>
+          <div>Get a voucher - it's free!</div>
+<!--
+          <%= image_tag '100_free.png', class: 'free' %>
 -->
-          <div>Special discount!</div>
          </div>
         <div class="voucher_validity" style="display: none">
           <span><%= fa_icon "clock-o", text: "  Valid until", left: true %></span>
           <span class="voucher_expiry" data-model="order" data-field="expiry_s"></span>
         </div>
       </div>
-      <!--       <div class="col-xs-1 col-md-1">
-          <div data-clicked="printer" class="printer_icon">
-            <%= fa_icon "print" %>
-          </div>
-        </div>
--->      </div>
+    </div>
   </div>
 
   <div class="exchange_order">
@@ -50,6 +46,14 @@
     </div>
   </div>
 
+  <div class="center_message">
+    <div class="row">
+      <div class="col-xs-12">
+        Your voucher is worth £3 - present it at the counter
+      </div>
+    </div>
+  </div>
+<!--
    <div class="exchange_bullets">
     <div class="row">
       <div class="col-md-12 col-xs-12">
@@ -68,6 +72,7 @@
       </div>
     </div>
   </div>
+-->
 
 
   <div class="calming_msg text-center">
@@ -79,7 +84,6 @@
   <div class="confirmation_form">
     <div class="row">
       <div class="col-xs-12">
-        <%= image_tag '100_free.png', class: 'free' %>
         <%= render partial: 'order_form', locals: {email: 'required'} %>
       </div>
     </div>
