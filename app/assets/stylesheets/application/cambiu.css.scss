@@ -1391,6 +1391,7 @@ body#cambiu {
       z-index: -1;
       font-family: $font-family;
       .list-group-item:not(#exchanges_search_results):not(#exchanges_search_params) {
+        z-index: 40000;
         &:hover {
           background-color: lighten($brand-color, 35%);
         }
