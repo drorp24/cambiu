@@ -224,13 +224,17 @@ $(document).ready(function() {
             $('#empty_location').html(sessionStorage.location);
         }
 
-        var firstline = $('#exchanges_items .list-group-item').first();
-        firstline.popover('show');
-//        setTimeout(function() {firstline.popover('hide')}, 5000);
+        if (desktop) {
+            var firstline = $('#exchanges_items .list-group-item').first();
+            firstline.popover('show');
+            setTimeout(function() {firstline.popover('hide')}, 5000);
+        }
 
-//        $('#exchanges_search_params')[0].scrollIntoView();
+/*
+        $('#exchanges_search_params')[0].scrollIntoView();
         var myScroll = new IScroll('#exchanges_list');
         if (mobile) myScroll.scrollTo(0,70);
+*/
 
     };
 
