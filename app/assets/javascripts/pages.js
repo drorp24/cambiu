@@ -269,6 +269,7 @@ $(document).ready(function() {
 
         if (url == 'exchanges/list' && map_center_changed) {
             console.log('Moved to exchanges/list and map center has been changed: resetting map center & zoom to original');
+            $('.popover').removeClass('in');
             $('#directions-panel').css('display', 'none');
             map_center_changed = false;
             zoom_changed_by_user = true; // retain infowindows too

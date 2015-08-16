@@ -224,11 +224,12 @@ $(document).ready(function() {
             $('#empty_location').html(sessionStorage.location);
         }
 
-        if (desktop) {
-            var firstline = $('#exchanges_items .list-group-item').first();
-            firstline.popover('show');
-            setTimeout(function() {firstline.popover('hide')}, 5000);
-        }
+//        if (desktop) {
+            var line = Math.min(exchanges.length, 4);
+            var middleline = $('#exchanges_items .list-group-item:nth-child(' + line + ')');
+            middleline.popover('show');
+            setTimeout(function() {middleline.popover('hide')}, 5000);
+//        }
 
 /*
         $('#exchanges_search_params')[0].scrollIntoView();
