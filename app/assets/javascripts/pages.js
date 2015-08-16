@@ -325,7 +325,7 @@ $(document).ready(function() {
 
     };
 
-    $('body').on('click tap', '[data-href]', (function(e) {
+    $('body').on('vclick', '[data-href]', (function(e) {
         // if clicked element is part of a form, dont move page unless form is valid
 
         // Avoids getting into exchange page when 'getit' is clicked even if redirection takes place, probably due to validation
