@@ -672,6 +672,9 @@ body#cambiu {
 
   &.home  {
     .above_fold {
+      .homepage_arrow {
+        font-size: 2em;
+      }
       .or {
         text-transform: uppercase;
         font-weight: 700;
