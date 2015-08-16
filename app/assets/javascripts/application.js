@@ -5,6 +5,7 @@
 //
 
 //= require jquery
+//= require jquery.mobile.custom.min
 //= require jquery_ujs
 //= require autonumeric
 //= require jquery.validate
