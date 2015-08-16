@@ -34,6 +34,7 @@ class OrderMailer < ApplicationMailer
       logger.warn error
       logger.warn ""
       report(exchange, error)
+      return
     end
 
 
