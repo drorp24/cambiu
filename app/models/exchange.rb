@@ -557,6 +557,10 @@ class Exchange < ActiveRecord::Base
     self.chain.name if self.chain
   end
   def chain_name=(name)
+    if name.blank?
+      self.update(chain_id: nil)
+      return
+    end
     chain = Chain.where(name: name).first_or_create
     currency = chain.currency || 'GBP'
     rates_source = chain.rates_source || 'no_rates'
