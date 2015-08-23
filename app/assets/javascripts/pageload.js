@@ -190,7 +190,7 @@ def = function(variable) {
         'buy_currency'  : 'EUR',
         'sort'          : 'quote',
         'service_type'  : 'collection',
-        'distance'      : '3'
+        'distance'      : '1.3'
     };
     return val[variable] ? val[variable] : null
 };
