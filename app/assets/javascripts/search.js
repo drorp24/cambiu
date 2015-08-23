@@ -312,6 +312,18 @@ $(document).ready(function() {
     });
 
 
+    var current_distance = value_of('distance')*1000;
+    $('#distance_slider').val(current_distance);
+    $('#distance_output').html(current_distance);
+
+    $('#distance_slider').on('input', function() {
+        var $this = $(this);
+        var value = $this.val();
+        $('#distance_output').html(value);
+        set('distance', value/1000, $this);
+    });
+
+
 
     //
     // AJAX Callbacks

@@ -1,15 +1,15 @@
 <div class="row">
 
 <form id="search_form" action="/exchanges/search" class="form-inline" novalidate>
-	<div class="middle_wrapper help_text col-md-1 col-xs-12">
+	<div class="middle_wrapper help_text mobile_only col-xs-12">
 		<div class="middle">
 			Exchange
 		</div>
 	</div>
-  <div class="form-group col-md-1 col-xs-6 reach-out-right">
+  <div class="form-group col-md-1-minus col-xs-6 reach-out-right">
     <input type="text" pattern="\d*" id="pay_amount" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="pay_amount" class="form-control">
   </div>
-  <div class="form-group col-md-1 col-xs-6 reach-out-left">
+  <div class="form-group col-md-1-minus col-xs-6 reach-out-left">
     <select id="pay_currency" data-field="pay_currency" data-symboltarget="pay_amount" name="pay_currency" class="currency_select select optional text-center form-control">
       <option selected disabled hidden value=''></option>
       <option data-symbol="￡ " value="GBP">GBP</option>
@@ -24,15 +24,15 @@
     </select>
   </div>
 
-  <div class="middle_wrapper help_text col-md-1 col-xs-12">
+  <div class="middle_wrapper help_text col-md-half col-xs-12">
     <div class="middle">
       To
     </div>
   </div>
-	<div class="form-group col-md-1 col-xs-6 reach-out-right">
+	<div class="form-group col-md-1-minus col-xs-6 reach-out-right">
 		<input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control">
   	</div>
-  <div class="form-group col-md-1 col-xs-6 reach-out-left">
+  <div class="form-group col-md-1-minus col-xs-6 reach-out-left">
     <select id="buy_currency" data-field="buy_currency" data-symboltarget="buy_amount" name="buy_currency" class="currency_select select optional text-center form-control">
       <option selected disabled hidden value=''></option>
       <option data-symbol="$ "  value="USD">USD</option>
@@ -46,12 +46,27 @@
       <option data-symbol="₪ " value="ILS">ILS</option>
     </select>
   </div>
- 	<div class="middle_wrapper help_text col-md-1 col-xs-12">
-		<div class="middle">
-			Around
-		</div>
-	</div>
-	<div class="form-group col-md-3 col-xs-12">
+
+  <div class="form-group col-md-2 col-xs-6 reach-out-right desktop_only" class="">
+      <span class="slider_text">0</span>
+      <input type="range" name="distance_slider" min=0 max=5000 id="distance_slider" class="">
+      <span id="distance_output" class="slider_text"></span>
+      <span id="distance_unit" class="slider_text">m</span>
+  </div>
+
+  <div class="form-group middle_wrapper help_text col-md-1 col-xs-6 reach-out-left desktop_only reach-out-right">
+    <div class="middle">
+      <span>around</span>
+    </div>
+  </div>
+
+  <div class="mobile_only middle_wrapper help_text col-xs-12">
+    <div class="middle">
+      Around
+    </div>
+  </div>
+
+	<div class="form-group col-md-3 col-xs-12 reach-out-left">
 		<input type="text" id="location_search" data-field="location" data-searchbox="true" name="location_search" class="text-center location search form-control" placeholder="   Change location"
 		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="location" data-key2="type" data-val2="search" data-key3="location">
   	</div>
@@ -81,14 +96,14 @@
   		<input type="hidden" name="latitude" class="location" id="latitude" data-field="user_lat">
   		<input type="hidden" name="longitude" class="location" id="longitude" data-field="user_lng">
   		<input type="hidden" name="geocoded_location" id="geocoded_location" data-field="location">
-  		<input type="hidden" name="distance" data-field="distance">
   		<input type="hidden" name="sort" id="sort" data-field="sort">
   		<input type="hidden" name="searched_location" id="searched_location" data-field="location">
   		<input type="hidden" name="actual_pay_amount" id="actual_pay_amount" data-field="actual_pay_amount">
+        <input type="hidden" name="distance" data-field="distance">
 	</div>
 
-  	<div id="search_div" class="form-group col-md-2 col-xs-12" class="form-group">
-		<button id="search_button" data-href="exchanges/list" data-href-page="exchanges" data-herf-id='' data-href-pane="summary" class="form-control btn btn-cambiu" type="submit">Find offers</button>
+  	<div id="search_div" class="form-group col-md-1 col-xs-12" class="form-group">
+		<button id="search_button" data-href="exchanges/list" data-href-page="exchanges" data-herf-id='' data-href-pane="summary" class="form-control btn btn-cambiu" type="submit">Find</button>
 	</div>
 
   <div class="validation_errors">

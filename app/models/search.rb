@@ -82,5 +82,9 @@ class Search < ActiveRecord::Base
     self.rest = val
   end
 
+  def distance_slider=(val)
+
+  end
+
   
 end

@@ -16,6 +16,7 @@ $(document).ready(function() {
     updatePage = function(data) {
 
         console.log('updatePage');
+        clearExchanges();
         exchanges = data;
 
         if (exchangePage() && exchanges && exchanges.length > 0) {
@@ -28,7 +29,6 @@ $(document).ready(function() {
         drawMap(mapCenterLat, mapCenterLng, exchanges);
 
         if (search() && exchanges && exchanges.length > 0) {
-            clearExchanges();
             updateExchanges(exchanges);
         }
 
