@@ -30,7 +30,7 @@ $(document).ready(function() {
 
     findPosition = function(position) {
 
-        console.log('at findPosition: location found');
+        console.log('at findPosition: user location found');
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
 
@@ -46,7 +46,11 @@ $(document).ready(function() {
                     set('user_lat',         lat);
                     set('user_lng',         lng);
 
-                    if (formatted_address.indexOf("London") > -1) {
+                    var london_latlng = new google.maps.LatLng(51.5104890, -0.1300730);
+                    var user_distance_from_london = Math.round(google.maps.geometry.spherical.computeDistanceBetween(latlng, london_latlng)/1000);
+                    console.log('user distance from London is: ' + user_distance_from_london.toString() + ' km');
+
+                    if (user_distance_from_london < 50) {
                         set('location',         formatted_address);
                         set('location_short',   results[1].address_components[1].short_name);
                         set('location_lat',     lat);
