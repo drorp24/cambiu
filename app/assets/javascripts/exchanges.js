@@ -342,7 +342,7 @@ $(document).ready(function() {
 
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-//        addUserMarker();
+        addUserMarker();
         if (exchanges && exchanges.length > 0) {
             updateMarkers(exchanges);
         }
