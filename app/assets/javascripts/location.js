@@ -50,7 +50,7 @@ $(document).ready(function() {
                     var user_distance_from_london = Math.round(google.maps.geometry.spherical.computeDistanceBetween(latlng, london_latlng)/1000);
                     console.log('user distance from London is: ' + user_distance_from_london.toString() + ' km');
 
-                    if (user_distance_from_london < 50) {
+                    if (user_distance_from_london < 50  ) {
                         set('location',         formatted_address);
                         set('location_short',   results[1].address_components[1].short_name);
                         set('location_lat',     lat);
