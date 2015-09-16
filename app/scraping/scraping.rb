@@ -55,7 +55,7 @@ class Scraping
         buy =  line[:buy]
         sell = line[:sell]
         rate = chain_name ? chain.rates.where(currency: currency).first_or_create! : exchange.rates.where(currency: currency).first_or_create!
-        rate.update(source: 'scraping', currency: currency, buy: buy, sell: sell, last_update: DateTime.now)
+        rate.update(source: 'scraping', currency: currency, buy: buy, sell: sell, last_update: DateTime.now, admin_user_id: nil)
       end
     end
 
