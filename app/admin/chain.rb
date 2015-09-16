@@ -15,7 +15,9 @@ ActiveAdmin.register Chain do
       chain.rates_source.titleize if chain.rates_source
       link_to chain.rates_source.titleize, admin_chain_rates_path(chain)
     end
-    column :rates_update
+    column :rates_update do |rate|
+      rate.rates_update.in_time_zone('Jerusalem') if rate.rates_update
+    end
   end
 
     sidebar "Rates", only: [:show, :edit] do

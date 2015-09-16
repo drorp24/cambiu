@@ -29,7 +29,6 @@ class Scraping
 =end
 
 
-  # TODO: include in a rake task
   # Generic envelope. Works for all html pages whose rates are in 'table tbody tr' elements
   def self.update(chain_name=nil, exchange_name=nil, url)
 
