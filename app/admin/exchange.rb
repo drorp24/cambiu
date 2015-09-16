@@ -275,7 +275,7 @@ form do |f|
         best_in_place rate, :sell_s, :as => :input
       end
       column :last_update do |rate|
-        rate.last_update.in_time_zone('Jerusalem')
+        rate.last_update.in_time_zone('Jerusalem') if rate.last_update
       end
       column "By", :admin_user_s
       actions defaults: false
