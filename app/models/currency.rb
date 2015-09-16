@@ -1,5 +1,18 @@
 class Currency 
 
+  def self.updatable
+    unless @currency_array
+      @currency_array = []
+      Money::Currency.table.inject([]) do |array, (id, attributes)|
+        priority = attributes[:priority]
+        if priority && priority < 10
+          @currency_array << attributes[:iso_code]
+        end
+      end
+    end
+    @currency_array
+  end
+
   def self.major
     Money::Currency.table.inject([]) do |array, (id, attributes)|
     priority = attributes[:priority]

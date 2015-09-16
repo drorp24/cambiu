@@ -13,6 +13,7 @@ ActiveAdmin.register Chain do
     column :currency
     column :rates_source do |chain|
       chain.rates_source.titleize if chain.rates_source
+      link_to chain.rates_source.titleize, admin_chain_rates_path(chain)
     end
     column :rates_update
   end
