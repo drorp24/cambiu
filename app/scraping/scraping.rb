@@ -7,28 +7,6 @@ include ERB::Util
 class Scraping
 
 
-=begin
-  def self.thomas
-    chain_id = Chain.find_by(name: 'Thomas exchange global').id
-    url = "https://www.thomasexchange.co.uk/i_banknote_rates.asp"
-        # TODO: insists not to work: return unless source = Source.find_by(url: url_encode(url))
-        source = Source.first
-    currency_array  = source.s_currencies.pluck(:name, :iso_code)
-    currency_hash   = Hash[*currency_array.flatten]
-    doc = Nokogiri::HTML(open(url))
-    doc.css('tr').each do |node|
-      next if node.css('td')[0].text == 'Currency'
-      next unless currency_iso_code = currency_hash[node.css('td')[0].text]
-      buy_currency =  currency_iso_code
-      buy_cents     = 100
-      pay_currency  = "GBP"
-      pay_cents     = (1.0/(node.css('td')[2].text.remove(',').to_f)) * 100.0
-      Rate.refresh(chain_id, buy_currency, buy_cents, pay_currency, pay_cents)
-    end
-  end
-=end
-
-
   # Generic envelope. Works for all html pages whose rates are in 'table tbody tr' elements
   def self.update(chain_name=nil, exchange_name=nil, url)
 
@@ -47,35 +25,201 @@ class Scraping
 
     raise "No such url: #{url}" unless doc = Nokogiri::HTML(open(url))
 
-    raise "No tbody element" unless tbody = doc.css('table tbody')
+    parse_rates(url, doc, chain, exchange)
 
-    tbody.css('tr').each do |tr|
-      line = parse_rates(url, tr)
-      if Currency.updatable.include? currency =  line[:currency]
-        buy =  line[:buy]
-        sell = line[:sell]
-        rate = chain_name ? chain.rates.where(currency: currency).first_or_create! : exchange.rates.where(currency: currency).first_or_create!
-        rate.update(source: 'scraping', currency: currency, buy: buy, sell: sell, last_update: DateTime.now, admin_user_id: nil)
+  end
+
+  def self.parse_rates(url, doc, chain, exchange)
+
+    if url == "https://www.bfcexchange.co.uk/en/rates.html"
+
+      doc.css('table tbody tr').each do |tr|
+        currency    = tr.css('td')[0].text.strip
+        next unless Currency.updatable.include? currency
+        buy         = tr.css('td')[2].text.strip
+        sell        = tr.css('td')[3].text.strip
+        rate_update(currency, buy, sell, chain, exchange)
       end
+
+    elsif url == "http://www.chequecentre.co.uk/foreign-currency"
+      doc.css('table tbody tr').each do |tr|
+        currency_name       =  tr.css('td')[0].text.strip
+        result[:currency]   =
+            case currency_name
+              when 'Japanese Yen'
+                'JPY'
+              when 'Canadian Dollar'
+                'CAD'
+              when 'Australian Dollar'
+                'AUD'
+              when 'US Dollar'
+                'USD'
+              when 'Euro'
+                'EUR'
+              else
+                nil
+            end
+        next unless currency
+        buy        =  tr.css('td')[1].text.strip
+        sell       =  tr.css('td')[2].text.strip
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
+    elsif url == "https://www.eurochange.co.uk/exchangerates.aspx"
+
+      doc.css('table.ERTable tr').each do |tr|
+        next unless tr.css('td span').count > 0
+        currency_name =  tr.css('td span')[0].text.strip
+        currency      =
+            case currency_name
+              when 'Japanese Yen'
+                'JPY'
+              when 'Canadian Dollar'
+                'CAD'
+              when 'Australian Dollar'
+                'AUD'
+              when 'US Dollar'
+                'USD'
+              when 'Euro'
+                'EUR'
+              when 'Israeli Shekels'
+                'ILS'
+              when 'Hong Kong Dollar'
+                'HKD'
+              when 'Chinese Yuan'
+                'CNY'
+              else
+                nil
+            end
+        next unless currency
+        buy        =  tr.css('td')[1].text.strip
+        sell       =  nil
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
+    elsif url == "https://www.eurochange.co.uk/buybackexchangerates.aspx"
+
+      doc.css('table.ERTable tr').each do |tr|
+        next unless tr.css('td span').count > 0
+        currency_name =  tr.css('td span')[0].text.strip
+        currency      =
+            case currency_name
+              when 'Japanese Yen'
+                'JPY'
+              when 'Canadian Dollar'
+                'CAD'
+              when 'Australian Dollar'
+                'AUD'
+              when 'US Dollar'
+                'USD'
+              when 'Euro'
+                'EUR'
+              when 'Israeli Shekels'
+                'ILS'
+              when 'Hong Kong Dollar'
+                'HKD'
+              when 'Chinese Yuan'
+                'CNY'
+              else
+                nil
+            end
+        next unless currency
+        buy        =  nil
+        sell       =  tr.css('td')[1].text.strip
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
+    elsif url == "https://www.thomasexchangeglobal.co.uk/exchange-rates-check-exchange-rates.php"
+
+      doc.css('table#contentTable')[1].css('tr').each do |tr|
+        next if     tr.css('td').count == 1
+        next if     tr.css('td')[0]['class'] == 'thtext'
+        currency_name =  tr.css('td')[1].text
+        currency      =
+            case currency_name
+              when 'Yen - Japan'
+                'JPY'
+              when 'Dollars - Canada'
+                'CAD'
+              when 'Dollars - Australia'
+                'AUD'
+              when 'Dollars - USA'
+                'USD'
+              when 'Euro - Europe'
+                'EUR'
+              when 'Sheqel - Israel'
+                'ILS'
+              when 'Dollars - Hongkong'
+                'HKD'
+              when 'Yuan - China'
+                'CNY'
+              else
+                nil
+            end
+        next unless currency
+        buy        =  tr.css('td')[2].text
+        sell       =  tr.css('td')[3].text
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
+    elsif url == "https://cecltd.com/?q=exchange-rates"
+
+      doc.css('table tbody tr').each do |tr|
+        currency   = tr.css('td')[1].text.strip
+        next unless Currency.updatable.include? currency
+        buy        =  tr.css('td')[3].text.strip
+        sell       =  tr.css('td')[4].text.strip
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
+    elsif url == "https://www.thomasexchange.co.uk/i_banknote_rates.asp"
+
+      doc.css('table tr').each do |tr|
+        next if     tr.css('td')[0].text == "Currency"
+        currency_name =  tr.css('td')[0].text
+        currency      =
+            case currency_name
+              when 'Japan Jpy'
+                'JPY'
+              when 'Canada Dollar'
+                'CAD'
+              when 'Australia Dollar'
+                'AUD'
+              when 'U.S.A Dollar'
+                'USD'
+              when 'EURO Euro'
+                'EUR'
+              when 'Israel Shekel'
+                'ILS'
+              when 'Hong Kong Dollar'
+                'HKD'
+              when 'China Yuan'
+                'CNY'
+              else
+                nil
+            end
+        next unless currency
+        buy        =  tr.css('td')[1].text
+        sell       =  tr.css('td')[2].text
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
+    else
+
+      raise "Dont know how to parse that url"
+
     end
 
 
   end
 
-  # Specific parsing. tr is a Nokogiri object
-  def self.parse_rates(url, tr)
-
-    result = {}
-    if url == "https://www.bfcexchange.co.uk/en/rates.html"
-      result[:currency]   =  tr.css('td')[0].text.strip
-      result[:buy]        =  tr.css('td')[2].text.strip
-      result[:sell]       =  tr.css('td')[3].text.strip
-    else
-      raise "Dont know how to parse that url"
-    end
-
-    result
-
+  def self.rate_update(currency, buy, sell, chain, exchange)
+    return nil unless Currency.updatable.include? currency
+    rate = chain ? chain.rates.where(currency: currency).first_or_create! : exchange.rates.where(currency: currency).first_or_create!
+    buy   ||=   rate.buy
+    sell  ||=   rate.sell
+    rate.update(source: 'scraping', currency: currency, buy: buy, sell: sell, last_update: DateTime.now, admin_user_id: nil)
+    puts rate.inspect
   end
 
 
