@@ -10,24 +10,38 @@ class Scraping
   # Generic envelope. Works for all html pages whose rates are in 'table tbody tr' elements
   def self.update(chain_name=nil, exchange_name=nil, url)
 
-    if chain_name
-      raise "No such chain: #{chain_name}" unless chain = Chain.find_by(name: chain_name)
-      chain.update(rates_source: 'scraping', rates_update: DateTime.now)
-      chain.exchanges.each do |exchange|
+    begin
+
+      if chain_name
+        raise "No such chain: #{chain_name}" unless chain = Chain.find_by(name: chain_name)
+        chain.update(rates_source: 'scraping', rates_update: DateTime.now)
+        chain.exchanges.each do |exchange|
+          exchange.update(rates_source: 'scraping')
+        end
+      elsif exchange_name
+        raise "No such exchange: #{exchange_name}" unless exchange = Exchange.find_by(name: exchange_name)
         exchange.update(rates_source: 'scraping')
+      else
+        raise "Neither chain nor exchange were passed in"
       end
-    elsif exchange_name
-      raise "No such exchange: #{exchange_name}" unless exchange = Exchange.find_by(name: exchange_name)
-      exchange.update(rates_source: 'scraping')
+
+      raise "No such url: #{url}" unless doc = Nokogiri::HTML(open(url))
+
+      parse_rates(url, doc, chain, exchange)
+
+    rescue => e
+
+      Rails.logger.info "parsing " + url + " failed:"
+      Rails.logger.info e
+
     else
-      raise "Neither chain nor exchange were passed in"
+
+      Rails.logger.info "parsing " + url + " succeeded"
+      
     end
 
-    raise "No such url: #{url}" unless doc = Nokogiri::HTML(open(url))
 
-    parse_rates(url, doc, chain, exchange)
-
-  end
+    end
 
   def self.parse_rates(url, doc, chain, exchange)
 
