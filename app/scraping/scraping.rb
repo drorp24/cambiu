@@ -44,7 +44,7 @@ class Scraping
     elsif url == "http://www.chequecentre.co.uk/foreign-currency"
       doc.css('table tbody tr').each do |tr|
         currency_name       =  tr.css('td')[0].text.strip
-        result[:currency]   =
+        currency   =
             case currency_name
               when 'Japanese Yen'
                 'JPY'
@@ -219,7 +219,6 @@ class Scraping
     buy   ||=   rate.buy
     sell  ||=   rate.sell
     rate.update(source: 'scraping', currency: currency, buy: buy, sell: sell, last_update: DateTime.now, admin_user_id: nil)
-    puts rate.inspect
   end
 
 
