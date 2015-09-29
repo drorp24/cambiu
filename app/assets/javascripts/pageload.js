@@ -184,7 +184,7 @@ findMarker = function(id) {
 
 def = function(variable) {
     var val = {
-        'pay_amount'    : 300,
+        'pay_amount'    : 700,
         'pay_currency'  : 'GBP',
         'buy_amount'    : null,
         'buy_currency'  : 'EUR',

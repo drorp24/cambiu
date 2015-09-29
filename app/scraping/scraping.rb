@@ -37,7 +37,7 @@ class Scraping
     else
 
       Rails.logger.info "parsing " + url + " succeeded"
-      
+
     end
 
 
@@ -106,8 +106,8 @@ class Scraping
                 nil
             end
         next unless currency
-        buy        =  tr.css('td')[1].text.strip
-        sell       =  nil
+        sell        =  tr.css('td')[1].text.strip
+        buy       =  nil
         rate_update(currency, buy, sell, chain, exchange)
       end
 
@@ -138,8 +138,8 @@ class Scraping
                 nil
             end
         next unless currency
-        buy        =  nil
-        sell       =  tr.css('td')[1].text.strip
+        sell        =  nil
+        buy       =  tr.css('td')[1].text.strip
         rate_update(currency, buy, sell, chain, exchange)
       end
 
@@ -181,8 +181,8 @@ class Scraping
       doc.css('table tbody tr').each do |tr|
         currency   = tr.css('td')[1].text.strip
         next unless Currency.updatable.include? currency
-        buy        =  tr.css('td')[3].text.strip
-        sell       =  tr.css('td')[4].text.strip
+        buy        =  tr.css('td')[5].text.strip
+        sell       =  tr.css('td')[6].text.strip
         rate_update(currency, buy, sell, chain, exchange)
       end
 
