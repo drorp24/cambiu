@@ -218,6 +218,38 @@ class Scraping
         rate_update(currency, buy, sell, chain, exchange)
       end
 
+    elsif url == "http://www.natwest.com/tools/personal/currency_rates"
+
+      doc.css('table')[0].css('tr').each do |tr|
+        next unless     tr.css('td').count == 3
+        currency_name =  tr.css('td')[0].text
+        currency      =
+            case currency_name
+              when 'JAPANESE YEN'
+                'JPY'
+              when 'CANADIAN DOLLARS'
+                'CAD'
+              when 'AUSTRALIAN DOLLARS'
+                'AUD'
+              when 'US DOLLARS'
+                'USD'
+              when 'EURO'
+                'EUR'
+              when 'ISRAELI NEW SHEQELS'
+                'ILS'
+              when 'HONG KONG DOLLARS'
+                'HKD'
+              when 'CHINESE YUAN'
+                'CNY'
+              else
+                nil
+            end
+        next unless currency
+        buy        =  tr.css('td')[1].text
+        sell       =  tr.css('td')[2].text
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
     else
 
       raise "Dont know how to parse that url"
