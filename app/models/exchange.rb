@@ -14,7 +14,7 @@ class Exchange < ActiveRecord::Base
   accepts_nested_attributes_for :rates
   belongs_to  :upload
   belongs_to  :admin_user
-  enum business_type: [ :exchange, :post_office, :supermarket, :other ]
+  enum business_type: [ :exchange, :bank, :post_office, :other ]
   enum rates_source: [ :no_rates, :fake, :manual, :xml, :scraping ]
   enum rates_policy: [:individual, :chain]
 

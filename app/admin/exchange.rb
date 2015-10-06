@@ -183,17 +183,14 @@ form do |f|
     f.inputs 'Details' do
 
       f.semantic_errors *f.object.errors.keys
-      f.input     :created_at, as: :string, input_html: { :disabled => true }
-      f.input     :updated_at, as: :string, input_html: { :disabled => true }
-      f.input     :admin_user_s, as: :string, label: "By", input_html: { :disabled => true }
-      f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
-      f.input     :chain_name, label: 'Chain'
-      f.input     :rates_policy, as: :select, collection: {:"Individual"=>"individual", :"Chain"=>"chain"}, include_blank: false
       f.input     :name
       f.input     :caption, hint: 'Optional: populate if you want to override the exchange name shown to user'
-      f.input     :address
+      f.input     :business_type, as: :select, collection: {:"Exchange"=>"exchange", :"Bank"=>"bank", :"Post office"=>"post_office", :"Other"=>"other"}, include_blank: false
+      f.input     :chain_name, label: 'Chain'
+      f.input     :rates_policy, as: :select, collection: {:"Individual"=>"individual", :"Chain"=>"chain"}, include_blank: false
+      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Fake"=>"fake", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping"}, include_blank: false
       f.input     :contract, label: 'Contract', as: :radio
-      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Fake"=>"fake", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping"}
+      f.input     :address
       f.input     :delivery_tracking, as: :url
       f.input     :direct_link, input_html: { :disabled => true }, hint: '  Direct link for search engines and ads'
       f.input     :logo, as: :file
@@ -208,7 +205,6 @@ form do |f|
       f.input     :phone, as: :phone
       f.input     :osm_id, input_html: { :disabled => true }
       f.input     :atm
-      f.input     :business_type
       f.input     :city
       f.input     :region
       f.input     :rating
@@ -218,6 +214,10 @@ form do |f|
       f.input     :accessible
       f.input     :upload_id
       f.input     :note
+      f.input     :created_at, as: :string, input_html: { :disabled => true }
+      f.input     :updated_at, as: :string, input_html: { :disabled => true }
+      f.input     :admin_user_s, as: :string, label: "By", input_html: { :disabled => true }
+      f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
     end
 
     f.actions
