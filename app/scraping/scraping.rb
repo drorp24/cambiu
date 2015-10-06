@@ -245,8 +245,8 @@ class Scraping
                 nil
             end
         next unless currency
-        buy        =  tr.css('td')[1].text
-        sell       =  tr.css('td')[2].text
+        sell        =  tr.css('td')[1].text
+        buy         =  tr.css('td')[2].text
         rate_update(currency, buy, sell, chain, exchange)
       end
 

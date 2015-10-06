@@ -49,4 +49,10 @@ class Currency
     display_amount.rpartition(" ")[2].remove(",")
   end
 
+  # override .format with proper negative placement
+  def self.format(num, cur)
+    result = num.abs.to_money(cur).format
+    num < 0 ? "-" + result : result
+  end
+
 end

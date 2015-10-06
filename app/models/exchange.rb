@@ -24,10 +24,14 @@ class Exchange < ActiveRecord::Base
 
   scope :with_contract, -> { where(contract: true) }
 
-   def has_real_rates?
+  def has_real_rates?
     !fake? && !no_rates?
   end
-  # TODO: Currently returns error unless either of the currencies is local. Generalize.
+
+  def self.bad
+    @bank ||= self.bank.first
+  end
+
   def quote(params)
 
     result = {
@@ -38,10 +42,12 @@ class Exchange < ActiveRecord::Base
         field:            field         = params[:field],
         transaction:      transaction   = get_currency != currency ? 'sell' : 'buy',
         rates:            {},
+        bad_rates:        {},
         quote:            nil,
         quote_currency:   nil,
         edited_quote:     nil,
         edited_quote_rounded: nil,
+        bad_amount:       nil,
         gain_amount:      gain_amount   = 0,
         gain_currency:    gain_currency = nil,
         real_rates:       has_real_rates?,
@@ -65,7 +71,7 @@ class Exchange < ActiveRecord::Base
     end
 
     if field == 'pay_amount' or field == 'pay_currency'
-      rates = result[:rates] = rate(get_currency, pay_currency)
+      rates = result[:rates]          = rate(get_currency, pay_currency)
       if rates[:error]
         result[:errors]           <<   rates[:error]
         return result
@@ -74,8 +80,17 @@ class Exchange < ActiveRecord::Base
       result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format
       result[:edited_quote] = result[:edited_quote_rounded] = result[:get_amount]
       result[:quote_currency]                               = get_currency
-      result[:gain_amount]                                  = (get_amount * 0.13).to_money(get_currency).format
+
+      bad_rates = result[:bad_rates]  = Exchange.bad.rate(get_currency, pay_currency)
+      if bad_rates[:error]
+        result[:errors]               <<   bad_rates[:error]
+        return result
+      end
+      bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
+      result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
+      result[:gain_amount]                                  = Currency.format(get_amount - bad_amount, get_currency)
       result[:gain_currency]                                = get_currency
+
       result[:pay_amount]                                   = pay_amount.to_money(pay_currency).format
 
       if get_currency != currency and (get_subtract = get_amount.modulo(1)) > 0
@@ -88,17 +103,27 @@ class Exchange < ActiveRecord::Base
 
     else
 
-      rates = result[:rates] = rate(pay_currency, get_currency)
+      rates = result[:rates]          = rate(pay_currency, get_currency)
       if rates[:error]
-        result[:errors]           <<   rates[:error]
+        result[:errors]               <<   rates[:error]
         return result
       end
-      pay_amount              =   result[:quote]            = get_amount * rates[transaction.to_sym]
+      pay_amount                      =   result[:quote]            = get_amount * rates[transaction.to_sym]
       result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format
       result[:edited_quote] = result[:edited_quote_rounded] = result[:pay_amount]
       result[:quote_currency]                               = pay_currency
-      result[:gain_amount]                                  = (pay_amount * 0.13).to_money(pay_currency).format
+
+      bad_rates = result[:bad_rates]  = Exchange.bad.rate(pay_currency, get_currency)
+      if bad_rates[:error]
+        result[:errors]           <<   bad_rates[:error]
+        return result
+      end
+
+      bad_amount                                            = get_amount * bad_rates[transaction.to_sym]
+      result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
+      result[:gain_amount]                                  = Currency.format(pay_amount - bad_amount, pay_currency)
       result[:gain_currency]                                = pay_currency
+
       result[:get_amount]                                   = get_amount.to_money(get_currency).format
 
       if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
@@ -211,6 +236,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:pay_currency] = quotes[:pay_currency]
     exchange_hash[:buy_amount] = quotes[:get_amount]
     exchange_hash[:buy_currency] = quotes[:get_currency]
+    exchange_hash[:bad_amount] = quotes[:bad_amount]
     exchange_hash[:gain_amount] = quotes[:gain_amount]
     exchange_hash[:gain_currency] = quotes[:gain_currency]
     exchange_hash[:quote] = quotes[:quote]
@@ -225,17 +251,6 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:user_location] = user_location
     exchange_hash[:delivery_tracking] = delivery_tracking
     exchange_hash[:service_type] = service_type
-
-=begin
-    exchange_hash[:pay_amount] = pay.amount > 0 ? pay.format : (Bank.exchange(buy.amount, buy.currency.iso_code, pay.currency.iso_code) * rand(1.03..1.37)).format
-    exchange_hash[:pay_currency] = pay.currency.iso_code
-    exchange_hash[:buy_amount] = buy.amount > 0 ? buy.format : (Bank.exchange(pay.amount, pay.currency.iso_code, buy.currency.iso_code) * rand(1.03..1.37)).format
-    exchange_hash[:buy_currency] = buy.currency.iso_code
-    exchange_hash[:edited_quote] = pay.amount > 0 ? exchange_hash[:buy_amount] : exchange_hash[:pay_amount]
-    exchange_hash[:quote] = Monetize.parse(exchange_hash[:edited_quote]).amount
-    exchange_hash[:gain_amount] =  pay.amount > 0 ? ((exchange_hash[:quote] * 0.127).to_money(buy.currency.iso_code)).format : ((exchange_hash[:quote] * 0.127).to_money(pay.currency.iso_code)).format
-    exchange_hash[:gain_currency] = pay.amount > 0 ? buy.currency.iso_code : pay.currency.iso_code
-=end
     exchange_hash[:logo] = self.logo ? ActionController::Base.helpers.image_path(self.logo) : nil
     exchange_hash[:logo_ind] = self.logo
 
