@@ -88,7 +88,9 @@ class Exchange < ActiveRecord::Base
       end
       bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
-      result[:gain_amount]                                  = Currency.format(get_amount - bad_amount, get_currency)
+      gain                                                  = get_amount - bad_amount
+      result[:gain_amount]                                  = gain.abs.to_money(get_currency).format
+      result[:gain_type]                                    = gain < 0 ? 'Save' : 'Extra'
       result[:gain_currency]                                = get_currency
 
       result[:pay_amount]                                   = pay_amount.to_money(pay_currency).format
@@ -115,15 +117,17 @@ class Exchange < ActiveRecord::Base
 
       bad_rates = result[:bad_rates]  = Exchange.bad.rate(pay_currency, get_currency)
       if bad_rates[:error]
-        result[:errors]           <<   bad_rates[:error]
+        result[:errors]               <<   bad_rates[:error]
         return result
       end
 
       bad_amount                                            = get_amount * bad_rates[transaction.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
-      result[:gain_amount]                                  = Currency.format(pay_amount - bad_amount, pay_currency)
-      result[:gain_currency]                                = pay_currency
+      gain                                                  = pay_amount - bad_amount
+      result[:gain_amount]                                  = gain.abs.to_money(pay_currency).format
 
+      result[:gain_currency]                                = pay_currency
+      result[:gain_type]                                    = gain < 0 ? 'Save' : 'Extra'
       result[:get_amount]                                   = get_amount.to_money(get_currency).format
 
       if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
@@ -238,6 +242,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:buy_currency] = quotes[:get_currency]
     exchange_hash[:bad_amount] = quotes[:bad_amount]
     exchange_hash[:gain_amount] = quotes[:gain_amount]
+    exchange_hash[:gain_type] = quotes[:gain_type]
     exchange_hash[:gain_currency] = quotes[:gain_currency]
     exchange_hash[:quote] = quotes[:quote]
     exchange_hash[:edited_quote] = quotes[:edited_quote]

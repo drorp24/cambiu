@@ -91,10 +91,13 @@ $(document).ready(function() {
         exchange_el.find('.name').html(exchange.name_s);
         exchange_el.find('.quote').html(exchange.edited_quote);
         exchange_el.find('.quote_currency').html(exchange.quote_currency);
-        if (exchange.quote > 0) {
+ /*       if (exchange.quote > 0) {
 //            exchange_el.find('.comparison').css('display', 'block');
             exchange_el.find('[data-field=gain_amount]').html(exchange.gain_amount);
         }
+*/
+        exchange_el.find('.gain_amount').html(exchange.gain_amount);
+        exchange_el.find('.gain_type').html(exchange.gain_type);
         exchange_el.find('.address').html(exchange.address);
         exchange_el.find('.open_today').html(exchange.open_today);
         exchange_el.find('.open_today').attr('href', exchange.website ? exchange.website : "#");
