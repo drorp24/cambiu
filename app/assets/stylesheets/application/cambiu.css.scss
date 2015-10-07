@@ -1351,13 +1351,9 @@ body#cambiu {
         #exchanges_search_results {
           text-align: center;
           .results {
-            @media (max-width: $screen-xs-max) {
-              font-size: 0.9em;
-            }
-            @media (min-width: $screen-sm-min) {
-              font-size: 1em;
-            }
-            color: #333;
+            font-size: 1em;
+            text-transform: uppercase;
+             color: #333;
             font-weight: 500;
             span {
               text-indent: 2px;
@@ -1369,15 +1365,10 @@ body#cambiu {
           }
           .sorted_by {
               text-transform: uppercase;
+            color: #333;
               cursor: pointer;
-            font-weight: 700;
-              @media (max-width: $screen-xs-max) {
-                font-size: 0.7em;
-              }
-              @media (min-width: $screen-sm-min) {
-                font-size: 0.8em;
-              }
-            &.active {
+            font-weight: 400;
+              &.active {
               color: $brand-color;
             }
           }
@@ -1430,6 +1421,12 @@ body#cambiu {
         }
       }
     }
+    #exchanges_search_banner {
+      font-size: 0.9em;
+      text-align: center;
+      height: 3em;
+      color: #333;
+    }
     #exchanges_content {
       z-index: -1;
       font-family: $font-family;
@@ -1466,15 +1463,13 @@ body#cambiu {
       .list_icon {
         font-size: 1.2em;
         font-weight: 900;
-        color: #888;
+        color: #666;
       }
       .distance {
         font-size: 0.8em;
         width: 100%;
         margin-top: -0.8em;
         display: inline;
-        position: absolute;
-        top: 4em;
         font-weight: 300;
         color: #333;
         &::before {
@@ -1486,8 +1481,8 @@ body#cambiu {
         }
       }
       .name {
-        font-weight: 900;
-        color: #333;
+        font-weight: 700;
+        color: #555;
       }
       .list-group-item .name {
         @media (min-width: $screen-sm-min) {
@@ -1503,17 +1498,16 @@ body#cambiu {
       }
       .middle-parent {
         .middle-child {
-          height: 50px;
+          height: 35px;
           vertical-align: middle;
           display: table-cell;
         }
       }
         .quote, .quote_currency {
         font-weight: 900;
-        line-height: 25px;
-          padding-top: 10px;
-          color: #111;
-          font-size: 1em;
+          font-size: 1.25em;
+          color: #333;
+          line-height: 1em;
       }
       .quote_currency {
         font-size: 0.85em;
@@ -1523,6 +1517,11 @@ body#cambiu {
         @media (max-width: $screen-xs-max) {
           display: none;
         }
+      }
+      .gain_amount, .gain_direction, .gain_comparison {
+        font-size: 0.9em;
+        font-weight: 400;
+        color: $brand-color;
       }
       .comparison {
         text-align: center;
@@ -1549,14 +1548,9 @@ body#cambiu {
       .service_type {
         text-transform: uppercase;
         color: #888;
-        font-weight: 900;
+        line-height: 1.1em;
+        font-size: 0.75em;
 
-        @media (min-width: $screen-sm-min) {
-          font-size: 0.7em;
-        }
-        @media (max-width: $screen-xs-max) {
-          font-size: 0.7em;
-        }
       }
       .you {
         font-size: 0.65em;
