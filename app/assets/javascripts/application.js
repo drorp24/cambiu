@@ -25,4 +25,3 @@
 //= require bootstrap-switch
 //= require jquery.freeow.min
 //= require iscroll-lite
-//= require riveted.min
