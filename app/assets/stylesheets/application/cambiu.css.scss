@@ -1923,11 +1923,14 @@ body#cambiu {
       }
     }
     #exchange_voucher {
+      .qr_code {
+      }
 //      width: 94%;
       #voucher_bullets.exchange_bullets {
-        font-weight: 300;
+        font-weight: 400;
         color: #333;
         margin-top: 15vh;
+        font-size: 1.4em;
       }
     }
     #exchange_deal {
@@ -2027,7 +2030,7 @@ body#cambiu {
           font-weight: 300;
           color: #333;
           margin-bottom: 1vh;
-          margin-top: 9vh;
+          margin-top: 3vh;
         }
         .es_name {
           text-transform: initial;
@@ -2064,8 +2067,7 @@ body#cambiu {
           color: #333;
           text-align: center;
           margin-bottom: 1.5em;
-          margin-top: 1em;
-        }
+         }
        .exchange_bullets {
           margin-bottom: 4vh;
           margin-top: 1vh;
@@ -2166,7 +2168,7 @@ body#cambiu {
     }
     #exchange_voucher {
       .center_message {
-        margin-top: 6em;
+        margin-top: 2em;
         margin-bottom: -4em;
       }
     }
