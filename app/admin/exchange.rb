@@ -29,7 +29,7 @@ ActiveAdmin.register Exchange do
     e.nearest_station = hash[:nearest_station]
     e.airport =         hash[:airport]
     e.save!
-    e.update_csv_business_hours(hash[:sunday_openning_hours], 0) 
+    e.update_csv_business_hours(hash[:sunday_openning_hours], 0)
     e.update_csv_business_hours(hash[:monday_openning_hours], 1) 
     e.update_csv_business_hours(hash[:tuesday_openning_hours], 2) 
     e.update_csv_business_hours(hash[:wednesday_openning_hours], 3) 
@@ -41,7 +41,7 @@ ActiveAdmin.register Exchange do
 #       error = e  
 #    end     
   end
-  
+
   # osm import
   collection_action :import_osm, method: :post do
     Exchange.import("bdc", "London")
@@ -370,7 +370,7 @@ form do |f|
 
       end
 
-     end
+    end
 
   end
 end
