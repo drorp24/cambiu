@@ -258,6 +258,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:service_type] = service_type
     exchange_hash[:logo] = self.logo ? ActionController::Base.helpers.image_path(self.logo) : nil
     exchange_hash[:logo_ind] = self.logo
+    exchange_hash[:best_at] = self.best_at
 
     exchange_hash
 
@@ -598,6 +599,14 @@ class Exchange < ActiveRecord::Base
 
   def name_s
     self.caption.present? ? self.caption : self.name
+  end
+
+  def best_at
+    @best_at
+  end
+
+  def best_at=(ba)
+    @best_at=ba
   end
 
   protected
