@@ -1283,6 +1283,12 @@ body#cambiu {
         @media (max-width: $screen-xs-max){
           padding-right: 0;
          }
+        #exchanges_list .tag {
+          display: none;
+        }
+        #best_exchanges .tag {
+          display: block;
+        }
         #exchanges_search_params {
           margin-top: 15px;
           background-color: #ccc;

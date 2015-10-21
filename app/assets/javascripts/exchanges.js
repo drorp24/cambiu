@@ -55,15 +55,20 @@ $(document).ready(function() {
 
         console.log('updateExchanges');
 
+        if (value_of('fetch') == 'all') {
+            append_point = '#exchanges_list .list-group #exchanges_items'
+        } else {
+            append_point = '#exchanges_list .list-group #best_exchanges'
+        }
         for (var i = 0; i < exchanges.length; i++) {
-            addExchange(exchanges[i], i);
+            addExchange(exchanges[i], i, append_point);
         }
 
     };
 
 
     // TODO: Remove det, replace classes with data- attributes, do it in a loop over the data fields
-    function addExchange(exchange, index) {
+    function addExchange(exchange, index, append_point) {
 
         if (exchange.errors.length > 0) return;
         exchange_list_count += 1;
@@ -123,7 +128,7 @@ $(document).ready(function() {
 
         exchange_sum.find('.you').html(exchange.pay_amount == exchange.edited_quote ? 'you pay' : 'you get');
 
-        exchange_sum.appendTo('#exchanges_list .list-group #exchanges_items');
+        exchange_sum.appendTo(append_point);
 
     }
 
