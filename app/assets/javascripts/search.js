@@ -101,6 +101,7 @@
                 var value = (use_session ? value_of(field) || def_val : def_val);
                 if (field == 'pay_amount') {value = use_session ? value_of('pay_amount') || (value_of('buy_amount') ? null : def_val) : def_val}
                 if (field == 'buy_amount') {value = use_session ? value_of('buy_amount') || (value_of('pay_amount') ? null : def_val) : def_val}
+                if (field == 'fetch') {value = def_val}
             }
 
             set(field, value, '#order_id');
@@ -302,7 +303,10 @@ $(document).ready(function() {
     $('#search_form #search_button').click(function(e) {
         e.preventDefault();
         if (mobile) {$('#exchange_params_change').collapse('hide');}
-        if ($('#search_form').valid()) {$('#new_search').submit()};
+        if ($('#search_form').valid()) {
+            set('fetch', 'all');
+            $('#new_search').submit()
+        };
      });
 
     // any click to change params returns to main search page
