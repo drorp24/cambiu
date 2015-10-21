@@ -24,6 +24,8 @@ class Exchange < ActiveRecord::Base
 
   scope :with_contract, -> { where(contract: true) }
 
+  attr_accessor :best_at
+
   def has_real_rates?
     !fake? && !no_rates?
   end
@@ -90,7 +92,7 @@ class Exchange < ActiveRecord::Base
       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       gain                                                  = get_amount - bad_amount
       result[:gain_amount]                                  = gain.abs.to_money(get_currency).format
-      result[:gain_type]                                    = gain < 0 ? 'Save' : 'Extra'
+      result[:gain_type]                                    = gain < 0 ? 'minus' : 'plus'
       result[:gain_currency]                                = get_currency
 
       result[:pay_amount]                                   = pay_amount.to_money(pay_currency).format
@@ -127,7 +129,7 @@ class Exchange < ActiveRecord::Base
       result[:gain_amount]                                  = gain.abs.to_money(pay_currency).format
 
       result[:gain_currency]                                = pay_currency
-      result[:gain_type]                                    = gain < 0 ? 'Save' : 'Extra'
+      result[:gain_type]                                    = gain < 0 ? 'minus' : 'plus'
       result[:get_amount]                                   = get_amount.to_money(get_currency).format
 
       if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
@@ -599,14 +601,6 @@ class Exchange < ActiveRecord::Base
 
   def name_s
     self.caption.present? ? self.caption : self.name
-  end
-
-  def best_at
-    @best_at
-  end
-
-  def best_at=(ba)
-    @best_at=ba
   end
 
   protected

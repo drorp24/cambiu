@@ -4,6 +4,8 @@ class Search < ActiveRecord::Base
 #  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   enum service_type: [ :collection, :delivery ]
 
+  attr_accessor :fetch, :mode, :hash, :distance_slider
+
   def exchanges
 
     return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
@@ -72,102 +74,60 @@ class Search < ActiveRecord::Base
 
   def self.best(exchanges, center, pay, buy)
 
-    nearest = 1000000
-    min_rate = 1000000
-    max_rate = 0
-    min_rate_in_radius = 1000000
-    max_rate_in_radius = 0
-
-    nearest_exchange_id, min_rate_exchange_id, max_rate_exchange_id, min_rate_in_radius_exchange_id, max_rate_in_radius_exchange_id = exchanges.first.id
-
     transaction = buy.currency.iso_code != "GBP" ? 'sell' : 'buy'
-    direction = pay.amount  ? 'max' : 'min'
-    if pay.amount
+    if pay.amount > 0
+      direction = 'max'
       amt_currency = pay.currency.iso_code
       no_amt_currency = buy.currency.iso_code
     else
+      direction = 'min'
       amt_currency = buy.currency.iso_code
       no_amt_currency = pay.currency.iso_code
     end
 
-    exchanges.each do |exchange|
 
-      exchange_distance = exchange.distance_from(center)
-      if exchange_distance < nearest
-        nearest_exchange_id = exchange.id
-        nearest = exchange_distance
-      end
+    exchange = exchanges.min_by{|exchange| exchange.distance_from(center)}
+    nearest_distance = exchange.distance_from(center)
+    nearest_exchange = exchange.dup
+    nearest_exchange.id = exchange.id
+    nearest_exchange.best_at = 'nearest'
 
-      rate = exchange.rate(no_amt_currency, amt_currency)[transaction.to_sym]
-      if rate < min_rate
-        min_rate_exchange_id = exchange.id
-        min_rate = rate
-      end
-      if rate > max_rate
-        max_rate_exchange_id = exchange.id
-        max_rate = rate
-      end
-      if exchange_distance < 1
-        if rate < min_rate_in_radius
-          min_rate_in_radius_exchange_id = exchange.id
-          min_rate_in_radius = rate
-        end
-        if rate > max_rate_in_radius
-          max_rate_in_radius_exchange_id = exchange.id
-          max_rate_in_radius = rate
-        end
-      end
+    if direction == 'min'
+
+      exchange = exchanges.min_by{|exchange| exchange.rate(no_amt_currency, amt_currency)[transaction.to_sym]}
+      cheapest_exchange = exchange.dup
+      cheapest_exchange.id = exchange.id
+      cheapest_exchange.best_at = 'cheapest'
+
+      box = Geocoder::Calculations.bounding_box(center, nearest_distance + 1)
+      exchange = exchanges.within_bounding_box(box).min_by{|exchange| exchange.rate(no_amt_currency, amt_currency)[transaction.to_sym]}
+      best_exchange = exchange.dup
+      best_exchange.id = exchange.id
+      best_exchange.best_at = 'best'
+
+    elsif direction == 'max'
+
+      exchange = exchanges.max_by{|exchange| exchange.rate(no_amt_currency, amt_currency)[transaction.to_sym]}
+      highest_exchange = exchange.dup
+      highest_exchange.id = exchange.id
+      highest_exchange.best_at = 'highest'
+
+      box = Geocoder::Calculations.bounding_box(center, nearest_distance + 1)
+      exchange = exchanges.within_bounding_box(box).max_by{|exchange| exchange.rate(no_amt_currency, amt_currency)[transaction.to_sym]}
+      best_exchange = exchange.dup
+      best_exchange.id = exchange.id
+      best_exchange.best_at = 'best'
 
     end
-
-    nearest_exchange = exchanges.detect{|exchange| exchange.id == nearest_exchange_id}
-    nearest_exchange.best_at = 'nearest'
-    min_rate_exchange = exchanges.detect{|exchange| exchange.id == min_rate_exchange_id}
-    min_rate_exchange.best_at = 'min_rate'
-    max_rate_exchange = exchanges.detect{|exchange| exchange.id == max_rate_exchange_id}
-    max_rate_exchange.best_at = 'max_rate'
-    min_rate_in_radius_exchange = exchanges.detect{|exchange| exchange.id == min_rate_in_radius_exchange_id}
-    min_rate_in_radius_exchange.best_at = 'min_rate_in_radius' if min_rate_in_radius_exchange
-    max_rate_in_radius_exchange = exchanges.detect{|exchange| exchange.id == max_rate_in_radius_exchange_id}
-    max_rate_in_radius_exchange.best_at = 'max_rate_in_radius' if max_rate_in_radius_exchange
 
     result = []
-    [nearest_exchange, min_rate_exchange, max_rate_exchange, min_rate_in_radius_exchange, max_rate_in_radius_exchange].each do |exchange|
-      result << exchange if exchange and exchange.id
-    end
+    result << best_exchange
+    result << nearest_exchange
+    result << (direction == 'min' ? cheapest_exchange : highest_exchange)
 
     result
 
   end
 
-  def mode
-    @mode
-  end
 
-  def mode=(mode)
-    @mode = mode
-  end
-
-  # TODO: record the fetch in DB
-  def fetch
-    @fetch
-  end
-
-  def fetch=(fetch)
-    @fetch = fetch
-  end
-
-  def hash
-    self.rest
-  end
-
-  def hash=(val)
-    self.rest = val
-  end
-
-  def distance_slider=(val)
-
-  end
-
-  
 end

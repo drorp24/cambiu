@@ -105,6 +105,8 @@ $(document).ready(function() {
         exchange_el.find('.website').attr('href', exchange.website);
         exchange_el.find('.directions').attr('data-lat', exchange.latitude);
         exchange_el.find('.directions').attr('data-lng', exchange.longitude);
+        exchange_el.find('.best_at').html(' ');
+        exchange_el.find('.best_at').addClass(exchange.best_at);
 
 
         /*
