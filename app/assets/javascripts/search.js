@@ -306,8 +306,18 @@ $(document).ready(function() {
         if ($('#search_form').valid()) {
             set('fetch', 'all');
             $('#new_search').submit()
-        };
+            $('#exchanges_list #fetch_more').remove();
+            $('#exchanges_search_results').css('display', 'block')
+        }
      });
+
+    $('#exchanges_list #fetch_more').click(function(e) {
+        e.preventDefault();
+        set('fetch', 'all');
+        $('#new_search').submit();
+        $('#exchanges_list #fetch_more').remove();
+        $('#exchanges_search_results').css('display', 'block')
+    });
 
     // any click to change params returns to main search page
 
