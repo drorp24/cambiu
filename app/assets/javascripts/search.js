@@ -101,7 +101,6 @@
                 var value = (use_session ? value_of(field) || def_val : def_val);
                 if (field == 'pay_amount') {value = use_session ? value_of('pay_amount') || (value_of('buy_amount') ? null : def_val) : def_val}
                 if (field == 'buy_amount') {value = use_session ? value_of('buy_amount') || (value_of('pay_amount') ? null : def_val) : def_val}
-                if (field == 'fetch') {value = def_val}
             }
 
             set(field, value, '#order_id');
@@ -304,7 +303,6 @@ $(document).ready(function() {
         e.preventDefault();
         if (mobile) {$('#exchange_params_change').collapse('hide');}
         if ($('#search_form').valid()) {
-            set('fetch', 'all');
             $('#new_search').submit()
             $('#exchanges_list .more').remove();
             $('#exchanges_search_results').css('display', 'block')
@@ -313,7 +311,6 @@ $(document).ready(function() {
 
     $('#exchanges_list #fetch_more').click(function(e) {
         e.preventDefault();
-        set('fetch', 'all');
         $('#new_search').submit();
         $('#exchanges_list .more').remove();
         $('#exchanges_search_results').css('display', 'block')

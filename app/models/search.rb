@@ -52,9 +52,7 @@ class Search < ActiveRecord::Base
         exchanges = []
       end
 
-      if self.fetch == 'best'
-        exchanges = Search.best(exchanges, center, pay, buy)
-      end
+      best_exchanges = Search.best(exchanges, center, pay, buy)
 
       @exchange_offers = []
       exchanges.each do |exchange|
