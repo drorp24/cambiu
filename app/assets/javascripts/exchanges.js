@@ -113,6 +113,7 @@ $(document).ready(function() {
         exchange_el.find('.directions').attr('data-lng', exchange.longitude);
         exchange_el.find('.best_at').html(' ');
         exchange_el.find('.best_at').addClass(exchange.best_at);
+        if (exchange.best_at == 'best') exchange_el.find('.exchange_icon').css('display', 'block');
 
 
         /*
@@ -278,7 +279,7 @@ $(document).ready(function() {
             position: new google.maps.LatLng(lat, lng),
             disableAutoPan: true,
             map: map,
-            icon: '/dot-circle-o.png',
+            icon: '/pin.gif',
             draggable: true
         });
     }

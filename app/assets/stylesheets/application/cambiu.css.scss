@@ -1296,11 +1296,20 @@ body#cambiu {
         #exchanges_items {
           margin-top: -1px;
         }
-        #exchanges_list .tag {
+        #exchanges_list .tag_row {
           display: none;
         }
-        #best_exchanges .tag {
+        #best_exchanges .tag_row {
           display: block;
+        }
+        .tag_row .exchange_icon {
+           img {
+            width: 3em;
+          }
+        }
+        .exchange_icon {
+          margin-top: -5px;
+          margin-bottom: -16px;
         }
         .more {
           margin-top: 1vh;
