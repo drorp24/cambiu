@@ -320,12 +320,12 @@ $(document).ready(function() {
 
         if (exchange.errors.length > 0) return;
 
-        if (exchange.best_at == 'best') {
-            var icon = '/logo_no_text.png'
-        } else if (exchange.best_at == 'nearest') {
-            var icon = '/nearest.png'
-        } else if (exchange.best_at == 'highest' || exchange.best_at == 'cheapest') {
-            var icon = '/pricest.png'
+         if (exchange.best_at == 'highest' || exchange.best_at == 'cheapest') {
+             var icon = '/pricest.png'
+         } else if (exchange.best_at == 'nearest') {
+             var icon = '/nearest.png'
+         } else if (exchange.best_at == 'best') {
+             var icon = '/logo_no_text.png'
         } else {
             var icon = '/other.png'
         }

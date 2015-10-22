@@ -233,6 +233,7 @@ body#cambiu {
 
     /*progressbar*/
   #progressbar {
+    display: none;
     position: fixed;
     width: 35%;
     top: 0;
@@ -495,7 +496,7 @@ body#cambiu {
   .moneybox {
     margin-top: -30px;
   }
-  padding-top: $navbar-height;
+//  padding-top: $navbar-height;
   font-family: $font-family;
   color: $color;
   .btn {border-radius: $border-radius;}
@@ -829,7 +830,7 @@ body#cambiu {
         margin-top: 9px;
       }
     }
-    background-color: #777;
+    background-color: rgba(0,0,0,0.5);
     box-shadow: 0 0 10px #888;
     height: $navbar-height;
     border: none;
@@ -1223,6 +1224,7 @@ body#cambiu {
   }
 
   .parameters #exchange_params_wrapper {
+    margin-top: $navbar-height;
     input:not(#getit_button), select, button:not(#search_button) {
       font-weight: 400;
       @media (max-width: $screen-xs-max) {
@@ -1299,7 +1301,7 @@ body#cambiu {
         margin-top: -3px;
         @media (min-width: $screen-sm-min) {
           position: relative;
-          top: 4vh;
+          top: $navbar-height;
         }
         z-index: 1;
         padding-left: 0;
@@ -2299,10 +2301,10 @@ body#cambiu {
        }
     }
     &.search #map_container {
-      top: $navbar-height /*+ $parameters-height*/;
+//      top: $navbar-height /*+ $parameters-height*/;
     }
     &.exchange #map_container {
-      top: $navbar-height;
+ //     top: $navbar-height;
     }
 
     /*
@@ -2350,7 +2352,7 @@ body#cambiu {
         display: none;
       }
       #exchange_params_wrapper {
-        margin: 0;
+//        margin: 0;
         padding-left: 15px;
         padding-right: 15px;
         padding-top: 0;
