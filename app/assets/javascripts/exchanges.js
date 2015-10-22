@@ -30,7 +30,7 @@ $(document).ready(function() {
         drawMap(mapCenterLat, mapCenterLng, exchanges);
 
         if (search() && exchanges && exchanges.length > 0) {
-            updateExchanges(best_exchanges, 'best');
+            updateExchanges();
         }
 
         if (exchanges && exchanges.length > 0) {
@@ -52,19 +52,50 @@ $(document).ready(function() {
 
     };
 
-    updateExchanges = function(exchanges, mode) {
+    updateExchanges = function() {
 
-        console.log('updateExchanges. mode: ' + mode);
+        console.log('updateExchanges. mode: ' + String(value_of('list')));
 
-        if (mode == 'more') {
-            append_point = '#exchanges_list .list-group #exchanges_items'
-        } else if (mode == 'best') {
-            append_point = '#exchanges_list .list-group #best_exchanges'
+        list = value_of('list');
+
+        if (list == 'all') {
+
+            updateBest();
+            updateMore();
+
+        } else if (list == 'more') {
+
+            updateMore();
+            set('list', 'all');
+
+        } else {
+
+            updateBest();
         }
+
+    };
+
+    updateBest = function() {
+        $('#exchanges_search_results').css('display', 'none');
+
+        best_append_point = '#exchanges_list .list-group #best_exchanges';
+
+        for (var i = 0; i < best_exchanges.length; i++) {
+            addExchange(best_exchanges[i], i, best_append_point);
+        }
+
+        $('#exchanges_list .more').css('display', 'block');
+    };
+
+    updateMore = function() {
+        exchanges_append_point = '#exchanges_list .list-group #exchanges_items';
+
+        $('#exchanges_list .more').css('display', 'none');
+        $('#exchanges_search_results').css('display', 'block');
+
         for (var i = 0; i < exchanges.length; i++) {
-            addExchange(exchanges[i], i, append_point);
+            addExchange(exchanges[i], i, exchanges_append_point);
         }
-
     };
 
 
@@ -138,6 +169,7 @@ $(document).ready(function() {
     clearExchanges = function () {
         console.log('clearExchanges');
         exchange_list_count = 0;
+        $('#exchanges_list #best_exchanges').empty();
         $('#exchanges_list #exchanges_items').empty();
     };
 

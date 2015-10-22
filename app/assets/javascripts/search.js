@@ -304,16 +304,12 @@ $(document).ready(function() {
         if (mobile) {$('#exchange_params_change').collapse('hide');}
         if ($('#search_form').valid()) {
             $('#new_search').submit()
-            $('#exchanges_list .more').remove();
-            $('#exchanges_search_results').css('display', 'block')
         }
      });
 
     $('#exchanges_list #fetch_more').click(function(e) {
-        e.preventDefault();
-        $('#new_search').submit();
-        $('#exchanges_list .more').remove();
-        $('#exchanges_search_results').css('display', 'block')
+        set('list', 'more');
+        updateExchanges();
     });
 
     // any click to change params returns to main search page
