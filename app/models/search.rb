@@ -69,8 +69,13 @@ class Search < ActiveRecord::Base
 
       best_exchanges_offers = []
       best_exchanges.each do |best_exchange|
-        best_exchange_offer = exchanges_offers.find{|exchange| exchange[:id] == best_exchange[:id]}.dup || best_exchange.offer(center, pay, buy, user_location)
-        best_exchange_offer[:best_at] = best_exchange.best_at
+        exchange_in_exchanges = exchanges_offers.find{|exchange| exchange[:id] == best_exchange[:id]}
+        if exchange_in_exchanges
+          exchange_in_exchanges[:best_at] = best_exchange.best_at
+          best_exchange_offer = exchange_in_exchanges.dup
+        else
+          best_exchange_offer = best_exchange.offer(center, pay, buy, user_location)
+        end
         best_exchanges_offers << best_exchange_offer
       end
 

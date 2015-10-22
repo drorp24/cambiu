@@ -211,6 +211,10 @@ body#cambiu {
     }
   }
 
+  .gm-style .gm-style-iw {
+    text-align: center;
+  }
+
   .popover {
 //    z-index:  100000;
     color: #333;
@@ -398,12 +402,22 @@ body#cambiu {
     color: #444;
     font-weight: 400;
     font-size: 1em;
+    text-align: center;
     .exchange_window_name {
-      font-size: 1.1em;
-      font-weight: 700;
+      font-size: 1em;
+      font-weight: 400;
+      line-height: normal;
     }
     .exchange_window_quote {
       margin-top: 0.5em;
+    }
+    .exchange_window_best_at {
+      &.show {
+        display: block;
+      }
+      &.hide {
+        display: none;
+      }
     }
   }
 
@@ -1472,13 +1486,18 @@ body#cambiu {
 //        z-index: 40000;
         &:hover {
           background-color: lighten($brand-color, 35%);
+          background-color: #ddd;
         }
       }
-      .best_at {
+      .best_at, .exchange_window_best_at {
         font-size: 2vh;
         text-transform: uppercase;
-        line-height: 4vh;
         font-weight: 400;
+        line-height: 4vh;
+        &#exchange_window_best_at {
+          font-size: 1em;
+          line-height: normal;
+        }
         &.best {
           background-color: darken($brand-color, 10%);
           &::after {
@@ -1572,7 +1591,7 @@ body#cambiu {
         }
       }
         .quote, .quote_currency {
-        font-weight: 700;
+        font-weight: 500;
           font-size: 1.25em;
           color: $green;
           line-height: 1em;

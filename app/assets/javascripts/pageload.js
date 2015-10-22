@@ -85,9 +85,10 @@ highlight = function(id) {
     var big_parent  =   iw_content.parent().parent().parent();
     var o_z_index   =   big_parent.css('z-index');
 
-    big_parent.find('[style*="background-color: rgb(255, 255, 255)"]').css('background-color', '#FF6E3A').addClass('highlight_bg');
+    big_parent.find('[style*="background-color: rgb(255, 255, 255)"]').css('background-color', '#ddd').addClass('highlight_bg');
     big_parent.attr('data-o-z-index', o_z_index).css('z-index', '1000');
-    iw_content.css('color', '#fff').css('text-shadow', '0px 1px 0px rgba(0, 0, 0, 1)');
+//    big_parent.find('.exchange_window_best_at').css('background-color', '#555');
+//    iw_content.css('color', '#fff')/*.css('text-shadow', '0px 1px 0px rgba(0, 0, 0, 1)')*/;
 
 };
 
@@ -241,7 +242,14 @@ $(document).on('click','.navbar-collapse.in',function(e) {
         var exchange_el  = $('.exchange_window.template').clone().removeClass('template');
         exchange_el.find('.exchange_window_quote').html(exchange.edited_quote);
         exchange_el.find('.exchange_window_name').html(exchange.name_s);
-        exchange_el.find('.exchange_window_address').html(exchange.address);
+        exchange_el.find('.exchange_window_name').html(exchange.name_s);
+        var best_at = exchange_el.find('.exchange_window_best_at');
+        if (exchange.best_at) {
+            best_at.html(' ');
+            best_at.addClass('show').addClass(exchange.best_at);
+        } else {
+            best_at.addClass('hide');
+        };
         exchange_el.find('.exchange_window_open').html(exchange.todays_hours);
         exchange_el.attr('id', 'exchange_window_' + exchange.id);
         exchange_el.find('[data-id]').attr('data-id', exchange.id);
