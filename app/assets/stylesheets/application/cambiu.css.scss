@@ -197,6 +197,9 @@ body#cambiu {
     .col-md-1-minus {
       width: 8%;
     }
+    .col-md-offset-half {
+      margin-left: 3%;
+    }
   }
   @media (max-width: $screen-xs-max) {
     .col-md-half {
@@ -1280,7 +1283,11 @@ body#cambiu {
       }
       #exchanges {
         margin-top: -3px;
-        z-index: 0;
+        @media (min-width: $screen-sm-min) {
+          position: relative;
+          top: 4vh;
+        }
+        z-index: 1;
         padding-left: 0;
         padding-right: 0;
         @media (max-width: $screen-xs-max){
@@ -1294,6 +1301,9 @@ body#cambiu {
         }
         #best_exchanges .tag {
           display: block;
+        }
+        .more {
+          margin-top: 1vh;
         }
         #fetch_more {
           text-align: center;
@@ -2251,8 +2261,9 @@ body#cambiu {
 
      #map_container {
       position: fixed;
-      margin-left: 33.0%;
-      width: 70%;
+//      margin-left: 33.0%;
+//      width: 70%;
+       width: 100%;
       padding-right: 0;
       padding-left: 0;
       #map-canvas {

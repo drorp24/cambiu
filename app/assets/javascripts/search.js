@@ -306,7 +306,7 @@ $(document).ready(function() {
         if ($('#search_form').valid()) {
             set('fetch', 'all');
             $('#new_search').submit()
-            $('#exchanges_list #fetch_more').remove();
+            $('#exchanges_list .more').remove();
             $('#exchanges_search_results').css('display', 'block')
         }
      });
@@ -315,7 +315,7 @@ $(document).ready(function() {
         e.preventDefault();
         set('fetch', 'all');
         $('#new_search').submit();
-        $('#exchanges_list #fetch_more').remove();
+        $('#exchanges_list .more').remove();
         $('#exchanges_search_results').css('display', 'block')
     });
 
