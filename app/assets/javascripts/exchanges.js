@@ -17,7 +17,8 @@ $(document).ready(function() {
 
         console.log('updatePage');
         clearExchanges();
-        exchanges = data;
+        best_exchanges = data['best'];
+        exchanges = data['more'];
 
         if (exchangePage() && exchanges && exchanges.length > 0) {
             var mapCenterLat = exchanges[0].latitude;
@@ -29,7 +30,7 @@ $(document).ready(function() {
         drawMap(mapCenterLat, mapCenterLng, exchanges);
 
         if (search() && exchanges && exchanges.length > 0) {
-            updateExchanges(exchanges);
+            updateExchanges(best_exchanges, 'best');
         }
 
         if (exchanges && exchanges.length > 0) {
@@ -51,13 +52,13 @@ $(document).ready(function() {
 
     };
 
-    updateExchanges = function(exchanges) {
+    updateExchanges = function(exchanges, mode) {
 
-        console.log('updateExchanges');
+        console.log('updateExchanges. mode: ' + mode);
 
-        if (value_of('fetch') == 'all') {
+        if (mode == 'more') {
             append_point = '#exchanges_list .list-group #exchanges_items'
-        } else {
+        } else if (mode == 'best') {
             append_point = '#exchanges_list .list-group #best_exchanges'
         }
         for (var i = 0; i < exchanges.length; i++) {

@@ -194,7 +194,7 @@ $(document).ready(function() {
             if (value_of('pay_amount') > 0) { exchanges.reverse()}
         }
         clearExchanges();
-        updateExchanges(exchanges);
+        updateExchanges(exchanges, 'more');
     };
 
 

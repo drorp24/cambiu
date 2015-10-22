@@ -52,24 +52,30 @@ class Search < ActiveRecord::Base
         exchanges = []
       end
 
-      best_exchanges = Search.best(exchanges, center, pay, buy)
-
-      @exchange_offers = []
+      exchanges_offers = []
       exchanges.each do |exchange|
         exchange_offer = exchange.offer(center, pay, buy, user_location)
-        @exchange_offers << exchange_offer #unless exchange_offer[:errors].any?
-      end
-      
-      unless self.fetch == 'best'
-        if self.sort == "quote"
-          @exchange_offers = @exchange_offers.sort_by { |e| e[:quote] || 1000000 }
-          @exchange_offers.reverse! if pay.amount > 0
-        else
-          @exchange_offers = @exchange_offers.sort_by { |e| e[:distance] }
-        end
+        exchanges_offers << exchange_offer
       end
 
-      @exchange_offers
+      if self.sort == "quote"
+        exchanges_offers = exchanges_offers.sort_by { |e| e[:quote] || 1000000 }
+        exchanges_offers.reverse! if pay.amount > 0
+      else
+        exchanges_offers = exchanges_offers.sort_by { |e| e[:distance] }
+      end
+
+      best_exchanges = Search.best(exchanges, center, pay, buy)
+
+      best_exchanges_offers = []
+      best_exchanges.each do |best_exchange|
+        best_exchange_offer = exchanges_offers.find{|exchange| exchange[:id] == best_exchange[:id]}.dup || best_exchange.offer(center, pay, buy, user_location)
+        best_exchange_offer[:best_at] = best_exchange.best_at
+        best_exchanges_offers << best_exchange_offer
+      end
+
+
+      {'best': best_exchanges_offers, 'more': exchanges_offers}
   end
 
   def self.best(exchanges, center, pay, buy)
