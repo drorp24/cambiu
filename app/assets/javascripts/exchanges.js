@@ -317,28 +317,9 @@ $(document).ready(function() {
 
     forwardBestMarkers = function() {
 
-        // have one single marker with the best quality
-        best_exchange_ids = [];
-        best_array = best_exchanges.slice().reverse();    // reversing then overriding an id indexed array ensure one item with best quality
-
-        for (var i = 0; i < best_array.length; i++) {
-            var best_exchange = best_array[i];
-            var existing_item = $.grep(best_exchange_ids, function (e) {
-                return e.id == best_exchange.id;
-            });
-            if (existing_item.length != 0) {
-                existing_item[0]['best_at'] = best_exchange.best_at
-            } else {
-                best_exchange_ids.push({'id': best_exchange.id, 'best_at': best_exchange.best_at})
-            }
-        }
-
-        console.log("best_exchange_ids:");
-        console.log(best_exchange_ids);
-
-        // find respective iw's and increase their z-index
-        for (var i = 0; i < best_exchange_ids.length; i++) {
-            var best_exchange = best_exchange_ids[i];
+        // find best exchanges' iw's and increase their z-index
+        for (var i = 0; i < best_exchanges.length; i++) {
+            var best_exchange = best_exchanges[i];
             var marker = findMarker(best_exchange.id);
             var iw = marker.infowindow;
             var el = iw.content;
@@ -380,7 +361,8 @@ $(document).ready(function() {
             title: exchange.name,
             map: map,
             icon: icon,
-            exchange_id: exchange.id
+            exchange_id: exchange.id,
+            best_at: exchange.best_at
         });
 
 
