@@ -170,7 +170,7 @@ $(document).ready(function() {
 
    sort_ui = function(sort) {
 
-        $('#sort_switch').bootstrapSwitch('state', sort == 'quote', true);
+//        $('#sort_switch').bootstrapSwitch('state', sort == 'quote', true);
         $('.sorted_by').each(function() {
             $this = $(this);
             if ($this.data('sort')== sort) {$this.addClass('active')} else {$this.removeClass('active')}
@@ -198,12 +198,12 @@ $(document).ready(function() {
     };
 
 
-    $('.make-switch').bootstrapSwitch();
+//    $('.make-switch').bootstrapSwitch();
 
-    $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
+ /*   $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
         sort_by(state ? 'quote' : 'distance');
     });
-
+*/
     $('.sorted_by').click(function() {
          sort_by($(this).data('sort'));
     });

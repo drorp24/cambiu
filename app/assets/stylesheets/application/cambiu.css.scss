@@ -1239,7 +1239,7 @@ body#cambiu {
   }
   
   &.exchanges {
-    input:not(#getit_button), select, button, .email_submit {
+    input:not(#getit_button), select, button:not(.sort), .email_submit {
       font-weight: 700;
 
       @media (max-width: $screen-xs-max) {
@@ -1404,6 +1404,25 @@ body#cambiu {
         #exchanges_search_results {
           text-align: center;
           margin-top: -1px;
+          padding-bottom: 3px;
+          background-color: #eee;
+          border-top: 1px solid #bbb;
+          button.sort {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            border-bottom: none;
+            &.active {
+              background-color: #fff;
+              box-shadow: none;
+              color: #333;
+            }
+            &:not(.active) {
+            background-color: #eee;
+            box-shadow: none;
+            color: #888;
+            border: 1px solid #ddd;
+            }
+          }
           .results {
             font-size: 1em;
             text-transform: uppercase;

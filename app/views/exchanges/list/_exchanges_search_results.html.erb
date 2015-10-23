@@ -5,20 +5,38 @@
         <span>Finding offers...</span>
       </div>
       <div id="result_message" style="display: none;">
-        <div class="results col-md-4 col-xs-4 middle-parent">
+
+ <!--       <div class="results col-md-4 col-xs-4 middle-parent">
           <span style="display: none" class="middle-child desktop_only" id="exchanges_count"></span>
           <span  class="middle-child"> Sort by </span>
           <span  class="middle-child"></span>
         </div>
-        <div class="sorted_by col-md-4 col-xs-4 middle-parent" data-sort="quote">
-          <span class="middle-child">Price</span>
+-->
+
+        <div class="col-md-8 col-md-offset-4 col-xs-12 middle-parent">
+
+          <div class="btn-group  btn-group-sm btn-group-justified" role="group" data-toggle="buttons">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default sort active">Distance</button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default sort">Price</button>
+            </div>
+          </div>
+
         </div>
-        <div class="sorted_by col-md-4 col-xs-4 middle-parent" data-sort="distance">
-          <span class="middle-child">Distance</span>
-        </div>
-      </div>
+
+          <!--       <div class="sorted_by col-md-4 col-xs-4 middle-parent" data-sort="quote">
+                   <span class="middle-child">Price</span>
+                 </div>
+                 <div class="sorted_by col-md-4 col-xs-4 middle-parent" data-sort="distance">
+                   <span class="middle-child">Distance</span>
+                 </div>
+               </div>
+         -->
       <div id="empty_message" style="display: none;">
         <span>No offers found. Click above to change your search criteria.</span>
       </div>
   </div>
 </div>
+    </div>

@@ -22,6 +22,6 @@
 //= require bootstrap/transition
 //= require bootstrap/collapse
 //= require bootstrap/carousel
-//= require bootstrap-switch
+//= require bootstrap/button
 //= require jquery.freeow.min
 //= require iscroll-lite
