@@ -68,7 +68,7 @@ class Search < ActiveRecord::Base
       best_exchanges = Search.best(exchanges, center, pay, buy)
 
       best_exchanges_offers = []
-      best_exchanges.each do |best_exchange|
+      best_exchanges.reverse_each do |best_exchange|
         exchange_in_exchanges = exchanges_offers.find{|exchange| exchange[:id] == best_exchange[:id]}
         if exchange_in_exchanges
           exchange_in_exchanges[:best_at] = best_exchange.best_at
@@ -79,6 +79,7 @@ class Search < ActiveRecord::Base
         best_exchanges_offers << best_exchange_offer
       end
 
+      best_exchanges_offers.reverse!
 
       {'best': best_exchanges_offers, 'more': exchanges_offers}
   end

@@ -249,6 +249,18 @@ $(document).ready(function() {
         }));
 
 
+        // This will fire when map has finished loading
+        google.maps.event.addListenerOnce(map, 'idle', function(){
+
+            // remove 'x's
+            $('.gm-style-iw').next().css('display', 'none');
+
+            // increase z-index of best markers
+            setTimeout(function(){ forwardBestMarkers() }, 100);
+
+        });
+
+
     }
 
 
@@ -300,7 +312,40 @@ $(document).ready(function() {
         if (length == 1) {
             big_marker(exchanges[0].id)
         }
-     };
+
+      };
+
+    forwardBestMarkers = function() {
+
+        // have one single marker with the best quality
+        best_exchange_ids = [];
+        best_array = best_exchanges.slice().reverse();    // reversing then overriding an id indexed array ensure one item with best quality
+
+        for (var i = 0; i < best_array.length; i++) {
+            var best_exchange = best_array[i];
+            var existing_item = $.grep(best_exchange_ids, function (e) {
+                return e.id == best_exchange.id;
+            });
+            if (existing_item.length != 0) {
+                existing_item[0]['best_at'] = best_exchange.best_at
+            } else {
+                best_exchange_ids.push({'id': best_exchange.id, 'best_at': best_exchange.best_at})
+            }
+        }
+
+        console.log("best_exchange_ids:");
+        console.log(best_exchange_ids);
+
+        // find respective iw's and increase their z-index
+        for (var i = 0; i < best_exchange_ids.length; i++) {
+            var best_exchange = best_exchange_ids[i];
+            var marker = findMarker(best_exchange.id);
+            var iw = marker.infowindow;
+            var el = iw.content;
+            var $el = $(el);
+            $el.parent().parent().parent().css('z-index', '900');
+        }
+    };
 
     function addUserMarker() {
         var lat = value_of('location_lat') || value_of('user_lat');
@@ -400,11 +445,6 @@ $(document).ready(function() {
         if (exchanges && exchanges.length > 0) {
             updateMarkers(exchanges);
         }
-        // This will fire when map has finished loading
-        google.maps.event.addListenerOnce(map, 'idle', function(){
-            $('.gm-style-iw').next().css('display', 'none'); // remove 'x's
-        });
-
 
     };
 
