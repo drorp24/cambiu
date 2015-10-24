@@ -598,6 +598,9 @@ body#cambiu {
       @media (min-width: $screen-sm-min) {
 //        margin-top: $parameters-height - 3px;
       }
+      .list-group-item {
+        padding-bottom: 0;
+      }
     }
 
     .parameters {
@@ -702,12 +705,18 @@ body#cambiu {
 
   .reach-out-left {
     padding-left: 0;
+    &.almost {
+      padding-left: 0.5em;
+    }
     input, select, button {
       border-left: none;
     }
   }
   .reach-out-right {
     padding-right: 0;
+    &.almost {
+      padding-right: 0.5em;
+    }
     input, select {
       border-right: none;
     }
@@ -1511,10 +1520,11 @@ body#cambiu {
         }
       }
       .best_at, .exchange_window_best_at {
-        font-size: 2vh;
+        font-size: 1.1em;
+        paddgin-top: 0.25em;
+        padding-bottom: 0.25em;
         text-transform: uppercase;
         font-weight: 400;
-        line-height: 4vh;
         &#exchange_window_best_at {
           font-size: 1em;
           line-height: normal;
@@ -1569,8 +1579,10 @@ body#cambiu {
         }
       }
       .list_icon {
-        font-size: 1.2em;
-        font-weight: 900;
+        font-size: 1em;
+        position: relative;
+        bottom: 0.12em;
+        font-weight: 400;
         color: #666;
       }
       .distance {
@@ -1629,7 +1641,7 @@ body#cambiu {
       .gain {
         font-size: 0.9em;
         font-weight: 400;
-        color: $brand-color;
+        color: $green;
       }
       .comparison {
         text-align: center;
@@ -1675,6 +1687,24 @@ body#cambiu {
           color: darken($brand-color, 10%);
         }
       }
+      .base_rate {
+        color: #888;
+        line-height: 1.1em;
+        font-size: 0.8em;
+      }
+      .appendix {
+        color: #555;
+        font-weight: 300;
+//        font-size: 0.85em;
+//        background: #eee;
+//        border-top: 1px dashed #bbb;
+        line-height: 2em;
+      }
+      .bank_comparison {
+ //        color: $darken-brand-color;
+//         color: #333;
+//         color: $green;
+       }
 
     }
     .getit_parent {
@@ -1705,6 +1735,13 @@ body#cambiu {
         @include middle-parent(70px, 0)
       }
     }
+    .list-group-item .row:first-child {
+      margin-top: 0.5em;
+    }
+    .list-group-item .row:not(:first-child) {
+      margin-top: 1em;
+    }
+
     .page {
       background-color: #fff;
       box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
