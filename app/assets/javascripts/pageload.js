@@ -16,7 +16,7 @@ var directionsDisplay;
 var markers = [];
 var exchanges = [];
 var infowindows = [];
-var exchanges_by_quote = [];
+var exchanges_by_price = [];
 var exchanges_by_distance = [];
 var drawMap;
 var clearExchanges;
@@ -189,7 +189,7 @@ def = function(variable) {
         'pay_currency'  : 'GBP',
         'buy_amount'    : null,
         'buy_currency'  : 'EUR',
-        'sort'          : 'quote',
+        'sort'          : 'distance',
         'service_type'  : 'collection',
         'distance'      : '2.7'
     };
@@ -225,7 +225,7 @@ current_hash = function() {
 
 display = function(term) {
     switch (term) {
-        case 'quote':
+        case 'price':
             return 'best prices first:';
         case 'distance':
             return 'nearest first:';

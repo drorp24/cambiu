@@ -159,7 +159,7 @@ $(document).ready(function() {
     fix('pay_amount');
     fix('buy_amount');
 
-    $('.open_search').click(function() {
+    $('#exchanges').on('click','.open_search', function(e) {
         $('#exchange_params_change').collapse('toggle')
     });
 
@@ -169,32 +169,31 @@ $(document).ready(function() {
     // Sorting
 
    sort_ui = function(sort) {
-
-//        $('#sort_switch').bootstrapSwitch('state', sort == 'quote', true);
-        $('.sorted_by').each(function() {
-            $this = $(this);
-            if ($this.data('sort')== sort) {$this.addClass('active')} else {$this.removeClass('active')}
-        })
-    };
+       $('#exchanges_search_results .sort_btn_group button').removeClass('active');
+       $('#exchanges_search_results .sort_btn_group button.' + sort).addClass('active');
+   };
 
     sort_by = function(sort) {
 
+/*
         sort_ui(sort);
 
         $('[data-field=sort]').val(sort);
         sessionStorage.sort = sort;
+*/
 
         if (exchanges.length == 0) return;
 
         if (sort == 'distance') {
             exchanges_by_distance = exchanges.sort(function(a, b){return a.distance-b.distance;}).slice(0);
         }
-        else if (sort == 'quote') {
-            exchanges_by_quote = exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)}).slice(0);
+        else if (sort == 'price') {
+            exchanges_by_price = exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)}).slice(0);
             if (value_of('pay_amount') > 0) { exchanges.reverse()}
         }
+        set('list', 'more');
         clearExchanges();
-        updateExchanges(exchanges, 'more');
+        updateExchanges();
     };
 
 
@@ -204,8 +203,10 @@ $(document).ready(function() {
         sort_by(state ? 'quote' : 'distance');
     });
 */
-    $('.sorted_by').click(function() {
-         sort_by($(this).data('sort'));
+    $('#exchanges_search_results .sort_btn_group button').click(function() {
+        $('#exchanges_search_results .sort_btn_group button').toggleClass('active');
+        sort = $('#exchanges_search_results .sort_btn_group button.distance').hasClass('active') ? 'distance' : 'price';
+        sort_by(sort);
     });
 
     sort_ui(sessionStorage.sort);
@@ -301,7 +302,9 @@ $(document).ready(function() {
 
     $('#search_form #search_button').click(function(e) {
         e.preventDefault();
-        if (mobile) {$('#exchange_params_change').collapse('hide');}
+        $('#exchanges_search_params span:not(.change_link').css('display', 'block');
+        $('#exchanges_search_params span.change_link').html('change');
+        $('#exchange_params_change').collapse('hide');
         if ($('#search_form').valid()) {
             $('#new_search').submit()
         }

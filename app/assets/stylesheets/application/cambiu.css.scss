@@ -398,6 +398,19 @@ body#cambiu {
     overflow: hidden;
     white-space: nowrap;
   }
+  .change_link {
+    //               font-size: 0.9em;
+    margin-left: 2em;
+    margin-right: 0.5em;
+    cursor: pointer;
+    color: $darken-brand-color;
+    font-size: 0.9em;
+    font-weight: 400;
+    text-transform: uppercase;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 
   .best_at, .exchange_window_best_at {
     font-size: 1.1em;
@@ -614,7 +627,7 @@ body#cambiu {
   .parameters {
     background-color: #fff;
     width: 100%;
-    z-index: 1;
+    z-index: 2;
     .well {
       margin-bottom: 0;
     }
@@ -731,9 +744,6 @@ body#cambiu {
 
   }
 
-  .exchange_search_form_gain .gain_amount {
-    font-weight: 700;
-  }
 
   .delivery_method button {
     width: 100%;
@@ -1421,19 +1431,6 @@ body#cambiu {
             [data-field] {
 //              font-weight: 500;
             }
-            .change_link {
-//               font-size: 0.9em;
-              margin-left: 2em;
-              margin-right: 0.5em;
-              cursor: pointer;
-              color: $darken-brand-color;
-              font-size: 0.9em;
-              font-weight: 400;
-              text-transform: uppercase;
-              &:hover {
-                text-decoration: underline;
-              }
-            }
  /*           &::after {
               content: "\f002";
               font-family: fontAwesome;
@@ -1469,7 +1466,10 @@ body#cambiu {
           padding-bottom: 3px;
           background-color: #eee;
           border-top: 1px solid #bbb;
-          button.sort {
+          .sort_btn_group button {
+            &:focus {
+              outline: none;
+            }
             font-size: 0.75em;
             text-transform: uppercase;
             border-bottom: none;
@@ -1603,13 +1603,13 @@ body#cambiu {
         font-weight: 400;
         color: #666;
       }
-      .distance {
-        font-size: 1em;
+      .distance:not(button) {
+        font-size: 0.9em;
         width: 100%;
         margin-top: -0.8em;
         display: inline;
-        font-weight: 300;
-        color: #333;
+        font-weight: 500;
+        color: #000;
         &::before {
           font-family: fontAwesome;
           content: "\f041" + '    ';
@@ -1728,7 +1728,8 @@ body#cambiu {
           }
           .gain_amount {
             color: $green;
-            margin-right: 0.9em;
+            margin-right: 1em;
+            font-weight: 500;
           }
           .gain_tooltip {
             color: #555;

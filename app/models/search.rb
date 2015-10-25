@@ -13,7 +13,7 @@ class Search < ActiveRecord::Base
 
     self.distance      ||=  20
     self.distance_unit ||= "km"
-    self.sort          ||= "quote"
+    self.sort          ||= "price"
     self.exchange_id = nil if self.mode == 'search'
 
     pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
@@ -58,7 +58,7 @@ class Search < ActiveRecord::Base
         exchanges_offers << exchange_offer
       end
 
-      if self.sort == "quote"
+      if self.sort == "price"
         exchanges_offers = exchanges_offers.sort_by { |e| e[:quote] || 1000000 }
         exchanges_offers.reverse! if pay.amount > 0
       else
@@ -85,6 +85,8 @@ class Search < ActiveRecord::Base
   end
 
   def self.best(exchanges, center, pay, buy)
+
+    return [] if exchanges.empty?
 
     transaction = buy.currency.iso_code != "GBP" ? 'sell' : 'buy'
     if pay.amount > 0

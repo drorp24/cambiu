@@ -416,7 +416,7 @@ class Exchange < ActiveRecord::Base
         @exchange_quotes << exchange_quote
       end
       
-      if sort == "quote"
+      if sort == "price"
         @exchange_quotes.sort_by{|e| e[:quote] || 1000000}
       else
         @exchange_quotes.sort_by{|e| e[:distance] }

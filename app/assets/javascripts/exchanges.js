@@ -54,7 +54,7 @@ $(document).ready(function() {
 
     updateExchanges = function() {
 
-        console.log('updateExchanges. mode: ' + String(value_of('list')));
+        console.log('updateExchanges. list: ' + String(value_of('list')));
 
         list = value_of('list');
 
@@ -170,7 +170,8 @@ $(document).ready(function() {
     clearExchanges = function () {
         console.log('clearExchanges');
         exchange_list_count = 0;
-        $('#exchanges_list #best_exchanges').empty();
+        list = value_of('list');
+        if (list != 'more') $('#exchanges_list #best_exchanges').empty();
         $('#exchanges_list #exchanges_items').empty();
     };
 
@@ -270,23 +271,44 @@ $(document).ready(function() {
         console.log('updateResults');
 
         $('#loader_message').css('display', 'none');
+
+
         if (exchanges && exchanges.length) {
+
+            $('#exchanges_search_results').css('display', 'block');
+            $('#exchanges_search_params span').css('display', 'inline');
+            $('#exchanges_search_params span.change_link').html('change');
+            $('#result_message').css('display', 'block');
+
+/*
             $('#empty_message').css('display', 'none');
             $('#result_message').css('display', 'block');
             $('#exchanges_count').html(exchange_list_count);
-            $('#sort_order').html(display(sessionStorage.sort));
+            $('#sort_order').html(display(sessionStorage.sort));   // TODO: Change sort method
+*/
+
         } else {
-            $('#result_message').css('display', 'none');
-            $('#empty_message').css('display', 'block');
-            $('#empty_location').html(sessionStorage.location);
+            $('#exchanges_search_results').css('display', 'none');
+            $('#exchanges_search_params span:not(.change_link').css('display', 'none');
+            $('#exchanges_search_params span.change_link').html('change your search');
+            $('.more').css('display', 'block');
+            $('#fetch_more').html('No results found in that area.');
+
+            /*
+                        $('#result_message').css('display', 'none');
+                        $('#empty_message').css('display', 'block');
+                        $('#empty_location').html(sessionStorage.location);
+            */
         }
 
+/*
         if (desktop) {
             var line = Math.min(exchanges.length, 4);
             var middleline = $('#exchanges_items .list-group-item:nth-child(' + line + ')');
             middleline.popover('show');
             setTimeout(function() {middleline.popover('hide')}, 5000);
         }
+*/
 
 /*
         $('#exchanges_search_params')[0].scrollIntoView();
