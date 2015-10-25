@@ -275,7 +275,9 @@ $(document).ready(function() {
 
         if (exchanges && exchanges.length) {
 
-            $('#exchanges_search_results').css('display', 'block');
+
+            var list = value_of('list')
+            if (list && list != 'best' ) $('#exchanges_search_results').css('display', 'block');
             $('#exchanges_search_params span').css('display', 'inline');
             $('#exchanges_search_params span.change_link').html('change');
             $('#result_message').css('display', 'block');
