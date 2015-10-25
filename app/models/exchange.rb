@@ -56,6 +56,7 @@ class Exchange < ActiveRecord::Base
         rounded:          false,
         pay_rounded:      params[:pay_amount].to_money(pay_currency).format,
         get_rounded:      params[:get_amount].to_money(get_currency).format,
+        base_rate:        nil,
         errors:           []
     }
 
@@ -105,6 +106,8 @@ class Exchange < ActiveRecord::Base
         result[:edited_quote_rounded]                       = result[:get_rounded]
       end
 
+      result[:base_rate]                                    = Exchange.edit_base_rate(rates, transaction)
+
     else
 
       rates = result[:rates]          = rate(pay_currency, get_currency)
@@ -139,6 +142,9 @@ class Exchange < ActiveRecord::Base
         result[:pay_rounded]                                = (pay_amount - pay_subtract).to_money(pay_currency).format
         result[:edited_quote_rounded]                       = result[:pay_rounded]
       end
+
+      result[:base_rate]                                    = Exchange.edit_base_rate(rates, transaction)
+
     end
 
     return result
@@ -209,6 +215,11 @@ class Exchange < ActiveRecord::Base
 
   end
 
+  def self.edit_base_rate(rates, transaction)
+#working    1.to_money(rates[:base_currency]).format(:disambiguate => true) + ' = ' + rates[transaction.to_sym].to_money(rates[:rated_currency]).format(:disambiguate => true)
+    1.to_money(rates[:base_currency]).format(:disambiguate => true) + ' = ' + (100*rates[transaction.to_sym]).to_money(rates[:rated_currency]).format(:disambiguate => true).delete('.').insert(-5, '.')
+  end
+
 
   def admin_user_s
 
@@ -255,6 +266,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:quote_currency] = quotes[:quote_currency]
     exchange_hash[:errors] = quotes[:errors]
     exchange_hash[:rounded] = quotes[:rounded]
+    exchange_hash[:base_rate] = quotes[:base_rate]
     exchange_hash[:user_location] = user_location
     exchange_hash[:delivery_tracking] = delivery_tracking
     exchange_hash[:service_type] = service_type

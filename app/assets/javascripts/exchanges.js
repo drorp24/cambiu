@@ -134,7 +134,7 @@ $(document).ready(function() {
         }
 */
         exchange_el.find('.gain_amount').html(exchange.gain_amount);
-        exchange_el.find('.gain_type').html(exchange.gain_type);
+        exchange_el.find('.gain_type').addClass(exchange.gain_type);
         exchange_el.find('.address').html(exchange.address);
         exchange_el.find('.open_today').html(exchange.open_today);
         exchange_el.find('.open_today').attr('href', exchange.website ? exchange.website : "#");
@@ -146,6 +146,7 @@ $(document).ready(function() {
         exchange_el.find('.best_at').addClass(exchange.best_at);
         if (exchange.best_at == 'best') exchange_el.find('.exchange_icon').css('display', 'block');
 
+        exchange_el.find('.base_rate').html(exchange.base_rate);
 
         /*
          exchange_sum.find('[data-exchangeid]').attr('data-exchangeid', exchange.id);

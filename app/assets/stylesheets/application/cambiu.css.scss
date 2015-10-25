@@ -399,6 +399,42 @@ body#cambiu {
     white-space: nowrap;
   }
 
+  .best_at, .exchange_window_best_at {
+    font-size: 1.1em;
+    paddgin-top: 0.25em;
+    padding-bottom: 0.25em;
+    text-transform: uppercase;
+    font-weight: 400;
+    &#exchange_window_best_at {
+      font-size: 1em;
+      line-height: normal;
+    }
+    &.best {
+      background-color: darken($brand-color, 10%);
+      &::after {
+        content: 'best value';
+      }
+    }
+    &.nearest {
+      background-color: #000;
+      &::after {
+        content: 'nearest';
+      }
+    }
+    &.highest {
+      background-color: $green;
+      &::after {
+        content: 'highest';
+      }
+    }
+    &.cheapest {
+      background-color: $green;
+      &::after {
+        content: 'cheapest';
+      }
+    }
+  }
+
   .exchange_window_sum, .exchange_window_det {
     color: #444;
     font-weight: 400;
@@ -1308,20 +1344,34 @@ body#cambiu {
       }
       #exchanges {
         margin-top: -3px;
-        @media (min-width: $screen-sm-min) {
-          position: relative;
-          top: $navbar-height;
-        }
         z-index: 1;
         padding-left: 0;
         padding-right: 0;
+        /*
+        @media (min-width: $screen-sm-min) {
+          position: relative;
+          top: 12px;
+        }
+        @media (max-width: $screen-xs-max){
+          position: relative;
+          top:12px;
+        }
+        */
         @media (max-width: $screen-xs-max){
           padding-right: 0;
          }
         #exchanges_items {
           margin-top: -1px;
         }
-        #exchanges_list .tag_row {
+        #exchanges_list {
+           @media (min-width: $screen-sm-min) {
+            margin-top: $navbar-height + $parameters-height + 5px;
+          }
+          @media (max-width: $screen-xs-max){
+            margin-top: $navbar-height;
+          }
+        }
+        .tag_row {
           display: none;
         }
         #best_exchanges .tag_row {
@@ -1341,19 +1391,21 @@ body#cambiu {
         }
         #fetch_more {
           text-align: center;
-          line-height: 7vh;
+          line-height: 3.5em;
+          position: relative;
+          bottom: 5px;
           a {
             color: $darken-brand-color;
-            font-size: 1.1em;
+            font-size: 0.9em;
+            text-transform: uppercase;
            }
         }
         #exchanges_search_params {
           margin-top: 15px;
           border: none;
+          background-color: #eee;
           @media (min-width: $screen-sm-min) {
-            min-height: 60px;
-            padding-top: 20px;
-            .exchanges_search_params_title {
+             .exchanges_search_params_title {
              }
           }
           .exchanges_search_params_title {
@@ -1375,13 +1427,14 @@ body#cambiu {
               margin-right: 0.5em;
               cursor: pointer;
               color: $darken-brand-color;
-              font-size: 1.1em;
+              font-size: 0.9em;
               font-weight: 400;
+              text-transform: uppercase;
               &:hover {
                 text-decoration: underline;
               }
             }
-            &::after {
+ /*           &::after {
               content: "\f002";
               font-family: fontAwesome;
               color: #fff;
@@ -1390,7 +1443,7 @@ body#cambiu {
                 color: $brand-color;
               }
             }
-           }
+*/           }
           #comma {
 //            margin-left: -0.2em;
           }
@@ -1519,42 +1572,7 @@ body#cambiu {
           background-color: #ddd;
         }
       }
-      .best_at, .exchange_window_best_at {
-        font-size: 1.1em;
-        paddgin-top: 0.25em;
-        padding-bottom: 0.25em;
-        text-transform: uppercase;
-        font-weight: 400;
-        &#exchange_window_best_at {
-          font-size: 1em;
-          line-height: normal;
-        }
-        &.best {
-          background-color: darken($brand-color, 10%);
-          &::after {
-            content: 'best value';
-          }
-         }
-        &.nearest {
-          background-color: #000;
-          &::after {
-            content: 'nearest';
-          }
-        }
-        &.highest {
-          background-color: $green;
-          &::after {
-            content: 'highest';
-          }
-         }
-        &.cheapest {
-          background-color: $green;
-          &::after {
-            content: 'cheapest';
-          }
-        }
-      }
-      .delivery_bg {
+       .delivery_bg {
         position: absolute;
         right: 0px;
         top: 0px;
@@ -1687,24 +1705,45 @@ body#cambiu {
           color: darken($brand-color, 10%);
         }
       }
-      .base_rate {
-        color: #888;
-        line-height: 1.1em;
-        font-size: 0.8em;
-      }
       .appendix {
-        color: #555;
+        color: #000;
         font-weight: 300;
+        font-size: 0.85em;
+        padding-bottom: 0.5em;
 //        font-size: 0.85em;
 //        background: #eee;
 //        border-top: 1px dashed #bbb;
         line-height: 2em;
+        .base_rate {
+
+        }
+        .gains {
+          .gain_type {
+            &.plus:after {
+              content: ' Extra';
+            }
+            &.minus:after {
+              content: ' Save';
+            }
+          }
+          .gain_amount {
+            color: $green;
+            margin-right: 0.9em;
+          }
+          .gain_tooltip {
+            color: #555;
+          }
+        }
+        .tooltip {
+          width: 100%;
+        }
+        .tooltip-inner {
+          background-color: #fff;
+        }
+        .tooltip-arrow {
+          border-right-color: #fff;
+        }
       }
-      .bank_comparison {
- //        color: $darken-brand-color;
-//         color: #333;
-//         color: $green;
-       }
 
     }
     .getit_parent {
@@ -1736,10 +1775,10 @@ body#cambiu {
       }
     }
     .list-group-item .row:first-child {
-      margin-top: 0.5em;
+      margin-top: 0.3em;
     }
     .list-group-item .row:not(:first-child) {
-      margin-top: 1em;
+      margin-top: 0.7em;
     }
 
     .page {
@@ -1982,15 +2021,7 @@ body#cambiu {
             font-size: 0.9em;
           }
         }
-        .gain_amount {
-          @media (max-width: $screen-xs-max) {
-            font-size: 1em;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 0.9em;
-          }
-       }
-        .gain_currency {
+         .gain_currency {
           @media (max-width: $screen-xs-max) {
             font-size: 1em;
           }
@@ -2085,11 +2116,13 @@ body#cambiu {
       text-align: center;
       color: $brand-color;
     }
+    .pane:not(#exchanges_list) {
+      margin-top: $navbar-height + 2px;
+    }
     #exchange_voucher, #exchange_deal {
       width: 94%;
       background-image: image_url('voucher_bg.png');
       margin-left: 3%;
-      margin-top: 10px;
       /*
       filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12,Color='#444')";
       filter: url(#drop-shadow);
@@ -2352,6 +2385,8 @@ body#cambiu {
        width: 100%;
       padding-right: 0;
       padding-left: 0;
+       top: 0;
+       left: 0;
       #map-canvas {
         height: 100vh;
        }
