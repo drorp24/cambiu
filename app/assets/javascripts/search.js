@@ -115,8 +115,8 @@
         console.log('Since user location could not be found: setting the default location');
         set('location',         'London, UK');
         set('location_short',   'London');
-        set('location_lat',     '51.510422');
-        set('location_lng',     '-0.156885');
+        set('location_lat',     '51.5008');
+        set('location_lng',     '-0.1247');
         set('location_type',    'default');
     };
 
@@ -352,7 +352,6 @@ $(document).ready(function() {
 
     beforeSubmit = function() {
         startLoader();
-        $('.logo_word').css('display', 'none');
     };
 
     $('#new_search').on('ajax:before', function() {

@@ -867,8 +867,8 @@ body#cambiu {
 
   .navbar {
     .logo_word {
-      color: white;
-      font-style: italic;
+      color: #fff;
+      font-weight: 300;
       font-size: 1.5em;
       text-transform: initial;
       line-height: 50px;
@@ -876,6 +876,7 @@ body#cambiu {
     }
     #navbar_logo {
       position: absolute;
+      left: 120px;
       @media (max-width: $screen-xs-max) {
         left: 0;
       }
@@ -1425,7 +1426,7 @@ body#cambiu {
             @media (min-width: $screen-sm-min) {
               font-size: 1em;
             }
-            color: #333;
+            color: #000;
 //            text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
             font-weight: 400;
             [data-field] {
@@ -1466,7 +1467,12 @@ body#cambiu {
           padding-bottom: 3px;
           background-color: #eee;
           border-top: 1px solid #bbb;
-          .sort_btn_group button {
+          .order_text {
+            position: relative;
+            top: 0.3em;
+            color: #000;
+          }
+          .sort_btn_group button, .order_text {
             &:focus {
               outline: none;
             }
@@ -1476,14 +1482,13 @@ body#cambiu {
             &.active {
               background-color: #fff;
               box-shadow: none;
-              color: #333;
+              color: #000;
             }
-            &:not(.active) {
+            &:not(.active):not(.order_text) {
             background-color: #eee;
             box-shadow: none;
-            color: #888;
-            border: 1px solid #ddd;
-            }
+            color: #999;
+             }
           }
           .results {
             font-size: 1em;
@@ -1601,7 +1606,7 @@ body#cambiu {
         position: relative;
         bottom: 0.12em;
         font-weight: 400;
-        color: #666;
+        color: #000;
       }
       .distance:not(button) {
         font-size: 0.9em;
