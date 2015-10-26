@@ -2111,8 +2111,8 @@ body#cambiu {
       #voucher_bullets.exchange_bullets {
         font-weight: 400;
         color: #333;
-        margin-top: 15vh;
-        font-size: 1.4em;
+        margin-top: 11vh;
+        font-size: 1.2em;
       }
     }
     #exchange_deal {
@@ -2121,9 +2121,10 @@ body#cambiu {
     .calming_msg {
       text-align: center;
       color: $brand-color;
+      font-size: 0.9em;
     }
     .pane:not(#exchanges_list) {
-      margin-top: $navbar-height + 2px;
+      margin-top: 70px;
     }
     #exchange_voucher, #exchange_deal {
       width: 94%;
@@ -2135,7 +2136,7 @@ body#cambiu {
       -webkit-filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));
       filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));
       */
-      height: 100vh;
+      height: 87vh;
     i {
         margin-right: 5px;
       }
@@ -2162,10 +2163,9 @@ body#cambiu {
         color: $brand-color;
       }
       .deal_title {
-        font-family: 'Patrick Hand', cursive;
         color: #888;
         @media (min-width: $screen-sm-min) {
-          font-size: 4vh;
+          font-size: 2vh;
         }
         @media (max-width: $screen-xs-max) {
           font-size: 3vh;
@@ -2181,7 +2181,7 @@ body#cambiu {
       .voucher_title {
         color: #888;
         @media (min-width: $screen-sm-min) {
-          font-size: 3.5vh;
+          font-size: 2.5vh;
         }
         @media (max-width: $screen-xs-max) {
           font-size: 3.5vh;
@@ -2258,7 +2258,6 @@ body#cambiu {
 //          text-align: center;
          color: #333;
          .bullets_title {
-           font-family: 'Patrick Hand', cursive;
            font-size: 4.5vh;
            color: $brand-color;
            text-transform: uppercase;
