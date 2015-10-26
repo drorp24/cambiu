@@ -168,27 +168,20 @@ $(document).ready(function() {
 
     // Sorting
 
-   sort_ui = function(sort) {
-       $('#exchanges_search_results .sort_btn_group button').removeClass('active');
-       $('#exchanges_search_results .sort_btn_group button.' + sort).addClass('active');
-   };
+    sort_ui = function(sort) {
+        $('#exchanges_search_results .sort_btn_group button').removeClass('active');
+        $('#exchanges_search_results .sort_btn_group button.' + sort).addClass('active');
+    };
 
     sort_by = function(sort) {
-
-/*
-        sort_ui(sort);
-
-        $('[data-field=sort]').val(sort);
-        sessionStorage.sort = sort;
-*/
 
         if (exchanges.length == 0) return;
 
         if (sort == 'distance') {
-            exchanges_by_distance = exchanges.sort(function(a, b){return a.distance-b.distance;}).slice(0);
+            exchanges.sort(function(a, b){return a.distance-b.distance;});
         }
         else if (sort == 'price') {
-            exchanges_by_price = exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)}).slice(0);
+            exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)});
             if (value_of('pay_amount') > 0) { exchanges.reverse()}
         }
         set('list', 'more');
@@ -197,12 +190,6 @@ $(document).ready(function() {
     };
 
 
-//    $('.make-switch').bootstrapSwitch();
-
- /*   $('#sort_switch').on('switchChange.bootstrapSwitch', function(event, state) {
-        sort_by(state ? 'quote' : 'distance');
-    });
-*/
     $('#exchanges_search_results .sort_btn_group button').click(function() {
         $('#exchanges_search_results .sort_btn_group button').toggleClass('active');
         sort = $('#exchanges_search_results .sort_btn_group button.distance').hasClass('active') ? 'distance' : 'price';
@@ -263,16 +250,6 @@ $(document).ready(function() {
      });
 
 
-    // open parameters collapsed form in desktops only
-/*
-    var mq = window.matchMedia('(min-width: 768px)');
-    if(mq.matches) {
-        $('.parameters .collapse').addClass('in');
-    } else {
-        // the width of browser is less then 700px
-    }
-*/
-
 
     $('.getstarted_button').click(function(){
         if ($('#new_search').valid() && custom_validate($('#new_search'))) {
@@ -301,10 +278,6 @@ $(document).ready(function() {
     // #search_form submits the shadow form #new_search rather than itself
 
     $('#search_form #search_button').click(function(e) {
-        e.preventDefault();
-        $('#exchanges_search_params span:not(.change_link').css('display', 'block');
-        $('#exchanges_search_params span.change_link').html('change');
-        $('#exchange_params_change').collapse('hide');
         if ($('#search_form').valid()) {
             $('#new_search').submit()
         }
@@ -345,8 +318,12 @@ $(document).ready(function() {
     // Before actions
 
     startLoader = function() {
+
+      // will be required again if only the entire list is presented initially
+        // currently, when only best list is initially displayed, the empty message has to be displayed on the best list part's '#fetch_more' div
         $('#empty_message').css('display', 'none');
         $('#result_message').css('display', 'none');
+
         $('#loader_message').css('display', 'block');
     };
 

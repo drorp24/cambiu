@@ -88,6 +88,8 @@ $(document).ready(function() {
     };
 
     updateMore = function() {
+        $('#exchanges_search_results').css('display', 'block');
+
         exchanges_append_point = '#exchanges_list .list-group #exchanges_items';
 
         $('#exchanges_list .more').css('display', 'none');
@@ -271,36 +273,23 @@ $(document).ready(function() {
         console.log('updateResults');
 
         $('#loader_message').css('display', 'none');
-
+        $('#exchange_params_change').collapse('hide');
 
         if (exchanges && exchanges.length) {
 
-
-            var list = value_of('list')
+            var list = value_of('list');
             if (list && list != 'best' ) $('#exchanges_search_results').css('display', 'block');
             $('#exchanges_search_params span').css('display', 'inline');
             $('#exchanges_search_params span.change_link').html('change');
-            $('#result_message').css('display', 'block');
-
-/*
-            $('#empty_message').css('display', 'none');
-            $('#result_message').css('display', 'block');
-            $('#exchanges_count').html(exchange_list_count);
-            $('#sort_order').html(display(sessionStorage.sort));   // TODO: Change sort method
-*/
+            $('#fetch_more').html('<a href=#>Show more</a>');
 
         } else {
+
             $('#exchanges_search_results').css('display', 'none');
             $('#exchanges_search_params span:not(.change_link').css('display', 'none');
             $('#exchanges_search_params span.change_link').html('change your search');
-            $('.more').css('display', 'block');
+            $('#exchanges_list .more').css('display', 'block');
             $('#fetch_more').html('No results found in that area.');
-
-            /*
-                        $('#result_message').css('display', 'none');
-                        $('#empty_message').css('display', 'block');
-                        $('#empty_location').html(sessionStorage.location);
-            */
         }
 
 /*
