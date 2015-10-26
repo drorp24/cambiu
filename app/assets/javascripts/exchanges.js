@@ -66,7 +66,7 @@ $(document).ready(function() {
         } else if (list == 'more') {
 
             updateMore();
-            set('list', 'all');
+            set('list', 'all'); // Important! to only display entire list always, just comment this line
 
         } else {
 
