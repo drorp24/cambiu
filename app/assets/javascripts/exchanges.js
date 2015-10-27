@@ -437,6 +437,7 @@ $(document).ready(function() {
 
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        map.panBy(-0.15 * screen.width, 0);
         addUserMarker();
         if (exchanges && exchanges.length > 0) {
             updateMarkers(exchanges);
