@@ -57,6 +57,7 @@ class Exchange < ActiveRecord::Base
         pay_rounded:      params[:pay_amount].to_money(pay_currency).format,
         get_rounded:      params[:get_amount].to_money(get_currency).format,
         base_rate:        nil,
+        rates:            nil,
         errors:           []
     }
 
@@ -273,6 +274,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:logo] = self.logo ? ActionController::Base.helpers.image_path(self.logo) : nil
     exchange_hash[:logo_ind] = self.logo
     exchange_hash[:best_at] = self.best_at
+    exchange_hash[:rates] = quotes[:rates]
 
     exchange_hash
 

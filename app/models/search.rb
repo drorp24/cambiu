@@ -65,79 +65,52 @@ class Search < ActiveRecord::Base
         exchanges_offers = exchanges_offers.sort_by { |e| e[:distance] }
       end
 
-      best_exchanges = Search.best(exchanges, center, pay, buy)
-
-      best_exchanges_offers = []
-      best_exchanges.reverse_each do |best_exchange|
-        exchange_in_exchanges = exchanges_offers.find{|exchange| exchange[:id] == best_exchange[:id]}
-        if exchange_in_exchanges
-          exchange_in_exchanges[:best_at] = best_exchange.best_at
-          best_exchange_offer = exchange_in_exchanges.dup
-        else
-          best_exchange_offer = best_exchange.offer(center, pay, buy, user_location)
-        end
-        best_exchanges_offers << best_exchange_offer
-      end
-
-      best_exchanges_offers.reverse!
+      best_exchanges_offers = Search.best(exchanges_offers, pay, buy)
 
       {'best': best_exchanges_offers, 'more': exchanges_offers}
   end
 
-  def self.best(exchanges, center, pay, buy)
+  def self.best(exchanges_offers, pay, buy)
 
-    return [] if exchanges.empty?
+    return [] if exchanges_offers.empty?
 
     transaction = buy.currency.iso_code != "GBP" ? 'sell' : 'buy'
-    if pay.amount > 0
-      direction = 'max'
-      amt_currency = pay.currency.iso_code
-      no_amt_currency = buy.currency.iso_code
-    else
-      direction = 'min'
-      amt_currency = buy.currency.iso_code
-      no_amt_currency = pay.currency.iso_code
-    end
+    direction = pay.amount > 0 ? 'max' : 'min'
 
+    exchanges_offers_s = exchanges_offers.select{|exchange_offer| exchange_offer[:rates][transaction.to_sym] != nil}
 
-    exchange = exchanges.min_by{|exchange| exchange.distance_from(center)}
-    nearest_distance = exchange.distance_from(center)
-    nearest_exchange = exchange.dup
-    nearest_exchange.id = exchange.id
-    nearest_exchange.best_at = 'nearest'
+    exchange_offer = exchanges_offers_s.min_by{|exchange_offer| exchange_offer[:distance]}
+    nearest_exchange_offer = exchange_offer.dup
+    nearest_exchange_offer[:best_at] = exchange_offer[:best_at] = 'nearest'
+
+    nearest_distance = nearest_exchange_offer[:distance]
 
     if direction == 'min'
 
-      exchange = exchanges.min_by{|exchange| exchange.rate(no_amt_currency, amt_currency)[transaction.to_sym]}
-      cheapest_exchange = exchange.dup
-      cheapest_exchange.id = exchange.id
-      cheapest_exchange.best_at = 'cheapest'
+      exchange_offer = exchanges_offers_s.min_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || 1000000}
+      cheapest_exchange_offer = exchange_offer.dup
+      cheapest_exchange_offer[:best_at] = exchange_offer[:best_at] = 'cheapest'
 
-      box = Geocoder::Calculations.bounding_box(center, nearest_distance + 1)
-      exchange = exchanges.within_bounding_box(box).min_by{|exchange| exchange.rate(no_amt_currency, amt_currency)[transaction.to_sym]}
-      best_exchange = exchange.dup
-      best_exchange.id = exchange.id
-      best_exchange.best_at = 'best'
+      exchange_offer = exchanges_offers_s.select{|exchange_offer| exchange_offer[:distance] <= nearest_distance}.min_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || 1000000}
+      best_exchange_offer = exchange_offer.dup
+      best_exchange_offer[:best_at] = exchange_offer[:best_at] = 'best'
 
     elsif direction == 'max'
 
-      exchange = exchanges.max_by{|exchange| exchange.rate(no_amt_currency, amt_currency)[transaction.to_sym]}
-      highest_exchange = exchange.dup
-      highest_exchange.id = exchange.id
-      highest_exchange.best_at = 'highest'
+      exchange_offer = exchanges_offers_s.max_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || -1}
+      highest_exchange_offer = exchange_offer.dup
+      highest_exchange_offer[:best_at] = exchange_offer[:best_at] = 'highest'
 
-      box = Geocoder::Calculations.bounding_box(center, nearest_distance + 1)
-      exchange = exchanges.within_bounding_box(box).max_by{|exchange| exchange.rate(no_amt_currency, amt_currency)[transaction.to_sym]}
-      best_exchange = exchange.dup
-      best_exchange.id = exchange.id
-      best_exchange.best_at = 'best'
+      exchange_offer = exchanges_offers_s.select{|exchange_offer| exchange_offer[:distance] <= nearest_distance}.max_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || 1000000}
+      best_exchange_offer = exchange_offer.dup
+      best_exchange_offer[:best_at] = exchange_offer[:best_at] = 'best'
 
     end
 
     result = []
-    result << best_exchange
-    result << nearest_exchange
-    result << (direction == 'min' ? cheapest_exchange : highest_exchange)
+    result << best_exchange_offer
+    result << nearest_exchange_offer
+    result << (direction == 'min' ? cheapest_exchange_offer : highest_exchange_offer)
 
     result
 
