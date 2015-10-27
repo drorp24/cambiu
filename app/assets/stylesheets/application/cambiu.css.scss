@@ -200,6 +200,9 @@ body#cambiu {
     .col-md-offset-half {
       margin-left: 3%;
     }
+    .col-md-35 {
+      width: 30%;
+    }
   }
   @media (max-width: $screen-xs-max) {
     .col-md-half {
@@ -1304,7 +1307,7 @@ body#cambiu {
       }
       @media (min-width: $screen-sm-min) {
         height: 6.5vh;
-        font-size: 2vh;
+        font-size: 1.5vh;
       }
    }
     #order_email {
@@ -2280,7 +2283,7 @@ body#cambiu {
         padding-right: 0;
       }
       .exchange_order {
-        font-size: 2.5vh;
+        font-size: 2vh;
         font-weight: 900;
         .order {
           color: #333;
