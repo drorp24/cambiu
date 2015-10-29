@@ -14,7 +14,8 @@ Money::Currency.register({
    :subunit             => "Cent",
    :subunit_to_unit     => 100,
    :thousands_separator => ",",
-   :decimal_mark        => "."
+   :decimal_mark        => ".",
+   :disambiguate_symbol => "H$"
  })
 Money::Currency.register({
     :priority            => 1,

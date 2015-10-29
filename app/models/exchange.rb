@@ -117,7 +117,7 @@ class Exchange < ActiveRecord::Base
         return result
       end
       pay_amount                      =   result[:quote]            = get_amount * rates[transaction.to_sym]
-      result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format
+      result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format(:disambiguate => true)
       result[:edited_quote] = result[:edited_quote_rounded] = result[:pay_amount]
       result[:quote_currency]                               = pay_currency
 
@@ -134,7 +134,7 @@ class Exchange < ActiveRecord::Base
 
       result[:gain_currency]                                = pay_currency
       result[:gain_type]                                    = gain < 0 ? 'minus' : 'plus'
-      result[:get_amount]                                   = get_amount.to_money(get_currency).format
+      result[:get_amount]                                   = get_amount.to_money(get_currency).format(:disambiguate => true)
 
       if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
         result[:rounded]                                    = true

@@ -277,11 +277,28 @@ $(document).ready(function() {
 
     // #search_form submits the shadow form #new_search rather than itself
 
+/*
     $('#search_form #search_button').click(function(e) {
         if ($('#search_form').valid()) {
             $('#new_search').submit()
         }
      });
+*/
+
+    $('#search').click(function() {
+        if ($('#search_form').valid()) {
+            $('#new_search').submit();
+            $('#new_parameters').collapse('hide');
+        }
+    });
+
+    $('#open_params').click(function() {
+        $(this).toggleClass('open')
+    });
+
+    $('#search').click(function() {
+        if (mobile) $('#open_params').toggleClass('open')
+    });
 
     $('#exchanges_list #fetch_more').click(function(e) {
         set('list', 'more');
