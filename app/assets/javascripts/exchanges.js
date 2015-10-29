@@ -149,6 +149,7 @@ $(document).ready(function() {
         if (exchange.best_at == 'best') exchange_el.find('.exchange_icon').css('display', 'block');
 
         exchange_el.find('.base_rate').html(exchange.base_rate);
+        exchange_sum.attr('data-best-at', exchange.best_at);
 
         /*
          exchange_sum.find('[data-exchangeid]').attr('data-exchangeid', exchange.id);
@@ -162,7 +163,7 @@ $(document).ready(function() {
          */
         exchange_sum.find('.service_type').html(exchange.service_type);
 
-        exchange_sum.find('.you').html(exchange.pay_amount == exchange.edited_quote ? 'you pay' : 'you get');
+//        exchange_sum.find('.you').html(exchange.pay_amount == exchange.edited_quote ? 'you pay' : 'you get');
 
         exchange_sum.appendTo(append_point);
 
