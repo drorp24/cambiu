@@ -391,7 +391,7 @@ $(document).ready(function() {
         if (xhr.status == 201) {
             var title = 'Order is ready and waiting for you!';
             var text = 'Voucher ' + order.voucher + ' was sent to you by email. <br>Present it by ' + order.expiry_s + ' to secure this rate.';
-            inform(title, text);
+            inform(title, text, true);
             console.log('order ajax returned and status is 201: populating order attributes');
             model_populate('order', order);
             $('form.new_order').attr('action', '/orders/' + order.id);

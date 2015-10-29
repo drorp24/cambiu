@@ -170,12 +170,6 @@ $(document).ready(function() {
         var $this = $(this);
         if (!$this.valid()) {
             return false
-        } else
-        if ($this.find('[data-field=status]').val() != 'offer') {
-            var title = 'Your order is being prepared ...';
-            var text = 'Please hold on';
-            var hide = true;
-            inform(title, text, hide);
         }
     });
 
