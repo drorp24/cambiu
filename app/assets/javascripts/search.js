@@ -286,6 +286,7 @@ $(document).ready(function() {
 */
 
     $('#search').click(function() {
+        if (mobile) $('#open_params').toggleClass('open');
         if ($('#search_form').valid()) {
             $('#new_search').submit();
             $('#new_parameters').collapse('hide');
@@ -296,11 +297,7 @@ $(document).ready(function() {
         $(this).toggleClass('open')
     });
 
-    $('#search').click(function() {
-        if (mobile) $('#open_params').toggleClass('open')
-    });
-
-    $('#exchanges_list #fetch_more').click(function(e) {
+     $('#exchanges_list #fetch_more').click(function(e) {
         set('list', 'more');
         updateExchanges();
     });

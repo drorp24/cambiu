@@ -354,6 +354,14 @@ $(document).ready(function() {
             icon: '/pin.gif',
             draggable: true
         });
+
+        location_marker.addListener('dragend', function(evt) {
+            set('location_lat', evt.latLng.lat());
+            set('location_lng', evt.latLng.lng());
+            set('location_type', 'selected');
+
+            search_exchanges();
+        });
     }
 
     function addMarker(exchange) {
