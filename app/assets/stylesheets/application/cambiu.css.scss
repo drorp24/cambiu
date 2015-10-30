@@ -181,9 +181,6 @@ html, body {
 
 body#cambiu {
 
-  @import url(http://fonts.googleapis.com/css?family=Montserrat);
-  @import url(http://fonts.googleapis.com/css?family=Pacifico);
-
   @media (min-width: $screen-sm-min) {
     .col-md-half {
       width: 4.166%;
@@ -1285,6 +1282,8 @@ body#cambiu {
   .parameters #exchange_params_wrapper {
     margin-top: $navbar-height;
     input:not(#getit_button), select, button:not(#search_button) {
+      -webkit-appearance: none;
+      -webkit-border-radius: 0px;
       font-weight: 400;
       text-align: center;
       @media (max-width: $screen-xs-max) {
@@ -1300,7 +1299,10 @@ body#cambiu {
   
   &.exchanges {
     input:not(#getit_button), select, button:not(.sort), #search {
-//      font-weight: 700;
+      -webkit-appearance: none;
+      -webkit-border-radius: 0px;
+
+      //      font-weight: 700;
       text-align: center;
       @media (max-width: $screen-xs-max) {
         height: 8vh;
@@ -1363,9 +1365,20 @@ body#cambiu {
     .text_above {
       text-transform: uppercase;
       font-size: 0.75em;
+      color: #555;
     }
     #search_div {
-      margin-bottom: -4px;
+      margin-bottom: 1vh;
+      margin-top: 1vh;
+      border: 1px solid #fff;
+      border-radius: 4px;
+ //     box-shadow: 0px 1px 1px #ccc;
+      height: 26px;
+      a {
+        padding-top: 0;
+        padding-bottom: 0;
+        line-height: 24px;
+      }
     }
       #search {
         border: none;
@@ -1411,7 +1424,7 @@ body#cambiu {
         }
         #exchanges_list {
            @media (min-width: $screen-sm-min) {
-            margin-top: 90px;
+            margin-top: 15vh;
           }
           @media (max-width: $screen-xs-max){
             margin-top: $navbar-height;
@@ -1429,7 +1442,6 @@ body#cambiu {
           }
           .list-group-item {
             background-color: #eee;
-            border: none;
           }
         }
         .open_params_wrapper {
@@ -1463,7 +1475,7 @@ body#cambiu {
           margin-bottom: -16px;
         }
         .more {
-          margin-top: 1vh;
+          margin-top: 2vh;
         }
         #fetch_more {
           text-align: center;
@@ -1532,10 +1544,25 @@ body#cambiu {
           padding-bottom: 3px;
           background-color: #eee;
           border-top: 1px solid #bbb;
-          .order_text {
+          #sort_line {
             position: relative;
-            top: 0.3em;
+            top: 0.25em;
+          }
+          button.sort {
+            height: 3.8em;
+          }
+          .order_text  {
+            position: relative;
+            top: 1em;
             color: #000;
+          }
+          .remove_more {
+            font-size: 1.5em;
+            font-weight: 300;
+            color: #555;
+            &:hover {
+              cursor: pointer;
+            }
           }
           .sort_btn_group button, .order_text {
             &:focus {
@@ -1585,6 +1612,7 @@ body#cambiu {
     #search_form {
       .form-control:not(#search) {
         color: #000;
+        font-size: 0.9em;
       }
       input, select {
         font-weight: 400;
@@ -1817,7 +1845,6 @@ body#cambiu {
           }
           .gain_amount {
             color: $green;
-            margin-right: 1em;
             font-weight: 500;
           }
           .gain_tooltip {
@@ -2338,7 +2365,7 @@ body#cambiu {
           text-align: center;
           margin-bottom: 1.5em;
           color: $darken-brand-color;
-          font-weight: 900;
+          font-weight: 400;
           margin-top: 4vh;
          }
        .exchange_bullets {

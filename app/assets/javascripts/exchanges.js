@@ -54,9 +54,8 @@ $(document).ready(function() {
 
     updateExchanges = function() {
 
-        console.log('updateExchanges. list: ' + String(value_of('list')));
-
         list = value_of('list');
+        console.log('updateExchanges. list: ' + list);
 
         if (list == 'all') {
 
@@ -75,7 +74,7 @@ $(document).ready(function() {
 
     };
 
-    updateBest = function() {
+     updateBest = function() {
         $('#exchanges_search_results').css('display', 'none');
 
         best_append_point = '#exchanges_list .list-group #best_exchanges';
@@ -89,19 +88,26 @@ $(document).ready(function() {
 
     updateMore = function() {
         $('#exchanges_search_results').css('display', 'block');
+        $('#exchanges_items').css('display', 'block');
+        $('#exchanges_list .more').css('display', 'none');
 
         exchanges_append_point = '#exchanges_list .list-group #exchanges_items';
-
-        $('#exchanges_list .more').css('display', 'none');
-        $('#exchanges_search_results').css('display', 'block');
 
         for (var i = 0; i < exchanges.length; i++) {
             addExchange(exchanges[i], i, exchanges_append_point);
         }
     };
 
+    removeMore = function() {
+        $('#exchanges_search_results').css('display', 'none');
+        $('#exchanges_items').css('display', 'none');
+        $('#exchanges_list .more').css('display', 'block');
+        set('list', 'best');
+    };
 
-    // TODO: Remove det, replace classes with data- attributes, do it in a loop over the data fields
+
+
+        // TODO: Remove det, replace classes with data- attributes, do it in a loop over the data fields
     function addExchange(exchange, index, append_point) {
 
         if (exchange.errors.length > 0) return;
@@ -446,7 +452,7 @@ $(document).ready(function() {
 
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        map.panBy(-0.15 * screen.width, 0);
+        map.panBy(-0.15 * screen.width, -0.1 * screen.height);
         addUserMarker();
         if (exchanges && exchanges.length > 0) {
             updateMarkers(exchanges);

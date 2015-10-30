@@ -302,6 +302,11 @@ $(document).ready(function() {
         updateExchanges();
     });
 
+    $('#exchanges_list .remove_more').click(function(e) {
+        removeMore();
+    });
+
+
     // any click to change params returns to main search page
 
     $('#search_form input').click(function() {
