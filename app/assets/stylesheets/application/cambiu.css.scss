@@ -1378,11 +1378,21 @@ body#cambiu {
 //      border: 1px solid #fff;
 //      border-radius: 4px;
 //      box-shadow: 0px 1px 1px #ccc;
-      height: 26px;
+      @media (max-width: $screen-xs-max) {
+        height: 8vh;
+      }
+      @media (min-width: $screen-sm-min) {
+        height: 26px;
+      }
       a {
         padding-top: 0;
         padding-bottom: 0;
-        line-height: 24px;
+        @media (max-width: $screen-xs-max) {
+          line-height: 8vh;
+        }
+        @media (min-width: $screen-sm-min) {
+          line-height: 24px;
+        }
       }
     }
       #search {
@@ -1861,6 +1871,7 @@ body#cambiu {
           width: 100%;
         }
         .tooltip-inner {
+          width: 15em;
           background-color: #fff;
         }
         .tooltip-arrow {
