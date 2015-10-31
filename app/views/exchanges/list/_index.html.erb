@@ -1,18 +1,27 @@
 <div  id="exchanges_list" class="pane active" data-pane="list" data-search-home="true">
+
   <div class="list-group">
+
     <%= render 'exchanges/list/exchanges_search_params' %>
     <%= render 'exchanges/params/special_search_form' %>
     <div id="best_exchanges">
+        <!--   Best exchanges list -->
     </div>
+
+  </div>
+
+  <div class="list-group">
+
     <div class="more list-group-item">
-      <div id="fetch_more">
-        <a href="#">Show more</a>
-      </div>
+      <!--   more line, Replaced by the sort line when full list is shown -->
+      <div id="fetch_more"><a href="#">Show more</a></div>
     </div>
     <%= render 'exchanges/list/exchanges_search_results' %>
-        <!--   Best exchange list goes here -->
+      <!--   Sort buttons and/or counters -->
     <div id="exchanges_items">
-      <!--   Exchange list goes here -->
+      <!--   Full exchanges list -->
     </div>
+
   </div>
+
 </div>
