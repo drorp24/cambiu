@@ -91,7 +91,7 @@ class Search < ActiveRecord::Base
       cheapest_exchange_offer = exchange_offer.dup
       cheapest_exchange_offer[:best_at] = exchange_offer[:best_at] = 'cheapest'
 
-      exchange_offer = exchanges_offers_s.select{|exchange_offer| exchange_offer[:distance] <= nearest_distance}.min_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || 1000000}
+      exchange_offer = exchanges_offers_s.select{|exchange_offer| exchange_offer[:distance] <= nearest_distance + 1}.min_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || 1000000}
       best_exchange_offer = exchange_offer.dup
       best_exchange_offer[:best_at] = exchange_offer[:best_at] = 'best'
 
@@ -101,7 +101,7 @@ class Search < ActiveRecord::Base
       highest_exchange_offer = exchange_offer.dup
       highest_exchange_offer[:best_at] = exchange_offer[:best_at] = 'highest'
 
-      exchange_offer = exchanges_offers_s.select{|exchange_offer| exchange_offer[:distance] <= nearest_distance}.max_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || 1000000}
+      exchange_offer = exchanges_offers_s.select{|exchange_offer| exchange_offer[:distance] <= nearest_distance + 1}.max_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || 1000000}
       best_exchange_offer = exchange_offer.dup
       best_exchange_offer[:best_at] = exchange_offer[:best_at] = 'best'
 
