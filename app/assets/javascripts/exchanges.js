@@ -485,7 +485,7 @@ $(document).ready(function() {
                 map_center_changed = true;
 //                $('#directions-panel').css('display', 'block');
                 directionsDisplay.setDirections(response);
-                setTimeout(function(){ mapPan() }, 100);
+//                setTimeout(function(){ mapPan() }, 100);
 
             }
          });
