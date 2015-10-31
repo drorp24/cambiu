@@ -115,8 +115,8 @@
         console.log('Since user location could not be found: setting the default location');
         set('location',         'London, UK');
         set('location_short',   'London');
-        set('location_lat',     '51.52098089933082');
-        set('location_lng',     '-0.1620039367676327');
+        set('location_lat',     '51.51574678520366');
+        set('location_lng',     '-0.16346305847173426');
         set('location_type',    'default');
     };
 
