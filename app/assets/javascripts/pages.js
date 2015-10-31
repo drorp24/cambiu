@@ -279,6 +279,7 @@ $(document).ready(function() {
             mapPan();
             if (marker_highlighted && exchanges && exchanges.length > 0) {
                 updateMarkers(exchanges);
+                setTimeout(function(){ forwardBestMarkers() }, 100);
             }
 
         }
