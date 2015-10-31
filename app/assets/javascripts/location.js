@@ -149,8 +149,20 @@ $(document).ready(function() {
         searchbox_addListener(searchBox);
     });
 
-    // fix their z-index dynamically
-    $('[data-field=location]').keypress(function() {
+        // Widen location in #new_parameters when clicked
+        $('#new_parameters [data-field=location]').click(function() {
+            $('.pac-container').css('transition',
+                'all .5s ease');
+            $('.pac-container').css('width',
+                '300px');
+            });
+
+        // fix their z-index dynamically
+        $('[data-field=location]').keypress(function() {
+/*
+        $('.pac-container').css('width',
+            '300px');
+*/
         if (!pacContainerInitialized) {
             $('.pac-container').css('z-index',
                 '9999');

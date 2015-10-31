@@ -1445,7 +1445,15 @@ body#cambiu {
             margin-top: $navbar-height;
           }
         }
-        #new_parameters {
+         #new_parameters {
+          input[data-field=location] {
+            -webkit-transition: all .5s ease;
+            -moz-transition: all .5s ease;
+            transition: all .5s ease;
+            &:focus {
+              width: 300px;
+            }
+          }
           text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
           &:hover {
             #search {
@@ -1628,7 +1636,7 @@ body#cambiu {
     #search_form {
       .form-control:not(#search) {
         color: #000;
-        font-size: 0.9em;
+        font-size: 0.85em;
       }
       input, select {
         font-weight: 400;
