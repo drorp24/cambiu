@@ -385,7 +385,7 @@ $(document).ready(function() {
          } else if (exchange.best_at == 'best') {
              var icon = '/logo_no_text.png'
         } else {
-            var icon = '/other.png'
+            var icon = '/other1.png'
         }
 
         var marker = new google.maps.Marker({
