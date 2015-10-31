@@ -1375,9 +1375,9 @@ body#cambiu {
     #search_div {
       margin-bottom: 1vh;
       margin-top: 1vh;
-      border: 1px solid #fff;
-      border-radius: 4px;
- //     box-shadow: 0px 1px 1px #ccc;
+//      border: 1px solid #fff;
+//      border-radius: 4px;
+//      box-shadow: 0px 1px 1px #ccc;
       height: 26px;
       a {
         padding-top: 0;
@@ -1447,6 +1447,7 @@ body#cambiu {
           }
           .list-group-item {
             background-color: #eee;
+            border-bottom: none;
           }
         }
         .open_params_wrapper {
@@ -2346,17 +2347,17 @@ body#cambiu {
         }
         .es_address {
           @media (min-width: $screen-sm-min) {
-            font-size: 2.7vh;
+            font-size: 2vh;
           }
           @media (max-width: $screen-xs-max) {
-            font-size: 2.7vh;
+            font-size: 2vh;
           }
           font-weight: 400;
           color: #888;
         }
       }
         .rate_expiry {
-          font-size: 2.3vh;
+          font-size: 1.9vh;
           text-transform: uppercase;
           font-weight: 900;
           text-align: center;
@@ -2398,7 +2399,7 @@ body#cambiu {
         padding-right: 0;
       }
       .exchange_order {
-        font-size: 3vh;
+        font-size: 2.5vh;
         font-weight: 900;
         .order {
           color: #333;

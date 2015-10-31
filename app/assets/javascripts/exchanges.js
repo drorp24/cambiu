@@ -244,8 +244,10 @@ $(document).ready(function() {
         });
 
 
-        // TODO: Remove?
+        // TODO: Remove!
+/*
         $('body').on('click', '.list-group-item [data-href-id]', (function () {
+            alert('I am being used!')
 
             var $this = $(this);
             var delivery_tracking = $this.attr('data-delivery-tracking');
@@ -256,8 +258,10 @@ $(document).ready(function() {
 
             big_marker(id);
             map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
+//            map.panBy(-216,-90);
 
         }));
+*/
 
 
         // This will fire when map has finished loading
@@ -270,7 +274,6 @@ $(document).ready(function() {
             setTimeout(function(){ forwardBestMarkers() }, 100);
 
         });
-
 
     }
 
@@ -452,7 +455,7 @@ $(document).ready(function() {
 
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        map.panBy(-0.15 * screen.width, -0.1 * screen.height);
+        mapPan();
         addUserMarker();
         if (exchanges && exchanges.length > 0) {
             updateMarkers(exchanges);
@@ -482,8 +485,10 @@ $(document).ready(function() {
                 map_center_changed = true;
 //                $('#directions-panel').css('display', 'block');
                 directionsDisplay.setDirections(response);
+                setTimeout(function(){ mapPan() }, 100);
+
             }
-        });
+         });
 
     }
 
