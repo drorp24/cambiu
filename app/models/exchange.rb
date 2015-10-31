@@ -57,7 +57,6 @@ class Exchange < ActiveRecord::Base
         pay_rounded:      params[:pay_amount].to_money(pay_currency).format,
         get_rounded:      params[:get_amount].to_money(get_currency).format,
         base_rate:        nil,
-        rates:            nil,
         errors:           []
     }
 
