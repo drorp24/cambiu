@@ -27,7 +27,7 @@ $(document).ready(function() {
             var mapCenterLat = sessionStorage.location_lat;
             var mapCenterLng = sessionStorage.location_lng;
         }
-        drawMap(mapCenterLat, mapCenterLng, exchanges);
+        if (desktop) drawMap(mapCenterLat, mapCenterLng, exchanges);
 
         if (search() && exchanges && exchanges.length > 0) {
             updateExchanges();
@@ -39,7 +39,10 @@ $(document).ready(function() {
                 var exchange_id = urlId();
                 if (exchange_id) {   // Refresh of *specific exchange page* even in search requires model_populate like in exchange mode
                     var exchange = findExchange(exchange_id);
-                    if (exchange) model_populate('exchange', exchange);
+                    if (exchange) {
+                        model_populate('exchange', exchange);
+                        drawExchangeMap(exchange);
+                    }
                 }
             } else {
                 model_populate('exchange', exchanges[0]);
@@ -213,6 +216,7 @@ $(document).ready(function() {
 
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
+/*
         $('body').on('click', '.directions', (function () {
             var $this = $(this);
             if ($this.data('delivery-tracking')) return;
@@ -221,8 +225,10 @@ $(document).ready(function() {
             var id = $this.attr('data-id');
             unhighlight(id);
             big_marker(id);
-            calcRoute(from, to);
+//            setTimeout(function(){ calcRoute(from, to) }, 500)
+//            calcRoute(from, to);
         }));
+*/
 
 
         // Open infowindows of markers that are within the map bounds. This is reactivated whenever user zooms out!
@@ -352,7 +358,8 @@ $(document).ready(function() {
         }
     };
 
-    function addUserMarker() {
+    addUserMarker = function(mappa) {
+        if (mappa === undefined) mappa = map;
         var lat = value_of('location_lat') || value_of('user_lat');
         var lng = value_of('location_lng') || value_of('user_lng');
         if (!lat || !lng) return;
@@ -360,7 +367,7 @@ $(document).ready(function() {
         var location_marker = new google.maps.Marker({
             position: new google.maps.LatLng(lat, lng),
             disableAutoPan: true,
-            map: map,
+            map: mappa,
             icon: '/pin.gif',
             draggable: true
         });
@@ -374,8 +381,9 @@ $(document).ready(function() {
         });
     }
 
-    function addMarker(exchange) {
+    addMarker = function(exchange, mappa) {
 
+        if (mappa === undefined) mappa = map;
         if (exchange.errors.length > 0) return;
 
          if (exchange.best_at == 'highest' || exchange.best_at == 'cheapest') {
@@ -391,7 +399,7 @@ $(document).ready(function() {
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(exchange.latitude, exchange.longitude),
             title: exchange.name,
-            map: map,
+            map: mappa,
             icon: icon,
             exchange_id: exchange.id,
             best_at: exchange.best_at
@@ -430,7 +438,7 @@ $(document).ready(function() {
         markers.push(marker);
 
 
-    }
+    };
 
     function clearMarkers() {
         for (var i = 0; i < markers.length; i++) {
@@ -442,9 +450,6 @@ $(document).ready(function() {
 
     drawMap = function (latitude, longitude, exchanges) {
 
-        if (mobile) {
-            return;
-        }
         console.log('drawMap');
 
         center = new google.maps.LatLng(latitude, longitude);
@@ -460,11 +465,34 @@ $(document).ready(function() {
         if (exchanges && exchanges.length > 0) {
             updateMarkers(exchanges);
         }
-
     };
 
-    function calcRoute(from, to) {
+    drawExchangeMap = function (exchange) {
 
+        console.log('drawExchangeMap');
+
+        center = new google.maps.LatLng(exchange.latitude, exchange.longitude);
+        var mapOptions = {
+            center: center,
+            zoom: Number(map_initial_zoom) -2,
+            scaleControl: true
+
+        };
+        exchangeMap = new google.maps.Map(document.getElementById('exchange_map'), mapOptions);
+        addMarker(exchange, exchangeMap);
+        google.maps.event.addListenerOnce(exchangeMap, 'idle', function(){
+            var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
+            var to = new google.maps.LatLng(exchange.latitude, exchange.longitude);
+            calcRoute(from, to, exchangeMap);
+        });
+        $('#exchange_directions a').attr('href', directionsLink(exchange));
+     };
+
+    calcRoute = function(from, to, mappa) {
+
+        if (mappa === undefined) mappa = map;
+        console.log('mappa:')
+        console.log(mappa)
         var request = {
             origin: from,
             destination: to,
@@ -476,7 +504,7 @@ $(document).ready(function() {
         directionsDisplay = new google.maps.DirectionsRenderer();
         zoom_changed_by_user = false;
 
-        directionsDisplay.setMap(map);
+        directionsDisplay.setMap(mappa);
  //       directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
         directionsService.route(request, function (response, status) {
@@ -485,14 +513,14 @@ $(document).ready(function() {
                 map_center_changed = true;
 //                $('#directions-panel').css('display', 'block');
                 directionsDisplay.setDirections(response);
-                setTimeout(function(){ map.setZoom(15) }, 100);
+                setTimeout(function(){ mappa.setZoom(15) }, 100);
                 setTimeout(function(){ mapPan() }, 100);
 
 
             }
          });
 
-    }
+    };
 
     $(document)
         .on('mouseenter', '.list-group-item', function () {

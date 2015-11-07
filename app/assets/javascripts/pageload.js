@@ -10,6 +10,7 @@ var params = {};
 var pacContainerInitialized = false;
 var searchBoxes = [];
 var map;
+var exchangeMap;
 var center;
 var geocoder;
 var directionsDisplay;
@@ -76,12 +77,23 @@ var marker_highlighted = false;
 var highlight;
 var unhighlight;
 var mapPan;
+var addMarker;
+var addUserMarker;
+var calcRoute;
+var directionsLink;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 
+directionsLink = function(exchange) {
+    // TODO: separate IOS/apple maps vs android/google maps
+    var encoded_address = encodeURI(exchange.address);
+    return 'http://maps.apple.com/?q=' + encoded_address;
+//    return 'comegooglemaps://?q=' + encoded_address;
+};
+
 mapPan = function() {
-    map.panBy(-0.17 * screen.width, -0.05 * screen.height)
+    if (map) map.panBy(-0.17 * screen.width, -0.05 * screen.height)
 };
 
 highlight = function(id) {

@@ -194,6 +194,7 @@ $(document).ready(function() {
 
             if (exchange) {
                 console.log('Exchange has values, i.e., someone clicked href button in spa mode');
+                drawExchangeMap(exchange);
                 $('[data-model=exchange]').each(function () {
                     populate($(this), exchange);        // TODO: Replace pages 'populate' with 'model_populate'
                 });
