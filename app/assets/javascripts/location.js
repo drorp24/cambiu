@@ -19,6 +19,27 @@
 
 $(document).ready(function() {
 
+    // TODO: DRY: functionize the lat/lng -> formatted_address part, common in both functions
+    report_current_location = function(position) {
+        console.log('report_current_position');
+
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+
+        var latlng = new google.maps.LatLng(lat, lng);
+        geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'latLng': latlng}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    var formatted_address = results[1].formatted_address;
+                    console.log('Current Location:');
+                    console.log(formatted_address);
+                    inform('Current Location', formatted_address, true);
+                }
+            }
+        })
+    };
+
     locationCallback = function() {
         search_exchanges()
     };
@@ -96,6 +117,7 @@ $(document).ready(function() {
                 displayError,
                 {enableHighAccuracy: false, timeout: timeoutVal, maximumAge: 0}
             );
+            var watchID = navigator.geolocation.watchPosition(report_current_location);
         }
         else {
             console.log('Browser does not support geolocation');
