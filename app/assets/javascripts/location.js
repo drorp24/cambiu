@@ -117,7 +117,11 @@ $(document).ready(function() {
                 displayError,
                 {enableHighAccuracy: false, timeout: timeoutVal, maximumAge: 0}
             );
-            var watchID = navigator.geolocation.watchPosition(report_current_location);
+            watchID = navigator.geolocation.watchPosition(
+                report_current_location,
+                displayError,
+                {enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0}
+            );
         }
         else {
             console.log('Browser does not support geolocation');

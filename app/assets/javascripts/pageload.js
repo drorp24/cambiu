@@ -82,6 +82,7 @@ var addUserMarker;
 var calcRoute;
 var directionsLink;
 var report_current_location;
+var watchID;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
