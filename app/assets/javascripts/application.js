@@ -9,6 +9,7 @@
 //= require autonumeric
 //= require jquery.validate
 
+//= require ytplayer
 //= require pageload
 //= require search
 //= require location
