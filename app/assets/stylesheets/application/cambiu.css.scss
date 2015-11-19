@@ -333,8 +333,7 @@ $inverse-color: #ffffff;
 */
 
 
-@mixin above_fold {
-  position: absolute;
+@mixin white_centered {
   width: 100%;
   color: #fff;
   text-align: center;
@@ -500,6 +499,18 @@ body#cambiu {
   // New Homepage //
 
 
+ #new_parameters #search_form {
+   .form-control {
+     width: 100%;
+   }
+   .reach-out-left:not(:first-child) {
+     input, select {
+       border-left: none;
+     }
+   }
+
+ }
+
   &.homepage .not_on_homepage {
     display: none;
   }
@@ -535,11 +546,13 @@ body#cambiu {
     }
 
     .marketing {
-      @include above_fold;
-      top: 320px;
+      @include white_centered;
+      margin-top: 25vmin;
+      margin-bottom: 5vmin;
       z-index: 1;
       .message {
-        @include above_fold;
+        @include white_centered;
+        position: absolute;
         color: transparent;
         &.darkness {
           @include blurFadeInOut;
@@ -559,21 +572,23 @@ body#cambiu {
             font-size: 6vh;
           }
           @media (min-width: $screen-sm-min) {
-            font-size: 7vh;
+            font-size: 5vw;
           }
         }
         p {
           font-weight: 300;
           letter-spacing: 0.5em;
           text-align: center;
-          font-size: 4vh;
+          font-size: 2.8vw;
         }
       }
     }
   }
 
   .homesearch {
-    @include above_fold;
+    @include white_centered;
+    margin-top: 35vmax;
+    width: 80%;
     .col-md-4 {
       width: 25%;
     }
@@ -583,8 +598,6 @@ body#cambiu {
     .col-md-1 {
       width: 6.25%;
     }
-    top: 500px;
-    width: 56%;
     margin-left: auto;
     margin-right: auto;
     left: 0;
@@ -593,21 +606,20 @@ body#cambiu {
       -webkit-appearance: none;
       -webkit-border-radius: 0px;
     }
-    #buy_amount:before {
-      content: "hi";
-    }
     #location_search {
       width: 100%;
     }
     p {
-      font-size: 2.5vh;
+      font-size: 1.3vw;
+      position: absolute;
+      bottom: 19vmax;
+      width: 80%;
+      font-weight: 300;
     }
     select {
-      border-right: none;
     }
     #new_parameters {
       background-color: #fff;
-      height: 56px;
     }
 
     .homesearch_button {
@@ -615,9 +627,15 @@ body#cambiu {
       background-color: darken($brand-color, 10%);
       color: #fff;
       border: 1px solid darken($brand-color, 10%);
-      font-size: 2em;
+      font-size: 1.3vw;
       line-height: 17px;
       font-weight: 300;
+      text-transform: uppercase;
+    }
+    .form-control {
+      font-size: 1.3vw;
+      line-height: 1.3vw;
+      height: 2.6vw;
     }
 
   }
