@@ -285,7 +285,7 @@ $(document).ready(function() {
      });
 */
 
-    $('#search').click(function() {
+    $('[data-ajax=searches]').click(function() {
         if (mobile) $('#open_params').toggleClass('open');
         if ($('#search_form').valid()) {
             $('#new_search').submit();
