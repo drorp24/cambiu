@@ -79,12 +79,17 @@ $inverse-color: #ffffff;
   }
   20%{
     opacity: 1;
-    text-shadow: 0px 0px 5px #fff;
+    text-shadow: 0px 0px 2px #fff;
+    -webkit-transform: scale(1);
+  }
+  50%{
+    opacity: 1;
+    text-shadow: 0px 0px 1px #fff;
     -webkit-transform: scale(1);
   }
   70%{
     opacity: 1;
-    text-shadow: 0px 0px 10px #fff;
+    text-shadow: 0px 0px 2px #fff;
     -webkit-transform: scale(1);
   }
   100%{
@@ -147,10 +152,10 @@ $inverse-color: #ffffff;
 }
 
 @mixin blurFadeIn1 {
-  @include animate(blurFadeIn, 3s, linear, forwards, 7s);
+  @include animate(blurFadeIn, 1s, linear, forwards, 6s);
 }
 @mixin blurFadeIn2 {
-  @include animate(blurFadeIn, 1s, linear, forwards, 11s);
+  @include animate(blurFadeIn, 1s, linear, forwards, 8.5s);
 }
 /*
 @-webkit-keyframes blurFadeInOut{
@@ -328,7 +333,12 @@ $inverse-color: #ffffff;
 */
 
 
-
+@mixin above_fold {
+  position: absolute;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+}
 
 @mixin middle-parent($height, $img-height) {
   height: $height;
@@ -486,80 +496,134 @@ body#cambiu {
     }
   }
 
-  .background-wrap {
-    z-index: -1;
-    position: relative;
-    padding-bottom: 55.25%;
-    padding-top: 30px;
-    height: 0;
-    overflow: hidden;
-    margin-left: -15px;
-    margin-right: -15px;
-    @media (max-width: $screen-xs-max) {
-      height: 100vh;
-      background-color: $brand-color;
-    }
-  }
 
-  #player {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    border: none;
-  }
+  // New Homepage //
 
-  .no_display {
+
+  &.homepage .not_on_homepage {
     display: none;
   }
-  .display {
-    display: block;
+
+  &.exchanges .homepage_only {
+    display: none;
   }
 
+  .above_fold {
 
-
-  .marketing {
-    position: relative;
-    top: -80vh;
-    z-index: 1;
-    color: #fff;
-    .message {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      text-align: center;
-      color: transparent;
-      &.darkness {
-        @include blurFadeInOut;
+    .background-wrap {
+      z-index: -1;
+      position: relative;
+      padding-bottom: 55.25%;
+      padding-top: 30px;
+      height: 0;
+      overflow: hidden;
+      margin-left: -15px;
+      margin-right: -15px;
+      @media (max-width: $screen-xs-max) {
+        height: 100vh;
+        background-color: $brand-color;
       }
-      &.lightness {
+    }
+
+    #player {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      border: none;
+    }
+
+    .marketing {
+      @include above_fold;
+      top: 320px;
+      z-index: 1;
+      .message {
+        @include above_fold;
+        color: transparent;
+        &.darkness {
+          @include blurFadeInOut;
+        }
+        &.lightness {
+          h1 {
+            @include blurFadeIn1;
+          }
+          p {
+            @include blurFadeIn2;
+          }
+        }
         h1 {
-          @include blurFadeIn1;
+          text-align: center;
+          font-weight: 100;
+          @media (max-width: $screen-xs-max) {
+            font-size: 6vh;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 7vh;
+          }
         }
         p {
-          @include blurFadeIn2;
+          font-weight: 300;
+          letter-spacing: 0.5em;
+          text-align: center;
+          font-size: 4vh;
         }
-      }
-      h1 {
-        text-align: center;
-        font-weight:100;
-        @media (max-width: $screen-xs-max) {
-          font-size: 6vh;
-        }
-        @media (min-width: $screen-sm-min) {
-          font-size: 10vh;
-        }
-      }
-      p {
-        font-weight:300;
-        text-align: center;
-        font-size: 4vh;
       }
     }
   }
 
+  .homesearch {
+    @include above_fold;
+    .col-md-4 {
+      width: 25%;
+    }
+    .col-md-2 {
+      width: 12.5%;
+    }
+    .col-md-1 {
+      width: 6.25%;
+    }
+    top: 500px;
+    width: 56%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    select {
+      -webkit-appearance: none;
+      -webkit-border-radius: 0px;
+    }
+    #buy_amount:before {
+      content: "hi";
+    }
+    #location_search {
+      width: 100%;
+    }
+    p {
+      font-size: 2.5vh;
+    }
+    select {
+      border-right: none;
+    }
+    #new_parameters {
+      background-color: #fff;
+      height: 56px;
+    }
 
+    .homesearch_button {
+      width: 100%;
+      background-color: darken($brand-color, 10%);
+      color: #fff;
+      border: 1px solid darken($brand-color, 10%);
+      font-size: 2em;
+      line-height: 17px;
+      font-weight: 300;
+    }
+
+  }
+
+
+  // New Homepage //
 
   .gm-style .gm-style-iw {
     text-align: center;
@@ -1110,38 +1174,6 @@ body#cambiu {
     }
   }
 
-
-
-  &.home  {
-    .above_fold {
-      .homepage_arrow {
-        font-size: 2em;
-      }
-      .or {
-        text-transform: uppercase;
-        font-weight: 700;
-        color: #fff;
-        ow: 0px 1px 0px rgba(0, 0, 0, 1);
-        margin-top: -5px;
-        margin-bottom: -5px;
-        font-size: 1.5em;
-      }
-      .main {
-        margin-top: /*15vh*//*45px*/15vh;
-        margin-bottom: 10vh;
-        .instructions {
-          /*
-          color: #333;
-          text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-          */
-          color: #fff;
-          text-align: center;
-          margin-bottom: 0.5em;
-        }
-
-      }
-    }
-  }
 
   &.exchanges .navbar {
       background-color: rgba(0,0,0,0.1);
@@ -2985,20 +3017,7 @@ body#cambiu {
       background-color: $brand-color;
     }
 
-    &.home {
-       .above_fold {
-        .main {
-          margin-top: 3vh;
-          margin-bottom: 3vh;
-         }
-      }
-      .rates_banner img {
-        display: none;
-      }
-
-    }
-
-    .getstarted_button_container {
+     .getstarted_button_container {
       .getstarted_button {
          width: 100%;
       }

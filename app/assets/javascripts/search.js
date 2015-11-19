@@ -309,7 +309,7 @@ $(document).ready(function() {
 
     // any click to change params returns to main search page
 
-    $('#search_form input').click(function() {
+    $('body.exchanges #search_form input').click(function() {
         if (window.location.pathname != '/exchanges/list') setPage('exchanges/list')
     });
 
