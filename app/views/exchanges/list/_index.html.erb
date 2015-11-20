@@ -3,7 +3,7 @@
   <div class="list-group">
 
     <%= render 'exchanges/list/exchanges_search_params' %>
-    <%= render 'exchanges/params/search_form' %>
+    <%= render partial: 'exchanges/params/collapsible_unit', locals: {container: '#exchanges_list'} %>
     <div id="best_exchanges">
         <!--   Best exchanges list -->
     </div>

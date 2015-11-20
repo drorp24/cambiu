@@ -293,8 +293,11 @@ $(document).ready(function() {
         }
     });
 
-    $('#open_params').click(function() {
+    $('.open_params').click(function() {
         $(this).toggleClass('open')
+    });
+    $('#mobile_search [data-ajax]').click(function() {
+        $('.open_params').addClass('open')
     });
 
      $('#exchanges_list #fetch_more').click(function(e) {

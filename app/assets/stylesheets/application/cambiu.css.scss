@@ -75,7 +75,7 @@ $inverse-color: #ffffff;
   0%{
     opacity: 0;
     text-shadow: 0px 0px 50px #fff;
-    -webkit-transform: scale(1.2);
+    -webkit-transform: scale(1);
   }
   20%{
     opacity: 1;
@@ -152,10 +152,10 @@ $inverse-color: #ffffff;
 }
 
 @mixin blurFadeIn1 {
-  @include animate(blurFadeIn, 1s, linear, forwards, 6s);
+  @include animate(blurFadeIn, 0.5s, linear, forwards, 6s);
 }
 @mixin blurFadeIn2 {
-  @include animate(blurFadeIn, 1s, linear, forwards, 8.5s);
+  @include animate(blurFadeIn, 0.5s, linear, forwards, 8s);
 }
 /*
 @-webkit-keyframes blurFadeInOut{
@@ -495,21 +495,46 @@ body#cambiu {
     }
   }
 
+  select {
+    -webkit-appearance: none;
+  }
+
+  &.desktop.exchanges {
+    #search_form input.form-control[data-field=location] {
+      -webkit-transition: all .5s ease;
+      -moz-transition: all .5s ease;
+      transition: all .5s ease;
+      &:focus {
+        width: 300px;
+      }
+    }
+    .form-control {
+      font-size: 0.85em;
+    }
+  }
 
   // New Homepage //
 
 
- #new_parameters #search_form {
+ #search_form {
    .form-control {
      width: 100%;
    }
-   .reach-out-left:not(:first-child) {
-     input, select {
-       border-left: none;
+   @media (min-width: $screen-sm-min) {
+     .reach-out-left {
+       select {
+         border-left: none;
+       }
      }
    }
-
  }
+
+  .help_text {
+    text-align: center;
+    font-size: 0.85em;
+    color: #000;
+    text-transform: uppercase;
+  }
 
   &.homepage .not_on_homepage {
     display: none;
@@ -519,6 +544,14 @@ body#cambiu {
     display: none;
   }
 
+  .open_params_wrapper a {
+    text-transform: uppercase;
+    color: darken($brand-color, 10%);
+    text-decoration: none;
+    &:hover {
+      color: darken($brand-color, 20%);
+    }
+  }
   .above_fold {
 
     .background-wrap {
@@ -551,12 +584,14 @@ body#cambiu {
       z-index: 1;
       .message {
         @include white_centered;
-        position: absolute;
-        color: transparent;
         &.darkness {
+          position: absolute;
+          color: transparent;
           @include blurFadeInOut;
         }
         &.lightness {
+          position: absolute;
+          color: transparent;
           h1 {
             @include blurFadeIn1;
           }
@@ -601,6 +636,14 @@ body#cambiu {
     margin-right: auto;
     left: 0;
     right: 0;
+    .list-group-item {
+      position: absolute;
+      width: 75%;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+    }
     select {
       -webkit-appearance: none;
       -webkit-border-radius: 0px;
@@ -609,7 +652,7 @@ body#cambiu {
       width: 100%;
     }
     p {
-      font-size: 1.3vw;
+      font-size: 1.6vw;
       position: absolute;
       bottom: 19vmax;
       width: 80%;
@@ -621,20 +664,63 @@ body#cambiu {
       background-color: #fff;
     }
 
-    .homesearch_button {
-      width: 100%;
-      background-color: darken($brand-color, 10%);
-      color: #fff;
-      border: 1px solid darken($brand-color, 10%);
-      font-size: 1.3vw;
-      line-height: 17px;
-      font-weight: 300;
-      text-transform: uppercase;
-    }
     .form-control {
       font-size: 1.3vw;
       line-height: 1.3vw;
       height: 2.6vw;
+    }
+  }
+
+  .homesearch_button {
+    width: 100%;
+    background-color: darken($brand-color, 10%);
+    color: #fff;
+    border: 1px solid darken($brand-color, 10%);
+    @media (max-width: $screen-xs-max) {
+      font-size: 1.3em;
+    }
+    @media (min-width: $screen-sm-min) {
+      font-size: 1.3vw;
+    }
+    line-height: 17px;
+    font-weight: 300;
+    text-transform: uppercase;
+    &:hover {
+      background-color: darken($brand-color, 20%);
+    }
+  }
+
+
+  .intro {
+    @include white_centered;
+    margin-top: 10vh;
+    h1 {
+      font-weight: 100;
+      font-size: 2.5em;
+      margin-top: 9vh;
+    }
+    p {
+      font-weight: 300;
+      font-size: 1.5em;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .mobilesearch {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
+  }
+
+  .open_params {
+    &.open:after {
+      content: 'Find offers';
+    }
+    &:not(.open):after {
+      content: 'Close';
     }
 
   }
@@ -982,10 +1068,10 @@ body#cambiu {
   font-family: $font-family;
   color: $color;
   .btn {border-radius: $border-radius;}
-  a:not(.carousel-control) {
+ /* a:not(.carousel-control) {
     color: $grey73;
   }
-  [data-href] {
+*/  [data-href] {
     cursor: pointer;
   }
   .list-group-item, .well {
@@ -1173,7 +1259,9 @@ body#cambiu {
   }
 
   .reach-out-left {
-    padding-left: 0;
+    @media (min-width: $screen-sm-min) {
+      padding-left: 0;
+    }
     &.almost {
       padding-left: 0.5em;
     }
@@ -1182,7 +1270,9 @@ body#cambiu {
     }
   }
   .reach-out-right {
-    padding-right: 0;
+    @media (min-width: $screen-sm-min) {
+      padding-right: 0;
+    }
     &.almost {
       padding-right: 0.5em;
     }
@@ -1192,15 +1282,24 @@ body#cambiu {
   }
 
 
-  &.exchanges .navbar {
+  &.desktop.exchanges .navbar {
       background-color: rgba(0,0,0,0.1);
       box-shadow: 0 0 10px #888;
+  }
+  &.mobile.exchanges .navbar {
+    background-color: rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px #888;
   }
 
   .navbar {
     .logo_word {
       color: #fff;
-      font-weight: 300;
+      @media (max-width: $screen-xs-max) {
+        font-weight: 100;
+      }
+      @media (min-width: $screen-sm-min) {
+        font-weight: 300;
+      }
       font-size: 1.5em;
       text-transform: initial;
       line-height: 50px;
@@ -1226,6 +1325,14 @@ body#cambiu {
     text-transform: uppercase;
     .navbar-brand {
       padding-top: 4px;
+      @media (max-width: $screen-xs-max) {
+        span:first-child {
+          background-color: #fff;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+      }
     }
   }
   .navbar-collapse {
@@ -1732,10 +1839,7 @@ body#cambiu {
           background-color: $darken-brand-color;
           color: #fff;
           line-height: 6vh;
-          position: relative;
-          left: -6%;
-          width: 105%;
-        }
+         }
         @media (min-width: $screen-sm-min) {
           background-color: transparent;
           color: $darken-brand-color;
@@ -1771,14 +1875,12 @@ body#cambiu {
           }
         }
          #new_parameters {
-          input[data-field=location] {
-            -webkit-transition: all .5s ease;
-            -moz-transition: all .5s ease;
-            transition: all .5s ease;
-            &:focus {
-              width: 300px;
-            }
-          }
+           background-color: #eee;
+           border-bottom: none;
+           .list-group-item {
+             background-color: #eee;
+             border-bottom: none;
+           }
           text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
           &:hover {
             #search {
@@ -1788,16 +1890,12 @@ body#cambiu {
           @media (min-width: $screen-sm-min) {
             display: block;
           }
-          .list-group-item {
-            background-color: #eee;
-            border-bottom: none;
-          }
-        }
+         }
         .open_params_wrapper {
           background-color: #eee;
           border: none;
         }
-        #open_params {
+        .open_params {
           color: $darken-brand-color;
           text-transform: uppercase;
           text-decoration: none;
@@ -1961,21 +2059,9 @@ body#cambiu {
     #search_form {
       .form-control:not(#search) {
         color: #000;
-        font-size: 0.85em;
       }
       input, select {
         font-weight: 400;
-      }
-      #location_search {
-        @media (max-width: $screen-xs-max) {
-          width: 94%;
-        }
-      }
-      #pay_amount, #buy_amount {
-        border-right: none;
-      }
-      #pay_currency, #buy_currency {
-        border-left: none;
       }
     }
     #exchange_params_wrapper {

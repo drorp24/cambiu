@@ -1,22 +1,21 @@
-<div id="new_parameters" class="clearfix">
+<form id="search_form" class="form-inline" novalidate>
 
-<div class="list-group-item clearfix">
+  <div class="text_above not_on_homepage">
+    <div class="desktop_only col-md-4">exchange</div>
+    <div class="desktop_only col-md-4">to</div>
+    <div class="desktop_only col-md-4">in</div>
+  </div>
 
-<div class="text_above not_on_homepage">
-  <div class="desktop_only col-md-4">exchange</div>
-  <div class="desktop_only col-md-4">to</div>
-  <div class="desktop_only col-md-4">in</div>
-</div>
+  <div class="middle_wrapper help_text mobile_only col-xs-12">
+    <div class="middle">
+      Exchange
+    </div>
+  </div>
 
-<form id="search_form" action="/exchanges/search" class="form-inline" novalidate>
-	<div class="middle_wrapper help_text mobile_only col-xs-12">
-		<div class="middle">
-			Exchange
-		</div>
-	</div>
   <div class="form-group col-md-2 col-xs-6 reach-out-right reach-out-left">
     <input type="text" pattern="\d*" id="pay_amount" data-clicked="pay_amount (list)" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="pay_amount" class="form-control">
   </div>
+
   <div class="form-group col-md-2 col-xs-6 reach-out-left select">
     <select id="pay_currency" data-field="pay_currency" data-clicked="pay_currency (list)" data-symboltarget="pay_amount" name="pay_currency" class="currency_select select optional text-center form-control">
       <option selected disabled hidden value=''></option>
@@ -37,9 +36,11 @@
       To
     </div>
   </div>
-	<div class="form-group col-md-2 col-xs-6 reach-out-right reach-out-left">
-		<input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-clicked="buy_amount (list)" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control">
-  	</div>
+
+  <div class="form-group col-md-2 col-xs-6 reach-out-right reach-out-left">
+    <input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-clicked="buy_amount (list)" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control">
+  </div>
+
   <div class="form-group col-md-2 col-xs-6 reach-out-left select">
     <select id="buy_currency" data-field="buy_currency" data-clicked="buy_currency (list)" data-symboltarget="buy_amount" name="buy_currency" class="currency_select select optional text-center form-control">
       <option selected disabled hidden value=''></option>
@@ -61,19 +62,20 @@
     </div>
   </div>
 
-	<div class="form-group col-md-4 col-xs-12 reach-out-left reach-out-right">
-		<input type="text" id="location_search" data-field="location" data-searchbox="true" name="location_search" class="text-center location search form-control" placeholder="   Change location"
-		 data-analyze="change" data-activity="Search" data-key1="searched" data-val1="location" data-key2="type" data-val2="search" data-key3="location">
-  	</div>
-   	<div class="hidden" style="display:none">
-  		<input type="hidden" name="latitude" class="location" id="latitude" data-field="user_lat">
-  		<input type="hidden" name="longitude" class="location" id="longitude" data-field="user_lng">
-  		<input type="hidden" name="geocoded_location" id="geocoded_location" data-field="location">
-  		<input type="hidden" name="sort" id="sort" data-field="sort">
-  		<input type="hidden" name="searched_location" id="searched_location" data-field="location">
-  		<input type="hidden" name="actual_pay_amount" id="actual_pay_amount" data-field="actual_pay_amount">
-        <input type="hidden" name="distance" data-field="distance">
-	</div>
+  <div class="form-group col-md-4 col-xs-12 reach-out-left reach-out-right">
+    <input type="text" id="location_search" data-field="location" data-searchbox="true" name="location_search" class="text-center location search form-control" placeholder="   Change location"
+           data-analyze="change" data-activity="Search" data-key1="searched" data-val1="location" data-key2="type" data-val2="search" data-key3="location">
+  </div>
+
+  <div class="hidden" style="display:none">
+    <input type="hidden" name="latitude" class="location" id="latitude" data-field="user_lat">
+    <input type="hidden" name="longitude" class="location" id="longitude" data-field="user_lng">
+    <input type="hidden" name="geocoded_location" id="geocoded_location" data-field="location">
+    <input type="hidden" name="sort" id="sort" data-field="sort">
+    <input type="hidden" name="searched_location" id="searched_location" data-field="location">
+    <input type="hidden" name="actual_pay_amount" id="actual_pay_amount" data-field="actual_pay_amount">
+    <input type="hidden" name="distance" data-field="distance">
+  </div>
 
   <div class="middle_wrapper mobile_only middle_wrapper help_text col-md-half col-xs-12">
     <div class="middle">
@@ -85,22 +87,12 @@
     <a data-ajax="searches" id="search" class="form-control" type="submit">find offers</a>
   </div>
 
-  <div class="homepage_only col-md-4 form-group reach-out-right">
+  <div class="homepage_only col-md-4 col-xs-12 form-group reach-out-right">
     <input data-ajax="searches" type="submit" name="commit" value="Find best value" data-href="exchanges/list" class="btn homesearch_button form-control">
   </div>
-
 
 
   <!-- <div class="validation_errors">
    </div>
  -->
 </form>
-
-
-</div>
-
-</div>
-
-<div class="open_params_wrapper list-group-item mobile_only text-center">
-  <a id="open_params" class="open" data-toggle="collapse" data-target="#new_parameters"></a>
-</div>
