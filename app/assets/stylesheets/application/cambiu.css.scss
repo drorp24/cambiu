@@ -129,6 +129,25 @@ $inverse-color: #ffffff;
   }
 }
 
+@include keyframes(fadeIn) {
+  0% {
+    transform: scale(0);
+    opacity: 0.0;
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  80% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
 @mixin animate($name, $duration, $timing-function, $fill-mode, $delay) {
   -webkit-animation-duration: $duration;
   -moz-animation-duration: $duration;
@@ -172,6 +191,9 @@ $inverse-color: #ffffff;
 }
 @mixin appear {
   @include animate(appear, 0.5s, linear, backwards, 15s);
+}
+@mixin fadeIn {
+  @include animate(fadeIn, 1.5s, ease-in-out, both, 15s);
 }
 /*
 @-webkit-keyframes blurFadeInOut{
@@ -649,7 +671,7 @@ body#cambiu {
 
   .homesearch {
     @include white_centered;
-    @include appear;
+    @include fadeIn;
     margin-top: 35vmax;
     width: 80%;
     .col-md-4 {
@@ -666,13 +688,14 @@ body#cambiu {
     left: 0;
     right: 0;
     .list-group-item {
+//      @include fadeIn;
       position: absolute;
-      width: 65%;
+      width: 90%;
       margin-left: auto;
       margin-right: auto;
       left: 0;
       right: 0;
-      box-shadow: -8px 8px 15px tgba(0, 0, 0, 0.8);
+      box-shadow: -8px 8px 15px rgba(0, 0, 0, 0.8);
       border-radius: 0;
     }
     select {
@@ -683,8 +706,8 @@ body#cambiu {
       width: 100%;
     }
     p {
-      position: absolute;
-      bottom: 19vmax;
+ //     position: absolute;
+ //     bottom: 19vmax;
       font-size: 1.5vw;
       margin-left: auto;
       margin-right: auto;
