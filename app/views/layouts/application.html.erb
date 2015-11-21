@@ -19,15 +19,15 @@
 
 <body id="cambiu" class="<%= "#{params[:controller]} #{Rails.env} #{@mode}" %>">
 
-	<%= render 'google_tag_manager' %>
-	<%= render 'navbar' %>
-	<%= bootstrap_flash %>
 
+  <%= render 'navbar' %>
 	<%= yield %>
+  <%= bootstrap_flash %>
+  <div id="freeow" class="freeow freeow-top-right"></div>
 
-    <%= render 'google_maps' %>
+  <%= render 'google_tag_manager' %>
+  <%= render 'google_maps' %>
 
-    <div id="freeow" class="freeow freeow-top-right"></div>
 </body>
 
 </html>

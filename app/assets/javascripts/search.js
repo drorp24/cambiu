@@ -285,7 +285,7 @@ $(document).ready(function() {
      });
 */
 
-    $('#search').click(function() {
+    $('[data-ajax=searches]').click(function() {
         if (mobile) $('#open_params').toggleClass('open');
         if ($('#search_form').valid()) {
             $('#new_search').submit();
@@ -293,8 +293,11 @@ $(document).ready(function() {
         }
     });
 
-    $('#open_params').click(function() {
+    $('.open_params').click(function() {
         $(this).toggleClass('open')
+    });
+    $('#mobile_search [data-ajax]').click(function() {
+        $('.open_params').addClass('open')
     });
 
      $('#exchanges_list #fetch_more').click(function(e) {
@@ -309,7 +312,7 @@ $(document).ready(function() {
 
     // any click to change params returns to main search page
 
-    $('#search_form input').click(function() {
+    $('body.exchanges #search_form input').click(function() {
         if (window.location.pathname != '/exchanges/list') setPage('exchanges/list')
     });
 

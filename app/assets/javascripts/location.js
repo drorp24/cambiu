@@ -176,7 +176,7 @@ $(document).ready(function() {
     });
 
         // Widen location in #new_parameters when clicked
-        $('#new_parameters [data-field=location]').click(function() {
+        $('body.desktop #new_parameters [data-field=location]').click(function() {
             $('.pac-container').css('transition',
                 'all .5s ease');
             $('.pac-container').css('width',

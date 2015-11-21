@@ -1,41 +1,42 @@
-<div class="above_fold" data-clicked="marketing messages" style="display: <%= (request.url.include? 'exchanges') ? 'none' : 'block' %>" >
-	<div class="row homepage_background">
-		<div class="main clearfix">
-			<div class="marketing col-xs-12 col-md-6 col-md-offset-1">
-				<div class="pre">
-					<p></p>
-				</div>
-				<div class="heading">
-					<p>Find the best rate around you with cambiu. Easy to use. Simple and free.</p>
-				</div>
-                <div class="flow">
-                  <div class="row">
-                    <div class="col-xs-3 middle-parent">
-                      <span class="middle-child">Enter <br/>amount</span>
-                    </div>
-                    <div class="col-xs-1 middle-parent">
-                      <span class="middle-child"><i class="homepage_arrow fa fa-arrow-circle-right"></i></span>
-                    </div>
-                    <div class="col-xs-3 middle-parent">
-                      <span class="middle-child">Choose <br/>exchange</span>
-                    </div>
-                    <div class="col-xs-1 middle-parent">
-                      <span class="middle-child"><i class="homepage_arrow fa fa-arrow-circle-right"></i></span>
-                    </div>
-                    <div class="col-xs-3 middle-parent">
-                      <span class="middle-child">Pickup <br/>your money</span>
-                    </div>
-                  </div>
- 				</div>
-			</div>
-			<div class="moneybox col-xs-12 col-md-3 col-md-offset-1">
-				<%= render 'search_form' %>
-			</div>
-		</div>
-	</div>
-<!--
-	<div class="row rates_banner">
-		<%= image_tag "rates.gif" %>
-	</div>
--->
+<div class="above_fold" data-clicked="above_fold" style="display: <%= (request.url.include? 'exchanges') ? 'none' : 'block' %>" >
+
+  <div class="background-wrap desktop_only">
+
+    <iframe id="player"
+            src="https://www.youtube.com/embed/WxZaqaQO8hg?autoplay=1&controls=0&loop=1&modestbranding=1&rel=0&showinfo=0&volume=0&enablejsapi=1">
+    </iframe>
+
+    <div class="marketing">
+      <div class="message darkness">
+        <h1>Any idea how much you pay for currency exchange?</h1>
+        <p>Step out of darkness</p>
+      </div>
+      <div class="message lightness">
+        <h1>cambiu changes currency exchange</h1>
+        <p>First location-base, personalized exchange service is here</p>
+      </div>
+   </div>
+
+   <div class="homesearch">
+     <p>Click and we'll find you the <strong>best value for you</strong>. Right where you are.</p>
+     <div class="list-group-item">
+       <%= render 'exchanges/params/search_form' %>
+     </div>
+   </div>
+
+  </div>
+
+  <div id="mobile_search" class="background-wrap mobile_only">
+
+    <div class="intro">
+      <p>Best currency exchange offers right where you are.</p>
+    </div>
+
+    <div class="mobilesearch">
+      <%= render partial: 'exchanges/params/collapsible_unit', locals: {container: '#mobile_search'} %>
+    </div>
+
+  </div>
+
+
 </div>

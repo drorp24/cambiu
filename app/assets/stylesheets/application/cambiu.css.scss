@@ -55,6 +55,306 @@ $inverse-color: #ffffff;
 
 
 // Mixins
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+@include keyframes(blurFadeInOut) {
+  0%{
+    opacity: 1;
+    text-shadow: 0px 0px 50px #fff;
+    -webkit-transform: scale(1);
+  }
+  20%{
+    opacity: 1;
+    text-shadow: 0px 0px 20px #fff;
+    -webkit-transform: scale(1);
+  }
+  50%{
+    opacity: 1;
+    text-shadow: 0px 0px 5px #fff;
+    -webkit-transform: scale(1);
+  }
+  70%{
+    opacity: 1;
+    text-shadow: 0px 0px 2px #fff;
+    -webkit-transform: scale(1);
+  }
+  100%{
+    opacity: 1;
+    text-shadow: 0px 0px 1px #fff;
+    -webkit-transform: scale(0);
+  }
+}
+
+@include keyframes(blurFadeIn) {
+  0%{
+    opacity: 0;
+    text-shadow: 0px 0px 40px #fff;
+    -webkit-transform: scale(1.7);
+  }
+  50%{
+    opacity: 0.5;
+    text-shadow: 0px 0px 10px #fff;
+    -webkit-transform: scale(1.5);
+  }
+  100%{
+    opacity: 1;
+//    text-shadow: 0px 0px 0px #fff;
+    -webkit-transform: scale(1);
+    color: #fff;
+  }
+}
+
+@include keyframes(appear) {
+  0%{
+    visibility: hidden;
+//    -webkit-transform: scale(1.7);
+  }
+  100%{
+    visibility: visible;
+//    -webkit-transform: scale(1);
+  }
+}
+
+@mixin animate($name, $duration, $timing-function, $fill-mode, $delay) {
+  -webkit-animation-duration: $duration;
+  -moz-animation-duration: $duration;
+  -o-animation-duration: $duration;
+  animation-duration: $duration;
+
+  -webkit-animation-timing-function: $timing-function;
+  -moz-animation-timing-function: $timing-function;
+  -o-animation-timing-function: $timing-function;
+  animation-timing-function: $timing-function;
+
+  -webkit-animation-name: $name;
+  -moz-animation-name: $name;
+  -o-animation-name: $name;
+  animation-name: $name;
+
+  -webkit-animation-fill-mode: $fill-mode;
+  -moz-animation-fill-mode: $fill-mode;
+  -o-animation-fill-mode: $fill-mode;
+  animation-fill-mode: $fill-mode;
+
+  -webkit-animation-delay: $delay;
+  -moz-animation-delay: $delay;
+  -o-animation-delay: $delay;
+  animation-delay: $delay;
+}
+
+
+@mixin blurFadeInOut {
+  @include animate(blurFadeInOut, 10s, ease-in, backwards, 0s);
+}
+
+@mixin blurFadeIn1 {
+  @include animate(blurFadeIn, 0.5s, linear, forwards, 10s);
+}
+@mixin blurFadeIn2 {
+  @include animate(blurFadeIn, 0.5s, linear, forwards, 12s);
+}
+@mixin blurFadeIn3 {
+  @include animate(blurFadeIn, 0.5s, linear, forwards, 14s);
+}
+@mixin appear {
+  @include animate(appear, 0.5s, linear, backwards, 15s);
+}
+/*
+@-webkit-keyframes blurFadeInOut{
+  0%{
+    opacity: 0;
+    text-shadow: 0px 0px 40px #fff;
+    -webkit-transform: scale(1.3);
+  }
+  20%,75%{
+    opacity: 1;
+    text-shadow: 0px 0px 1px #fff;
+    -webkit-transform: scale(1);
+  }
+  100%{
+    opacity: 0;
+    text-shadow: 0px 0px 50px #fff;
+    -webkit-transform: scale(0);
+  }
+}
+@-webkit-keyframes blurFadeIn{
+  0%{
+    opacity: 0;
+    text-shadow: 0px 0px 40px #fff;
+    -webkit-transform: scale(1.3);
+  }
+  50%{
+    opacity: 0.5;
+    text-shadow: 0px 0px 10px #fff;
+    -webkit-transform: scale(1.1);
+  }
+  100%{
+    opacity: 1;
+    text-shadow: 0px 0px 1px #fff;
+    -webkit-transform: scale(1);
+  }
+}
+@-webkit-keyframes fadeInBack{
+  0%{
+    opacity: 0;
+    -webkit-transform: scale(0);
+  }
+  50%{
+    opacity: 0.4;
+    -webkit-transform: scale(2);
+  }
+  100%{
+    opacity: 0.2;
+    -webkit-transform: scale(5);
+  }
+}
+@-webkit-keyframes fadeInRotate{
+  0%{
+    opacity: 0;
+    -webkit-transform: scale(0) rotate(360deg);
+  }
+  100%{
+    opacity: 1;
+    -webkit-transform: scale(1) rotate(0deg);
+  }
+}
+!**!
+@-moz-keyframes blurFadeInOut{
+  0%{
+    opacity: 0;
+    text-shadow: 0px 0px 40px #fff;
+    -moz-transform: scale(1.3);
+  }
+  20%,75%{
+    opacity: 1;
+    text-shadow: 0px 0px 1px #fff;
+    -moz-transform: scale(1);
+  }
+  100%{
+    opacity: 0;
+    text-shadow: 0px 0px 50px #fff;
+    -moz-transform: scale(0);
+  }
+}
+@-moz-keyframes blurFadeIn{
+  0%{
+    opacity: 0;
+    text-shadow: 0px 0px 40px #fff;
+    -moz-transform: scale(1.3);
+  }
+  100%{
+    opacity: 1;
+    text-shadow: 0px 0px 1px #fff;
+    -moz-transform: scale(1);
+  }
+}
+@-moz-keyframes fadeInBack{
+  0%{
+    opacity: 0;
+    -moz-transform: scale(0);
+  }
+  50%{
+    opacity: 0.4;
+    -moz-transform: scale(2);
+  }
+  100%{
+    opacity: 0.2;
+    -moz-transform: scale(5);
+  }
+}
+@-moz-keyframes fadeInRotate{
+  0%{
+    opacity: 0;
+    -moz-transform: scale(0) rotate(360deg);
+  }
+  100%{
+    opacity: 1;
+    -moz-transform: scale(1) rotate(0deg);
+  }
+}
+!**!
+@keyframes blurFadeInOut{
+  0%{
+    opacity: 0;
+    text-shadow: 0px 0px 40px #fff;
+    transform: scale(1.3);
+  }
+  20%,75%{
+    opacity: 1;
+    text-shadow: 0px 0px 1px #fff;
+    transform: scale(1);
+  }
+  100%{
+    opacity: 0;
+    text-shadow: 0px 0px 50px #fff;
+    transform: scale(0);
+  }
+}
+@keyframes blurFadeIn{
+  0%{
+    opacity: 0;
+    text-shadow: 0px 0px 40px #fff;
+    transform: scale(1.3);
+  }
+  50%{
+    opacity: 0.5;
+    text-shadow: 0px 0px 10px #fff;
+    transform: scale(1.1);
+  }
+  100%{
+    opacity: 1;
+    text-shadow: 0px 0px 1px #fff;
+    transform: scale(1);
+  }
+}
+@keyframes fadeInBack{
+  0%{
+    opacity: 0;
+    transform: scale(0);
+  }
+  50%{
+    opacity: 0.4;
+    transform: scale(2);
+  }
+  100%{
+    opacity: 0.2;
+    transform: scale(5);
+  }
+}
+@keyframes fadeInRotate{
+  0%{
+    opacity: 0;
+    transform: scale(0) rotate(360deg);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+*/
+
+
+@mixin white_centered {
+  width: 100%;
+  color: #fff;
+  text-align: center;
+}
+
 @mixin middle-parent($height, $img-height) {
   height: $height;
   .middle-child {
@@ -210,6 +510,256 @@ body#cambiu {
 
     }
   }
+
+  select {
+    -webkit-appearance: none;
+  }
+
+  &.desktop.exchanges {
+    #search_form input.form-control[data-field=location] {
+      -webkit-transition: all .5s ease;
+      -moz-transition: all .5s ease;
+      transition: all .5s ease;
+      &:focus {
+        width: 300px;
+      }
+    }
+    .form-control {
+      font-size: 0.85em;
+    }
+  }
+
+  // New Homepage //
+
+
+ #search_form {
+   .form-control {
+     width: 100%;
+     &:not([type=submit]) {
+       color: #000;
+     }
+   }
+   @media (min-width: $screen-sm-min) {
+     .reach-out-left {
+       select {
+         border-left: none;
+       }
+     }
+   }
+ }
+
+  .help_text {
+    text-align: center;
+    font-size: 0.85em;
+    color: #000;
+    text-transform: uppercase;
+  }
+
+  &.homepage .not_on_homepage {
+    display: none;
+  }
+
+  &.exchanges .homepage_only {
+    display: none;
+  }
+
+  .open_params_wrapper a {
+    text-transform: uppercase;
+    color: darken($brand-color, 10%);
+    text-decoration: none;
+    &:hover {
+      color: darken($brand-color, 20%);
+    }
+  }
+  .above_fold {
+
+    .background-wrap {
+      position: relative;
+      padding-bottom: 55.25%;
+      padding-top: 30px;
+      height: 0;
+      overflow: hidden;
+      margin-left: -15px;
+      margin-right: -15px;
+      @media (max-width: $screen-xs-max) {
+        height: 100vh;
+        background-color: $brand-color;
+      }
+    }
+
+    #player {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      border: none;
+    }
+
+    .marketing {
+      @include white_centered;
+      margin-top: 25vmin;
+      margin-bottom: 5vmin;
+      z-index: 1;
+      .message {
+        @include white_centered;
+        &.darkness {
+          position: absolute;
+          color: transparent;
+          @include blurFadeInOut;
+          h1 {
+            font-weight: 300;
+          }
+        }
+        &.lightness {
+          position: absolute;
+          color: transparent;
+          h1 {
+            @include blurFadeIn1;
+            font-weight: 100;
+//            text-transform: uppercase;
+            font-size: 5vw;
+          }
+          p {
+            @include blurFadeIn2;
+            font-weight: 100;
+            letter-spacing: 0.1em;
+          }
+        }
+        h1 {
+          text-align: center;
+          font-weight: 100;
+          margin-bottom: 0;
+          @media (max-width: $screen-xs-max) {
+            font-size: 6vh;
+          }
+          @media (min-width: $screen-sm-min) {
+            font-size: 3.5vw;
+          }
+        }
+        p {
+          font-weight: 100;
+//          letter-spacing: 0.5em;
+          text-align: center;
+          font-size: 2.5vw;
+        }
+      }
+    }
+  }
+
+  .homesearch {
+    @include white_centered;
+    @include appear;
+    margin-top: 35vmax;
+    width: 80%;
+    .col-md-4 {
+      width: 25%;
+    }
+    .col-md-2 {
+      width: 12.5%;
+    }
+    .col-md-1 {
+      width: 6.25%;
+    }
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    .list-group-item {
+      position: absolute;
+      width: 65%;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      box-shadow: -8px 8px 15px tgba(0, 0, 0, 0.8);
+      border-radius: 0;
+    }
+    select {
+      -webkit-appearance: none;
+      -webkit-border-radius: 0px;
+    }
+    #location_search {
+      width: 100%;
+    }
+    p {
+      position: absolute;
+      bottom: 19vmax;
+      font-size: 1.5vw;
+      margin-left: auto;
+      margin-right: auto;
+      width: 80%;
+      font-weight: 300;
+    }
+    select {
+    }
+    #new_parameters {
+      background-color: #fff;
+    }
+
+    .form-control {
+      font-size: 1.5vw;
+      line-height: 1.5vw;
+      height: 3vw;
+    }
+  }
+
+  .homesearch_button {
+    width: 100%;
+    background-color: darken($brand-color, 10%);
+    color: #fff;
+    border: 1px solid darken($brand-color, 10%);
+    @media (max-width: $screen-xs-max) {
+      font-size: 1.3em;
+    }
+    @media (min-width: $screen-sm-min) {
+      font-size: 1.3vw;
+    }
+    line-height: 17px;
+    font-weight: 300;
+    text-transform: uppercase;
+    &:hover {
+      background-color: darken($brand-color, 20%);
+    }
+  }
+
+
+  .intro {
+    @include white_centered;
+    margin-top: 10vh;
+    h1 {
+      font-weight: 100;
+      font-size: 2.5em;
+      margin-top: 9vh;
+    }
+    p {
+      font-weight: 300;
+      font-size: 1.5em;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .mobilesearch {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
+  }
+
+  .open_params {
+    &.open:after {
+      content: 'Find offers';
+    }
+    &:not(.open):after {
+      content: 'Close';
+    }
+
+  }
+
+
+  // New Homepage //
 
   .gm-style .gm-style-iw {
     text-align: center;
@@ -538,9 +1088,6 @@ body#cambiu {
     padding: 6px 6px;
   }
 
-  border-style: inset;
-  border-color: #ccc;
-
   &.exchange {
       .es_icon, .es_distance {
         color: $cn-brand-color;
@@ -554,20 +1101,10 @@ body#cambiu {
   font-family: $font-family;
   color: $color;
   .btn {border-radius: $border-radius;}
-  .homepage_background {
-    @include background-img('header_background.jpg');
-    margin-top: -5px;
-    @media (min-width: $screen-sm-min) {
-      height: 65vh;
-    }
-    @media (max-width: $screen-xs-max) {
-      height: 510px;
-    }
-  }
-  a:not(.carousel-control) {
+ /* a:not(.carousel-control) {
     color: $grey73;
   }
-  [data-href] {
+*/  [data-href] {
     cursor: pointer;
   }
   .list-group-item, .well {
@@ -755,7 +1292,9 @@ body#cambiu {
   }
 
   .reach-out-left {
-    padding-left: 0;
+    @media (min-width: $screen-sm-min) {
+      padding-left: 0;
+    }
     &.almost {
       padding-left: 0.5em;
     }
@@ -764,7 +1303,9 @@ body#cambiu {
     }
   }
   .reach-out-right {
-    padding-right: 0;
+    @media (min-width: $screen-sm-min) {
+      padding-right: 0;
+    }
     &.almost {
       padding-right: 0.5em;
     }
@@ -774,106 +1315,24 @@ body#cambiu {
   }
 
 
-
-  &.home  {
-    .above_fold {
-      .homepage_arrow {
-        font-size: 2em;
-      }
-      .or {
-        text-transform: uppercase;
-        font-weight: 700;
-        color: #fff;
-        ow: 0px 1px 0px rgba(0, 0, 0, 1);
-        margin-top: -5px;
-        margin-bottom: -5px;
-        font-size: 1.5em;
-      }
-      .main {
-        margin-top: /*15vh*//*45px*/15vh;
-        margin-bottom: 10vh;
-        .marketing {
-          @media (min-width: $screen-sm-min) {
-            margin-top: 2em;
-          }
-           .pre {
-            font-weight: $normal;
-            color: $black;
-            font-size: 1.2em;
-            margin-top: 10px;
-            margin-bottom: 5px;
-          }
-          .heading {
-            font-weight: $bold;
-            color: $lightgreen;
-            font-size:2.5em;
-            line-height: 1.1em;
-             margin-top: 15px;
-            margin-bottom: 30px;
-            color: #fff;
-            text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
-          }
-          .flow {
-            color: #fff;
-            text-align: center;
-            margin-top: 2em;
-            margin-bottom: 2em;
-            .middle-parent {
-              @media (min-width: $screen-sm-min) {
-                font-size: 1.5em;
-                @include middle-parent(60px, 60px);
-              }
-              @media (max-width: $screen-xs-max) {
-                font-size: 1em;
-                @include middle-parent(60px, 60px);
-              }
-            }
-
-          }
-          .bullets {
-            text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
-            color: #fff;
-            font-style: italic;
-            @media (min-width: $screen-sm-min) {
-              font-size: 1.7em;
-              line-height: 1.8em;
-            }
-            @media (max-width: $screen-xs-max) {
-              font-size: 1em;
-              line-height: 1.6em;
-            }
-
-           font-weight: 400;
-            margin-left: 1em;
-            li {
-              &::before {
-                font-family: fontAwesome;
-                content:"\f046";
-                margin-right: 0.7em;
-              }
-            }
-
-          }
-        }
-        .instructions {
-          /*
-          color: #333;
-          text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-          */
-          color: #fff;
-          text-align: center;
-          margin-bottom: 0.5em;
-        }
-
-      }
-    }
+  &.desktop.exchanges .navbar {
+      background-color: rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px #888;
   }
-
+  &.mobile.exchanges .navbar {
+    background-color: rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px #888;
+  }
 
   .navbar {
     .logo_word {
       color: #fff;
-      font-weight: 300;
+      @media (max-width: $screen-xs-max) {
+        font-weight: 100;
+      }
+      @media (min-width: $screen-sm-min) {
+        font-weight: 300;
+      }
       font-size: 1.5em;
       text-transform: initial;
       line-height: 50px;
@@ -891,8 +1350,6 @@ body#cambiu {
         margin-top: 9px;
       }
     }
-    background-color: rgba(0,0,0,0.5);
-    box-shadow: 0 0 10px #888;
     height: $navbar-height;
     border: none;
     margin-bottom: 0;
@@ -901,6 +1358,14 @@ body#cambiu {
     text-transform: uppercase;
     .navbar-brand {
       padding-top: 4px;
+      @media (max-width: $screen-xs-max) {
+        span:first-child {
+          background-color: #fff;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+      }
     }
   }
   .navbar-collapse {
@@ -1407,10 +1872,7 @@ body#cambiu {
           background-color: $darken-brand-color;
           color: #fff;
           line-height: 6vh;
-          position: relative;
-          left: -6%;
-          width: 105%;
-        }
+         }
         @media (min-width: $screen-sm-min) {
           background-color: transparent;
           color: $darken-brand-color;
@@ -1446,14 +1908,12 @@ body#cambiu {
           }
         }
          #new_parameters {
-          input[data-field=location] {
-            -webkit-transition: all .5s ease;
-            -moz-transition: all .5s ease;
-            transition: all .5s ease;
-            &:focus {
-              width: 300px;
-            }
-          }
+           background-color: #eee;
+           border-bottom: none;
+           .list-group-item {
+             background-color: #eee;
+             border-bottom: none;
+           }
           text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
           &:hover {
             #search {
@@ -1463,16 +1923,12 @@ body#cambiu {
           @media (min-width: $screen-sm-min) {
             display: block;
           }
-          .list-group-item {
-            background-color: #eee;
-            border-bottom: none;
-          }
-        }
+         }
         .open_params_wrapper {
           background-color: #eee;
           border: none;
         }
-        #open_params {
+        .open_params {
           color: $darken-brand-color;
           text-transform: uppercase;
           text-decoration: none;
@@ -1636,21 +2092,9 @@ body#cambiu {
     #search_form {
       .form-control:not(#search) {
         color: #000;
-        font-size: 0.85em;
       }
       input, select {
         font-weight: 400;
-      }
-      #location_search {
-        @media (max-width: $screen-xs-max) {
-          width: 94%;
-        }
-      }
-      #pay_amount, #buy_amount {
-        border-right: none;
-      }
-      #pay_currency, #buy_currency {
-        border-left: none;
       }
     }
     #exchange_params_wrapper {
@@ -2712,39 +3156,7 @@ body#cambiu {
       background-color: $brand-color;
     }
 
-    &.home {
-       .above_fold {
-        .main {
-          margin-top: 3vh;
-          margin-bottom: 3vh;
-          .marketing {
-            .pre {
-              font-weight: $normal;
-              color: $darkgrey;
-              font-size: 1em;            
-            }
-            .heading {
-              text-align: center;
-              font-weight: $bold;
-              font-size: 1.5em;
-              line-height: 1.1em;
-              margin-bottom: 20px;
-            }
-            .post {
-              font-weight: $normal;
-              color: $darkgrey;
-              font-size: 0.8em;
-            }
-        }
-        }
-      }
-      .rates_banner img {
-        display: none;
-      }
-
-    }
-
-    .getstarted_button_container {
+     .getstarted_button_container {
       .getstarted_button {
          width: 100%;
       }
