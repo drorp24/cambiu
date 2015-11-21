@@ -73,18 +73,18 @@ $inverse-color: #ffffff;
 
 @include keyframes(blurFadeInOut) {
   0%{
-    opacity: 0;
+    opacity: 1;
     text-shadow: 0px 0px 50px #fff;
     -webkit-transform: scale(1);
   }
   20%{
     opacity: 1;
-    text-shadow: 0px 0px 2px #fff;
+    text-shadow: 0px 0px 20px #fff;
     -webkit-transform: scale(1);
   }
   50%{
     opacity: 1;
-    text-shadow: 0px 0px 1px #fff;
+    text-shadow: 0px 0px 5px #fff;
     -webkit-transform: scale(1);
   }
   70%{
@@ -93,8 +93,8 @@ $inverse-color: #ffffff;
     -webkit-transform: scale(1);
   }
   100%{
-    opacity: 0;
-    text-shadow: 0px 0px 100px #fff;
+    opacity: 1;
+    text-shadow: 0px 0px 1px #fff;
     -webkit-transform: scale(0);
   }
 }
@@ -118,6 +118,16 @@ $inverse-color: #ffffff;
   }
 }
 
+@include keyframes(appear) {
+  0%{
+    visibility: hidden;
+//    -webkit-transform: scale(1.7);
+  }
+  100%{
+    visibility: visible;
+//    -webkit-transform: scale(1);
+  }
+}
 
 @mixin animate($name, $duration, $timing-function, $fill-mode, $delay) {
   -webkit-animation-duration: $duration;
@@ -148,14 +158,20 @@ $inverse-color: #ffffff;
 
 
 @mixin blurFadeInOut {
-  @include animate(blurFadeInOut, 6s, ease-in, backwards, 0s);
+  @include animate(blurFadeInOut, 10s, ease-in, backwards, 0s);
 }
 
 @mixin blurFadeIn1 {
-  @include animate(blurFadeIn, 0.5s, linear, forwards, 6s);
+  @include animate(blurFadeIn, 0.5s, linear, forwards, 10s);
 }
 @mixin blurFadeIn2 {
-  @include animate(blurFadeIn, 0.5s, linear, forwards, 8s);
+  @include animate(blurFadeIn, 0.5s, linear, forwards, 12s);
+}
+@mixin blurFadeIn3 {
+  @include animate(blurFadeIn, 0.5s, linear, forwards, 14s);
+}
+@mixin appear {
+  @include animate(appear, 0.5s, linear, backwards, 15s);
 }
 /*
 @-webkit-keyframes blurFadeInOut{
@@ -519,6 +535,9 @@ body#cambiu {
  #search_form {
    .form-control {
      width: 100%;
+     &:not([type=submit]) {
+       color: #000;
+     }
    }
    @media (min-width: $screen-sm-min) {
      .reach-out-left {
@@ -588,32 +607,41 @@ body#cambiu {
           position: absolute;
           color: transparent;
           @include blurFadeInOut;
+          h1 {
+            font-weight: 300;
+          }
         }
         &.lightness {
           position: absolute;
           color: transparent;
           h1 {
             @include blurFadeIn1;
+            font-weight: 100;
+//            text-transform: uppercase;
+            font-size: 5vw;
           }
           p {
             @include blurFadeIn2;
+            font-weight: 100;
+            letter-spacing: 0.1em;
           }
         }
         h1 {
           text-align: center;
           font-weight: 100;
+          margin-bottom: 0;
           @media (max-width: $screen-xs-max) {
             font-size: 6vh;
           }
           @media (min-width: $screen-sm-min) {
-            font-size: 5vw;
+            font-size: 3.5vw;
           }
         }
         p {
-          font-weight: 300;
-          letter-spacing: 0.5em;
+          font-weight: 100;
+//          letter-spacing: 0.5em;
           text-align: center;
-          font-size: 2.8vw;
+          font-size: 2.5vw;
         }
       }
     }
@@ -621,6 +649,7 @@ body#cambiu {
 
   .homesearch {
     @include white_centered;
+    @include appear;
     margin-top: 35vmax;
     width: 80%;
     .col-md-4 {
@@ -638,11 +667,13 @@ body#cambiu {
     right: 0;
     .list-group-item {
       position: absolute;
-      width: 75%;
+      width: 65%;
       margin-left: auto;
       margin-right: auto;
       left: 0;
       right: 0;
+      box-shadow: -8px 8px 15px tgba(0, 0, 0, 0.8);
+      border-radius: 0;
     }
     select {
       -webkit-appearance: none;
@@ -652,9 +683,11 @@ body#cambiu {
       width: 100%;
     }
     p {
-      font-size: 1.6vw;
       position: absolute;
       bottom: 19vmax;
+      font-size: 1.5vw;
+      margin-left: auto;
+      margin-right: auto;
       width: 80%;
       font-weight: 300;
     }
@@ -665,9 +698,9 @@ body#cambiu {
     }
 
     .form-control {
-      font-size: 1.3vw;
-      line-height: 1.3vw;
-      height: 2.6vw;
+      font-size: 1.5vw;
+      line-height: 1.5vw;
+      height: 3vw;
     }
   }
 
