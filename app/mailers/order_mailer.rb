@@ -57,14 +57,14 @@ class OrderMailer < ApplicationMailer
 
     bcc_me = [
         {
-            email:  'dror@cambiu.com',
+            email:  'drorp24@gmail.com',
             type:   'bcc'
         }
     ]
     bcc_us = [
          {
-            email:  'dror@cambiu.com',
-            type:   'bcc'
+             email:  'drorp24@gmail.com',
+             type:   'bcc'
         }
     ]
     bcc_eyal =
