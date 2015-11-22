@@ -62,15 +62,7 @@ class OrderMailer < ApplicationMailer
         }
     ]
     bcc_us = [
-        {
-            email:  'sharon@cambiu.com',
-            type:   'bcc'
-        },
-        {
-            email:  'arnon@cambiu.com',
-            type:   'bcc'
-        },
-        {
+         {
             email:  'dror@cambiu.com',
             type:   'bcc'
         }
