@@ -40,3 +40,14 @@ Money::Currency.register({
    :thousands_separator => ",",
    :decimal_mark        => "."
 })
+Money::Currency.register({
+   :priority            => 1,
+   :iso_code            => "NOK",
+   :name                => "Norwegian Krone",
+   :symbol              => "kr",
+   :symbol_first        => false,
+   :subunit             => "Øre",
+   :subunit_to_unit     => 100,
+   :thousands_separator => ".",
+   :decimal_mark        => ","
+})
