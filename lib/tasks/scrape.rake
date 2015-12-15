@@ -6,7 +6,7 @@ namespace :rates do
     Rails.logger.info "Started periodic scraping task"
     Rails.logger.info " "
 
-#    Scraping.update('BFC',                    nil, "https://www.bfcexchange.co.uk/en/rates.html")
+    Scraping.update('BFC',                    nil, "http://www.bfcexchange.co.uk")
     Scraping.update('Cheque Centre',          nil, "http://www.chequecentre.co.uk/foreign-currency")
     Scraping.update('Eurochange PLC',         nil, "https://www.eurochange.co.uk/exchangerates.aspx")
     Scraping.update('Eurochange PLC',         nil, "https://www.eurochange.co.uk/buybackexchangerates.aspx")

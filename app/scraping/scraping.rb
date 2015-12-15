@@ -45,13 +45,13 @@ class Scraping
 
   def self.parse_rates(url, doc, chain, exchange)
 
-    if url == "https://www.bfcexchange.co.uk/en/rates.html"
+    if url == "http://www.bfcexchange.co.uk"
 
-      doc.css('table tbody tr').each do |tr|
-        currency    = tr.css('td')[0].text.strip
+      doc.css('#tabs-1 ul li').each do |li|
+        currency    = li.css('span')[0].text.strip
         next unless Currency.updatable.include? currency
-        buy         = tr.css('td')[2].text.strip
-        sell        = tr.css('td')[3].text.strip
+        buy         = li.css('span')[1].text.strip
+        sell        = li.css('span')[2].text.strip
         rate_update(currency, buy, sell, chain, exchange)
       end
 
