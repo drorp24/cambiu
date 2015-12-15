@@ -70,6 +70,8 @@ class Scraping
                 'USD'
               when 'Euro'
                 'EUR'
+              when 'Norwegian Kroner'
+                'NOK'
               else
                 nil
             end
@@ -102,6 +104,8 @@ class Scraping
                 'HKD'
               when 'Chinese Yuan'
                 'CNY'
+              when 'Norwegian Krone'
+                'NOK'
               else
                 nil
             end
@@ -134,6 +138,8 @@ class Scraping
                 'HKD'
               when 'Chinese Yuan'
                 'CNY'
+              when 'Norwegian Krone'
+                'NOK'
               else
                 nil
             end
@@ -167,6 +173,8 @@ class Scraping
                 'HKD'
               when 'Yuan - China'
                 'CNY'
+              when 'Kroner - Norway'
+                'NOK'
               else
                 nil
             end
@@ -209,6 +217,8 @@ class Scraping
                 'HKD'
               when 'China Yuan'
                 'CNY'
+              when 'Norway Kroner'
+                'NOK'
               else
                 nil
             end
@@ -241,6 +251,8 @@ class Scraping
                 'HKD'
               when 'CHINESE YUAN'
                 'CNY'
+              when 'NORWEGIAN KRONER'
+                'NOK'
               else
                 nil
             end
