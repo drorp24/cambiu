@@ -29,7 +29,7 @@ class Exchange < ActiveRecord::Base
   attr_accessor :best_at
 
   def has_real_rates?
-    !test && !manual? && !no_rates?
+    !test? && !manual? && !no_rates?
   end
 
   def self.bad
