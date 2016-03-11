@@ -2,7 +2,7 @@ class Rate < ActiveRecord::Base
   belongs_to :ratable, polymorphic: true
   belongs_to :admin_user
   enum service_type: [ :collection, :delivery ]
-  enum source: [ :manual, :xml, :scraping, :fake ]
+  enum source: [ :manual, :xml, :scraping, :test ]
   validates :sell, numericality: true, allow_nil: true
   validates :buy, numericality: true, allow_nil: true
   validates :currency, uniqueness: { scope: [:ratable_type, :ratable_id],

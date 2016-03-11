@@ -67,13 +67,13 @@ ActiveAdmin.register Exchange do
   scope :manual
   scope :xml
   scope :scraping
-  scope :fake
+  scope :test
 
 
   before_filter :skip_sidebar!, :only => :index
 
 =begin
-  filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Fake', 'fake'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']]
+  filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Test', 'test'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']]
   filter :chain
   filter :name
   filter :address
@@ -188,7 +188,7 @@ form do |f|
       f.input     :business_type, as: :select, collection: {:"Exchange"=>"exchange", :"Bank"=>"bank", :"Post office"=>"post_office", :"Other"=>"other"}, include_blank: false
       f.input     :chain_name, label: 'Chain'
       f.input     :rates_policy, as: :select, collection: {:"Individual"=>"individual", :"Chain"=>"chain"}, include_blank: false
-      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Fake"=>"fake", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping"}, include_blank: false
+      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Test"=>"test", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping"}, include_blank: false
       f.input     :contract, label: 'Contract', as: :radio
       f.input     :address
       f.input     :delivery_tracking, as: :url
@@ -263,7 +263,7 @@ form do |f|
       selectable_column
       id_column
       column :source        do |rate|
-        best_in_place rate, :source, as: :select, collection: {:"manual"=>"Manual", :"xml"=>"XML", :"scraping"=>"Scraping", :"fake"=>"Fake"}
+        best_in_place rate, :source, as: :select, collection: {:"manual"=>"Manual", :"xml"=>"XML", :"scraping"=>"Scraping", :"test"=>"Test"}
       end
       column :currency           do |rate|
         best_in_place rate, :currency #, as: :select, collection: Currency.select

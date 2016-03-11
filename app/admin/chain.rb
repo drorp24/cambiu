@@ -42,7 +42,7 @@ ActiveAdmin.register Chain do
       f.input     :phone
       f.input     :url
       f.input     :currency
-      f.input     :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Fake', 'fake'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']], include_blank: false
+      f.input     :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Test', 'test'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']], include_blank: false
       f.input     :rates_update, input_html: { :disabled => true }
     end
     f.actions

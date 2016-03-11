@@ -15,7 +15,7 @@ class Exchange < ActiveRecord::Base
   belongs_to  :upload
   belongs_to  :admin_user
   enum business_type: [ :exchange, :bank, :post_office, :other ]
-  enum rates_source: [ :no_rates, :fake, :manual, :xml, :scraping ]
+  enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping ]
   enum rates_policy: [:individual, :chain]
 
   geocoded_by :address
@@ -29,7 +29,7 @@ class Exchange < ActiveRecord::Base
   attr_accessor :best_at
 
   def has_real_rates?
-    !fake? && !manual? && !no_rates?
+    !test && !manual? && !no_rates?
   end
 
   def self.bad
