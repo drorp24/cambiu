@@ -24,10 +24,12 @@ class Exchange < ActiveRecord::Base
 
   scope :with_contract, -> { where(contract: true) }
 
+  scope :with_real_rates, -> { where("rates_source > 2") }
+
   attr_accessor :best_at
 
   def has_real_rates?
-    !fake? && !no_rates?
+    !fake? && !manual? && !no_rates?
   end
 
   def self.bad

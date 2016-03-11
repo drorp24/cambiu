@@ -44,7 +44,7 @@ class Search < ActiveRecord::Base
       if exchange_id
         exchanges = Array(Exchange.find_by_id(exchange_id))
       elsif Rails.application.config.use_google_geocoding
-        exchanges = Exchange.with_contract.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(:open_today, :rates)
+        exchanges = Exchange.with_real_rates.with_contract.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(:open_today, :rates)
       # TODO: The following 2 options are temporary only
       elsif location.downcase.include?("london")
         exchanges = Exchange.geocoded.where.not(name: nil, address: nil).includes(:open_today, :rates).limit(50)
