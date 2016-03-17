@@ -361,7 +361,7 @@ $(document).ready(function() {
             position: new google.maps.LatLng(lat, lng),
             disableAutoPan: true,
             map: map,
-            icon: '/pin.gif',
+            icon: '/cur_loc.png',
             draggable: true
         });
 
