@@ -2708,6 +2708,7 @@ body#cambiu {
     }
     #exchange_voucher {
       .qr_code {
+        height: 45vh;
       }
 //      width: 94%;
       #voucher_bullets.exchange_bullets {
@@ -2906,8 +2907,7 @@ body#cambiu {
         }
       }
       .exchange_identification {
-        position: relative;
-        top: 2vh;
+        position: static;
         font-size: 0.9em;
         .identification {
           border-top: 1px solid rgba(0,0,0,.1);
