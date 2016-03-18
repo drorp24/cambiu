@@ -50,5 +50,7 @@ Rails.application.configure do
   ## TODO: Control with AB Testing
   config.exchange_search_inactive = true
 
+  config.email_required = false
+
 end
 Rails.application.routes.default_url_options[:host] = 'localhost:3000'

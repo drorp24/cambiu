@@ -18,6 +18,7 @@ class Order < ActiveRecord::Base
   after_commit   :order_notification
 
   def order_notification
+    return unless Rails.application.config.email_required
     response = OrderMailer.notify(self).deliver_now #if self.status_changed?       # without .deliver_now, OrderMailer.notify is not invoked but on the second call
     logger.info "order.rb - OrderMailer.notify response:"
     logger.info response
