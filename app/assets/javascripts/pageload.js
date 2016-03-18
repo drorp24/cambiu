@@ -289,6 +289,7 @@ $(document).ready(function() {
     });
 
     inform = function(title, text, hide) {
+/*
         if (hide === undefined) hide = false;
         $("#freeow").freeow(title, text, {
             classes: ["smokey", "slide"],
@@ -297,6 +298,7 @@ $(document).ready(function() {
             hideStyle: {opacity: 0, left: '400px'},
             autoHide: hide
         });
+*/
     };
 
  });
