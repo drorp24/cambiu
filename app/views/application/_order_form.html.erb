@@ -1,7 +1,7 @@
 <%= simple_form_for Order.new, url: orders_path, validate: false, remote: true, html: {data: {type: :json} } do |f| %>
 
 
-    <% if email_required %>
+    <% if email %>
         <%= f.input_field :email, required: true, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email to get voucher", label: false, type: "email" %>
         <div class="validation_errors text-center"></div>
     <% else %>
