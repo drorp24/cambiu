@@ -301,4 +301,5 @@ $(document).ready(function() {
 */
     };
 
+    listen_to_file_input();
  });

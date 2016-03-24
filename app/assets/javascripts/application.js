@@ -17,6 +17,7 @@
 //= require exchanges
 //= require validations
 //= require pages
+//= require upload
 
 //= require bootstrap/tooltip
 //= require bootstrap/popover

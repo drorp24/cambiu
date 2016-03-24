@@ -33,7 +33,11 @@ Rails.application.routes.draw do
   end
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  resources :orders
+  resources :orders do
+    collection do
+      post 'upload'
+    end
+  end
 
   resources :currencies do
     collection do
