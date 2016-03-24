@@ -41,7 +41,7 @@ class OrderMailer < ApplicationMailer
     to_user =
     [
         {
-            email:  order.email,
+            email:  order.customer_email,
             type:   'to'
         }
     ]
@@ -131,20 +131,24 @@ class OrderMailer < ApplicationMailer
           track_opens: true,
           track_clicks: true,
           global_merge_vars: [
-              {name: 'EXCHANGE_ID',             content: order.exchange_id},
-             {name: 'SERVICE_TYPE',             content: order.service_type.upcase},
-             {name: 'SERVICE_TYPE_MESSAGE',     content: service_type_message},
-             {name: 'VOUCHER_NUMBER',           content: order.voucher},
-             {name: 'EXPIRY_DATE',              content: order.expiry.strftime('%e %b, %Y')},
-             {name: 'EXPIRY_TIME',              content: order.expiry.strftime('%H:%M')},
-             {name: 'EXCHANGE_NAME',            content: order.exchange.name},
-             {name: 'EXCHANGE_ADDRESS',         content: order.exchange.address},
-             {name: 'PAY_AMOUNT',               content: Money.new(order.pay_cents, order.pay_currency).format},
-             {name: 'GET_AMOUNT',               content: Money.new(order.buy_cents, order.buy_currency).format},
-             {name: 'COMPANY_NAME',             content: from_name},
-             {name: 'COMPANY_ADDRESS',          content: company_address},
-             {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')},
-             {name: 'USER_LOCATION',            content: order.user_location}
+              {name: 'SERVICE_TYPE',             content: order.service_type.upcase},
+              {name: 'SERVICE_TYPE_MESSAGE',     content: service_type_message},
+              {name: 'VOUCHER_NUMBER',           content: order.voucher},
+              {name: 'EXPIRY_DATE',              content: order.expiry.strftime('%e %b, %Y')},
+              {name: 'EXPIRY_TIME',              content: order.expiry.strftime('%H:%M')},
+              {name: 'EXCHANGE_ID',              content: order.exchange_id},
+              {name: 'EXCHANGE_NAME',            content: order.exchange.name},
+              {name: 'EXCHANGE_ADDRESS',         content: order.exchange.address},
+              {name: 'EXCHANGE_PHONE',           content: order.exchange.phone},
+              {name: 'PAY_AMOUNT',               content: Money.new(order.pay_cents, order.pay_currency).format},
+              {name: 'GET_AMOUNT',               content: Money.new(order.buy_cents, order.buy_currency).format},
+              {name: 'USER_LOCATION',            content: order.user_location},
+              {name: 'CUSTOMER_EMAIL',           content: order.customer_email || ""},
+              {name: 'CUSTOMER_ADDRESS',         content: order.customer_address || ""},
+              {name: 'CUSTOMER_PHONE',           content: order.customer_phone || ""},
+              {name: 'COMPANY_NAME',             content: from_name},
+              {name: 'COMPANY_ADDRESS',          content: company_address},
+              {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')},
           ],
           images: [
             {type: "image/png", name: 'photo',  content:   order.photo.split(',')[1]}

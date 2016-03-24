@@ -14,16 +14,15 @@
       <%= f.input_field :get_currency, 	    as: :hidden, data: {model: 'exchange', field: 'get_currency'} %>
       <%= f.input_field :service_type, 	    as: :hidden, data: {model: 'order',    field: 'service_type'} %>
       <%= f.input_field :user_location, 	as: :hidden, data: {model: 'exchange', field: 'user_location'} %>
-      <%= f.input_field :phone,             as: :hidden, class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone to coordinate delivery", label: false %>
       <%= f.input_field :status, 	        as: :hidden, data: {                   field: 'status'}, value: status %>
     </div>
 
     <%= f.input_field :photo, required: false, type: "file", accept: "image/*" %>
     <%= f.input_field :customer_address, required: true, type: "textarea", placeholder: "  Where would you like the refund to be sent", label: false %>
     <% if email %>
-        <%= f.input_field :email, required: true, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email if you wish to facilitate refund", label: false, type: "email" %>
+        <%= f.input_field :customer_email, required: true, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email if you wish to facilitate refund", label: false, type: "email" %>
     <% end %>
-    <%= f.input_field :phone,             class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone if you wish to facilitate refund", label: false %>
+    <%= f.input_field :customer_phone,             class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone if you wish to facilitate refund", label: false %>
 
 
     <%= f.button :submit, 'Get Refund', id: 'email_submit',

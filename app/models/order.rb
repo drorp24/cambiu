@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
   enum status: [:offer, :produced, :used, :pictured ]
   enum service_type: [ :collection, :delivery ]
 
-  attr_accessor :photo, :customer_address
+  attr_accessor :photo
 
   before_create do
     self.expiry = 4.hours.from_now

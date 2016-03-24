@@ -7,7 +7,6 @@ class OrdersController < ApplicationController
     @order.pictured!
     @order.photo = params[:imageData]
     response = OrderMailer.notify(@order).deliver_now
-    logger.info ""
     respond_with @order
   end
 
