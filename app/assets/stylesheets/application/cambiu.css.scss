@@ -533,6 +533,42 @@ body#cambiu {
     }
   }
 
+
+
+  .page {
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+
+  .pane {
+    display: none;
+    &.active {
+      display: block;
+    }
+    margin-top: $navbar-height + 20px;
+    height: 85vh;
+    @media (min-width: $screen-sm-min) {
+      &:not(#exchanges_list), .list-group {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+    }
+    &:not(#exchanges_list) {
+      background-color: #fff;
+      padding-bottom: 5vh;
+      padding-top: 5vh;
+      padding-left: 2vh;
+      padding-right: 2vh;
+    }
+  }
+
+
+
+
+
+
+
   .button_link {
     text-align: center;
     div {
@@ -974,10 +1010,7 @@ body#cambiu {
 
   @media (min-width: $screen-sm-min) {
 
-    .list-group, #exchange_deal, #exchange_voucher {
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    }
-  }
+   }
 
 
 
@@ -1963,14 +1996,6 @@ body#cambiu {
         #exchanges_items {
           margin-top: -1px;
         }
-        .pane {
-          margin-top: $navbar-height + 20px;
-          height: 85vh;
-          @media (min-width: $screen-sm-min) {
-            padding-top: 5vh;
-           }
-          padding-bottom: 5vh;
-        }
          #new_parameters {
            background-color: #eee;
            border-bottom: none;
@@ -2759,242 +2784,9 @@ body#cambiu {
         font-size: 1.2em;
       }
     }
-    #exchange_deal {
-         width: 100%;
-    }
     .calming_msg {
       text-align: center;
       font-size: 0.9em;
-    }
-    #exchange_voucher, #exchange_deal {
-      width: 94%;
-      background-color: #fff;
-      margin-left: 3%;
-      /*
-      filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12,Color='#444')";
-      filter: url(#drop-shadow);
-      -webkit-filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));
-      filter: drop-shadow(0px 16px 4px rgba(0,0,0,0.5));
-      */
-      @media (min-width: $screen-sm-min) {
-        height: 80vh
-      }
-      @media (max-width: $screen-xs-max) {
-        height: 88vh;
-      }
-    i {
-        margin-right: 5px;
-      }
-      padding-right: 15px;
-      padding-left: 15px;
-      .row {
-        margin-left: 0;
-        margin-right: 0;
-      }
-      .voucher_heading {
-        padding-top: 7vh;
-        font-weight: 500;
-        text-align: center;
-        color: #333;
-        .printer_icon {
-          color: #888;
-          font-size: 1.5em;
-          margin-top: 0.2em;
-          position: relative;
-          right: 1em;
-        }
-      }
-      .voucher_expiry {
-        color: $brand-color;
-      }
-      .deal_title {
-        color: #888;
-        @media (min-width: $screen-sm-min) {
-          font-size: 2vh;
-        }
-        @media (max-width: $screen-xs-max) {
-          font-size: 3vh;
-        }
-        text-transform: uppercase;
-        .above_line {
-          font-size: 3vh;
-        }
-      }
-      .bullet {
-        color: #555;
-      }
-      .voucher_title {
-        color: #000;
-        font-weight: 900;
-        @media (min-width: $screen-sm-min) {
-          font-size: 4vh;
-        }
-        @media (max-width: $screen-xs-max) {
-          font-size: 4.5vh;
-        }
-        text-transform: uppercase;
-      }
-      .voucher_validity {
-        color: #000;
-        @media (min-width: $screen-sm-min) {
-          font-size: 2.5vh;
-        }
-        @media (max-width: $screen-xs-max) {
-          font-size: 2.5vh;
-        }
-        font-weight: 300;
-        margin-bottom: 10px;
-      }
-      .order_title {
-        font-size: 5vh;
-        color: #888;
-        font-weight: 700;
-        margin-top: 3vh;
-        margin-bottom: 3vh;
-      }
-      .exchange_banner {
-        height: 13vh;
-//        margin-top: 5vh;
-        .pickup_title {
-          font-size: 2.3vh;
-          font-weight: 300;
-          color: #333;
-          margin-bottom: 1vh;
-          margin-top: 3vh;
-        }
-        .es_name {
-          text-transform: initial;
-          @media (min-width: $screen-sm-min) {
-            font-size: 4vh;
-          }
-          @media (max-width: $screen-xs-max) {
-            font-size: 4vh;
-          }
-          color: #777;
-          font-weight: 700;
-          margin-bottom: 0px;
-        }
-        .es_address {
-          @media (min-width: $screen-sm-min) {
-            font-size: 2.5vh;
-          }
-          @media (max-width: $screen-xs-max) {
-            font-size: 2.5vh;
-          }
-          font-weight: 400;
-          color: #888;
-          margin-top: -5px;
-        }
-      }
-        .rate_expiry {
-          font-size: 1.9vh;
-          text-transform: uppercase;
-          font-weight: 900;
-          text-align: center;
-        }
-        .center_message {
-          font-size: 1.4em;
-          color: #333;
-          text-align: center;
-          margin-bottom: 1.5em;
-          color: $darken-brand-color;
-          font-weight: 400;
-          margin-top: 4vh;
-         }
-       .exchange_bullets {
-          margin-bottom: 4vh;
-          margin-top: 1vh;
-//          text-align: center;
-         color: #333;
-         .bullets_title {
-           font-size: 4.5vh;
-           color: $brand-color;
-           text-transform: uppercase;
-           margin-top: 3vh;
-           margin-bottom: 1vh;
-           font-weight: 900;
-         }
-        .bullet {
-          font-size: 2vh;
-          color: #333;
-          &::before {
-            margin-right: 0.8em;
-            font-family: fontAwesome;
-            content: '\f18e';
-          }
-        }
-      }
-      .order_wrapper {
-        padding-left: 0;
-        padding-right: 0;
-      }
-      .exchange_order {
-        font-size: 2.5vh;
-        font-weight: 900;
-        .order {
-          color: #888;
-          text-align: center;
-          padding-bottom: 10px;
-          .exchange_icon i{
-            margin-right: 10px;
-            margin-left: 10px;
-          }
-        }
-        .subject_to_change {
-          font-weight: 300;
-          font-size: 0.7em;
-          margin-top: 10px;
-          text-align: center;
-        }
-      }
-      .exchange_identification {
-        position: static;
-        font-size: 0.9em;
-        .identification {
-          border-top: 1px solid rgba(0,0,0,.1);
-          border-bottom: 1px solid rgba(0,0,0,.1);
-          padding-top: 10px;
-          padding-bottom: 10px;
-          .identification_icon {
-            @include middle-parent(30px, 30px);
-            padding-right: 10px;
-            padding-left: 10px;
-            img {
-              width: 100%;
-            }
-          }
-        }
-         .identification_note {
-          font-size: 0.8em;
-           text-align: center;
-        }
-      }
-      .confirmation_form {
-        margin-top: 2vh;
-        .confirmation_button {
-          width: 100%;
-          &.search {
-            background-color: $lightgreen;
-            border-bottom: 3px solid $darkgreen;
-          }
-          &.exchange {
-            font-size: 3vh;
-            font-weight: 300;
-          }
-          border-radius: 4px;
-          text-transform: uppercase;
-          @media (min-width: $screen-sm-min) {
-            font-size: 1.1em;
-          }
-          @media (max-width: $screen-xs-max) {
-            font-size: 1em;
-          }
-          color: white;
-          font-weight: 400;
-          height: 50px;
-          margin-top: 10px;
-        }
-      }
     }
     #exchange_voucher {
       .center_message {

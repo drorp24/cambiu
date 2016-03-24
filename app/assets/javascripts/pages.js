@@ -79,7 +79,7 @@ $(document).ready(function() {
 
     }
 
-    setPage = function(url, hash, transition) {
+    setPage = function(url, hash) {
 
         // Parse arguments
 
@@ -141,45 +141,17 @@ $(document).ready(function() {
         $('nav.navbar').addClass(page);
 
 
-        // activate/hide components
+        $('.page').removeClass('active');
+        $('.pane').removeClass('active');
 
-
-        var active_pane = $('.pane.active');
-        var active_page = $('.page.active');
-
-
-
-        // TODO: function
-        if (!transition) active_page.hide();
-        if (!transition) active_pane.hide();
-        active_page.removeClass('active');
-        active_pane.removeClass('active');
         if (page) {
             page_el = $('.page[data-page=' + page + ']');
             page_el.addClass('active');
-            if (!transition) page_el.show();
         }
         if (pane) {
             pane_el = $('.pane[data-pane=' + pane + ']');
             pane_el.addClass('active');
-            if (!transition) pane_el.show();
         }
-
-
-        if (active_pane.is('.flop')) {
-            active_pane.closest('.front').css('backface-visibility', 'initial');
-            pane_el.css('display', 'block');
-            if (iOS || Safari) active_pane.hide();
-        }
-
-        if (active_pane.is('.flip')) {
-            active_pane.closest('.back').css('backface-visibility', 'initial');
-            pane_el.css('display', 'block');
-            active_pane.hide();
-        }
-
-
-
 
 
         $('[data-active-pane=' + pane + ']').addClass('active');
@@ -314,20 +286,17 @@ $(document).ready(function() {
 
         var exchangeid =  el.attr('data-exchangeid');
         var href =        el.attr('data-href');
-        var page =        el.attr('data-href-page');
+        var page =        el.attr('data-href-page') !== "" && el.attr('data-href-page');
         var pane =        el.attr('data-href-pane');
         var id =          el.attr('data-href-id');
         var url =         (page && pane && id) ? page + '/' + id + '/' + pane : href;
         var hash =        el.attr('data-href-hash');
 
         console.log('data-href element clicked. href: ' + href + ' href-id: ' + id + ' hash: ' + String(hash));
-        var transition = $('.pane.active').is('.transition');
-        setPage(url, hash, transition);
-        if (transition)  $('.flip-container').removeClass('flop').addClass('flip');
-
+        setPage(url, hash);
     };
 
-    $('body').on('click tap', '[data-href]', (function(e) {
+    $('body').on('click tap', '[data-href], [data-href-page]', (function(e) {
         // if clicked element is part of a form, dont move page unless form is valid
 
         // Avoids getting into exchange page when 'getit' is clicked even if redirection takes place, probably due to validation
@@ -369,17 +338,10 @@ $(document).ready(function() {
         if (e.state && e.state.length > 0) {
 
             var curr_pane = $('.pane.active');
-            var transition  = curr_pane.is('.transition') && e.state != '/exchanges/list' && e.state != '/homepage';
-//            if (pane == 'deal' && e.state == '/exchanges/deal') transition = false;
+            setPage(e.state.slice(1), null);
 
-            if (transition) {
-                var from    = curr_pane.hasClass('flip') ? 'flip' : 'flop';
-                var to      = from == 'flip' ? 'flop' : 'flip';
-            }
-
-            setPage(e.state.slice(1), null, transition);
-            if (transition)  $('.flip-container').removeClass(from).addClass(to);
         } else
+
         if (window.location.hash && window.location.pathname.length > 1) {
             console.log('... but a hash exists - settingPage according to path');
             // when user goes to hash it's not pushed to history hence e.state is null in this case
