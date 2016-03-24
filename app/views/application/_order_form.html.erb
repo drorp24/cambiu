@@ -1,12 +1,7 @@
-<%= simple_form_for Order.new, url: orders_path, validate: false, remote: true, html: {data: {type: :json} } do |f| %>
+<%= simple_form_for Order.new, url: orders_path, validate: false, remote: true, html: {multipart: true, data: {type: :json} } do |f| %>
 
 
-    <% if email %>
-        <%= f.input_field :email, required: true, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email to get voucher", label: false, type: "email" %>
-        <div class="validation_errors text-center"></div>
-    <% else %>
-        <%= f.input_field :email, 		    as: :hidden, data: {model: 'order', field: 'order_email'} %>
-    <% end %>
+    <div class="validation_errors text-center"></div>
 
     <div class="hidden_fields">
       <%= f.input_field :id, 	            as: :hidden, data: {model: 'order',     field: 'order_id'} %>
@@ -20,17 +15,25 @@
       <%= f.input_field :service_type, 	    as: :hidden, data: {model: 'order',    field: 'service_type'} %>
       <%= f.input_field :user_location, 	as: :hidden, data: {model: 'exchange', field: 'user_location'} %>
       <%= f.input_field :phone,             as: :hidden, class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone to coordinate delivery", label: false %>
-      <%= f.input_field :status, 	        as: :hidden, data: {                   field: 'status'}, value: 'produced' %>
+      <%= f.input_field :status, 	        as: :hidden, data: {                   field: 'status'}, value: status %>
     </div>
 
-    <%= f.button :submit, 'Get voucher', id: 'email_submit',
+    <%= f.input_field :photo, required: false, type: "file", accept: "image/*" %>
+    <%= f.input_field :customer_address, required: true, type: "textarea", placeholder: "  Where would you like the refund to be sent", label: false %>
+    <% if email %>
+        <%= f.input_field :email, required: true, data: {model: 'order', field: 'order_email', clicked: 'clicking email'}, placeholder: "  Enter email if you wish to facilitate refund", label: false, type: "email" %>
+    <% end %>
+    <%= f.input_field :phone,             class: 'phoneUK', data: {field: 'phone', clicked: 'clicking phone'}, placeholder: "  Leave phone if you wish to facilitate refund", label: false %>
+
+
+    <%= f.button :submit, 'Get Refund', id: 'email_submit',
      data: {
              model:     'exchange',
              href:      '',
              href_page: 'exchanges',
              href_id:   '',
-             href_pane: 'voucher',
-             event:     'Making order',
+             href_pane: 'deal',
+             event:     'XXXXXX',
              exchange_name:      '',
              service_type: ''
      }, class: "middle-child email_submit btn btn-mini btn-warning #{@mode}" %>

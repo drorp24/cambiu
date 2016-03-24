@@ -37,12 +37,7 @@
   </div>
 
   <div id="rate_guarantee">
-    <div id="rate_guarantee_title">Get an extra £5 with a click</div>
-    <div id="rate_guarantee_text">
-      <input type="file" accept="image/*">
-      <p>Click to upload your receipt and we'll reward you with an extra £5 .</p>
-      <p> We'll also compensate you if the price was inaccurate for whatever reason.</p>
-    </div>
+    <%= render partial: 'order_form', locals: {email: Rails.application.config.email_required, status: 'pictured'} %>
   </div>
 
   <div class="button_link">

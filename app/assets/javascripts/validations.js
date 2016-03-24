@@ -144,7 +144,7 @@ $(document).ready(function() {
     $("form.new_order").validate({
         rules: {
             'order[email]': {
-                 email_for_real: true
+//                 email_for_real: true
 //                remote: '/searches/unique'
             }
         },
