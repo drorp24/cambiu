@@ -4,6 +4,12 @@ class OrdersController < ApplicationController
 
   def upload
     @order = Order.last
+    @order.pictured!
+    @order.photo = params[:imageData]
+    response = OrderMailer.notify(@order).deliver_now
+    logger.info "OrderMailer.notify response:"
+    logger.info response
+    logger.info ""
     respond_with @order
   end
 

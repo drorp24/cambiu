@@ -14,7 +14,7 @@ class OrderMailer < ApplicationMailer
   # mandrill api based. All smtp definitions ignored
   def notify(order)
 
-    return if Rails.env.development?
+#    return if Rails.env.development?
     logger.info "At notify. thats the order i received"
     logger.info  order.inspect
 
@@ -23,9 +23,9 @@ class OrderMailer < ApplicationMailer
     exchange = order.exchange
     if !exchange
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not exist"
-    elsif exchange.email.blank?
+    elsif !order.pictured? and exchange.email.blank?
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not have an email"
-    elsif !order.offer? and order.collection? and order.email.blank?
+    elsif Rails.application.config.email_required and !order.offer? and order.collection? and order.email.blank?
       error = "Order has no email"
     end
 
@@ -76,7 +76,10 @@ class OrderMailer < ApplicationMailer
     bcc_us = bcc_me if Rails.env.development?
 
 
-    if order.offer?
+    if order.pictured?
+      to = bcc_us
+      subject = "Receipt photo"
+    elsif order.offer?
       to = bcc_us
       subject = "Someone just clicked Get it..."
     elsif order.produced?
@@ -103,8 +106,8 @@ class OrderMailer < ApplicationMailer
       from_name = 'currency-net'
       from_email = 'support@currency-net.com'
     elsif $request.domain == 'localhost'
-      from_name = 'currency-net'
-      from_email = 'support@currency-net.com'
+      from_name = 'cambiu'
+      from_email = 'support@cambiu.com'
     end
 
     company_address = "5 long street, E2 8HJ, london"
@@ -141,13 +144,17 @@ class OrderMailer < ApplicationMailer
              {name: 'COMPANY_ADDRESS',          content: company_address},
              {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')},
              {name: 'USER_LOCATION',            content: order.user_location}
-      ]
+          ],
+          images: [
+            {type: "image/png", name: 'photo',  content:   order.photo}
+          ]
       }
 
       async = false
       ip_pool = "Main Pool"
       response = mandrill.messages.send_template template_name, template_content, message, async, ip_pool#, send_at
 
+=begin
       order_rec = Order.find_by_id(order.id)
       order_rec.emails.create(
           from:             message[:from_email],
@@ -157,6 +164,7 @@ class OrderMailer < ApplicationMailer
           reject_reason:    response[0]["reject_reason"],
           order_status:     order.status      # gets 0 always, thou the above puts clearly shows it's 2
       ) if order_rec
+=end
 
     rescue Mandrill::Error => e
 
