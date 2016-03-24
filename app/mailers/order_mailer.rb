@@ -131,6 +131,7 @@ class OrderMailer < ApplicationMailer
           track_opens: true,
           track_clicks: true,
           global_merge_vars: [
+              {name: 'EXCHANGE_ID',             content: order.exchange_id},
              {name: 'SERVICE_TYPE',             content: order.service_type.upcase},
              {name: 'SERVICE_TYPE_MESSAGE',     content: service_type_message},
              {name: 'VOUCHER_NUMBER',           content: order.voucher},
@@ -146,7 +147,7 @@ class OrderMailer < ApplicationMailer
              {name: 'USER_LOCATION',            content: order.user_location}
           ],
           images: [
-            {type: "image/png", name: 'photo',  content:   order.photo}
+            {type: "image/png", name: 'photo',  content:   order.photo.split(',')[1]}
           ]
       }
 
