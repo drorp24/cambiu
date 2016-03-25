@@ -45,8 +45,8 @@ function readFile(file) {
 
 function processFile(dataURL, fileType) {
     console.log('processFile');
-    var maxWidth = 1200;
-    var maxHeight = 1200;
+    var maxWidth = 1400;
+    var maxHeight = 1400;
 
     var image = new Image();
     image.src = dataURL;

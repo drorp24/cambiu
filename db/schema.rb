@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324175800) do
+ActiveRecord::Schema.define(version: 20160324231000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,11 +146,11 @@ ActiveRecord::Schema.define(version: 20160324175800) do
     t.integer  "exchange_id"
     t.integer  "user_id"
     t.datetime "expiry"
-    t.integer  "status",                       default: 0
+    t.integer  "status",                        default: 0
     t.integer  "pay_cents"
-    t.string   "pay_currency",     limit: 255
+    t.string   "pay_currency",      limit: 255
     t.integer  "buy_cents"
-    t.string   "buy_currency",     limit: 255
+    t.string   "buy_currency",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "service_type"
@@ -159,7 +159,9 @@ ActiveRecord::Schema.define(version: 20160324175800) do
     t.string   "user_location"
     t.string   "customer_email"
     t.string   "customer_phone"
-    t.string   "customer_address"
+    t.string   "customer_address1"
+    t.string   "customer_address2"
+    t.string   "customer_address3"
   end
 
   add_index "orders", ["exchange_id"], name: "index_orders_on_exchange_id", using: :btree
