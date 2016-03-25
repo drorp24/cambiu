@@ -147,6 +147,10 @@ $(document).ready(function() {
         if (page) {
             page_el = $('.page[data-page=' + page + ']');
             page_el.addClass('active');
+            if (page_el.data('page') !== 'homepage') {
+                replaceVideoWithBackground();
+            }
+
         }
         if (pane) {
             pane_el = $('.pane[data-pane=' + pane + ']');

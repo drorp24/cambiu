@@ -175,6 +175,13 @@ $inverse-color: #ffffff;
   animation-delay: $delay;
 }
 
+@mixin stopAnimate {
+  -webkit-animation-name: none;
+  -moz-animation-name: none;
+  -o-animation-name: none;
+  animation-name: none;
+}
+
 
 @mixin blurFadeInOut {
   @include animate(blurFadeInOut, 10s, ease-in, backwards, 0s);
@@ -533,8 +540,6 @@ body#cambiu {
     }
   }
 
-
-
   .page {
     display: none;
     &.active {
@@ -686,13 +691,18 @@ body#cambiu {
       }
     }
 
-    #player {
+    #player, #background {
       position: absolute;
       top: 0;
       left: 0;
       height: 100%;
       width: 100%;
       border: none;
+    }
+    
+    #background {
+      background-image: image-url('london.jpg');
+      display: none;
     }
 
     .marketing {
@@ -706,6 +716,9 @@ body#cambiu {
           position: absolute;
           color: transparent;
           @include blurFadeInOut;
+          &.off {
+            @include stopAnimate;
+          }
           h1 {
             font-weight: 300;
           }
@@ -715,12 +728,18 @@ body#cambiu {
           color: transparent;
           h1 {
             @include blurFadeIn1;
+            &.off {
+              @include stopAnimate;
+            }
             font-weight: 100;
 //            text-transform: uppercase;
             font-size: 5vw;
           }
           p {
             @include blurFadeIn2;
+            &.off {
+              @include stopAnimate;
+            }
             font-weight: 100;
             letter-spacing: 0.1em;
           }
@@ -749,6 +768,9 @@ body#cambiu {
   .homesearch {
     @include white_centered;
     @include fadeIn;
+    &.off {
+      @include stopAnimate;
+    }
     margin-top: 35vmax;
     width: 80%;
     .col-md-4 {

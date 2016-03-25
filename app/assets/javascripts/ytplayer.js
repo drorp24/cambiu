@@ -49,6 +49,21 @@ function pauseVideo() {
     player.pauseVideo();
 }
 
+function stopVideo() {
+    player.stopVideo();
+    $('#player')[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+}
+
+function replaceVideoWithBackground() {
+    $('.above_fold #background').show();
+    $('.above_fold .marketing .message.darkness').hide();
+    $('.above_fold .marketing .message.lightness').css('color', '#fff');
+    $('.above_fold .marketing .message.lightness h1').addClass('off');
+    $('.above_fold .marketing .message.lightness p').addClass('off');
+    $('.homesearch').addClass('off');
+    $('#player').remove();
+}
+
 var resume = 0;
 function resumeVideo() {
     if (resume == 0) {
