@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get 'exchanges/:id/map',            to: 'home#index'
   get 'exchanges/:id/directions',     to: 'home#index'
   get 'exchanges/:id/refund',         to: 'home#index'
-  get 'exchanges/:id/report',         to: 'home#index'
+  get 'exchanges/:id/send',         to: 'home#index'
   resources :exchanges
   get 'exchanges/:id/quote',    to: 'exchanges#quote'
 

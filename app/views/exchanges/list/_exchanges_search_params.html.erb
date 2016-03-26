@@ -1,14 +1,24 @@
 <div id="exchanges_search_params" class="mobile_only list-group-item text-center open_search">
-  <div class="row">
-    <div class="exchanges_search_params_title col-md-12 col-xs-12">
-        <span data-field="activity">Exchange</span>
-        <span data-field="pay_amount" data-autonumeric="true"></span>
-        <span data-field="pay_currency"></span>
-        <span data-field="into">to</span>
-        <span data-field="buy_amount" data-autonumeric="true"></span>
-        <span data-field="buy_currency"></span>
-        <span id="comma"> around</span>
-        <span data-field="location_short"></span>
+    <div class="exchanges_search_params_title open" data-toggle="collapse" data-target="#exchanges_list #new_parameters">
+
+        <div>
+          <span id="search_icon">
+            <i class="search on fa fa-search pull-left"></i>
+            <i class="close fa fa-times pull-left"></i>
+          </span>
+          <span class="text-center">
+            <span data-field="pay_amount" data-autonumeric="true"></span>
+            <span data-field="pay_currency"></span>
+            <span data-field="into"><i class="fa fa-long-arrow-right"></i></span>
+            <span data-field="buy_amount" data-autonumeric="true"></span>
+            <span data-field="buy_currency"></span>
+          </span>
+        </div>
+
+        <div class="text-center">
+          <span id="comma"><i class="fa fa-map-marker"></i></span>
+          <span data-field="location_short"></span>
+        </div>
+
      </div>
-  </div>
 </div>

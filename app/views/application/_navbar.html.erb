@@ -1,11 +1,17 @@
-<% if request.domain == 'cambiu.com' %>
-    <%= render 'navbar_cambiu', logo: 'cambiu' %>
-<% elsif request.domain == 'currency-net.com' %>
-    <%= render 'navbar_cambiu', logo: 'cn' %>
-<% elsif request.domain == 'localhost' %>
-    <% if @mode == 'search' %>
-        <%= render 'navbar_cambiu', logo: 'cambiu' %>
-    <% elsif @mode == 'exchange' %>
-        <%= render 'navbar_cambiu', logo: 'cn' %>
-    <% end %>
-<% end %>
+<nav  class="navbar navbar-fixed-top">
+  <div class="container-fluid">
+
+    <div class="row">
+
+        <div class="navbar_link col-xs-4" id="navbar_left">
+          <i class="list_icon fa fa-list-ol"></i>
+        </div>
+        <div class="navbar_link col-xs-4" id="navbar_center">List</div>
+        <div class="navbar_link col-xs-4" id="navbar_right">
+          <i class="list_icon fa fa-map"></i>
+        </div>
+
+   </div>
+
+  </div>
+</nav>

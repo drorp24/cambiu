@@ -289,8 +289,19 @@ $(document).ready(function() {
         if (mobile) $('#open_params').toggleClass('open');
         if ($('#search_form').valid()) {
             $('#new_search').submit();
-            $('#new_parameters').collapse('hide');
+            $('body.mobile.exchanges #new_parameters').collapse('hide');
         }
+    });
+
+    toggle_search_icon = function() {
+      el = $('#search_icon');
+      var search = el.find('.search').hasClass('on');
+      el.find('i').removeClass('on');
+      if (search) {el.find('i.close').addClass('on')} else {el.find('i.search').addClass('on')}
+    };
+
+    $('.open_search').click(function() {
+        toggle_search_icon();
     });
 
     $('.open_params').click(function() {
