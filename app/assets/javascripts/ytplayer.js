@@ -49,11 +49,6 @@ function pauseVideo() {
     player.pauseVideo();
 }
 
-function stopVideo() {
-    player.stopVideo();
-    $('#player')[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
-}
-
 function replaceVideoWithBackground() {
     $('.above_fold #background').show();
     $('.above_fold .marketing .message.darkness').hide();

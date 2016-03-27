@@ -321,14 +321,7 @@ $(document).ready(function() {
     });
 
 
-    // any click to change params returns to main search page
-
-    $('body.exchanges #search_form input').click(function() {
-        if (window.location.pathname != '/exchanges/list') setPage('exchanges/list')
-    });
-
-
-    var current_distance = value_of('distance')*1000;
+     var current_distance = value_of('distance')*1000;
     $('#distance_slider').val(current_distance);
     $('#distance_output').html(current_distance);
 

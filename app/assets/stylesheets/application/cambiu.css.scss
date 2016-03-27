@@ -2074,16 +2074,8 @@ body#cambiu {
           i {
             font-size: 8vw;
             line-height: 18vw;
-            display: none;
             width: 5vw;
-            &.on {
-              display: inline;
-            }
-            &.close {
-              color: $darken-brand-color;
-              opacity: 1;
-            }
-          }
+           }
         }
         #user_location_icon {
           margin-right: 1vw;

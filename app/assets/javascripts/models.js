@@ -10,21 +10,6 @@
         // Populate data fields
         // TODO: prefix model=<modelName> and match data-X so that X is the name used in the ajax returned model obj, to save having to all these 'custom' cases
 
-       if (field == 'delivery_tracking' && value) {
-         $('[data-delivery-tracking]').attr('data-delivery-tracking', value)
-       }
-
-       if (field == 'logo') {
-            if (value) {
-                $('[data-field=logo]').attr('src', value);
-                $('img#exchange_logo').css('display', 'block');
-            } else {
-                $('[data-field=logo]').attr('src', value);
-                $('img#exchange_logo').css('display', 'none');
-            }
-            return
-        }
-
         if (field == 'distance') value = (value * 1000).toFixed(0);
 
         if (field == 'real_rates') {
@@ -81,6 +66,7 @@
 
 
 
+/* TODO: DELETE! Exchange_id and order_id are ONLY held at SS. Order form removed.
         if (field == model + '_id') {
             console.log('field = '+ model + '_id');
             console.log('value is: ' + value);
@@ -98,17 +84,8 @@
             $('[data-field=' + model + '_id]').val(value);
             console.log('setting all [data-field=' + model + '_id] val() to: ' + value);
         }
+*/
 
-        if (field == 'delivery_tracking') {
-            sessionStorage.setItem('exchange_delivery_tracking', value)
-            if (!value) {
-                $('button[data-service-type=delivery]').attr('disabled', 'disabled');
-//                $('.delivery_method.delivery').attr('data-content', 'Sorry, no delivery');
-            } else {
-                $('button[data-service-type=delivery]').removeAttr('disabled');
-//                $('.delivery_method.delivery').removeAttr('data-content');
-            }
-        }
 
     };
 

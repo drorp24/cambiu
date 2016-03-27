@@ -77,9 +77,42 @@ var highlight;
 var unhighlight;
 var mapPan;
 var clear;
+var make_url;
+var break_url;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+
+make_url = function(page, id, pane) {
+  var url = '/' + page;
+  if (id) {url += ('/' + id)}
+  if (pane) {url += ('/' + pane)}
+  return url;
+};
+
+break_url = function(url) {
+
+    var split_url = url.split('/');
+    var page = split_url[1];
+    if (split_url.length == 4) {
+        var id = split_url[2];
+        var pane = split_url[3];
+    } else
+    if (split_url.length == 3) {
+        var id = null;
+        var pane = split_url[2];
+    } else
+    if (split_url.length == 2) {
+        var id = null;
+        var pane = null;
+    }
+
+    return {
+        'page'  : page,
+        'id'    : id,
+        'pane'  : pane
+    }
+};
 
 clear = function(entity) {
     for (var i=0, len = sessionStorage.length; i  <  len; i++){
@@ -228,7 +261,7 @@ current_url = function() {
     var url;
 
     url = sessionStorage.page;
-    if (sessionStorage.id != "null") url += ('/' + sessionStorage.id);
+    if (sessionStorage.exchange_id != "null") url += ('/' + sessionStorage.exchange_id);
     if (sessionStorage.pane != "null") url += ('/' + sessionStorage.pane);
     return url;
 };

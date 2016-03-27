@@ -116,31 +116,14 @@ $(document).ready(function() {
         var exchange_el = $('.exchange_row.template').clone().removeClass('template');
         var exchange_sum = exchange_el.find('.list-group-item');
 
-        exchange_sum.attr('data-id', exchange.id);
-        exchange_sum.attr('data-exchangeid', exchange.id);
-        exchange_sum.attr('data-href-id', exchange.id);
+        exchange_sum.attr('data-exchange-id', exchange.id);
         exchange_sum.attr('data-exchange-name', exchange.name);
-        /*
-         exchange_sum.attr('lat', exchange.latitude);
-         exchange_sum.attr('lng', exchange.longitude);
-         */
         exchange_sum.attr('data-service-type', exchange.service_type);
-        exchange_sum.addClass(exchange.service_type);
-        if (exchange.service_type == 'delivery') {
-            exchange_sum.attr('data-delivery-tracking', exchange.delivery_tracking);
-            if (!mobile) exchange_sum.find('.delivery_ind').css('display', 'block');
-        }
-
 
         exchange_el.find('.distance').html((exchange.distance * 1000).toFixed(0));
         exchange_el.find('.name').html(exchange.name_s);
         exchange_el.find('.quote').html(exchange.edited_quote);
         exchange_el.find('.quote_currency').html(exchange.quote_currency);
- /*       if (exchange.quote > 0) {
-//            exchange_el.find('.comparison').css('display', 'block');
-            exchange_el.find('[data-field=gain_amount]').html(exchange.gain_amount);
-        }
-*/
         exchange_el.find('.gain_amount').html(exchange.gain_amount);
         exchange_el.find('.gain_type').addClass(exchange.gain_type);
         exchange_el.find('.address').html(exchange.address);
@@ -157,19 +140,8 @@ $(document).ready(function() {
         exchange_el.find('.base_rate').html(exchange.base_rate);
         exchange_sum.attr('data-best-at', exchange.best_at);
 
-        /*
-         exchange_sum.find('[data-exchangeid]').attr('data-exchangeid', exchange.id);
-         exchange_sum.find('[data-href-id]').attr('data-href-id', exchange.id);
-         exchange_sum.find('[data-exchange-name]').attr('data-exchange-name', exchange.name);
-         */
         exchange_sum.find('.subject_to_change').html(exchange.real_rates ? '' : 'This rate is subject to change and is regularly updated by our staff');
-        /*
-         var delivery_icon = exchange_sum.find('.service_type_icon.delivery');
-         exchange.delivery_tracking ? delivery_icon.show() : delivery_icon.hide();
-         */
         exchange_sum.find('.service_type').html(exchange.service_type);
-
-//        exchange_sum.find('.you').html(exchange.pay_amount == exchange.edited_quote ? 'you pay' : 'you get');
 
         exchange_sum.appendTo(append_point);
 
@@ -242,26 +214,6 @@ $(document).ready(function() {
             }
 
         });
-
-
-        // TODO: Remove!
-/*
-        $('body').on('click', '.list-group-item [data-href-id]', (function () {
-            alert('I am being used!')
-
-            var $this = $(this);
-            var delivery_tracking = $this.attr('data-delivery-tracking');
-            if (delivery_tracking && delivery_tracking != 'null') return;
-
-            var id = $this.attr('data-href-id');
-            var exchange = findExchange(id);
-
-            big_marker(id);
-            map.panTo(new google.maps.LatLng(exchange.latitude, exchange.longitude));
-//            map.panBy(-216,-90);
-
-        }));
-*/
 
 
         // This will fire when map has finished loading

@@ -1,6 +1,0 @@
-<% if @visitor %> 
-	mixpanel.identify("<%= @visitor.id %>");
-	mixpanel.people.set({
-    	"$email": "<%= @visitor.email %>"
-	});
-<% end %>

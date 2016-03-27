@@ -23,8 +23,6 @@ $(document).ready(function() {
      // TODO: This prevents every variable to propage to sessionStorag, plus In the case of something like delivery_tracking, that doesn't need to sit anywhere in the html, this is a problem
     function populate(el, exchange) {
 
-        if (el.is('[data-id]:not([data-exchange-selection])'))                                                 el.attr('data-id', exchange.id);
-        if (el.is('[data-href-id]:not([data-exchange-selection])'))             el.attr('data-href-id', exchange.id);
         if (el.is('[data-lat]:not([data-exchange-selection])'))                                                el.attr('data-lat', exchange.latitude);
         if (el.is('[data-lng]:not([data-exchange-selection])'))                                                el.attr('data-lng', exchange.longitude);
         if (el.is('[data-exchange-name]:not([data-exchange-selection])'))                                      el.attr('data-exchange-name', exchange.name);
@@ -33,6 +31,8 @@ $(document).ready(function() {
         var field = el.data('field');
         if (field == 'exchange_id') {field = 'id'}
         var value = field == 'distance' ? (exchange['distance'] * 1000).toFixed(0) : exchange[field];
+
+// TODO! Remove. Don't update forms, only data- fields
         if (field)  {
             if (el.is('input, select')) {
                 el.val(value);
@@ -63,14 +63,12 @@ $(document).ready(function() {
         }
 */
 
-    };
+    }
 
 
     // TODO: Unite, or do in one shot
     function unpopulate(el) {
 
-        if (el.is('[data-id]'))                 el.attr('data-id', '');
-        if (el.is('[data-href-id]'))            el.attr('data-href-id', '');
         if (el.is('[data-lat]'))                el.attr('data-lat', '');
         if (el.is('[data-lng]'))                el.attr('data-lng', '');
         if (el.is('[data-exchange-name]'))      el.attr('data-exchange-name', '');
@@ -79,198 +77,106 @@ $(document).ready(function() {
 
     }
 
-    setPage = function(url, hash) {
+    setPage = function(page, id, pane, hash) {
 
-        // Parse arguments
+        console.log('setPage');
 
-        console.log('url argument: ' + url);
+        //Update SS with the new active page/pane
+        sessionStorage.page = page ? page : null;
+        sessionStorage.pane = pane ? pane : null;
 
-        // TODO: Remove: prevents form data from populating if in the same page
- /*     if (url == current_url() && hash == current_hash() ) {
-            if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true)}
-            console.log('already on that page. Existing'); return}
-*/
-
-        if (hash === undefined) {
-            hash = null;
-        } else if (hash && hash[0] == '#') {
-            hash = hash.slice(1)
-        }
-
-        var url_a       = url.split('/');
-        if (url_a.length == 3) {
-            var page        = url_a[0];
-            var id          = url_a[1];
-            var pane        = url_a[2];
-        } else if (url_a.length == 2 && (url_a[1] == 'list')) {
-            var page        = url_a[0];
-            var pane        = url_a[1];
-            var id          = null;
-        } else if (url_a.length == 2 && (url_a[1] != 'list')) {
-            var page        = url_a[0];
-            var pane        = 'summary';
-            var id          = url_a[1];
-        } else if (url_a.length == 1) {
-            var page        = url_a[0]
-        }
-        var exchangeid  = id;
-
-        console.log('pages.js, result of url parsing: page: ' + page + ' id: ' + String(id) + ' pane: ' + String(pane));
-
-
-        // update session
-        sessionStorage.exchangeid   = exchangeid    ? exchangeid    : value_of('exchangeid');
-        sessionStorage.page         = page  ? page  : null;
-        sessionStorage.pane         = pane  ? pane  : null;
-        sessionStorage.id           = id    ? id    : value_of('id');
-
-
-
-        // Order is important below this point
-
-        // replace page indication on body and navbar
-        var old_page        = $('.page.active').attr('id');
-        var old_page_id     = '#' + old_page;
-        var old_page_el     = $(old_page_id);
-        var new_page_id     = '#' + page;
-        var new_page_el     = $(new_page_id);
-
-        $('body').removeClass(old_page);
-        $('body').addClass(page);
-        $('nav.navbar').removeClass(old_page);
-        $('nav.navbar').addClass(page);
-
-
+        // Reveal requested page & pane, updating 'active' classes
         $('.page').removeClass('active');
         $('.pane').removeClass('active');
 
-        if (page) {
-            page_el = $('.page[data-page=' + page + ']');
-            page_el.addClass('active');
-            if (page_el.data('page') !== 'homepage') {
-                replaceVideoWithBackground();
+        page_el = $('.page[data-page=' + page + ']');
+        page_el.addClass('active');
+        if (page_el.data('page') !== 'homepage') {
+            replaceVideoWithBackground()
+        }
+        $('body').addClass(page);
+
+        pane_el = $('.pane[data-pane=' + pane + ']');
+        pane_el.addClass('active');
+
+        if (hash) {
+            if (hash[0] == '#') {
+                hash = hash.slice(1)
             }
-
-        }
-        if (pane) {
-            pane_el = $('.pane[data-pane=' + pane + ']');
-            pane_el.addClass('active');
+            document.getElementsByName(hash)[0].scrollIntoView(true);
         }
 
+        // Populate exchange data
 
-        $('[data-active-pane=' + pane + ']').addClass('active');
-
-        // populate exchange data in exchange pages (spa only, at page transition)
-        if (id && spa()) {
-
-            console.log('pages.js: spa mode and page contains id: populate?');
-            // collapse params bar if moving to an exchange-specific page
-            $('#exchange_params_change').collapse('hide');
-            var exchange = findExchange(id);
-
-            if (exchange) {
-                console.log('Exchange has values, i.e., someone clicked href button in spa mode');
-                $('[data-model=exchange]').each(function () {
-                    populate($(this), exchange);        // TODO: Replace pages 'populate' with 'model_populate'
-                });
-                 // One extra update is required for exchange foreign keys which exist in other models
-                $('[data-field=exchange_id]').val(exchange.id);
-                // another extra assignment for delivery_tracking, that has no html tag
-                sessionStorage.setItem('exchange_delivery_tracking', exchange.delivery_tracking);
-                $('[data-delivery-tracking]:not([data-exchange-selection])').attr('data-delivery-tracking', String(exchange.delivery_tracking));
-                if (!value_of('exchange_delivery_tracking')) {
-                    $('button[data-service-type=delivery]').attr('disabled', 'disabled');
-//                    $('.delivery_method.delivery').attr('data-content', 'Sorry, no delivery');
-                } else {
-                    $('button[data-service-type=delivery]').removeAttr('disabled');
-//                    $('.delivery_method.delivery').removeAttr('data-content');
-                }
-                // another setting for rounded results, that no explicit html tag either
-                if (exchange.rounded) {
-                    text = '<p class=info_class>You may pay ' + exchange.pay_rounded + ' and get ' + exchange.get_rounded + ' to round</p>'
-                    $('.exchange_search_form_error').html(text);
-               }
+        if (id) {
+            if (id == 'id') {
+                var exchange_id = value_of('exchange_id')
             } else {
-                console.log('Exchange is empty, i.e., page reload. pages will not populate, updatePage will soon')
+                var exchange_id = id
             }
-
-         }
-
-        // reset all 'exchange_' and '_order' sessionStorage vars if moving to a non exchange-specific page (e.g., /list)
-        if (!id) {
-             console.log('moving to a non exchange-specific page: clearing all exchange-specific session vars (not clearing html though)');
-
-             clear('exchange');
-             clear('order');
         }
 
-        // don't push state if invoked from popstate or page reloads
-        var new_state =  '/' + url;
+        if (exchange_id && spa()) {
+
+            var exchange_populated = value_of('exchange_populated');
+
+            if (exchange_populated && exchange_populated == exchange_id) {
+                console.log('exchange ' + exchange_id + ' is populated already')
+
+            } else {
+
+                var exchange = findExchange(exchange_id);
+
+                if (exchange) {
+
+                    console.log('Exchange has values, i.e., someone clicked href button in spa mode');
+                    console.log('populating exchange ' + exchange_id + ' for the first time');
+
+                    $('[data-model=exchange]').each(function () {
+                        populate($(this), exchange);        // TODO: Replace pages 'populate' with 'model_populate'
+                    });
+
+                    sessionStorage.setItem('exchange_populated', exchange_id);
+                }
+                 else {
+                    console.log('Exchange is empty, i.e., page reload. pages will not populate, updatePage will soon')
+                }
+            }
+        }
+
+        // Clear SS of all 'exchange_' and 'order_' upon moving to a non exchange-specific page (e.g., /list)
+        // Note: Currently not removing markup: all data- and form exchange-specific fields remain populated
+        if (!exchange_id) {
+            console.log('Non exchange-specific page: clearing all exchange_ and order_ vars from ss');
+
+            clear('exchange');
+            clear('order');
+        }
+
+        // Push new state (unless invoked from popstate or page reloads)
+        var new_state = make_url(page, exchange_id, pane);
         if (window.location.pathname != new_state) {
+            console.log('window.location pathname is: ' + window.location.pathname + ' and it is != new_status which is ' + new_state)
             history.pushState(new_state, 'cambiu', new_state);
             console.log('pushing state: ' + new_state);
         } else {
             console.log('current pathname matches the url; not pushing');
         }
 
-        if (url == 'exchanges/list' && map_center_changed) {
-            console.log('Moved to exchanges/list and map center has been changed: resetting map center & zoom to original');
-            $('.popover').removeClass('in');
-            $('#directions-panel').css('display', 'none');
-            map_center_changed = false;
-            zoom_changed_by_user = true; // retain infowindows too
-            if (directionsDisplay) directionsDisplay.set('directions', null);
-            map.panTo(new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng));
-            map.setZoom(map_initial_zoom);
-            mapPan();
-            if (marker_highlighted && exchanges && exchanges.length > 0) {
-                updateMarkers(exchanges);
-                setTimeout(function(){ forwardBestMarkers() }, 100);
-            }
-
-        }
-
-        // if hash argument was included, go to it
-        if (hash) {console.log('hash argument included: ' + hash + '. going there -') ; document.getElementsByName(hash)[0].scrollIntoView(true);}
-
     };
-
 
     link = function(el) {
 
-        if (el.is('[data-delivery-tracking]')) {
-            if ((el.attr('data-delivery-redirect-if-selected') == 'true' && value_of('service_type') == 'delivery') || el.attr('data-delivery-redirect-if-selected') == 'null') {
-                var delivery_tracking = el.attr('data-delivery-tracking');
-                if (delivery_tracking && delivery_tracking != 'null') {
-
-                    var id = el.attr('data-href-id');
-                    var exchange = findExchange(id);
-/*
-                    $('[data-model=exchange]').each(function () {
-                        populate($(this), exchange);        // TODO: Replace pages 'populate' with 'model_populate'
-                    });
-*/
-
-                    $("#freeow").freeow("Preparing to take your order", "Please hold on for a few moments", {classes: ["smokey"], autoHide: false});
-                    window.location = delivery_tracking;
-                    return false
-                }
-            }
-        }
-
-        var exchangeid =  el.attr('data-exchangeid');
-        var href =        el.attr('data-href');
         var page =        el.attr('data-href-page') !== "" && el.attr('data-href-page');
+        var exchange_id = el.attr('data-exchange-id');
         var pane =        el.attr('data-href-pane');
-        var id =          el.attr('data-href-id');
-        var url =         (page && pane && id) ? page + '/' + id + '/' + pane : href;
         var hash =        el.attr('data-href-hash');
 
-        console.log('data-href element clicked. href: ' + href + ' href-id: ' + id + ' hash: ' + String(hash));
-        setPage(url, hash);
+        console.log('data-href element clicked. page: ' + page + ' exchange-id: ' + exchange_id + ' pane: ' + pane + ' hash: ' + String(hash));
+        setPage(page, exchange_id, pane, hash);
     };
 
-    $('body').on('click tap', '[data-href], [data-href-page]', (function(e) {
+    $('body').on('click tap', '[data-href-page]', (function(e) {
         // if clicked element is part of a form, dont move page unless form is valid
 
         // Avoids getting into exchange page when 'getit' is clicked even if redirection takes place, probably due to validation
@@ -301,7 +207,8 @@ $(document).ready(function() {
 
     }));
 
-    $('a[data-href]').click(function(e) {
+    // EXTREMELY IMPORTANT! Without it, every pushState will add another push with '#' and popState will be invoked. Pulling hair.
+    $('a[data-href-page]').click(function(e) {
         e.preventDefault();
     });
 
@@ -309,10 +216,11 @@ $(document).ready(function() {
     window.addEventListener("popstate", function(e) {
 
         console.log('pop. e.state: ' + e.state);
+        console.log(e)
         if (e.state && e.state.length > 0) {
 
-            var curr_pane = $('.pane.active');
-            setPage(e.state.slice(1), null);
+            var ppart = break_url(e.state);
+            setPage(ppart['page'], ppart['id'], ppart['pane'], null);
 
         } else
 
@@ -344,23 +252,24 @@ $(document).ready(function() {
     // replace '/' with 'homepage' or else pushState will get ''
 
     if (window.location.pathname == '/') {
-        var reload_path = 'homepage'
+        var reload_path = '/homepage'
     } else
     if (window.location.pathname == '/exchanges') {
-        var reload_path = 'exchanges/list'
+        var reload_path = '/exchanges/list'
     }
     else {
-        var reload_path = window.location.pathname.slice(1)
+        var reload_path = window.location.pathname
     }
     var hash = window.location.hash ? window.location.hash.slice(1) : null;
-     if (spa()) {
+    if (spa()) {
         console.log('spa re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
-        setPage(reload_path, hash);
+        var ppart = break_url(reload_path);
+        setPage(ppart['page'], ppart['id'], ppart['pane'], hash);
     } else {
-         var new_state = window.location.pathname + window.location.search;
-         console.log('Not spa. Just pushingState ' + new_state);
-         history.pushState(new_state, 'cambiu', new_state);
+        var new_state = window.location.pathname + window.location.search;
+        console.log('Not spa. Just pushingState ' + new_state);
+        history.pushState(new_state, 'cambiu', new_state);
      }
 
 
-});
+})
