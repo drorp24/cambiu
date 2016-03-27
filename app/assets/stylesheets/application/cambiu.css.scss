@@ -513,20 +513,24 @@ body#cambiu {
 
 
   .navbar_link {
-    font-size: 8vw;
+    @media (max-width: $screen-xs-max) {
+      font-size: 8vw;
+    }
+    @media (min-width: $screen-sm-min) {
+      font-size: 2em;
+    }
     color: #fff;
     line-height: $navbar-height;
-    text-align: center;
     font-weight: 300;
-  }
-  #navbar_left {
-    text-align: left;
-  }
-  #navbar_center {
-    text-align: center;
-  }
-  #navbar_right {
-    text-align: right;
+    &.navbar_left {
+      text-align: left;
+    }
+    &.navbar_center {
+      text-align: center;
+    }
+    &.navbar_right {
+      text-align: right;
+    }
   }
 
   .page {
@@ -558,6 +562,10 @@ body#cambiu {
   }
 
 
+  .list-group-item {
+    border-left: none;
+    border-right: none;
+  }
 
 
 
@@ -1460,7 +1468,7 @@ body#cambiu {
 
 
   &.desktop.exchanges .navbar {
-      background-color: rgba(0,0,0,0.1);
+      background-color: rgba(0,0,0,0.2);
       box-shadow: 0 0 10px #888;
   }
   &.mobile.exchanges .navbar {
@@ -2077,7 +2085,7 @@ body#cambiu {
             }
           }
         }
-        #user_location {
+        #user_location_icon {
           margin-right: 1vw;
         }
         .open_params {
@@ -2522,13 +2530,6 @@ body#cambiu {
     }
     .list-group-item .row:not(:first-child) {
       margin-top: 0.7em;
-    }
-
-    .page {
-      background-color: #fff;
-      box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
-      min-height: 100vh;
-//      margin-right: -15px;
     }
 
     .params > .exchange_summary_banner {

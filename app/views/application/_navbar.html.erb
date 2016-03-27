@@ -1,17 +1,24 @@
-<nav  class="navbar navbar-fixed-top">
-  <div class="container-fluid">
+<nav class="navbar navbar-fixed-top">
 
-    <div class="row">
 
-        <div class="navbar_link col-xs-4" id="navbar_left">
-          <i class="list_icon fa fa-list-ol"></i>
-        </div>
-        <div class="navbar_link col-xs-4" id="navbar_center">List</div>
-        <div class="navbar_link col-xs-4" id="navbar_right">
-          <i class="list_icon fa fa-map"></i>
-        </div>
+    <div class="navbar_link navbar_left col-xs-4"
+       data-href-page="exchanges"
+       data-href-pane=<%= left_pane %>>
+      <% unless left_pane == 'none' %>
+        <i class="navbar_icon fa fa-<%= left_icon %>"></i>
+      <% end %>
+    </div>
 
-   </div>
 
-  </div>
+    <div class="navbar_link navbar_center col-xs-4"><%= name %></div>
+
+    <div class="navbar_link navbar_right col-xs-4"
+      data-href-page="exchanges"
+      data-href-id="369"
+      data-href-pane=<%= right_pane %>>
+      <% unless right_pane == 'none' %>
+          <i class="navbar_icon fa fa-<%= right_icon %>"></i>
+      <% end %>
+    </div>
+
 </nav>
