@@ -76,9 +76,20 @@ var marker_highlighted = false;
 var highlight;
 var unhighlight;
 var mapPan;
+var clear;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+
+clear = function(entity) {
+    for (var i=0, len = sessionStorage.length; i  <  len; i++){
+        var key     = sessionStorage.key(i);
+        var value   = sessionStorage.getItem(key);
+            if  (key && key.indexOf(entity + '_') > -1)  {
+                sessionStorage.setItem(key, null)
+            }
+    }
+};
 
 mapPan = function() {
     map.panBy(-0.17 * screen.width, -0.05 * screen.height)

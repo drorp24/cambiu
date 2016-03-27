@@ -197,43 +197,13 @@ $(document).ready(function() {
          }
 
         // reset all 'exchange_' and '_order' sessionStorage vars if moving to a non exchange-specific page (e.g., /list)
-/*
         if (!id) {
-             console.log('moving to a non exchange-specific page: clearing all exchange-specific html fields and session vars');
-             $('[data-model=exchange][data-field]').each(function() {
-                var $this = $(this);
-                if ($this.is('input, select')) {
-                    $this.val('');
-                } else {
-                    $this.html('');
-                }
-            });
-            $('[data-model=order][data-field]').not('[data-field=status]').not('[data-field=service_type]').not('[data-field=order_email]').each(function() {
-                var $this = $(this);
-                if ($this.is('input, select')) {
-                    $this.val('');
-                } else {
-                    $this.html('');
-                }
-            });
-             for (var i=0, len = sessionStorage.length; i  <  len; i++){
-                var key = sessionStorage.key(i);
-                var value = sessionStorage.getItem(key);
-                 if (key) {
-                    if  (((key.indexOf('exchange_') > -1) || (key.indexOf('order_') > -1)) &&
-                         ((key.indexOf('status') == -1) && (key.indexOf('service_type') == -1) && (key.indexOf('order_email') == -1)))  {
-                         sessionStorage.setItem(key, null)
-                    } else
-                    if ((key == 'exchangeid') || (key == 'id')) {
-                        sessionStorage.setItem(key, null)
-                    } else {
-                    }
-                }
-            }
-            $('form.new_order').attr('action', '/orders');
-            $('form.new_order').attr('method', 'post');
+             console.log('moving to a non exchange-specific page: clearing all exchange-specific session vars (not clearing html though)');
+
+             clear('exchange');
+             clear('order');
         }
-*/
+
         // don't push state if invoked from popstate or page reloads
         var new_state =  '/' + url;
         if (window.location.pathname != new_state) {
