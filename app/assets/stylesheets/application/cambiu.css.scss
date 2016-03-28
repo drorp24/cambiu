@@ -534,16 +534,16 @@ body#cambiu {
   }
 
   .page {
-    display: none;
+    visibility: hidden;
     &.active {
-      display: block;
+      visibility: visible;
     }
   }
 
   .pane {
-    display: none;
+    visibility: hidden;
     &.active {
-      display: block;
+      visibility: visible;
     }
     margin-top: $navbar-height;
     height: 85vh;

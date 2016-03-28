@@ -331,9 +331,6 @@ $(document).ready(function() {
     search = function() {
         return $('body').hasClass('search');
     };
-    exchangePage = function() {
-        return $('body').hasClass('exchange');
-    };
 
     $(function () {
         $("body").tooltip({ selector: '[data-toggle=tooltip]' });

@@ -280,6 +280,9 @@ $(document).ready(function() {
 
     forwardBestMarkers = function() {
 
+        if (mobile) {
+            return;
+        }
         // find best exchanges' iw's and increase their z-index
         for (var i = 0; i < best_exchanges.length; i++) {
             var best_exchange = best_exchanges[i];
