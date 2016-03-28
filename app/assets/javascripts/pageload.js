@@ -313,7 +313,10 @@ $(document).on('click','.navbar-collapse.in',function(e) {
 
 
 $(document).ready(function() {
-    if (mobile) {$('#exchange_params_change').removeClass('in');}
+    if (mobile) {
+        $('iframe#player').remove();
+        $('#exchange_params_change').removeClass('in');
+    }
 
     $('body').addClass(media);
     production = function() {
