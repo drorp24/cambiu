@@ -1,5 +1,9 @@
 <div class="pane" data-pane="map">
 
-Hi I'm map
+  <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'arrow-left', name: 'Map', right_pane: 'list', right_icon: 'list-ol'} %>
+
+  <div id="map_container" class="mobile_only">
+    <div id="map-canvas" data-clicked="map"></div>
+  </div>
 
 </div>

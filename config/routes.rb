@@ -7,12 +7,9 @@ Rails.application.routes.draw do
   get 'homepage',                     to: 'home#index'
   get 'exchanges',                    to: 'home#index'
   get 'exchanges/list',               to: 'home#index'
-  get 'exchanges/:id/summary',        to: 'home#index'
-  get 'exchanges/:id/voucher',        to: 'home#index'
+  get 'exchanges/map',                to: 'home#index'
   get 'exchanges/:id/deal',           to: 'home#index'
-  get 'exchanges/:id/map',            to: 'home#index'
   get 'exchanges/:id/directions',     to: 'home#index'
-  get 'exchanges/:id/refund',         to: 'home#index'
   get 'exchanges/:id/send',         to: 'home#index'
   resources :exchanges
   get 'exchanges/:id/quote',    to: 'exchanges#quote'

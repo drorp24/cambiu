@@ -569,6 +569,19 @@ body#cambiu {
 
 
 
+  #map_container {
+    position: fixed;
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+    top: 0;
+    left: 0;
+    #map-canvas {
+      height: 100vh;
+    }
+  }
+
+
   @media (min-width: $screen-sm-min) {
     .col-md-half {
       width: 4.166%;
@@ -2883,40 +2896,6 @@ body#cambiu {
       }
     }
 
-     #map_container {
-      position: fixed;
-//      margin-left: 33.0%;
-//      width: 70%;
-       width: 100%;
-      padding-right: 0;
-      padding-left: 0;
-       top: 0;
-       left: 0;
-      #map-canvas {
-        height: 100vh;
-       }
-    }
-    &.search #map_container {
-//      top: $navbar-height /*+ $parameters-height*/;
-    }
-    &.exchange #map_container {
- //     top: $navbar-height;
-    }
-
-    /*
-    &.search {
-      #map_container {
-        top: 125px;
-        z-index: 0;
-      }
-    }
-    &.exchange {
-      #map_container {
-        top: 60px;
-        z-index: 1;
-      }
-    }
-    */
 
 
     &.exchanges {
@@ -3078,9 +3057,6 @@ body#cambiu {
 
 
     &.exchanges {
-      #map_container {
-        display: none;
-      }
       .name {
         @media (min-width: $screen-sm-min) {
           font-size: 0.9em;

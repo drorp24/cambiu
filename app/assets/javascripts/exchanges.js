@@ -45,7 +45,7 @@ $(document).ready(function() {
                 model_populate('exchange', exchanges[0]);
             }
 
-            if (desktop) bindBehavior();
+            bindBehavior();
         }
 
         updateResults(exchanges);
@@ -185,16 +185,18 @@ $(document).ready(function() {
 
         // TODO: move to any of the .js files, with delegate, so no re-binding over again
 
-        $('body').on('click', '.directions', (function () {
-            var $this = $(this);
-            if ($this.data('delivery-tracking')) return;
-            var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
-            var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
-            var id = $this.attr('data-id');
-            unhighlight(id);
-            big_marker(id);
-            calcRoute(from, to);
-        }));
+        if (desktop) {
+            $('body').on('click', '.directions', (function () {
+                var $this = $(this);
+                if ($this.data('delivery-tracking')) return;
+                var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
+                var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
+                var id = $this.attr('data-id');
+                unhighlight(id);
+                big_marker(id);
+                calcRoute(from, to);
+            }));
+        }
 
 
         // Open infowindows of markers that are within the map bounds. This is reactivated whenever user zooms out!
@@ -254,30 +256,12 @@ $(document).ready(function() {
             $('#fetch_more').html('No results found in that area.');
         }
 
-/*
-        if (desktop) {
-            var line = Math.min(exchanges.length, 4);
-            var middleline = $('#exchanges_items .list-group-item:nth-child(' + line + ')');
-            middleline.popover('show');
-            setTimeout(function() {middleline.popover('hide')}, 5000);
-        }
-*/
-
-/*
-        $('#exchanges_search_params')[0].scrollIntoView();
-        var myScroll = new IScroll('#exchanges_list');
-        if (mobile) myScroll.scrollTo(0,70);
-*/
-
     };
 
 
     // TODO: Update markers within the map boundaries only!
     updateMarkers = function (exchanges) {
 
-        if (mobile) {
-            return;
-        }
         console.log('updateMarkers');
 
         clearMarkers();
@@ -394,9 +378,6 @@ $(document).ready(function() {
 
     drawMap = function (latitude, longitude, exchanges) {
 
-        if (mobile) {
-            return;
-        }
         console.log('drawMap');
 
         center = new google.maps.LatLng(latitude, longitude);
@@ -407,7 +388,7 @@ $(document).ready(function() {
 
         };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        mapPan();
+        if (desktop) mapPan();
         addUserMarker();
         if (exchanges && exchanges.length > 0) {
             updateMarkers(exchanges);
@@ -445,17 +426,5 @@ $(document).ready(function() {
          });
 
     }
-
-    $(document)
-        .on('mouseenter', '.list-group-item', function () {
-            var $this = $(this);
-            highlight($this.attr('data-id'));
-            $this.find('.list_icon').addClass('pulse');
-        })
-        .on('mouseleave', '.list-group-item', function () {
-            var $this = $(this);
-            unhighlight($this.attr('data-id'));
-            $this.find('.list_icon').removeClass('pulse');
-        })
 
 });

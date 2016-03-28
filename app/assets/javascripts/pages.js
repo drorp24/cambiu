@@ -164,9 +164,9 @@ $(document).ready(function() {
 
     link = function(el) {
 
+        var pane =        el.attr('data-href-pane');   if (pane == 'back') {console.log('just back'); window.history.back(); return}
         var page =        el.attr('data-href-page') !== "" && el.attr('data-href-page');
         var exchange_id = el.attr('data-exchange-id');
-        var pane =        el.attr('data-href-pane');
         var hash =        el.attr('data-href-hash');
 
         console.log('data-href element clicked. page: ' + page + ' exchange-id: ' + exchange_id + ' pane: ' + pane + ' hash: ' + String(hash));
