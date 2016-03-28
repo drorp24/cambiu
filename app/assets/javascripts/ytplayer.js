@@ -57,6 +57,7 @@ function replaceVideoWithBackground() {
     $('.above_fold .marketing .message.lightness p').addClass('off');
     $('.homesearch').addClass('off');
     $('#player').remove();
+    sessionStorage.videoStopped = true;
 }
 
 var resume = 0;

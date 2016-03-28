@@ -81,19 +81,13 @@ $(document).ready(function() {
 
         console.log('setPage');
 
-        //Update SS with the new active page/pane
-        sessionStorage.page = page ? page : null;
-        sessionStorage.pane = pane ? pane : null;
-
         // Reveal requested page & pane, updating 'active' classes
         $('.page').removeClass('active');
         $('.pane').removeClass('active');
 
         page_el = $('.page[data-page=' + page + ']');
         page_el.addClass('active');
-        if (page_el.data('page') !== 'homepage') {
-            replaceVideoWithBackground()
-        }
+        if (!value_of('videoStopped') && page_el.data('page') !== 'homepage') {replaceVideoWithBackground()}
         $('body').addClass(page);
 
         pane_el = $('.pane[data-pane=' + pane + ']');
@@ -107,7 +101,6 @@ $(document).ready(function() {
         }
 
         // Populate exchange data
-
         if (id) {
             if (id == 'id') {
                 var exchange_id = value_of('exchange_id')
@@ -145,8 +138,9 @@ $(document).ready(function() {
         }
 
         // Clear SS of all 'exchange_' and 'order_' upon moving to a non exchange-specific page (e.g., /list)
+        // value_of('exchange_id') indicates whether these fields needs clearing, or are clear already
         // Note: Currently not removing markup: all data- and form exchange-specific fields remain populated
-        if (!exchange_id) {
+        if (!exchange_id && value_of('exchange_id')) {
             console.log('Non exchange-specific page: clearing all exchange_ and order_ vars from ss');
 
             clear('exchange');
@@ -156,12 +150,15 @@ $(document).ready(function() {
         // Push new state (unless invoked from popstate or page reloads)
         var new_state = make_url(page, exchange_id, pane);
         if (window.location.pathname != new_state) {
-            console.log('window.location pathname is: ' + window.location.pathname + ' and it is != new_status which is ' + new_state)
             history.pushState(new_state, 'cambiu', new_state);
             console.log('pushing state: ' + new_state);
         } else {
             console.log('current pathname matches the url; not pushing');
         }
+
+        //Update SS with the new active page/pane
+        sessionStorage.page = page;
+        sessionStorage.pane = pane;
 
     };
 
@@ -216,7 +213,6 @@ $(document).ready(function() {
     window.addEventListener("popstate", function(e) {
 
         console.log('pop. e.state: ' + e.state);
-        console.log(e)
         if (e.state && e.state.length > 0) {
 
             var ppart = break_url(e.state);

@@ -83,6 +83,8 @@ var break_url;
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 
+sessionStorage.videoStopped = null;
+
 make_url = function(page, id, pane) {
   var url = '/' + page;
   if (id) {url += ('/' + id)}
