@@ -328,9 +328,6 @@ $(document).ready(function() {
     spa = function() {
         return $('body').hasClass('home');
     };
-    search = function() {
-        return $('body').hasClass('search');
-    };
 
     $(function () {
         $("body").tooltip({ selector: '[data-toggle=tooltip]' });

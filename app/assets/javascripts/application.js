@@ -12,6 +12,7 @@
 //= require ytplayer
 //= require pageload
 //= require search
+//= require map
 //= require location
 //= require models
 //= require exchanges

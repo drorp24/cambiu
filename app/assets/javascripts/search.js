@@ -353,19 +353,17 @@ $(document).ready(function() {
         $('#loader_message').css('display', 'block');
     };
 
-    beforeSubmit = function() {
-        startLoader();
-    };
 
     $('#new_search').on('ajax:before', function() {
-        console.log('ajax:before: form is submitted');
-        beforeSubmit()
+        console.log('#new_search ajax:before. Invoking drawMap');
+        drawMap(value_of('location_lat'), value_of('location_lng'));
+        startLoader();
+        clearExchanges();
     });
 
     $('#new_search').on('ajax:success', function(event, data, status, xhr) {
         console.log('#new_search ajax:success. Starting to updatePage...');
         updatePage(data);
-//        setPage(current_url());
      });
 
     $('#new_search').on('ajax:error', function(event, xhr, status, error) {

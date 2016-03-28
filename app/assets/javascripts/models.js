@@ -12,10 +12,6 @@
 
         if (field == 'distance') value = (value * 1000).toFixed(0);
 
-        if (field == 'real_rates') {
-            $('.subject_to_change').html(value ? '' : 'This rate is subject to change and is regularly updated by our staff');
-            return
-        }
 
         if (field == 'latitude') {
             $('[data-lat]').attr('data-lat', value);
@@ -97,9 +93,4 @@
         $.each(obj, function(field, value) {
             model_set(model, field, value)
         });
-        if (obj.rounded) {
-            text = '<p class=info_class>You may pay ' + obj.pay_rounded + ' and get ' + obj.get_rounded + ' to round</p>'
-            $('.exchange_search_form_error').html(text);
-        }
-
     };

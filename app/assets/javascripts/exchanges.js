@@ -1,51 +1,28 @@
 //
 //  E X C H A N G E S
 //
-//  Responsible to reflect exchanges search results in View (updatePage)
-//
-//  Uses the exchanges buffer passed by the ajax callback, to:
-//  -  Draw map and place dynamic markers, centering map by selected exchange or searched location (depending on the number of exchanges returned)
-//  -  Render a list of exchange DIVs, or populate a single exchange info (depending on the number of exchanges returned),
-//  -  Update results banner
+//  Uses the exchanges buffer returned by search form callback to update all markup
 
-$(document).ready(function() {
-
-//if ($('body').hasClass('exchanges'))   {    
 
 
     updatePage = function(data) {
 
         console.log('updatePage');
-        clearExchanges();
+
         best_exchanges = data['best'];
         exchanges = data['more'];
 
-        if (exchangePage() && exchanges && exchanges.length > 0) {
-            var mapCenterLat = exchanges[0].latitude;
-            var mapCenterLng = exchanges[0].longitude;
-        } else {
-            var mapCenterLat = sessionStorage.location_lat;
-            var mapCenterLng = sessionStorage.location_lng;
-        }
-        drawMap(mapCenterLat, mapCenterLng, exchanges);
-
-        if (search() && exchanges && exchanges.length > 0) {
-            updateExchanges();
-        }
-
         if (exchanges && exchanges.length > 0) {
 
-            if (search()) {
-                var exchange_id = urlId();
-                if (exchange_id) {   // Refresh of *specific exchange page* even in search requires model_populate like in exchange mode
-                    var exchange = findExchange(exchange_id);
-                    if (exchange) model_populate('exchange', exchange);
-                }
-            } else {
-                model_populate('exchange', exchanges[0]);
+            updateExchanges();
+            updateMarkers(exchanges);
+
+            var exchange_id = urlId();
+            if (exchange_id) {   // Refresh of *specific exchange page* even in search requires model_populate like in exchange mode
+                var exchange = findExchange(exchange_id);
+                if (exchange) model_populate('exchange', exchange);
             }
 
-            bindBehavior();
         }
 
         updateResults(exchanges);
@@ -179,58 +156,6 @@ $(document).ready(function() {
         marker_highlighted = true;
     };
 
-    function bindBehavior() {
-
-        console.log('bindBehavior');
-
-        // TODO: move to any of the .js files, with delegate, so no re-binding over again
-
-        if (desktop) {
-            $('body').on('click', '.directions', (function () {
-                var $this = $(this);
-                if ($this.data('delivery-tracking')) return;
-                var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
-                var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
-                var id = $this.attr('data-id');
-                unhighlight(id);
-                big_marker(id);
-                calcRoute(from, to);
-            }));
-        }
-
-
-        // Open infowindows of markers that are within the map bounds. This is reactivated whenever user zooms out!
-        // Comment if no infowindows should be opened by default, then use 'mouseover' event below to open them manually
-        google.maps.event.addListener(map, 'bounds_changed', function () {
-
-            if (!zoom_changed_by_user) return;
-
-            var mapBounds = map.getBounds();
-            for (var i = 0; i < markers.length; i++) {
-
-                var marker_position = markers[i].getPosition();
-
-                if (mapBounds.contains(marker_position)) {
-                    markers[i]['infowindow'].open(map, markers[i]);
-                }
-            }
-
-        });
-
-
-        // This will fire when map has finished loading
-        google.maps.event.addListenerOnce(map, 'idle', function(){
-
-            // remove 'x's
-            $('.gm-style-iw').next().css('display', 'none');
-
-            // increase z-index of best markers
-            setTimeout(function(){ forwardBestMarkers() }, 100);
-
-        });
-
-    }
-
 
     updateResults = function (exchanges) {
 
@@ -278,43 +203,7 @@ $(document).ready(function() {
 
       };
 
-    forwardBestMarkers = function() {
 
-        if (mobile) {
-            return;
-        }
-        // find best exchanges' iw's and increase their z-index
-        for (var i = 0; i < best_exchanges.length; i++) {
-            var best_exchange = best_exchanges[i];
-            var marker = findMarker(best_exchange.id);
-            var iw = marker.infowindow;
-            var el = iw.content;
-            var $el = $(el);
-            $el.parent().parent().parent().css('z-index', '900');
-        }
-    };
-
-    function addUserMarker() {
-        var lat = value_of('location_lat') || value_of('user_lat');
-        var lng = value_of('location_lng') || value_of('user_lng');
-        if (!lat || !lng) return;
-
-        var location_marker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat, lng),
-            disableAutoPan: true,
-            map: map,
-            icon: '/cur_loc.png',
-            draggable: true
-        });
-
-        location_marker.addListener('dragend', function(evt) {
-            set('location_lat', evt.latLng.lat());
-            set('location_lng', evt.latLng.lng());
-            set('location_type', 'selected');
-
-            search_exchanges();
-        });
-    }
 
     function addMarker(exchange) {
 
@@ -381,56 +270,3 @@ $(document).ready(function() {
         markers = [];
     }
 
-
-    drawMap = function (latitude, longitude, exchanges) {
-
-        console.log('drawMap');
-
-        center = new google.maps.LatLng(latitude, longitude);
-        var mapOptions = {
-            center: center,
-            zoom: map_initial_zoom,
-            scaleControl: true
-
-        };
-        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        if (desktop) mapPan();
-        addUserMarker();
-        if (exchanges && exchanges.length > 0) {
-            updateMarkers(exchanges);
-        }
-
-    };
-
-    function calcRoute(from, to) {
-
-        var request = {
-            origin: from,
-            destination: to,
-            travelMode: google.maps.TravelMode.TRANSIT,
-            unitSystem: google.maps.UnitSystem.METRIC
-        };
-
-        directionsService = new google.maps.DirectionsService();
-        directionsDisplay = new google.maps.DirectionsRenderer();
-        zoom_changed_by_user = false;
-
-        directionsDisplay.setMap(map);
- //       directionsDisplay.setPanel(document.getElementById('directions-panel'));
-
-        directionsService.route(request, function (response, status) {
-            console.log('directionsService.route returned with status: ' + status);
-            if (status == google.maps.DirectionsStatus.OK) {
-                map_center_changed = true;
-//                $('#directions-panel').css('display', 'block');
-                directionsDisplay.setDirections(response);
-                setTimeout(function(){ map.setZoom(15) }, 100);
-                setTimeout(function(){ mapPan() }, 100);
-
-
-            }
-         });
-
-    }
-
-});
