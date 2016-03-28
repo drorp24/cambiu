@@ -262,6 +262,9 @@ $(document).ready(function() {
     // TODO: Update markers within the map boundaries only!
     updateMarkers = function (exchanges) {
 
+        if (mobile) {
+            return;
+        }
         console.log('updateMarkers');
 
         clearMarkers();
