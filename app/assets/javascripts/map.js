@@ -71,6 +71,25 @@ function calcRoute(from, to) {
 
 //// EVENTS & LISTENERS
 
+
+
+/*
+var contentString = 'blah';
+
+var infowindow = new google.maps.InfoWindow({
+    content: contentString
+});
+
+var marker = new google.maps.Marker({
+    position: latlng,
+    map: map
+});
+
+google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map,marker);
+});
+*/
+
 // TODO: Consider using the api's geoJsonLoad
 
 // Open infowindows of markers that are within the map bounds. This is reactivated whenever user zooms out!

@@ -92,6 +92,7 @@ $(document).ready(function() {
 
         pane_el = $('.pane[data-pane=' + pane + ']');
         pane_el.addClass('active');
+        if (pane == 'map') google.maps.event.trigger(map, 'resize');
 
         if (hash) {
             if (hash[0] == '#') {
