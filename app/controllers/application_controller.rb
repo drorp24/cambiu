@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :set_landing
 #  before_action :authenticate_user!
 
   before_action :pass_request
@@ -44,11 +43,6 @@ class ApplicationController < ActionController::Base
   def set_http_cache_headers
     expires_in 1.month, public: true
     fresh_when last_modified: Date.new(2015, 1, 1), public: true
-  end
-  
-  def set_landing
-    @landing = request.original_fullpath.remove("/").split("?")[0]
-    @landing = "app" unless ["save_money", "best_rates", "currency_exchange"].include? @landing 
   end
 
   def find_guest_user
