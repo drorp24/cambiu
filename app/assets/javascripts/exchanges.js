@@ -181,6 +181,8 @@
             $('#fetch_more').html('No results found in that area.');
         }
 
+        window.scrollTo(0,1);
+
     };
 
 
