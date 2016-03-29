@@ -17,7 +17,6 @@
 // Homepage: trigger by button click (search.js)
 // 3 - either of the homepage buttons is clicked
 
-$(document).ready(function() {
 
     locationCallback = function() {
         search_exchanges()
@@ -177,6 +176,3 @@ $(document).ready(function() {
         $this.val('');
     });
 
-
-
-});

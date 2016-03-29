@@ -88,46 +88,32 @@
     function addExchange(exchange, index, append_point) {
 
         if (exchange.errors.length > 0) return;
-        exchange_list_count += 1;
 
-        var exchange_el = $('.exchange_row.template').clone().removeClass('template');
-        var exchange_sum = exchange_el.find('.list-group-item');
+        var exchange_wrapper = $('#exchange_template').clone().removeClass('template');
+        var exchange_el = exchange_wrapper.find('.list-group-item');
 
-        exchange_sum.attr('data-exchange-id', exchange.id);
-        exchange_sum.attr('data-exchange-name', exchange.name);
-        exchange_sum.attr('data-service-type', exchange.service_type);
+        exchange_el.attr('data-exchange-id', exchange.id);
 
-        exchange_el.find('.distance').html((exchange.distance * 1000).toFixed(0));
-        exchange_el.find('.name').html(exchange.name_s);
-        exchange_el.find('.quote').html(exchange.edited_quote);
-        exchange_el.find('.quote_currency').html(exchange.quote_currency);
-        exchange_el.find('.gain_amount').html(exchange.gain_amount);
-        exchange_el.find('.gain_type').addClass(exchange.gain_type);
-        exchange_el.find('.address').html(exchange.address);
-        exchange_el.find('.open_today').html(exchange.open_today);
-        exchange_el.find('.open_today').attr('href', exchange.website ? exchange.website : "#");
-        exchange_el.find('.phone').attr('href', exchange.phone ? 'tel:+44' + exchange.phone.substring(1) : "#");
-        exchange_el.find('.website').attr('href', exchange.website);
-        exchange_el.find('.directions').attr('data-lat', exchange.latitude);
-        exchange_el.find('.directions').attr('data-lng', exchange.longitude);
         exchange_el.find('.best_at').html(' ');
         exchange_el.find('.best_at').addClass(exchange.best_at);
-        if (exchange.best_at == 'best') exchange_el.find('.exchange_icon').css('display', 'block');
-
+        exchange_el.find('.name').html(exchange.name_s);
+        exchange_el.find('.address').html(exchange.address);
+        exchange_el.find('.open_today').html(exchange.open_today);
+        exchange_el.find('.phone').attr('href', exchange.phone ? 'tel:+44' + exchange.phone.substring(1) : "#");
+        exchange_el.find('.distance').html((exchange.distance * 1000).toFixed(0));
+        exchange_el.find('.quote').html(exchange.edited_quote);
+        exchange_el.find('.quote_currency').html(exchange.quote_currency);
         exchange_el.find('.base_rate').html(exchange.base_rate);
-        exchange_sum.attr('data-best-at', exchange.best_at);
+        exchange_el.find('.gain_amount').html(exchange.gain_amount);
+        exchange_el.find('.gain_type').addClass(exchange.gain_type);
 
-        exchange_sum.find('.subject_to_change').html(exchange.real_rates ? '' : 'This rate is subject to change and is regularly updated by our staff');
-        exchange_sum.find('.service_type').html(exchange.service_type);
-
-        exchange_sum.appendTo(append_point);
+        exchange_el.appendTo(append_point);
 
     }
 
 
     clearExchanges = function () {
         console.log('clearExchanges');
-        exchange_list_count = 0;
         list = value_of('list');
         if (list != 'more') $('#exchanges_list #best_exchanges').empty();
         $('#exchanges_list #exchanges_items').empty();

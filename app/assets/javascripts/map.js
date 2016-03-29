@@ -19,6 +19,7 @@ drawDirectionsMap = function (latitude, longitude) {
 
     var mapOptions = {
         center: new google.maps.LatLng(latitude, longitude),
+        zoom: map_initial_zoom,
         scaleControl: true
     };
     directionsMap = new google.maps.Map(document.getElementById('directions-map-canvas'), mapOptions);

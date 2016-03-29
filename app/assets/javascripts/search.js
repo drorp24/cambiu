@@ -81,13 +81,16 @@
     };
 
     // Sets all variables
+// TODO: Restore session values from ss. That's its role. Not from the form
+// Doesn't justify the effort - used to restore after refresh
+// Probably better to use the default values unless there are values in ss
     set_variables = function(use_session) {
 
         console.log('set_variables');
         variables_set = true;
         if (use_session === undefined) use_session = true;
 
-        $('#search_form [data-field]').each(function() {
+        $('.homesearch #search_form [data-field]').each(function() {
 
             var $this = $(this);
             var model = $this.data('model');

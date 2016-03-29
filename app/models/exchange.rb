@@ -248,7 +248,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:website] = self.website
     exchange_hash[:latitude] = self.latitude
     exchange_hash[:longitude] = self.longitude
-    exchange_hash[:distance] = self.delivery? ?  0 : self.distance_from(center)
+    exchange_hash[:distance] = self.distance_from(center)
 
     quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount')
     exchange_hash[:pay_amount] = quotes[:pay_amount]
