@@ -1,11 +1,9 @@
 <div  id="exchanges_list" class="pane active" data-pane="list" data-search-home="true">
 
-  <%= render partial: 'navbar', locals: {left_pane: 'none', left_icon: '', name: 'List', right_pane: 'map', right_icon: 'map'} %>
+  <%= render partial: 'navbar', locals: {left_pane: 'search', left_icon: 'search', center: 'search_params', right_pane: 'map', right_icon: 'map'} %>
 
   <div class="list-group">
 
-    <%= render 'exchanges/list/exchanges_search_params' %>
-    <%= render partial: 'exchanges/params/collapsible_unit', locals: {container: '#exchanges_list'} %>
     <div id="best_exchanges">
         <!--   Best exchanges list -->
     </div>

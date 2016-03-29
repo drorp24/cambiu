@@ -1,23 +1,37 @@
 <nav class="navbar navbar-fixed-top">
 
+  <div class="navbar_link navbar_left col-xs-2"
 
-    <div class="navbar_link navbar_left col-xs-4"
-       data-href-page="exchanges"
-       data-href-pane=<%= left_pane %>>
-      <% unless left_pane == 'none' %>
-        <i class="navbar_icon fa fa-<%= left_icon %>"></i>
+     data-href-page="exchanges"
+     data-href-pane=<%= left_pane %>>
+    <% unless left_pane == 'none' %>
+      <i class="navbar_icon fa fa-<%= left_icon %>"></i>
+    <% end %>
+
+  </div>
+
+
+  <div class="navbar_link navbar_center col-xs-8">
+
+    <% if center == 'search_params' %>
+        <%= render 'currency_params' %>
+        <%= render 'location_params' %>
+      <% else %>
+        <div class="middle">
+          <%= center %>
+        </div>
       <% end %>
-    </div>
 
+  </div>
 
-    <div class="navbar_link navbar_center col-xs-4"><%= name %></div>
+  <div class="navbar_link navbar_right col-xs-2"
 
-    <div class="navbar_link navbar_right col-xs-4"
-      data-href-page="exchanges"
-       data-href-pane=<%= right_pane %>>
-      <% unless right_pane == 'none' %>
-          <i class="navbar_icon fa fa-<%= right_icon %>"></i>
-      <% end %>
-    </div>
+    data-href-page="exchanges"
+     data-href-pane=<%= right_pane %>>
+    <% unless right_pane == 'none' %>
+        <i class="navbar_icon fa fa-<%= right_icon %>"></i>
+    <% end %>
+
+  </div>
 
 </nav>

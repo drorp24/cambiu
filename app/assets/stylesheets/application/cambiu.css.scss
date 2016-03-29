@@ -10,7 +10,7 @@ $green: #27AE60;
 $bg_green: #6db61e;
 $progress-color: #fff;
 $font-family: 'Roboto', sans-serif;
-$navbar-height: 60px;
+$navbar-height: 70px;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
@@ -513,18 +513,23 @@ body#cambiu {
 
 
   .navbar_link {
-    font-size: 2.4em;
+    font-size: 1.7em;
     color: #fff;
-    line-height: $navbar-height;
+    line-height: 30px;
     font-weight: 300;
-    &.navbar_left {
-      text-align: left;
+    white-space: nowrap;
+    &.navbar_right, &.navbar_left {
+      line-height: $navbar-height - 10px;
+      font-size: 2.2em;
     }
     &.navbar_center {
       text-align: center;
-    }
-    &.navbar_right {
-      text-align: right;
+      .middle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: $navbar-height - 10px;
+      }
     }
   }
 
@@ -1501,6 +1506,8 @@ body#cambiu {
       }
     }
     height: $navbar-height;
+    padding-top: 5px;
+    padding-bottom: 5px;
     border: none;
     margin-bottom: 0;
     font-size: 11px;
@@ -1569,113 +1576,7 @@ body#cambiu {
     margin-top: $navbar-height * -1;        /* Size of fixed header */
     padding-bottom: $navbar-height;
     display: block;   }
-  #new_search {
-    color: #555;
-    label {
-      position: absolute;
-      @media (min-width: $screen-sm-min) {
-        top: 13px;
-      }
-      @media (max-width: $screen-xs-max) {
-        top: 14px;
-      }
-      left: 2em;
-      @media (min-width: $screen-sm-min) {
-        font-size: 1em;
-      }
-      @media (max-width: $screen-xs-max) {
-        font-size: 0.9em;
-      }
-      text-transform: uppercase;
-     }
-    input {
-      text-align: right;
-      &#search_pay_amount, &#search_buy_amount {
-         @media (min-width: $screen-sm-min) {
-          font-size: 1em;
-           text-indent: 4.5em;
-        }
-        @media (max-width: $screen-xs-max) {
-          font-size: 0.9em;
-          text-indent: 3.5em;
-        }
-      }
-      &.btn {
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
-        font-style: italic;
-      }
-    }
-    .homepage_search_button {
-      margin-top: -15px;
-    }
-    .location_control {
-      i {
-        position: relative;
-        float: right;
-        margin-right: 10px;
-        bottom: 30px;
-        color: #fff;
-      }
-    }
-    #search_pay_amount {
-    }
-     input, select {
-      @include search-form-def;
-      @include search_placeholder;
-       text-align: center;
-      &#search_location {
-//        text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
-        color: #fff;
-         margin-top: -10px;
-        @include placeholder-icon("\f041");
-//      @include placeholder-center;
-        background: transparent;
-        border: none;
-        border-bottom: $border-bottom;
-        box-shadow: none;
-        text-align: center;
-        text-transform: capitalize;
-        font-size: 1.2em;
-        font-weight: 400;
-        }
-       &.btn {
-        background-color: $darkgreen;
-        width: 100%;
-        line-height: inherit;
-        text-align: center;
-        color: #fff;
-        font-size: 1.5em;
-        font-weight: $bold;
-        height: $button-height;
-        border-bottom: $border-bottom;
-        margin-top: -53px;
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
-        &:hover {
-          background-color: darken($darkgreen, 20%);
-        }
-      }
-    }
-    select {
-      background-color: #fff;
-      &.brand_background {
-        /*      text-indent: 15%; */
-        margin-left: -25%;
-        width: 125%;
-        background-color: $brand-color;
-        color: #fff;
-      }
-    }
-    img {
-      position: relative;
-      top: -9px;
-      right: -10px;
-    }
-    .after_submit {
-      text-align: center;
-      color: $darkgrey;
-    }
-  }
-  .rates_banner img {
+   .rates_banner img {
     width: 100%;
     height: 65px;
   }
