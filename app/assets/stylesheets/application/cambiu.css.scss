@@ -513,12 +513,7 @@ body#cambiu {
 
 
   .navbar_link {
-    @media (max-width: $screen-xs-max) {
-      font-size: 8vw;
-    }
-    @media (min-width: $screen-sm-min) {
-      font-size: 2em;
-    }
+    font-size: 2.4em;
     color: #fff;
     line-height: $navbar-height;
     font-weight: 300;
@@ -1126,13 +1121,8 @@ body#cambiu {
   }
 
   .best_at, .exchange_window_best_at {
-    @media (min-width: $screen-sm-min) {
-      font-size: 1.1em;
-    }
-    @media (max-width: $screen-xs-max) {
-      font-size: 5vw;
-    }
-    paddgin-top: 0.25em;
+    font-size: 1.2em;
+     paddgin-top: 0.25em;
     padding-bottom: 0.25em;
     text-transform: uppercase;
     font-weight: 400;
@@ -1457,9 +1447,7 @@ body#cambiu {
   }
 
   .reach-out-left {
-    @media (min-width: $screen-sm-min) {
-      padding-left: 0;
-    }
+    padding-left: 0;
     &.almost {
       padding-left: 0.5em;
     }
@@ -1468,9 +1456,7 @@ body#cambiu {
     }
   }
   .reach-out-right {
-    @media (min-width: $screen-sm-min) {
       padding-right: 0;
-    }
     &.almost {
       padding-right: 0.5em;
     }
@@ -1485,8 +1471,7 @@ body#cambiu {
       box-shadow: 0 0 10px #888;
   }
   &.mobile.exchanges .navbar {
-    background-color: $brand-color;
-    box-shadow: 0 0 10px #888;
+    background-color: rgba(0,0,0,0.7);
   }
 
   .navbar {
@@ -2083,11 +2068,12 @@ body#cambiu {
           display: none;
         }
         #search_icon {
-          color: $darken-brand-color;
+          color: #fff;
           i {
-            font-size: 8vw;
-            line-height: 18vw;
-            width: 5vw;
+            font-size: 1.5em;
+            line-height: 2em;
+            position: absolute;
+            left: 15px;
            }
         }
         #user_location_icon {
@@ -2136,22 +2122,20 @@ body#cambiu {
         #exchanges_search_params {
           margin-top: 15px;
           border: none;
-          background-color: #eee;
+          background-color: rgba(0,0,0,0.3);
+          padding-bottom: 5px;
           @media (min-width: $screen-sm-min) {
              .exchanges_search_params_title {
              }
           }
           .exchanges_search_params_title {
-            @media (max-width: $screen-xs-max) {
-              font-size: 5vw;
-              line-height: 10vw;
-            }
-            @media (min-width: $screen-sm-min) {
-              font-size: 1em;
-            }
-            color: #000;
+            font-size: 1.4em;
+            line-height: 1.6em;
+            font-weight:400;
+          margin-top: -0.3em;
+            color: #fff;
 //            text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
-            font-weight: 400;
+            font-weight: 300;
             [data-field] {
 //              font-weight: 500;
             }
@@ -2354,12 +2338,9 @@ body#cambiu {
         margin-left: -0.3em;
       }
       .distance:not(button) {
-        font-size: 1.1em;
         width: 100%;
         display: inline;
-        font-weight: 500;
-        color: #000;
-        &::before {
+         &::before {
           font-family: fontAwesome;
           content: "\f041" + '    ';
         }
@@ -2368,14 +2349,11 @@ body#cambiu {
         }
       }
       .name {
-        font-weight: 300;
-        color: #000;
+        font-weight: 400;
+        color: $darken-brand-color;
+        font-size: 1.2em;
       }
-      .list-group-item .name {
-        @media (min-width: $screen-sm-min) {
-        }
-      }
-      .units-d {
+       .units-d {
         font-size: 0.9em;
         font-weight: 100;
         display: inline;
@@ -2390,9 +2368,9 @@ body#cambiu {
           display: table-cell;
         }
       }
-        .quote, .quote_currency {
+        .quote, .quote_currency, .distance:not(.button) {
         font-weight: 400;
-          font-size: 1.5em;
+          font-size: 1.2em;
           color: #333;
           line-height: 1em;
       }
@@ -2458,17 +2436,8 @@ body#cambiu {
       .appendix {
         color: #000;
         font-weight: 300;
-        @media (min-width: $screen-sm-min) {
-          font-size: 0.85em;
-        }
-        @media (max-width: $screen-xs-max) {
-          font-size: 4.5vw;
-        }
-        padding-bottom: 0.5em;
-//        font-size: 0.85em;
-//        background: #eee;
-//        border-top: 1px dashed #bbb;
-        line-height: 2em;
+        font-size: 1.2em;
+         padding-bottom: 0.3em;
         .base_rate {
 
         }
@@ -2482,8 +2451,7 @@ body#cambiu {
             }
           }
           .gain_amount {
-            color: $green;
-            font-weight: 500;
+            font-weight: 400;
           }
           .gain_tooltip {
             color: #555;
@@ -2499,6 +2467,10 @@ body#cambiu {
         .tooltip-arrow {
           border-right-color: #fff;
         }
+      }
+
+      .distance_and_quote {
+        margin-top: 0.3em;
       }
 
     }
@@ -3057,14 +3029,6 @@ body#cambiu {
 
 
     &.exchanges {
-      .name {
-        @media (min-width: $screen-sm-min) {
-          font-size: 0.9em;
-        }
-        @media (max-width: $screen-xs-max) {
-          font-size: 5vw;
-        }
-      }
       .quote {
         font-size: 0.9em;
       }
