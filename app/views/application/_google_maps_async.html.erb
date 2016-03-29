@@ -7,7 +7,7 @@
             // But only for  search page : homepage awaits user input and will submit only upon clicking the button (for performance)
             // Though getLocation() probably havent yet found the location, this if occurs only upon reload, so session holds the location
              console.log('not homepage: submitting form');
-            $('#new_search').submit();
+            $('#search_form').submit();
         } else {
             console.log('homepage. Not submitting form')
         }

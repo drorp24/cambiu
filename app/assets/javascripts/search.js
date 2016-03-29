@@ -47,7 +47,7 @@
         if (field =='buy_amount' || field == "pay_amount") {
             var value_clean = value  ? String(value).replace(/[^0-9\.]+/g,"")  : null;
             sessionStorage.setItem(field, value_clean);
-            $('.simple_form ' + '#search_' + field + '_val').val(value_clean);   // Ugly hack for autoNumeric sending _val values to server
+            $('#search_form ' + '#' + field + '_val').val(value_clean);   // Ugly hack for autoNumeric sending _val values to server
         }  else {
             sessionStorage.setItem(field, value);
         }
@@ -87,7 +87,7 @@
         variables_set = true;
         if (use_session === undefined) use_session = true;
 
-        $('#new_search [data-field]').each(function() {
+        $('#search_form [data-field]').each(function() {
 
             var $this = $(this);
             var model = $this.data('model');
@@ -126,7 +126,7 @@
         console.log('After location found, set to default, changed by user, or page was reloaded:');
          if (!homepage()) {
             console.log('Not homepage: submitting form');
-            $('#new_search').submit();
+            $('#search_form').submit();
         } else {
             console.log('Homepage: not submitting form');
         }
@@ -252,9 +252,9 @@ $(document).ready(function() {
 
 
     $('.getstarted_button').click(function(){
-        if ($('#new_search').valid() && custom_validate($('#new_search'))) {
+        if ($('#search_form').valid()) {
             console.log('getstarted button clicked: submitting search form')
-            $('#new_search').submit();
+            $('#search_form').submit();
         } else {
             $('#homepage input[data-field=buy_amount]').focus()
         }
@@ -275,33 +275,12 @@ $(document).ready(function() {
     });
 
 
-    // #search_form submits the shadow form #new_search rather than itself
-
-/*
-    $('#search_form #search_button').click(function(e) {
-        if ($('#search_form').valid()) {
-            $('#new_search').submit()
-        }
-     });
-*/
-
     $('[data-ajax=searches]').click(function() {
         if (mobile) $('#open_params').toggleClass('open');
         if ($('#search_form').valid()) {
-            $('#new_search').submit();
+            $('#search_form').submit();
             $('body.mobile.exchanges #new_parameters').collapse('hide');
         }
-    });
-
-    toggle_search_icon = function() {
-      el = $('#search_icon');
-      var search = el.find('.search').hasClass('on');
-      el.find('i').removeClass('on');
-      if (search) {el.find('i.close').addClass('on')} else {el.find('i.search').addClass('on')}
-    };
-
-    $('.open_search').click(function() {
-        toggle_search_icon();
     });
 
     $('.open_params').click(function() {
@@ -338,8 +317,6 @@ $(document).ready(function() {
     // AJAX Callbacks
     //
 
-    // #new_search
-
 
     // Before actions
 
@@ -354,20 +331,20 @@ $(document).ready(function() {
     };
 
 
-    $('#new_search').on('ajax:before', function() {
-        console.log('#new_search ajax:before. Invoking drawMap');
+    $('#search_form').on('ajax:before', function() {
+        console.log('#search_form ajax:before. Invoking drawMap');
         drawMap(value_of('location_lat'), value_of('location_lng'));
         startLoader();
         clearExchanges();
     });
 
-    $('#new_search').on('ajax:success', function(event, data, status, xhr) {
-        console.log('#new_search ajax:success. Starting to updatePage...');
+    $('#search_form').on('ajax:success', function(event, data, status, xhr) {
+        console.log('#search_form ajax:success. Starting to updatePage...');
         updatePage(data);
      });
 
-    $('#new_search').on('ajax:error', function(event, xhr, status, error) {
-        console.log('#new_search ajax:error. Error: ' + error);
+    $('#search_form').on('ajax:error', function(event, xhr, status, error) {
+        console.log('#search_form ajax:error. Error: ' + error);
         alert('We are unable to process your request at this time. Please try again in a few moments');
         updateResults(null);
     });

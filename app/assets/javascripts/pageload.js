@@ -44,7 +44,6 @@ var is_currency_unique;
 var disable_other_currency;
 var link;
 var is_larger_than_zero;
-var custom_validate;
 var location_settings;
 var def;
 var set_variables;

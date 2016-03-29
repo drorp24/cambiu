@@ -1,5 +1,4 @@
 var is_currency_unique;
-var new_search_validator;
 
 $(document).ready(function() {
 
@@ -50,12 +49,6 @@ $(document).ready(function() {
     disable_other_currency('pay_currency');
     disable_other_currency('buy_currency');
 
-    // Prevent form submission if invalid
-    $('#new_search').submit(function() {
-        return new_search_validator.form() && custom_validate($('#new_search'))
-    });
-
-
 
 
     //
@@ -93,26 +86,8 @@ $(document).ready(function() {
 
 
 
-    new_search_validator = $("#new_search").validate({
-        focusInvalid: false,
-        rules: {
-            'search[buy_amount]': {
-                required: function(element) {
-                    return !$(element).closest('form').find('#search_pay_amount').val();
-                }
-            }
-        },
-        messages: {
-            'search[buy_amount]': {
-                required: "Please fill either amount"
-            }
-        }
-     });
-
-    new_search_validator.form();
-
     // required since for some reason jquery.validate only validates after reload
-    custom_validate = function(form_el) {
+ /*   custom_validate = function(form_el) {
       switch(form_el.attr('id')) {
           case 'new_search':
               var pay_amount =  form_el.find('#search_pay_amount')[0];
@@ -129,7 +104,7 @@ $(document).ready(function() {
               return true;
        }
     };
-
+*/
     jQuery.validator.addMethod('phoneUK', function(phone_number, element) {
          return this.optional(element) || phone_number.length > 9 &&
             phone_number.match(/^(((\+44)? ?(\(0\))? ?)|(0))( ?[0-9]{3,4}){3}$/);

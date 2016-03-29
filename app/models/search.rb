@@ -116,5 +116,9 @@ class Search < ActiveRecord::Base
 
   end
 
+  def pane=(pane)
+    @rest=pane
+  end
+
 
 end

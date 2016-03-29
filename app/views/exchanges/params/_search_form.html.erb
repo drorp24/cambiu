@@ -1,4 +1,6 @@
-<form id="search_form" class="form-inline" novalidate>
+<form id="search_form" method="post" action="/searches" data-type="json" data-remote="true" novalidate accept-charset="UTF-8" class="form-inline">
+
+  <input name="utf8" type="hidden" value="✓">
 
   <div class="text_above not_on_homepage">
     <div class="desktop_only col-md-4">exchange</div>
@@ -13,11 +15,11 @@
   </div>
 
   <div class="form-group col-md-2 col-xs-6 reach-out-right reach-out-left">
-    <input type="text" pattern="\d*" id="pay_amount" data-clicked="pay_amount (list)" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="pay_amount" class="form-control">
+    <input type="text" pattern="\d*" id="pay_amount" data-clicked="pay_amount (list)" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control">
   </div>
 
   <div class="form-group col-md-2 col-xs-6 reach-out-left select">
-    <select id="pay_currency" data-field="pay_currency" data-clicked="pay_currency (list)" data-symboltarget="pay_amount" name="pay_currency" class="currency_select select optional text-center form-control">
+    <select id="pay_currency" data-field="pay_currency" data-clicked="pay_currency (list)" data-symboltarget="pay_amount" name="search[pay_currency]" class="currency_select select optional text-center form-control">
       <option selected disabled hidden value=''></option>
       <option data-symbol="￡ " value="GBP">GBP</option>
       <option data-symbol="€ " value="EUR">EUR</option>
@@ -39,11 +41,11 @@
   </div>
 
   <div class="form-group col-md-2 col-xs-6 reach-out-right reach-out-left">
-    <input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-clicked="buy_amount (list)" data-autonumeric="true" data-symbolsource="buy_currency" name="buy_amount" class="form-control">
+    <input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-clicked="buy_amount (list)" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control">
   </div>
 
   <div class="form-group col-md-2 col-xs-6 reach-out-left select">
-    <select id="buy_currency" data-field="buy_currency" data-clicked="buy_currency (list)" data-symboltarget="buy_amount" name="buy_currency" class="currency_select select optional text-center form-control">
+    <select id="buy_currency" data-field="buy_currency" data-clicked="buy_currency (list)" data-symboltarget="buy_amount" name="search[buy_currency]" class="currency_select select optional text-center form-control">
       <option selected disabled hidden value=''></option>
       <option data-symbol="$ "  value="USD">USD</option>
       <option data-symbol="€ "  value="EUR">EUR</option>
@@ -65,18 +67,26 @@
   </div>
 
   <div class="form-group col-md-4 col-xs-12 reach-out-left reach-out-right">
-    <input type="text" id="location_search" data-field="location" data-searchbox="true" name="location_search" class="text-center location search form-control" placeholder="   Change location"
+    <input type="text" id="location" data-field="location" data-searchbox="true" name="search[location]" class="text-center location search form-control" placeholder="   Change location"
            data-analyze="change" data-activity="Search" data-key1="searched" data-val1="location" data-key2="type" data-val2="search" data-key3="location">
   </div>
 
   <div class="hidden" style="display:none">
-    <input type="hidden" name="latitude" class="location" id="latitude" data-field="user_lat">
-    <input type="hidden" name="longitude" class="location" id="longitude" data-field="user_lng">
-    <input type="hidden" name="geocoded_location" id="geocoded_location" data-field="location">
-    <input type="hidden" name="sort" id="sort" data-field="sort">
-    <input type="hidden" name="searched_location" id="searched_location" data-field="location">
-    <input type="hidden" name="actual_pay_amount" id="actual_pay_amount" data-field="actual_pay_amount">
-    <input type="hidden" name="distance" data-field="distance">
+    <input type="hidden" name="search[location_lat]"    id="location_lat"   data-field="location_lat">
+    <input type="hidden" name="search[location_lng]"    id="location_lng"   data-field="location_lng">
+    <input type="hidden" name="search[location_type]"   id="location_type"  data-field="location_type">
+    <input type="hidden" name="search[location_short]"  id="location_short" data-field="location_short">
+    <input type="hidden" name="search[user_lat]"        id="user_lat"       data-field="user_lat">
+    <input type="hidden" name="search[user_lng]"        id="user_lng"       data-field="user_lng">
+    <input type="hidden" name="search[user_location]"   id="user_location"  data-field="user_location">
+    <input type="hidden" name="search[distance]"        id="distance"       data-field="distance">
+    <input type="hidden" name="search[distance_unit]"   id="distance_unit"  data-field="distance_unit">
+    <input type="hidden" name="search[sort]"            id="sort"           data-field="sort">
+    <input type="hidden" name="search[page]"            id="page"           data-field="page">
+    <input type="hidden" name="search[pane]"            id="pane"           data-field="pane">
+    <input type="hidden" name="search[exchange_id]"     id="exchange_id"    data-field="exchange_id">
+    <input type="hidden" name="search[service_type]"    id="service_type"   data-field="service_type">
+    <input type="hidden" name="search[mode]"            id="mode"           data-field="mode">
   </div>
 
   <div class="middle_wrapper mobile_only middle_wrapper help_text col-md-half col-xs-12">

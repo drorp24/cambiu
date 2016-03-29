@@ -181,7 +181,7 @@ $(document).ready(function() {
         e.stopPropagation();
 
         var $this           = $(this);
-        var invoked_form    = $this.data('form') ? $($this.data('form')) : null;   // e.g., getstarted_button click invokes #new_search form
+        var invoked_form    = $this.data('form') ? $($this.data('form')) : null;   // only case: getstarted_button click invokes #search_form form
         var form            = invoked_form ? invoked_form : $this.closest('form');
 
         if (form.length > 0) {
@@ -190,12 +190,12 @@ $(document).ready(function() {
                 form.validate();
                 form.on('ajax:complete', (function (evt, data, status, xhr) {
                     console.log('form remote validation completed. Status: ' + status);
-                    if (form.valid() && custom_validate(form)) {
+                    if (form.valid()) {
                         link($this)
                     }
                 }));
             } else {
-                if (form.valid() && custom_validate(form)) {
+                if (form.valid()) {
                     link($this)
                 }
             }
