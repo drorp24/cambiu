@@ -275,7 +275,8 @@ $(document).ready(function() {
     });
 
 
-    $('[data-ajax=searches]').click(function() {
+    $('[data-ajax=searches]').click(function(e) {
+        e.preventDefault();
         if (mobile) $('#open_params').toggleClass('open');
         if ($('#search_form').valid()) {
             $('#search_form').submit();

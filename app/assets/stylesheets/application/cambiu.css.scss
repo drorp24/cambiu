@@ -569,14 +569,14 @@ body#cambiu {
 
 
 
-  #map_container {
+  #map_container, #directions_map_container {
     position: fixed;
     width: 100%;
     padding-right: 0;
     padding-left: 0;
     top: 0;
     left: 0;
-    #map-canvas {
+    #map-canvas, #directions-map-canvas {
       height: 100vh;
     }
   }

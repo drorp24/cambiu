@@ -103,14 +103,14 @@ $(document).ready(function() {
             set_default_location();
             locationCallback();
         }
-        var t = setTimeout(function () {
+ /*       var t = setTimeout(function () {
             if (!value_of('location')) {
                 console.log('Geocoder timeout, firefox bug: setting default location');
                 set_default_location();
                 locationCallback();
             }
-        }, 3000);
-    };
+        }, 6000);
+*/    };
 
 
 

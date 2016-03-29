@@ -1,5 +1,9 @@
 <div class="pane" data-pane="directions">
 
-Hi I'm directions
+  <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'chevron-left', center: 'Directions', right_pane: 'list', right_icon: 'list-ol'} %>
+
+  <div id="directions_map_container">
+    <div id="directions-map-canvas" data-clicked="directions_map"></div>
+  </div>
 
 </div>

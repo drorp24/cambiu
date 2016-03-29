@@ -53,6 +53,7 @@
             // TODO: sessionStorage setting should be outside the loop, else it will populate only for those fields which has html tags
             // TODO: Do it with set() and the following logic will be done by set. This is not DRY...
             sessionStorage.setItem(model + '_' + field_no_model, value);     // update in session only used fields (if potnetially several times)
+            if (field == 'exchange_id') console.log('In models.js, just updated ss exchange_id to: ' + value);
             if ($this.is('input, select')) {
                 $this.val(value);
             } else {

@@ -79,6 +79,7 @@ $(document).ready(function() {
 
     setPage = function(page, id, pane, hash) {
 
+        var exchange_id = null;
         console.log('setPage');
 
         // Reveal requested page & pane, updating 'active' classes
@@ -93,6 +94,7 @@ $(document).ready(function() {
         pane_el = $('.pane[data-pane=' + pane + ']');
         pane_el.addClass('active');
         if (pane == 'map') google.maps.event.trigger(map, 'resize');
+        if (pane == 'directions') drawDirectionsMap(value_of('location_lat'), value_of('location_lng'));
 
         if (hash) {
             if (hash[0] == '#') {
@@ -104,9 +106,9 @@ $(document).ready(function() {
         // Populate exchange data
         if (id) {
             if (id == 'id') {
-                var exchange_id = value_of('exchange_id')
+                exchange_id = value_of('exchange_id')
             } else {
-                var exchange_id = id
+                exchange_id = id
             }
         }
 

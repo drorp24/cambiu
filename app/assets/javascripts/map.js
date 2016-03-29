@@ -13,6 +13,18 @@ drawMap = function (latitude, longitude) {
 
  };
 
+drawDirectionsMap = function (latitude, longitude) {
+
+    console.log('drawDirectionsMap');
+
+    var mapOptions = {
+        center: new google.maps.LatLng(latitude, longitude),
+        scaleControl: true
+    };
+    directionsMap = new google.maps.Map(document.getElementById('directions-map-canvas'), mapOptions);
+
+};
+
 
 function addUserMarker(latitude, longitude) {
 
