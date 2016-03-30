@@ -615,14 +615,16 @@ body#cambiu {
 
   .button_link {
     text-align: center;
+    position: absolute;
+    bottom: 10vh;
+    left: 30%;
     div {
-      height: 23vh;
-      width: 23vh;
-      border-radius: 12vh;
-      line-height: 21vh;
-      font-size: 3.5vh;
+      height: 40vw;
+      width: 40vw;
+      border-radius: 20vw;
+      line-height: 36vw;
+      font-size: 6vw;
       font-weight: 500;
-      margin-top: 3vh;
     }
   }
 

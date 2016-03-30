@@ -23,6 +23,9 @@ drawDirectionsMap = function (latitude, longitude) {
         scaleControl: true
     };
     directionsMap = new google.maps.Map(document.getElementById('directions-map-canvas'), mapOptions);
+    from =          new google.maps.LatLng(value_of('location_lat'), value_of('location_lng'));
+    to =            new google.maps.LatLng(value_of('exchange_latitude'), value_of('exchange_longitude'));
+    calcRoute(from, to);
 
 };
 
@@ -53,7 +56,7 @@ function calcRoute(from, to) {
     var request = {
         origin: from,
         destination: to,
-        travelMode: google.maps.TravelMode.TRANSIT,
+        travelMode: google.maps.TravelMode.WALKING,
         unitSystem: google.maps.UnitSystem.METRIC
     };
 
@@ -61,7 +64,8 @@ function calcRoute(from, to) {
     directionsDisplay = new google.maps.DirectionsRenderer();
     zoom_changed_by_user = false;
 
-    directionsDisplay.setMap(map);
+    directionsDisplay.setMap(directionsMap);
+    directionsDisplay.setPanel(document.getElementById("directionsPanel"));
     //       directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
     directionsService.route(request, function (response, status) {
