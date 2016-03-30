@@ -100,15 +100,10 @@ $(document).ready(function() {
 
     link = function (el) {
 
-        var pane = el.attr('data-href-pane');
-        if (pane == 'back') {
-            console.log('just back');
-            window.history.back();
-            return
-        }
-        var page = el.attr('data-href-page') !== "" && el.attr('data-href-page');
-        var exchange_id = el.attr('data-exchange-id');
-        var hash = el.attr('data-href-hash');
+        var pane        = el.data('href-pane');  if (pane == 'back') {window.history.back();return}
+        var page        = el.data('href-page');
+        var exchange_id = el.data('href-id');
+        var hash        = el.data('href-hash');
 
         console.log('data-href element clicked. page: ' + page + ' exchange-id: ' + exchange_id + ' pane: ' + pane + ' hash: ' + String(hash));
         setPage(page, exchange_id, pane, hash);
