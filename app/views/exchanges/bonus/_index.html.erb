@@ -1,0 +1,15 @@
+<div id="exchange_deal" class="pane" data-pane="bonus">
+
+  <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'chevron-left', center: 'Bonus', right_pane: 'none', right_icon: 'none'} %>
+
+    <div class="camera_access text-center">
+      <div class="camera">
+        <%= fa_stacked_icon "camera inverse", base: "circle", class: "fa-5x" %>
+      </div>
+      <div class="camera_label">
+        <input id="photo" type="file" name="photo" accept="image/*" class="inputfile">
+        <label for="photo">Upload receipt</label>
+      </div>
+    </div>
+
+</div>

@@ -92,7 +92,7 @@
         var exchange_wrapper = $('#exchange_template').clone().removeClass('template');
         var exchange_el = exchange_wrapper.find('.list-group-item');
 
-        exchange_el.attr('data-exchange-id', exchange.id);
+        exchange_el.attr('data-href-id', exchange.id);
 
         exchange_el.find('.best_at').html(' ');
         exchange_el.find('.best_at').addClass(exchange.best_at);
@@ -246,7 +246,7 @@
             closeInfowindows();
             this['infowindow'].setContent(exchange_window_det[0]);
             this['infowindow'].open(map, this);
-            setPage('exchanges/' + exchange.id + '/deal');
+            setPage('exchanges/' + exchange.id + '/offer');
         });
 */
 

@@ -12,7 +12,7 @@ Devise.setup do |config|
   # with default "from" parameter.
   config.mailer_sender = 'Cambiu support team <support@cambiu.com>'
 
-  # Configure the class responsible to send e-mails.
+  # Configure the class responsible to bonus e-mails.
   # config.mailer = 'Devise::Mailer'
 
   # ==> ORM configuration

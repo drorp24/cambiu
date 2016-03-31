@@ -1,0 +1,21 @@
+<div id="exchange_deal" class="pane" data-pane="offer">
+
+  <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'chevron-left', center: 'Offer', right_pane: 'none', right_icon: 'none'} %>
+
+  <div class="text-center">
+        <div class="order">
+          <span data-model="exchange" data-field="pay_amount"></span>
+          <span data-model="exchange" data-field="pay_currency" style="display: none"></span>
+          <span class="exchange_icon"><%= fa_icon "caret-right" %></span>
+          <span data-model="exchange" data-field="buy_amount"></span>
+          <span data-model="exchange" data-field="buy_currency" style="display: none"></span>
+        </div>
+  </div>
+
+
+
+  <div class="button_link" data-href-page="exchanges" data-href-id="id" data-href-pane="order">Order</div>
+
+
+
+</div>

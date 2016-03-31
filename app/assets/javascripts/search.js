@@ -39,7 +39,10 @@
 
     };
 
-    // populate a field's value in all relevant html tags and in sessionStorage
+// TODO! If there's one single search form (and no order form), this is not needed
+// TODO Even if there are 2 (one in homepage the other in the search pane) upon entry to search pane, the form there should be populated from the ss
+// TODO Make 'set' only set the sessionStorage. It is called many times!
+// populate a field's value in all relevant html tags and in sessionStorage
     set = function(field, value, excluded) {
         if (excluded === undefined) excluded = '';
         var elements = '[data-field=' + field + ']';
@@ -65,6 +68,7 @@
         })
     };
 
+// TODO: Remove!
     // bind an event handler to a field's all relevant html tags so that when either of them change, all the other tags change to match
     bind = function(field, event) {
         var elements = '[data-field=' + field + ']';
@@ -82,8 +86,7 @@
 
     // Sets all variables
 // TODO: Restore session values from ss. That's its role. Not from the form
-// Doesn't justify the effort - used to restore after refresh
-// Probably better to use the default values unless there are values in ss
+// TODO: Just go over the def values and use ss value if exists otherwise the def
     set_variables = function(use_session) {
 
         console.log('set_variables');
@@ -204,53 +207,10 @@ $(document).ready(function() {
 
     // UI
 
-     // service_type button
-    service_type_ui = function(service_type) {
-        if (service_type == 'collection') {
-            $('button[data-service-type=delivery]').removeClass('active');
-            $('button[data-service-type=collection]').addClass('active');
-            $('#exchange_summary #order_email').attr('placeholder', '  Enter email to guarantee deal');
-            $('#exchange_summary #order_email').attr('required', 'required');
-/*
-            $('#order_phone').removeAttr('required');
-            $('#order_phone').css('display', 'none');
-*/
-            $('.fees').html('');
-         } else
-        if (service_type == 'delivery') {
-            $('.validation_errors').empty();
-            $('.exchange_search_form_error').empty();
-            $('button[data-service-type=collection]').removeClass('active');
-            $('button[data-service-type=delivery]').addClass('active');
-            $('#exchange_summary #order_email').attr('placeholder', '  Leave us your email if you wish');
-            $('#exchange_summary #order_email').removeAttr('required');
-            $('#exchange_summary #order_email').removeAttr('aria-required');
-            $('#exchange_summary #order_email').removeClass('required');
 
-/*
-            $('#order_phone').css('display', 'block');
-            $('#order_phone').attr('required', 'true');
-            $('#order_phone').attr('placeholder', 'Leave phone for delivery');
-            $('.fees').html('Add &pound;20 for delivery');
-*/
-        }
-    };
-    if (sessionStorage.service_type == 'collection') {
-        service_type_ui('collection')
-    } else
-    if (sessionStorage.service_type == 'delivery') {
-        service_type_ui('delivery')
-    }
-
-    $('button[data-service-type=collection]').click(function() {
-        service_type_ui('collection');
-        set('service_type', 'collection');
-    });
-
-    $('button[data-service-type=delivery]').click(function() {
-        service_type_ui('delivery');
-        set('service_type', 'delivery');
-     });
+    $('.camera').on('click tap', (function() {
+        $('#photo').click()
+    }));
 
 
 
@@ -263,19 +223,6 @@ $(document).ready(function() {
         }
     });
 
-    $('.exchanges_search_search_title').click(function(){
-        if (sessionStorage.pay_amount != "null") {
-            $('#search_form input[data-field=pay_amount]').focus()
-        } else {
-            $('#search_form input[data-field=buy_amount]').focus()
-        }
-    });
-
-    // clicking on certain elements rests params to default values
-    $('[data-set-default]').click(function() {
-        var use_session = false;
-        set_variables(use_session);
-    });
 
 
     $('[data-ajax=searches]').click(function(e) {
@@ -302,19 +249,6 @@ $(document).ready(function() {
     $('#exchanges_list .remove_more').click(function(e) {
         removeMore();
     });
-
-
-     var current_distance = value_of('distance')*1000;
-    $('#distance_slider').val(current_distance);
-    $('#distance_output').html(current_distance);
-
-    $('#distance_slider').on('input', function() {
-        var $this = $(this);
-        var value = $this.val();
-        $('#distance_output').html(value);
-        set('distance', value/1000, $this);
-    });
-
 
 
     //
@@ -373,6 +307,7 @@ $(document).ready(function() {
 
     // The code below is used after create: it will populate the returned order_id of the newly created order, and will also replace the POST with PUT
 
+/*
     $('#exchanges').on('ajax:success', 'form.new_order', (function(evt, data, status, xhr) {
         console.log('#new_order ajax:success');
         order = data;
@@ -396,11 +331,12 @@ $(document).ready(function() {
         var value = $this.val();
         set('order_email', value, $this);
     });
+*/
 
 
     // Real-time exchange quotes
 
-    $('#exchange_search form input, #exchange_search form select').on('keyup click', function() {
+ /*   $('#exchange_search form input, #exchange_search form select').on('keyup click', function() {
 
         var $this = $(this);
         var exchange_id = value_of('exchange_id');  if (!exchange_id) return;
@@ -445,6 +381,6 @@ $(document).ready(function() {
             }
         })
     });
-
+*/
 
 });

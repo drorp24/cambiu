@@ -3,7 +3,7 @@ module ActiveAdmin
   module Views
     class IndexAsTable < ActiveAdmin::Component
       def editable_text_column resource, attr
-        val = resource.send(attr)
+        val = resource.bonus(attr)
         val = "&nbsp;" if val.blank?
  
         html = %{
