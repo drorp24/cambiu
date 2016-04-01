@@ -5,25 +5,38 @@ require 'tod'
 class Exchange < ActiveRecord::Base
   has_many :searches
   has_many :orders
-  
-  belongs_to  :chain
-  has_many    :business_hours
-  has_one     :open_today, -> {where(day: Date.today.wday)}, class_name: "BusinessHour"
-  accepts_nested_attributes_for :business_hours
+  has_many :business_hours
   has_many :rates, as: :ratable
-  accepts_nested_attributes_for :rates
-  belongs_to  :upload
+#  has_many :rates, through: :chain, as: :ratable
+
+  belongs_to  :chain
   belongs_to  :admin_user
+
+  has_one     :open_today,  ->(date) {where(day: Date.today.wday)}  ,class_name: "BusinessHour"
+
+  has_one     :gbp_rate,    -> {where(currency: 'GBP')}       ,class_name: "Rate", as: :ratable
+  has_one     :eur_rate,    -> {where(currency: 'EUR')}       ,class_name: "Rate", as: :ratable
+  has_one     :usd_rate,    -> {where(currency: 'USD')}       ,class_name: "Rate", as: :ratable
+  has_one     :aud_rate,    -> {where(currency: 'AUD')}       ,class_name: "Rate", as: :ratable
+  has_one     :cad_rate,    -> {where(currency: 'CAD')}       ,class_name: "Rate", as: :ratable
+  has_one     :jpy_rate,    -> {where(currency: 'JPY')}       ,class_name: "Rate", as: :ratable
+  has_one     :cny_rate,    -> {where(currency: 'CNY')}       ,class_name: "Rate", as: :ratable
+  has_one     :hkd_rate,    -> {where(currency: 'HKD')}       ,class_name: "Rate", as: :ratable
+  has_one     :ils_rate,    -> {where(currency: 'ILS')}       ,class_name: "Rate", as: :ratable
+  has_one     :nok_rate,    -> {where(currency: 'NOK')}       ,class_name: "Rate", as: :ratable
+
   enum business_type: [ :exchange, :bank, :post_office, :other ]
   enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping ]
   enum rates_policy: [:individual, :chain]
+
+  accepts_nested_attributes_for :business_hours
+  accepts_nested_attributes_for :rates
 
   geocoded_by :address
 
   validates :delivery_tracking, allow_blank: true, :format => {:with => URI.regexp}
 
   scope :with_contract, -> { where(contract: true) }
-
   scope :with_real_rates, -> { where("rates_source > 2") }
 
   attr_accessor :best_at
@@ -62,10 +75,13 @@ class Exchange < ActiveRecord::Base
         errors:           []
     }
 
+=begin
     unless rates.any?
       result[:errors]           <<   'No rates defined for that exchange'
       return result
     end
+=end
+
     if currency.nil?
       result[:errors]           <<   'No local currency defined for that exchange'
       return result
@@ -196,7 +212,7 @@ class Exchange < ActiveRecord::Base
       return result
     end
 
-    rec = rates.where(currency: currency).first
+    rec = chain? ? self.chain.send(currency.downcase + '_rate') : self.send(currency.downcase + '_rate')
 
     if rec
       ['buy', 'sell'].each do |kind|
@@ -281,39 +297,6 @@ class Exchange < ActiveRecord::Base
 
   end
 
-=begin
-  def quote(rate, params, sessionKey)
-
-    pay_amount = Monetize.parse(params[:pay_amount]).amount
-    pay_currency = params[:pay_currency]
-    buy_amount = Monetize.parse(params[:buy_amount]).amount
-    buy_currency = params[:buy_currency]
-    field = params[:field]
-    if field == 'pay_amount'
-      buy_amount = pay_amount * rate
-    elsif field == 'buy_amount'
-      pay_amount = buy_amount * rate
-    end
-
-    gain_amount = field == 'pay_amount' ? buy_amount * 0.13 : pay_amount * 0.13
-    gain_currency = field == 'pay_amount' ? buy_currency : pay_currency
-
-    result = {}
-
-    result[:buy_amount] = Monetize.parse(buy_amount, buy_currency).format
-    result[:buy_currency] = buy_currency
-    result[:pay_amount] = Monetize.parse(pay_amount, pay_currency).format
-    result[:pay_currency] = pay_currency
-    result[:gain_amount] = Monetize.parse(gain_amount, gain_currency).format
-    result[:gain_currency] = gain_currency
-    result[:field] = field
-    result[:rate] = rate
-    result[:sessionKey] = sessionKey
-
-    result
-
-  end
-=end
 
   def direct_link
     Rails.application.routes.url_helpers.exchange_url(self.id) if self.id
@@ -335,136 +318,11 @@ class Exchange < ActiveRecord::Base
   def tmp_source=(email)
   end
 
-=begin
-  # TODO: Write anew
-  def quote(pay, buy)
-    return nil unless rates
-    return nil unless 
-      (rate = rates.where(pay_currency: pay_currency, buy_currency: buy_currency).first) or
-      (rev_rate = rates.where(buy_currency: pay_currency, pay_currency: buy_currency).first) 
-    if rate
-      return nil unless rate.pay_cents.present? and rate.buy_cents.present?
-      buy_cents = pay_amount.to_i * 100 * (rate.buy_cents.to_f / rate.pay_cents.to_f)
-    end
-    if rev_rate
-      return nil unless rev_rate.pay_cents.present? and rev_rate.buy_cents.present?      
-      buy_cents = pay_amount.to_i * 100 * (rev_rate.pay_cents.to_f / rev_rate.buy_cents.to_f)  #TODO: Introduce buy vs sell rates
-    end
-    Money.new(buy_cents, buy_currency)
-  end
-=end
-
-
 
   def effective_rates
     rates.any? ? rates : (chain ? chain.rates : nil)
   end
   
-# TODO: Remove. All search will be handled by Search model
-    
-  def self.search(params)
-     
-    return if params[:pay_currency].blank? or params[:buy_currency].blank? or params[:actual_pay_amount].blank?
-    location_search = params[:location_search]
-    latitude =        params[:latitude] 
-    longitude =       params[:longitude]
-    distance =        params[:distance].present? ? params[:distance] : 20     
-
-    pay_currency =    params[:pay_currency]
-    buy_currency =    params[:buy_currency]
-    pay_amount =      params[:actual_pay_amount] # before: Currency.strip(params[:pay_amount])
-    sort =            params[:sort] || "amount"
-    
-    center = location_search.present? ? location_search : ((latitude.present? and longitude.present?) ? [latitude, longitude] : 'London')  
-  # center = ['London']    # TODO: Force London. This is to first check it can find exchanges by the user's location
-    box = Geocoder::Calculations.bounding_box(center, distance)
-
-    cache_key = "#{location_search}#{latitude}#{longitude}#{distance}#{pay_currency}#{buy_currency}#{pay_amount}#{sort}"
-    if Rails.application.config.action_controller.perform_caching
-        Rails.logger.info("searched results fetched from cache")
-        Rails.cache.fetch("#{cache_key}", expires_in: 30.days) do
-          perform_search(center, box, pay_amount, pay_currency, buy_currency, sort)
-        end
-    else
-      Rails.logger.info("searched results *not* fetched from cache")
-      perform_search(center, box, pay_amount, pay_currency, buy_currency, sort)  
-    end
-   
-  end
-    
-  def self.perform_search(center, box, pay_amount, pay_currency, buy_currency, sort)      
-  
-      @exchange_quotes = []
-      exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil).includes(:open_today, :rates)
-      exchanges.each do |exchange| 
-        exchange_quote = {}
-        exchange_quote[:id] = exchange.id
-        exchange_quote[:name] = exchange.name
-        exchange_quote[:address] = exchange.address
-        exchange_quote[:open_today] = exchange.todays_hours
-        exchange_quote[:phone] = exchange.phone
-        exchange_quote[:website] = exchange.website
-        exchange_quote[:latitude] = exchange.latitude
-        exchange_quote[:longitude] = exchange.longitude 
-        exchange_quote[:distance] = Rails.application.config.use_google_geocoding ?  exchange.distance_from(center) : rand(1.2..17.9) 
-        exchange_quote[:bearing] = Rails.application.config.use_google_geocoding ? Geocoder::Calculations.compass_point(exchange.bearing_from(center)) : "NE"  
-        exchange_quote[:quote] = nil
-        if pay_amount  and pay_currency and buy_currency     
-          if quote = Money.new(rand(330..460), buy_currency) # exchange.quote(pay_currency, buy_currency, pay_amount) TODO: Handle random quotes
-            exchange_quote[:edited_quote] = Currency.display(quote)
-            quote = quote.fractional / 100.00
-            exchange_quote[:quote] = quote
-          end
-        end
-        @exchange_quotes << exchange_quote
-      end
-      
-      if sort == "price"
-        @exchange_quotes.sort_by{|e| e[:quote] || 1000000}
-      else
-        @exchange_quotes.sort_by{|e| e[:distance] }
-      end
-
-  end
-
-  def old_quote(pay_currency, buy_currency, pay_amount)
-    return nil unless rates
-    return nil unless 
-      (rate = rates.where(pay_currency: pay_currency, buy_currency: buy_currency).first) or
-      (rev_rate = rates.where(buy_currency: pay_currency, pay_currency: buy_currency).first) 
-    if rate
-      return nil unless rate.pay_cents.present? and rate.buy_cents.present?
-      buy_cents = pay_amount.to_i * 100 * (rate.buy_cents.to_f / rate.pay_cents.to_f)
-    end
-    if rev_rate
-      return nil unless rev_rate.pay_cents.present? and rev_rate.buy_cents.present?      
-      buy_cents = pay_amount.to_i * 100 * (rev_rate.pay_cents.to_f / rev_rate.buy_cents.to_f)  #TODO: Introduce buy vs sell rates
-    end
-    Money.new(buy_cents, buy_currency)
-  end
-
-# TODO: STOPPED WORKING: something to do with BusinessHour serialize by Tod::TimeOfDay
-# Landing database works find: open1.class is Tod::TimeOfDay, but staging serialize puts string in there
-# The symptom: cannot save a BusinessHour instance record after putting there a tod object in open1
-
-=begin
-  def todays_hours
-    bh = open_today
-        return nil unless bh
-        puts self.id  
-    open1 = bh.open1 ? bh.open1.strftime("%H:%M") : nil
-    close1 = bh.close1 ? bh.close1.strftime("%H:%M") : nil
-    open2 = bh.open2 ? bh.open2.strftime("%H:%M") : nil
-    close2 = bh.close2 ? bh.close2.strftime("%H:%M") : nil
-    if open1 and close1
-      result = open1 + " - " + close1
-      if open2 and close2
-        result += ", " + open2 + " - " + close2
-      end
-    end
-    result
-  end 
-=end
 
   def todays_hours
     return @todays_hours if @todays_hours
@@ -520,24 +378,6 @@ class Exchange < ActiveRecord::Base
       end
     end     
   end
-
-=begin
-  def open_today
-    bh = self.business_hours.where(day: Date.today.wday).first
-    return nil unless bh
-    open1 = bh.open1 ? bh.open1.strftime("%H:%M") : nil
-    close1 = bh.close1 ? bh.close1.strftime("%H:%M") : nil
-    open2 = bh.open2 ? bh.open2.strftime("%H:%M") : nil
-    close2 = bh.close2 ? bh.close2.strftime("%H:%M") : nil
-    if open1 and close1
-      result = open1 + " - " + close1
-      if open2 and close2
-        result += ", " + open2 + " - " + close2
-      end
-    end
-    result
-  end
-=end  
 
 
   def self.list(amenity, area)
@@ -612,7 +452,7 @@ class Exchange < ActiveRecord::Base
     else
       super
     end
-  end
+   end
 
   def name_s
     self.caption.present? ? self.caption : self.name

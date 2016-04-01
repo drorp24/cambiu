@@ -167,11 +167,13 @@
             $('#fetch_more').html('No results found in that area.');
         }
 
+/*
         setTimeout(function() {
             if(window.pageYOffset !== 0) return;
             window.scrollTo(0, window.pageYOffset + 1);
 
         }, 1000);
+*/
 
 
     };

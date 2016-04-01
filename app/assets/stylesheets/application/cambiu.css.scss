@@ -1840,8 +1840,10 @@ body#cambiu {
   .parameters #exchange_params_wrapper {
     margin-top: $navbar-height;
     input:not(#getit_button), select, button:not(#search_button) {
+      /*
       -webkit-appearance: none;
       -webkit-border-radius: 0px;
+      */
       font-weight: 400;
       text-align: center;
       @media (max-width: $screen-xs-max) {

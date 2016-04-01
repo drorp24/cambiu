@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'homepage',                     to: 'home#index'
   get 'exchanges',                    to: 'home#index'
   get 'exchanges/list',               to: 'home#index'
+  get 'exchanges/search',             to: 'home#index'
   get 'exchanges/:id/*pane',          to: 'home#index'
 
   resources :exchanges
