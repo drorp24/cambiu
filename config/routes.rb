@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'exchanges',                    to: 'home#index'
   get 'exchanges/list',               to: 'home#index'
   get 'exchanges/search',             to: 'home#index'
+  get 'exchanges/map',                to: 'home#index'
   get 'exchanges/:id/*pane',          to: 'home#index'
 
   resources :exchanges

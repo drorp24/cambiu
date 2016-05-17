@@ -11,11 +11,13 @@
 
         best_exchanges = data['best'];
         exchanges = data['more'];
+        geoJson = data;
 
-        if (exchanges && exchanges.length > 0) {
+        if (geoJson && Object.keys(geoJson).length > 0) {
 
-            updateExchanges();
-            updateMarkers(exchanges);
+ //           updateExchanges();
+//            updateMarkers(exchanges);
+            updateMarkers1(geoJson);
 
             var exchange_id = urlId();
             if (exchange_id) {   // Refresh of *specific exchange page* even in search requires model_populate like in exchange mode
@@ -27,6 +29,12 @@
 
         updateResults(exchanges);
 
+    };
+
+    updateMarkers1 = function(geoJson) {
+console.log('just before addGeoJson')
+        map.data.addGeoJson(geoJson);
+console.log('right after addGeoJson')
     };
 
     updateExchanges = function() {
@@ -84,7 +92,7 @@
 
 
 
-        // TODO: Remove det, replace classes with data- attributes, do it in a loop over the data fields
+// TODO: Replace classes with data- attributes, do it in a loop over the data fields, so I dont need to change it whenever I add another field to fetch
     function addExchange(exchange, index, append_point) {
 
         if (exchange.errors.length > 0) return;
@@ -235,23 +243,6 @@
             content: exchange_window_sum[0],
             disableAutoPan: true
         });
-
-        /*      // Uncomment if no infowindows should be opened by default, then this will open them manually
-         google.maps.event.addListener(marker, 'mouseover', function() {
-         this['infowindow'].setContent(exchange_window_sum[0]);
-         this['infowindow'].open(map, this);
-         });
-
-         */
-/*
-        google.maps.event.addListener(marker, 'click', function () {
-            closeInfowindows();
-            this['infowindow'].setContent(exchange_window_det[0]);
-            this['infowindow'].open(map, this);
-            setPage('exchanges/' + exchange.id + '/offer');
-        });
-*/
-
 
         markers.push(marker);
 

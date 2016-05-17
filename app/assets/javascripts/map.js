@@ -12,7 +12,29 @@
          if (desktop) mapPan();
          addUserMarker(latitude, longitude);
 
-     };
+         map.data.addGeoJson(geoJson);
+         map.data.setStyle(function(feature) {
+            var best_at = feature.getProperty('best_at');
+            return {
+                icon: '/logo_no_text.png'
+            };
+         });
+
+    };
+
+
+
+ /*   google.maps.event.addListener(map, 'idle', function(geoJson) {
+
+        map.data.addGeoJson(geoJson);
+        map.data.setStyle(function (feature) {
+            return {
+                icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/marina.png',
+                visible: true
+            }
+        })
+    });
+*/
 
     drawDirectionsMap = function (latitude, longitude) {
 
@@ -84,9 +106,6 @@
 
     }
 
-
-
-
     //// EVENTS & LISTENERS
 
 
@@ -133,9 +152,21 @@
     */
 
 
+    /*      // Uncomment if no infowindows should be opened by default, then this will open them manually
+     google.maps.event.addListener(marker, 'mouseover', function() {
+     this['infowindow'].setContent(exchange_window_sum[0]);
+     this['infowindow'].open(map, this);
+     });
 
-
-
+     */
+    /*
+     google.maps.event.addListener(marker, 'click', function () {
+     closeInfowindows();
+     this['infowindow'].setContent(exchange_window_det[0]);
+     this['infowindow'].open(map, this);
+     setPage('exchanges/' + exchange.id + '/offer');
+     });
+     */
 
 
 

@@ -53,7 +53,7 @@ var findMarker;
 var exchange_el;
 var closeInfowindows;
 var zoom_changed_by_user = true;
-var map_initial_zoom = 14;
+var map_initial_zoom = 17;
 var map_center_changed = false;
 var updateResults;
 var directionsService;
@@ -78,6 +78,7 @@ var mapPan;
 var clear;
 var make_url;
 var break_url;
+var geoJson;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);

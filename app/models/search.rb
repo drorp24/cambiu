@@ -32,9 +32,11 @@ class Search < ActiveRecord::Base
     exchanges = Exchange.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
       exchanges_offers = []
+      features = []
       exchanges.each do |exchange|
         exchange_offer = exchange.offer(center, pay, buy, user_location)
         exchanges_offers << exchange_offer
+        features << Search.to_geo(exchange_offer)
       end
 
       if self.sort == "price"
@@ -46,7 +48,20 @@ class Search < ActiveRecord::Base
 
       best_exchanges_offers = Search.best(exchanges_offers, pay, buy)
 
-      {'best': best_exchanges_offers, 'more': exchanges_offers}
+      geoJson = {type: 'FeatureCollection', features: features}.to_json
+
+#      {'best': best_exchanges_offers, 'more': exchanges_offers, 'geoJson': geoJson}
+    geoJson
+  end
+
+  def self.to_geo(exchange_offer)
+    { type: 'Feature',
+      properties: exchange_offer.except(:rates, :errors),
+      geometry: {
+          type: 'Point',
+          coordinates: [exchange_offer[:longitude], exchange_offer[:latitude]]
+      }
+    }
   end
 
   def self.best(exchanges_offers, pay, buy)
