@@ -116,7 +116,9 @@
 
        bind_currency_to_autonumeric();
 
-       set('sort', def('sort')) // Templrary!!
+        var value_of_sort = value_of('sort');
+        var sort = value_of_sort ? value_of_sort : def('sort')
+        set('sort', sort) // Templrary!!
 
     };
 
@@ -177,11 +179,6 @@ $(document).ready(function() {
 
     // Sorting
 
-    sort_ui = function(sort) {
-        $('[data-sort]').removeClass('active');
-        $('[data-sort=' + sort + ']').addClass('active');
-    };
-
     sort_by = function(sort) {
 
         console.log('sort by ' + sort);
@@ -196,20 +193,22 @@ $(document).ready(function() {
             if (value_of('pay_amount') > 0) { exchanges.reverse()}
         }
 
+        $('[data-sort]').removeClass('active');
+        $('[data-sort=' + sort + ']').addClass('active');
+
+        set('sort', sort);
+
         return exchanges;
      };
 
-
     $('[data-sort]').click(function() {
-        $('[data-sort]').removeClass('active');
-        $(this).addClass('active');
-        set('list', 'more');
-        sort_by($(this).data('sort'));
-        clearList();
-        updateList(exchanges);
-    });
 
-    sort_ui(value_of('sort'));
+        var sort = $(this).data('sort');
+        if (sort == value_of('sort')) {console.log('already sorted by ' + sort); return;}
+
+        updateList(exchanges, 'more', sort);
+
+    });
 
 
     // UI
@@ -249,8 +248,7 @@ $(document).ready(function() {
     });
 
      $('#exchanges_list #fetch_more').click(function(e) {
-        set('list', 'more');
-        updateList(exchanges);
+        updateList(exchanges, 'more');
     });
 
     $('#exchanges_list .remove_more').click(function(e) {

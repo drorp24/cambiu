@@ -18,19 +18,21 @@
 
 
 
-    updateList = function(exchanges) {
+    updateList = function(exchanges, list_to_update, sort_by) {
 
-        list = value_of('list');
-
+        var list = list_to_update ? list_to_update : value_of('list');
+        set('list', list);
+        var sort = sort_by ? sort_by : value_of('sort');
+        set('sort', sort);
 
         if (list == 'all') {
 
             updateBest(exchanges);
-            updateMore(exchanges);
+            updateMore(exchanges, sort);
 
         } else if (list == 'more') {
 
-            updateMore(exchanges);
+            updateMore(exchanges, sort);
             set('list', 'all'); // Important! to only display entire list always, just comment this line
 
         } else {
@@ -53,14 +55,18 @@
         $('#exchanges_list .more').css('display', 'block');
     };
 
-    updateMore = function(exchanges) {
+    updateMore = function(exchanges, sort) {
+
+        clearList();
+
         $('#exchanges_search_results').css('display', 'block');
         $('#exchanges_items').css('display', 'block');
         $('#exchanges_list .more').css('display', 'none');
 
         exchanges_append_point = '#exchanges_list .list-group #exchanges_items';
 
-        exchanges = sort_by(value_of('sort'));
+        exchanges = sort_by(sort);
+        
         for (var i = 0; i < exchanges.length; i++) {
             addExchange(exchanges[i], i, exchanges_append_point);
         }
@@ -107,7 +113,7 @@
 
     clearList = function () {
         list = value_of('list');
-        if (list != 'more') $('#exchanges_list #best_exchanges').empty();
+        if (list == 'best') $('#exchanges_list #best_exchanges').empty();
         $('#exchanges_list #exchanges_items').empty();
     };
 
