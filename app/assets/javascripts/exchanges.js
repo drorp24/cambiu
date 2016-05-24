@@ -66,7 +66,7 @@
         exchanges_append_point = '#exchanges_list .list-group #exchanges_items';
 
         exchanges = sort_by(sort);
-        
+
         for (var i = 0; i < exchanges.length; i++) {
             addExchange(exchanges[i], i, exchanges_append_point);
         }
