@@ -317,22 +317,27 @@ $(document).on('click','.navbar-collapse.in',function(e) {
         $(this).collapse('hide');
     }
 });
-    exchange_el = function(exchange) {
+    exchange_el = function(feature) {
 
         var exchange_el  = $('.exchange_window.template').clone().removeClass('template');
-        exchange_el.find('.exchange_window_quote').html(exchange.edited_quote);
-        exchange_el.find('.exchange_window_name').html(exchange.name_s);
-        exchange_el.find('.exchange_window_name').html(exchange.name_s);
-        var best_at = exchange_el.find('.exchange_window_best_at');
-        if (exchange.best_at) {
-            best_at.html(' ');
-            best_at.addClass('show').addClass(exchange.best_at);
+        var best_at_el = exchange_el.find('.exchange_window_best_at');
+
+        var name_s          = feature.getProperty('name_s');
+        var address         = feature.getProperty('address');
+        var edited_quote    = feature.getProperty('edited_quote');
+        var best_at_array   = feature.getProperty('best_at');
+        var best_at         = best_at_array.length == 0 ? '' : (best_at_array.indexOf('best') > -1 ? 'best' : best_at_array[0]);
+
+        if (best_at != '') {
+            best_at_el.html(' ');
+            best_at_el.addClass('show').addClass(best_at);
         } else {
-            best_at.addClass('hide');
-        };
-        exchange_el.find('.exchange_window_open').html(exchange.todays_hours);
-        exchange_el.attr('id', 'exchange_window_' + exchange.id);
-        exchange_el.find('[data-id]').attr('data-id', exchange.id);
+            best_at_el.addClass('hide');
+        }
+
+        exchange_el.find('.exchange_window_name').html(name_s);
+        exchange_el.find('.exchange_window_address').html(address);
+        exchange_el.find('.exchange_window_quote').html(edited_quote);
 
         return {
             sum: exchange_el.find('.exchange_window_sum'),

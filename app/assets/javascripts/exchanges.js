@@ -17,10 +17,6 @@
     };
 
 
-    updateMap = function(data) {
-        map.data.addGeoJson(data);
-    };
-
 
     updateList = function(exchanges) {
 
@@ -115,30 +111,6 @@
         $('#exchanges_list #exchanges_items').empty();
     };
 
-    closeInfowindows = function () {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i]['infowindow'].close();
-        }
-    };
-
-
-    big_marker = function (id) {
-        console.log('big_marker');
-        if (!id) return;
-        var exchange = findExchange(id);
-        if (exchange.errors.length > 0) return;
-        var exchange_html = exchange_el(exchange).det;
-        var marker = findMarker(id);
-
-        closeInfowindows();
-        marker['infowindow'].setContent(exchange_html[0]);
-        marker['infowindow'].open(map, marker);
-        zoom_changed_by_user = false;
-        map_center_changed = true;
-        marker_highlighted = true;
-    };
-
-
     updateResults = function (data) {
 
         console.log('updateResults');
@@ -164,74 +136,3 @@
         }
 
     };
-
-
-    // TODO: Update markers within the map boundaries only!
-    updateMarkers = function (exchanges) {
-
-        if (mobile) {
-            return;
-        }
-        console.log('updateMarkers');
-
-        clearMarkers();
-        var length = exchanges.length;
-        for (var i = 0; i < length; i++) {
-            addMarker(exchanges[i]);
-        }
-        if (length == 1) {
-            big_marker(exchanges[0].id)
-        }
-
-      };
-
-
-
-    function addMarker(exchange) {
-
-        if (exchange.errors.length > 0) return;
-
-         if (exchange.best_at == 'highest' || exchange.best_at == 'cheapest') {
-             var icon = '/pricest.png'
-         } else if (exchange.best_at == 'nearest') {
-             var icon = '/nearest.png'
-         } else if (exchange.best_at == 'best') {
-             var icon = '/logo_no_text.png'
-        } else {
-            var icon = '/other1.png'
-        }
-
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(exchange.latitude, exchange.longitude),
-            title: exchange.name,
-            map: map,
-            icon: icon,
-            exchange_id: exchange.id,
-            best_at: exchange.best_at
-        });
-
-
-        // associate the marker's infowindow by storing the infowindow object as a property of the marker
-
-        var exchange_html = exchange_el(exchange);
-        var exchange_window_sum = exchange_html.sum;
-        var exchange_window_det = exchange_html.det;
-
-
-        marker['infowindow'] = new google.maps.InfoWindow({
-            content: exchange_window_sum[0],
-            disableAutoPan: true
-        });
-
-        markers.push(marker);
-
-
-    }
-
-    function clearMarkers() {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(null);
-        }
-        markers = [];
-    }
-

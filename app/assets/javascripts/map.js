@@ -9,46 +9,53 @@
              scaleControl: true
          };
          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
          if (desktop) mapPan();
+
          addUserMarker(latitude, longitude);
 
          map.data.setStyle(function(feature) {
-            var best_at = feature.getProperty('best_at');
-            return {
-                icon: '/logo_no_text.png'
-            };
+
+             var best_at = feature.getProperty('best_at');
+             var icon;
+
+             if (best_at.length == 0) {
+                 icon = 'http://wwwcdn.cambiu.com//other1.png'
+             } else if (best_at.indexOf('best') > -1) {
+                 icon = 'http://wwwcdn.cambiu.com/logo_no_text.png'
+             } else if (best_at.indexOf('highest') > -1 || best_at.indexOf('cheapest') > -1) {
+                 icon = 'http://wwwcdn.cambiu.com/pricest.png'
+             } else if (best_at.indexOf('nearest') > -1) {
+                 icon = 'http://wwwcdn.cambiu.com/nearest.png'
+             }
+
+             return {
+                icon: icon
+             };
          });
 
+        map.data.addListener('click', function(event) {
+
+            var content = exchange_el(event.feature).det[0];
+            var infowindow = new google.maps.InfoWindow({
+                content: content
+            });
+            var anchor = new google.maps.MVCObject();
+            anchor.set("position",event.latLng);
+            infowindow.open(map, anchor);
+
+         });
     };
 
+    updateMap = function(data) {
+        map.data.addGeoJson(data);
+    };
 
-
- /*   google.maps.event.addListener(map, 'idle', function(geoJson) {
-
-        map.data.addGeoJson(geoJson);
-        map.data.setStyle(function (feature) {
-            return {
-                icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/marina.png',
-                visible: true
-            }
-        })
-    });
-*/
-
-    drawDirectionsMap = function (latitude, longitude) {
-
-        console.log('drawDirectionsMap');
-
-        var mapOptions = {
-            center: new google.maps.LatLng(latitude, longitude),
-            zoom: map_initial_zoom,
-            scaleControl: true
-        };
-        directionsMap = new google.maps.Map(document.getElementById('directions-map-canvas'), mapOptions);
-        from =          new google.maps.LatLng(value_of('location_lat'), value_of('location_lng'));
-        to =            new google.maps.LatLng(value_of('exchange_latitude'), value_of('exchange_longitude'));
-        calcRoute(from, to);
-
+    clearMap = function() {
+        map.data.forEach(function(feature) {
+            //filter...
+            map.data.remove(feature);
+        });
     };
 
 
@@ -71,6 +78,22 @@
         });
     }
 
+
+    drawDirectionsMap = function (latitude, longitude) {
+
+        console.log('drawDirectionsMap');
+
+        var mapOptions = {
+            center: new google.maps.LatLng(latitude, longitude),
+            zoom: map_initial_zoom,
+            scaleControl: true
+        };
+        directionsMap = new google.maps.Map(document.getElementById('directions-map-canvas'), mapOptions);
+        from =          new google.maps.LatLng(value_of('location_lat'), value_of('location_lng'));
+        to =            new google.maps.LatLng(value_of('exchange_latitude'), value_of('exchange_longitude'));
+        calcRoute(from, to);
+
+    };
 
 
     function calcRoute(from, to) {
@@ -104,115 +127,4 @@
         });
 
     }
-
-    //// EVENTS & LISTENERS
-
-
-
-    /*
-    var contentString = 'blah';
-
-    var infowindow = new google.maps.InfoWindow({
-        content: contentString
-    });
-
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: map
-    });
-
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map,marker);
-    });
-    */
-
-    // TODO: Consider using the api's geoJsonLoad
-
-    // Open infowindows of markers that are within the map bounds. This is reactivated whenever user zooms out!
-    // Comment if no infowindows should be opened by default, then use 'mouseover' event below to open them manually
-
-
-    /*
-    google.maps.event.addListener(map, 'bounds_changed', function () {
-
-        if (!zoom_changed_by_user) return;
-
-        var mapBounds = map.getBounds();
-        for (var i = 0; i < markers.length; i++) {
-
-            var marker_position = markers[i].getPosition();
-
-            if (mapBounds.contains(marker_position)) {
-                markers[i]['infowindow'].open(map, markers[i]);
-            }
-        }
-
-    });
-    */
-
-
-    /*      // Uncomment if no infowindows should be opened by default, then this will open them manually
-     google.maps.event.addListener(marker, 'mouseover', function() {
-     this['infowindow'].setContent(exchange_window_sum[0]);
-     this['infowindow'].open(map, this);
-     });
-
-     */
-    /*
-     google.maps.event.addListener(marker, 'click', function () {
-     closeInfowindows();
-     this['infowindow'].setContent(exchange_window_det[0]);
-     this['infowindow'].open(map, this);
-     setPage('exchanges/' + exchange.id + '/offer');
-     });
-     */
-
-
-
-    // This will fire when map has finished loading
-    //google.maps.event.addListenerOnce(map, 'idle', function(){
-
-        // NO OPEN MARKERS IN MOBILE
-        // remove 'x's
-        //$('.gm-style-iw').next().css('display', 'none');
-
-        // TOO MUCH WORK
-        // increase z-index of best markers
-        //setTimeout(function(){ forwardBestMarkers() }, 100);
-
-    //});
-
-    /*
-    forwardBestMarkers = function() {
-
-        if (mobile) {
-            return;
-        }
-        // find best exchanges' iw's and increase their z-index
-        for (var i = 0; i < best_exchanges.length; i++) {
-            var best_exchange = best_exchanges[i];
-            var marker = findMarker(best_exchange.id);
-            var iw = marker.infowindow;
-            var el = iw.content;
-            var $el = $(el);
-            $el.parent().parent().parent().css('z-index', '900');
-        }
-    };
-    */
-
-
-    //TODO: Remove: not needed anymore, with the new directions pane
-    /*
-    if (desktop) {
-        $('body').on('click', '.directions', (function () {
-            var $this = $(this);
-            var from = new google.maps.LatLng(sessionStorage.location_lat, sessionStorage.location_lng);
-            var to = new google.maps.LatLng($(this).attr('data-lat'), $(this).attr('data-lng'));
-            var id = $this.attr('data-id');
-            unhighlight(id);
-            big_marker(id);
-            calcRoute(from, to);
-        }));
-    }
-    */
 

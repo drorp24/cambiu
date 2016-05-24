@@ -1164,7 +1164,7 @@ body#cambiu {
   }
 
   .best_at, .exchange_window_best_at {
-    font-size: 1.2em;
+    font-size: 1.3em;
      paddgin-top: 0.25em;
     padding-bottom: 0.25em;
     text-transform: uppercase;
@@ -1204,19 +1204,26 @@ body#cambiu {
   .exchange_window_sum, .exchange_window_det {
     color: #444;
     font-weight: 400;
-    font-size: 1em;
+    font-size: 1.1em;
+    line-height:1.5em;
     text-align: center;
+    padding: 10px 0;
     .exchange_window_name {
-      font-size: 1em;
-      font-weight: 400;
-      line-height: normal;
+      font-weight: 500;
+      font-size: 1.2em;
     }
     .exchange_window_quote {
       margin-top: 0.5em;
+      font-size: 1.5em;
+      color: $darkengreen;
+      font-weight:600;
     }
     .exchange_window_best_at {
       &.show {
         display: block;
+        margin-bottom: 0.7em;
+        height:2em;
+        line-height:1.7em;
       }
       &.hide {
         display: none;
