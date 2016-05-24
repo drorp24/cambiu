@@ -79,7 +79,6 @@ gem 'tooltipster-rails'
 gem 'ransack', '~> 1.6.6'
 gem 'i18n', '~> 0.7.0'
 gem 'mandrill-api', '~> 1.0.53', require: "mandrill"
-gem 'rgeo-geojson'
 #gem 'cloudinary'
 #gem 'compass-rails'
 #gem 'chosen-rails'

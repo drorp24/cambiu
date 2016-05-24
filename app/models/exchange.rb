@@ -5,25 +5,25 @@ require 'tod'
 class Exchange < ActiveRecord::Base
   has_many :searches
   has_many :orders
-  has_many :business_hours
-  has_many :rates, as: :ratable
 #  has_many :rates, through: :chain, as: :ratable
 
   belongs_to  :chain
   belongs_to  :admin_user
 
+  has_many    :business_hours
   has_one     :open_today,  ->(date) {where(day: Date.today.wday)}  ,class_name: "BusinessHour"
 
-  has_one     :gbp_rate,    -> {where(currency: 'GBP')}       ,class_name: "Rate", as: :ratable
-  has_one     :eur_rate,    -> {where(currency: 'EUR')}       ,class_name: "Rate", as: :ratable
-  has_one     :usd_rate,    -> {where(currency: 'USD')}       ,class_name: "Rate", as: :ratable
-  has_one     :aud_rate,    -> {where(currency: 'AUD')}       ,class_name: "Rate", as: :ratable
-  has_one     :cad_rate,    -> {where(currency: 'CAD')}       ,class_name: "Rate", as: :ratable
-  has_one     :jpy_rate,    -> {where(currency: 'JPY')}       ,class_name: "Rate", as: :ratable
-  has_one     :cny_rate,    -> {where(currency: 'CNY')}       ,class_name: "Rate", as: :ratable
-  has_one     :hkd_rate,    -> {where(currency: 'HKD')}       ,class_name: "Rate", as: :ratable
-  has_one     :ils_rate,    -> {where(currency: 'ILS')}       ,class_name: "Rate", as: :ratable
-  has_one     :nok_rate,    -> {where(currency: 'NOK')}       ,class_name: "Rate", as: :ratable
+  has_many    :rates,                                                               as: :ratable
+  has_one     :gbp_rate,    -> {where(currency: 'GBP')}       ,class_name: "Rate",  as: :ratable
+  has_one     :eur_rate,    -> {where(currency: 'EUR')}       ,class_name: "Rate",  as: :ratable
+  has_one     :usd_rate,    -> {where(currency: 'USD')}       ,class_name: "Rate",  as: :ratable
+  has_one     :aud_rate,    -> {where(currency: 'AUD')}       ,class_name: "Rate",  as: :ratable
+  has_one     :cad_rate,    -> {where(currency: 'CAD')}       ,class_name: "Rate",  as: :ratable
+  has_one     :jpy_rate,    -> {where(currency: 'JPY')}       ,class_name: "Rate",  as: :ratable
+  has_one     :cny_rate,    -> {where(currency: 'CNY')}       ,class_name: "Rate",  as: :ratable
+  has_one     :hkd_rate,    -> {where(currency: 'HKD')}       ,class_name: "Rate",  as: :ratable
+  has_one     :ils_rate,    -> {where(currency: 'ILS')}       ,class_name: "Rate",  as: :ratable
+  has_one     :nok_rate,    -> {where(currency: 'NOK')}       ,class_name: "Rate",  as: :ratable
 
   enum business_type: [ :exchange, :bank, :post_office, :other ]
   enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping ]
@@ -39,14 +39,22 @@ class Exchange < ActiveRecord::Base
   scope :with_contract, -> { where(contract: true) }
   scope :with_real_rates, -> { where("rates_source > 2") }
 
-  attr_accessor :best_at
-
   def has_real_rates?
     !test? && !manual? && !no_rates?
   end
 
   def self.bad
     @bank ||= self.bank.first
+  end
+
+  def self.bad_rate(pay_currency, get_currency)
+    if (@bad_rate and @pay_currency == pay_currency and @get_currency == get_currency)
+      return @bad_rate
+    else
+      @pay_currency = pay_currency
+      @get_currency = get_currency
+      @bad_rate = Exchange.bad.rate(pay_currency, get_currency)
+    end
   end
 
   def quote(params)
@@ -102,7 +110,7 @@ class Exchange < ActiveRecord::Base
       result[:edited_quote] = result[:edited_quote_rounded] = result[:get_amount]
       result[:quote_currency]                               = get_currency
 
-      bad_rates = result[:bad_rates]  = Exchange.bad.rate(get_currency, pay_currency)
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(get_currency, pay_currency)
       if bad_rates[:error]
         result[:errors]               <<   bad_rates[:error]
         return result
@@ -138,7 +146,7 @@ class Exchange < ActiveRecord::Base
       result[:edited_quote] = result[:edited_quote_rounded] = result[:pay_amount]
       result[:quote_currency]                               = pay_currency
 
-      bad_rates = result[:bad_rates]  = Exchange.bad.rate(pay_currency, get_currency)
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(pay_currency, get_currency)
       if bad_rates[:error]
         result[:errors]               <<   bad_rates[:error]
         return result
@@ -290,7 +298,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:service_type] = service_type
     exchange_hash[:logo] = self.logo ? ActionController::Base.helpers.image_path(self.logo) : nil
     exchange_hash[:logo_ind] = self.logo
-    exchange_hash[:best_at] = self.best_at
+    exchange_hash[:best_at] = []
     exchange_hash[:rates] = quotes[:rates]
 
     exchange_hash
