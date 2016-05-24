@@ -35,7 +35,7 @@ $darkgrey: #333;
 $lightgreybg: #f6f6f6;
 $greybg: #3b3b3b;
 
-$border-radius: 0;
+$border-radius: 4px;
 $form-control-line-height: 35px;
 $form-control-height: 45px;
 $button-height: 50px;
@@ -2056,7 +2056,7 @@ body#cambiu {
           bottom: 5px;
           a {
             color: $darken-brand-color;
-            font-size: 0.9em;
+            font-size: 1.2em;
             text-transform: uppercase;
            }
         }
@@ -2112,7 +2112,7 @@ body#cambiu {
         #exchanges_search_results {
           text-align: center;
           margin-top: -1px;
-          padding-bottom: 3px;
+          padding-bottom: 20px;
           background-color: #eee;
           border-top: 1px solid #bbb;
           #sort_line {
@@ -2128,30 +2128,40 @@ body#cambiu {
             color: #000;
           }
           .remove_more {
-            font-size: 1.5em;
+            font-size: 2em;
             font-weight: 300;
             color: #555;
+            line-height: 45px;
             &:hover {
               cursor: pointer;
             }
           }
-          .sort_btn_group button, .order_text {
+          button {
+            width: 8.5em;
+          }
+          button, .order_text {
             &:focus {
               outline: none;
             }
-            font-size: 0.75em;
+            font-size: 0.9em;
             text-transform: uppercase;
-            border-bottom: none;
+
             &.active {
               background-color: #fff;
-              box-shadow: none;
-              color: #000;
+              color: $darken-brand-color;
+              font-weight: 500;
             }
             &:not(.active):not(.order_text) {
             background-color: #eee;
-            box-shadow: none;
+//            box-shadow: none;
             color: #999;
              }
+          }
+          button:first-child {
+            border-radius: 4px 0 0 4px;
+          }
+          button:last-child {
+            border-radius: 0 4px 4px 0;
           }
           .results {
             font-size: 1em;

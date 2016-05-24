@@ -9,60 +9,46 @@
 
         console.log('updatePage');
 
-        best_exchanges = data['best'];
-        exchanges = data['more'];
-        geoJson = data;
-
-        if (geoJson && Object.keys(geoJson).length > 0) {
-
- //           updateExchanges();
-//            updateMarkers(exchanges);
-            updateMarkers1(geoJson);
-
-            var exchange_id = urlId();
-            if (exchange_id) {   // Refresh of *specific exchange page* even in search requires model_populate like in exchange mode
-                var exchange = findExchange(exchange_id);
-                if (exchange) model_populate('exchange', exchange);
-            }
-
-        }
-
+        exchanges = data.features;
+        updateMap(data);
+        updateList(exchanges);
         updateResults(exchanges);
 
     };
 
-    updateMarkers1 = function(geoJson) {
-console.log('just before addGeoJson')
-        map.data.addGeoJson(geoJson);
-console.log('right after addGeoJson')
+
+    updateMap = function(data) {
+        map.data.addGeoJson(data);
     };
 
-    updateExchanges = function() {
+
+    updateList = function(exchanges) {
 
         list = value_of('list');
-        console.log('updateExchanges. list: ' + list);
+
 
         if (list == 'all') {
 
-            updateBest();
-            updateMore();
+            updateBest(exchanges);
+            updateMore(exchanges);
 
         } else if (list == 'more') {
 
-            updateMore();
+            updateMore(exchanges);
             set('list', 'all'); // Important! to only display entire list always, just comment this line
 
         } else {
 
-            updateBest();
+            updateBest(exchanges);
         }
 
     };
 
-     updateBest = function() {
+     updateBest = function(exchanges) {
         $('#exchanges_search_results').css('display', 'none');
-
         best_append_point = '#exchanges_list .list-group #best_exchanges';
+
+        best_exchanges = best(exchanges);
 
         for (var i = 0; i < best_exchanges.length; i++) {
             addExchange(best_exchanges[i], i, best_append_point);
@@ -71,13 +57,14 @@ console.log('right after addGeoJson')
         $('#exchanges_list .more').css('display', 'block');
     };
 
-    updateMore = function() {
+    updateMore = function(exchanges) {
         $('#exchanges_search_results').css('display', 'block');
         $('#exchanges_items').css('display', 'block');
         $('#exchanges_list .more').css('display', 'none');
 
         exchanges_append_point = '#exchanges_list .list-group #exchanges_items';
 
+        exchanges = sort_by(value_of('sort'));
         for (var i = 0; i < exchanges.length; i++) {
             addExchange(exchanges[i], i, exchanges_append_point);
         }
@@ -93,7 +80,9 @@ console.log('right after addGeoJson')
 
 
 // TODO: Replace classes with data- attributes, do it in a loop over the data fields, so I dont need to change it whenever I add another field to fetch
-    function addExchange(exchange, index, append_point) {
+    function addExchange(feature, index, append_point) {
+
+        var exchange = feature.properties;
 
         if (exchange.errors.length > 0) return;
 
@@ -103,7 +92,7 @@ console.log('right after addGeoJson')
         exchange_el.attr('data-href-id', exchange.id);
 
         exchange_el.find('.best_at').html(' ');
-        exchange_el.find('.best_at').addClass(exchange.best_at);
+        if (exchange.best_at[0]) exchange_el.find('.best_at').addClass(exchange.best_at[0]);
         exchange_el.find('.name').html(exchange.name_s);
         exchange_el.find('.address').html(exchange.address);
         exchange_el.find('.open_today').html(exchange.open_today);
@@ -120,8 +109,7 @@ console.log('right after addGeoJson')
     }
 
 
-    clearExchanges = function () {
-        console.log('clearExchanges');
+    clearList = function () {
         list = value_of('list');
         if (list != 'more') $('#exchanges_list #best_exchanges').empty();
         $('#exchanges_list #exchanges_items').empty();
@@ -151,7 +139,7 @@ console.log('right after addGeoJson')
     };
 
 
-    updateResults = function (exchanges) {
+    updateResults = function (data) {
 
         console.log('updateResults');
 
@@ -174,15 +162,6 @@ console.log('right after addGeoJson')
             $('#exchanges_list .more').css('display', 'block');
             $('#fetch_more').html('No results found in that area.');
         }
-
-/*
-        setTimeout(function() {
-            if(window.pageYOffset !== 0) return;
-            window.scrollTo(0, window.pageYOffset + 1);
-
-        }, 1000);
-*/
-
 
     };
 

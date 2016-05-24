@@ -87,6 +87,7 @@
     // Sets all variables
 // TODO: Restore session values from ss. That's its role. Not from the form
 // TODO: Just go over the def values and use ss value if exists otherwise the def
+// TODO: For instace, sort is no longer in the form (since FE sorts) so it never gets initialized here!
     set_variables = function(use_session) {
 
         console.log('set_variables');
@@ -114,6 +115,8 @@
         });
 
        bind_currency_to_autonumeric();
+
+       set('sort', def('sort')) // Templrary!!
 
     };
 
@@ -175,34 +178,38 @@ $(document).ready(function() {
     // Sorting
 
     sort_ui = function(sort) {
-        $('#exchanges_search_results .sort_btn_group button').removeClass('active');
-        $('#exchanges_search_results .sort_btn_group button.' + sort).addClass('active');
+        $('[data-sort]').removeClass('active');
+        $('[data-sort=' + sort + ']').addClass('active');
     };
 
     sort_by = function(sort) {
 
+        console.log('sort by ' + sort);
+
         if (exchanges.length == 0) return;
 
         if (sort == 'distance') {
-            exchanges.sort(function(a, b){return a.distance-b.distance;});
+            exchanges.sort(function(a, b){return a.properties.distance-b.properties.distance;});
         }
         else if (sort == 'price') {
-            exchanges.sort(function(a, b){return (a.quote ? a.quote : 10000000)-(b.quote ? b.quote : 10000000)});
+            exchanges.sort(function(a, b){return (a.properties.quote ? a.properties.quote : 10000000)-(b.properties.quote ? b.properties.quote : 10000000)});
             if (value_of('pay_amount') > 0) { exchanges.reverse()}
         }
+
+        return exchanges;
+     };
+
+
+    $('[data-sort]').click(function() {
+        $('[data-sort]').removeClass('active');
+        $(this).addClass('active');
         set('list', 'more');
-        clearExchanges();
-        updateExchanges();
-    };
-
-
-    $('#exchanges_search_results .sort_btn_group button').click(function() {
-        $('#exchanges_search_results .sort_btn_group button').toggleClass('active');
-        sort = $('#exchanges_search_results .sort_btn_group button.distance').hasClass('active') ? 'distance' : 'price';
-        sort_by(sort);
+        sort_by($(this).data('sort'));
+        clearList();
+        updateList(exchanges);
     });
 
-    sort_ui(sessionStorage.sort);
+    sort_ui(value_of('sort'));
 
 
     // UI
@@ -243,7 +250,7 @@ $(document).ready(function() {
 
      $('#exchanges_list #fetch_more').click(function(e) {
         set('list', 'more');
-        updateExchanges();
+        updateList(exchanges);
     });
 
     $('#exchanges_list .remove_more').click(function(e) {
@@ -273,7 +280,7 @@ $(document).ready(function() {
         console.log('#search_form ajax:before. Invoking drawMap');
         drawMap(value_of('location_lat'), value_of('location_lng'));
         startLoader();
-        clearExchanges();
+        clearList();
     });
 
     $('#search_form').on('ajax:success', function(event, data, status, xhr) {

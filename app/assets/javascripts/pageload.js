@@ -81,9 +81,38 @@ var break_url;
 var geoJson;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
+
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 
 sessionStorage.videoStopped = null;
+
+
+best = function(exchanges) {
+
+    var best = [];
+    var rest = [];
+    var exchange;
+    var best_at_array;
+    var best_at;
+
+    for (var i=0, len = exchanges.length; i  <  len; i++){
+        if (exchanges[i].properties.best_at.length == 0) {continue}
+        best_at_array = JSON.parse(JSON.stringify(exchanges[i].properties.best_at));
+        for (var j=0; j  <  best_at_array.length; j++){
+            exchange = JSON.parse(JSON.stringify(exchanges[i]));
+            best_at = best_at_array[j];
+            exchange.properties.best_at = [];
+            exchange.properties.best_at.push(best_at);
+            best_at == "best" ? best.push(exchange) : rest.push(exchange);
+        }
+    }
+
+    return best.concat(rest);
+
+};
+
+
+
 
 make_url = function(page, id, pane) {
   var url = '/' + page;

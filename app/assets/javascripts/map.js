@@ -12,7 +12,6 @@
          if (desktop) mapPan();
          addUserMarker(latitude, longitude);
 
-         map.data.addGeoJson(geoJson);
          map.data.setStyle(function(feature) {
             var best_at = feature.getProperty('best_at');
             return {
