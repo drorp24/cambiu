@@ -28,7 +28,7 @@ group :test, :staging, :production do
 end
 
 gem 'activeadmin', '~> 1.0.0.pre1'
-gem 'devise'
+gem 'devise', '~> 3.2'
 gem 'activerecord-postgis-adapter', '~> 3.0.0'
 gem 'geocoder'
 gem 'country-select'

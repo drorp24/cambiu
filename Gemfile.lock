@@ -315,7 +315,7 @@ DEPENDENCIES
   country-select
   dalli
   delayed_job_active_record
-  devise
+  devise (~> 3.2)
   diskcached
   font-awesome-rails
   font_assets
