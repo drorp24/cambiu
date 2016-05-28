@@ -232,7 +232,7 @@ urlParameter = function(sParam)
 
 findExchange = function(id) {
     if (exchanges && exchanges.length > 0) {
-        var results = $.grep(exchanges, function(e){ return e.id == id; });
+        var results = $.grep(exchanges, function(e){ return e.properties.id == id; });
         if (results[0]) {
             console.log('exchange with id ' + id + ' was found in exchanges array');
             var exchange = results[0];
@@ -245,22 +245,6 @@ findExchange = function(id) {
     }
 
     return exchange;
-};
-
-findMarker = function(id) {
-    if (markers && markers.length > 0) {
-        var results = $.grep(markers, function(m){ return m.exchange_id == id; });
-        if (results[0]) {
-            console.log('marker with that exchange_id found in markers array');
-            var marker = results[0];
-        } else {
-            console.log('marker with this exchange_id was not found in markers array');
-        }
-    } else {
-        console.log('markers is empty');
-    }
-
-    return marker;
 };
 
 def = function(variable) {
@@ -285,23 +269,6 @@ value_of = function(key) {
     return (a && a != "null") ? a : null;
 };
 
-
-// intended to base on session values rather than window.location
-// TODO: Remove
-current_url = function() {
-    var url;
-
-    url = sessionStorage.page;
-    if (sessionStorage.exchange_id != "null") url += ('/' + sessionStorage.exchange_id);
-    if (sessionStorage.pane != "null") url += ('/' + sessionStorage.pane);
-    return url;
-};
-
-current_hash = function() {
-    var hash = value_of('hash');
-    if (hash && hash.length > 1) hash = hash.slice(1);
-    return hash;
-};
 
 display = function(term) {
     switch (term) {

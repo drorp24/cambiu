@@ -65,7 +65,7 @@ $(document).ready(function() {
 
                 if (exchange) {
                     console.log('Populating exchange ' + exchange_id + ' from exchanges');
-                    model_populate('exchange', exchange);
+                    model_populate('exchange', exchange.properties);
                     sessionStorage.setItem('exchange_populated', exchange_id);
                 } else {
                     console.log('Exchange is empty, i.e., page reload. pages will not populate, updatePage will soon')
