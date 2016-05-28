@@ -87,6 +87,20 @@ var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 sessionStorage.videoStopped = null;
 
 
+populated = function(exchange_id) {
+
+    var exchange_populated = value_of('exchange_populated');
+
+    if (exchange_populated && exchange_populated == exchange_id) {
+        console.log('exchange ' + exchange_id + ' is populated already');
+        return true;
+    } else {
+        console.log('exchange ' + exchange_id + ' is not populated already');
+        return false;
+    }
+};
+
+
 best = function(exchanges) {
 
     var best = [];
@@ -236,15 +250,16 @@ findExchange = function(id) {
         if (results[0]) {
             console.log('exchange with id ' + id + ' was found in exchanges array');
             var exchange = results[0];
+            return exchange.properties;
         } else {
             console.log('exchange with this id was not found in exchanges array');
             // bring it from the server
+            return null
         }
     } else {
         console.log('exchanges is empty');
+        return null
     }
-
-    return exchange;
 };
 
 def = function(variable) {

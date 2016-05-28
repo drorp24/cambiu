@@ -18,7 +18,7 @@ $(document).ready(function() {
     setPage = function (page, id, pane, hash) {
 
         var exchange_id = null;
-        console.log('setPage');
+        console.log('setPage. page: ' + page + ' id: ' + String(id) + ' pane: ' + String(pane) + ' hash: ' + String(hash) );
 
         // Reveal requested page & pane, updating 'active' classes
         $('.page').removeClass('active');
@@ -52,24 +52,14 @@ $(document).ready(function() {
             }
         }
 
-        if (exchange_id) {
+        if (exchange_id && !populated(exchange_id)) {
 
-            var exchange_populated = value_of('exchange_populated');
+            var exchange = findExchange(exchange_id);
 
-            if (exchange_populated && exchange_populated == exchange_id) {
-                console.log('exchange ' + exchange_id + ' is populated already')
-
+            if (exchange) {
+                model_populate('exchange', exchange);
             } else {
-
-                var exchange = findExchange(exchange_id);
-
-                if (exchange) {
-                    console.log('Populating exchange ' + exchange_id + ' from exchanges');
-                    model_populate('exchange', exchange.properties);
-                    sessionStorage.setItem('exchange_populated', exchange_id);
-                } else {
-                    console.log('Exchange is empty, i.e., page reload. pages will not populate, updatePage will soon')
-                }
+                console.log('Exchanges is empty, i.e., page reload. pages will not populate, updatePage will soon')
             }
         }
 
@@ -85,6 +75,8 @@ $(document).ready(function() {
 
         // Push new state (unless invoked from popstate or page reloads)
         var new_state = make_url(page, exchange_id, pane);
+        console.log('window.location.pathname: ' + window.location.pathname)
+        console.log('new_state: ' + new_state)
         if (window.location.pathname != new_state) {
             history.pushState(new_state, 'cambiu', new_state);
             console.log('pushing state: ' + new_state);

@@ -8,10 +8,11 @@
     updatePage = function(data) {
 
         console.log('updatePage');
-
         exchanges = data.features;
+
         updateMap(data);
         updateList(exchanges);
+        updateExchange(exchanges, urlId());
         updateResults(exchanges);
 
     };
@@ -115,6 +116,16 @@
         list = value_of('list');
         if (list == 'best') $('#exchanges_list #best_exchanges').empty();
         $('#exchanges_list #exchanges_items').empty();
+    };
+
+
+    updateExchange = function(exchanges, exchange_id) {
+
+        if (exchange_id && !populated(exchange_id)) {
+            var exchange = findExchange(exchange_id);
+            if (exchange) model_populate('exchange', exchange);
+        }
+
     };
 
     updateResults = function (data) {
