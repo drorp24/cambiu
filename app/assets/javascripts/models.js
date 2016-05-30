@@ -11,6 +11,8 @@ model_populate = function(model, obj) {
 
     $.each(obj, function(field, value) {
 
+        if (!value) return true;
+
         if (field == 'id') {
             $('[data-' + model + '-id]').attr('data-' + model + '-id', value);
         } else {

@@ -8,9 +8,10 @@
     updatePage = function(data) {
 
         console.log('updatePage');
-        exchanges = data.features;
+        set('search_id', data.search);
+        exchanges = data.exchanges.features;
 
-        updateMap(data);
+        updateMap(data.exchanges);
         updateList(exchanges);
         updateExchange(exchanges, urlId());
         updateResults(exchanges);

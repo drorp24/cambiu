@@ -321,8 +321,7 @@ $(document).on('click','.navbar-collapse.in',function(e) {
         exchange_el.find('.exchange_window_name').html(name_s);
         exchange_el.find('.exchange_window_address').html(address);
         exchange_el.find('.exchange_window_quote').html(edited_quote);
-        exchange_el.find('.exchange_window_link').attr('data-href-id', id);
-        exchange_el.find('.exchange_window_det').attr('data-href-id', id);
+        exchange_el.find('.exchange_window_det').attr('data-href-id', id).attr('data-exchange-id', id);
 
         return {
             sum: exchange_el.find('.exchange_window_sum'),

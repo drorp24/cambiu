@@ -255,6 +255,31 @@ $(document).ready(function() {
         removeMore();
     });
 
+    $('body').on('click tap', '[data-ajax=createOrder]', (function (e) {
+
+        var exchange_id = $(this).data('exchange-id');
+        var search_id = value_of('search_id');
+        if (!exchange_id || !search_id) {
+            console.log('Cannot create order: exchange_id or search_id are missing');
+            return
+        }
+
+        $.ajax({
+            type:       'POST',
+            url:        '/orders',
+            data:       {'order[exchange_id]': exchange_id, 'order[search_id]': search_id},
+            dataType:   'JSON',
+            success:    function (data) {
+                console.log('Order successfully created');
+                model_populate('order', data)
+                },
+            error:      function (data) {
+                alert('There was an error creating the order');
+                }
+        });
+
+    }));
+
 
     //
     // AJAX Callbacks

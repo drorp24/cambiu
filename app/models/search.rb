@@ -1,5 +1,6 @@
 class Search < ActiveRecord::Base
-  belongs_to :exchange
+#  belongs_to :exchange
+  has_many  :orders
 #  validates :email, presence: true#, on: :update #allow_nil: true #unless: Proc.new { |a| a.email.blank? }
 #  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   enum service_type: [ :collection, :delivery ]
@@ -48,7 +49,7 @@ class Search < ActiveRecord::Base
     exchanges_offers.each do |exchange_offer|
       features << to_geo(exchange_offer)
     end
-    return {type: 'FeatureCollection', features: features}.to_json
+    return {search: id, exchanges: {type: 'FeatureCollection', features: features}}.to_json
 
   end
 
