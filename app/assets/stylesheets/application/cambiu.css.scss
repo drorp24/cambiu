@@ -613,6 +613,9 @@ body#cambiu {
     }
   }
 
+  .template {
+    display: none;
+  }
 
   .button_link {
     text-align: center;
@@ -1214,9 +1217,27 @@ body#cambiu {
     }
     .exchange_window_quote {
       margin-top: 0.5em;
-      font-size: 1.5em;
+      font-size: 1.7em;
       color: $darkengreen;
-      font-weight:600;
+      font-weight:700;
+    }
+    .exchange_window_link {
+      margin-top: 1em;
+      text-transform: uppercase;
+      background-color: $darken-brand-color;
+      color: #fff;
+      box-sizing: border-box;
+      border-radius: 3px;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      i{
+        font-size: 2em;
+        line-height: 1.5em;
+        margin-left: 15px;
+      }
+      span {
+        font-weight: 700;
+      }
     }
     .exchange_window_best_at {
       &.show {

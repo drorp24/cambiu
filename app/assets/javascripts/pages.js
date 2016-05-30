@@ -104,6 +104,8 @@ $(document).ready(function() {
     $('body').on('click tap', '[data-href-pane]', (function (e) {
         // if clicked element is part of a form, dont move page unless form is valid
 
+        // EXTREMELY IMPORTANT! Without it, every pushState will add another push with '#' and popState will be invoked. Pulling hair.
+        e.preventDefault();
         // Avoids getting into exchange page when 'getit' is clicked even if redirection takes place, probably due to validation
         e.stopPropagation();
 
@@ -131,12 +133,6 @@ $(document).ready(function() {
         }
 
     }));
-
-    // EXTREMELY IMPORTANT! Without it, every pushState will add another push with '#' and popState will be invoked. Pulling hair.
-    $('a[data-href-page]').click(function (e) {
-        e.preventDefault();
-    });
-
 
     window.addEventListener("popstate", function (e) {
 
