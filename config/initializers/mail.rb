@@ -1,9 +1,9 @@
-MANDRILL_API_KEY = 'SL8GczS0VF_og_8qvAbgyQ'
+MANDRILL_API_KEY = 'dnGJIo4J9BaYoaAtU4Ks2g'
 ActionMailer::Base.smtp_settings = {
   address:              'smtp.mandrillapp.com',
   port:                 587,
   enable_starttls_auto: true,
-  user_name:            'drorp24@gmail.com',
+  user_name:            'cambiu',
   password:              MANDRILL_API_KEY,
   authentication:       'login'
 }

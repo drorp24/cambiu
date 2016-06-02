@@ -4,6 +4,7 @@ require 'json'
 MultiJson.engine = :json_gem
 Money.default_bank = Money::Bank::GoogleCurrency.new
 Money::Bank::GoogleCurrency.ttl_in_seconds = 86400
+Monetize.assume_from_symbol = true
 Money::Currency.register({
    :priority            => 1,
    :iso_code            => "HKD",

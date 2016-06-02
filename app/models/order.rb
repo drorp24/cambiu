@@ -15,13 +15,13 @@ class Order < ActiveRecord::Base
 
   before_create do
     self.expiry = 4.hours.from_now
+    self.service_type = 'collection'
   end
 
 
   after_commit   :order_notification
 
   def order_notification
-    return unless Rails.application.config.email_required
     response = OrderMailer.notify(self).deliver_now #if self.status_changed?       # without .deliver_now, OrderMailer.notify is not invoked but on the second call
     logger.info "order.rb - OrderMailer.notify response:"
     logger.info response
@@ -63,7 +63,6 @@ class Order < ActiveRecord::Base
   def voucher
     (self.id + 80000).to_s
   end
-
 
 
 end

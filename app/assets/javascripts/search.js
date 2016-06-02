@@ -259,22 +259,33 @@ $(document).ready(function() {
 
         var exchange_id = $(this).data('exchange-id');
         var search_id = value_of('search_id');
-        if (!exchange_id || !search_id) {
-            console.log('Cannot create order: exchange_id or search_id are missing');
+        var offer = findExchange(exchange_id);
+        if (!exchange_id || !offer || !search_id) {
+            console.log('Cannot create order: exchange_id, exchange offer or search_id are missing');
             return
         }
 
         $.ajax({
             type:       'POST',
             url:        '/orders',
-            data:       {'order[exchange_id]': exchange_id, 'order[search_id]': search_id},
+            data:       {
+                'order[exchange_id]':       exchange_id,
+                'order[search_id]':         search_id,
+                'order[pay]':               offer.pay_amount,
+                'order[buy]':               offer.buy_amount,
+                'order[user_location]':     offer.user_location,
+                'order[base_currency]':     offer.rates['base_currency'],
+                'order[rated_currency]':    offer.rates['rated_currency'],
+                'order[buy_rate]':          offer.rates['buy'],
+                'order[sell_rate]':         offer.rates['sell']
+            },
             dataType:   'JSON',
             success:    function (data) {
                 console.log('Order successfully created');
                 model_populate('order', data)
                 },
             error:      function (data) {
-                alert('There was an error creating the order');
+                console.log('There was an error creating the order');
                 }
         });
 

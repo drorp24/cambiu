@@ -22,7 +22,7 @@ class OrderMailer < ApplicationMailer
     exchange = order.exchange
     if !exchange
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not exist"
-    elsif !order.pictured? and exchange.email.blank?
+    elsif Rails.env.production? and !order.pictured? and exchange.email.blank?
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not have an email"
     elsif Rails.application.config.email_required and !order.offer? and order.collection? and order.email.blank?
       error = "Order has no email"
@@ -38,19 +38,20 @@ class OrderMailer < ApplicationMailer
 
 
     to_user =
+    order.customer_email ?
     [
         {
             email:  order.customer_email,
             type:   'to'
         }
-    ]
+    ] : []
 
-    bcc_exchange =
+    to_exchange =
     [
         {
-            email:  Rails.env.production? ? exchange.email : 'dror@cambiu.com',
+            email:  exchange.email,
             name:   exchange.name,
-            type:   'bcc'
+            type:   'to'
         }
     ]
 
@@ -60,33 +61,24 @@ class OrderMailer < ApplicationMailer
             type:   'bcc'
         }
     ]
-    bcc_us = [
-         {
-             email:  'drorp24@gmail.com',
+    bcc_eyal = [
+          {
+             email:  'eyal@cambiu.com',
              type:   'bcc'
-        }
+          }
     ]
-    bcc_eyal =
-    [
-        email:  'eyal@cambiu.com',
-        type:   'bcc'
-    ]
-    bcc_us += bcc_eyal if Rails.env.production?
-    bcc_us = bcc_me if Rails.env.development?
+
+    bcc = Rails.env.development? ? bcc_me : bcc_me + bcc_eyal
+    to =  Rails.env.production? ? to_user + to_exchange : bcc
 
 
     if order.pictured?
-      to = bcc_us
       subject = "Receipt photo"
     elsif order.offer?
-      to = bcc_us
-      subject = "Someone just clicked Get it..."
+      subject = "New order #{order.voucher}"
     elsif order.produced?
-      to = bcc_us
-      to +=  (to_user + bcc_exchange) if order.collection?
       subject = "Order #{order.voucher}"
     elsif order.used?
-      to = to_user + bcc_us
       subject = "Order #{order.voucher} has been fulfilled"
     end
     subject += " (#{Rails.env})" unless Rails.env.production?
@@ -98,34 +90,18 @@ class OrderMailer < ApplicationMailer
       service_type_message = "Please specify delivery details if you haven't done so already"
     end
 
-    if $request.domain == 'cambiu.com'
-      from_name = 'cambiu'
-      from_email = 'support@cambiu.com'
-    elsif $request.domain == 'currency-net.com'
-      from_name = 'currency-net'
-      from_email = 'support@currency-net.com'
-    elsif $request.domain == 'localhost'
-      from_name = 'cambiu'
-      from_email = 'support@cambiu.com'
-    end
 
+    from_name = 'cambiu'
+    from_email = 'support@cambiu.com'
     company_address = "5 long street, E2 8HJ, london"
 
-    pay_currency = order.pay_currency
-    buy_currency = order.buy_currency
-    base_currency = pay_currency == exchange.currency ? pay_currency : buy_currency
-    rated_currency = pay_currency == base_currency ? buy_currency : pay_currency
-    rates = exchange.rate(rated_currency, base_currency)
 
     begin
 
-      template_name = 'order_' + order.status
-      if order.produced? or order.used?
-        template_name += '_' + $request.domain.split('.')[0]
-      end
+      template_name = 'order'
       template_content = []
       message = {
-          to:             to,
+          to:             to + bcc,
           preserve_recipients: true,
           subject:        subject,
           from_name:      from_name,
@@ -147,7 +123,7 @@ class OrderMailer < ApplicationMailer
               {name: 'EXCHANGE_PHONE',           content: exchange.phone},
               {name: 'PAY_AMOUNT',               content: Money.new(order.pay_cents, order.pay_currency).format},
               {name: 'GET_AMOUNT',               content: Money.new(order.buy_cents, order.buy_currency).format},
-              {name: 'USER_LOCATION',            content: order.user_location},
+              {name: 'USER_LOCATION',            content: order.user_location || order.search.user_location},
               {name: 'CUSTOMER_EMAIL',           content: order.customer_email || ""},
               {name: 'CUSTOMER_ADDRESS1',        content: order.customer_address1 || ""},
               {name: 'CUSTOMER_ADDRESS2',        content: order.customer_address1 || ""},
@@ -156,15 +132,15 @@ class OrderMailer < ApplicationMailer
               {name: 'COMPANY_NAME',             content: from_name},
               {name: 'COMPANY_ADDRESS',          content: company_address},
               {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')},
-              {name: 'BASE_CURRENCY',            content: base_currency},
-              {name: 'RATED_CURRENCY',           content: rated_currency},
-              {name: 'BUY',                      content: '%.4f' % rates[:buy]},
-              {name: 'SELL',                     content: '%.4f' % rates[:sell]}
-          ],
-          images: [
-            {type: "image/png", name: 'photo',  content:   order.photo.split(',')[1]}
+              {name: 'BASE_CURRENCY',            content: order.base_currency},
+              {name: 'RATED_CURRENCY',           content: order.rated_currency},
+              {name: 'BUY_RATE',                 content: '%.4f' % order.buy_rate},
+              {name: 'SELL_RATE',                content: '%.4f' % order.sell_rate},
+              {name: 'ORDER_STATUS',             content: order.status}
           ]
       }
+
+      message[:images] = [{type: "image/png", name: 'photo',  content:   order.photo.split(',')[1]}] if order.photo
 
       async = false
       ip_pool = "Main Pool"
@@ -229,7 +205,7 @@ class OrderMailer < ApplicationMailer
           from_name: 'system',
           from_email: "team@cambiu.com",
           headers: {
-              "Reply-To": "support@currency-net.com"
+              "Reply-To": "support@cambiu.com"
           },
           track_opens: true,
           track_clicks: true,
