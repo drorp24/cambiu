@@ -4,3 +4,4 @@ else
 	web: bundle exec unicorn -c ./config/unicorn.rb
 end
 worker: bundle exec rake jobs:work
+worker: bundle exec sidekiq

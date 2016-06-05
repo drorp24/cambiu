@@ -22,11 +22,8 @@ class Order < ActiveRecord::Base
   after_commit   :order_notification
 
   def order_notification
-    response = OrderMailer.notify(self).deliver_now #if self.status_changed?       # without .deliver_now, OrderMailer.notify is not invoked but on the second call
-    logger.info "order.rb - OrderMailer.notify response:"
-    logger.info response
-    logger.info ""
-   end
+    NotifyJob.perform_later(self.id)
+  end
 
   # Overriding 'attributes' adds methods as additional attributes within the JSON response as if they were part of the DB model, enabling controller to respond_with @order
   # except doesn't remove unwanted keys though

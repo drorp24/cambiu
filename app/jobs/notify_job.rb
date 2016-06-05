@@ -1,20 +1,10 @@
-class OrderMailer < ApplicationMailer
+class NotifyJob < ActiveJob::Base
+  queue_as :default
 
-  def mandrill
-    @mandrill ||= Mandrill::API.new MANDRILL_API_KEY
-  end
+  def perform(order_id)
 
-
-  # smtp thru mandrill, not using mandrill's api nor template
-  def smtp_notify(order)
-    @order = order
-    mail(to: @order.email, subject: 'Welcome to My Awesome Site', cc: 'drorp24@yahoo.com')
-  end
-
-  # mandrill api based. All smtp definitions ignored
-  def notify(order)
-
-    logger.info "At notify. thats the order i received"
+    logger.info "At perform. thats the order i received"
+    order = Order.find(order_id)
     logger.info  order.inspect
 
     response = {}
@@ -38,22 +28,22 @@ class OrderMailer < ApplicationMailer
 
 
     to_user =
-    order.customer_email ?
-    [
-        {
-            email:  order.customer_email,
-            type:   'to'
-        }
-    ] : []
+        order.customer_email ?
+            [
+                {
+                    email:  order.customer_email,
+                    type:   'to'
+                }
+            ] : []
 
     to_exchange =
-    [
-        {
-            email:  exchange.email,
-            name:   exchange.name,
-            type:   'to'
-        }
-    ]
+        [
+            {
+                email:  exchange.email,
+                name:   exchange.name,
+                type:   'to'
+            }
+        ]
 
     bcc_me = [
         {
@@ -62,10 +52,10 @@ class OrderMailer < ApplicationMailer
         }
     ]
     bcc_eyal = [
-          {
-             email:  'eyal@cambiu.com',
-             type:   'bcc'
-          }
+        {
+            email:  'eyal@cambiu.com',
+            type:   'bcc'
+        }
     ]
 
     bcc = Rails.env.development? ? bcc_me : bcc_me + bcc_eyal
@@ -144,7 +134,8 @@ class OrderMailer < ApplicationMailer
 
       async = false
       ip_pool = "Main Pool"
-      response = mandrill.messages.send_template template_name, template_content, message, async, ip_pool#, send_at
+      @mandrill ||= Mandrill::API.new MANDRILL_API_KEY
+      response = @mandrill.messages.send_template template_name, template_content, message, async, ip_pool#, send_at
 
 =begin
       order_rec = Order.find_by_id(order.id)
@@ -165,7 +156,7 @@ class OrderMailer < ApplicationMailer
       logger.info(error)
       report(exchange, error)
 
-    # TODO: Happens, since async = false. Consider moving to async.
+        # TODO: Happens, since async = false. Consider moving to async.
     rescue Rack::Timeout::RequestTimeoutError => e
       error = "Timeout error: #{e.class} - #{e.message}"
       logger.info(error)
@@ -218,7 +209,8 @@ class OrderMailer < ApplicationMailer
 
       async = false
       ip_pool = "Main Pool"
-      response = mandrill.messages.send_template template_name, template_content, message, async, ip_pool#, send_at
+      @mandrill ||= Mandrill::API.new MANDRILL_API_KEY
+      response = @mandrill.messages.send_template template_name, template_content, message, async, ip_pool#, send_at
 
     rescue Mandrill::Error => e
 

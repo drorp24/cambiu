@@ -118,7 +118,8 @@
 
         var value_of_sort = value_of('sort');
         var sort = value_of_sort ? value_of_sort : def('sort')
-        set('sort', sort) // Templrary!!
+        set('sort', sort); // Temporary!!
+        set('exchange_populated', null); // Temporary!!
 
     };
 

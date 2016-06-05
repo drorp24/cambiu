@@ -242,3 +242,5 @@ pip-log.txt
 /log/*.log
 /tmp
 
+
+*.rdb

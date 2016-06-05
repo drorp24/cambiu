@@ -52,5 +52,6 @@ Rails.application.configure do
 
   config.email_required = false
 
+  ENV["REDISTOGO_URL"] = 'redis://localhost:6379/'
 end
 Rails.application.routes.default_url_options[:host] = 'localhost:3000'
