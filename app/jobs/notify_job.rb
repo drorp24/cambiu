@@ -113,7 +113,7 @@ class NotifyJob < ActiveJob::Base
               {name: 'EXCHANGE_PHONE',           content: exchange.phone},
               {name: 'PAY_AMOUNT',               content: Money.new(order.pay_cents, order.pay_currency).format},
               {name: 'GET_AMOUNT',               content: Money.new(order.buy_cents, order.buy_currency).format},
-              {name: 'USER_LOCATION',            content: order.user_location || order.search.user_location},
+              {name: 'LOCATION',            content: order.search.location},
               {name: 'CUSTOMER_EMAIL',           content: order.customer_email || ""},
               {name: 'CUSTOMER_ADDRESS1',        content: order.customer_address1 || ""},
               {name: 'CUSTOMER_ADDRESS2',        content: order.customer_address1 || ""},
