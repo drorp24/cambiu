@@ -18,7 +18,18 @@
 // 3 - either of the homepage buttons is clicked
 
 
-    locationCallback = function() {
+    set_default_location = function(reason) {
+        if (reason === undefined) reason = null;
+        console.log('Since user location could not be found: setting the default location');
+        set('location',         def_location);
+        set('location_short',   def_location_short);
+        set('location_lat',     def_lat);
+        set('location_lng',     def_lng);
+        set('location_type',    'default');
+        set('location_reason',  reason);
+    };
+
+locationCallback = function() {
         search_exchanges()
     };
 
@@ -30,45 +41,45 @@
     findPosition = function(position) {
 
         console.log('at findPosition: user location found');
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
+        var user_lat = position.coords.latitude;
+        var user_lng = position.coords.longitude;
 
-        var latlng = new google.maps.LatLng(lat, lng);
+        var user_latlng = new google.maps.LatLng(user_lat, user_lng);
         geocoder = new google.maps.Geocoder();
-        geocoder.geocode({'latLng': latlng}, function(results, status) {
+        geocoder.geocode({'latLng': user_latlng}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 if (results[1]) {
 
                     var formatted_address = results[1].formatted_address;
 
                     set('user_location',    formatted_address);
-                    set('user_lat',         lat);
-                    set('user_lng',         lng);
+                    set('user_lat',         user_lat);
+                    set('user_lng',         user_lng);
 
-                    var london_latlng = new google.maps.LatLng(51.5104890, -0.1300730);
-                    var user_distance_from_london = Math.round(google.maps.geometry.spherical.computeDistanceBetween(latlng, london_latlng)/1000);
-                    console.log('user distance from London is: ' + user_distance_from_london.toString() + ' km');
+                    def_latlng = new google.maps.LatLng(def_lat, def_lng);
+                    var user_distance_from_def = Math.round(google.maps.geometry.spherical.computeDistanceBetween(user_latlng, def_latlng)/1000);
+                    console.log('user distance from Default is: ' + user_distance_from_def.toString() + ' km');
 
-                    if (user_distance_from_london < 50  ) {
+                    if (user_distance_from_def < 50  ) {
                         set('location',         formatted_address);
                         set('location_short',   results[1].address_components[1].short_name);
-                        set('location_lat',     lat);
-                        set('location_lng',     lng);
+                        set('location_lat',     user_lat);
+                        set('location_lng',     user_lng);
                         set('location_type',    'user');
                     } else {
-                        set_default_location();
+                        set_default_location('user is far');
                     }
 
                     console.log('User position found and GeocoderStatus is OK. Session populated');
                     locationCallback();
                 } else {
                     console.log('User position found and GeocoderStatus is OK, but no results were found');
-                    set_default_location();
+                    set_default_location('geocoder found no results');
                     locationCallback();
                 }
             } else {
                 console.log('Geocoder failed due to: ' + status);
-                set_default_location();
+                set_default_location('geocoder error: ' + status);
                 locationCallback();
             }
         });
@@ -81,7 +92,7 @@
             3: 'Request timeout'
         };
         console.log("navigator.geolocation has an error: " + errors[error.code]);
-        set_default_location();
+        set_default_location('geolocation error: ' + error.code);
         locationCallback();
     };
 
@@ -99,7 +110,7 @@
         else {
             console.log('Browser does not support geolocation');
             console.log('Populating the default location');
-            set_default_location();
+            set_default_location('Browser does not support geolocation');
             locationCallback();
         }
  /*       var t = setTimeout(function () {
@@ -122,10 +133,10 @@
 
     function searchbox_addListener(searchBox) {
         google.maps.event.addListener(searchBox, 'places_changed', function () {
-            console.log('Location changed by user')
+            console.log('Location changed by user');
             var places = searchBox.getPlaces();
             if (places.length == 0) {
-                set_default_location();
+                set_default_location('Location changed by user, but getPlaces found no place');
                 return
             }
             place = places[0];
@@ -175,4 +186,6 @@
         $this.attr('placeholder', 'Search for offers in...');
         $this.val('');
     });
+
+
 

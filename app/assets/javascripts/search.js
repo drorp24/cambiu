@@ -123,16 +123,6 @@
 
     };
 
-    set_default_location = function(excluded) {
-        console.log('Since user location could not be found: setting the default location');
-        set('location',         'London, UK');
-        set('location_short',   'London');
-        set('location_lat',     '51.51574678520366');
-        set('location_lng',     '-0.16346305847173426');
-        set('location_type',    'default');
-    };
-
-
 
     search_exchanges = function() {
         console.log('After location found, set to default, changed by user, or page was reloaded:');

@@ -78,7 +78,11 @@ var mapPan;
 var clear;
 var make_url;
 var break_url;
-var geoJson;
+var def_latlng;
+var def_lat = '51.51574678520366';
+var def_lng = '-0.16346305847173426';
+var def_location = 'London, UK';
+var def_location_short = 'London';
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
