@@ -56,7 +56,7 @@ locationCallback = function() {
                     set('user_lat',         user_lat);
                     set('user_lng',         user_lng);
 
-                    def_latlng = new google.maps.LatLng(def_lat, def_lng);
+                    var def_latlng =            new google.maps.LatLng(def_lat, def_lng);
                     var user_distance_from_def = Math.round(google.maps.geometry.spherical.computeDistanceBetween(user_latlng, def_latlng)/1000);
                     console.log('user distance from Default is: ' + user_distance_from_def.toString() + ' km');
 

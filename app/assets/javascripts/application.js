@@ -13,6 +13,7 @@
 //= require pageload
 //= require search
 //= require map
+//= require place
 //= require location
 //= require models
 //= require exchanges
