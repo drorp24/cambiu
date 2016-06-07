@@ -13,7 +13,7 @@
 
         updateMap(data.exchanges);
         updateList(exchanges);
-        updateExchange(exchanges, urlId());
+        populateExchange(exchanges, urlId());
         updateResults(exchanges);
 
     };
@@ -120,7 +120,7 @@
     };
 
 
-    updateExchange = function(exchanges, exchange_id) {
+    populateExchange = function(exchanges, exchange_id) {
 
         if (exchange_id && !populated(exchange_id)) {
             var exchange = findExchange(exchange_id);

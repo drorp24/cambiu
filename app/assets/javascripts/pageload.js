@@ -83,6 +83,8 @@ var def_lng = '-0.16346305847173426';
 var def_location = 'London, UK';
 var def_location_short = 'London';
 var google_api_key = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
+var photo_width;
+var photo_height;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 

@@ -9,6 +9,11 @@ model_populate = function(model, obj) {
 
     console.log('model_populate: ' + model);
 
+    if (model == 'exchange') {
+        streetview(obj);
+        place_populate(obj.id);
+    }
+
     $.each(obj, function(field, value) {
 
         if (!value) return true;
@@ -22,20 +27,5 @@ model_populate = function(model, obj) {
     });
 
     sessionStorage.setItem('exchange_populated', obj.id);
-
-    streetview(obj);
-
-};
-
-streetview = function(exchange) {
-
-    console.log('in streetview');
-
-    var size        = String(Math.round(screen.width)) + 'x' + String(Math.round(screen.height/2.7));
-    var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
-    var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key;
-    var html        = '<img src=' + src + '>';
-
-    $('.streetview').html(html);
 
 };
