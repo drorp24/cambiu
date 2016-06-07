@@ -2,6 +2,8 @@
 
   <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'chevron-left', center: 'Offer', right_pane: 'none', right_icon: 'none'} %>
 
+  <div class="streetview"></div>
+
   <div class="text-center">
         <div class="order">
           <span data-model="exchange" data-field="pay_amount"></span>
@@ -12,10 +14,8 @@
         </div>
   </div>
 
-
+  <%= image_tag "powered_by_google_on_white.png" %>
 
   <div class="button_link" data-href-page="exchanges" data-href-id="id" data-href-pane="order" data-ajax="createOrder" data-exchange-id="x">Order</div>
-
-
 
 </div>

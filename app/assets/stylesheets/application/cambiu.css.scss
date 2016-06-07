@@ -12,6 +12,7 @@ $bg_green: #6db61e;
 $progress-color: #fff;
 $font-family: 'Roboto', sans-serif;
 $navbar-height: 70px;
+$mobile-navbar-height: 42px;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
@@ -546,7 +547,12 @@ body#cambiu {
     &.active {
       display: block;
     }
-    margin-top: $navbar-height;
+    @media (min-width: $screen-sm-min) {
+      margin-top: $navbar-height;
+    }
+    @media (max-width: $screen-xs-max) {
+      margin-top: $mobile-navbar-height;
+    }
     height: 85vh;
     @media (min-width: $screen-sm-min) {
       &:not(#exchanges_list), .list-group {
@@ -615,6 +621,10 @@ body#cambiu {
 
   .template {
     display: none;
+  }
+
+  .streetview {
+    margin-left: -2vh;
   }
 
   .button_link {
