@@ -1,6 +1,6 @@
 <div class="pane" data-pane="order">
 
-  <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'chevron-left', center: 'Order', right_pane: 'none', right_icon: 'none'} %>
+  <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'arrow-left', center: 'Order', right_pane: 'none', right_icon: 'none'} %>
 
   <div class="voucher_title text-center">
     <span data-model="order" data-field="service_type" style="display: none"></span>
@@ -33,7 +33,8 @@
   </div>
 
 
-  <div class="button_link" data-href-page="exchanges" data-href-id="id" data-href-pane="directions">Directions</div>
-
+  <div class="button_link_wrapper flex_parent">
+    <div class="button_link flex_child" data-href-page="exchanges" data-href-id="id" data-href-pane="directions">Directions</div>
+  </div>
 
 </div>

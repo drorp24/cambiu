@@ -4,7 +4,8 @@
 @import "font-awesome";
 
 // Variables
-$button_link_height: 50vw;
+$pane-padding: 2vh;
+$button_link_height: 150px;
 $green: #27AE60;
 $darkengreen: darken($green, 10%);
 $green: #27AE60;
@@ -12,7 +13,7 @@ $bg_green: #6db61e;
 $progress-color: #fff;
 $font-family: 'Roboto', sans-serif;
 $navbar-height: 70px;
-$mobile-navbar-height: 42px;
+$mobile-navbar-height: 70px;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
@@ -403,22 +404,22 @@ $inverse-color: #ffffff;
 @mixin search-form-def {
   text-align: left;
 /*  text-indent: 5% !important; */
-  font-size: 1em; 
+  font-size: 1em;
   text-transform: uppercase;
-  font-weight: 700; 
+  font-weight: 700;
   border-radius: $border-radius;
   line-height: $form-control-line-height;
-  height: $form-control-height; 
+  height: $form-control-height;
 }
 
 @mixin search-placeholder {
-  &::-webkit-input-placeholder { 
+  &::-webkit-input-placeholder {
     @include search-form-def;
   }
-  &:-moz-placeholder { 
+  &:-moz-placeholder {
     @include search-form-def;
   }
-  &::-moz-placeholder { 
+  &::-moz-placeholder {
     @include search-form-def;
  }
   &:-ms-input-placeholder {
@@ -431,13 +432,13 @@ $inverse-color: #ffffff;
 }
 
 @mixin placeholder-center {
-  &::-webkit-input-placeholder { 
+  &::-webkit-input-placeholder {
     @include placeholder-center-def;
   }
-  &:-moz-placeholder { 
+  &:-moz-placeholder {
     @include placeholder-center-def;
   }
-  &::-moz-placeholder { 
+  &::-moz-placeholder {
     @include placeholder-center-def;
  }
   &:-ms-input-placeholder {
@@ -480,14 +481,14 @@ $inverse-color: #ffffff;
   &::-webkit-input-placeholder::before {
     @include placeholder-icon-def($code);
   }
-  &:-moz-placeholder::before { 
+  &:-moz-placeholder::before {
     @include placeholder-icon-def($code);
   }
-  &::-moz-placeholder::before { 
+  &::-moz-placeholder::before {
     @include placeholder-icon-def($code);
  }
-  &:-ms-input-placeholder::before { 
-    @include placeholder-icon-def($code);  
+  &:-ms-input-placeholder::before {
+    @include placeholder-icon-def($code);
   }
 }
 
@@ -505,7 +506,7 @@ $inverse-color: #ffffff;
 
 //
 // CROSS-MEDIA
-// Attempt to define things here 
+// Attempt to define things here
 //
 html, body {
 //  height: 100%;
@@ -562,9 +563,8 @@ body#cambiu {
     &:not(#exchanges_list) {
       background-color: #fff;
       padding-bottom: 5vh;
-      padding-top: 5vh;
-      padding-left: 2vh;
-      padding-right: 2vh;
+      padding-left: $pane-padding;
+      padding-right: $pane-padding;
     }
   }
 
@@ -619,25 +619,70 @@ body#cambiu {
     }
   }
 
+  .flex_parent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .template {
     display: none;
   }
 
-  .streetview {
-    margin-left: -2vh;
+  .no_padding {
+    margin-left: $pane-padding * -1;
+    margin-right: $pane-padding * -1;
   }
 
+  .offer {
+    background-color: #333;
+    font-size: 1.4em;
+    padding-left: $pane-padding;
+    padding-right: $pane-padding;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    color: #fff;
+    font-weight:400;
+    font-size: 1.25em;
+    .amounts {
+      font-size: 1.4em;
+      margin-bottom: 5px;
+    }
+    .expiry {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-bottom: 5px;
+    }
+  }
+
+  .exchange_info {
+    [data-field=name] {
+      color: $darken-brand-color;
+      font-weight:500;
+      font-size: 1.5em;
+      margin-top: 0.5em;
+    }
+  }
+
+  .photo {
+    margin-left: $pane-padding * -1;
+    margin-right: $pane-padding * -1;
+  }
+
+  .button_link_wrapper {
+    margin-left: $pane-padding * -1;
+    margin-right: $pane-padding * -1;
+  }
   .button_link {
     text-align: center;
-    font-weight: 500;
+    font-weight: 300;
     background-color: $brand-color;
     color: #fff;
-    position: absolute;
-    bottom: 15vh;
-    left: (100vw - $button_link_height) / 2;
-    height: $button_link_height;
+    margin-top: 0;
+    height: 0;
+    padding-bottom: $button_link_height;
     width: $button_link_height;
-    border-radius: $button_link_height / 2;
+    border-radius: $button_link_height;
     line-height: $button_link_height;
     font-size: $button_link_height / 6;
   }

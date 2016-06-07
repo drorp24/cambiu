@@ -1,21 +1,32 @@
 <div class="pane" data-pane="offer">
 
-  <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'chevron-left', center: 'Offer', right_pane: 'none', right_icon: 'none'} %>
+  <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'arrow-left', center: 'Offer', right_pane: 'none', right_icon: 'none'} %>
 
-  <div class="streetview"></div>
+  <div class="photo"></div>
 
-  <div class="text-center">
-        <div class="order">
-          <span data-model="exchange" data-field="pay_amount"></span>
-          <span data-model="exchange" data-field="pay_currency" style="display: none"></span>
-          <span class="exchange_icon"><%= fa_icon "caret-right" %></span>
-          <span data-model="exchange" data-field="buy_amount"></span>
-          <span data-model="exchange" data-field="buy_currency" style="display: none"></span>
-        </div>
+  <div class="offer no_padding text-center">
+     <p class="amounts">
+      <span data-model="exchange" data-field="pay_amount"></span>
+      <span data-model="exchange" data-field="pay_currency" style="display: none"></span>
+      <span class="exchange_icon"><%= fa_icon "caret-right" %></span>
+      <span data-model="exchange" data-field="buy_amount"></span>
+      <span data-model="exchange" data-field="buy_currency" style="display: none"></span>
+    </p>
+    <p class="expiry">
+      <span><%= fa_icon "clock-o", text: "  Expires on", left: true %></span>
+      <span class="voucher_expiry" data-model="order" data-field="expiry_s"></span>
+    </p>
+  </div>
+
+  <div class="exchange_info">
+    <p data-model="exchange" data-field="name"></p>
+  </div>
+
+
+  <div class="button_link_wrapper flex_parent">
+    <div class="button_link flex_child" data-href-page="exchanges" data-href-id="id" data-href-pane="order" data-ajax="createOrder" data-exchange-id="x">Order</div>
   </div>
 
   <%= image_tag "powered_by_google_on_white.png" %>
-
-  <div class="button_link" data-href-page="exchanges" data-href-id="id" data-href-pane="order" data-ajax="createOrder" data-exchange-id="x">Order</div>
 
 </div>
