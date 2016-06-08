@@ -282,6 +282,31 @@ $(document).ready(function() {
 
     }));
 
+    $('body').on('click tap', '[data-ajax=updateOrder]', (function (e) {
+
+        var order_id        = value_of('order_id');
+        var order_status    = $(this).data('order-status');
+        if (!order_id || !order_status) {
+            console.log('Cannot update order: order_id or order_status are missing');
+            return
+        }
+
+        $.ajax({
+            type:       'PUT',
+            url:        '/orders/' + order_id,
+            data:       {
+                'order[status]':            order_status
+             },
+            dataType:   'JSON',
+            success:    function (data) {
+                console.log('Order successfully updated');
+             },
+            error:      function (data) {
+                console.log('There was an error updating the order');
+            }
+        });
+
+    }));
 
     //
     // AJAX Callbacks

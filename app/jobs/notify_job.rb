@@ -12,7 +12,7 @@ class NotifyJob < ActiveJob::Base
     exchange = order.exchange
     if !exchange
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not exist"
-    elsif Rails.env.production? and !order.pictured? and exchange.email.blank?
+    elsif Rails.env.production? and !order.verified? and exchange.email.blank?
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not have an email"
     elsif Rails.application.config.email_required and !order.offer? and order.collection? and order.email.blank?
       error = "Order has no email"
@@ -59,26 +59,11 @@ class NotifyJob < ActiveJob::Base
     ]
 
     bcc = Rails.env.development? ? bcc_me : bcc_me + bcc_eyal
-    to =  Rails.env.production? ? to_user + to_exchange : bcc
+    to =  (order.ordered? and Rails.env.production?) ? to_user + to_exchange : [{}]
 
 
-    if order.pictured?
-      subject = "Receipt photo"
-    elsif order.offer?
-      subject = "New order #{order.voucher}"
-    elsif order.produced?
-      subject = "Order #{order.voucher}"
-    elsif order.used?
-      subject = "Order #{order.voucher} has been fulfilled"
-    end
+    subject = "Order #{order.voucher}"
     subject += " (#{Rails.env})" unless Rails.env.production?
-
-
-    if order.collection?
-      service_type_message = 'Please pick it up at the above address'
-    elsif order.delivery?
-      service_type_message = "Please specify delivery details if you haven't done so already"
-    end
 
 
     from_name = 'cambiu'
@@ -103,7 +88,6 @@ class NotifyJob < ActiveJob::Base
           track_clicks: true,
           global_merge_vars: [
               {name: 'SERVICE_TYPE',             content: order.service_type.upcase},
-              {name: 'SERVICE_TYPE_MESSAGE',     content: service_type_message},
               {name: 'VOUCHER_NUMBER',           content: order.voucher},
               {name: 'EXPIRY_DATE',              content: order.expiry.strftime('%e %b, %Y')},
               {name: 'EXPIRY_TIME',              content: order.expiry.strftime('%H:%M')},
@@ -113,7 +97,7 @@ class NotifyJob < ActiveJob::Base
               {name: 'EXCHANGE_PHONE',           content: exchange.phone},
               {name: 'PAY_AMOUNT',               content: Money.new(order.pay_cents, order.pay_currency).format},
               {name: 'GET_AMOUNT',               content: Money.new(order.buy_cents, order.buy_currency).format},
-              {name: 'LOCATION',            content: order.search.location},
+              {name: 'LOCATION',                 content: order.search.location},
               {name: 'CUSTOMER_EMAIL',           content: order.customer_email || ""},
               {name: 'CUSTOMER_ADDRESS1',        content: order.customer_address1 || ""},
               {name: 'CUSTOMER_ADDRESS2',        content: order.customer_address1 || ""},

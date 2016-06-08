@@ -94,6 +94,7 @@
         var exchange_el = exchange_wrapper.find('.list-group-item');
 
         exchange_el.attr('data-href-id', exchange.id);
+        exchange_el.attr('data-exchange-id', exchange.id);
 
         exchange_el.find('.best_at').html(' ');
         if (exchange.best_at[0]) exchange_el.find('.best_at').addClass(exchange.best_at[0]);

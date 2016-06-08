@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
 
   def upload
     @order = Order.last
-    @order.pictured!
+    @order.verified!
     @order.photo = params[:imageData]
     response = OrderMailer.notify(@order).deliver_now
     respond_with @order
@@ -16,9 +16,12 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order = Order.find(order_params[:id])
-    @order.update!(order_params)
-    respond_with @order
+    order = Order.find(params[:id])
+    if order.update(order_params)
+      render json: {'status': 'ok'}
+    else
+      render json: {'status': 'failed'}
+    end
   end
 
   def order_params

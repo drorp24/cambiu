@@ -8,7 +8,7 @@ class Order < ActiveRecord::Base
   monetize :buy_cents, with_model_currency: :buy_currency, :allow_nil => true
   monetize :get_cents, with_model_currency: :get_currency, :allow_nil => true
 
-  enum status: [:offer, :produced, :used, :pictured ]
+  enum status: [:offer, :ordered, :pursued, :fulfilled, :verified]
   enum service_type: [ :collection, :delivery ]
 
   attr_accessor :photo
