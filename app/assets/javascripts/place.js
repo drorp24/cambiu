@@ -15,7 +15,7 @@ place_populate = function(exchange_id) {
     }
 
     if (place_id) {
-        getPlaceDetails(place_id)
+        getPlaceDetails(place_id, 0)
     } else {
         getPlace(exchange_id)
     }
@@ -74,7 +74,6 @@ textSearchCallback = function(results, status, exchange_id) {
 
             var place_id = results[0].place_id;
             getPlaceDetails(place_id, 0);
-            updateExchange(exchange_id, place_id);
 
             if (results.length > 1) {
                 console.log('More than one place id found');
@@ -114,18 +113,24 @@ getDetailsCallback = function(place, status, i) {
         var exchange_latlng = new google.maps.LatLng(sessionStorage.exchange_latitude, sessionStorage.exchange_longitude);
         var place_latlng = place.geometry.location;
         var distance = Math.round(google.maps.geometry.spherical.computeDistanceBetween(exchange_latlng, place_latlng));
-        if (i == 0 && distance > 100) {alert('distance > 100m')}
 
-        if (i == 0) {console.log('This is the place selected')}
-        console.log('Distance from request: ' + String(distance) + ' Name: ' + place.name + ' Address: ' + place.formatted_address + ' Phone: ' + place.formatted_phone_number);
+        console.log(String(i) + ' - Distance from request: ' + String(distance) + ' Name: ' + place.name + ' Address: ' + place.formatted_address + ' Phone: ' + place.formatted_phone_number);
         console.log(place);
 
-        /// update here: opening hours, phone, website, rating, reviews, google page ("more")
+        if (i != 0) {return}
 
+        // Update everything only if place returned is close to the exchange's DB latlng
+        if (distance > 100) {
+            alert('distance > 100m')
+        } else {
+            if (place.photos && place.photos.length > 0) {
+                console.log('replacing streetview with photo');
+                photo(place.photos[0]);
+            }
 
-        if (i == 0 && place.photos && place.photos.length > 0) {
-            console.log('replacing streetview with photo');
-            photo(place.photos[0]);
+            /// update here: opening hours, phone, website, rating, reviews, google page ("more")
+
+            updateExchange(exchange_id, place_id);
         }
 
     } else {
