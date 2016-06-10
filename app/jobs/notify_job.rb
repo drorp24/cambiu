@@ -3,6 +3,8 @@ class NotifyJob < ActiveJob::Base
 
   def perform(order_id)
 
+    return if Rails.env.development?
+
     logger.info "At perform. thats the order i received"
     order = Order.find(order_id)
     logger.info  order.inspect

@@ -248,7 +248,7 @@ $(document).ready(function() {
 
     $('body').on('click tap', '[data-ajax=createOrder]', (function (e) {
 
-        var exchange_id = $(this).data('exchange-id');
+        var exchange_id = $(this).attr('data-exchange-id');
         var search_id = value_of('search_id');
         var offer = findExchange(exchange_id);
         if (!exchange_id || !offer || !search_id) {

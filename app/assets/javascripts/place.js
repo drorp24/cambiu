@@ -52,9 +52,12 @@ getPlace = function(exchange_id) {
 
     var request = {
         location: new google.maps.LatLng(exchange_lat, exchange_lng),
-        radius: '5',
-        query: exchange_name + ' ' + exchange_address
+        radius: '1000',
+        query: exchange_name
     };
+
+    console.log('textSearch: ' + request['query']);
+    console.log('request localtion lat: ' + request.location.lat() + ' lng: ' + request.location.lng());
 
     var service = new google.maps.places.PlacesService(map);
     service.textSearch(
@@ -64,27 +67,22 @@ getPlace = function(exchange_id) {
 };
 
 
-getPlaceDetails = function(place_id) {
-
-    console.log('getPlaceDetails');
-
-    service = new google.maps.places.PlacesService(map);
-    service.getDetails({placeId: place_id}, getDetailsCallback);
-};
-
 textSearchCallback = function(results, status, exchange_id) {
 
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         if (results.length >= 1) {
 
             var place_id = results[0].place_id;
-            getPlaceDetails(place_id);
+            getPlaceDetails(place_id, 0);
             updateExchange(exchange_id, place_id);
 
-            /// SAVE IT IN THE DATABASE
-            /// dont call this at all if in the database
-
-            if (results.length > 1) {console.log('More than one place id found')}
+            if (results.length > 1) {
+                console.log('More than one place id found');
+                for(var i=1; i < results.length; i++) {
+                    var place_id = results[i].place_id;
+                    getPlaceDetails(place_id, i);
+                }
+            }
 
          } else {
             console.log('No place id found')
@@ -96,17 +94,37 @@ textSearchCallback = function(results, status, exchange_id) {
 
 };
 
-getDetailsCallback = function(place, status) {
+
+getPlaceDetails = function(place_id, i) {
+
+    console.log('getPlaceDetails');
+
+    service = new google.maps.places.PlacesService(map);
+    service.getDetails(
+        {placeId: place_id},
+        function(place, status) {getDetailsCallback(place, status, i)}
+    );
+};
+
+
+getDetailsCallback = function(place, status, i) {
 
     if (status == google.maps.places.PlacesServiceStatus.OK) {
 
-        console.log('Place found. Here it is:');
+        var exchange_latlng = new google.maps.LatLng(sessionStorage.exchange_latitude, sessionStorage.exchange_longitude);
+        var place_latlng = place.geometry.location;
+        var distance = Math.round(google.maps.geometry.spherical.computeDistanceBetween(exchange_latlng, place_latlng));
+        if (i == 0 && distance > 100) {alert('distance > 100m')}
+
+        if (i == 0) {console.log('This is the place selected')}
+        console.log('Distance from request: ' + String(distance) + ' Name: ' + place.name + ' Address: ' + place.formatted_address + ' Phone: ' + place.formatted_phone_number);
         console.log(place);
 
-        /// update here: opening hours, phone, websaite, rating, reviews, google page ("more")
+        /// update here: opening hours, phone, website, rating, reviews, google page ("more")
 
 
-        if (place.photos && place.photos.length > 0) {
+        if (i == 0 && place.photos && place.photos.length > 0) {
+            console.log('replacing streetview with photo');
             photo(place.photos[0]);
         }
 
@@ -147,10 +165,12 @@ streetview = function(exchange) {
 };
 
 photo = function(photo) {
-    var src         = photo.getUrl({'maxWidth': photoWidth()});
+    var width       = photoWidth();
+    var height      = photoHeight();
+    var src         = photo.getUrl({'maxWidth': width, 'maxHeight': height});
     var html        = '<img src=' + src + '>';
 
-    $('.photo').html(html);
+    $('.photo').html(html).find('img').css('width', '100%').css('height', height);
 };
 
 photoWidth = function() {

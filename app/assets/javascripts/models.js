@@ -26,6 +26,6 @@ model_populate = function(model, obj) {
         sessionStorage.setItem(model + '_' + field, value);
     });
 
-    sessionStorage.setItem('exchange_populated', obj.id);
+    sessionStorage.setItem(model + '_populated', obj.id);
 
 };
