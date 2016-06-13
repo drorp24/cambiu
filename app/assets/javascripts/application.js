@@ -27,3 +27,4 @@
 //= require bootstrap/collapse
 //= require bootstrap/carousel
 //= require jquery.freeow.min
+//= require star-rating

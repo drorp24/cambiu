@@ -15,7 +15,7 @@ place_populate = function(exchange_id) {
     }
 
     if (place_id) {
-        getPlaceDetails(place_id, 0)
+        getPlaceDetails(place_id, 0, exchange_id)
     } else {
         getPlace(exchange_id)
     }
@@ -79,7 +79,7 @@ textSearchCallback = function(results, status, exchange_id) {
                 console.log('More than one place id found');
                 for(var i=1; i < results.length; i++) {
                     var place_id = results[i].place_id;
-                    getPlaceDetails(place_id, i);
+                    getPlaceDetails(place_id, i, exchange_id);
                 }
             }
 
@@ -94,19 +94,19 @@ textSearchCallback = function(results, status, exchange_id) {
 };
 
 
-getPlaceDetails = function(place_id, i) {
+getPlaceDetails = function(place_id, i, exchange_id) {
 
     console.log('getPlaceDetails');
 
     service = new google.maps.places.PlacesService(map);
     service.getDetails(
         {placeId: place_id},
-        function(place, status) {getDetailsCallback(place, status, i)}
+        function(place, status) {getDetailsCallback(place, status, i, exchange_id)}
     );
 };
 
 
-getDetailsCallback = function(place, status, i) {
+getDetailsCallback = function(place, status, i, exchange_id) {
 
     if (status == google.maps.places.PlacesServiceStatus.OK) {
 
@@ -121,7 +121,8 @@ getDetailsCallback = function(place, status, i) {
 
         // Update everything only if place returned is close to the exchange's DB latlng
         if (distance > 100) {
-            alert('distance > 100m')
+            alert('Returned place too far: ' + String(distance));
+            return;
         } else {
             if (place.photos && place.photos.length > 0) {
                 console.log('replacing streetview with photo');
@@ -129,8 +130,11 @@ getDetailsCallback = function(place, status, i) {
             }
 
             /// update here: opening hours, phone, website, rating, reviews, google page ("more")
+            if (place.rating && place.rating > 0) {
 
-            updateExchange(exchange_id, place_id);
+            }
+
+            updateExchange(exchange_id, {'exchange[place_id]': place.place_id});
         }
 
     } else {
@@ -140,13 +144,11 @@ getDetailsCallback = function(place, status, i) {
 };
 
 
-updateExchange = function(exchange_id, place_id) {
+updateExchange = function(exchange_id, data) {
     $.ajax({
         type: 'PUT',
         url: '/exchanges/' + exchange_id,
-        data: {
-            'exchange[place_id]': place_id
-        },
+        data: data,
         dataType: 'JSON',
         success: function (data) {
             console.log('Exchange successfully updated');
@@ -195,4 +197,23 @@ photoHeight = function() {
     }
     return photo_height;
 };
+
+$(document).ready(function() {
+    $('.ratings').rating({
+        theme: 'krajee-fa',
+        filledStar: '<i class="fa fa-star"></i>',
+        emptyStar: '<i class="fa fa-star-o"></i>',
+        showClear: false,
+        showCaption: false,
+        size: 'xs'
+    });
+
+    $('.ratings').on('rating.change', function(event, value, caption) {
+        var exchange_id = $(this).attr('data-exchange-id');
+        alert('Thank you for your input!');
+        updateExchange(exchange_id, {'exchange[rating]': value});
+    });
+
+
+});
 

@@ -165,16 +165,6 @@ break_url = function(url) {
     }
 };
 
-clear = function(entity) {
-    for (var i=0, len = sessionStorage.length; i  <  len; i++){
-        var key     = sessionStorage.key(i);
-        var value   = sessionStorage.getItem(key);
-            if  (key && key.indexOf(entity + '_') > -1)  {
-                sessionStorage.setItem(key, null)
-            }
-    }
-};
-
 mapPan = function() {
     map.panBy(-0.17 * screen.width, -0.05 * screen.height)
 };
@@ -370,6 +360,7 @@ $(document).ready(function() {
         });
 */
     };
+
 
     listen_to_file_input();
  });

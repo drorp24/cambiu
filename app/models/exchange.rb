@@ -25,6 +25,8 @@ class Exchange < ActiveRecord::Base
   has_one     :ils_rate,    -> {where(currency: 'ILS')}       ,class_name: "Rate",  as: :ratable
   has_one     :nok_rate,    -> {where(currency: 'NOK')}       ,class_name: "Rate",  as: :ratable
 
+  has_many    :reviews
+
   enum business_type: [ :exchange, :bank, :post_office, :other ]
   enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping ]
   enum rates_policy: [:individual, :chain]
@@ -38,6 +40,14 @@ class Exchange < ActiveRecord::Base
 
   scope :with_contract, -> { where(contract: true) }
   scope :with_real_rates, -> { where("rates_source > 2") }
+
+  def rating
+    reviews.average(:rating) if reviews.any?
+  end
+
+  def rating=(rate)
+    reviews.create(rating: rate)
+  end
 
   def has_real_rates?
     !test? && !manual? && !no_rates?
@@ -301,6 +311,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:best_at] = []
     exchange_hash[:rates] = quotes[:rates]
     exchange_hash[:place_id] = self.place_id
+    exchange_hash[:rating] = self.rating || 0
 
     exchange_hash
 
