@@ -5,7 +5,7 @@
 
 // Variables
 $pane-padding: 2vh;
-$button_link_height: 125px;
+$button_link_height: 100vw * 0.4;
 $green: #27AE60;
 $darkengreen: darken($green, 10%);
 $green: #27AE60;
@@ -716,11 +716,10 @@ body#cambiu {
     margin-right: $pane-padding * -1;
   }
 
-  .button_link_wrapper {
-    margin-left: $pane-padding * -1;
-    margin-right: $pane-padding * -1;
-  }
   .button_link {
+    position: fixed;
+    bottom: 45px; //  height of mobile browser bottom menu
+    left: (100vw - $button_link_height) / 2;
     text-align: center;
     font-weight: 300;
     background-color: $brand-color;
@@ -732,6 +731,7 @@ body#cambiu {
     border-radius: $button_link_height;
     line-height: $button_link_height;
     font-size: $button_link_height / 6;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }
 
 
