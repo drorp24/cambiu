@@ -312,6 +312,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:rates] = quotes[:rates]
     exchange_hash[:place_id] = self.place_id
     exchange_hash[:rating] = self.rating || 0
+    exchange_hash[:reviews] = 'No'
 
     exchange_hash
 

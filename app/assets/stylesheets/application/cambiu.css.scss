@@ -5,7 +5,7 @@
 
 // Variables
 $pane-padding: 2vh;
-$button_link_height: 150px;
+$button_link_height: 125px;
 $green: #27AE60;
 $darkengreen: darken($green, 10%);
 $green: #27AE60;
@@ -569,10 +569,12 @@ body#cambiu {
   }
 
 
+  /*
   .list-group-item {
     border-left: none;
     border-right: none;
   }
+  */
 
 
 
@@ -619,6 +621,10 @@ body#cambiu {
     }
   }
 
+  .img-circle {
+    border-radius: 50%;
+  }
+
   .flex_parent {
     display: flex;
     align-items: center;
@@ -654,6 +660,46 @@ body#cambiu {
       margin-bottom: 5px;
     }
   }
+
+  .star {
+    font-size: 0.8em;
+  }
+
+  .rating-container {
+    margin-top: -0.5em;
+  }
+
+  .reviews{
+    margin-right: 1em;
+    color: #777;
+    font-size: 1.2em;
+  }
+
+  .reviews_list {
+    color: #000;
+  }
+
+  .review {
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+  }
+
+  .review_rating {
+    margin-bottom: 0.5em;
+  }
+
+  .review_author {
+    font-style: italic;
+    margin-top: 1em;
+    &::before {
+      content: " - "
+    }
+  }
+
+  .review_photo img {
+    width: 100%;
+  }
+
 
   .exchange_info {
     [data-field=name] {
@@ -1389,9 +1435,11 @@ body#cambiu {
 */  [data-href] {
     cursor: pointer;
   }
+  /*
   .list-group-item, .well {
     border-radius: 0;
   }
+  */
   .list-group-item.delivery {
 //    background-color: darken($brand-color, 10%);
   }
@@ -1471,9 +1519,11 @@ body#cambiu {
       @media (min-width: $screen-sm-min) {
 //        margin-top: $parameters-height - 3px;
       }
+      /*
       .list-group-item {
         padding-bottom: 0;
       }
+      */
     }
 
     .parameters {
@@ -2120,6 +2170,8 @@ body#cambiu {
         }
         #best_exchanges .tag_row {
           display: block;
+          margin-top: 0.5em;
+          margin-bottom: 0.5em;
         }
         .tag_row .exchange_icon {
            img {
@@ -2386,7 +2438,9 @@ body#cambiu {
       .name {
         font-weight: 400;
         color: $darken-brand-color;
-        font-size: 1.2em;
+        font-size: 1.3em;
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
       }
        .units-d {
         font-size: 0.9em;
@@ -2537,12 +2591,16 @@ body#cambiu {
         @include middle-parent(70px, 0)
       }
     }
+    /*
     .list-group-item .row:first-child {
       margin-top: 0.3em;
     }
+    */
+    /*
     .list-group-item .row:not(:first-child) {
       margin-top: 0.7em;
     }
+    */
 
     .params > .exchange_summary_banner {
       color: #555;

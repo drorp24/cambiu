@@ -93,6 +93,10 @@ var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 sessionStorage.videoStopped = null;
 
 
+pluralize = function(word, count) {
+  return count > 1 ? word + 's' : word
+};
+
 populated = function(exchange_id) {
 
     var exchange_populated = value_of('exchange_populated');
@@ -278,6 +282,10 @@ homepage = function() {
 value_of = function(key) {
     var a = sessionStorage.getItem(key);
     return (a && a != "null") ? a : null;
+};
+
+numeric_value_of = function(key) {
+    return Number(value_of(key));
 };
 
 

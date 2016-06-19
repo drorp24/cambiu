@@ -1,6 +1,6 @@
 place_populate = function(exchange_id) {
 
-    console.log('place_populate');
+    console.log('place_populate for exchange_id: ' + exchange_id);
 
     var curr_exchange_id = value_of('exchange_id');
     if (curr_exchange_id == exchange_id) {
@@ -24,7 +24,7 @@ place_populate = function(exchange_id) {
 
 getPlace = function(exchange_id) {
 
-    console.log('getPlace for ' + String(exchange_id));
+    console.log('getPlace for exchange_id: ' + String(exchange_id));
 
     if (exchange_id === undefined) {
         var exchange_id      = value_of('exchange_id');
@@ -73,7 +73,7 @@ textSearchCallback = function(results, status, exchange_id) {
         if (results.length >= 1) {
 
             var place_id = results[0].place_id;
-            getPlaceDetails(place_id, 0);
+            getPlaceDetails(place_id, 0, exchange_id);
 
             if (results.length > 1) {
                 console.log('More than one place id found');
@@ -96,7 +96,7 @@ textSearchCallback = function(results, status, exchange_id) {
 
 getPlaceDetails = function(place_id, i, exchange_id) {
 
-    console.log('getPlaceDetails');
+    console.log('getPlaceDetails for exchange_id: ' + exchange_id);
 
     service = new google.maps.places.PlacesService(map);
     service.getDetails(
@@ -108,38 +108,100 @@ getPlaceDetails = function(place_id, i, exchange_id) {
 
 getDetailsCallback = function(place, status, i, exchange_id) {
 
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
+    if (status != google.maps.places.PlacesServiceStatus.OK) {
+        console.log('Google Places API getDetails error: ' + status);
+        return
+    }
 
-        var exchange_latlng = new google.maps.LatLng(sessionStorage.exchange_latitude, sessionStorage.exchange_longitude);
-        var place_latlng = place.geometry.location;
-        var distance = Math.round(google.maps.geometry.spherical.computeDistanceBetween(exchange_latlng, place_latlng));
+    var exchange_latlng = new google.maps.LatLng(sessionStorage.exchange_latitude, sessionStorage.exchange_longitude);
+    var place_latlng = place.geometry.location;
+    var distance = Math.round(google.maps.geometry.spherical.computeDistanceBetween(exchange_latlng, place_latlng));
 
-        console.log(String(i) + ' - Distance from request: ' + String(distance) + ' Name: ' + place.name + ' Address: ' + place.formatted_address + ' Phone: ' + place.formatted_phone_number);
-        console.log(place);
+    // TODO: Remove eventually
+    console.log(String(i) + ' - Distance from request: ' + String(distance) + ' Name: ' + place.name + ' Address: ' + place.formatted_address + ' Phone: ' + place.formatted_phone_number);
+    console.log(place);
 
-        if (i != 0) {return}
+    // Update only by the first result, and only if place returned is close to the exchange's DB latlng
+    if (i != 0) return;
+    if (distance > 100) {alert('Returned place too far: ' + String(distance)); return}
 
-        // Update everything only if place returned is close to the exchange's DB latlng
-        if (distance > 100) {
-            alert('Returned place too far: ' + String(distance));
-            return;
-        } else {
-            if (place.photos && place.photos.length > 0) {
-                console.log('replacing streetview with photo');
-                photo(place.photos[0]);
+    if (place.photos && place.photos.length > 0) {
+        console.log('replacing streetview with photo');
+        photo(place.photos[0]);
+    }
+
+    /// update here: reviews, opening hours, phone, website, rating, reviews, google page ("more")
+
+
+    // Reviews
+
+    var reviews_length = place.reviews && place.reviews.length;
+    if (reviews_length > 0) {
+
+        $('[data-model=exchange][data-field=reviews]').html(reviews_length);
+        $('.review_word').html(pluralize('review', reviews_length));
+
+        var reviews_list = $('.reviews_list');
+        var review_template = $('.review.template');
+
+        reviews_list.empty();
+        var rating_sum = 0;
+        for (i = 0; i < place.reviews.length; i++) {
+
+            var review = place.reviews[i];
+            var review_el = review_template.clone().removeClass('template');
+
+            if (review.rating) {
+                review_el.find('.review_rating input')
+                    .rating({
+                        theme: 'krajee-fa',
+                        filledStar: '<i class="fa fa-star"></i>',
+                        emptyStar: '<i class="fa fa-star-o"></i>',
+                        showClear: false,
+                        showCaption: true,
+                        size: 'xs',
+                        readonly: true
+                    })
+                    .rating('update', review.rating);
+                rating_sum += review.rating;
             }
+            if (review.text)                review_el.find('.review_text').html(review.text);
+            if (review.author_name)         review_el.find('.review_author').html(review.author_name);
+            if (review.profile_photo_url)   review_el.find('.review_photo').html('<img class=img-circle src=' + review.profile_photo_url + '>');
 
-            /// update here: opening hours, phone, website, rating, reviews, google page ("more")
-            if (place.rating && place.rating > 0) {
+            reviews_list.append(review_el);
 
-            }
-
-            updateExchange(exchange_id, {'exchange[place_id]': place.place_id});
         }
 
-    } else {
-        console.log('Google Places API getDetails error: ' + status);
     }
+
+    // Rating. Precedence: 1. cambiu's avg rating 2. place's rating 3. reviews' avg rating
+
+    var rating_el       = $('[data-model=exchange][data-field=rating]');
+    var cambiu_rating   = exchange_id == numeric_value_of('exchange_id') && numeric_value_of('exchange_rating');
+    var rating          = 0;
+    var rating_source;
+
+    if (cambiu_rating) {
+        rating = cambiu_rating;
+        rating_source = 'cambiu';
+    } else
+    if (place.rating && place.rating > 0) {
+        rating = place.rating;
+        rating_source = 'place'
+    } else
+    if (place.reviews && place.reviews.length > 0 && rating_sum > 0) {
+        rating = rating_sum / place.reviews.length;
+        rating_source = 'reviews'
+    } else {
+        rating = 0;
+        rating_source = 'none';
+    }
+    rating_el.rating('update', rating);
+    console.log('rating source: ' + rating_source);
+
+
+    updateExchange(exchange_id, {'exchange[place_id]': place.place_id});
 
 };
 

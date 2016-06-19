@@ -20,11 +20,8 @@ model_populate = function(model, obj) {
 
         if (field == 'id') {
             $('[data-' + model + '-id]').attr('data-' + model + '-id', value);
-        } else
-        if (field == 'rating') {
-            $('[data-model=' + model + '][data-field=' + field + ']').rating('update', value);
         } else {
-            $('[data-model=' + model + '][data-field=' + field + ']').html(value);
+             $('[data-model=' + model + '][data-field=' + field + ']').html(value);
         }
 
         sessionStorage.setItem(model + '_' + field, value);

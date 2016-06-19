@@ -20,11 +20,17 @@
 
   <div class="exchange_info">
     <p data-model="exchange" data-field="name"></p>
-    <input data-model="exchange" data-field="rating" data-exchange-id="x" class="ratings rating-loading">
-    <p data-model="exchange" data-field="address"></p>
-    <p data-model="exchange" data-field="phone"></p>
-    <p data-model="exchange" data-field="latitude"></p>
-    <p data-model="exchange" data-field="longitude"></p>
+    <div class="row">
+      <div class="col-xs-7">
+        <input data-model="exchange" data-field="rating" data-exchange-id="x" class="ratings rating-loading pull-left">
+      </div>
+      <div class="col-xs-5 text-right">
+        <div class="reviews" data-href-page="exchanges" data-href-id="id" data-href-pane="reviews">
+          <span data-model="exchange" data-field="reviews"></span>
+          <span class="review_word">reviews</span>
+        </div>
+      </div>
+    </div>
   </div>
 
 
@@ -32,6 +38,5 @@
     <div class="button_link flex_child" data-href-page="exchanges" data-href-id="id" data-href-pane="order" data-ajax="updateOrder" data-order-status="ordered">Order</div>
   </div>
 
-  <%= image_tag "powered_by_google_on_white.png" %>
 
 </div>
