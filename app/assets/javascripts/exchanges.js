@@ -128,7 +128,7 @@
         // TODO: Dont take it from the buffer after search like here, it should all exist in the ss. That's the ss for.
         if (exchange_id && !populated(exchange_id)) {
             var exchange = findExchange(exchange_id);
-            if (exchange) model_populate('exchange', exchange);
+            if (exchange) populate('exchange', exchange);
         }
 
 

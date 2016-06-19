@@ -22,7 +22,7 @@
     <p data-model="exchange" data-field="name"></p>
     <div class="row">
       <div class="col-xs-7">
-        <input data-model="exchange" data-field="rating" data-exchange-id="x" class="ratings rating-loading pull-left">
+        <input data-model="exchange" data-field="rating" data-exchange-id="null" class="ratings rating-loading pull-left">
       </div>
       <div class="col-xs-5 text-right">
         <div class="reviews" data-href-page="exchanges" data-href-id="id" data-href-pane="reviews">
@@ -35,7 +35,16 @@
 
 
   <div class="button_link_wrapper flex_parent">
-    <div class="button_link flex_child" data-href-page="exchanges" data-href-id="id" data-href-pane="order" data-ajax="updateOrder" data-order-status="ordered">Order</div>
+    <div class="button_link flex_child"
+         data-model="exchange"
+         data-href-page="exchanges"
+         data-href-id="id"
+         data-href-pane="order"
+         data-ajax="updateOrder"
+         data-order-status="ordered"
+         data-exchange-delivery_tracking="null">
+      Order
+    </div>
   </div>
 
 

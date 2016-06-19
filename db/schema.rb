@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20160613115249) do
 
   add_index "emails", ["emailable_type", "emailable_id"], name: "index_emails_on_emailable_type_and_emailable_id", using: :btree
 
-  create_table "exchanges", force: :cascade do |t|
+  create_table "exchanges``", force: :cascade do |t|
     t.string   "name",              limit: 255
     t.string   "address",           limit: 255
     t.datetime "created_at"

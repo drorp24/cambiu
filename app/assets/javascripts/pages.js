@@ -57,7 +57,7 @@ $(document).ready(function() {
             var exchange = findExchange(exchange_id);
 
             if (exchange) {
-                model_populate('exchange', exchange);
+                populate('exchange', exchange);
             } else {
                 console.log('Exchanges is empty, i.e., page reload. pages will not populate, updatePage will soon')
             }
@@ -92,7 +92,9 @@ $(document).ready(function() {
 
     link = function (el) {
 
-        var pane        = el.data('href-pane');  if (pane == 'back') {window.history.back();return}
+        var external    = el.data('exchange-delivery_tracking');    if (external && external != 'null') {window.location = external; return}
+        var pane        = el.data('href-pane');                     if (pane == 'back')                 {window.history.back();return}
+
         var page        = el.data('href-page');
         var exchange_id = el.data('href-id');
         var hash        = el.data('href-hash');

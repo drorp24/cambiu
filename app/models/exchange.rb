@@ -444,11 +444,11 @@ class Exchange < ActiveRecord::Base
   end
 
   def delivery?
-    self.delivery_tracking.present?
+    false
   end
 
   def service_type
-    self.delivery_tracking.present? ? 'delivery' : 'collection'
+    'collection'
   end
 
 

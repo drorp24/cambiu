@@ -273,7 +273,7 @@ $(document).ready(function() {
             dataType:   'JSON',
             success:    function (data) {
                 console.log('Order successfully created');
-                model_populate('order', data)
+                populate('order', data)
                 },
             error:      function (data) {
                 console.log('There was an error creating the order');

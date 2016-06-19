@@ -97,19 +97,6 @@ pluralize = function(word, count) {
   return count > 1 ? word + 's' : word
 };
 
-populated = function(exchange_id) {
-
-    var exchange_populated = value_of('exchange_populated');
-
-    if (exchange_populated && exchange_populated == exchange_id) {
-        console.log('exchange ' + exchange_id + ' is populated already');
-        return true;
-    } else {
-        console.log('exchange ' + exchange_id + ' is not populated already');
-        return false;
-    }
-};
-
 
 best = function(exchanges) {
 
