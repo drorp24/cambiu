@@ -10,8 +10,12 @@ populate = function(model, obj) {
     console.log('populate: ' + model);
 
     if (model == 'exchange') {
-        streetview(obj);
-        place_populate(obj.id);
+        var exchange = obj;
+        populatePlace(exchange);
+    } else
+    if (model == 'order') {
+        var order = obj;
+        renderQr(order);
     }
 
     $.each(obj, function(field, value) {
@@ -57,4 +61,9 @@ populated = function(exchange_id) {
         console.log('exchange ' + exchange_id + ' is not populated already');
         return false;
     }
+};
+
+renderQr = function(order) {
+    var url = window.location.host + '/orders/' + order.id + '/confirm';
+    $('.qrcode').empty().qrcode({size: photoHeight(), text: url})
 };

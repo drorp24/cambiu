@@ -1,3 +1,7 @@
+    renderMap = function(exchange) {
+        // TODO: Show selected exchange on map
+        google.maps.event.trigger(map, 'resize');
+    };
 
     drawMap = function (latitude, longitude) {
 
@@ -79,24 +83,26 @@
     }
 
 
-    drawDirectionsMap = function (latitude, longitude) {
+    renderDirections = function (exchange) {
 
-        console.log('drawDirectionsMap');
+        console.log('renderDirections');
 
         var mapOptions = {
-            center: new google.maps.LatLng(latitude, longitude),
+            center: new google.maps.LatLng(exchange.latitude, exchange.longitude),
             zoom: map_initial_zoom,
             scaleControl: true
         };
         directionsMap = new google.maps.Map(document.getElementById('directions-map-canvas'), mapOptions);
         from =          new google.maps.LatLng(value_of('location_lat'), value_of('location_lng'));
-        to =            new google.maps.LatLng(value_of('exchange_latitude'), value_of('exchange_longitude'));
+        to =            new google.maps.LatLng(exchange.latitude, exchange.longitude);
         calcRoute(from, to);
 
     };
 
 
     function calcRoute(from, to) {
+
+        $('#directionsPanel').empty();
 
         var request = {
             origin: from,
@@ -105,24 +111,20 @@
             unitSystem: google.maps.UnitSystem.METRIC
         };
 
+        console.log('calcRoute. Following is the request:');
+        console.log(request);
+
         directionsService = new google.maps.DirectionsService();
         directionsDisplay = new google.maps.DirectionsRenderer();
-        zoom_changed_by_user = false;
 
         directionsDisplay.setMap(directionsMap);
         directionsDisplay.setPanel(document.getElementById("directionsPanel"));
-        //       directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
         directionsService.route(request, function (response, status) {
             console.log('directionsService.route returned with status: ' + status);
             if (status == google.maps.DirectionsStatus.OK) {
                 map_center_changed = true;
-    //                $('#directions-panel').css('display', 'block');
                 directionsDisplay.setDirections(response);
-                setTimeout(function(){ map.setZoom(15) }, 100);
-                setTimeout(function(){ mapPan() }, 100);
-
-
             }
         });
 

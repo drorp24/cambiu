@@ -1,85 +1,51 @@
-place_populate = function(exchange_id) {
+populatePlace = function(exchange) {
 
+    var exchange_id =   exchange.id;
+    var place_id =      exchange.place_id;
     console.log('place_populate for exchange_id: ' + exchange_id);
 
-    var curr_exchange_id = value_of('exchange_id');
-    if (curr_exchange_id == exchange_id) {
-        var place_id = value_of('exchange_place_id')
-    } else {
-        exchange = findExchange(exchange_id);
-        if (!exchange) {
-            console.log('place_populate: no exchange found for ' + String(exchange_id));
-            return
-        }
-        var place_id = exchange.place_id
-    }
-
     if (place_id) {
-        getPlaceDetails(place_id, 0, exchange_id)
+        getPlaceDetails(place_id, 0, exchange)
     } else {
-        getPlace(exchange_id)
+        getPlace(exchange)
     }
 
 };
 
-getPlace = function(exchange_id) {
+getPlace = function(exchange) {
 
-    console.log('getPlace for exchange_id: ' + String(exchange_id));
-
-    if (exchange_id === undefined) {
-        var exchange_id      = value_of('exchange_id');
-        var exchange_name    = value_of('exchange_name');
-        var exchange_address = value_of('exchange_address');
-        var exchange_lat     = value_of('exchange_latitude');
-        var exchange_lng     = value_of('exchange_longitude');
-    } else {
-        var exchange         = findExchange(exchange_id);
-        if (!exchange) {
-            console.log('getPlace: exchange id ' + String(exchange_id) + ' was not found in exchanges');
-            return
-        }
-        var exchange_id      = exchange.id;
-        var exchange_name    = exchange.name;
-        var exchange_address = exchange.address;
-        var exchange_lat     = exchange.latitude;
-        var exchange_lng     = exchange.longitude;
-    }
-
-    if (!exchange_id || !exchange_name || !exchange_address || !exchange_lat || !exchange_lng) {
-        console.log('getPlace: exchange id, name, address, lat and/or lng missing for ' + String(exchange_id));
+    if (!exchange.id || !exchange.name || !exchange.latitude || !exchange.longitude) {
+        console.log('cannot getPlace without exchange name, lat and lng for ' + String(exchange.id));
         return
     }
 
     var request = {
-        location: new google.maps.LatLng(exchange_lat, exchange_lng),
+        location: new google.maps.LatLng(exchange.latitude, exchange.longitude),
         radius: '1000',
-        query: exchange_name
+        query: exchange.name
     };
-
-    console.log('textSearch: ' + request['query']);
-    console.log('request localtion lat: ' + request.location.lat() + ' lng: ' + request.location.lng());
 
     var service = new google.maps.places.PlacesService(map);
     service.textSearch(
         request,
-        function(place, status) {textSearchCallback(place, status, exchange_id)}
+        function(place, status) {textSearchCallback(place, status, exchange)}
     );
 };
 
 
-textSearchCallback = function(results, status, exchange_id) {
+textSearchCallback = function(results, status, exchange) {
 
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         if (results.length >= 1) {
 
             var place_id = results[0].place_id;
-            getPlaceDetails(place_id, 0, exchange_id);
+            getPlaceDetails(place_id, 0, exchange);
 
             if (results.length > 1) {
                 console.log('More than one place id found');
                 for(var i=1; i < results.length; i++) {
                     var place_id = results[i].place_id;
-                    getPlaceDetails(place_id, i, exchange_id);
+                    getPlaceDetails(place_id, i, exchange);
                 }
             }
 
@@ -94,43 +60,56 @@ textSearchCallback = function(results, status, exchange_id) {
 };
 
 
-getPlaceDetails = function(place_id, i, exchange_id) {
+getPlaceDetails = function(place_id, i, exchange) {
 
+    var exchange_id = exchange.id;
     console.log('getPlaceDetails for exchange_id: ' + exchange_id);
 
     service = new google.maps.places.PlacesService(map);
     service.getDetails(
         {placeId: place_id},
-        function(place, status) {getDetailsCallback(place, status, i, exchange_id)}
+        function(place, status) {getDetailsCallback(place, status, i, exchange)}
     );
 };
 
 
-getDetailsCallback = function(place, status, i, exchange_id) {
+getDetailsCallback = function(place, status, i, exchange) {
 
     if (status != google.maps.places.PlacesServiceStatus.OK) {
         console.log('Google Places API getDetails error: ' + status);
         return
     }
 
-    var exchange_latlng = new google.maps.LatLng(sessionStorage.exchange_latitude, sessionStorage.exchange_longitude);
-    var place_latlng = place.geometry.location;
-    var distance = Math.round(google.maps.geometry.spherical.computeDistanceBetween(exchange_latlng, place_latlng));
+    var exchange_id =       exchange.id;
+    var exchange_latlng =   new google.maps.LatLng(exchange.latitude, exchange.longitude);
+    var place_latlng =      place.geometry.location;
+    var distance =          String(Math.round(google.maps.geometry.spherical.computeDistanceBetween(exchange_latlng, place_latlng)));
 
-    // TODO: Remove eventually
-    console.log(String(i) + ' - Distance from request: ' + String(distance) + ' Name: ' + place.name + ' Address: ' + place.formatted_address + ' Phone: ' + place.formatted_phone_number);
+    // TODO: Remove loop !! Trust the first result
+    console.log(String(i) + ' - Distance from request: ' + distance + ' Name: ' + place.name + ' Address: ' + place.formatted_address + ' Phone: ' + place.formatted_phone_number);
     console.log(place);
 
     // Update only by the first result, and only if place returned is close to the exchange's DB latlng
     if (i != 0) return;
-    if (distance > 100) {alert('Returned place too far: ' + String(distance)); return}
 
-    if (place.photos && place.photos.length > 0) {
-        console.log('replacing streetview with photo');
-        photo(place.photos[0]);
+    if (distance > 100) {
+        console.log('Google 1st place is ' + distance + 'm from exchange. Not using it');
+        streetview(exchange);
+        // TODO: remove!
+        alert('Returned place too far: ' + String(distance));
+        return
     }
 
-    /// update here: reviews, opening hours, phone, website, rating, reviews, google page ("more")
+    // Place photo or streeview
+
+    if (place.photos && place.photos.length > 0) {
+        console.log('place photo insread of streetview');
+        photo(place.photos[0]);
+    } else {
+        streetview(exchange)
+    }
+
+    /// update here: opening hours, phone, website, rating, reviews, google page?! ("more")
 
 
     // Reviews
@@ -201,7 +180,11 @@ getDetailsCallback = function(place, status, i, exchange_id) {
     console.log('rating source: ' + rating_source);
 
 
-    updateExchange(exchange_id, {'exchange[place_id]': place.place_id});
+    if (!exchange.place_id) {
+        updateExchange(exchange_id, {'exchange[place_id]': place.place_id});
+    } else {
+        console.log('exchange place_id exists, no need to update')
+    }
 
 };
 

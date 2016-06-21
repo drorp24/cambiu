@@ -20,6 +20,7 @@
 //= require validations
 //= require pages
 //= require upload
+//= require jquery-qrcode-0.14.0
 
 //= require bootstrap/tooltip
 //= require bootstrap/popover

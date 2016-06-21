@@ -17,10 +17,14 @@
 $(document).ready(function() {
     setPage = function (page, id, pane, hash) {
 
-        var exchange_id = null;
         console.log('setPage. page: ' + page + ' id: ' + String(id) + ' pane: ' + String(pane) + ' hash: ' + String(hash) );
+        var page_el;
+        var pane_el;
+        var exchange_id;
+        var exchange;
 
-        // Reveal requested page & pane, updating 'active' classes
+
+        // REVEAL requested page & pane, updating 'active' classes
         $('.page').removeClass('active');
         $('.pane').removeClass('active');
 
@@ -33,37 +37,44 @@ $(document).ready(function() {
 
         pane_el = $('.pane[data-pane=' + pane + ']');
         pane_el.addClass('active');
-        if (pane == 'map') google.maps.event.trigger(map, 'resize');
-        if (pane == 'directions') drawDirectionsMap(value_of('location_lat'), value_of('location_lng'));
 
-        if (hash) {
+
+         if (hash) {
             if (hash[0] == '#') {
                 hash = hash.slice(1)
             }
             document.getElementsByName(hash)[0].scrollIntoView(true);
         }
 
-        // Populate exchange data
+        // POPULATE exchange data, (re)render map, directions
         if (id) {
+
             if (id == 'id') {
-                exchange_id = value_of('exchange_id')
+                exchange_id = value_of('exchange_id');
+                if (!exchange_id) {console.log('href-id is id but ss includes no exchange_id'); return}
             } else {
                 exchange_id = id
             }
-        }
 
-        if (exchange_id && !populated(exchange_id)) {
-
-            var exchange = findExchange(exchange_id);
-
-            if (exchange) {
-                populate('exchange', exchange);
-            } else {
+            exchange = findExchange(exchange_id);
+            if (!exchange) {
                 console.log('Exchanges is empty, i.e., page reload. pages will not populate, updatePage will soon')
+            } else {
+                if (!populated(exchange_id)) {
+                    populate('exchange', exchange);
+                }
+                if (pane == 'map') {
+                    renderMap(exchange);
+                } else
+                if (pane == 'directions') {
+                    renderDirections(exchange);
+                }
             }
+
         }
 
-        // Clear SS of all 'exchange_' and 'order_' upon moving to a non exchange-specific page (e.g., /list)
+
+        // CLEAR SS of all 'exchange_' and 'order_' upon moving to a non exchange-specific page (e.g., /list)
         // value_of('exchange_id') indicates whether these fields needs clearing, or are clear already
         // Note: Currently not removing markup: all data- and form exchange-specific fields remain populated
         if (!exchange_id && value_of('exchange_id')) {
@@ -73,7 +84,7 @@ $(document).ready(function() {
             clear('order');
         }
 
-        // Push new state (unless invoked from popstate or page reloads)
+        // PUSH new state (unless invoked from popstate or page reloads)
         var new_state = make_url(page, exchange_id, pane);
         console.log('window.location.pathname: ' + window.location.pathname)
         console.log('new_state: ' + new_state)

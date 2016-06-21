@@ -4,7 +4,7 @@
 @import "font-awesome";
 
 // Variables
-$pane-padding: 2vh;
+$pane-padding: 15px;
 $button_link_height: 100vw * 0.4;
 $green: #27AE60;
 $darkengreen: darken($green, 10%);
@@ -515,6 +515,9 @@ html, body {
 body#cambiu {
 
 
+  .navbar {
+    width: 100vw;
+  }
   .navbar_link {
     font-size: 1.7em;
     color: #fff;
@@ -643,8 +646,10 @@ body#cambiu {
   .offer {
     background-color: #333;
     font-size: 1.4em;
+    /*
     padding-left: $pane-padding;
     padding-right: $pane-padding;
+    */
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     color: #fff;
@@ -654,8 +659,8 @@ body#cambiu {
       font-size: 1.4em;
       margin-bottom: 5px;
     }
-    .expiry {
-      font-size: 0.9em;
+    .offer_motivation {
+      font-size: 1.2em;
       color: #aaa;
       margin-bottom: 5px;
     }
@@ -708,15 +713,26 @@ body#cambiu {
       font-size: 1.5em;
       margin-top: 0.5em;
       line-height: 1.2em;
+      margin-bottom: 0.3em;
+    }
+    [data-field=address] {
+      color: #000;
+      margin-top: -0.3em;
+      font-size: 1.2em;
     }
   }
 
-  .photo {
+  .photo, .qrcode {
     margin-left: $pane-padding * -1;
     margin-right: $pane-padding * -1;
   }
 
-  .button_link {
+  .qrcode {
+    text-align: center;
+    margin-bottom: -5px;
+  }
+
+  .call_to_action {
     position: fixed;
     bottom: 45px; //  height of mobile browser bottom menu
     left: (100vw - $button_link_height) / 2;
@@ -732,6 +748,16 @@ body#cambiu {
     line-height: $button_link_height;
     font-size: $button_link_height / 6;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .motivation_to_action {
+    font-size: 1em;
+    color: #000;
+    position: fixed;
+    bottom: 20px; //  height of mobile browser bottom menu
+    width: 100%;
+    text-align: center;
+    margin-left: $pane-padding * -1;
   }
 
 
@@ -3125,10 +3151,10 @@ body#cambiu {
       .quote {
         font-size: 0.9em;
       }
-      input {
+ /*     input {
         width: 100%;
       }
-    }
+*/    }
   
   }
  

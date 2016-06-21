@@ -2,39 +2,34 @@
 
   <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'arrow-left', center: 'Order', right_pane: 'none', right_icon: 'none'} %>
 
-  <div class="voucher_title text-center">
-    <span data-model="order" data-field="service_type" style="display: none"></span>
-    <span>Order</span>
-    <span data-model="order" data-field="id" style="display: none"></span>
-    <span class="voucher_number" data-model="order" data-field="voucher"></span>
+  <div class="qrcode"></div>
+
+  <div class="offer no_padding text-center">
+    <p class="amounts">
+      <span data-model="exchange" data-field="pay_amount"></span>
+      <span data-model="exchange" data-field="pay_currency" style="display: none"></span>
+      <span class="exchange_icon"><%= fa_icon "caret-right" %></span>
+      <span data-model="exchange" data-field="buy_amount"></span>
+      <span data-model="exchange" data-field="buy_currency" style="display: none"></span>
+    </p>
+    <p class="offer_motivation">
+      <a data-href-page="exchanges" data-href-id="id" data-href-pane="bonus">Click for extra £5</a>
+    </p>
   </div>
 
-  <div class="voucher_validity text-center">
-    <span><%= fa_icon "clock-o", text: "  Valid through", left: true %></span>
-    <span class="voucher_expiry" data-model="order" data-field="expiry_s"></span>
+  <div class="exchange_info">
+    <div data-model="exchange" data-field="name"></div>
+    <div data-model="exchange" data-field="address"></div>
   </div>
 
-  <div class="exchange_order text-center">
-    <div class="row">
-      <div class="col-md-12 col-xs-12 order_wrapper">
-        <div class="order">
-          <span data-model="exchange" data-field="pay_amount"></span>
-          <span data-model="exchange" data-field="pay_currency" style="display: none"></span>
-          <span class="exchange_icon"><%= fa_icon "caret-right" %></span>
-          <span data-model="exchange" data-field="buy_amount"></span>
-          <span data-model="exchange" data-field="buy_currency" style="display: none"></span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="h2 text-center">
-    Click <a data-href-page="exchanges" data-href-id="id" data-href-pane="bonus">here</a> for a £5 bonus
-  </div>
-
-
-  <div class="button_link_wrapper flex_parent">
-    <div class="button_link flex_child" data-href-page="exchanges" data-href-id="id" data-href-pane="directions" data-ajax="updateOrder" data-order-status="pursued">Directions</div>
+  <div class="call_to_action"
+       data-model="exchange"
+       data-href-page="exchanges"
+       data-href-id="id"
+       data-href-pane="directions"
+       data-ajax="updateOrder"
+       data-order-status="pursued">
+    Directions
   </div>
 
 </div>

@@ -100,6 +100,7 @@
             var model = $this.data('model');
             var field = /*model ? model + '_' + $this.data('field') :*/ $this.data('field');
 
+            // TODO: delete! piece of crap!
             var url_val = urlParameter(field);
             if (url_val) {
                 var value = url_val;
