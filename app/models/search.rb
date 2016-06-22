@@ -14,7 +14,6 @@ class Search < ActiveRecord::Base
 
     self.distance      ||=  20
     self.distance_unit ||= "km"
-    self.sort          ||= "price"
 
     pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
     buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)   

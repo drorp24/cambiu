@@ -58,7 +58,7 @@ $(document).ready(function() {
 
             exchange = findExchange(exchange_id);
             if (!exchange) {
-                console.log('Exchanges is empty, i.e., page reload. pages will not populate, updatePage will soon')
+                console.log('Exchanges is empty => page reload. pages doesnt populate, restore() does.');
             } else {
                 if (!populated(exchange_id)) {
                     populate('exchange', exchange);
@@ -170,13 +170,11 @@ $(document).ready(function() {
     // This should be the only code doing something that's not event-driven
 
 
-    // Upon re/load, search exchanges. Either triggered by getLocation if missing, or directly.
+    // restore session vars and populate
+    restore();
 
-    if (!value_of('location')) {
-        getLocation();
-    } else {
-        search_exchanges()
-    }
+    // get user's location and invoke search
+    getLocation();
 
     // setPage() to current path
     // replace '/' with 'homepage' or else pushState will get ''

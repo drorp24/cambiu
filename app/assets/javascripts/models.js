@@ -5,6 +5,18 @@
 //  1-way binding model -> view
 
 
+value_of = function(key) {
+    var a = sessionStorage.getItem(key);
+    return (a && a != "null") ? a : null;
+};
+
+// populate a field's value in ss, and in form inputs too if applicable
+set = function(field, value) {
+    sessionStorage.setItem(field, value);
+    $('form [data-field=' + field + ']').val(value);
+};
+
+
 populate = function(model, obj) {
 
     console.log('populate: ' + model);
@@ -67,3 +79,41 @@ renderQr = function(order) {
     var url = window.location.host + '/orders/' + order.id + '/confirm';
     $('.qrcode').empty().qrcode({size: photoHeight(), text: url})
 };
+
+restore = function() {
+
+    var value_of_pay_amount = value_of('pay_amount');
+
+    set('pay_amount',       value_of_pay_amount         || def_pay_amount);
+    set('pay_currency',     value_of('pay_currency')    || def_pay_currency);
+    set('buy_amount',       value_of('buy_amount')      || (value_of_pay_amount ? null : def_buy_amount));
+    set('buy_currency',     value_of('buy_currency')    || def_buy_currency);
+    set('sort',             value_of('sort')            || def_sort);
+    set('location',         value_of('location')        || def_location);
+    set('location_short',   value_of('location_short')  || def_location_short);
+    set('location_lat',     value_of('location_lat')    || def_location_lat);
+    set('location_lng',     value_of('location_lng')    || def_location_lng);
+    set('location_type',    value_of('location_type')   || def_location_type);
+    set('location_reason',  value_of('location_reason') || def_location_reason);
+
+    bind_currency_to_autonumeric();
+    bind_forms();
+
+    var exchange = {};
+    var order = {};
+
+    for (var i = 0; i < sessionStorage.length; i++) {
+        var key = sessionStorage.key(i);
+        var value = sessionStorage.getItem(key);
+        if (value == "null") value = null;
+        if (key && key.indexOf('exchange_') > -1) {
+            exchange[key.slice(9)] = value;
+        } else if (key && key.indexOf('order_') > -1) {
+            order[key.slice(6)] = value;
+        }
+    }
+    populate('exchange', exchange);
+    populate('order', order);
+};
+
+

@@ -78,10 +78,17 @@ var mapPan;
 var clear;
 var make_url;
 var break_url;
-var def_lat = '51.51574678520366';
-var def_lng = '-0.16346305847173426';
+var def_pay_amount = null;
+var def_pay_currency = 'USD';
+var def_buy_amount = 1000;
+var def_buy_currency = 'EUR';
+var def_sort = 'price';
+var def_location_lat = '51.51574678520366';
+var def_location_lng = '-0.16346305847173426';
 var def_location = 'London, UK';
 var def_location_short = 'London';
+var def_location_type = 'default';
+var def_location_reason = null;
 var google_api_key = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
 var photo_width;
 var photo_height;
@@ -249,26 +256,8 @@ findExchange = function(id) {
     }
 };
 
-def = function(variable) {
-    var val = {
-        'pay_amount'    : null,
-        'pay_currency'  : 'USD',
-        'buy_amount'    : 1000,
-        'buy_currency'  : 'GBP',
-        'sort'          : 'distance',
-        'service_type'  : 'collection',
-        'distance'      : '100'
-    };
-    return val[variable] ? val[variable] : null
-};
-
 homepage = function() {
   return $('body').hasClass('homepage') || window.location.pathname == '/homepage' || window.location.pathname == '/'
-};
-
-value_of = function(key) {
-    var a = sessionStorage.getItem(key);
-    return (a && a != "null") ? a : null;
 };
 
 numeric_value_of = function(key) {

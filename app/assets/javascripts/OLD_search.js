@@ -1,11 +1,11 @@
 //
 // S E A R C H
 //
-// Search forms  UI
-// Search forms ajax calls
+// Maintain 2-way sync b/w sessionStorage and search form variable values (incl. initialization upon re/load and event handlers)
+// Handle ajax calls
+// Forms  UI
 
-$(document).ready(function() {
-
+// Currencies: initial settings & change events
     bind_currency_to_autonumeric = function() {
 
         $('[data-autonumeric]').autoNumeric('init');
@@ -21,7 +21,7 @@ $(document).ready(function() {
             var target  = $this.data('symboltarget');
             var symbol  = $this.find('option:selected').attr('data-symbol');
 
-            set(field, value);
+            set(field, value, $this);
 
             $('[data-autonumeric][data-field=' + target + ']').each(function() {
                 update_currency_symbol($(this), symbol);
@@ -39,17 +39,128 @@ $(document).ready(function() {
 
     };
 
-    // TODO: Remove when only one form exists!
-    // when a form field changes in one form, it should change in other forms too
-    bind_forms = function() {
-        $('form [data-field]').change(function() {
+// TODO! If there's one single search form (and no order form), this is not needed
+// TODO Even if there are 2 (one in homepage the other in the search pane) upon entry to search pane, the form there should be populated from the ss
+// TODO Make 'set' only set the sessionStorage. It is called many times!
+// populate a field's value in all relevant html tags and in sessionStorage
+    set = function(field, value, excluded) {
+        if (excluded === undefined) excluded = '';
+        var elements = '[data-field=' + field + ']';
+
+        if (field =='buy_amount' || field == "pay_amount") {
+            var value_clean = value  ? String(value).replace(/[^0-9\.]+/g,"")  : null;
+            sessionStorage.setItem(field, value_clean);
+            $('#search_form ' + '#' + field + '_val').val(value_clean);   // Ugly hack for autoNumeric sending _val values to server
+        }  else {
+            sessionStorage.setItem(field, value);
+        }
+
+
+        $(elements).each(function() {
             var $this = $(this);
-            var field = $this.data('field');
-            var value = $this.val();
-            set(field, value);
-        });
+            if (!$this.is(excluded)) {
+                if ($this.is('input, select')) {
+                    $this.val(value);
+                } else {
+                    $this.html(value);
+                }
+            }
+        })
     };
 
+// TODO: Remove!
+    // bind an event handler to a field's all relevant html tags so that when either of them change, all the other tags change to match
+    bind = function(field, event) {
+        var elements = '[data-field=' + field + ']';
+        $(elements).on(event, function() {
+
+            var $this = $(this);
+            if ($this.is('select')) return;
+            var changed_el = $this;
+            var value = $this.val();
+
+            set(field, value, changed_el);
+            if (field=='location') set('location_short', value, changed_el);
+        })
+    };
+
+    // Sets all variables
+// TODO: Restore session values from ss. That's its role. Not from the form
+// TODO: Just go over the def values and use ss value if exists otherwise the def
+// TODO: For instace, sort is no longer in the form (since FE sorts) so it never gets initialized here!
+    set_variables = function(use_session) {
+
+        console.log('set_variables');
+        variables_set = true;
+        if (use_session === undefined) use_session = true;
+
+        $('.homesearch #search_form [data-field]').each(function() {
+
+            var $this = $(this);
+            var model = $this.data('model');
+            var field = /*model ? model + '_' + $this.data('field') :*/ $this.data('field');
+
+            // TODO: delete! piece of crap!
+            var url_val = urlParameter(field);
+            if (url_val) {
+                var value = url_val;
+             } else {
+                var def_val = def(field);
+                var value = (use_session ? value_of(field) || def_val : def_val);
+                if (field == 'pay_amount') {value = use_session ? value_of('pay_amount') || (value_of('buy_amount') ? null : def_val) : def_val}
+                if (field == 'buy_amount') {value = use_session ? value_of('buy_amount') || (value_of('pay_amount') ? null : def_val) : def_val}
+            }
+
+            set(field, value, '#order_id');
+
+        });
+
+       bind_currency_to_autonumeric();
+
+        var value_of_sort = value_of('sort');
+        var sort = value_of_sort ? value_of_sort : def('sort')
+        set('sort', sort); // Temporary!!
+        set('exchange_populated', null); // Temporary!!
+
+    };
+
+
+    search_exchanges = function() {
+        console.log('After location found, set to default, changed by user, or page was reloaded:');
+         if (!homepage()) {
+            console.log('Not homepage: submitting form');
+            $('#search_form').submit();
+        } else {
+            console.log('Homepage: not submitting form');
+        }
+    };
+
+
+
+
+$(document).ready(function() {
+
+
+//    set_variables();
+
+    // Binding
+
+    $('#homepage form input').each(function() {
+        var field = $(this).data('field');
+        bind(field, 'keyup');
+    });
+
+
+
+    // fix autoNumeric placing "0.00" instead of null
+    function fix(field) {
+        if (sessionStorage.getItem(field) == '') {
+            sessionStorage.setItem(field, null);
+            set(field, null)
+        }
+    }
+    fix('pay_amount');
+    fix('buy_amount');
 
     $('#exchanges').on('click','.open_search', function(e) {
         $('#exchange_params_change').collapse('toggle')
@@ -94,9 +205,6 @@ $(document).ready(function() {
 
     // UI
 
-
-
-    // UI - Display proper symbol on amount fields based on respective currency fields
 
     $('.camera').on('click tap', (function() {
         $('#photo').click()
@@ -206,21 +314,6 @@ $(document).ready(function() {
     //
 
 
-
-    search_exchanges = function() {
-        console.log('After location found, set to default, changed by user, or page was reloaded:');
-        if (!homepage()) {
-            console.log('Not homepage: submitting form');
-            $('#search_form').submit();
-        } else {
-            console.log('Homepage: not submitting form');
-        }
-    };
-
-
-
-
-
     // Before actions
 
     startLoader = function() {
@@ -239,8 +332,6 @@ $(document).ready(function() {
         drawMap(value_of('location_lat'), value_of('location_lng'));
         startLoader();
         clearList();
-        $('input[type=hidden][id=pay_amount_val]').remove();
-        $('input[type=hidden][id=buy_amount_val]').remove();
     });
 
     $('#search_form').on('ajax:success', function(event, data, status, xhr) {

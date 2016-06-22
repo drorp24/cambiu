@@ -13,7 +13,6 @@
 
         updateMap(data.exchanges);
         updateList(exchanges);
-        populateExchange(exchanges, urlId());
         updateResults(exchanges);
 
     };

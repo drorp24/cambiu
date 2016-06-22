@@ -2,7 +2,7 @@ populatePlace = function(exchange) {
 
     var exchange_id =   exchange.id;
     var place_id =      exchange.place_id;
-    console.log('place_populate for exchange_id: ' + exchange_id);
+    console.log('populatePlace for exchange_id: ' + exchange_id);
 
     if (place_id) {
         getPlaceDetails(place_id, 0, exchange)
@@ -25,6 +25,7 @@ getPlace = function(exchange) {
         query: exchange.name
     };
 
+    if (!map) drawMap(def_location_lat, def_location_lng);
     var service = new google.maps.places.PlacesService(map);
     service.textSearch(
         request,
@@ -56,7 +57,6 @@ textSearchCallback = function(results, status, exchange) {
     } else {
         console.log('Google Places API textSearch error: ' + status);
     }
-
 };
 
 
@@ -103,7 +103,7 @@ getDetailsCallback = function(place, status, i, exchange) {
     // Place photo or streeview
 
     if (place.photos && place.photos.length > 0) {
-        console.log('place photo insread of streetview');
+        console.log('place photo instead of streetview');
         photo(place.photos[0]);
     } else {
         streetview(exchange)

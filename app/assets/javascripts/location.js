@@ -20,11 +20,11 @@
 
     set_default_location = function(reason) {
         if (reason === undefined) reason = null;
-        console.log('Since user location could not be found: setting the default location');
+        console.log('Set default location');
         set('location',         def_location);
         set('location_short',   def_location_short);
-        set('location_lat',     def_lat);
-        set('location_lng',     def_lng);
+        set('location_lat',     def_location_lat);
+        set('location_lng',     def_location_lng);
         set('location_type',    'default');
         set('location_reason',  reason);
     };
@@ -56,7 +56,7 @@ locationCallback = function() {
                     set('user_lat',         user_lat);
                     set('user_lng',         user_lng);
 
-                    var def_latlng =            new google.maps.LatLng(def_lat, def_lng);
+                    var def_latlng =            new google.maps.LatLng(def_location_lat, def_location_lng);
                     var user_distance_from_def = Math.round(google.maps.geometry.spherical.computeDistanceBetween(user_latlng, def_latlng)/1000);
                     console.log('user distance from Default is: ' + user_distance_from_def.toString() + ' km');
 

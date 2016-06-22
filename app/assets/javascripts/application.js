@@ -20,7 +20,6 @@
 //= require validations
 //= require pages
 //= require upload
-//= require jquery-qrcode-0.14.0
 
 //= require bootstrap/tooltip
 //= require bootstrap/popover
@@ -29,3 +28,4 @@
 //= require bootstrap/carousel
 //= require jquery.freeow.min
 //= require star-rating
+//= require jquery-qrcode-0.14.0
