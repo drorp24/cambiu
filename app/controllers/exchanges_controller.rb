@@ -1,5 +1,12 @@
 class ExchangesController < ApplicationController
 
+  def get
+    result = {}
+    exchange = Exchange.find(params[:id])
+    result[params[:property]] = exchange.send(params[:property])
+    render json: result
+  end
+
   def quote
     exchange = Exchange.find(params[:id])
     render json: exchange.quote(params)

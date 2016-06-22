@@ -41,12 +41,9 @@ class Exchange < ActiveRecord::Base
   scope :with_contract, -> { where(contract: true) }
   scope :with_real_rates, -> { where("rates_source > 2") }
 
-  def rating
-    reviews.average(:rating) if reviews.any?
-  end
-
   def rating=(rate)
     reviews.create(rating: rate)
+    write_attribute(:rating, reviews.average(:rating))
   end
 
   def has_real_rates?
@@ -311,7 +308,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:best_at] = []
     exchange_hash[:rates] = quotes[:rates]
     exchange_hash[:place_id] = self.place_id
-    exchange_hash[:rating] =  0
+    exchange_hash[:rating] =  self.rating
     exchange_hash[:reviews] = 'No'
 
     exchange_hash

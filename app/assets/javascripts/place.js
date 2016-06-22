@@ -180,28 +180,14 @@ getDetailsCallback = function(place, status, i, exchange) {
     console.log('rating source: ' + rating_source);
 
 
+    // Persist place_id
+
     if (!exchange.place_id) {
         updateExchange(exchange_id, {'exchange[place_id]': place.place_id});
     } else {
         console.log('exchange place_id exists, no need to update')
     }
 
-};
-
-
-updateExchange = function(exchange_id, data) {
-    $.ajax({
-        type: 'PUT',
-        url: '/exchanges/' + exchange_id,
-        data: data,
-        dataType: 'JSON',
-        success: function (data) {
-            console.log('Exchange successfully updated');
-        },
-        error: function (data) {
-            console.log('There was an error updating the exchange');
-        }
-    });
 };
 
 
@@ -242,6 +228,39 @@ photoHeight = function() {
     }
     return photo_height;
 };
+
+
+updateExchange = function(exchange_id, data) {
+    $.ajax({
+        type: 'PUT',
+        url: '/exchanges/' + exchange_id,
+        data: data,
+        dataType: 'JSON',
+        success: function (data) {
+            console.log('Exchange successfully updated');
+        },
+        error: function (data) {
+            console.log('There was an error updating the exchange');
+        }
+    });
+};
+
+getExchange = function(exchange_id, property) {
+    $.ajax({
+        type: 'GET',
+        url: '/exchanges/' + exchange_id + '/get',
+        data: 'property=' + property,
+        dataType: 'JSON',
+        success: function (data) {
+            console.log('Exchange successfully returned value');
+            console.log(data)
+        },
+        error: function (data) {
+            console.log('There was an error getting value from the exchange');
+        }
+    });
+};
+
 
 $(document).ready(function() {
     $('.ratings').rating({
