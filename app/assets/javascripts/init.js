@@ -90,6 +90,14 @@ var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 sessionStorage.videoStopped = null;
 
 
+toggleOrder = function($el) {
+
+    var order       = $el.attr('data-order');
+    var toggledOrder    = order == 'asc' ? 'desc' : 'asc';
+    $el.attr('data-order', toggledOrder);
+    return $el;
+};
+
 def_vals = function() {
 
     var def = {};

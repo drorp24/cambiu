@@ -69,23 +69,31 @@ $(document).ready(function() {
         if (sort == 'distance') {
             exchanges.sort(function(a, b){return a.properties.distance-b.properties.distance;});
         }
-        else if (sort == 'price') {
+        else
+        if (sort == 'price') {
             exchanges.sort(function(a, b){return (a.properties.quote ? a.properties.quote : 10000000)-(b.properties.quote ? b.properties.quote : 10000000)});
             if (value_of('pay_amount') > 0) { exchanges.reverse()}
+        } else
+        if (sort == 'reverse') {
+            exchanges.reverse()
         }
 
-        $('[data-sort]').removeClass('active');
-        $('[data-sort=' + sort + ']').addClass('active');
-
-        set('sort', sort);
+        if (sort != 'reverse') set('sort', sort);
 
         return exchanges;
      };
 
     $('[data-sort]').click(function() {
 
-        var sort = $(this).data('sort');
-        if (sort == value_of('sort')) {console.log('already sorted by ' + sort); return;}
+        var $this = $(this);
+        var sort = $this.hasClass('active') ? 'reverse' : $this.data('sort');
+
+        if (sort == 'reverse') {
+            $this = toggleOrder($this)
+        } else {
+            $('[data-sort]').removeClass('active');
+            $('[data-sort=' + sort + ']').addClass('active');
+        }
 
         updateList(exchanges, 'more', sort);
 

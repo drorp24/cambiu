@@ -643,6 +643,22 @@ body#cambiu {
     margin-right: $pane-padding * -1;
   }
 
+  [data-order=desc] span::after {
+      font-family: fontAwesome;
+      content: '    ' + "\f0dd";
+      font-size: 1.7em;
+      position: relative;
+      bottom: 0.1em;
+  }
+
+  [data-order=asc] span::after {
+    font-family: fontAwesome;
+    content: '    ' + "\f0de";
+    font-size: 1.7em;
+    position: relative;
+    bottom: -0.4em;
+  }
+
   .offer {
     background-color: #333;
     font-size: 1.4em;
