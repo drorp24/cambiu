@@ -36,7 +36,7 @@ class Search < ActiveRecord::Base
       exchanges_offers << exchange.offer(center, pay, buy)
     end
 
-    exchanges_offers = indicate_best(exchanges_offers, pay, buy)
+    exchanges_offers = indicate_best(exchanges_offers, pay, buy) if exchanges.any?
 
     geoJsonize(exchanges_offers)
 
@@ -70,6 +70,8 @@ class Search < ActiveRecord::Base
     direction = pay.amount > 0 ? 'max' : 'min'
 
     exchanges_offers = exchanges_offers.select{|exchange_offer| exchange_offer[:rates][transaction.to_sym] != nil}
+
+    return [] if exchanges_offers.empty?
 
     nearest_exchange_offer = exchanges_offers.min_by{|exchange_offer| exchange_offer[:distance]}
     nearest_exchange_offer[:best_at] << 'nearest'

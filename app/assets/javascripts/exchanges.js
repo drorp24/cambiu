@@ -5,9 +5,9 @@
 
 
 
-    updatePage = function(data) {
+    updateExchanges = function(data) {
 
-        console.log('updatePage');
+        console.log('updateExchanges');
         set('search_id', data.search);
         exchanges = data.exchanges.features;
 
@@ -46,6 +46,7 @@
      updateBest = function(exchanges) {
         $('#exchanges_search_results').css('display', 'none');
         best_append_point = '#exchanges_list .list-group #best_exchanges';
+        $(best_append_point).empty();
 
         best_exchanges = best(exchanges);
 
@@ -65,6 +66,7 @@
         $('#exchanges_list .more').css('display', 'none');
 
         exchanges_append_point = '#exchanges_list .list-group #exchanges_items';
+        $(exchanges_append_point).empty();
 
         exchanges = sort_by(sort);
 
@@ -119,20 +121,6 @@
         $('#exchanges_list #exchanges_items').empty();
     };
 
-
-    // TODO: Move to search.js as part of the set_variables: reconstructing the markup from the session's vars if exitent
-    // TODO: and include order too. Currently refresh loses order fields markup
-    populateExchange = function(exchanges, exchange_id) {
-
-        // TODO: Dont take it from the buffer after search like here, it should all exist in the ss. That's the ss for.
-        if (exchange_id && !populated(exchange_id)) {
-            var exchange = findExchange(exchange_id);
-            if (exchange) populate('exchange', exchange);
-        }
-
-
-
-    };
 
     updateResults = function (data) {
 

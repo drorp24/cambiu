@@ -42,7 +42,7 @@ $(document).ready(function() {
     // TODO: Remove when only one form exists!
     // when a form field changes in one form, it should change in other forms too
     bind_forms = function() {
-        $('form [data-field]').change(function() {
+        $('form [data-field]').keyup(function() {
             var $this = $(this);
             var field = $this.data('field');
             var value = $this.val();
@@ -64,7 +64,7 @@ $(document).ready(function() {
 
         console.log('sort by ' + sort);
 
-        if (exchanges.length == 0) return;
+        if (exchanges.length == 0) return exchanges;
 
         if (sort == 'distance') {
             exchanges.sort(function(a, b){return a.properties.distance-b.properties.distance;});
@@ -201,6 +201,66 @@ $(document).ready(function() {
 
     }));
 
+
+
+
+    // Handle user location changes
+
+    function searchbox_addListener(searchBox) {
+        google.maps.event.addListener(searchBox, 'places_changed', function () {
+            console.log('Location changed by user');
+            var places = searchBox.getPlaces();
+            if (places.length == 0) {
+                set_default_location('Location changed by user, but getPlaces found no place');
+                return
+            }
+            place = places[0];
+            set('location', place.formatted_address);
+            set('location_short', place.name);
+            set('location_lat', place.geometry.location.lat());
+            set('location_lng', place.geometry.location.lng());
+            set('location_type', 'selected');
+            set('location_reason', null);
+
+            search_exchanges();
+        });
+    }
+
+    // Turn location fields into google searchBox's
+    $('input[data-field=location]').each(function() {
+        input = $(this).get(0);
+        searchBox = new google.maps.places.SearchBox(input, {
+            types: ['regions']
+        });
+        searchbox_addListener(searchBox);
+    });
+
+    // Widen location in #new_parameters when clicked
+    $('body.desktop #new_parameters [data-field=location]').click(function() {
+        $('.pac-container').css('transition',
+            'all .5s ease');
+        $('.pac-container').css('width',
+            '300px');
+    });
+
+    // fix their z-index dynamically
+    $('input[data-field=location]').click(function() {
+        if (!pacContainerInitialized) {
+            $('.pac-container').css('z-index',
+                '9999');
+            pacContainerInitialized = true;
+        }
+    });
+
+
+
+
+
+
+
+
+
+
     //
     // AJAX Callbacks
     //
@@ -244,8 +304,8 @@ $(document).ready(function() {
     });
 
     $('#search_form').on('ajax:success', function(event, data, status, xhr) {
-        console.log('#search_form ajax:success. Starting to updatePage...');
-        updatePage(data);
+        console.log('#search_form ajax:success. Starting to updateExchanges...');
+        updateExchanges(data);
      });
 
     $('#search_form').on('ajax:error', function(event, xhr, status, error) {

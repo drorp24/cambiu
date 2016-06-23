@@ -7,9 +7,9 @@
 // Instead of calling server to fetch results from DB and return relevant, populated html, do:
 //
 //   -  replace active html, manipulate browser history (setPage),
-//   -  populate pages from in-memory exchanges buffer  (populate, unpopulate) relevant for spa that has all exchanges in buffer; single-result searches use updatePage
+//   -  populate pages from in-memory exchanges buffer  (populate, unpopulate) relevant for spa that has all exchanges in buffer; single-result searches use updateExchanges
 //      Note: populate also will not work in page reload, since setPage is called before ajax:success returns. Such cases can be seen on the console as: 'exchanges is empty'.
-//      updatePage will find the exchange record in buffer and update the page.
+//      updateExchanges will find the exchange record in buffer and update the page.
 //
 // Pages.js is also where the technical flow begins
 // It is here that getLocation() is called (location.js), triggering a search (search.js) that in turn updatesPage (exchanges.js)
@@ -174,8 +174,11 @@ $(document).ready(function() {
     restore();
 
     // get user's location and invoke search
-    getLocation();
-
+    if (value_of('location_type') == 'default') {
+        getLocation();
+    } else {
+        search_exchanges()
+    }
     // setPage() to current path
     // replace '/' with 'homepage' or else pushState will get ''
 

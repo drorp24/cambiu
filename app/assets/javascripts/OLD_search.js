@@ -335,8 +335,8 @@ $(document).ready(function() {
     });
 
     $('#search_form').on('ajax:success', function(event, data, status, xhr) {
-        console.log('#search_form ajax:success. Starting to updatePage...');
-        updatePage(data);
+        console.log('#search_form ajax:success. Starting to updateExchanges...');
+        updateExchanges(data);
      });
 
     $('#search_form').on('ajax:error', function(event, xhr, status, error) {

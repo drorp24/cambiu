@@ -78,20 +78,10 @@ var mapPan;
 var clear;
 var make_url;
 var break_url;
-var def_pay_amount = null;
-var def_pay_currency = 'USD';
-var def_buy_amount = 1000;
-var def_buy_currency = 'EUR';
-var def_sort = 'price';
-var def_location_lat = '51.51574678520366';
-var def_location_lng = '-0.16346305847173426';
-var def_location = 'London, UK';
-var def_location_short = 'London';
-var def_location_type = 'default';
-var def_location_reason = 'default';
 var google_api_key = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
 var photo_width;
 var photo_height;
+var defaults;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
@@ -100,12 +90,37 @@ var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 sessionStorage.videoStopped = null;
 
 
+def_vals = function() {
+
+    var def = {};
+
+    def['pay_amount']       = null;
+    def['pay_currency']     = 'USD';
+    def['buy_amount']       = 1000;
+    def['buy_currency']     = 'EUR';
+    def['sort']             = 'price';
+    def['location_lat']     = '51.51574678520366';
+    def['location_lng']     = '-0.16346305847173426';
+    def['location']         = 'London, UK';
+    def['location_short']   = 'London';
+    def['location_type']    = 'default';
+
+    return def;
+
+};
+
+// returns null if no default is defined for the given key
+def = function(key) {
+    if (typeof defaults === 'undefined') defaults = def_vals();  //invoke def_vals() once only
+    return (typeof defaults[key] !== 'undefined') ? defaults[key] : null;
+};
+
 searchable = function(field) {
   return (
     field.indexOf('buy_') > -1   ||
     field.indexOf('pay_') > -1   ||
     field.indexOf('user_') > -1  ||
-    field.indexOf('location_') > -1
+    field.indexOf('location') > -1
   )
 };
 

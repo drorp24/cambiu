@@ -19,13 +19,14 @@
 
 
     set_default_location = function(reason) {
+        var def = def_vals();
         if (reason === undefined) reason = "no reason";
         console.log('Setting default location. Reason: ' + reason);
-        set('location',         def_location);
-        set('location_short',   def_location_short);
-        set('location_lat',     def_location_lat);
-        set('location_lng',     def_location_lng);
-        set('location_type',    def_location_type);
+        set('location',         def.location);
+        set('location_short',   def.location_short);
+        set('location_lat',     def.location_lat);
+        set('location_lng',     def.location_lng);
+        set('location_type',    def.location_type);
         set('location_reason',  reason);
     };
 
@@ -57,7 +58,7 @@ locationCallback = function() {
                     set('user_lat',         user_lat);
                     set('user_lng',         user_lng);
 
-                    var def_latlng =            new google.maps.LatLng(def_location_lat, def_location_lng);
+                    var def_latlng =            new google.maps.LatLng(def('location_lat'), def('location_lng'));
                     var user_distance_from_def = Math.round(google.maps.geometry.spherical.computeDistanceBetween(user_latlng, def_latlng)/1000);
                     console.log('user distance from Default is: ' + user_distance_from_def.toString() + ' km');
 
@@ -99,7 +100,7 @@ locationCallback = function() {
 
     getLocation = function() {
 
-        if (navigator.geolocation) {
+         if (navigator.geolocation) {
             console.log('calling navigator.geolocation....');
             var timeoutVal = 5000;  // setInterval????!
             navigator.geolocation.getCurrentPosition(
@@ -114,79 +115,4 @@ locationCallback = function() {
             set_default_location('Browser does not support geolocation');
             locationCallback();
         }
- /*       var t = setTimeout(function () {
-            if (!value_of('location')) {
-                console.log('Geocoder timeout, firefox bug: setting default location');
-                set_default_location();
-                locationCallback();
-            }
-        }, 6000);
-*/    };
-
-
-
-
-
-
-
-    // UI
-    // Handle user location changes
-
-    function searchbox_addListener(searchBox) {
-        google.maps.event.addListener(searchBox, 'places_changed', function () {
-            console.log('Location changed by user');
-            var places = searchBox.getPlaces();
-            if (places.length == 0) {
-                set_default_location('Location changed by user, but getPlaces found no place');
-                return
-            }
-            place = places[0];
-            set('location', place.formatted_address);
-            set('location_short', place.name);
-            set('location_lat', place.geometry.location.lat());
-            set('location_lng', place.geometry.location.lng());
-            set('location_type', 'selected');
-
-            search_exchanges();
-        });
-    }
-
-    // Turn location fields into google searchBox's
-    $('input[data-field=location]').each(function() {
-        input = $(this).get(0);
-        searchBox = new google.maps.places.SearchBox(input, {
-            types: ['regions']
-        });
-        searchbox_addListener(searchBox);
-    });
-
-        // Widen location in #new_parameters when clicked
-        $('body.desktop #new_parameters [data-field=location]').click(function() {
-            $('.pac-container').css('transition',
-                'all .5s ease');
-            $('.pac-container').css('width',
-                '300px');
-            });
-
-        // fix their z-index dynamically
-        $('[data-field=location]').keypress(function() {
-/*
-        $('.pac-container').css('width',
-            '300px');
-*/
-        if (!pacContainerInitialized) {
-            $('.pac-container').css('z-index',
-                '9999');
-            pacContainerInitialized = true;
-        }
-    });
-
-    // clear input upon click, but do not set() anything yet
-    $('input[data-field=location]').click(function() {
-        var $this = $(this);
-        $this.attr('placeholder', 'Search for offers in...');
-        $this.val('');
-    });
-
-
-
+     };

@@ -1,11 +1,19 @@
 populatePlace = function(exchange) {
 
-    var exchange_id =   exchange.id;
-    var place_id =      exchange.place_id;
-    console.log('populatePlace for exchange_id: ' + exchange_id);
+    console.log('populatePlace for exchange_id: ' + exchange.id);
+
+    var place_id =          exchange.place_id;
+    var exchange_location = new google.maps.LatLng(exchange.latitude, exchange.longitude);
+
+    map =   new google.maps.Map(document.getElementById('map-canvas'), {
+        center: exchange_location,
+        zoom: 15
+    });
+
+    sessionStorage.map_exchange_id = exchange.id;
 
     if (place_id) {
-        getPlaceDetails(place_id, 0, exchange)
+        getPlaceDetails(place_id, exchange)
     } else {
         getPlace(exchange)
     }
@@ -14,40 +22,38 @@ populatePlace = function(exchange) {
 
 getPlace = function(exchange) {
 
-    if (!exchange.id || !exchange.name || !exchange.latitude || !exchange.longitude) {
+    if (!exchange.name || !exchange.latitude || !exchange.longitude) {
         console.log('cannot getPlace without exchange name, lat and lng for ' + String(exchange.id));
         return
     }
 
+    var exchange_location = new google.maps.LatLng(exchange.latitude, exchange.longitude);
+
     var request = {
-        location: new google.maps.LatLng(exchange.latitude, exchange.longitude),
-        radius: '1000',
-        query: exchange.name
+        location: exchange_location,
+        name: exchange.name,
+        rankBy: google.maps.places.RankBy.DISTANCE
     };
 
-    if (!map) drawMap(def_location_lat, def_location_lng);
     var service = new google.maps.places.PlacesService(map);
-    service.textSearch(
+
+    service.nearbySearch(
         request,
-        function(place, status) {textSearchCallback(place, status, exchange)}
+        function(results, status) {nearbySearchCallback(results, status, exchange)}
     );
 };
 
 
-textSearchCallback = function(results, status, exchange) {
+nearbySearchCallback = function(results, status, exchange) {
 
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         if (results.length >= 1) {
 
             var place_id = results[0].place_id;
-            getPlaceDetails(place_id, 0, exchange);
+            getPlaceDetails(place_id, exchange);
 
             if (results.length > 1) {
                 console.log('More than one place id found');
-                for(var i=1; i < results.length; i++) {
-                    var place_id = results[i].place_id;
-                    getPlaceDetails(place_id, i, exchange);
-                }
             }
 
          } else {
@@ -55,26 +61,37 @@ textSearchCallback = function(results, status, exchange) {
          }
 
     } else {
-        console.log('Google Places API textSearch error: ' + status);
+        console.log('Google Places API nearbySearch error: ' + status);
     }
 };
 
 
-getPlaceDetails = function(place_id, i, exchange) {
+getPlaceDetails = function(place_id, exchange) {
 
-    var exchange_id = exchange.id;
-    console.log('getPlaceDetails for exchange_id: ' + exchange_id);
+    console.log('getPlaceDetails for exchange_id: ' + exchange.id);
 
-    if (!map) drawMap(def_location_lat, def_location_lng);
+    if (value_of('map_exchange_id') != exchange.id) {
+        var exchange_location = new google.maps.LatLng(exchange.latitude, exchange.longitude);
+
+        map =   new google.maps.Map(document.getElementById('map-canvas'), {
+            center: exchange_location,
+            zoom: 15
+        });
+        console.log('map_exchange_id != exchange.id: re-rendered map')
+    } else {
+        console.log('map_exchange_id == exchange.id. No need to re-render map')
+    }
+
     service = new google.maps.places.PlacesService(map);
+
     service.getDetails(
         {placeId: place_id},
-        function(place, status) {getDetailsCallback(place, status, i, exchange)}
+        function(place, status) {getDetailsCallback(place, status, exchange)}
     );
 };
 
 
-getDetailsCallback = function(place, status, i, exchange) {
+getDetailsCallback = function(place, status, exchange) {
 
     if (status != google.maps.places.PlacesServiceStatus.OK) {
         console.log('Google Places API getDetails error: ' + status);
@@ -86,14 +103,11 @@ getDetailsCallback = function(place, status, i, exchange) {
     var place_latlng =      place.geometry.location;
     var distance =          String(Math.round(google.maps.geometry.spherical.computeDistanceBetween(exchange_latlng, place_latlng)));
 
-    // TODO: Remove loop !! Trust the first result
-    console.log(String(i) + ' - Distance from request: ' + distance + ' Name: ' + place.name + ' Address: ' + place.formatted_address + ' Phone: ' + place.formatted_phone_number);
+    // TODO: Remove eventually
+    console.log('Distance: ' + distance + ' Name: ' + place.name + ' Address: ' + place.formatted_address);
     console.log(place);
 
-    // Update only by the first result, and only if place returned is close to the exchange's DB latlng
-    if (i != 0) return;
-
-    if (distance > 100) {
+    if (distance > 150) {
         console.log('Google 1st place is ' + distance + 'm from exchange. Not using it');
         streetview(exchange);
         // TODO: remove!
@@ -116,15 +130,16 @@ getDetailsCallback = function(place, status, i, exchange) {
     // Reviews
 
     var reviews_length = place.reviews && place.reviews.length;
+    var reviews_list = $('.reviews_list');
+
+    reviews_list.empty();
     if (reviews_length > 0) {
 
         $('[data-model=exchange][data-field=reviews]').html(reviews_length);
         $('.review_word').html(pluralize('review', reviews_length));
 
-        var reviews_list = $('.reviews_list');
         var review_template = $('.review.template');
 
-        reviews_list.empty();
         var rating_sum = 0;
         for (i = 0; i < place.reviews.length; i++) {
 

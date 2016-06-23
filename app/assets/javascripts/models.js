@@ -13,7 +13,11 @@ value_of = function(key) {
 // populate a field's value in ss, and in form inputs too if applicable
 set = function(field, value) {
     sessionStorage.setItem(field, value);
-    if (searchable(field)) $('form [data-field=' + field + ']').val(value);
+    if (searchable(field)) {
+        var clean_value = (field.indexOf('amount') > -1)  ? String(value).replace(/[^0-9\.]+/g,"")  : value;
+        $('form [data-field=' + field + ']').val(value);
+        $('.navbar [data-field=' + field + ']').html(clean_value);
+    }
 };
 
 
@@ -82,32 +86,44 @@ renderQr = function(order) {
 
 restore = function() {
 
+    var exchange = {};
+    var order = {};
     var value_of_pay_amount = value_of('pay_amount');
+    var value_of_buy_amount = value_of('buy_amount');
+    var def = def_vals();
 
-    set('pay_amount',       value_of_pay_amount         || def_pay_amount);
-    set('pay_currency',     value_of('pay_currency')    || def_pay_currency);
-    set('buy_amount',       value_of('buy_amount')      || (value_of_pay_amount ? null : def_buy_amount));
-    set('buy_currency',     value_of('buy_currency')    || def_buy_currency);
-    set('sort',             value_of('sort')            || def_sort);
+    for (var i = 0; i < sessionStorage.length; i++) {
+
+        var key = sessionStorage.key(i);
+        var value = sessionStorage.getItem(key);  if (value == "null") value = null;
+
+        if (key && key.indexOf('exchange_') > -1) {
+
+            exchange[key.slice(9)] = value;
+
+        } else if (key && key.indexOf('order_') > -1) {
+
+            order[key.slice(6)] = value;
+
+        } else if (searchable(key)) {
+
+            if (key == 'buy_amount') {
+                set('buy_amount',   value_of_buy_amount || (value_of_pay_amount ? null : def['buy_amount']))
+            } else
+            if (key == 'pay_amount') {
+                set('pay_amount',   value_of_pay_amount || (value_of_buy_amount ? null : def['pay_amount']))
+            } else {
+                set(key,            value_of(key)       || def[key])
+            }
+
+        }
+    }
+
+    populate('exchange', exchange);
+    populate('order', order);
 
     bind_currency_to_autonumeric();
     bind_forms();
-
-    var exchange = {};
-    var order = {};
-
-    for (var i = 0; i < sessionStorage.length; i++) {
-        var key = sessionStorage.key(i);
-        var value = sessionStorage.getItem(key);
-        if (value == "null") value = null;
-        if (key && key.indexOf('exchange_') > -1) {
-            exchange[key.slice(9)] = value;
-        } else if (key && key.indexOf('order_') > -1) {
-            order[key.slice(6)] = value;
-        }
-    }
-    populate('exchange', exchange);
-    populate('order', order);
 };
 
 

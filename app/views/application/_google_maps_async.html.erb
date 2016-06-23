@@ -3,7 +3,7 @@
     function initialize() {
         location_settings();
         if (window.location.pathname != '/homepage') {
-            // Now that google is defined, submit form to re-ajax search results & updatePage (= draw map, place markers & display restuls)
+            // Now that google is defined, submit form to re-ajax search results & updateExchanges (= draw map, place markers & display restuls)
             // But only for  search page : homepage awaits user input and will submit only upon clicking the button (for performance)
             // Though getLocation() probably havent yet found the location, this if occurs only upon reload, so session holds the location
              console.log('not homepage: submitting form');
