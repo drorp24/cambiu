@@ -19,17 +19,18 @@
 
 
     set_default_location = function(reason) {
-        if (reason === undefined) reason = null;
-        console.log('Set default location');
+        if (reason === undefined) reason = "no reason";
+        console.log('Setting default location. Reason: ' + reason);
         set('location',         def_location);
         set('location_short',   def_location_short);
         set('location_lat',     def_location_lat);
         set('location_lng',     def_location_lng);
-        set('location_type',    'default');
+        set('location_type',    def_location_type);
         set('location_reason',  reason);
     };
 
 locationCallback = function() {
+        console.log('now that location is found, search is invoked');
         search_exchanges()
     };
 

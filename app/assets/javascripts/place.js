@@ -65,6 +65,7 @@ getPlaceDetails = function(place_id, i, exchange) {
     var exchange_id = exchange.id;
     console.log('getPlaceDetails for exchange_id: ' + exchange_id);
 
+    if (!map) drawMap(def_location_lat, def_location_lng);
     service = new google.maps.places.PlacesService(map);
     service.getDetails(
         {placeId: place_id},

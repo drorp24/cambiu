@@ -266,7 +266,7 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  def offer(center, pay, buy, user_location)
+  def offer(center, pay, buy)
 
     exchange_hash = {}
 
@@ -300,7 +300,6 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:errors] = quotes[:errors]
     exchange_hash[:rounded] = quotes[:rounded]
     exchange_hash[:base_rate] = quotes[:base_rate]
-    exchange_hash[:user_location] = user_location
     exchange_hash[:delivery_tracking] = delivery_tracking
     exchange_hash[:service_type] = service_type
     exchange_hash[:logo] = self.logo ? ActionController::Base.helpers.image_path(self.logo) : nil

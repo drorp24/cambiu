@@ -10,7 +10,7 @@
 //= require jquery.validate
 
 //= require ytplayer
-//= require pageload
+//= require init
 //= require search
 //= require map
 //= require place

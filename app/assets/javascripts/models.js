@@ -13,7 +13,7 @@ value_of = function(key) {
 // populate a field's value in ss, and in form inputs too if applicable
 set = function(field, value) {
     sessionStorage.setItem(field, value);
-    $('form [data-field=' + field + ']').val(value);
+    if (searchable(field)) $('form [data-field=' + field + ']').val(value);
 };
 
 
@@ -89,12 +89,6 @@ restore = function() {
     set('buy_amount',       value_of('buy_amount')      || (value_of_pay_amount ? null : def_buy_amount));
     set('buy_currency',     value_of('buy_currency')    || def_buy_currency);
     set('sort',             value_of('sort')            || def_sort);
-    set('location',         value_of('location')        || def_location);
-    set('location_short',   value_of('location_short')  || def_location_short);
-    set('location_lat',     value_of('location_lat')    || def_location_lat);
-    set('location_lng',     value_of('location_lng')    || def_location_lng);
-    set('location_type',    value_of('location_type')   || def_location_type);
-    set('location_reason',  value_of('location_reason') || def_location_reason);
 
     bind_currency_to_autonumeric();
     bind_forms();

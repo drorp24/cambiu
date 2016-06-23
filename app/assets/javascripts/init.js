@@ -88,7 +88,7 @@ var def_location_lng = '-0.16346305847173426';
 var def_location = 'London, UK';
 var def_location_short = 'London';
 var def_location_type = 'default';
-var def_location_reason = null;
+var def_location_reason = 'default';
 var google_api_key = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
 var photo_width;
 var photo_height;
@@ -99,6 +99,15 @@ var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 
 sessionStorage.videoStopped = null;
 
+
+searchable = function(field) {
+  return (
+    field.indexOf('buy_') > -1   ||
+    field.indexOf('pay_') > -1   ||
+    field.indexOf('user_') > -1  ||
+    field.indexOf('location_') > -1
+  )
+};
 
 pluralize = function(word, count) {
   return count > 1 ? word + 's' : word
