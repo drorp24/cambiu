@@ -655,7 +655,20 @@ body#cambiu {
     width: 100%;
   }
 
-   [data-order=desc] span::before {
+  .list-group-item:nth-child(odd) {
+    background-color: #eee;
+  }
+
+
+  #exchanges_items .list-group-item{
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+
+
+
+  [data-order=desc] span::before {
       font-family: fontAwesome;
       content: "\f161" + '    ';
   }
@@ -2465,9 +2478,9 @@ body#cambiu {
         }
       }
       .list_icon {
-        font-size: 1.5em;
+        font-size: 1.2em;
         font-weight: 400;
-        color: #333;
+        color: #888;
         margin-left: -0.3em;
       }
       .distance:not(button) {
@@ -2482,9 +2495,9 @@ body#cambiu {
         }
       }
       .name {
-        font-weight: 400;
-        color: $darken-brand-color;
-        font-size: 1.3em;
+        font-weight: 300;
+        color: #000;
+        font-size: 1.1em;
         margin-top: 0.2em;
         margin-bottom: 0.2em;
       }
@@ -2503,11 +2516,17 @@ body#cambiu {
           display: table-cell;
         }
       }
-        .quote, .quote_currency, .distance:not(.button) {
-        font-weight: 400;
-          font-size: 1.2em;
-          color: #333;
+        .quote, .quote_currency {
+        font-weight: 700;
+          font-size: 1.3em;
+          color: #000;
           line-height: 1em;
+      }
+      .distance:not(.button) {
+        font-size: 1.2em;
+        font-weight: 400;
+        color: #333;
+        line-height: 1em;
       }
       .quote_currency {
         font-size: 0.85em;
@@ -2569,7 +2588,7 @@ body#cambiu {
         }
       }
       .appendix {
-        color: #000;
+        color: #888;
         font-weight: 300;
         font-size: 1.2em;
          padding-bottom: 0.3em;
@@ -2586,7 +2605,8 @@ body#cambiu {
             }
           }
           .gain_amount {
-            font-weight: 400;
+            font-weight: 700;
+            color: $darkengreen;
           }
           .gain_tooltip {
             color: #555;
@@ -3011,11 +3031,7 @@ body#cambiu {
 
     &.exchanges {
       
-      #exchanges_items {
-//        box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
-      }
-
-// OLD SEARCH PAGE
+ // OLD SEARCH PAGE
 
     .bootstrap-switch {
       border-radius: $border-radius;

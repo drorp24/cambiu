@@ -63,14 +63,15 @@ $(document).ready(function() {
                 if (!populated(exchange_id)) {
                     populate('exchange', exchange);
                 }
-                if (pane == 'map') {
-                    renderMap(exchange);
-                } else
-                if (pane == 'directions') {
-                    renderDirections(exchange);
-                }
             }
 
+        }
+
+        if (pane == 'map') {
+            renderMap(exchange);
+        } else
+        if (pane == 'directions') {
+            renderDirections(exchange);
         }
 
 
