@@ -1,6 +1,5 @@
 <div id="exchanges_search_results" class="list-group-item" style="display: none">
 
-  <div class="row">
 
     <div id="loader_message">
         <span id="loading_icon"><%= image_tag "loader1.gif"%></span>
@@ -15,27 +14,27 @@
 
     </div>
 
-    <div id="sort_line">
 
-      <div class="col-md-10 col-xs-10">
+    <div id="sort_line" class="align-items">
 
-        <div class="sort_btn_group btn-group" role="group" data-toggle="buttons">
-            <button type="button" class="sort btn btn-default active" data-sort="distance" data-order="desc">
-              <span>Distance&nbsp  </span>
+      <div class="col-xs-11 reach-out-left align-items">
+
+        <div class="sort_btn_group btn-group full_width" role="group" data-toggle="buttons">
+            <button type="button" class="sort btn btn-default" data-sort="distance" data-order="asc">
+              <span>&nbsp  Distance</span>
             </button>
-            <button type="button" class="sort btn btn-default" data-sort="price" data-order="desc">
-              <span>Price&nbsp  </span>
+            <button type="button" class="sort btn btn-default" data-sort="price" data-order="asc">
+              <span>&nbsp  Price</span>
             </button>
         </div>
 
       </div>
 
-      <div class="col-md-1 col-xs-1">
+      <div class="col-md-1 col-xs-1 reach-out-left align-items">
         <span class="remove_more pull-right">&times;</span>
       </div>
 
     </div>
 
-  </div>
 
 </div>

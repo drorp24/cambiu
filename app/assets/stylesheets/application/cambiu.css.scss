@@ -571,6 +571,10 @@ body#cambiu {
     }
   }
 
+  .align-items {
+    display: flex;
+    align-items: center;
+  }
 
   /*
   .list-group-item {
@@ -579,6 +583,9 @@ body#cambiu {
   }
   */
 
+  .list-group {
+    margin-bottom: 0;
+  }
 
 
   #map_container, #directions_map_container {
@@ -624,6 +631,7 @@ body#cambiu {
     }
   }
 
+
   .img-circle {
     border-radius: 50%;
   }
@@ -643,20 +651,18 @@ body#cambiu {
     margin-right: $pane-padding * -1;
   }
 
-  [data-order=desc] span::after {
-      font-family: fontAwesome;
-      content: '    ' + "\f0dd";
-      font-size: 1.7em;
-      position: relative;
-      bottom: 0.1em;
+  .full_width {
+    width: 100%;
   }
 
-  [data-order=asc] span::after {
+   [data-order=desc] span::before {
+      font-family: fontAwesome;
+      content: "\f161" + '    ';
+  }
+
+  [data-order=asc] span::before {
     font-family: fontAwesome;
-    content: '    ' + "\f0de";
-    font-size: 1.7em;
-    position: relative;
-    bottom: -0.4em;
+    content: "\f160" + '    ';
   }
 
   .offer {
@@ -2288,18 +2294,10 @@ body#cambiu {
           }
         }
         #exchanges_search_results {
-          text-align: center;
-          margin-top: -1px;
-          padding-bottom: 20px;
-          background-color: #eee;
-          border-top: 1px solid #bbb;
           #sort_line {
-            position: relative;
-            top: 0.25em;
           }
           button.sort {
-            height: 3.8em;
-          }
+           }
           .order_text  {
             position: relative;
             top: 1em;
@@ -2309,13 +2307,12 @@ body#cambiu {
             font-size: 2em;
             font-weight: 300;
             color: #555;
-            line-height: 45px;
             &:hover {
               cursor: pointer;
             }
           }
           button {
-            width: 8.5em;
+            width: 50%;
           }
           button, .order_text {
             &:focus {
@@ -2324,17 +2321,7 @@ body#cambiu {
             font-size: 0.9em;
             text-transform: uppercase;
 
-            &.active {
-              background-color: #fff;
-              color: $darken-brand-color;
-              font-weight: 500;
             }
-            &:not(.active):not(.order_text) {
-            background-color: #eee;
-//            box-shadow: none;
-            color: #999;
-             }
-          }
           button:first-child {
             border-radius: 4px 0 0 4px;
           }
@@ -2363,7 +2350,24 @@ body#cambiu {
               color: $brand-color;
             }
           }
+          [data-sort] {
+            font-size: 1em;
+            &.active {
+              background-color: $darken-brand-color;
+              color: #fff;
+            }
+            &:not(.active) {
+              background-color: #fff;
+              color: #000;
+            }
+          }
+
+
+
         }
+
+
+
       }
       .badge {
         background-color: $brand-color;

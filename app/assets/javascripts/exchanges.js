@@ -7,6 +7,10 @@
 
     updateExchanges = function(data) {
 
+        if (data == null) {
+            alert('Unfortunately we cannot serve you at this time. Please try again in a few moments');
+            return;
+        }
         console.log('updateExchanges');
         set('search_id', data.search);
         exchanges = data.exchanges.features;
@@ -24,7 +28,6 @@
         var list = list_to_update ? list_to_update : value_of('list');
         set('list', list);
         var sort = sort_by ? sort_by : value_of('sort');
-        set('sort', sort);
 
         if (list == 'all') {
 

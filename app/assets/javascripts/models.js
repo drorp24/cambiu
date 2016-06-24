@@ -86,15 +86,30 @@ renderQr = function(order) {
 
 restore = function() {
 
+    console.log('restore');
+
     var exchange = {};
     var order = {};
     var value_of_pay_amount = value_of('pay_amount');
     var value_of_buy_amount = value_of('buy_amount');
     var def = def_vals();
 
+    searchParams.forEach(function(key) {
+
+        if (key == 'buy_amount') {
+            set('buy_amount',   value_of_buy_amount || (value_of_pay_amount ? null : def['buy_amount']))
+        } else
+        if (key == 'pay_amount') {
+            set('pay_amount',   value_of_pay_amount || (value_of_buy_amount ? null : def['pay_amount']))
+        } else {
+            set(key,            value_of(key)       || def[key])
+        }
+
+    });
+
     for (var i = 0; i < sessionStorage.length; i++) {
 
-        var key = sessionStorage.key(i);
+        var key =   sessionStorage.key(i);
         var value = sessionStorage.getItem(key);  if (value == "null") value = null;
 
         if (key && key.indexOf('exchange_') > -1) {
@@ -104,17 +119,6 @@ restore = function() {
         } else if (key && key.indexOf('order_') > -1) {
 
             order[key.slice(6)] = value;
-
-        } else if (searchable(key)) {
-
-            if (key == 'buy_amount') {
-                set('buy_amount',   value_of_buy_amount || (value_of_pay_amount ? null : def['buy_amount']))
-            } else
-            if (key == 'pay_amount') {
-                set('pay_amount',   value_of_pay_amount || (value_of_buy_amount ? null : def['pay_amount']))
-            } else {
-                set(key,            value_of(key)       || def[key])
-            }
 
         }
     }

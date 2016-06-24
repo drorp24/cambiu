@@ -123,13 +123,25 @@ def = function(key) {
     return (typeof defaults[key] !== 'undefined') ? defaults[key] : null;
 };
 
+var searchParams = [
+    'pay_amount',
+    'pay_currency',
+    'buy_amount',
+    'buy_currency',
+    'location',
+    'location_short',
+    'location_type',
+    'location_reason',
+    'location_lat',
+    'location_lng',
+    'user_location',
+    'user_lat',
+    'user_lng',
+    'sort'
+];
+
 searchable = function(field) {
-  return (
-    field.indexOf('buy_') > -1   ||
-    field.indexOf('pay_') > -1   ||
-    field.indexOf('user_') > -1  ||
-    field.indexOf('location') > -1
-  )
+  return searchParams.indexOf(field) > -1;
 };
 
 pluralize = function(word, count) {

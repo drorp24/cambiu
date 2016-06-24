@@ -63,23 +63,35 @@ $(document).ready(function() {
     sort_by = function(sort) {
 
         console.log('sort by ' + sort);
-
         if (exchanges.length == 0) return exchanges;
 
         if (sort == 'distance') {
-            exchanges.sort(function(a, b){return a.properties.distance-b.properties.distance;});
+             if ($('[data-sort=distance]').data('order') == 'asc') {
+                exchanges.sort(function(a, b){return a.properties.distance - b.properties.distance});
+            } else {
+                exchanges.sort(function(a, b){return b.properties.distance - a.properties.distance});
+            }
         }
         else
         if (sort == 'price') {
-            exchanges.sort(function(a, b){return (a.properties.quote ? a.properties.quote : 10000000)-(b.properties.quote ? b.properties.quote : 10000000)});
-            if (value_of('pay_amount') > 0) { exchanges.reverse()}
+            if ($('[data-sort=price]').data('order') == 'asc') {
+                exchanges.sort(function(a, b){return (a.properties.quote ? a.properties.quote : 10000000) - (b.properties.quote ? b.properties.quote : 10000000)});
+             } else {
+                exchanges.sort(function(a, b){return (b.properties.quote ? b.properties.quote : 10000000) - (a.properties.quote ? a.properties.quote : 10000000)});
+            }
         } else
         if (sort == 'reverse') {
-            exchanges.reverse()
+            exchanges.reverse();
+            toggleOrder($('[data-sort].active'));
         }
 
-        if (sort != 'reverse') set('sort', sort);
-
+        if (sort != 'reverse') {
+            set('sort', sort);
+            if (!$('[data-sort=' + sort + ']').hasClass('active')) { //if sorted programmatically (otherwise ui already changed that upon user click)
+                $('[data-sort]').removeClass('active');
+                $('[data-sort=' + sort + ']').addClass('active');
+            }
+        }
         return exchanges;
      };
 
@@ -88,9 +100,7 @@ $(document).ready(function() {
         var $this = $(this);
         var sort = $this.hasClass('active') ? 'reverse' : $this.data('sort');
 
-        if (sort == 'reverse') {
-            $this = toggleOrder($this)
-        } else {
+        if (sort != 'reverse') {
             $('[data-sort]').removeClass('active');
             $('[data-sort=' + sort + ']').addClass('active');
         }
