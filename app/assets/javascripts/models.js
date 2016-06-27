@@ -81,7 +81,7 @@ populated = function(exchange_id) {
 
 renderQr = function(order) {
     var url = window.location.host + '/orders/' + order.id + '/confirm';
-    $('.qrcode').empty().qrcode({size: photoHeight(), text: url})
+    $('.qrcode').empty().qrcode({size: photoHeight() - 20, text: url})
 };
 
 restore = function() {
@@ -109,7 +109,7 @@ restore = function() {
 
     for (var i = 0; i < sessionStorage.length; i++) {
 
-        var key =   sessionStorage.key(i);
+        var key = sessionStorage.key(i);
         var value = sessionStorage.getItem(key);  if (value == "null") value = null;
 
         if (key && key.indexOf('exchange_') > -1) {

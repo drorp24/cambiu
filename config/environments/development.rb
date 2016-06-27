@@ -15,7 +15,7 @@ Rails.application.configure do
   config.cache_store = :null_store
   config.static_cache_control = "public, s-maxage=31536000, max-age=31536000"   
 
-  # Don't care if the mailer can't bonus.
+  # Don't care if the mailer can't confirm.
   config.action_mailer.raise_delivery_errors = false
 
   # Print deprecation notices to the Rails logger.

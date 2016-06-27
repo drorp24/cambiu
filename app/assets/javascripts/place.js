@@ -230,7 +230,7 @@ photo = function(photo) {
 photoWidth = function() {
     if (photo_width) return photo_width;
 
-    photo_width = Math.round($('.active.pane').outerWidth());
+    photo_width = Math.round($('.pane .navbar').eq(0).outerWidth());
     return photo_width;
 };
 

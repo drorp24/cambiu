@@ -211,6 +211,9 @@ $(document).ready(function() {
             dataType:   'JSON',
             success:    function (data) {
                 console.log('Order successfully updated');
+                if (order_status == 'ordered') {
+                    swal("Ordered!", "Your order is ready and waiting for you", "success")
+                }
              },
             error:      function (data) {
                 console.log('There was an error updating the order');

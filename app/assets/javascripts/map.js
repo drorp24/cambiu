@@ -89,7 +89,7 @@
 
         var mapOptions = {
             center: new google.maps.LatLng(exchange.latitude, exchange.longitude),
-            zoom: map_initial_zoom,
+//            zoom: map_initial_zoom,
             scaleControl: true
         };
         directionsMap = new google.maps.Map(document.getElementById('directions-map-canvas'), mapOptions);
@@ -123,7 +123,6 @@
         directionsService.route(request, function (response, status) {
             console.log('directionsService.route returned with status: ' + status);
             if (status == google.maps.DirectionsStatus.OK) {
-                map_center_changed = true;
                 directionsDisplay.setDirections(response);
             }
         });

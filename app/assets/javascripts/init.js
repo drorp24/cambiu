@@ -82,6 +82,7 @@ var google_api_key = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
 var photo_width;
 var photo_height;
 var defaults;
+var expiry;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
@@ -376,19 +377,9 @@ $(document).ready(function() {
         if (desktop) $("body").popover({ selector: '[data-toggle=popover]' });
     });
 
-    inform = function(title, text, hide) {
-/*
-        if (hide === undefined) hide = false;
-        $("#freeow").freeow(title, text, {
-            classes: ["smokey", "slide"],
-            autoHide: false,
-            showStyle: {opacity: 1, left: 0},
-            hideStyle: {opacity: 0, left: '400px'},
-            autoHide: hide
-        });
-*/
-    };
-
+    expiry = $('.flipclock').FlipClock(3600, {
+        countdown: true
+    });
 
     listen_to_file_input();
  });

@@ -63,15 +63,15 @@ $(document).ready(function() {
                 if (!populated(exchange_id)) {
                     populate('exchange', exchange);
                 }
+                if (pane == 'map') {
+                    renderMap(exchange);
+                } else
+                if (pane == 'directions') {
+                    renderDirections(exchange);
+                }
+
             }
 
-        }
-
-        if (pane == 'map') {
-            renderMap(exchange);
-        } else
-        if (pane == 'directions') {
-            renderDirections(exchange);
         }
 
 
@@ -120,7 +120,7 @@ $(document).ready(function() {
 
         // EXTREMELY IMPORTANT! Without it, every pushState will add another push with '#' and popState will be invoked. Pulling hair.
         e.preventDefault();
-        // Avoids getting into exchange page when 'getit' is clicked even if redirection takes place, probably due to validation
+        // Avoids getting into exchange page when 'order' is clicked even if redirection takes place, probably due to validation
         e.stopPropagation();
 
         var $this = $(this);

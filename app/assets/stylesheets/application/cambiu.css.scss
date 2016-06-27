@@ -656,13 +656,58 @@ body#cambiu {
   }
 
   .list-group-item:nth-child(odd) {
-    background-color: #eee;
+//    background-color: #eee;
   }
 
 
   #exchanges_items .list-group-item{
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+
+
+
+
+  .loader {
+    margin: 60px auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+    border-left: 1.1em solid #ffffff;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.1s infinite linear;
+    animation: load8 1.1s infinite linear;
+  }
+  .loader,
+  .loader:after {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+  }
+  @-webkit-keyframes load8 {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes load8 {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
   }
 
 
@@ -752,8 +797,10 @@ body#cambiu {
     }
     [data-field=address] {
       color: #000;
-      margin-top: -0.3em;
-      font-size: 1.2em;
+      margin-top: -0.5em;
+      font-size: 1em;
+      font-weight: 300;
+      margin-bottom: 0.5em;
     }
   }
 
@@ -764,12 +811,22 @@ body#cambiu {
 
   .qrcode {
     text-align: center;
-    margin-bottom: -5px;
+    padding: 10px;
+    canvas {
+      margin-bottom: -5px;
+    }
+  }
+
+  .flipclock.expiry {
+    zoom: 0.3;
+    -moz-transform: scale(0.25);
+    position: fixed;
+    bottom: 45px;
   }
 
   .call_to_action {
     position: fixed;
-    bottom: 45px; //  height of mobile browser bottom menu
+    bottom: 65px; //  height of mobile browser bottom menu
     left: (100vw - $button_link_height) / 2;
     text-align: center;
     font-weight: 300;
@@ -789,7 +846,7 @@ body#cambiu {
     font-size: 1em;
     color: #000;
     position: fixed;
-    bottom: 20px; //  height of mobile browser bottom menu
+    bottom: 40px; //  height of mobile browser bottom menu
     width: 100%;
     text-align: center;
     margin-left: $pane-padding * -1;

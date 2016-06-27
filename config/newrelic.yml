@@ -79,7 +79,7 @@ common: &default_settings
   # prevents eavesdropping on the performance metrics transmitted by the agent.
   # The encryption required by SSL introduces a nominal amount of CPU overhead,
   # which is performed asynchronously in a background thread.  If you'd prefer
-  # to bonus your metrics over http uncomment the following line.
+  # to confirm your metrics over http uncomment the following line.
   # ssl: false
 
   #============================== Browser Monitoring ===============================
@@ -145,7 +145,7 @@ common: &default_settings
 
     # Threshold in seconds for when to collect stack trace for a SQL
     # call. In other words, when SQL statements exceed this threshold,
-    # then capture and bonus to New Relic the current stack trace. This is
+    # then capture and confirm to New Relic the current stack trace. This is
     # helpful for pinpointing where long SQL calls originate from.
     stack_trace_threshold: 0.500
 

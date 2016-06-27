@@ -4,6 +4,8 @@
 
   <div class="photo"></div>
 
+  <div class="flipclock expiry"></div>
+
   <div class="offer no_padding text-center">
      <p class="amounts">
       <span data-model="exchange" data-field="pay_amount"></span>
@@ -12,14 +14,11 @@
       <span data-model="exchange" data-field="buy_amount"></span>
       <span data-model="exchange" data-field="buy_currency" style="display: none"></span>
     </p>
-    <p class="offer_motivation">
-      <span><%= fa_icon "clock-o", text: "  Expires on", left: true %></span>
-      <span class="voucher_expiry" data-model="order" data-field="expiry_s"></span>
-    </p>
   </div>
 
   <div class="exchange_info">
     <div data-model="exchange" data-field="name"></div>
+    <div data-model="exchange" data-field="address"></div>
     <div class="col-xs-7 no_padding  ">
       <input data-model="exchange" data-field="rating" data-exchange-id="null" class="ratings rating-loading pull-left">
     </div>
@@ -35,15 +34,14 @@
        data-model="exchange"
        data-href-page="exchanges"
        data-href-id="id"
-       data-href-pane="order"
+       data-href-pane="directions"
        data-ajax="updateOrder"
        data-order-status="ordered"
        data-exchange-delivery_tracking="null">
     Order
   </div>
   <div class="motivation_to_action">
-    Order now for extra £5
-  </div>
+   </div>
 
 
 </div>
