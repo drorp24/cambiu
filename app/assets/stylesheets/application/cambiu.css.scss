@@ -817,11 +817,33 @@ body#cambiu {
     }
   }
 
-  .flipclock.expiry {
+  /*
+  .flipclock {
     zoom: 0.3;
     -moz-transform: scale(0.25);
     position: fixed;
     bottom: 45px;
+  }
+  */
+
+  .valid_by {
+    font-size: 0.7em;
+  }
+  .expiry {
+    position: fixed;
+    right: 15px;
+    top: 45vw;
+    width: 25vw;
+    height: 25vw;
+    border-radius: 12.5vw;
+    font-size: 1.5em;
+    color: #000;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
   }
 
   .call_to_action {

@@ -28,7 +28,7 @@ class Order < ActiveRecord::Base
   # Overriding 'attributes' adds methods as additional attributes within the JSON response as if they were part of the DB model, enabling controller to respond_with @order
   # except doesn't remove unwanted keys though
   def attributes
-    super.merge(expiry_s: self.expiry_s, voucher: self.voucher, mandrill_status: self.mandrill_status, mandrill_reject_reason: self.mandrill_reject_reason).except(:order_created_at, :order_updated_at, :order_expiry)
+    super.merge(expiry_t: self.expiry_t, expiry_s: self.expiry_s, voucher: self.voucher, mandrill_status: self.mandrill_status, mandrill_reject_reason: self.mandrill_reject_reason).except(:order_created_at, :order_updated_at, :order_expiry)
   end
 
   def mandrill_status
@@ -55,6 +55,10 @@ class Order < ActiveRecord::Base
 
   def expiry_s
     self.expiry.to_s(:short)
+  end
+
+  def expiry_t
+    self.expiry.to_s(:time)
   end
 
   def voucher

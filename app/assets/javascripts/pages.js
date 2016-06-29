@@ -74,9 +74,11 @@ $(document).ready(function() {
         if (pane == 'map') {
             renderMap(exchange);
         } else
+/*
         if (pane == 'offer') {
             expiry.setTime(3600)
         }
+*/
 
 
         // CLEAR SS of all 'exchange_' and 'order_' upon moving to a non exchange-specific page (e.g., /list)

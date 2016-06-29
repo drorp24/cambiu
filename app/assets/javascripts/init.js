@@ -377,9 +377,11 @@ $(document).ready(function() {
         if (desktop) $("body").popover({ selector: '[data-toggle=popover]' });
     });
 
+/*
     expiry = $('.flipclock').FlipClock(3600, {
         countdown: true
     });
+*/
 
     listen_to_file_input();
  });
