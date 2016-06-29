@@ -212,9 +212,32 @@ $(document).ready(function() {
             success:    function (data) {
                 console.log('Order successfully updated');
                 if (order_status == 'ordered') {
-                    swal("Ordered!", "Your order is ready and waiting for you", "success")
-                }
-             },
+                    /*                   swal({
+                     title: "Ordered!",
+                     html: true,
+                     text: "Your order is ready and waiting for you at </br><strong>" + value_of('exchange_name') + '</strong></br>' + value_of('exchange_address'),
+                     type: 'success'
+                     })
+                     */
+                     swal({
+                     title: "Ordered",
+                     html: true,
+                     text: "",
+                     type: "success",
+                     showCancelButton: true,
+                     confirmButtonColor: "#DD6B55",
+                     confirmButtonText: "OK",
+                     cancelButtonText: "Directions"
+                     },
+                     function(isConfirm){
+                     if (isConfirm) {
+                     setPage('exchanges', 'id', 'order');
+                     } else {
+                     setPage('exchanges', 'id', 'directions');
+                     }
+                     });
+                 }
+            },
             error:      function (data) {
                 console.log('There was an error updating the order');
             }

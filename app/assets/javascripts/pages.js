@@ -62,9 +62,6 @@ $(document).ready(function() {
             } else {
                 if (!populated(exchange_id)) {
                     populate('exchange', exchange);
-                }
-                if (pane == 'map') {
-                    renderMap(exchange);
                 } else
                 if (pane == 'directions') {
                     renderDirections(exchange);
@@ -72,6 +69,13 @@ $(document).ready(function() {
 
             }
 
+        }
+
+        if (pane == 'map') {
+            renderMap(exchange);
+        } else
+        if (pane == 'offer') {
+            expiry.setTime(3600)
         }
 
 

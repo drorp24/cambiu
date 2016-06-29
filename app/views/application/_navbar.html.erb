@@ -1,6 +1,8 @@
 <nav class="navbar navbar-fixed-top">
 
-  <div class="navbar_link navbar_left col-xs-2" data-href-page="exchanges" data-href-pane=<%= left_pane %>>
+  <% left_id = nil if local_assigns[:left_id].nil? %>
+  <% right_id = nil if local_assigns[:right_id].nil? %>
+  <div class="navbar_link navbar_left col-xs-2" data-href-page="exchanges" data-href-pane=<%= left_pane %> data-href-id=<%= left_id  %>>
     <% unless left_pane == 'none' %>
       <i class="navbar_icon fa fa-<%= left_icon %>"></i>
     <% end %>
@@ -23,7 +25,8 @@
   <div class="navbar_link navbar_right col-xs-2"
 
     data-href-page="exchanges"
-     data-href-pane=<%= right_pane %>>
+    data-href-pane=<%= right_pane %>
+    data-href-id=<%= right_id %>>
     <% unless right_pane == 'none' %>
         <i class="navbar_icon fa fa-<%= right_icon %>"></i>
     <% end %>
