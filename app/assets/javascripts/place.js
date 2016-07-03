@@ -290,7 +290,13 @@ $(document).ready(function() {
 
     $('.ratings').on('rating.change', function(event, value, caption) {
         var exchange_id = $(this).attr('data-exchange-id');
-        alert('Thank you for your input!');
+        swal({
+                title: "Saved",
+                html: true,
+                text: 'You gave ' + value_of('exchange_name') + ' <strong>' + value + ' stars</strong>' ,
+                type: "success"
+             });
+
         updateExchange(exchange_id, {'exchange[rating]': value});
     });
 

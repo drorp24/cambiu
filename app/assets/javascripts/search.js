@@ -222,7 +222,7 @@ $(document).ready(function() {
                      swal({
                      title: "Ordered",
                      html: true,
-                     text: "",
+                     text: '<strong>' + value_of('exchange_name') + '</strong></br>' + value_of('exchange_address'),
                      type: "success",
                      showCancelButton: true,
                      confirmButtonColor: "#DD6B55",
