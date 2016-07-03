@@ -2,18 +2,8 @@ populatePlace = function(exchange) {
 
     console.log('populatePlace for exchange_id: ' + exchange.id);
 
-    var place_id =          exchange.place_id;
-    var exchange_location = new google.maps.LatLng(exchange.latitude, exchange.longitude);
-
-    map =   new google.maps.Map(document.getElementById('map-canvas'), {
-        center: exchange_location,
-        zoom: 15
-    });
-
-    sessionStorage.map_exchange_id = exchange.id;
-
-    if (place_id) {
-        getPlaceDetails(place_id, exchange)
+    if (exchange.place_id) {
+        getPlaceDetails(exchange.place_id, exchange)
     } else {
         getPlace(exchange)
     }
@@ -68,20 +58,8 @@ nearbySearchCallback = function(results, status, exchange) {
 
 getPlaceDetails = function(place_id, exchange) {
 
-    console.log('getPlaceDetails for exchange_id: ' + exchange.id);
-
-    if (value_of('map_exchange_id') != exchange.id) {
-        var exchange_location = new google.maps.LatLng(exchange.latitude, exchange.longitude);
-
-        map =   new google.maps.Map(document.getElementById('map-canvas'), {
-            center: exchange_location,
-            zoom: 15
-        });
-        console.log('map_exchange_id != exchange.id: re-rendered map')
-    } else {
-        console.log('map_exchange_id == exchange.id. No need to re-render map')
-    }
-
+    console.log('this is map now: ')
+    console.log(map)
     service = new google.maps.places.PlacesService(map);
 
     service.getDetails(
@@ -199,8 +177,6 @@ getDetailsCallback = function(place, status, exchange) {
 
     if (!exchange.place_id) {
         updateExchange(exchange_id, {'exchange[place_id]': place.place_id});
-    } else {
-        console.log('exchange place_id exists, no need to update')
     }
 
 };

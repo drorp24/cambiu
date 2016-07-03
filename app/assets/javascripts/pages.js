@@ -62,24 +62,17 @@ $(document).ready(function() {
             } else {
                 if (!populated(exchange_id)) {
                     populate('exchange', exchange);
-                } else
+                }
                 if (pane == 'directions') {
                     renderDirections(exchange);
                 }
-
             }
 
         }
 
-        if (pane == 'map') {
+        if (pane == 'map' && map) {
             renderMap(exchange);
-        } else
-/*
-        if (pane == 'offer') {
-            expiry.setTime(3600)
         }
-*/
-
 
         // CLEAR SS of all 'exchange_' and 'order_' upon moving to a non exchange-specific page (e.g., /list)
         // value_of('exchange_id') indicates whether these fields needs clearing, or are clear already
@@ -176,9 +169,12 @@ $(document).ready(function() {
     // first entry, reloads, direct linking
     // This should be the only code doing something that's not event-driven
 
+    // getLocation() triggers the entire flow. Dependency graph:
+    // locationCallback() (= as soon as search location is determined)
+    //    1. drawMap() - center map around that location
+    //    2. restore() - nearbySearch and getPlaceDetails both require 'map' to be defined
+    //    3. search_exchanges() - search require all amounts and location to be restored
 
-    // restore session vars and populate
-    restore();
 
     // get user's location and invoke search
     getLocation();

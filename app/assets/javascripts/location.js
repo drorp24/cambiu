@@ -31,8 +31,10 @@
     };
 
 locationCallback = function(reason) {
-        search_exchanges(reason)
-    };
+        drawMap(value_of('location_lat'), value_of('location_lng'));
+        restore(); // not always - do some optimization
+        search_exchanges(reason);
+};
 
     // Find user location and set session/forms accordingly
 

@@ -338,8 +338,6 @@ $(document).ready(function() {
 
 
     $('#search_form').on('ajax:before', function() {
-        console.log('#search_form ajax:before. Invoking drawMap');
-        drawMap(value_of('location_lat'), value_of('location_lng'));
         startLoader();
         clearList();
         $('input[type=hidden][id=pay_amount_val]').remove();

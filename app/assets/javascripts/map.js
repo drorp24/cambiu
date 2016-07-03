@@ -14,8 +14,6 @@
          };
          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-         if (desktop) mapPan();
-
          addUserMarker(latitude, longitude);
 
          map.data.setStyle(function(feature) {
