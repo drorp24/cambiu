@@ -103,15 +103,14 @@ getDetailsCallback = function(place, status, exchange) {
     var place_latlng =      place.geometry.location;
     var distance =          String(Math.round(google.maps.geometry.spherical.computeDistanceBetween(exchange_latlng, place_latlng)));
 
-    // TODO: Remove eventually
-    console.log('Distance: ' + distance + ' Name: ' + place.name + ' Address: ' + place.formatted_address);
-    console.log(place);
+
+    // Don't use if too far
 
     if (distance > 150) {
-        console.log('Google 1st place is ' + distance + 'm from exchange. Not using it');
         streetview(exchange);
-        // TODO: remove!
-        alert('Returned place too far: ' + String(distance));
+        console.log('Google 1st place NOT used - ' + distance + 'm from exchange:');
+        console.log('Distance: ' + distance + ' Name: ' + place.name + ' Address: ' + place.formatted_address);
+        console.log(place);
         return
     }
 

@@ -30,9 +30,8 @@
         set('location_reason',  reason);
     };
 
-locationCallback = function() {
-        console.log('now that location is found, search is invoked');
-        search_exchanges()
+locationCallback = function(reason) {
+        search_exchanges(reason)
     };
 
     // Find user location and set session/forms accordingly
@@ -68,21 +67,21 @@ locationCallback = function() {
                         set('location_lat',     user_lat);
                         set('location_lng',     user_lng);
                         set('location_type',    'user');
+                        locationCallback('User position found. Searched location is user position');
                     } else {
                         set_default_location('user is far');
+                        locationCallback('User position found. Searched location is the default since user is far');
                     }
 
-                    console.log('User position found and GeocoderStatus is OK. Session populated');
-                    locationCallback();
                 } else {
                     console.log('User position found and GeocoderStatus is OK, but no results were found');
                     set_default_location('geocoder found no results');
-                    locationCallback();
+                    locationCallback('User position found. Searched location is the default since geocoder found no result');
                 }
             } else {
                 console.log('Geocoder failed due to: ' + status);
                 set_default_location('geocoder error: ' + status);
-                locationCallback();
+                locationCallback('User position found. Searched location is the default since google geocoder failed');
             }
         });
     };
@@ -95,7 +94,7 @@ locationCallback = function() {
         };
         console.log("navigator.geolocation has an error: " + errors[error.code]);
         set_default_location('geolocation error: ' + error.code);
-        locationCallback();
+        locationCallback('User position not found, device geolocation failed. Searched location is the default');
     };
 
     getLocation = function() {
@@ -113,6 +112,6 @@ locationCallback = function() {
             console.log('Browser does not support geolocation');
             console.log('Populating the default location');
             set_default_location('Browser does not support geolocation');
-            locationCallback();
+            locationCallback('Device/browser does not support gelocation. Searched location is the default');
         }
      };

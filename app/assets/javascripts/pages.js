@@ -181,11 +181,8 @@ $(document).ready(function() {
     restore();
 
     // get user's location and invoke search
-    if (value_of('location_type') == 'default') {
-        getLocation();
-    } else {
-        search_exchanges()
-    }
+    getLocation();
+
     // setPage() to current path
     // replace '/' with 'homepage' or else pushState will get ''
 

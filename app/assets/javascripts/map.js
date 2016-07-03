@@ -78,7 +78,7 @@
             set('location_lng', evt.latLng.lng());
             set('location_type', 'dragged');
 
-            search_exchanges();
+            search_exchanges('User dragged the user marker');
         });
     }
 

@@ -266,7 +266,7 @@ $(document).ready(function() {
             set('location_type', 'selected');
             set('location_reason', null);
 
-            search_exchanges();
+            search_exchanges('location changed by user');
         });
     }
 
@@ -311,10 +311,9 @@ $(document).ready(function() {
 
 
 
-    search_exchanges = function() {
-        console.log('After location found, set to default, changed by user, or page was reloaded:');
+    search_exchanges = function(reason) {
+        console.log('Search invoked. Reason: ' + reason);
         if (!homepage()) {
-            console.log('Not homepage: submitting form');
             $('#search_form').submit();
         } else {
             console.log('Homepage: not submitting form');
