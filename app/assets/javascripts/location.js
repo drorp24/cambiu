@@ -41,9 +41,8 @@ locationCallback = function(reason) {
      // findPosition is the callback after getLocation has returned
     // Only at this point can the form be submitted, since location is one of the search criteria
 
-    findPosition = function(position) {
+    watchPosition = function(position) {
 
-        console.log('at findPosition: user location found');
         var user_lat = position.coords.latitude;
         var user_lng = position.coords.longitude;
 
@@ -54,6 +53,7 @@ locationCallback = function(reason) {
                 if (results[1]) {
 
                     var formatted_address = results[1].formatted_address;
+                    alert('watchPosition: you are at ' + formatted_address);
 
                     set('user_location',    formatted_address);
                     set('user_lat',         user_lat);
@@ -103,11 +103,14 @@ locationCallback = function(reason) {
 
          if (navigator.geolocation) {
             console.log('calling navigator.geolocation....');
-            var timeoutVal = 5000;  // setInterval????!
-            navigator.geolocation.getCurrentPosition(
-                findPosition,
+            watchId = navigator.geolocation.watchPosition(
+                watchPosition,
                 displayError,
-                {enableHighAccuracy: false, timeout: timeoutVal, maximumAge: 0}
+                {
+                    enableHighAccuracy: value_of('user_location') ? true : false,
+                    timeout: 5000,
+                    maximumAge: 0
+                }
             );
         }
         else {
@@ -117,3 +120,7 @@ locationCallback = function(reason) {
             locationCallback('Device/browser does not support gelocation. Searched location is the default');
         }
      };
+
+    stopFollowing = function() {
+        navigator.geolocation.clearWatch(watchId);
+    };

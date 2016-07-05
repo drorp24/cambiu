@@ -794,6 +794,9 @@ body#cambiu {
       margin-top: 0.5em;
       line-height: 1.2em;
       margin-bottom: 0.3em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     [data-field=address] {
       color: #000;

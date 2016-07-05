@@ -58,8 +58,6 @@ nearbySearchCallback = function(results, status, exchange) {
 
 getPlaceDetails = function(place_id, exchange) {
 
-    console.log('this is map now: ')
-    console.log(map)
     service = new google.maps.places.PlacesService(map);
 
     service.getDetails(

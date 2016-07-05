@@ -83,6 +83,7 @@ var photo_width;
 var photo_height;
 var defaults;
 var expiry;
+var watchId;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
