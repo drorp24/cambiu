@@ -53,7 +53,7 @@ locationCallback = function(reason) {
                 if (results[1]) {
 
                     var formatted_address = results[1].formatted_address;
-                    alert('watchPosition: you are at ' + formatted_address);
+                    alert('Timestamp: ' + position.timestamp + ' Address: ' + formatted_address + ' Accuracy: ' + String(position.coords.accuracy) + ' Heading: ' + String(position.coords.heading) + ' Speed: ' + String(position.coords.speed));
 
                     set('user_location',    formatted_address);
                     set('user_lat',         user_lat);
@@ -94,8 +94,8 @@ locationCallback = function(reason) {
             2: 'Position unavailable',
             3: 'Request timeout'
         };
-        console.log("navigator.geolocation has an error: " + errors[error.code]);
-        set_default_location('geolocation error: ' + error.code);
+        console.log("navigator.geolocation has an error: " + errors[error.message]);
+        set_default_location('geolocation error: ' + error.message);
         locationCallback('User position not found, device geolocation failed. Searched location is the default');
     };
 
@@ -109,7 +109,7 @@ locationCallback = function(reason) {
                 {
                     enableHighAccuracy: value_of('user_location') ? true : false,
                     timeout: 5000,
-                    maximumAge: 0
+                    maximumAge: 30000
                 }
             );
         }

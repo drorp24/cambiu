@@ -5,7 +5,7 @@
 
 // Variables
 $pane-padding: 15px;
-$button_link_height: 100vw * 0.4;
+$button_link_height: 35vw;
 $green: #27AE60;
 $darkengreen: darken($green, 10%);
 $green: #27AE60;
@@ -858,7 +858,7 @@ body#cambiu {
 
   .call_to_action {
     position: fixed;
-    bottom: 65px; //  height of mobile browser bottom menu
+    bottom: 5px; //  height of mobile browser bottom menu
     left: (100vw - $button_link_height) / 2;
     text-align: center;
     font-weight: 300;
