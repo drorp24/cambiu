@@ -209,7 +209,7 @@ photoWidth = function() {
 
 photoHeight = function() {
     if (photo_height) return photo_height;
-    var ar = 2.25;
+    var ar = 2.2;
     if (photo_width) {
         photo_height = Math.round(photo_width / ar);
     } else {
