@@ -53,7 +53,8 @@ locationCallback = function(reason) {
                 if (results[1]) {
 
                     var formatted_address = results[1].formatted_address;
-                    alert('Timestamp: ' + position.timestamp + ' Address: ' + formatted_address + ' Accuracy: ' + String(position.coords.accuracy) + ' Heading: ' + String(position.coords.heading) + ' Speed: ' + String(position.coords.speed));
+                    var d = new Date(position.timestamp);
+                    alert('Timestamp: ' + d.toLocaleString() + ' Address: ' + formatted_address + ' Accuracy: ' + String(position.coords.accuracy) + ' Heading: ' + String(position.coords.heading) + ' Speed: ' + String(position.coords.speed));
 
                     set('user_location',    formatted_address);
                     set('user_lat',         user_lat);
