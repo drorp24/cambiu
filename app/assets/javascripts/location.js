@@ -30,35 +30,38 @@
         set('location_reason',  reason);
     };
 
-locationCallback = function(reason) {
-        drawMap(value_of('location_lat'), value_of('location_lng'));
-        restore(); // not always - do some optimization
-        search_exchanges(reason);
-};
+    locationCallback = function(reason) {
+            drawMap(value_of('location_lat'), value_of('location_lng'));
+            restore(); // not always - do some optimization
+            search_exchanges(reason);
+    };
 
     // Find user location and set session/forms accordingly
 
-     // findPosition is the callback after getLocation has returned
+     // handlePosition is called as soon as (and every time) user position is found. It is getLocation()'s successful callback
     // Only at this point can the form be submitted, since location is one of the search criteria
 
-    watchPosition = function(position) {
+    handlePosition = function(position) {
 
         var user_lat = position.coords.latitude;
         var user_lng = position.coords.longitude;
 
         var user_latlng = new google.maps.LatLng(user_lat, user_lng);
-        geocoder = new google.maps.Geocoder();
+        var geocoder = new google.maps.Geocoder();
         geocoder.geocode({'latLng': user_latlng}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 if (results[1]) {
 
                     var formatted_address = results[1].formatted_address;
                     var d = new Date(position.timestamp);
-                    alert('Timestamp: ' + d.toLocaleString() + ' Address: ' + formatted_address + ' Accuracy: ' + String(position.coords.accuracy) + ' Heading: ' + String(position.coords.heading) + ' Speed: ' + String(position.coords.speed));
 
                     set('user_location',    formatted_address);
                     set('user_lat',         user_lat);
                     set('user_lng',         user_lng);
+                    set('user_location_timestamp',  d.toLocaleTimeString());
+                    set('user_location_accuracy',   position.coords.accuracy);
+                    set('user_location_heading',    position.coords.heading);
+                    set('user_location_speed',      position.coords.speed);
 
                     var def_latlng =            new google.maps.LatLng(def('location_lat'), def('location_lng'));
                     var user_distance_from_def = Math.round(google.maps.geometry.spherical.computeDistanceBetween(user_latlng, def_latlng)/1000);
@@ -104,12 +107,12 @@ locationCallback = function(reason) {
 
          if (navigator.geolocation) {
             console.log('calling navigator.geolocation....');
-            watchId = navigator.geolocation.watchPosition(
-                watchPosition,
+            navigator.geolocation.getCurrentPosition(
+                handlePosition,
                 displayError,
                 {
                     enableHighAccuracy: value_of('user_location') ? true : false,
-                    timeout: 5000,
+                    timeout: 30000,
                     maximumAge: 30000
                 }
             );
@@ -122,6 +125,54 @@ locationCallback = function(reason) {
         }
      };
 
-    stopFollowing = function() {
+/*
+    stopFollowingUser = function() {
         navigator.geolocation.clearWatch(watchId);
     };
+*/
+
+
+    reportPosition = function(position) {
+
+        var user_lat = position.coords.latitude;
+        var user_lng = position.coords.longitude;
+        var user_latlng = new google.maps.LatLng(user_lat, user_lng);
+        var geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({'latLng': user_latlng}, function(results, status) {
+
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+
+                    var address = results[1].formatted_address;
+                    var d = new Date(position.timestamp);
+                    var timestamp = d.toLocaleTimeString();
+                    var accuracy = position.coords.accuracy;
+                    var heading = position.coords.heading;
+                    var speed =   position.coords.speed;
+
+                    alert('Timestamp: ' + timestamp + '\nAddress: ' + address + '\nAccuracy: ' + accuracy + '\nHeading: ' + heading + '\nSpeed: ' + speed)
+
+                }
+            }
+        })
+    };
+
+    followUser = function() {
+        setInterval(function() {
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    reportPosition,
+                    displayError,
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 30000,
+                        maximumAge: 30000
+                    }
+                )
+            }
+
+        }, 1000*30);
+    };
+

@@ -176,8 +176,11 @@ $(document).ready(function() {
     //    3. search_exchanges() - search require all amounts and location to be restored
 
 
-    // get user's location and invoke search
+    // get user's initial position, determine search location accordingly then invoke search
     getLocation();
+
+    // start following user's position
+    followUser();
 
     // setPage() to current path
     // replace '/' with 'homepage' or else pushState will get ''
