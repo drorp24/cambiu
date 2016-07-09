@@ -180,7 +180,7 @@ $(document).ready(function() {
     getLocation();
 
     // start following user's position
-    followUser();
+//    followUser();
 
     // setPage() to current path
     // replace '/' with 'homepage' or else pushState will get ''

@@ -8,21 +8,24 @@ class Order < ActiveRecord::Base
   monetize :buy_cents, with_model_currency: :buy_currency, :allow_nil => true
   monetize :get_cents, with_model_currency: :get_currency, :allow_nil => true
 
-  enum status: [:offer, :ordered, :pursued, :fulfilled, :verified]
+  enum status: [:offer, :ordered, :confirmed, :pictured]
   enum service_type: [ :collection, :delivery ]
-
-  attr_accessor :photo
 
   before_create do
     self.expiry = 4.hours.from_now
     self.service_type = 'collection'
   end
 
+  after_commit   :notification
 
-  after_commit   :order_notification
+  attr_accessor :photo
 
-  def order_notification
-    NotifyJob.perform_later(self.id)
+  def requires_notification?
+    Rails.env.production? || pictured?
+  end
+
+  def notification
+    NotifyJob.perform_later(self, self.photo) if self.requires_notification?
   end
 
   # Overriding 'attributes' adds methods as additional attributes within the JSON response as if they were part of the DB model, enabling controller to respond_with @order

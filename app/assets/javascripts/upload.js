@@ -26,11 +26,11 @@ function readFile(file) {
 
     reader.onloadend = function () {
         processFile(reader.result, file.type);
-    }
+    };
 
     reader.onerror = function () {
         alert('There was an error reading the file!');
-    }
+    };
 
     reader.readAsDataURL(file);
 }
@@ -83,25 +83,24 @@ function processFile(dataURL, fileType) {
     };
 }
 
-function sendFile(fileData) {
+function sendFile(imageData) {
     console.log('sendFile');
-    var formData = new FormData();
-
-    formData.append('imageData', fileData);
 
     $.ajax({
-        type: 'POST',
-        url: '/orders/upload',
-        data: formData,
-        dataType: "JSON",
-        contentType: false,
-        processData: false,
-        success: function (data) {
-                console.log('The photo was successfully uploaded!');
+        type:       'PUT',
+        url:        '/orders/' + value_of('order_id'),
+        data:       {
+            'order[photo]': imageData,
+            'order[status]': 'pictured'
         },
-        error: function (data) {
-            alert('There was an error uploading your file!');
+        dataType:   'JSON',
+        success:    function (data) {
+            console.log('Order imageData successfully updated');
+        },
+        error:      function (data) {
+            console.log('Order imageData failed to upload');
         }
+
     });
 }
 

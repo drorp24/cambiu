@@ -1,12 +1,11 @@
 class NotifyJob < ActiveJob::Base
   queue_as :default
 
-  def perform(order_id)
+  def perform(order, photo)
 
-    return if Rails.env.development?
+#    return if Rails.env.development?
 
     logger.info "At perform. thats the order i received"
-    order = Order.find(order_id)
     logger.info  order.inspect
 
     response = {}
@@ -116,7 +115,7 @@ class NotifyJob < ActiveJob::Base
           ]
       }
 
-      message[:images] = [{type: "image/png", name: 'photo',  content:   order.photo.split(',')[1]}] if order.photo
+      message[:images] = [{type: "image/png", name: 'photo',  content:   photo.split(',')[1]}] if photo
 
       async = false
       ip_pool = "Main Pool"
