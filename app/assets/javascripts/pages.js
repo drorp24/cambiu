@@ -30,7 +30,7 @@ $(document).ready(function() {
 
         page_el = $('.page[data-page=' + page + ']');
         page_el.addClass('active');
-        if (!value_of('videoStopped') && page_el.data('page') !== 'homepage') {
+        if (desktop && !value_of('videoStopped') && page_el.data('page') !== 'homepage') {
             replaceVideoWithBackground()
         }
         $('body').addClass(page);

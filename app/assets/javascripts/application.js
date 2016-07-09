@@ -9,8 +9,8 @@
 //= require autonumeric
 //= require jquery.validate
 
-//= require ytplayer
 //= require init
+//= require ytplayer
 //= require search
 //= require map
 //= require place
