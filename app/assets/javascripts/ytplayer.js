@@ -12,6 +12,7 @@ if (desktop) {
 
     console.log('desktop: inserting youtube iframe');
 
+    $('iframe#player').attr('src', 'https://www.youtube.com/embed/WxZaqaQO8hg?autoplay=1&controls=0&loop=0&modestbranding=1&rel=0&showinfo=0&volume=0&enablejsapi=1');
     var tag = document.createElement('script');
 
     tag.src = "//www.youtube.com/iframe_api";
