@@ -1,6 +1,7 @@
 var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
+var isAndroid = /(android)/i.test(navigator.userAgent);
 var homepage;
 var production;
 var search;
@@ -114,6 +115,7 @@ def_vals = function() {
     def['location']         = 'London, UK';
     def['location_short']   = 'London';
     def['location_type']    = 'default';
+    def['location_default'] = '88 Edgware Rd, London W2, UK';
 
     return def;
 
@@ -136,6 +138,7 @@ var searchParams = [
     'location_reason',
     'location_lat',
     'location_lng',
+    'location_default',
     'user_location',
     'user_lat',
     'user_lng',

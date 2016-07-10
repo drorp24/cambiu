@@ -28,6 +28,7 @@ populate = function(model, obj) {
     if (model == 'exchange') {
         var exchange = obj;
         populatePlace(exchange);
+        populateDirections(exchange);
     } else
     if (model == 'order') {
         var order = obj;
@@ -82,6 +83,43 @@ populated = function(exchange_id) {
 renderQr = function(order) {
     var url = window.location.host + '/orders/' + order.id + '/confirm';
     $('.qrcode').empty().qrcode({size: photoHeight() - 20, text: url})
+};
+
+populateDirections = function(exchange) {
+
+    var current_address = sessionStorage.location_type == 'default' ? sessionStorage.location_default : sessionStorage.location;
+    current_address = encodeURI(current_address);
+
+    var href = 'maps://maps.apple.com/?';
+    href += 'saddr=' + current_address + '&';
+    href += 'daddr=' + encodeURI(exchange.address);
+    href += '&dirflg=w';
+    $('.applemaps').attr('href', href);
+
+    var href = 'http://maps.apple.com/?';
+    href += 'saddr=' + current_address + '&';
+    href += 'daddr=' + encodeURI(exchange.address);
+    href += '&dirflg=w';
+    $('.httpsapple').attr('href', href);
+
+    var href = 'comgooglemaps://?';
+    href += 'saddr=' + sessionStorage.location_lat + ',' + sessionStorage.location_lng + '&';
+    href += 'daddr=' + exchange.latitude + ',' + exchange.longitude + '&';
+    href += 'directionsmode=walking';
+    $('.comgooglemaps').attr('href', href);
+
+    var href = 'http://maps.google.com/?';
+    href += sessionStorage.location_lat + ',' + sessionStorage.location_lng + '&';
+    href += 'daddr=' + exchange.latitude + ',' + exchange.longitude;
+    $('.httpsgoogle').attr('href', href);
+
+    var href = 'geo:';
+    href += exchange.latitude + ',' + exchange.longitude;
+    $('.geo').attr('href', href);
+
+    $('.device').html(isAndroid ? 'Android ' : 'iOs ' + 'device').css('font-weight', 'bold').css('color', '#000');
+
+
 };
 
 restore = function() {

@@ -17,12 +17,23 @@
   <div class="exchange_info">
     <div data-model="exchange" data-field="name"></div>
     <div data-model="exchange" data-field="address"></div>
-    <div class="col-xs-7 no_padding  ">
-      <input data-model="exchange" data-field="rating" data-exchange-id="null" class="ratings rating-loading pull-left">
+    <div class="row">
+      <div class="col-xs-7">
+        <input data-model="exchange" data-field="rating" data-exchange-id="null" class="ratings rating-loading pull-left">
+      </div>
+      <div class="col-xs-5 pull-right text-right reach-out-right directions_link">
+        <a href="#" data-href-page="exchanges" data-href-id="id" data-href-pane="directions">Directions</a>
+      </div>
     </div>
-    <div class="col-xs-5 pull-right text-right reach-out-right directions_link">
-      <a href="#" data-href-page="exchanges" data-href-id="id" data-href-pane="directions">Directions</a>
-    </div>
+   </div>
+
+  <div>
+    <p><a class="applemaps" data-rel="external"> apple maps using maps protocol </a></p>
+    <p><a class="httpsapple" data-rel="external">apple maps using https protocol</a></p>
+    <p><a class="comgooglemaps" data-rel="external">google maps using comgooglemaps</a></p>
+    <p><a class="httpsgoogle" data-rel="external">Google maps using https</a></p>
+    <p><a class="geo" data-rel="external">geo protocol</a></p>
+    <p class="device"></p>
   </div>
 
   <div class="call_to_action"
