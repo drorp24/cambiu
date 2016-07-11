@@ -7,10 +7,8 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 # Precompile fonts as well:
-Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf )
+Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf sw.js)
 # Add the fonts path:
 Rails.application.config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
 # For devise on heroku
 Rails.application.config.assets.initialize_on_precompile = false
-
-
