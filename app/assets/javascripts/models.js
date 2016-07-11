@@ -87,6 +87,8 @@ renderQr = function(order) {
 
 populateDirections = function(exchange) {
 
+// http://stackoverflow.com/questions/18739436/how-to-create-a-link-for-all-mobile-devices-that-opens-google-maps-with-a-route
+
     var current_address = sessionStorage.location_type == 'default' ? sessionStorage.location_default : sessionStorage.location;
     current_address = encodeURI(current_address);
 
@@ -109,7 +111,7 @@ populateDirections = function(exchange) {
     $('.comgooglemaps').attr('href', href);
 
     var href = 'http://maps.google.com/?';
-    href += sessionStorage.location_lat + ',' + sessionStorage.location_lng + '&';
+    href += 'saddr=' + sessionStorage.location_lat + ',' + sessionStorage.location_lng + '&';
     href += 'daddr=' + exchange.latitude + ',' + exchange.longitude;
     $('.httpsgoogle').attr('href', href);
 

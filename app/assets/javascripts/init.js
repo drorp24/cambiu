@@ -2,6 +2,7 @@ var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'deskto
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
 var isAndroid = /(android)/i.test(navigator.userAgent);
+var isIos = (navigator.platform.indexOf("iPhone") != -1) || (navigator.platform.indexOf("iPod") != -1) || (navigator.platform.indexOf("iPad") != -1);
 var homepage;
 var production;
 var search;
