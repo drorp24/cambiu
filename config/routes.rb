@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'exchanges/list',               to: 'home#index'
   get 'exchanges/search',             to: 'home#index'
   get 'exchanges/map',                to: 'home#index'
+  get 'exchanges/bonus',              to: 'home#index'
   get 'exchanges/:id/quote',          to: 'exchanges#quote'
   get 'exchanges/:id/get',            to: 'exchanges#get'
   get 'exchanges/:id/*pane',          to: 'home#index'

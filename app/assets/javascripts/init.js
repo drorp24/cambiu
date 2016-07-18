@@ -86,6 +86,7 @@ var photo_height;
 var defaults;
 var expiry;
 var watchId;
+var gcm_apikey = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
@@ -382,11 +383,9 @@ $(document).ready(function() {
         if (desktop) $("body").popover({ selector: '[data-toggle=popover]' });
     });
 
-/*
-    expiry = $('.flipclock').FlipClock(3600, {
-        countdown: true
-    });
-*/
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        console.log("Installable app!");
+    }
 
     listen_to_file_input();
  });

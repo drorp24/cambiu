@@ -245,3 +245,5 @@ pip-log.txt
 
 *.rdb
 /public/*
+!/public/sw.js.erb
+!/public/manifest.json

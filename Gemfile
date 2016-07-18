@@ -82,6 +82,7 @@ gem 'mandrill-api', '~> 1.0.53', require: "mandrill"
 gem 'redis'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
+gem 'serviceworker-rails'
 
 
 

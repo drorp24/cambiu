@@ -11,7 +11,7 @@
 
 //= require init
 //= require ytplayer
-//= require push.js.erb
+//= require push
 //= require search
 //= require map
 //= require place
