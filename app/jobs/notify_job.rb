@@ -13,10 +13,6 @@ class NotifyJob < ActiveJob::Base
     exchange = order.exchange
     if !exchange
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not exist"
-    elsif Rails.env.production? and !order.verified? and exchange.email.blank?
-      error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not have an email"
-    elsif Rails.application.config.email_required and !order.offer? and order.collection? and order.email.blank?
-      error = "Order has no email"
     end
 
     if error
