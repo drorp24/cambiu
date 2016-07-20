@@ -55,7 +55,7 @@ class NotifyJob < ActiveJob::Base
         }
     ]
 
-    bcc = Rails.env.development? ? bcc_me : bcc_me + bcc_eyal
+    bcc = Rails.env.production ? bcc_me + bcc_eyal : bcc_me
     to =  (order.ordered? and Rails.env.production?) ? to_user + to_exchange : [{}]
 
 
