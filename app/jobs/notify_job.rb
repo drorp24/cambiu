@@ -7,6 +7,7 @@ class NotifyJob < ActiveJob::Base
 
     logger.info "At perform. thats the order i received"
     logger.info  order.inspect
+    logger.info "Code was updated at 17:37"
 
     response = {}
     error = nil
@@ -55,8 +56,8 @@ class NotifyJob < ActiveJob::Base
         }
     ]
 
-    bcc = Rails.env.production? ? bcc_me + bcc_eyal : bcc_me
-    to =  (order.ordered? and Rails.env.production?) ? to_user + to_exchange : [{}]
+    bcc = Rails.env.production? ? bcc_me + bcc_eyal : [{}]
+    to =  (order.ordered? and Rails.env.production?) ? to_user + to_exchange : bcc_me
 
 
     subject = "Order #{order.voucher}"
