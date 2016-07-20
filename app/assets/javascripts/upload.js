@@ -90,7 +90,7 @@ function sendFile(imageData) {
         type:       'PUT',
         url:        '/orders/' + value_of('order_id'),
         data:       {
-            'order[photo]': /*imageData*/null,
+            'order[photo]': imageData,
             'order[status]': 'pictured'
         },
         dataType:   'JSON',
