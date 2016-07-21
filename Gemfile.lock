@@ -178,6 +178,7 @@ GEM
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    newrelic_rpm (3.16.0.318)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     nokogiri (1.6.7.2-x64-mingw32)
@@ -347,6 +348,7 @@ DEPENDENCIES
   monetize
   money (~> 6.5.1)
   money-rails
+  newrelic_rpm
   nokogiri
   omniauth-facebook
   pg

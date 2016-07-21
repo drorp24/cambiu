@@ -5,10 +5,6 @@ class NotifyJob < ActiveJob::Base
 
 #    return if Rails.env.development?
 
-    logger.info "At perform. thats the order i received"
-    logger.info  order.inspect
-    logger.info "Code was updated at 17:37"
-
     response = {}
     error = nil
     exchange = order.exchange
@@ -67,6 +63,25 @@ class NotifyJob < ActiveJob::Base
     from_name = 'cambiu'
     from_email = 'support@cambiu.com'
     company_address = "5 long street, E2 8HJ, london"
+
+    logger.info ""
+    logger.info ""
+    logger.info ""
+    logger.info ""
+    logger.info ""
+    logger.info ""
+    logger.info "Code updated at 21.07.2016 15:54"
+    logger.info ""
+    logger.info "Following is the To:"
+    logger.info ""
+    logger.info (to + bcc).inspect
+    logger.info ""
+    logger.info "environment: " + Rails.env
+    logger.info ""
+    logger.info ""
+    logger.info ""
+    logger.info ""
+    logger.info ""
 
 
     begin
