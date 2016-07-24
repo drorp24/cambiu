@@ -58,7 +58,8 @@ class Search < ActiveRecord::Base
       geometry: {
           type: 'Point',
           coordinates: [exchange_offer[:longitude], exchange_offer[:latitude]]
-      }
+      },
+      id: exchange_offer[:id]
     }
   end
 
