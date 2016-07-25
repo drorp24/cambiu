@@ -550,6 +550,11 @@ body#cambiu {
     display: none;
     &.active {
       display: block;
+      &[data-pane=map] {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
     @media (min-width: $screen-sm-min) {
       margin-top: $navbar-height;
@@ -672,7 +677,7 @@ body#cambiu {
   }
 
   .flex_parent {
-    display: flex !important;
+    display: flex;
     align-items: center;
     justify-content: center;
   }
