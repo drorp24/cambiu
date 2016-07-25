@@ -47,6 +47,19 @@
             infowindow.open(map, anchor);
 
          });
+
+
+        google.maps.event.addListenerOnce(map, 'idle', function(){
+            // do something only the first time the map is loaded
+
+            setTimeout(function() {
+/*
+                updateMap(search.exchanges);
+                radarFade();
+*/
+            }, 13000);
+        });
+
     };
 
     updateMap = function(data) {
@@ -127,3 +140,12 @@
 
     }
 
+/*
+    fromLatLngToPoint = function(latLng, map) {
+        var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
+        var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
+        var scale = Math.pow(2, map.getZoom());
+        var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
+        return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
+    };
+*/

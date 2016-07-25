@@ -11,6 +11,7 @@
 
 //= require init
 //= require ytplayer
+//= require radar
 //= require push
 //= require search
 //= require map

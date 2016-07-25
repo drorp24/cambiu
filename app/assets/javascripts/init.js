@@ -87,6 +87,7 @@ var defaults;
 var expiry;
 var watchId;
 var gcm_apikey = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
+var search;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 

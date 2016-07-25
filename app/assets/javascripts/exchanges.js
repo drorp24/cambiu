@@ -13,9 +13,10 @@
         }
         console.log('updateExchanges');
         set('search_id', data.search);
-        exchanges = data.exchanges.features;
+        search = data;
+        exchanges = search.exchanges.features;
 
-        updateMap(data.exchanges);
+//        updateMap(search.exchanges);
         updateList(exchanges);
         updateResults(exchanges);
 

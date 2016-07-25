@@ -1,6 +1,21 @@
-<div class="pane" data-pane="map">
+<div class="pane flex_parent adjust_navbar" data-pane="map">
 
   <%= render partial: 'navbar', locals: {left_pane: 'search', left_icon: 'search', center: 'search_params', right_pane: 'list', right_icon: 'list-ol'} %>
+
+  <div id="radar">
+    <div id="rad"></div>
+    <div class="obj" data-x="75" data-y="10"></div>
+    <div class="obj" data-x="203" data-y="120"></div>
+    <div class="obj" data-x="100" data-y="100"></div>
+    <div class="obj" data-x="25" data-y="170"></div>
+    <div class="obj" data-x="270" data-y="180"></div>
+    <div class="obj" data-x="110" data-y="270"></div>
+    <div class="obj" data-x="300" data-y="53"></div>
+    <div class="obj" data-x="60" data-y="235"></div>
+    <div class="obj" data-x="250" data-y="67"></div>
+    <div class="obj" data-x="280" data-y="30"></div>
+  </div>
+
 
   <div id="map_container" class="mobile_only">
     <div id="map-canvas" data-clicked="map"></div>
