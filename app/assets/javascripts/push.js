@@ -31,7 +31,7 @@ window.onload = function() {
 push = function(pushid) {
     $.ajax({
         type: 'GET',
-        url: 'http://android.googleapis.com/gcm/send',
+        url: 'https://android.googleapis.com/gcm/send',
         headers: {
             'Authorization': 'key=' + gcm_apikey,
             'Content-Type': 'application/json'

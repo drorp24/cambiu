@@ -6,7 +6,7 @@ require 'nokogiri'
 
 class Overpass
   
-  DEFAULT_ENDPOINT='http://overpass-api.de/api/interpreter?data='
+  DEFAULT_ENDPOINT='https://overpass-api.de/api/interpreter?data='
 
   def initialize(args={})
     @endpoint = args[:endpoint] || DEFAULT_ENDPOINT

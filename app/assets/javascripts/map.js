@@ -22,13 +22,13 @@
              var icon;
 
              if (best_at.length == 0) {
-                 icon = 'http://wwwcdn.cambiu.com/other1.png'
+                 icon = 'https://wwwcdn.cambiu.com/other1.png'
              } else if (best_at.indexOf('best') > -1) {
-                 icon = 'http://wwwcdn.cambiu.com/logo_no_text.png'
+                 icon = 'https://wwwcdn.cambiu.com/logo_no_text.png'
              } else if (best_at.indexOf('highest') > -1 || best_at.indexOf('cheapest') > -1) {
-                 icon = 'http://wwwcdn.cambiu.com/pricest.png'
+                 icon = 'https://wwwcdn.cambiu.com/pricest.png'
              } else if (best_at.indexOf('nearest') > -1) {
-                 icon = 'http://wwwcdn.cambiu.com/nearest.png'
+                 icon = 'https://wwwcdn.cambiu.com/nearest.png'
              }
 
              return {
@@ -80,7 +80,7 @@
             position: new google.maps.LatLng(latitude, longitude),
             disableAutoPan: true,
             map: map,
-            icon: 'http://wwwcdn.cambiu.com/cur_loc.png',
+            icon: 'https://wwwcdn.cambiu.com/cur_loc.png',
             draggable: true
         });
 
