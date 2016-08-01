@@ -1,3 +1,4 @@
+/*
 $(function() {
 
     var $rad = $('#rad'),
@@ -25,6 +26,7 @@ $(function() {
 
     })();
 });
+*/
 
 radarFade = function() {
     $('#radar').fadeTo(5000, 0)
