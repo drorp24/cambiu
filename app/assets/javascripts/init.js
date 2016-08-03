@@ -88,6 +88,7 @@ var expiry;
 var watchId;
 var gcm_apikey = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
 var search;
+var mySwiper;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
@@ -389,4 +390,16 @@ $(document).ready(function() {
     }
 
     listen_to_file_input();
- });
+
+    mySwiper = new Swiper ('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationType: 'fraction',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        centeredSlides: true,
+        freeMode: true,
+        freeModeSticky: true,
+        spaceBetween: 15,
+        slidesPerView: 1.3
+     })
+});

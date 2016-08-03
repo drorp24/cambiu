@@ -672,6 +672,25 @@ body#cambiu {
 
   }
 
+  .swiper-container {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+  // temp
+  .swiper-slide {
+    font-size: 2em;
+    font-weight: bold;
+    color: black;
+    background-color: #fff;
+    // temp
+    border: 2px solid black;
+    height: 30vh;
+    text-align: center;
+  }
+
+
 
   .img-circle {
     border-radius: 50%;
