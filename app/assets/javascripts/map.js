@@ -80,7 +80,7 @@
             position: new google.maps.LatLng(latitude, longitude),
             disableAutoPan: true,
             map: map,
-            icon: 'https://wwwcdn.cambiu.com/cur_loc.png',
+//            icon: 'https://wwwcdn.cambiu.com/cur_loc.png',
             draggable: true
         });
 
