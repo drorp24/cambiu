@@ -16,7 +16,7 @@
 
          addUserMarker(latitude, longitude);
 
-         map.data.setStyle(function(feature) {
+ /*        map.data.setStyle(function(feature) {
 
              var best_at = feature.getProperty('best_at');
              var icon;
@@ -35,7 +35,7 @@
                 icon: icon
              };
          });
-
+*/
         map.data.addListener('click', function(event) {
 
             var content = exchange_el(event.feature).det[0];

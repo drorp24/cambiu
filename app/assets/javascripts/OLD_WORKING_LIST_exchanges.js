@@ -16,34 +16,88 @@
         search = data;
         exchanges = search.exchanges.features;
 
-        updateMap(search.exchanges);
-        updateCards(exchanges);
+//        updateMap(search.exchanges);
+        updateList(exchanges);
+        updateResults(exchanges);
+
     };
 
 
 
-    updateCards = function(exchanges, sort) {
+    updateList = function(exchanges, list_to_update, sort_by) {
 
-        var sort = sort ? sort : value_of('sort');
+        var list = list_to_update ? list_to_update : value_of('list');
+        set('list', list);
+        var sort = sort_by ? sort_by : value_of('sort');
+
+        if (list == 'all') {
+
+            updateBest(exchanges);
+            updateMore(exchanges, sort);
+
+        } else if (list == 'more') {
+
+            updateMore(exchanges, sort);
+            set('list', 'all'); // Important! to only display entire list always, just comment this line
+
+        } else {
+
+            updateBest(exchanges);
+        }
+
+    };
+
+     updateBest = function(exchanges) {
+        $('#exchanges_search_results').css('display', 'none');
+        best_append_point = '#exchanges_list .list-group #best_exchanges';
+        $(best_append_point).empty();
+
+        best_exchanges = best(exchanges);
+
+        for (var i = 0; i < best_exchanges.length; i++) {
+            addExchange(best_exchanges[i], i, best_append_point);
+        }
+
+        $('#exchanges_list .more').css('display', 'block');
+    };
+
+    updateMore = function(exchanges, sort) {
+
+        clearList();
+
+        $('#exchanges_search_results').css('display', 'block');
+        $('#exchanges_items').css('display', 'block');
+        $('#exchanges_list .more').css('display', 'none');
+
+        exchanges_append_point = '#exchanges_list .list-group #exchanges_items';
+        $(exchanges_append_point).empty();
+
         exchanges = sort_by(sort);
 
         for (var i = 0; i < exchanges.length; i++) {
-            addCard(exchanges[i], i);
+            addExchange(exchanges[i], i, exchanges_append_point);
         }
+    };
 
-        initSwipers();
+    removeMore = function() {
+        $('#exchanges_search_results').css('display', 'none');
+        $('#exchanges_items').css('display', 'none');
+        $('#exchanges_list .more').css('display', 'block');
+        set('list', 'best');
+    };
 
-     };
 
 
 // TODO: Replace classes with data- attributes, do it in a loop over the data fields, so I dont need to change it whenever I add another field to fetch
-    function addCard(feature, index) {
+    function addExchange(feature, index, append_point) {
 
         var exchange = feature.properties;
-        if (exchange.errors.length > 0) return;
-        var exchange_el = $('.card.template').clone().removeClass('template');
 
-/*
+        if (exchange.errors.length > 0) return;
+
+        var exchange_wrapper = $('#exchange_template').clone().removeClass('template');
+        var exchange_el = exchange_wrapper.find('.list-group-item');
+
         exchange_el.attr('data-href-id', exchange.id);
         exchange_el.attr('data-exchange-id', exchange.id);
 
@@ -59,9 +113,8 @@
         exchange_el.find('.base_rate').html(exchange.base_rate);
         exchange_el.find('.gain_amount').html(exchange.gain_amount);
         exchange_el.find('.gain_type').addClass(exchange.gain_type);
-*/
 
-        exchange_el.appendTo($('#cards'));
+        exchange_el.appendTo(append_point);
 
     }
 
@@ -96,28 +149,5 @@
             $('#exchanges_list .more').css('display', 'block');
             $('#fetch_more').html('No results found in that area.');
         }
-
-    };
-
-    initSwipers = function() {
-        swiperH = new Swiper ('.swiper-container-h', {
-            /*
-             pagination: '.swiper-pagination',
-             paginationType: 'fraction',
-             nextButton: '.swiper-button-next',
-             prevButton: '.swiper-button-prev',
-             */
-
-            centeredSlides: true,
-            spaceBetween: 15,
-            slidesPerView: 1.3
-        });
-        swiperV = new Swiper ('.swiper-container-v', {
-            direction: 'vertical',
-            slidesOffsetBefore: 150,
-            freeMode: true
-        });
-
-        console.log('initialized Swiper');
 
     };

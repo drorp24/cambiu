@@ -72,7 +72,8 @@ $(document).ready(function() {
 
         if (pane == 'map' && map) {
             renderMap(exchange);
-            mySwiper.update(false);
+            if (swiperV) swiperV.update(false);
+            if (swiperH) swiperH.update(false);
         }
 
         // CLEAR SS of all 'exchange_' and 'order_' upon moving to a non exchange-specific page (e.g., /list)

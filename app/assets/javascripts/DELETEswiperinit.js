@@ -1,11 +1,12 @@
 $(document).ready(function() {
-    swiperH = new Swiper ('.swiper-container-h', {
 /*
+    swiperH = new Swiper ('.swiper-container-h', {
+/!*
         pagination: '.swiper-pagination',
         paginationType: 'fraction',
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev',
- */
+ *!/
 
         centeredSlides: true,
         spaceBetween: 15,
@@ -14,9 +15,9 @@ $(document).ready(function() {
     swiperV = new Swiper ('.swiper-container-v', {
         direction: 'vertical',
         slidesOffsetBefore: 150,
-        freeMode: true,
-        nextButton: '.swiper-button-next-v'//        nested: true
+        freeMode: true
     });
 
     console.log('initialized Swiper');
+*/
 });
