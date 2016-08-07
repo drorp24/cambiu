@@ -18,7 +18,6 @@
 //= require place
 //= require location
 //= require models
-//= require swiper
 //= require exchanges
 //= require validations
 //= require pages
