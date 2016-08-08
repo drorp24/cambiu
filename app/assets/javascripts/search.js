@@ -62,7 +62,7 @@ $(document).ready(function() {
 
     sort_by = function(sort) {
 
-/*        console.log('sort by ' + sort);
+        console.log('sort by ' + sort);
         if (exchanges.length == 0) return exchanges;
 
         if (sort == 'distance') {
@@ -92,7 +92,8 @@ $(document).ready(function() {
                 $('[data-sort=' + sort + ']').addClass('active');
             }
         }
- */       return exchanges;
+
+        return exchanges;
      };
 
     $('[data-sort]').click(function() {

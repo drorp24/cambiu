@@ -41,7 +41,7 @@
 
         var exchange = feature.properties;
         if (exchange.errors.length > 0) return;
-        var exchange_el = $('.card.template').clone().removeClass('template');
+        var exchange_el = $('.card.template').clone().removeClass('template').attr('data-exchange_id', exchange.id);
 
 /*
         exchange_el.attr('data-href-id', exchange.id);
@@ -62,7 +62,7 @@
 */
 
         exchange_el.appendTo($('#cards'));
-
+        if (index < 5) populatePlace(exchange);
     }
 
 

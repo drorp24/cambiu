@@ -1,8 +1,6 @@
 populatePlace = function(exchange) {
 
-    console.log('exchange ' + exchange.id + ' - populatePlace started');
-    console.log('   exchange ' + exchange.id + ':');
-    console.log(exchange);
+    console.log('populatePlace for exchange_id: ' + exchange.id);
 
     if (exchange.place_id) {
         getPlaceDetails(exchange.place_id, exchange)
@@ -24,16 +22,10 @@ getPlace = function(exchange) {
     var request = {
         location: exchange_location,
         name: exchange.name,
-        radius: 100/*,
-        rankBy: google.maps.places.RankBy.DISTANCE*/ // Google doesn't allow to rank by distance if radius is specified and without radius specified it returns zero results
+        rankBy: google.maps.places.RankBy.DISTANCE
     };
 
     var service = new google.maps.places.PlacesService(map);
-
-    console.log('exchange ' + exchange.id + ' - nearbySearch request:');
-    console.log(request);
-    console.log('   exchange lat: ' + exchange.latitude + ' lng: ' + exchange.longitude);
-    console.log('   request lat: ' + request.location.lat() + ' lng: ' + request.location.lng());
 
     service.nearbySearch(
         request,
@@ -51,9 +43,7 @@ nearbySearchCallback = function(results, status, exchange) {
             getPlaceDetails(place_id, exchange);
 
             if (results.length > 1) {
-                console.log('exchange ' + exchange.id + ' - More than one place id found in Google');
-                console.log('   Our name: ' + exchange.name + '. Our address: ' + exchange.address);
-                console.log('   Google name: ' + results[0].name + '. Google address: ' + results[0].vicinity);
+                console.log('More than one place id found');
             }
 
          } else {
@@ -61,13 +51,7 @@ nearbySearchCallback = function(results, status, exchange) {
          }
 
     } else {
-        console.log('exchange ' + exchange.id + ' - nearbySearch error: ' + status);
-        console.log('   Our name: ' + exchange.name + '. Our address: ' + exchange.address);
-/*
-        console.log('   results:');
-        console.log(results);
-*/
-        defaultImage(exchange, status);
+        console.log('Google Places API nearbySearch error: ' + status);
     }
 };
 
@@ -86,7 +70,7 @@ getPlaceDetails = function(place_id, exchange) {
 getDetailsCallback = function(place, status, exchange) {
 
     if (status != google.maps.places.PlacesServiceStatus.OK) {
-        console.log('exchange ' + exchange.id + ' - getDetails error: ' + status);
+        console.log('Google Places API getDetails error: ' + status);
         return
     }
 
@@ -99,26 +83,18 @@ getDetailsCallback = function(place, status, exchange) {
     // Don't use if too far
 
     if (distance > 150) {
-        console.log('exchange ' + exchange.id + ' - Unusing place: ' + distance + 'm from exchange:');
-        console.log('   Our name: ' + exchange.name + '. Our address: ' + exchange.address);
-        console.log('   Googles unused place name: ' + place.name + '. place address: ' + place.formatted_address);
-        console.log('   Our lat: ' + exchange.latitude + ' lng: ' + exchange.longitude);
-        console.log('   Googles unused place lat: ' + place.geometry.location.lat() + ' lng: ' + place.geometry.location.lng());
-/*
-        console.log('   Unused place:');
+        streetview(exchange);
+        console.log('Google 1st place NOT used - ' + distance + 'm from exchange:');
+        console.log('Distance: ' + distance + ' Name: ' + place.name + ' Address: ' + place.formatted_address);
         console.log(place);
-*/
-        defaultImage(exchange, distance + 'm away');
         return
     }
 
     // Place photo or streeview
 
-    console.log('exchange ' + exchange.id + ' - details found');
-
     if (place.photos && place.photos.length > 0) {
-        console.log('exchange ' + exchange.id + ' - place photo instead of streetview');
-        photo(place.photos[0], exchange);
+        console.log('place photo instead of streetview');
+        photo(place.photos[0]);
     } else {
         streetview(exchange)
     }
@@ -206,42 +182,42 @@ getDetailsCallback = function(place, status, exchange) {
 
 streetview = function(exchange) {
 
-    var size        = String(photoWidth) + 'x' + String(photoHeight);
+    var size        = String(photoWidth()) + 'x' + String(photoHeight());
     var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
     var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key;
     var html        = '<img src=' + src + '>';
 
-    $('[data-exchange_id='+ exchange.id +'] .photo').html(html);
+    $('.photo').html(html);
 
 };
 
-photo = function(photo, exchange) {
-    var width       = photoWidth;
-    var height      = photoHeight;
+photo = function(photo) {
+    var width       = photoWidth();
+    var height      = photoHeight();
     var src         = photo.getUrl({'maxWidth': width, 'maxHeight': height});
     var html        = '<img src=' + src + '>';
 
-    $('[data-exchange_id='+ exchange.id +'] .photo').html(html).find('img').css('width', '100%').css('height', height);
-    console.log('exchange ' + exchange.id + ' - photo inserted');
+    $('.photo').html(html).find('img').css('width', '100%').css('height', height);
 };
 
-logo = function(exchange) {
+photoWidth = function() {
+    if (photo_width) return photo_width;
 
-    var height      = photoHeight;
-    var src         = '../apple-touch-icon.jpg';
-    var html        = '<img src=' + src + '>';
-
-    $('[data-exchange_id='+ exchange.id +'] .photo').html(html).find('img').css('width', '100%').css('height', height);
+    photo_width = Math.round($('.pane .navbar').eq(0).outerWidth());
+    return photo_width;
 };
 
-missing = function(exchange) {
-    $('[data-exchange_id='+ exchange.id +'] .photo').removeClass('photo').addClass('missing').css('height', photoHeight).css('width', photoWidth).html('Exchange missing in Google');
+photoHeight = function() {
+    if (photo_height) return photo_height;
+    var ar = 2.25;
+    if (photo_width) {
+        photo_height = Math.round(photo_width / ar);
+    } else {
+        photo_height = Math.round(photoWidth() / ar);
+    }
+    return photo_height;
 };
 
-defaultImage = function(exchange, reason) {
-    console.log('   exchange ' + exchange.id + ' - default image placed. Reason: ' + reason);
-    missing(exchange);
-};
 
 updateExchange = function(exchange_id, data) {
     $.ajax({

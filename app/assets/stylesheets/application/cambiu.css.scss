@@ -699,7 +699,8 @@ body#cambiu {
  //   background-color: #fff;
   }
   .swiper-pagination-fraction {
-    font-size: 2em;
+    font-size: 1.1em;
+    bottom: 0;
   }
 
 
@@ -883,18 +884,37 @@ body#cambiu {
     }
   }
 
-  .photo, .qrcode {
+  .exchange_photo, .exchange_qrcode {
     margin-left: $pane-padding * -1;
     margin-right: $pane-padding * -1;
   }
 
-  .qrcode {
+  .exchange_qrcode {
     text-align: center;
     padding: 10px;
     canvas {
       margin-bottom: -5px;
     }
   }
+
+
+  .photo {
+    height: 150px;
+    padding: 15px;
+  }
+
+  .missing {
+    border: 1px solid #ccc;
+    margin: 15px;
+    font-size: 4vw;
+    font-weight: 400;
+    color: #888;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
 
   /*
   .flipclock {

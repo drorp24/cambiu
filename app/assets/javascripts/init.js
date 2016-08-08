@@ -88,6 +88,11 @@ var expiry;
 var watchId;
 var gcm_apikey = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
 var search;
+var slidesPerView = 1.3;
+var photoAspectRatio = 1;
+var photoPadding = 15;
+var photoWidth;
+var photoHeight;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
@@ -390,4 +395,6 @@ $(document).ready(function() {
 
     listen_to_file_input();
 
- });
+    photoWidth = Math.round(($('body').width() / slidesPerView / 2) - (2 * photoPadding));
+    photoHeight = Math.round(photoWidth / photoAspectRatio);
+});

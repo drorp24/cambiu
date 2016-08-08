@@ -111,7 +111,7 @@
                 handlePosition,
                 displayError,
                 {
-                    enableHighAccuracy: value_of('user_location') ? true : false,
+                    enableHighAccuracy: true,
                     timeout: 30000,
                     maximumAge: 30000
                 }

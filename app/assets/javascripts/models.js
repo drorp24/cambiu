@@ -82,7 +82,7 @@ populated = function(exchange_id) {
 
 renderQr = function(order) {
     var url = window.location.host + '/orders/' + order.id + '/confirm';
-    $('.qrcode').empty().qrcode({size: photoHeight() - 20, text: url})
+    $('.qrcode').empty().qrcode({size: photoHeight - 20, text: url})
 };
 
 populateDirections = function(exchange) {
