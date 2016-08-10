@@ -27,8 +27,8 @@
         var sort = sort ? sort : value_of('sort');
         exchanges = sort_by(sort);
 
-        for (var i = 0; i < exchanges.length; i++) {
-            addCard(exchanges[i], i);
+        for (var i = 0; i < initialSlides; i++) {
+            addCard(exchanges, i);
         }
 
         initSwipers();
@@ -37,10 +37,11 @@
 
 
 // TODO: Replace classes with data- attributes, do it in a loop over the data fields, so I dont need to change it whenever I add another field to fetch
-    function addCard(feature, index) {
+    function addCard(exchanges, index) {
 
-        var exchange = feature.properties;
+        var exchange = exchanges[index].properties;
         if (exchange.errors.length > 0) return;
+        console.log('addCard called. exchange id: ' + exchange.id);
         var exchange_el = $('.card.template').clone().removeClass('template').attr('data-exchange_id', exchange.id);
 
 /*
@@ -62,7 +63,9 @@
 */
 
         exchange_el.appendTo($('#cards'));
-        if (index < 5) populatePlace(exchange);
+        initSwiperV();
+        populatePlace(exchange);
+        slidesAdded.push(index);
     }
 
 
@@ -98,3 +101,19 @@
         }
 
     };
+
+    findExchange = function(id) {
+        if (exchanges && exchanges.length > 0) {
+            var results = $.grep(exchanges, function(e){ return e.properties.id == id; });
+            if (results[0]) {
+                return results[0].properties;
+            } else {
+                console.log('exchange ' + id + ' was not found in exchanges array');
+                return null
+            }
+        } else {
+            console.log('exchanges is empty');
+            return null
+        }
+    };
+

@@ -222,7 +222,6 @@ photo = function(photo, exchange) {
     var html        = '<img src=' + src + '>';
 
     $('[data-exchange_id='+ exchange.id +'] .photo').html(html).find('img').css('width', '100%').css('height', height);
-    console.log('exchange ' + exchange.id + ' - photo inserted');
 };
 
 logo = function(exchange) {

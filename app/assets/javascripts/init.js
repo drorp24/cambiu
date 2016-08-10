@@ -93,6 +93,9 @@ var photoAspectRatio = 1;
 var photoPadding = 15;
 var photoWidth;
 var photoHeight;
+var slidesAdded = [];
+var currentSlide = 0;
+var initialSlides = 3;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
@@ -293,24 +296,6 @@ urlParameter = function(sParam)
         }
     }
 
-};
-
-findExchange = function(id) {
-    if (exchanges && exchanges.length > 0) {
-        var results = $.grep(exchanges, function(e){ return e.properties.id == id; });
-        if (results[0]) {
-            console.log('exchange with id ' + id + ' was found in exchanges array');
-            var exchange = results[0];
-            return exchange.properties;
-        } else {
-            console.log('exchange with this id was not found in exchanges array');
-            // bring it from the server
-            return null
-        }
-    } else {
-        console.log('exchanges is empty');
-        return null
-    }
 };
 
 homepage = function() {
