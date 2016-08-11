@@ -180,6 +180,7 @@ $(document).ready(function() {
 
     // get user's initial position, determine search location accordingly then invoke search
     getLocation();
+    followUser();
 
     // start following user's position
 //    followUser();
