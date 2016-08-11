@@ -95,7 +95,7 @@ var photoWidth;
 var photoHeight;
 var slidesAdded = [];
 var currentSlide = 0;
-var initialSlides = 3;
+var initialSlides = 10;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
