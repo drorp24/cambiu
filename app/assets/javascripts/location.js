@@ -67,7 +67,7 @@
                     var user_distance_from_def = Math.round(google.maps.geometry.spherical.computeDistanceBetween(user_latlng, def_latlng)/1000);
                     console.log('user distance from Default is: ' + user_distance_from_def.toString() + ' km');
 
-                    if (user_distance_from_def < 50  ) {
+                    if (/*user_distance_from_def < 50*/1==1   ) {
                         set('location',         formatted_address);
                         set('location_short',   results[1].address_components[1].short_name);
                         set('location_lat',     user_lat);
@@ -158,12 +158,44 @@
         })
     };
 
-    followUser = function() {
+
+showUserLocation = function(position) {
+
+    var user_lat = position.coords.latitude;
+    var user_lng = position.coords.longitude;
+    var user_latlng = new google.maps.LatLng(user_lat, user_lng);
+    var geocoder = new google.maps.Geocoder();
+    var point = fromLatLngToPoint(user_latlng, map);
+    $('#userLoc').css('top', String(point.y) + 'px').css('right', String(point.x) + 'px');
+
+/* Unnecessaey to geoCode
+    geocoder.geocode({'latLng': user_latlng}, function(results, status) {
+
+        if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+
+                var address = results[1].formatted_address;
+                var d = new Date(position.timestamp);
+                var timestamp = d.toLocaleTimeString();
+                var accuracy = position.coords.accuracy;
+                var heading = position.coords.heading;
+                var speed =   position.coords.speed;
+
+                console.log('Timestamp: ' + timestamp + '\nAddress: ' + address + '\nAccuracy: ' + accuracy + '\nHeading: ' + heading + '\nSpeed: ' + speed)
+
+            }
+        }
+    })
+*/
+};
+
+followUser = function() {
         setInterval(function() {
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
-                    reportPosition,
+//                    reportPosition,
+                    showUserLocation,
                     displayError,
                     {
                         enableHighAccuracy: true,

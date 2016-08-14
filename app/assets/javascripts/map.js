@@ -14,7 +14,7 @@
          };
          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-         addUserMarker(latitude, longitude);
+//         addUserMarker(latitude, longitude);
 
  /*        map.data.setStyle(function(feature) {
 
@@ -74,6 +74,7 @@
     };
 
 
+/*
     function addUserMarker(latitude, longitude) {
 
         var location_marker = new google.maps.Marker({
@@ -92,7 +93,22 @@
             search_exchanges('User dragged the user marker');
         });
     }
+*/
 
+
+/*
+    function userLocationMarker(latitude, longitude) {
+
+        var location_marker = new google.maps.Marker({
+            position: new google.maps.LatLng(latitude, longitude),
+            disableAutoPan: true,
+            map: map,
+            icon: 'https://wwwcdn.cambiu.com/cur_loc.png',
+            draggable: true
+        });
+
+    }
+*/
 
     renderDirections = function (exchange) {
 
@@ -140,7 +156,6 @@
 
     }
 
-/*
     fromLatLngToPoint = function(latLng, map) {
         var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
         var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
@@ -148,4 +163,4 @@
         var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
         return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
     };
-*/
+

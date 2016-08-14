@@ -17,7 +17,8 @@
         exchanges = search.exchanges.features;
 
         updateMap(search.exchanges);
-        updateCards(exchanges);
+// TODO: only updatCards if there are exchanges returned
+//        updateCards(exchanges);
     };
 
 
