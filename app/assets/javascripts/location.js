@@ -176,33 +176,26 @@
     };
 
 
-showUserLocation = function(position) {
+    showUserLocation = function(position) {
 
-    var user_lat = position.coords.latitude;
-    var user_lng = position.coords.longitude;
-    var user_latlng = new google.maps.LatLng(user_lat, user_lng);
-    var point = fromLatLngToPoint(user_latlng, map);
-    $('#userLoc').css('top', String(point.y) + 'px').css('left', String(point.x) + 'px');
+        if (!map) return;
+        var user_lat = position.coords.latitude;
+        var user_lng = position.coords.longitude;
+        var user_latlng = new google.maps.LatLng(user_lat, user_lng);
+        var point = fromLatLngToPoint(user_latlng, map);
+        var x, y;
+        if (point.x < tooLeft || point.x > tooRight || point.y < tooHigh || point.y > tooLow) {
+            map.setCenter(user_latlng);
+            x = String(centerX);
+            y = String(centerY);
+        } else {
+            x = String(point.x);
+            y = String(point.y);
+        }
+        $('#userLoc').css('top', y + 'px').css('left', x + 'px');
 
-    // TODO: comment. Use for testing only! unnecessary & quota limited
-    reportPosition(position);
-
-};
-
-followUser = function() {
-        setInterval(function() {
-
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    showUserLocation,
-                    displayError,
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 30000,
-                        maximumAge: 30000
-                    }
-                )
-            }
+        // TODO: comment. Use for testing only! unnecessary & quota limited
+        reportPosition(position);
 
     };
 
