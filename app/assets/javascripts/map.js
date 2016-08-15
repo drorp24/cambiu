@@ -22,15 +22,17 @@
             map: map
         });
 
-            map.data.addListener('click', function(event) {
+        showUserLocation(latitude, longitude);
 
-            var content = exchange_el(event.feature).det[0];
-            var infowindow = new google.maps.InfoWindow({
-                content: content
-            });
-            var anchor = new google.maps.MVCObject();
-            anchor.set("position",event.latLng);
-            infowindow.open(map, anchor);
+        map.data.addListener('click', function(event) {
+
+        var content = exchange_el(event.feature).det[0];
+        var infowindow = new google.maps.InfoWindow({
+            content: content
+        });
+        var anchor = new google.maps.MVCObject();
+        anchor.set("position",event.latLng);
+        infowindow.open(map, anchor);
 
          });
 

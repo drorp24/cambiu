@@ -176,33 +176,48 @@
     };
 
 
-    showUserLocation = function(position) {
+    handleCurrPosition = function(position) {
 
-        if (!map) return;
-        var user_lat = position.coords.latitude;
-        var user_lng = position.coords.longitude;
+        showUserLocation(position.coords.latitude, position.coords.longitude);
+
+        // TODO: comment. Use for testing only! unnecessary & quota limited
+        reportPosition(position);
+
+     };
+
+    showUserLocation = function(user_lat, user_lng) {
+
+        if (!map || !map.getProjection()) {
+            console.log('showUserLocation: map isnt ready yet')
+            return
+        } else {
+            console.log('showUserLocation: map is ready')
+        }
+
         var user_latlng = new google.maps.LatLng(user_lat, user_lng);
         var point = fromLatLngToPoint(user_latlng, map);
         var x, y;
         if (point.x < tooLeft || point.x > tooRight || point.y < tooHigh || point.y > tooLow) {
             map.setCenter(user_latlng);
-            x = String(centerX);
-            y = String(centerY);
+            x = centerX;
+            y = centerY;
         } else {
-            x = String(point.x);
-            y = String(point.y);
+            x = point.x;
+            y = point.y;
         }
-        $('#userLoc').css('top', y + 'px').css('left', x + 'px');
+        x -= 30;
+        y -= 30;
+        x = String(x);
+        y = String(y);
 
-        // TODO: comment. Use for testing only! unnecessary & quota limited
-        reportPosition(position);
+        $('#userLoc').css('top', y + 'px').css('left', x + 'px');
 
     };
 
     followUser = function() {
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(
-                showUserLocation,
+                handleCurrPosition,
                 displayError,
                 {
                     enableHighAccuracy: true,
