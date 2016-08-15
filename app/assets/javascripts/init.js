@@ -106,6 +106,7 @@ var currentSlide = 0;
 var initialSlides = 10;
 var mapIsDrawn = false;
 var paramsPopulated = false;
+var userLocationShown = false;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 

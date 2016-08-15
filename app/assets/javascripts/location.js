@@ -212,6 +212,8 @@
 
         $('#userLoc').css('top', y + 'px').css('left', x + 'px');
 
+        userLocationShown = true;
+
     };
 
     followUser = function() {

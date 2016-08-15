@@ -22,8 +22,6 @@
             map: map
         });
 
-        showUserLocation(latitude, longitude);
-
         map.data.addListener('click', function(event) {
 
         var content = exchange_el(event.feature).det[0];
@@ -47,6 +45,11 @@
 */
             }, 13000);
         });
+
+        var interval = setInterval(function() {
+            showUserLocation(latitude, longitude);
+            if (userLocationShown) clearInterval(interval)
+        }, 2000)
 
     };
 
