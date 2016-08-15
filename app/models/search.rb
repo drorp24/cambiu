@@ -7,6 +7,19 @@ class Search < ActiveRecord::Base
 
   attr_accessor :fetch, :mode, :hash, :distance_slider
 
+  validate :valid_input, on: :create
+
+  def valid_input
+     if
+        pay_currency.blank? or
+        buy_currency.blank? or
+        (pay_amount.blank? and buy_amount.blank?) or
+        location_lat.blank? or location_lng.blank?
+
+       errors[:base] << "Missing search parameters"
+     end
+  end
+
   def exchanges
 
     return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)

@@ -31,9 +31,26 @@
     };
 
     locationCallback = function(reason) {
+
+        console.log('locationCallback. Reason: ' + reason);
+        if (mapIsDrawn) {
+            console.log('locationCallback. Map already drawn')
+        } else {
+            console.log('locationCallback. Drawing map for the first time');
             drawMap(value_of('location_lat'), value_of('location_lng'));
-            restore(); // not always - do some optimization
-            search_exchanges(reason);
+        }
+        if (paramsPopulated) {
+            console.log('locationCallback. search params already populated')
+        } else {
+            console.log('locationCallback. populating search params in form & navbar');
+            paramsPopulate()
+        }
+        if (exchanges && exchanges.length > 0) {
+            console.log('locationCallback. exchanges exist - no search performed')
+        } else {
+            console.log('locationCallback. performing search');
+            search_exchanges();
+        }
     };
 
     // Find user location and set session/forms accordingly
@@ -151,7 +168,7 @@
                     var heading = position.coords.heading;
                     var speed =   position.coords.speed;
 
-                    alert('Timestamp: ' + timestamp + '\nAddress: ' + address + '\nAccuracy: ' + accuracy + '\nHeading: ' + heading + '\nSpeed: ' + speed)
+                    console.log('Timestamp: ' + timestamp + '\nAddress: ' + address + '\nAccuracy: ' + accuracy + '\nHeading: ' + heading + '\nSpeed: ' + speed)
 
                 }
             }
@@ -164,29 +181,12 @@ showUserLocation = function(position) {
     var user_lat = position.coords.latitude;
     var user_lng = position.coords.longitude;
     var user_latlng = new google.maps.LatLng(user_lat, user_lng);
-    var geocoder = new google.maps.Geocoder();
     var point = fromLatLngToPoint(user_latlng, map);
-    $('#userLoc').css('top', String(point.y) + 'px').css('right', String(point.x) + 'px');
+    $('#userLoc').css('top', String(point.y) + 'px').css('left', String(point.x) + 'px');
 
-/* Unnecessaey to geoCode
-    geocoder.geocode({'latLng': user_latlng}, function(results, status) {
+    // TODO: comment. Use for testing only! unnecessary & quota limited
+    reportPosition(position);
 
-        if (status == google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-
-                var address = results[1].formatted_address;
-                var d = new Date(position.timestamp);
-                var timestamp = d.toLocaleTimeString();
-                var accuracy = position.coords.accuracy;
-                var heading = position.coords.heading;
-                var speed =   position.coords.speed;
-
-                console.log('Timestamp: ' + timestamp + '\nAddress: ' + address + '\nAccuracy: ' + accuracy + '\nHeading: ' + heading + '\nSpeed: ' + speed)
-
-            }
-        }
-    })
-*/
 };
 
 followUser = function() {
@@ -194,7 +194,6 @@ followUser = function() {
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
-//                    reportPosition,
                     showUserLocation,
                     displayError,
                     {

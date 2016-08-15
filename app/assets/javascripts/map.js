@@ -3,6 +3,8 @@
         google.maps.event.trigger(map, 'resize');
     };
 
+    // render a map around given (lat,lng) set as center
+    // to re-center the map use map.center rather than calling all of this
     drawMap = function (latitude, longitude) {
 
          console.log('drawMap');
@@ -13,30 +15,9 @@
              scaleControl: true
          };
          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+         mapIsDrawn = true;
 
-//         addUserMarker(latitude, longitude);
-
- /*        map.data.setStyle(function(feature) {
-
-             var best_at = feature.getProperty('best_at');
-             var icon;
-
-             if (best_at.length == 0) {
-                 icon = 'https://wwwcdn.cambiu.com/other1.png'
-             } else if (best_at.indexOf('best') > -1) {
-                 icon = 'https://wwwcdn.cambiu.com/logo_no_text.png'
-             } else if (best_at.indexOf('highest') > -1 || best_at.indexOf('cheapest') > -1) {
-                 icon = 'https://wwwcdn.cambiu.com/pricest.png'
-             } else if (best_at.indexOf('nearest') > -1) {
-                 icon = 'https://wwwcdn.cambiu.com/nearest.png'
-             }
-
-             return {
-                icon: icon
-             };
-         });
-*/
-        map.data.addListener('click', function(event) {
+         map.data.addListener('click', function(event) {
 
             var content = exchange_el(event.feature).det[0];
             var infowindow = new google.maps.InfoWindow({
@@ -73,42 +54,6 @@
         });
     };
 
-
-/*
-    function addUserMarker(latitude, longitude) {
-
-        var location_marker = new google.maps.Marker({
-            position: new google.maps.LatLng(latitude, longitude),
-            disableAutoPan: true,
-            map: map,
-//            icon: 'https://wwwcdn.cambiu.com/cur_loc.png',
-            draggable: true
-        });
-
-        location_marker.addListener('dragend', function(evt) {
-            set('location_lat', evt.latLng.lat());
-            set('location_lng', evt.latLng.lng());
-            set('location_type', 'dragged');
-
-            search_exchanges('User dragged the user marker');
-        });
-    }
-*/
-
-
-/*
-    function userLocationMarker(latitude, longitude) {
-
-        var location_marker = new google.maps.Marker({
-            position: new google.maps.LatLng(latitude, longitude),
-            disableAutoPan: true,
-            map: map,
-            icon: 'https://wwwcdn.cambiu.com/cur_loc.png',
-            draggable: true
-        });
-
-    }
-*/
 
     renderDirections = function (exchange) {
 

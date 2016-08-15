@@ -21,6 +21,7 @@ set = function(field, value) {
 };
 
 
+/* population was cancelled
 populate = function(model, obj) {
 
     console.log('populate: ' + model);
@@ -79,12 +80,16 @@ populated = function(exchange_id) {
         return false;
     }
 };
+*/
 
+/* leave commented: no QR at the moment
 renderQr = function(order) {
     var url = window.location.host + '/orders/' + order.id + '/confirm';
     $('.qrcode').empty().qrcode({size: photoHeight - 20, text: url})
 };
+*/
 
+/* native direction (leave commented, I may want to use later)
 populateDirections = function(exchange) {
 
 // http://stackoverflow.com/questions/18739436/how-to-create-a-link-for-all-mobile-devices-that-opens-google-maps-with-a-route
@@ -123,7 +128,12 @@ populateDirections = function(exchange) {
 
 
 };
+*/
 
+// May not be needed, or if needed will require vast change
+// Reason: no 'current exchange/order' anymore, and no need to populate any pages
+// Only thing worth persisting between refreshes is the search params, which stays persisted in the SS
+/*
 restore = function() {
 
     console.log('restore');
@@ -169,5 +179,33 @@ restore = function() {
     bind_currency_to_autonumeric();
     bind_forms();
 };
+*/
 
+// populate search params in search form and navbar
+// values are either defaults or taken from ss is this is refresh
+// part of what used to be restore()
+paramsPopulate = function() {
 
+    var value_of_pay_amount = value_of('pay_amount');
+    var value_of_buy_amount = value_of('buy_amount');
+    var def = def_vals();
+
+    searchParams.forEach(function(key) {
+
+        if (key == 'buy_amount') {
+            set('buy_amount',   value_of_buy_amount || (value_of_pay_amount ? null : def['buy_amount']))
+        } else
+        if (key == 'pay_amount') {
+            set('pay_amount',   value_of_pay_amount || (value_of_buy_amount ? null : def['pay_amount']))
+        } else {
+            set(key,            value_of(key)       || def[key])
+        }
+
+    });
+
+    bind_currency_to_autonumeric();
+    bind_forms();
+
+    paramsPopulated = true;
+
+};

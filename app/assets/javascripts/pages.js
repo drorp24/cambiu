@@ -46,6 +46,8 @@ $(document).ready(function() {
             document.getElementsByName(hash)[0].scrollIntoView(true);
         }
 
+// TODO: Remove: no 'current' exchange, no page 'population'
+/*
         // POPULATE exchange data, (re)render map, directions
         if (id) {
 
@@ -69,6 +71,7 @@ $(document).ready(function() {
             }
 
         }
+*/
 
         if (pane == 'map' && map) {
             renderMap(exchange);
@@ -175,6 +178,7 @@ $(document).ready(function() {
     // locationCallback() (= as soon as search location is determined)
     //    1. drawMap() - center map around that location
     //    2. restore() - nearbySearch and getPlaceDetails both require 'map' to be defined
+    //       note: GooglePlaces API is now invoked on several exchanges, restore() is not used anymore, as it served to restore html relative to *current* exchange/order
     //    3. search_exchanges() - search require all amounts and location to be restored
 
 

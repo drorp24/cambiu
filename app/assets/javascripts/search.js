@@ -158,6 +158,7 @@ $(document).ready(function() {
         removeMore();
     });
 
+/*
     $('body').on('click tap', '[data-ajax=createOrder]', (function (e) {
 
         var exchange_id = $(this).attr('data-exchange-id');
@@ -193,8 +194,9 @@ $(document).ready(function() {
         });
 
     }));
+*/
 
-    $('body').on('click tap', '[data-ajax=updateOrder]', (function (e) {
+ /*   $('body').on('click tap', '[data-ajax=updateOrder]', (function (e) {
 
         var order_id        = value_of('order_id');
         var order_status    = $(this).data('order-status');
@@ -213,13 +215,13 @@ $(document).ready(function() {
             success:    function (data) {
                 console.log('Order successfully updated');
                 if (order_status == 'ordered') {
-                    /*                   swal({
+                    /!*                   swal({
                      title: "Ordered!",
                      html: true,
                      text: "Your order is ready and waiting for you at </br><strong>" + value_of('exchange_name') + '</strong></br>' + value_of('exchange_address'),
                      type: 'success'
                      })
-                     */
+                     *!/
                      swal({
                      title: "Ordered",
                      html: true,
@@ -247,7 +249,7 @@ $(document).ready(function() {
     }));
 
 
-
+*/
 
     // Handle user location changes
 
@@ -312,8 +314,7 @@ $(document).ready(function() {
 
 
 
-    search_exchanges = function(reason) {
-        console.log('Search invoked. Reason: ' + reason);
+    search_exchanges = function() {
         if (!homepage()) {
             $('#search_form').submit();
         } else {
