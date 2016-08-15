@@ -1,6 +1,14 @@
 var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
+var windowWidth = $(window).width();
+var windowHeight = $(window).height();
+var tooHigh = windowHeight / 3;
+var tooLow = windowHeight * 2 / 3;
+var tooLeft = windowWidth / 3;
+var tooRight = windowWidth * 2 / 3;
+var centerX = windowWidth / 2;
+var centerY = windowHeight / 2;
 var isAndroid = /(android)/i.test(navigator.userAgent);
 var isIos = (navigator.platform.indexOf("iPhone") != -1) || (navigator.platform.indexOf("iPod") != -1) || (navigator.platform.indexOf("iPad") != -1);
 var homepage;

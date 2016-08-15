@@ -204,6 +204,19 @@ followUser = function() {
                 )
             }
 
-        }, 1000*10);
+    };
+
+    followUser = function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(
+                showUserLocation,
+                displayError,
+                {
+                    enableHighAccuracy: true,
+                    timeout: 30000,
+                    maximumAge: 30000
+                }
+            )
+        }
     };
 
