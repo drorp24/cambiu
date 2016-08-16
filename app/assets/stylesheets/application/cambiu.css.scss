@@ -529,16 +529,17 @@ body#cambiu {
 
   .navbar {
     width: 100vw;
+    min-height: initial;
   }
   .navbar_link {
-    font-size: 1.6em;
+    font-size: 1.3em;
     color: #000;
     line-height: 30px;
     font-weight: 300;
     white-space: nowrap;
     &.navbar_right, &.navbar_left {
       line-height: $navbar-height - 10px;
-      font-size: 2.2em;
+      font-size: 1.3em;
     }
     &.navbar_center {
       text-align: center;
@@ -2008,12 +2009,12 @@ body#cambiu {
 
 
   &.desktop.exchanges .navbar {
-      background-color: rgba(255,255,255,0.7);
+      background-color: rgba(255,255,255,1);
       box-shadow: 0 0 10px #888;
   }
   &.mobile.exchanges .navbar {
-    background-color: rgba(255,255,255,0.7);
-    box-shadow: 0px 0px 20px #aaa;
+    background-color: rgba(255,255,255,1);
+    box-shadow: 0px 0px 10px #888;
   }
 
   .navbar {
@@ -2043,13 +2044,11 @@ body#cambiu {
       }
     }
     height: $navbar-height;
-    border: 1px solid #aaa;
     margin-top: 70px;
     margin-left: 8%;
     width: 84%;
     padding-top: 5px;
     padding-bottom: 5px;
-    border: none;
     margin-bottom: 0;
     font-size: 11px;
     font-weight: 400;
