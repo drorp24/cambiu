@@ -60,8 +60,8 @@
 
     handlePosition = function(position) {
 
-        var user_lat = position.coords.latitude;
-        var user_lng = position.coords.longitude;
+        user_lat = position.coords.latitude;
+        user_lng = position.coords.longitude;
 
         var user_latlng = new google.maps.LatLng(user_lat, user_lng);
         var geocoder = new google.maps.Geocoder();
@@ -84,7 +84,7 @@
                     var user_distance_from_def = Math.round(google.maps.geometry.spherical.computeDistanceBetween(user_latlng, def_latlng)/1000);
                     console.log('user distance from Default is: ' + user_distance_from_def.toString() + ' km');
 
-                    if (/*user_distance_from_def < 50*/1==1   ) {
+                    if (/*user_distance_from_def < 50*/1==1 ) {
                         set('location',         formatted_address);
                         set('location_short',   results[1].address_components[1].short_name);
                         set('location_lat',     user_lat);
@@ -178,10 +178,12 @@
 
     handleCurrPosition = function(position) {
 
-        showUserLocation(position.coords.latitude, position.coords.longitude);
+        user_lat = position.coords.latitude;
+        user_lng = position.coords.longitude;
+        showUserLocation(user_lat, user_lng);
 
         // TODO: comment. Use for testing only! unnecessary & quota limited
-        reportPosition(position);
+//        reportPosition(position);
 
      };
 

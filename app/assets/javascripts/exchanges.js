@@ -18,7 +18,7 @@
 
         updateMap(search.exchanges);
 // TODO: only updatCards if there are exchanges returned
-//        updateCards(exchanges);
+        updateCards(exchanges);
     };
 
 
@@ -28,7 +28,7 @@
         var sort = sort ? sort : value_of('sort');
         exchanges = sort_by(sort);
 
-        for (var i = 0; i < initialSlides; i++) {
+        for (var i = 0; i < Math.min(initialSlides, exchanges.length); i++) {
             addCard(exchanges, i);
         }
 
@@ -116,5 +116,9 @@
             console.log('exchanges is empty');
             return null
         }
+    };
+
+    currExchange = function() {
+        return $('#cards > .swiper-slide-active').data('exchange_id')
     };
 

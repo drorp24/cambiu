@@ -15,7 +15,7 @@ $green: #27AE60;
 $bg_green: #6db61e;
 $progress-color: #fff;
 $font-family: 'Roboto', sans-serif;
-$navbar-height: 70px;
+$navbar-height: 40px;
 $mobile-navbar-height: 70px;
 $white: #fff;
 $black: #000;
@@ -531,8 +531,8 @@ body#cambiu {
     width: 100vw;
   }
   .navbar_link {
-    font-size: 1.7em;
-    color: #fff;
+    font-size: 1.6em;
+    color: #000;
     line-height: 30px;
     font-weight: 300;
     white-space: nowrap;
@@ -778,6 +778,7 @@ body#cambiu {
 
 .swiper-container {
   height: 50vh;
+  z-index: 2;
 }
 
   .swiper-container-h {
@@ -1005,20 +1006,29 @@ body#cambiu {
   }
 
 
-  .photo {
+  .photo, .summary {
     height: 150px;
     padding: 15px;
   }
 
   .missing {
     border: 1px solid #ccc;
-    margin: 15px;
     font-size: 4vw;
     font-weight: 400;
     color: #888;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .nav_icon {
+    transform: scale(0.5, 0.5);
+    .outer {
+      color: $user-location-color;
+    }
+    .inner {
+      color: #fff;
+    }
   }
 
 
@@ -1998,11 +2008,12 @@ body#cambiu {
 
 
   &.desktop.exchanges .navbar {
-      background-color: rgba(0,0,0,0.2);
+      background-color: rgba(255,255,255,0.7);
       box-shadow: 0 0 10px #888;
   }
   &.mobile.exchanges .navbar {
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(255,255,255,0.7);
+    box-shadow: 0px 0px 20px #aaa;
   }
 
   .navbar {
@@ -2032,6 +2043,10 @@ body#cambiu {
       }
     }
     height: $navbar-height;
+    border: 1px solid #aaa;
+    margin-top: 70px;
+    margin-left: 8%;
+    width: 84%;
     padding-top: 5px;
     padding-bottom: 5px;
     border: none;

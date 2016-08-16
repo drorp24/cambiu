@@ -42,6 +42,7 @@ class Exchange < ActiveRecord::Base
   scope :with_real_rates, -> { where("rates_source > 2") }
 
   def rating=(rate)
+    return if self.new_record?
     reviews.create(rating: rate)
     write_attribute(:rating, reviews.average(:rating))
   end

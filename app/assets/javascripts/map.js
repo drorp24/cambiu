@@ -12,7 +12,14 @@
          var mapOptions = {
              center: new google.maps.LatLng(latitude, longitude),
              zoom: map_initial_zoom,
-             scaleControl: true
+             scaleControl: true,
+             zoomControlOptions: {
+                 position: google.maps.ControlPosition.LEFT_CENTER
+             },
+             streetViewControlOptions: {
+                 position: google.maps.ControlPosition.LEFT_CENTER
+             },
+             mapTypeControl: false
          };
          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
          mapIsDrawn = true;
@@ -24,15 +31,18 @@
 
         map.data.addListener('click', function(event) {
 
-        var content = exchange_el(event.feature).det[0];
-        var infowindow = new google.maps.InfoWindow({
-            content: content
-        });
-        var anchor = new google.maps.MVCObject();
-        anchor.set("position",event.latLng);
-        infowindow.open(map, anchor);
+// TODO: fix to show card instead of infoWindow
+/*
+            var content = exchange_el(event.feature).det[0];
+            var infowindow = new google.maps.InfoWindow({
+                content: content
+            });
+            var anchor = new google.maps.MVCObject();
+            anchor.set("position",event.latLng);
+            infowindow.open(map, anchor);
+*/
 
-         });
+        });
 
 
         google.maps.event.addListenerOnce(map, 'idle', function(){
@@ -45,6 +55,17 @@
 */
             }, 13000);
         });
+
+
+        // irritating, but inevitable since i can't stick the user's blue dot to a place on the map (it's always on the screen's center)
+        // re-center map around user location if he drags the map around
+        google.maps.event.addListener(map, 'dragend', function(){
+
+            setTimeout(function() {
+                showUserLocation(user_lat, user_lng)
+            }, 1000);
+        });
+
 
         var interval = setInterval(function() {
             showUserLocation(latitude, longitude);
@@ -69,28 +90,22 @@
 
         console.log('renderDirections');
 
-        var mapOptions = {
-            center: new google.maps.LatLng(exchange.latitude, exchange.longitude),
-//            zoom: map_initial_zoom,
-            scaleControl: true
-        };
-        directionsMap = new google.maps.Map(document.getElementById('directions-map-canvas'), mapOptions);
-        from =          new google.maps.LatLng(value_of('location_lat'), value_of('location_lng'));
-        to =            new google.maps.LatLng(exchange.latitude, exchange.longitude);
-        calcRoute(from, to);
+        origin =            new google.maps.LatLng(user_lat, user_lng);
+        destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
+        calcRoute(origin, destination);
 
     };
 
 
-    function calcRoute(from, to) {
+    function calcRoute(origin, destination) {
 
         $('#directionsPanel').empty();
 
         var request = {
-            origin: from,
-            destination: to,
-            travelMode: google.maps.TravelMode.WALKING,
-            unitSystem: google.maps.UnitSystem.METRIC
+            origin:         origin,
+            destination:    destination,
+            travelMode:     google.maps.TravelMode.WALKING,
+            unitSystem:     google.maps.UnitSystem.METRIC
         };
 
         console.log('calcRoute. Following is the request:');
@@ -99,7 +114,7 @@
         directionsService = new google.maps.DirectionsService();
         directionsDisplay = new google.maps.DirectionsRenderer();
 
-        directionsDisplay.setMap(directionsMap);
+        directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById("directionsPanel"));
 
         directionsService.route(request, function (response, status) {
@@ -119,3 +134,8 @@
         return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
     };
 
+$(document).ready(function() {
+    $('body').on('click tap', '.nav_icon', function() {
+        renderDirections(findExchange(currExchange()))
+    });
+});

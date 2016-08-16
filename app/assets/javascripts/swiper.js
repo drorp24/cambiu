@@ -32,8 +32,11 @@ slideChange = function() {
 };
 
 slideNext = function() {
-    addSlide(currentSlide + initialSlides);
-    currentSlide ++;
+    var index = currentSlide + initialSlides;
+    if (index < exchanges.length) {
+        addSlide(index);
+        currentSlide ++;
+    }
 };
 slidePrev = function() {
     currentSlide --;

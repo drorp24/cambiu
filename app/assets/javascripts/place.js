@@ -234,7 +234,9 @@ logo = function(exchange) {
 };
 
 missing = function(exchange) {
-    $('[data-exchange_id='+ exchange.id +'] .photo').removeClass('photo').addClass('missing').css('height', photoHeight).css('width', photoWidth).html('Exchange missing in Google');
+    var height      = photoHeight;
+    var html = '<div class=missing>Exchange missing in Google</div>';
+    $('[data-exchange_id='+ exchange.id +'] .photo').html(html).find('div').css('width', '100%').css('height', height);
 };
 
 defaultImage = function(exchange, reason) {
