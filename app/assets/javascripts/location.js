@@ -188,7 +188,7 @@
     showUserLocation = function(user_lat, user_lng) {
 
         if (!map || !map.getProjection()) {
-            console.log('showUserLocation: map isnt ready yet')
+            console.log('showUserLocation: map isnt ready yet');
             return
         } else {
             console.log('showUserLocation: map is ready')
@@ -196,21 +196,12 @@
 
         var user_latlng = new google.maps.LatLng(user_lat, user_lng);
         var point = fromLatLngToPoint(user_latlng, map);
-        var x, y;
-        if (point.x < tooLeft || point.x > tooRight || point.y < tooHigh || point.y > tooLow) {
-            map.setCenter(user_latlng);
-            x = centerX;
-            y = centerY;
-        } else {
-            x = point.x;
-            y = point.y;
-        }
-        x -= 30;
-        y -= 30;
-        x = String(x);
-        y = String(y);
+        var x = String(centerX - 30) + 'px';
+        var y = String(centerY - 30) + 'px';
 
-        $('#userLoc').css('top', y + 'px').css('left', x + 'px');
+        // TODO: check panTo (or setCenter) doesnt remove the directions
+        map.panTo(user_latlng);
+        $('#userLoc').css('top', y).css('left', x);
 
         userLocationShown = true;
 
