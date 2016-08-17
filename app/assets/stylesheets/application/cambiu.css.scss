@@ -4,7 +4,7 @@
 @import "font-awesome";
 
 // Variables
-$navbar-background-color: rgba(0, 0, 0, 0.3);
+$navbar-background-color: rgba(0, 0, 0, 0.4);
 $user-location-color: #4384f7;
 $user-location-color-medium: rgba(67, 132, 247, 0.6);
 $user-location-color-light: rgba(67, 132, 247, 0.15);
@@ -16,7 +16,7 @@ $green: #27AE60;
 $bg_green: #6db61e;
 $progress-color: #fff;
 $font-family: 'Roboto', sans-serif;
-$navbar-height: 40px;
+$navbar-height: 50px;
 $mobile-navbar-height: 70px;
 $white: #fff;
 $black: #000;
@@ -533,7 +533,7 @@ body#cambiu {
     min-height: initial;
   }
   .navbar_link {
-    font-size: 1.3em;
+    font-size: 1.7em;
     color: #fff;
     line-height: 30px;
     font-weight: 400;
