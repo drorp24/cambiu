@@ -4,7 +4,7 @@
 @import "font-awesome";
 
 // Variables
-$navbar-background-color: rgba(0, 0, 0, 0.2);
+$navbar-background-color: rgba(0, 0, 0, 0.3);
 $user-location-color: #4384f7;
 $user-location-color-medium: rgba(67, 132, 247, 0.6);
 $user-location-color-light: rgba(67, 132, 247, 0.15);
@@ -533,14 +533,13 @@ body#cambiu {
     min-height: initial;
   }
   .navbar_link {
-    font-size: 1.5em;
+    font-size: 1.3em;
     color: #fff;
     line-height: 30px;
-    font-weight: 300;
+    font-weight: 400;
     white-space: nowrap;
     &.navbar_right, &.navbar_left {
       line-height: $navbar-height - 10px;
-      font-size: 1.3em;
     }
     &.navbar_center {
       text-align: center;
@@ -2027,7 +2026,6 @@ body#cambiu {
       @media (min-width: $screen-sm-min) {
         font-weight: 300;
       }
-      font-size: 1.5em;
       text-transform: initial;
       line-height: 50px;
       margin-left: 10px;
@@ -2051,7 +2049,6 @@ body#cambiu {
     padding-top: 5px;
     padding-bottom: 5px;
     margin-bottom: 0;
-    font-size: 11px;
     font-weight: 400;
     .navbar-brand {
       padding-top: 4px;
