@@ -28,7 +28,7 @@ initSwiperV = function() {      // for swiperH, 'observer: true' is enough to ma
 };
 
 slideChange = function() {
-//    alert('slide change')
+    if (directionsDisplay) directionsDisplay.setMap(null)
 };
 
 slideNext = function() {

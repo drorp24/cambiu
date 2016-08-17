@@ -4,6 +4,7 @@
 @import "font-awesome";
 
 // Variables
+$navbar-background-color: rgba(0, 0, 0, 0.2);
 $user-location-color: #4384f7;
 $user-location-color-medium: rgba(67, 132, 247, 0.6);
 $user-location-color-light: rgba(67, 132, 247, 0.15);
@@ -532,8 +533,8 @@ body#cambiu {
     min-height: initial;
   }
   .navbar_link {
-    font-size: 1.3em;
-    color: #000;
+    font-size: 1.5em;
+    color: #fff;
     line-height: 30px;
     font-weight: 300;
     white-space: nowrap;
@@ -2009,12 +2010,12 @@ body#cambiu {
 
 
   &.desktop.exchanges .navbar {
-      background-color: rgba(255,255,255,1);
-      box-shadow: 0 0 10px #888;
+      background-color: $navbar-background-color;
+//      box-shadow: 0 0 10px #888;
   }
   &.mobile.exchanges .navbar {
-    background-color: rgba(255,255,255,1);
-    box-shadow: 0px 0px 10px #888;
+    background-color: $navbar-background-color;
+//    box-shadow: 0px 0px 10px #888;
   }
 
   .navbar {
@@ -2044,7 +2045,7 @@ body#cambiu {
       }
     }
     height: $navbar-height;
-    margin-top: 70px;
+    margin-top: 60px;
     margin-left: 8%;
     width: 84%;
     padding-top: 5px;
