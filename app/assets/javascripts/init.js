@@ -105,10 +105,11 @@ var slidesAdded = [];
 var currentSlide = 0;
 var initialSlides = 10;
 var mapIsDrawn = false;
-var paramsPopulated = false;
-var userLocationShown = false;
+var userPositionShown = false;
 var user_lat;
 var user_lng;
+var def_lat = '51.51574678520366';
+var def_lng = '-0.16346305847173426';
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
@@ -125,6 +126,7 @@ toggleOrder = function($el) {
     return $el;
 };
 
+/*
 def_vals = function() {
 
     var def = {};
@@ -133,13 +135,31 @@ def_vals = function() {
     def['pay_currency']     = 'USD';
     def['buy_amount']       = 1000;
     def['buy_currency']     = 'EUR';
-    def['sort']             = 'price';
     def['location_lat']     = '51.51574678520366';
     def['location_lng']     = '-0.16346305847173426';
     def['location']         = 'London, UK';
     def['location_short']   = 'London';
     def['location_type']    = 'default';
     def['location_default'] = '88 Edgware Rd, London W2, UK';
+    def['sort']             = 'price';
+
+    return def;
+
+};
+*/
+
+def_vals = function() {
+
+    var def = {};
+
+    def['pay_amount']       = null;
+    def['pay_currency']     = 'USD';
+    def['buy_amount']       = 1000;
+    def['buy_currency']     = 'EUR';
+    def['user_lat']         = def_lat;
+    def['user_lng']         = def_lng;
+    def['location_type']    = 'default';
+    def['sort']             = 'price';
 
     return def;
 
@@ -162,10 +182,6 @@ var searchParams = [
     'location_reason',
     'location_lat',
     'location_lng',
-    'location_default',
-    'user_location',
-    'user_lat',
-    'user_lng',
     'sort'
 ];
 

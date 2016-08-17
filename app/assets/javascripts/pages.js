@@ -168,40 +168,41 @@ $(document).ready(function() {
         }
     });
 
+    initialSetPage = function() {
+
+        // setPage() to current path
+        // replace '/' with 'homepage' or else pushState will get ''
+
+        if (window.location.pathname == '/') {
+            var reload_path = '/homepage'
+        } else if (window.location.pathname == '/exchanges') {
+            var reload_path = '/exchanges/list'
+        }
+        else {
+            var reload_path = window.location.pathname
+        }
+        var hash = window.location.hash ? window.location.hash.slice(1) : null;
+        console.log('re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
+        var ppart = break_url(reload_path);
+        setPage(ppart['page'], ppart['id'], ppart['pane'], hash);
+    };
+
+
 
     // P A G E   R E / L O A D
     //
-    // first entry, reloads, direct linking
+    // First entry, reloads, direct linking
     // This should be the only code doing something that's not event-driven
 
-    // getLocation() triggers the entire flow. Dependency graph:
-    // locationCallback() (= as soon as search location is determined)
-    //    1. drawMap() - center map around that location
-    //    2. restore() - nearbySearch and getPlaceDetails both require 'map' to be defined
-    //       note: GooglePlaces API is now invoked on several exchanges, restore() is not used anymore, as it served to restore html relative to *current* exchange/order
-    //    3. search_exchanges() - search require all amounts and location to be restored
 
+    // PARAMS - populate params from default values and/or ss (for page refreshes)
+    paramsPopulate();
 
-    // get user's initial position, determine search location accordingly then invoke search
+    // LOCATION - locate user, search and draw map accordingly (geocode and update address too)
     getLocation();
-
-    // start following user's position
     followUser();
 
-    // setPage() to current path
-    // replace '/' with 'homepage' or else pushState will get ''
-
-    if (window.location.pathname == '/') {
-        var reload_path = '/homepage'
-    } else if (window.location.pathname == '/exchanges') {
-        var reload_path = '/exchanges/list'
-    }
-    else {
-        var reload_path = window.location.pathname
-    }
-    var hash = window.location.hash ? window.location.hash.slice(1) : null;
-    console.log('re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
-    var ppart = break_url(reload_path);
-    setPage(ppart['page'], ppart['id'], ppart['pane'], hash);
+    // ROUTING - setPage with initial values
+    initialSetPage();
 });
 

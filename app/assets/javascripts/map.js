@@ -14,20 +14,23 @@
              zoom: map_initial_zoom,
              scaleControl: true,
              zoomControlOptions: {
-                 position: google.maps.ControlPosition.LEFT_CENTER
+                 position: google.maps.ControlPosition.RIGHT_CENTER
              },
              streetViewControlOptions: {
-                 position: google.maps.ControlPosition.LEFT_CENTER
+                 position: google.maps.ControlPosition.RIGHT_CENTER
              },
              mapTypeControl: false
          };
          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
          mapIsDrawn = true;
 
+// TODO: Remove
+/*
         var location_marker = new google.maps.Marker({
             position: new google.maps.LatLng(latitude, longitude),
             map: map
         });
+*/
 
         map.data.addListener('click', function(event) {
 
@@ -48,6 +51,8 @@
         google.maps.event.addListenerOnce(map, 'idle', function(){
             // do something only the first time the map is loaded
 
+            showUserPosition(latitude, longitude);
+
             setTimeout(function() {
 /*
                 updateMap(search.exchanges);
@@ -58,19 +63,23 @@
 
 
         // irritating, but inevitable since i can't stick the user's blue dot to a place on the map (it's always on the screen's center)
-        // re-center map around user location if he drags the map around
+        // re-center map around user *cuurent* position if he drags the map around
         google.maps.event.addListener(map, 'dragend', function(){
 
             setTimeout(function() {
-                showUserLocation(user_lat, user_lng)
+                showUserPosition(user_lat, user_lng)
             }, 1000);
         });
 
 
+/*
+        // moved to 'idle' as this is where it belongs
+        // plus it was confusing: intended to show user's *initial* position (latitude, longitude)
         var interval = setInterval(function() {
-            showUserLocation(latitude, longitude);
-            if (userLocationShown) clearInterval(interval)
+            showUserPosition(latitude, longitude);
+            if (userPositionShown) clearInterval(interval)
         }, 2000)
+*/
 
     };
 
