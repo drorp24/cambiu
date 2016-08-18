@@ -14,9 +14,12 @@ value_of = function(key) {
 set = function(field, value) {
     sessionStorage.setItem(field, value);
     if (searchable(field)) {
-        var clean_value = (field.indexOf('amount') > -1)  ? String(value).replace(/[^0-9\.]+/g,"")  : value;
         $('form [data-field=' + field + ']').val(value);
-        $('.navbar [data-field=' + field + ']').html(clean_value);
+        if (field.indexOf('amount') > -1) {
+            var clean_value = String(value).replace(/[^0-9\.]+/g,"");
+            $('form #' + field + '_val').val(clean_value)
+        }
+        $('.navbar [data-field=' + field + ']').html(value);
     }
 };
 

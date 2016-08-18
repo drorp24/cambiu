@@ -46,19 +46,20 @@ positionDetermined = function(lat, lng, type, reason) {
     set('location_type',    type);
     set('location_reason',  reason);
 
-    if (exchanges && exchanges.length > 0) {
-        console.log('positionDetermined. exchanges exist - no search performed')
-    } else {
-        console.log('positionDetermined: invoking search');
-        search_exchanges();
-    }
+    console.log('positionDetermined: invoking search');
+    search_exchanges().then(function(response) {
+        // move to Promise.all after both map and search have succeeded
+        updateExchanges(response)
+    }, function(error) {
+        console.error(error)
+    });
 
-    if (mapIsDrawn) {
-        console.log('positionDetermined. Map already drawn')
-    } else {
-        console.log('positionDetermined: drawing map');
-        drawMap(user_lat, user_lng);
-    }
+    console.log('positionDetermined: drawing map');
+    drawMap(user_lat, user_lng).then(function(response) {
+        console.log(response)
+    }, function(error) {
+        console.error(error)
+    });
 
     var location_latlng =   new google.maps.LatLng(user_lat, user_lng);
     var geocoder =      new google.maps.Geocoder();
@@ -178,6 +179,33 @@ reportUserPosition = function(position) {
         }
     })
 };
+
+// Handle user location changes
+
+function searchbox_addListener(searchBox) {
+    google.maps.event.addListener(searchBox, 'places_changed', function () {
+        console.log('Location changed by user');
+        var places = searchBox.getPlaces();
+        if (places.length == 0) {
+            set_default_location('Location changed by user, but getPlaces found no place');
+            return
+        }
+        place = places[0];
+        set('location', place.formatted_address);
+        set('location_short', place.name);
+        set('location_lat', place.geometry.location.lat());
+        set('location_lng', place.geometry.location.lng());
+        set('location_type', 'selected');
+        set('location_reason', null);
+
+        console.log('location changed by user: invoking search');
+        search_exchanges().then(function(response) {
+            updateExchanges(response)
+        }, function(error) {
+            console.error(error)
+        });
+    });
+}
 
 
 /*

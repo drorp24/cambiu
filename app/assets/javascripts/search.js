@@ -251,27 +251,6 @@ $(document).ready(function() {
 
 */
 
-    // Handle user location changes
-
-    function searchbox_addListener(searchBox) {
-        google.maps.event.addListener(searchBox, 'places_changed', function () {
-            console.log('Location changed by user');
-            var places = searchBox.getPlaces();
-            if (places.length == 0) {
-                set_default_location('Location changed by user, but getPlaces found no place');
-                return
-            }
-            place = places[0];
-            set('location', place.formatted_address);
-            set('location_short', place.name);
-            set('location_lat', place.geometry.location.lat());
-            set('location_lng', place.geometry.location.lng());
-            set('location_type', 'selected');
-            set('location_reason', null);
-
-            search_exchanges('location changed by user');
-        });
-    }
 
     // Turn location fields into google searchBox's
     $('input[data-field=location]').each(function() {
@@ -315,11 +294,36 @@ $(document).ready(function() {
 
 
     search_exchanges = function() {
-        if (!homepage()) {
-            $('#search_form').submit();
-        } else {
-            console.log('Homepage: not submitting form');
-        }
+
+        return new Promise(function(resolve, reject) {
+
+            function status(response) {
+                if (response.ok) {
+                    return Promise.resolve(response)
+                } else {
+                    return Promise.reject(response.statusText)
+                }
+            }
+
+            function json(response) {
+                return response.json()
+            }
+
+            fetch('/searches', {
+                method: 'post',
+                body: new FormData(document.getElementById('search_form'))
+            })
+                .then(status)
+                .then(json)
+                .then(function (data) {
+                    resolve(data)
+                })
+                .catch(function (error) {
+                    reject(error)
+            });
+
+        })
+
     };
 
 
