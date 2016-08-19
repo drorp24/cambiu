@@ -104,18 +104,27 @@ var photoHeight;
 var slidesAdded = [];
 var currentSlide = 0;
 var initialSlides = 10;
-var mapIsDrawn = false;
-var userPositionShown = false;
 var user_lat;
 var user_lng;
 var def_lat = '51.51574678520366';
 var def_lng = '-0.16346305847173426';
+
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 
 sessionStorage.videoStopped = null;
+
+
+showError = function(error) {
+    console.error(error);
+    alert(error);
+};
+
+logError = function(error) {
+    console.error(error);
+};
 
 
 toggleOrder = function($el) {

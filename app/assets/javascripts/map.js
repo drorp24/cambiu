@@ -28,7 +28,6 @@
                 mapTypeControl: false
             };
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-            mapIsDrawn = true;
 
 // TODO: Remove
              var location_marker = new google.maps.Marker({
@@ -55,9 +54,8 @@
             google.maps.event.addListenerOnce(map, 'idle', function () {
                 // do something only the first time the map is loaded
 
-                resolve('map is drawn!');
-
-                showUserPosition(latitude, longitude);
+                console.log(':) map completed drawing');
+                resolve();
 
                 setTimeout(function () {
                     /*
@@ -78,21 +76,12 @@
             });
 
 
-            /*
-             // moved to 'idle' as this is where it belongs
-             // plus it was confusing: intended to show user's *initial* position (latitude, longitude)
-             var interval = setInterval(function() {
-             showUserPosition(latitude, longitude);
-             if (userPositionShown) clearInterval(interval)
-             }, 2000)
-             */
-
-
         })
     };
 
-    updateMap = function(data) {
-        map.data.addGeoJson(data);
+    updateMap = function() {
+        console.log('updateMap');
+        map.data.addGeoJson(search.exchanges);
     };
 
     clearMap = function() {

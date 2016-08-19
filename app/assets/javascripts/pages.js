@@ -200,7 +200,6 @@ $(document).ready(function() {
 
     // LOCATION - locate user, search and draw map accordingly (geocode and update address too)
     getLocation();
-    followUser();
 
     // ROUTING - setPage with initial values
     initialSetPage();

@@ -68,7 +68,7 @@ positionCallback = function(user_lat, user_lng) {
         console.log('positionCallback. exchanges exist - no search performed')
     } else {
         console.log('positionCallback: invoking search');
-        search_exchanges();
+        search();
     }
 };
 

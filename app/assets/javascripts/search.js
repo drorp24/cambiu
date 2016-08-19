@@ -85,6 +85,7 @@ $(document).ready(function() {
             toggleOrder($('[data-sort].active'));
         }
 
+/*
         if (sort != 'reverse') {
             set('sort', sort);
             if (!$('[data-sort=' + sort + ']').hasClass('active')) { //if sorted programmatically (otherwise ui already changed that upon user click)
@@ -92,6 +93,7 @@ $(document).ready(function() {
                 $('[data-sort=' + sort + ']').addClass('active');
             }
         }
+*/
 
         return exchanges;
      };
@@ -293,7 +295,9 @@ $(document).ready(function() {
 
 
 
-    search_exchanges = function() {
+    search = function(reason) {
+
+        console.log('search invoked. Reason: ' + reason);
 
         return new Promise(function(resolve, reject) {
 
@@ -316,6 +320,8 @@ $(document).ready(function() {
                 .then(status)
                 .then(json)
                 .then(function (data) {
+                    console.log(':) search completed succesfully');
+                    search = data;
                     resolve(data)
                 })
                 .catch(function (error) {

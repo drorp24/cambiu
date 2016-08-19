@@ -46,20 +46,22 @@ positionDetermined = function(lat, lng, type, reason) {
     set('location_type',    type);
     set('location_reason',  reason);
 
-    console.log('positionDetermined: invoking search');
-    search_exchanges().then(function(response) {
-        // move to Promise.all after both map and search have succeeded
-        updateExchanges(response)
-    }, function(error) {
-        console.error(error)
-    });
+    map_p = drawMap(lat, lng);
 
-    console.log('positionDetermined: drawing map');
-    drawMap(user_lat, user_lng).then(function(response) {
-        console.log(response)
-    }, function(error) {
-        console.error(error)
-    });
+    map_p
+        .then(followUser)
+        .catch(showError);
+
+
+    search_p = search('positionDetermined');
+
+    search_p
+        .then(updateCards)
+        .catch(showError);
+
+
+    Promise.all([map_p, search_p])
+        .then(updateMap);
 
     var location_latlng =   new google.maps.LatLng(user_lat, user_lng);
     var geocoder =      new google.maps.Geocoder();
@@ -105,6 +107,7 @@ geocodeError = function(error) {
 
 
 followUser = function() {
+    console.log('followUser')
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(
             currPositionFound,
@@ -138,20 +141,18 @@ currPositionError = function(error) {
 showUserPosition = function(user_lat, user_lng) {
 
     if (!map || !map.getProjection()) {
-        console.log('showUserPosition: map isnt ready yet');
+        console.warn('showUserPosition: map isnt ready yet');
         return
     }
 
     var user_latlng = new google.maps.LatLng(user_lat, user_lng);
-    var point = fromLatLngToPoint(user_latlng, map);
+//    var point = fromLatLngToPoint(user_latlng, map);
     var x = String(centerX - 30) + 'px';
     var y = String(centerY - 30) + 'px';
 
     // TODO: check panTo (or setCenter) doesnt remove the directions
     map.panTo(user_latlng);
     $('#userLoc').css('top', y).css('left', x);
-
-    userPositionShown = true;
 
 };
 
@@ -198,12 +199,9 @@ function searchbox_addListener(searchBox) {
         set('location_type', 'selected');
         set('location_reason', null);
 
-        console.log('location changed by user: invoking search');
-        search_exchanges().then(function(response) {
-            updateExchanges(response)
-        }, function(error) {
-            console.error(error)
-        });
+        search('search location changed by user')
+            .then(updateCards)
+            .catch(showError);
     });
 }
 

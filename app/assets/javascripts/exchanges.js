@@ -5,6 +5,7 @@
 
 
 
+/*
     updateExchanges = function(data) {
 
         if (data == null) {
@@ -20,11 +21,12 @@
 // TODO: only updatCards if there are exchanges returned
         updateCards(exchanges);
     };
+*/
 
 
+    updateCards = function(sort) {
 
-    updateCards = function(exchanges, sort) {
-
+        var exchanges = search.exchanges.features;
         var sort = sort ? sort : value_of('sort');
         exchanges = sort_by(sort);
 
