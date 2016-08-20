@@ -187,7 +187,6 @@ positionCallback = function(user_lat, user_lng) {
         }
 
         var user_latlng = new google.maps.LatLng(user_lat, user_lng);
-        var point = fromLatLngToPoint(user_latlng, map);
         var x = String(centerX - 30) + 'px';
         var y = String(centerY - 30) + 'px';
 

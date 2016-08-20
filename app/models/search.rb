@@ -49,7 +49,7 @@ class Search < ActiveRecord::Base
       exchanges_offers << exchange.offer(center, pay, buy)
     end
 
-    exchanges_offers = indicate_best(exchanges_offers, pay, buy) if exchanges.any?
+#    exchanges_offers = indicate_best(exchanges_offers, pay, buy) if exchanges.any?
 
     geoJsonize(exchanges_offers)
 

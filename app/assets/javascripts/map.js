@@ -132,7 +132,9 @@
 
     }
 
-    fromLatLngToPoint = function(latLng, map) {
+    fromLatLngToPoint = function(lat, lng, map) {
+
+        var latLng = new google.maps.LatLng(lat, lng);
         var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
         var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
         var scale = Math.pow(2, map.getZoom());

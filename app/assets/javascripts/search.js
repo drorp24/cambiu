@@ -322,7 +322,8 @@ $(document).ready(function() {
                 .then(function (data) {
                     console.log(':) search completed succesfully');
                     search = data;
-                    resolve(data)
+                    exchanges = data.exchanges.features;
+                    resolve(search)
                 })
                 .catch(function (error) {
                     reject(error)

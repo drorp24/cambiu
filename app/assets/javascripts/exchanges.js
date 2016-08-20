@@ -26,26 +26,34 @@
 
     updateCards = function(sort) {
 
-        var exchanges = search.exchanges.features;
+        console.log('updateCards');
+
         var sort = sort ? sort : value_of('sort');
         exchanges = sort_by(sort);
 
         for (var i = 0; i < Math.min(initialSlides, exchanges.length); i++) {
-            addCard(exchanges, i);
+            var exchange = exchanges[i].properties;
+            addCard(exchange, i);
         }
 
         initSwipers();
 
      };
 
+    updateMarkers = function() {
+
+        console.log('updateCards');
+
+        exchanges.forEach(addMarker);
+
+    };
+
 
 // TODO: Replace classes with data- attributes, do it in a loop over the data fields, so I dont need to change it whenever I add another field to fetch
-    function addCard(exchanges, index) {
+    function addCard(exchange, index) {
 
-        var exchange = exchanges[index].properties;
-        if (exchange.errors.length > 0) return;
         console.log('addCard called. exchange id: ' + exchange.id);
-        var exchange_el = $('.card.template').clone().removeClass('template').attr('data-exchange_id', exchange.id);
+        var $exchange = $('.card.template').clone().removeClass('template').attr('data-exchange_id', exchange.id);
 
 /*
         exchange_el.attr('data-href-id', exchange.id);
@@ -65,12 +73,26 @@
         exchange_el.find('.gain_type').addClass(exchange.gain_type);
 */
 
-        exchange_el.appendTo($('#cards'));
+        $exchange.appendTo($('#cards'));
         initSwiperV();
         populatePlace(exchange);
         slidesAdded.push(index);
     }
 
+
+    function addMarker(exchange) {
+
+        var exchange = exchange.properties;
+        var $marker = $('.marker.template').clone().removeClass('template').attr('data-exchange_id', exchange.id);
+
+        var point = fromLatLngToPoint(exchange.latitude, exchange.longitude, map);
+        var point_width = 32, point_height = 32;
+
+        var deg = Math.trunc(getBearing(numeric_value_of('location_lat'), numeric_value_of('location_lng'), exchange.latitude, exchange.longitude));
+
+        $marker.css({left: point.x - point_width / 2, top: point.y - point_height / 2}).attr('data-atDeg', deg);
+        $marker.appendTo('#radar');
+    }
 
     clearList = function () {
         list = value_of('list');

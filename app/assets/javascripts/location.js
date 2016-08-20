@@ -60,8 +60,16 @@ positionDetermined = function(lat, lng, type, reason) {
         .catch(showError);
 
 
+/*  // Use for testing - to check all my exchange markers are in place with Google's
     Promise.all([map_p, search_p])
         .then(updateMap);
+*/
+
+    Promise.all([map_p, search_p])
+        .then(function() {
+            updateMarkers();
+            radarScan()
+        });
 
     var location_latlng =   new google.maps.LatLng(user_lat, user_lng);
     var geocoder =      new google.maps.Geocoder();
@@ -146,13 +154,8 @@ showUserPosition = function(user_lat, user_lng) {
     }
 
     var user_latlng = new google.maps.LatLng(user_lat, user_lng);
-//    var point = fromLatLngToPoint(user_latlng, map);
-    var x = String(centerX - 30) + 'px';
-    var y = String(centerY - 30) + 'px';
-
-    // TODO: check panTo (or setCenter) doesnt remove the directions
     map.panTo(user_latlng);
-    $('#userLoc').css('top', y).css('left', x);
+    $('#userLoc').css('top', centerYpx).css('left', centerXpx);
 
 };
 
@@ -204,13 +207,59 @@ function searchbox_addListener(searchBox) {
             .catch(showError);
     });
 }
+function radians(n) {
+    return n * (Math.PI / 180);
+}
+function degrees(n) {
+    return n * (180 / Math.PI);
+}
 
 
+function getBearing(startLat,startLong,endLat,endLong){
+    startLat = radians(startLat);
+    startLong = radians(startLong);
+    endLat = radians(endLat);
+    endLong = radians(endLong);
+
+    var dLong = endLong - startLong;
+
+    var dPhi = Math.log(Math.tan(endLat/2.0+Math.PI/4.0)/Math.tan(startLat/2.0+Math.PI/4.0));
+    if (Math.abs(dLong) > Math.PI){
+        if (dLong > 0.0)
+            dLong = -(2.0 * Math.PI - dLong);
+        else
+            dLong = (2.0 * Math.PI + dLong);
+    }
+
+    return (degrees(Math.atan2(dLong, dPhi)) + 360.0) % 360.0;
+}
+
+
+
+// Get degree between 2 latlan points
+// source: http://www.igismap.com/formula-to-find-bearing-or-heading-angle-between-two-points-latitude-longitude/
+/*
+ getDeg = function(latA, lngA, latB, lngB) {
+
+ var toDeg = 180 / Math.PI;
+ var latA = latA / toDeg;
+ var lngA = lngA / toDeg;
+ var latB = latB / toDeg;
+ var lngB = lngB / toDeg;
+ var dLng = Math.abs(lngA - lngB);
+ var x = Math.cos(latB) * Math.sin(dLng);
+ var y = Math.cos(latA) * Math.sin(latB) - Math.sin(latA) * Math.cos(latB) * Math.cos(dLng);
+
+ return Math.atan2(x, y) * toDeg;
+ };
+
+ */
 /*
  stopFollowingUser = function() {
  navigator.geolocation.clearWatch(watchId);
  };
  */
+
 
 
 
