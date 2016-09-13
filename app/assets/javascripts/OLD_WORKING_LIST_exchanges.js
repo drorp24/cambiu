@@ -16,7 +16,7 @@
         search = data;
         exchanges = search.exchanges.features;
 
-//        updateMap(search.exchanges);
+//        placeGoogleMarkers(search.exchanges);
         updateList(exchanges);
         updateResults(exchanges);
 

@@ -5,28 +5,9 @@
 
 
 
-/*
-    updateExchanges = function(data) {
+    addCards = function(sort) {
 
-        if (data == null) {
-            alert('Unfortunately we cannot serve you at this time. Please try again in a few moments');
-            return;
-        }
-        console.log('updateExchanges');
-        set('search_id', data.search);
-        search = data;
-        exchanges = search.exchanges.features;
-
-        updateMap(search.exchanges);
-// TODO: only updatCards if there are exchanges returned
-        updateCards(exchanges);
-    };
-*/
-
-
-    updateCards = function(sort) {
-
-        console.log('updateCards');
+        console.log('addCards');
 
         var sort = sort ? sort : value_of('sort');
         exchanges = sort_by(sort);
@@ -40,14 +21,6 @@
 
      };
 
-    updateMarkers = function() {
-
-        console.log('updateCards');
-
-        exchanges.forEach(addMarker);
-
-    };
-
 
 // TODO: Replace classes with data- attributes, do it in a loop over the data fields, so I dont need to change it whenever I add another field to fetch
     function addCard(exchange, index) {
@@ -55,23 +28,7 @@
         console.log('addCard called. exchange id: ' + exchange.id);
         var $exchange = $('.card.template').clone().removeClass('template').attr('data-exchange_id', exchange.id);
 
-/*
-        exchange_el.attr('data-href-id', exchange.id);
-        exchange_el.attr('data-exchange-id', exchange.id);
 
-        exchange_el.find('.best_at').html(' ');
-        if (exchange.best_at[0]) exchange_el.find('.best_at').addClass(exchange.best_at[0]);
-        exchange_el.find('.name').html(exchange.name_s);
-        exchange_el.find('.address').html(exchange.address);
-        exchange_el.find('.open_today').html(exchange.open_today);
-        exchange_el.find('.phone').attr('href', exchange.phone ? 'tel:+44' + exchange.phone.substring(1) : "#");
-        exchange_el.find('.distance').html((exchange.distance * 1000).toFixed(0));
-        exchange_el.find('.quote').html(exchange.edited_quote);
-        exchange_el.find('.quote_currency').html(exchange.quote_currency);
-        exchange_el.find('.base_rate').html(exchange.base_rate);
-        exchange_el.find('.gain_amount').html(exchange.gain_amount);
-        exchange_el.find('.gain_type').addClass(exchange.gain_type);
-*/
 
         $exchange.appendTo($('#cards'));
         initSwiperV();
@@ -80,54 +37,7 @@
     }
 
 
-    function addMarker(exchange) {
-
-        var exchange = exchange.properties;
-        var $marker = $('.marker.template').clone().removeClass('template').attr('data-exchange_id', exchange.id);
-
-        var point = fromLatLngToPoint(exchange.latitude, exchange.longitude, map);
-        var point_width = 32, point_height = 32;
-
-        var deg = Math.trunc(getBearing(numeric_value_of('location_lat'), numeric_value_of('location_lng'), exchange.latitude, exchange.longitude));
-
-        $marker.css({left: point.x - point_width / 2, top: point.y - point_height / 2}).attr('data-atDeg', deg);
-        $marker.appendTo('#radar');
-    }
-
-    clearList = function () {
-        list = value_of('list');
-        if (list == 'best') $('#exchanges_list #best_exchanges').empty();
-        $('#exchanges_list #exchanges_items').empty();
-    };
-
-
-    updateResults = function (data) {
-
-        console.log('updateResults');
-
-        $('#loader_message').css('display', 'none');
-        $('#exchange_params_change').collapse('hide');
-
-        if (exchanges && exchanges.length) {
-
-            var list = value_of('list');
-            if (list && list != 'best' ) $('#exchanges_search_results').css('display', 'block');
-            $('#exchanges_search_params span').css('display', 'inline');
-            $('#exchanges_search_params span.change_link').html('change');
-            $('#fetch_more').html('<a href=#>Show more</a>');
-
-        } else {
-
-            $('#exchanges_search_results').css('display', 'none');
-            $('#exchanges_search_params span:not(.change_link').css('display', 'none');
-            $('#exchanges_search_params span.change_link').html('change your search');
-            $('#exchanges_list .more').css('display', 'block');
-            $('#fetch_more').html('No results found in that area.');
-        }
-
-    };
-
-    findExchange = function(id) {
+      findExchange = function(id) {
         if (exchanges && exchanges.length > 0) {
             var results = $.grep(exchanges, function(e){ return e.properties.id == id; });
             if (results[0]) {

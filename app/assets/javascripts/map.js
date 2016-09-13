@@ -59,36 +59,78 @@
 
                 setTimeout(function () {
                     /*
-                     updateMap(search.exchanges);
+                     placeGoogleMarkers(search.exchanges);
                      radarFade();
                      */
                 }, 13000);
             });
 
 
-            // irritating, but inevitable since i can't stick the user's blue dot to a place on the map (it's always on the screen's center)
-            // re-center map around user *cuurent* position if he drags the map around
-            google.maps.event.addListener(map, 'dragend', function () {
+             google.maps.event.addListener(map, 'dragend', function () {
 
-                setTimeout(function () {
+                  // irritating, but inevitable since i can't stick the user's blue dot to a place on the map (it's always on the screen's center)
+                 // re-center map around user *cuurent* position if he drags the map around
+/*
+                 setTimeout(function () {
                     showUserPosition(user_lat, user_lng)
                 }, 1000);
+*/
             });
+
+
+            google.maps.event.addListener(map, 'center_changed', function () {
+
+                $('.marker').each(function () {
+                    positionSoftMarker(null, $(this))
+                });
+            });
+
+            google.maps.event.addListener(map, 'zoom_changed', function () {
+
+                $('.marker').each(function () {
+                    positionSoftMarker(null, $(this))
+                });
+            });
+
 
 
         })
     };
 
-    updateMap = function() {
-        console.log('updateMap');
+    placeGoogleMarkers = function() {
+        console.log('placeGoogleMarkers');
         map.data.addGeoJson(search.exchanges);
     };
 
-    clearMap = function() {
+    clearGoogleMarkers = function() {
         map.data.forEach(function(feature) {
-            //filter...
             map.data.remove(feature);
         });
+    };
+
+    placeSoftMarkers = function() {
+        console.log('placeSoftMarkers');
+        exchanges.forEach(placeSoftMarker);
+    };
+
+    placeSoftMarker = function(exchange) {
+
+        var exchange = exchange.properties;
+        var $marker = $('.marker.template').clone().removeClass('template').attr('data-exchange_id', exchange.id);
+
+        var deg = Math.trunc(getBearing(numeric_value_of('location_lat'), numeric_value_of('location_lng'), exchange.latitude, exchange.longitude));
+
+        $marker.attr({'data-lat': exchange.latitude, 'data-lng': exchange.longitude, 'data-atDeg': deg});
+        $marker = positionSoftMarker(null, $marker);
+        $marker.appendTo('#markers');
+    };
+
+    positionSoftMarker = function(index, $marker) {
+        var data = $marker.data();
+        var point = fromLatLngToPoint(data.lat, data.lng, map);
+        var point_width = 32, point_height = 32;
+        $marker.css({left: point.x - point_width / 2, top: point.y - point_height / 2});
+        return $marker;
     };
 
 

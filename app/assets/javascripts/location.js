@@ -56,18 +56,17 @@ positionDetermined = function(lat, lng, type, reason) {
     search_p = search('positionDetermined');
 
     search_p
-        .then(updateCards)
+        .then(addCards)
         .catch(showError);
 
 
-/*  // Use for testing - to check all my exchange markers are in place with Google's
+  // Use for testing - to check all my exchange markers are in place with Google's
     Promise.all([map_p, search_p])
-        .then(updateMap);
-*/
+        .then(placeGoogleMarkers);
 
     Promise.all([map_p, search_p])
         .then(function() {
-            updateMarkers();
+            placeSoftMarkers();
             radarScan()
         });
 
@@ -203,7 +202,7 @@ function searchbox_addListener(searchBox) {
         set('location_reason', null);
 
         search('search location changed by user')
-            .then(updateCards)
+            .then(addCards)
             .catch(showError);
     });
 }
