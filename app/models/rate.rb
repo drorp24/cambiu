@@ -15,7 +15,7 @@ class Rate < ActiveRecord::Base
 
   def display_name
     split = $request.path.split('/')
-    if split[2] == 'exchanges'
+    if split[2] == 'exchanges' and split[3]
       return Exchange.find_by_id(split[3]).name
     elsif split[2] == 'chains'
       return Chain.find_by_id(split[3]).name

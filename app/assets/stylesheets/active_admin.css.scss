@@ -15,6 +15,13 @@
 //
 //   .status_tag { background: #6090DB; }
 
+body.active_admin {
+  .status_tag {
+    &.blue { background: #63B8FF; }
+    &.black { background: #000; }
+  }
+}
+
 .purr {
   width: 100%;
   padding: 10px;

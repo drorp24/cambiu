@@ -15,4 +15,10 @@ class Chain < ActiveRecord::Base
 #
   enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping ]
   validates :name, uniqueness: true, on: :create
+
+  before_create do
+    self.no_rates!
+    self.currency = 'GBP'
+  end
+
 end

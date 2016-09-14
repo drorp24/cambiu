@@ -10,39 +10,39 @@ ActiveAdmin.register Exchange do
   includes :chain
 
   # csv import
+  # TODO: update opening hours in the search
   active_admin_importable do |model, hash|
-#   begin
-    hash = Hash[ hash.map { |key, value| [key, value ? value.force_encoding('iso-8859-1').encode('utf-8') : nil] } ]
-    hash = Hash[ hash.map { |key, value| [key, value == "00:00-24:00" ? "00:00-23:59" : value] } ]
-    puts hash
-    e = Exchange.where(name: (hash[:change]), address: (hash[:address])).first_or_initialize
-    e.name =            hash[:change]
-    e.exchange!
-    e.chain_id =        Chain.where(name: hash[:chain_name]).first_or_create.id if hash[:chain_name]
-    e.country =         hash[:country]
-    e.city =            hash[:metropolis]
-    e.region =          hash[:districtregion] || hash[:region]
-    e.address =         hash[:address]
-    e.latitude =        hash[:latitude]
-    e.longitude =       hash[:longitude]
-    e.phone =           hash[:telephone]
-    e.nearest_station = hash[:nearest_station]
-    e.airport =         hash[:airport]
-    e.save!
-    e.update_csv_business_hours(hash[:sunday_openning_hours], 0)
-    e.update_csv_business_hours(hash[:monday_openning_hours], 1) 
-    e.update_csv_business_hours(hash[:tuesday_openning_hours], 2) 
-    e.update_csv_business_hours(hash[:wednesday_openning_hours], 3) 
-    e.update_csv_business_hours(hash[:thursday_openning_hours], 4) 
-    e.update_csv_business_hours(hash[:friday_openning_hours], 5) 
-    e.update_csv_business_hours(hash[:saturday_openning_hours], 6) 
 
-#    rescue => e
-#       error = e  
-#    end     
+    begin
+
+      # TODO: if hash[:system] == 'remove' then logically cancel the record and return. Exclude cancelled records from search!
+
+      if hash[:name].nil?
+        puts "no name or empty line"
+        next
+      end
+
+      e = Exchange.find_by_either(hash[:id], hash[:name])
+      (Exchange.column_names - Exchange.unexported_columns).each do |column_name|
+        e.send(column_name + '=', hash[column_name.to_sym])
+      end
+      e.chain_id        = Chain.where(name: hash[:chain]).first_or_create.id if hash[:chain]
+#      e.admin_user_id   = current_admin_user.id if current_admin_user
+      e.geocode! unless e.latitude and e.longitude
+
+      e.save!
+
+    rescue => ee
+ #      e.save validate: false
+      puts "ee: #{ee}"
+      puts "e.error: #{e.error}" if e
+      puts ""
+    end
+
   end
 
   # osm import
+=begin
   collection_action :import_osm, method: :post do
     Exchange.import("bdc", "London")
     redirect_to collection_path, notice: "OSM imported successfully!"
@@ -50,6 +50,7 @@ ActiveAdmin.register Exchange do
   action_item only: :index do
     link_to 'OSM Import', import_osm_admin_exchanges_path, method: :post
   end
+=end
 
 
 =begin
@@ -64,14 +65,17 @@ ActiveAdmin.register Exchange do
   end
 =end
 
-  scope :manual
-  scope :xml
-  scope :scraping
-  scope :test
+  scope :all
+  scope :todo
+  scope :unverified
+  scope :no_contract
+  scope :no_rates
+  scope :system
+  scope :errors
 
 
-  before_filter :skip_sidebar!, :only => :index
-
+  filter :name
+  filter :chain
 =begin
   filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Test', 'test'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']]
   filter :chain
@@ -85,10 +89,30 @@ ActiveAdmin.register Exchange do
   index do
     selectable_column
     id_column
-    column :name do |exchange|
-      link_to exchange.name, admin_exchange_path(exchange)
+    column(:todo) do |exchange|
+      if exchange.verify?
+        status_tag(exchange.todo, :orange)
+      elsif exchange.call?
+        status_tag(exchange.todo, :blue)
+      elsif exchange.meet?
+        status_tag(exchange.todo, :green)
+      end
+    end
+    column(:system) do |exchange|
+      if exchange.error?
+        status_tag(exchange.system, :red)
+      elsif exchange.remove?
+        status_tag(exchange.system, :grey)
+      elsif exchange.geocode?
+        status_tag(exchange.system, :black)
+      end
     end
     column :chain
+    column :name
+    column :nearest_station
+    column :contract
+#    column :address
+    column :phone
     column :rates_policy do |exchange|
       exchange.rates_policy ? exchange.rates_policy.titleize : ''
     end
@@ -99,11 +123,7 @@ ActiveAdmin.register Exchange do
         link_to exchange.chain.rates_source ? exchange.chain.rates_source.titleize : '', admin_chain_rates_path(exchange.chain_id)
       end
     end
-    column :contract
-    column :delivery?
-    column :address
-    column :email
-    actions
+#    actions
   end
   
 =begin
@@ -120,6 +140,16 @@ ActiveAdmin.register Exchange do
   end
 
 =end
+
+
+  sidebar "System", only: [:show, :edit] do
+    status_tag exchange.system.humanize if exchange.system
+  end
+
+  sidebar "Comments", only: [:show, :edit] do
+    exchange.comment
+  end
+
   sidebar "Rates", only: [:show, :edit] do
     table_for exchange.rates do |r|
       r.column("Currency")    { |rate| status_tag rate.currency }
@@ -127,19 +157,28 @@ ActiveAdmin.register Exchange do
       r.column("Sell")    { |rate|  rate.sell_s }
     end
     if exchange.individual?
-      link_to "Update rates",    admin_exchange_rates_path(exchange)
+      link_to "Manually update rates",    admin_exchange_rates_path(exchange)
     elsif exchange.chain?
-      link_to "Update rates",    admin_chain_rates_path(exchange.chain_id)
+      link_to "Manually update rates",    admin_chain_rates_path(exchange.chain_id)
     end
   end
 
   sidebar "Opening hours", only: [:show, :edit] do
-    table_for exchange.business_hours.order("day") do |b|
-      b.column("Day")    { |bh| status_tag (Date::DAYNAMES[bh.day]), (bh.open1.present? ? :ok : :error) }
-      b.column("Open")     { |bh| bh.open1.to_s[0..4]}
-      b.column("Close")    { |bh| bh.close1.to_s[0..4] }
+    table_for Exchange.days do
+      column :day do |day|
+        day.humanize
+      end
+      column :open do |day|
+        time = exchange.send(day + '_open')
+        time.strftime("%H:%M") if time
+      end
+      column :close do |day|
+        time = exchange.send(day + '_close')
+        time.strftime("%H:%M") if time
+      end
     end
   end
+
 
   controller do
 
@@ -183,37 +222,31 @@ form do |f|
     f.inputs 'Details' do
 
       f.semantic_errors *f.object.errors.keys
-      f.input     :name
-      f.input     :caption, hint: 'Optional: populate if you want to override the exchange name shown to user'
-      f.input     :business_type, as: :select, collection: {:"Exchange"=>"exchange", :"Bank"=>"bank", :"Post office"=>"post_office", :"Other"=>"other"}, include_blank: false
+      f.input     :contract
+      f.input     :todo, as: :select, collection: {:"Call"=>"call", :"Meet"=>"meet", :"Verify"=>"verify", :"Remove"=>"remove"}
       f.input     :chain_name, label: 'Chain'
+      f.input     :name
+      f.input     :nearest_station
+      f.input     :contact
+      f.input     :address
+      f.input     :phone, as: :phone
+      f.input     :email, as: :email
+      f.input     :website, as: :url
+      f.input     :weekday_open
+      f.input     :weekday_close
+      f.input     :saturday_open
+      f.input     :saturday_close
+      f.input     :sunday_open
+      f.input     :sunday_close
+      f.input     :business_type, as: :select, collection: {:"Exchange"=>"exchange", :"Bank"=>"bank", :"Post office"=>"post_office", :"Other"=>"other"}, include_blank: false
       f.input     :rates_policy, as: :select, collection: {:"Individual"=>"individual", :"Chain"=>"chain"}, include_blank: false
       f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Test"=>"test", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping"}, include_blank: false
-      f.input     :contract, label: 'Contract', as: :radio
-      f.input     :address
-      f.input     :delivery_tracking, as: :url
-      f.input     :direct_link, input_html: { :disabled => true }, hint: '  Direct link for search engines and ads'
-      f.input     :logo, as: :file
+      f.input     :rates_url, as: :url
       f.input     :latitude
       f.input     :longitude
- #     f.input     :country, as: :country
       f.input     :currency, as: :select, collection: Currency.select, label: "Local currency", value: "GBP"
-      f.input     :opens, hint: "Fill if opening hours are the same all over the week"
-      f.input     :closes, hint: "Fill if closing hours are the same all over the week"
-      f.input     :website, as: :url
-      f.input     :email, as: :email
-      f.input     :phone, as: :phone
-      f.input     :osm_id, input_html: { :disabled => true }
-      f.input     :atm
-      f.input     :city
-      f.input     :region
-      f.input     :rating
-      f.input     :nearest_station
-      f.input     :airport
-      f.input     :directory
-      f.input     :accessible
-      f.input     :upload_id
-      f.input     :note
+      f.input     :comment, as: :text
+      f.input     :error, input_html: { :disabled => true }
       f.input     :created_at, as: :string, input_html: { :disabled => true }
       f.input     :updated_at, as: :string, input_html: { :disabled => true }
       f.input     :admin_user_s, as: :string, label: "By", input_html: { :disabled => true }

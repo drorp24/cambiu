@@ -20,6 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  time:
+    format:
+      long: "%Y-%m-%d %H:%M:%S"
+      short: "%H:%M:%S"
   number:
       format:
         delimiter: ","

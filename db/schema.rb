@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613115249) do
+ActiveRecord::Schema.define(version: 20160914211552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,49 +92,41 @@ ActiveRecord::Schema.define(version: 20160613115249) do
 
   add_index "emails", ["emailable_type", "emailable_id"], name: "index_emails_on_emailable_type_and_emailable_id", using: :btree
 
-  create_table "exchanges``", force: :cascade do |t|
-    t.string   "name",              limit: 255
-    t.string   "address",           limit: 255
+  create_table "exchanges", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "address",         limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "country",           limit: 255
-    t.time     "opens"
-    t.time     "closes"
-    t.string   "website",           limit: 255
-    t.string   "email",             limit: 255
-    t.text     "note"
-    t.string   "phone",             limit: 255
-    t.string   "addr_country",      limit: 255
-    t.string   "addr_city",         limit: 255
-    t.string   "addr_street",       limit: 255
-    t.string   "addr_housename",    limit: 255
-    t.string   "addr_housenumber",  limit: 255
-    t.string   "addr_postcode",     limit: 255
-    t.string   "addr_unit",         limit: 255
-    t.string   "osm_id",            limit: 255
-    t.boolean  "atm"
-    t.string   "source",            limit: 255
+    t.string   "country",         limit: 255
+    t.string   "website",         limit: 255
+    t.string   "email",           limit: 255
+    t.string   "phone",           limit: 255
     t.integer  "business_type"
     t.integer  "chain_id"
-    t.string   "city",              limit: 255
-    t.string   "region",            limit: 255
+    t.string   "city",            limit: 255
+    t.string   "region",          limit: 255
     t.float    "rating"
-    t.string   "nearest_station",   limit: 255
-    t.boolean  "airport"
-    t.string   "directory",         limit: 255
-    t.boolean  "accessible"
-    t.integer  "upload_id"
+    t.string   "nearest_station", limit: 255
     t.integer  "admin_user_id"
-    t.string   "logo",              limit: 255
-    t.string   "currency",          limit: 255
+    t.string   "currency",        limit: 255
     t.integer  "rates_source"
     t.boolean  "contract"
-    t.string   "delivery_tracking"
     t.integer  "rates_policy"
-    t.string   "caption"
     t.string   "place_id"
+    t.string   "contact"
+    t.text     "comment"
+    t.time     "weekday_open"
+    t.time     "weekday_close"
+    t.time     "saturday_open"
+    t.time     "saturday_close"
+    t.time     "sunday_open"
+    t.time     "sunday_close"
+    t.string   "rates_url"
+    t.string   "error"
+    t.integer  "todo"
+    t.integer  "system"
   end
 
   add_index "exchanges", ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree

@@ -28,18 +28,49 @@ class Exchange < ActiveRecord::Base
   has_many    :reviews
 
   enum business_type: [ :exchange, :bank, :post_office, :other ]
-  enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping ]
-  enum rates_policy: [:individual, :chain]
+  enum rates_source:  [ :no_rates, :test, :manual, :xml, :scraping ]
+  enum rates_policy:  [:individual, :chain]
+  enum todo:          [:verify, :call, :meet]
+  enum system:        [:remove, :geocode, :error]
 
   accepts_nested_attributes_for :business_hours
   accepts_nested_attributes_for :rates
 
   geocoded_by :address
 
-  validates :delivery_tracking, allow_blank: true, :format => {:with => URI.regexp}
+#  validates :delivery_tracking, allow_blank: true, :format => {:with => URI.regexp}
+  validates :rates_url, allow_blank: true, :format => {:with => URI.regexp}
 
-  scope :with_contract, -> { where(contract: true) }
+#  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
+
+  scope :contract, -> { where(contract: true) }
+  scope :no_contract, -> { where(contract: false) }
   scope :with_real_rates, -> { where("rates_source > 2") }
+  scope :verified, -> {where.not(todo: 'verify')}
+  scope :unverified, -> {where(todo: 'verify')}
+  scope :rates, -> {where("rates_source > 2") }
+  scope :no_rates, -> {where("rates_source <= 2") }
+  scope :todo, -> {where.not(todo: nil) }
+  scope :system, -> {where.not(system: nil) }
+  scope :errors, -> {where(system: 'error') }
+
+
+  def self.unexported_columns
+    ["id", "created_at", "updated_at", "latitude", "longitude", "chain_id", "rating", "admin_user_id", "place_id", "error"]
+  end
+
+  def self.find_by_either(id, name)
+    if id.present? && id != '0'
+      return Exchange.find_by_id(id) || Exchange.new(error: "Exchange with id #{id} doesnt exist", system: 'error')
+    elsif name
+      return Exchange.find_by(name: name) || Exchange.create(name: name)
+    end
+  end
+
+  def self.days
+    ['weekday', 'saturday', 'sunday']
+  end
+
 
   def rating=(rate)
     return if self.new_record?
@@ -438,10 +469,6 @@ class Exchange < ActiveRecord::Base
 
   def collection?
     true
-  end
-
-  def delivery?
-    false
   end
 
   def service_type
