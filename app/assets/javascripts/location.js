@@ -46,14 +46,18 @@ positionDetermined = function(lat, lng, type, reason) {
     set('location_type',    type);
     set('location_reason',  reason);
 
-    map_p = drawMap(lat, lng);
+    map_p = drawMap(lat, lng)
+        .catch(showError);
 
     map_p
         .then(followUser)
         .catch(showError);
 
 
-    search_p = search('positionDetermined');
+    search_p =
+        search('positionDetermined')
+        .catch(showError);
+
 
     search_p
         .then(addCards)

@@ -301,15 +301,17 @@ $(document).ready(function() {
 
         return new Promise(function(resolve, reject) {
 
-            function status(response) {
-                if (response.ok) {
-                    return Promise.resolve(response)
+            function checkStatus(response) {
+                if (response.status >= 200 && response.status < 300) {
+                    return response
                 } else {
-                    return Promise.reject(response.statusText)
+                    var error = new Error(response.statusText);
+                    error.response = response;
+                    throw error
                 }
             }
 
-            function json(response) {
+            function parseJson(response) {
                 return response.json()
             }
 
@@ -317,8 +319,8 @@ $(document).ready(function() {
                 method: 'post',
                 body: new FormData(document.getElementById('search_form'))
             })
-                .then(status)
-                .then(json)
+                .then(checkStatus)
+                .then(parseJson)
                 .then(function (data) {
                     console.log(':) search completed succesfully');
                     search = data;
@@ -326,6 +328,7 @@ $(document).ready(function() {
                     resolve(search)
                 })
                 .catch(function (error) {
+                    console.log('catch!')
                     reject(error)
             });
 
