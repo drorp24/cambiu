@@ -71,7 +71,7 @@ ActiveAdmin.register Exchange do
   scope :no_contract
   scope :no_rates
   scope :system
-  scope :errors
+  scope :error
 
 
   filter :name
@@ -89,24 +89,8 @@ ActiveAdmin.register Exchange do
   index do
     selectable_column
     id_column
-    column(:todo) do |exchange|
-      if exchange.verify?
-        status_tag(exchange.todo, :orange)
-      elsif exchange.call?
-        status_tag(exchange.todo, :blue)
-      elsif exchange.meet?
-        status_tag(exchange.todo, :green)
-      end
-    end
-    column(:system) do |exchange|
-      if exchange.error?
-        status_tag(exchange.system, :red)
-      elsif exchange.remove?
-        status_tag(exchange.system, :grey)
-      elsif exchange.geocode?
-        status_tag(exchange.system, :black)
-      end
-    end
+    column(:todo)   {|exchange| status_tag(exchange.todo, exchange.todo_color) if exchange.todo }
+    column(:system) {|exchange| status_tag(exchange.system, exchange.system_color) if exchange.system }
     column :chain
     column :name
     column :nearest_station
@@ -143,7 +127,8 @@ ActiveAdmin.register Exchange do
 
 
   sidebar "System", only: [:show, :edit] do
-    status_tag exchange.system.humanize if exchange.system
+    status_tag(exchange.status, exchange.status_color) if exchange.status
+    status_tag(exchange.system, exchange.system_color) if exchange.system
   end
 
   sidebar "Comments", only: [:show, :edit] do
@@ -223,7 +208,7 @@ form do |f|
 
       f.semantic_errors *f.object.errors.keys
       f.input     :contract
-      f.input     :todo, as: :select, collection: {:"Call"=>"call", :"Meet"=>"meet", :"Verify"=>"verify", :"Remove"=>"remove"}
+      f.input     :todo, as: :select, collection: {:"Verify"=>"verify", :"Call"=>"call", :"Meet"=>"meet"}
       f.input     :chain_name, label: 'Chain'
       f.input     :name
       f.input     :nearest_station

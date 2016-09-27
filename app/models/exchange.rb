@@ -32,6 +32,7 @@ class Exchange < ActiveRecord::Base
   enum rates_policy:  [:individual, :chain]
   enum todo:          [:verify, :call, :meet]
   enum system:        [:remove, :geocode, :error]
+  enum status:        [:active, :removed]
 
   accepts_nested_attributes_for :business_hours
   accepts_nested_attributes_for :rates
@@ -41,7 +42,7 @@ class Exchange < ActiveRecord::Base
 #  validates :delivery_tracking, allow_blank: true, :format => {:with => URI.regexp}
   validates :rates_url, allow_blank: true, :format => {:with => URI.regexp}
 
-#  after_validation :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
+  after_validation :do_geocoding, if: ->(exchange){ (exchange.latitude.blank? or exchange.address_changed?) and exchange.address.present? }
 
   scope :contract, -> { where(contract: true) }
   scope :no_contract, -> { where(contract: false) }
@@ -52,8 +53,29 @@ class Exchange < ActiveRecord::Base
   scope :no_rates, -> {where("rates_source <= 2") }
   scope :todo, -> {where.not(todo: nil) }
   scope :system, -> {where.not(system: nil) }
-  scope :errors, -> {where(system: 'error') }
 
+
+  def do_geocoding
+    geocode
+    self.system = nil if geocode?
+  end
+
+  def remove
+    todo = nil if remove?
+    removed!
+  end
+
+  def system_color
+    [:grey, :black, :red][Exchange.systems[system]]
+  end
+
+  def todo_color
+    [:orange, :blue, :green][Exchange.todos[todo]]
+  end
+
+  def status_color
+    :black if removed?
+  end
 
   def self.unexported_columns
     ["id", "created_at", "updated_at", "latitude", "longitude", "chain_id", "rating", "admin_user_id", "place_id", "error"]
@@ -287,15 +309,7 @@ class Exchange < ActiveRecord::Base
 
 
   def admin_user_s
-
-    result = 'System'
-    if admin_user_id
-      if admin_user_rec = AdminUser.find_by_id(admin_user_id)
-        result = admin_user_rec.email
-      end
-    end
-    result
-
+    'system'
   end
 
   def offer(center, pay, buy)
@@ -332,10 +346,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:errors] = quotes[:errors]
     exchange_hash[:rounded] = quotes[:rounded]
     exchange_hash[:base_rate] = quotes[:base_rate]
-    exchange_hash[:delivery_tracking] = delivery_tracking
     exchange_hash[:service_type] = service_type
-    exchange_hash[:logo] = self.logo ? ActionController::Base.helpers.image_path(self.logo) : nil
-    exchange_hash[:logo_ind] = self.logo
     exchange_hash[:best_at] = []
     exchange_hash[:rates] = quotes[:rates]
     exchange_hash[:place_id] = self.place_id
@@ -374,12 +385,17 @@ class Exchange < ActiveRecord::Base
   
 
   def todays_hours
-    return @todays_hours if @todays_hours
-    if opens and closes and opens.strftime("%H") != "00"
-      @todays_hours = opens.strftime("%H:%M") + ' - ' + closes.strftime("%H:%M")
+    t = Time.now
+    if t.sunday?
+      day = 'sunday'
+    elsif t.saturday?
+      day = 'saturday'
     else
-      @todays_hours = make_hour(rand(7..10)) + " - " + make_hour(rand(17..20))
+      day = 'weekday'
     end
+    open = self.send(day + '_open')
+    close = self.send(day + '_close')
+    open.strftime("%H:%M") + ' - ' + close.strftime("%H:%M") if open and close
   end
   
   def make_hour(int)
@@ -500,7 +516,8 @@ class Exchange < ActiveRecord::Base
    end
 
   def name_s
-    self.caption.present? ? self.caption : self.name
+    chain = self.chain
+    chain ? chain.name + ' - ' + name : name
   end
 
   protected
