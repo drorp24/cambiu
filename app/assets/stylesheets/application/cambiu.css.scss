@@ -757,6 +757,7 @@ body#cambiu {
   }
 
   #radar{
+    display: none;
     position: relative;
     z-index: 2;
     width:321px;
@@ -788,9 +789,12 @@ body#cambiu {
   }
 
   */
+
+.card {
+  background-color: #fff;
+  box-shadow: 0px 1px 15px rgba(0, 0, 0, .2);
+}
 .swiper-container {
-  display: none;
-  height: 50vh;
   z-index: 2;
 }
 
@@ -799,15 +803,11 @@ body#cambiu {
     position: fixed;
     bottom: 0;
     left: 0;
+    background-color: #eee;
+    padding-top: 10px;
+    box-shadow: 1px 2px 13px rgba(0, 0, 0, .5);
   }
 
-  .swiper-container-v {
-    .swiper-slide {
-      background-color: #fff;
-      box-shadow: 1px 2px 13px rgba(0, 0, 0, .5);
-      border-radius: 5px;
-     }
-  }
 
   // temp
   .swiper-slide {

@@ -6,7 +6,7 @@ initSwipers = function() {
         paginationType: 'fraction',
 */
         centeredSlides: true,
-        spaceBetween: 15,
+        spaceBetween: 10,
         slidesPerView: slidesPerView,
         observer: true,
         onSlideChangeStart: slideChange,
@@ -14,18 +14,8 @@ initSwipers = function() {
         onSlidePrevEnd: slidePrev
     });
 
-    initSwiperV();
 };
 
-initSwiperV = function() {      // for swiperH, 'observer: true' is enough to make every added slide behave like a swiper; swiperV requires re-initializing
-    swiperV = new Swiper ('.swiper-container-v', {
-        direction: 'vertical',
-        slidesOffsetBefore: 150,
-        observer: true,
-        observeParents: true,
-        freeMode: true
-    });
-};
 
 slideChange = function() {
     if (directionsDisplay) directionsDisplay.setMap(null)

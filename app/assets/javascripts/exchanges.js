@@ -31,7 +31,6 @@
 
 
         $exchange.appendTo($('#cards'));
-        initSwiperV();
         populatePlace(exchange);
         slidesAdded.push(index);
     }
