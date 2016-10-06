@@ -418,4 +418,5 @@ $(document).ready(function() {
 
     photoWidth = Math.round(($('body').width() / slidesPerView / 2) - (2 * photoPadding));
     photoHeight = Math.round(photoWidth / photoAspectRatio);
+    cardHeight = photoHeight + 2 * photoPadding + 3;
 });

@@ -68,11 +68,13 @@ positionDetermined = function(lat, lng, type, reason) {
     Promise.all([map_p, search_p])
         .then(placeGoogleMarkers);
 
+/*
     Promise.all([map_p, search_p])
         .then(function() {
             placeSoftMarkers();
             radarScan()
         });
+*/
 
     var location_latlng =   new google.maps.LatLng(user_lat, user_lng);
     var geocoder =      new google.maps.Geocoder();

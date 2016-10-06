@@ -1,3 +1,5 @@
+var radarLoop;
+
 radarScan = function() {
 
     var deg = 0;
@@ -7,7 +9,7 @@ radarScan = function() {
         $('.marker[data-atDeg='+deg+']').stop().fadeTo(400,1).fadeTo(1000,0.35);
 
         // LOOP
-        setTimeout(function() {
+        radarLoop = setTimeout(function() {
             deg = ++deg%360;
             rotate();
         }, 10);
@@ -17,4 +19,10 @@ radarScan = function() {
 
 radarFade = function() {
     $('#radar').fadeTo(5000, 0)
+};
+
+radarStop = function() {
+    $('#radar').remove();
+    clearTimeout(radarLoop);
+    $('.marker').stop().fadeTo(1,1);
 };

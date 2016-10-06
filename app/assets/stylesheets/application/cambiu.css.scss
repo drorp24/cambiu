@@ -4,6 +4,7 @@
 @import "font-awesome";
 
 // Variables
+$photoPadding: 15;
 $navbar-background-color: rgba(0, 0, 0, 0.4);
 $user-location-color: #4384f7;
 $user-location-color-medium: rgba(67, 132, 247, 0.6);
@@ -793,8 +794,16 @@ body#cambiu {
 .card {
   background-color: #fff;
   box-shadow: 0px 1px 15px rgba(0, 0, 0, .2);
+  .active_ind {
+    height: 3px;
+    background-color: #fff;
+  }
+  &.swiper-slide-active .active_ind{
+    background-color: $brand-color;
+  }
 }
 .swiper-container {
+  display: none;
   z-index: 2;
 }
 
@@ -805,6 +814,7 @@ body#cambiu {
     left: 0;
     background-color: #eee;
     padding-top: 10px;
+    padding-bottom: 10px;
     box-shadow: 1px 2px 13px rgba(0, 0, 0, .5);
   }
 
@@ -1015,7 +1025,6 @@ body#cambiu {
 
 
   .photo, .summary {
-    height: 150px;
     padding: 15px;
   }
 

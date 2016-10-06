@@ -15,6 +15,7 @@
         for (var i = 0; i < Math.min(initialSlides, exchanges.length); i++) {
             var exchange = exchanges[i].properties;
             addCard(exchange, i);
+            if (i == 0) $('.swiper-container').css('display', 'block')
         }
 
         initSwipers();
@@ -26,11 +27,11 @@
     function addCard(exchange, index) {
 
         console.log('addCard called. exchange id: ' + exchange.id);
-        var $exchange = $('.card.template').clone().removeClass('template').attr('data-exchange_id', exchange.id);
+        var $card = $('.card.template').clone().removeClass('template').attr('data-exchange_id', exchange.id).css('height', cardHeight);
 
 
 
-        $exchange.appendTo($('#cards'));
+        $card.appendTo($('#cards'));
         populatePlace(exchange);
         slidesAdded.push(index);
     }
