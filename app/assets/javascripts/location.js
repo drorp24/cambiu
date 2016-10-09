@@ -5,6 +5,7 @@ getLocation = function() {
 
     if (navigator.geolocation) {
         console.log('calling navigator.geolocation....');
+        console.time('navigator.geolocation');
         navigator.geolocation.getCurrentPosition(
             positionFound,
             positionError,
@@ -39,6 +40,7 @@ positionError = function(error) {
 positionDetermined = function(lat, lng, type, reason) {
 
     console.log('positionDetermined: Type: ' + type + '. Reason: ' + reason);
+    console.timeEnd('navigator.geolocation');
 
     // populate search params
     set('location_lat',     lat);

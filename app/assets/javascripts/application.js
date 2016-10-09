@@ -13,7 +13,7 @@
 //= require init
 //= require ytplayer
 //= require radar
-//= require push
+// require push
 //= require search
 //= require map
 //= require place

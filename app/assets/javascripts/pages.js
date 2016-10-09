@@ -75,7 +75,6 @@ $(document).ready(function() {
 
         if (pane == 'map' && map) {
             renderMap(exchange);
-            if (swiperV) swiperV.update(false);
             if (swiperH) swiperH.update(false);
         }
 
@@ -90,7 +89,7 @@ $(document).ready(function() {
         }
 
         // PUSH new state (unless invoked from popstate or page reloads)
-        var new_state = make_url(page, exchange_id, pane);
+        var new_state = make_url(page, id, pane);
         console.log('window.location.pathname: ' + window.location.pathname)
         console.log('new_state: ' + new_state)
         if (window.location.pathname != new_state) {

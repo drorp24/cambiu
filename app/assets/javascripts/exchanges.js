@@ -56,3 +56,10 @@
         return $('#cards > .swiper-slide-active').data('exchange_id')
     };
 
+$(document).ready(function() {
+    $('body').on('click tap', '.card.swiper-slide-active', function () {
+        id = $(this).closest('[data-exchange_id]').data('exchange_id');
+        setPage('exchanges', id, 'offer')
+    })
+});
+
