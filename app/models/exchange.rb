@@ -349,9 +349,11 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:service_type] = service_type
     exchange_hash[:best_at] = []
     exchange_hash[:rates] = quotes[:rates]
-    exchange_hash[:place_id] = self.place_id
     exchange_hash[:rating] =  self.rating
     exchange_hash[:reviews] = 'No'
+    exchange_hash[:place] = {}
+    exchange_hash[:place][:id] = self.place_id
+    exchange_hash[:place][:status] = {}
 
     exchange_hash
 

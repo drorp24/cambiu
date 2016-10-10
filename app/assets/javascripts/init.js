@@ -106,6 +106,15 @@ var user_lat;
 var user_lng;
 var def_lat = '51.51574678520366';
 var def_lng = '-0.16346305847173426';
+var ratingOptions = {
+    theme: 'krajee-fa',
+    filledStar: '<i class="fa fa-star"></i>',
+    emptyStar: '<i class="fa fa-star-o"></i>',
+    showClear: false,
+    showCaption: true,
+    size: 'xs',
+    readonly: true
+};
 
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
@@ -419,4 +428,19 @@ $(document).ready(function() {
     photoWidth = Math.round(($('body').width() / slidesPerView / 2) - (2 * photoPadding));
     photoHeight = Math.round(photoWidth / photoAspectRatio);
     cardHeight = photoHeight + 2 * photoPadding + 3;
+
+    $('.ratings').rating(ratingOptions);
+
+    $('.ratings').on('rating.change', function(event, value, caption) {
+        var exchange_id = $(this).attr('data-exchange-id');
+        swal({
+            title: "Saved",
+            html: true,
+            text: 'You gave this exchange' + ' <strong>' + value + ' stars</strong>' ,
+            type: "success"
+        });
+
+        updateExchange(exchange_id, {'exchange[rating]': value});
+    });
+
 });

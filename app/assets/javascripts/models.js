@@ -5,189 +5,72 @@
 //  1-way binding model -> view
 
 
-value_of = function(key) {
-    var a = sessionStorage.getItem(key);
-    return (a && a != "null") ? a : null;
-};
-
-// populate a field's value in ss, and in form inputs too if applicable
-set = function(field, value) {
-    sessionStorage.setItem(field, value);
-    if (searchable(field)) {
-        $('form [data-field=' + field + ']').val(value);
-        if (field.indexOf('amount') > -1) {
-            var clean_value = String(value).replace(/[^0-9\.]+/g,"");
-            $('form #' + field + '_val').val(clean_value)
-        }
-        $('.navbar [data-field=' + field + ']').html(value);
-    }
-};
+populateExchange = function(exchange, $el) {
 
 
-/* population was cancelled
-populate = function(model, obj) {
+    $.each(exchange, function(field, value) {
+        $('[data-model=exchange][data-field=' + field + ']').html(value);
+    });
 
-    console.log('populate: ' + model);
-
-    if (model == 'exchange') {
-        var exchange = obj;
-        populatePlace(exchange);
-        populateDirections(exchange);
-    } else
-    if (model == 'order') {
-        var order = obj;
-        renderQr(order);
-    }
-
-    $.each(obj, function(field, value) {
-
-        if (field == 'id' || field == 'delivery_tracking') {
-            $('[data-' + model + '-' + field + ']').attr('data-' + model + '-' + field, String(value));
+    $photo = $el.find('.photo');
+    if ($photo) {
+        if (exchange.place.photo) {
+            var src         = exchange.place.photo.getUrl({'maxWidth': photoWidth, 'maxHeight': photoHeight});
+            var html        = '<img src=' + src + '>';
+            $photo.html(html).find('img').css('width', '100%').css('height', height);
         } else {
-             $('[data-model=' + model + '][data-field=' + field + ']').html(value);
+            var size        = String(photoWidth) + 'x' + String(photoHeight);
+            var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
+            var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key;
+            var html        = '<img src=' + src + '>';
+            $photo.html(html);
         }
+    }
 
-        sessionStorage.setItem(model + '_' + field, value);
+    var reviews_length = exchange.place.reviews && exchange.place.reviews.length;
+    if (reviews_length) {
+        $el.find('[data-field=reviews]').html(reviews_length);
+        $el.find('.review_word').html(pluralize('review', reviews_length));
+    }
+
+    var rating = exchange.rating || exchange.place.rating;
+    if (rating && rating > 0) $el.find('[data-field=rating]').rating('update', rating);
+
+
+    /// Potential other overrides from GP: opening hours, phone, website, google page?! ("more")
+
+};
+
+populateReviews = function(exchange, $el) {
+
+    var review_template = $('.review.template');
+
+    $el.find('.reviews_list').empty();
+
+    exchange.place.reviews.forEach(function(review) {
+
+        var review_el = review_template.clone().removeClass('template');
+
+        if (review.rating) {
+            review_el.find('.review_rating input')
+                .rating(ratingOptions)
+                .rating('update', review.rating);
+        }
+        if (review.text)                review_el.find('.review_text').html(review.text);
+        if (review.author_name)         review_el.find('.review_author').html(review.author_name);
+        if (review.profile_photo_url)   review_el.find('.review_photo').html('<img class=img-circle src=' + review.profile_photo_url + '>');
+
+        reviews_list.append(review_el);
 
     });
 
-    sessionStorage.setItem(model + '_populated', obj.id);
-
 };
 
-clear = function(model) {
-
-    if (model == 'exchange') {
-        $('[data-model=exchange][data-exchange-id]').attr('data-exchange-id', 'null');
-        $('[data-model=exchange][data-exchange-delivery_tracking]').attr('data-exchange-delivery_tracking', 'null');
-    }
-
-    for (var i=0, len = sessionStorage.length; i  <  len; i++){
-        var key     = sessionStorage.key(i);
-        var value   = sessionStorage.getItem(key);
-        if  (key && key.indexOf(model + '_') > -1)  {
-            sessionStorage.setItem(key, null)
-        }
-    }
-};
-
-populated = function(exchange_id) {
-
-    var exchange_populated = value_of('exchange_populated');
-
-    if (exchange_populated && exchange_populated == exchange_id) {
-        console.log('exchange ' + exchange_id + ' is populated already');
-        return true;
-    } else {
-        console.log('exchange ' + exchange_id + ' is not populated already');
-        return false;
-    }
-};
-*/
-
-/* leave commented: no QR at the moment
-renderQr = function(order) {
-    var url = window.location.host + '/orders/' + order.id + '/confirm';
-    $('.qrcode').empty().qrcode({size: photoHeight - 20, text: url})
-};
-*/
-
-/* native direction (leave commented, I may want to use later)
-populateDirections = function(exchange) {
-
-// http://stackoverflow.com/questions/18739436/how-to-create-a-link-for-all-mobile-devices-that-opens-google-maps-with-a-route
-
-    var current_address = sessionStorage.location_type == 'default' ? sessionStorage.location_default : sessionStorage.location;
-    current_address = encodeURI(current_address);
-
-    var href = 'maps://maps.apple.com/?';
-    href += 'saddr=' + current_address + '&';
-    href += 'daddr=' + encodeURI(exchange.address);
-    href += '&dirflg=w';
-    $('.applemaps').attr('href', href);
-
-    var href = 'http://maps.apple.com/?';
-    href += 'saddr=' + current_address + '&';
-    href += 'daddr=' + encodeURI(exchange.address);
-    href += '&dirflg=w';
-    $('.httpsapple').attr('href', href);
-
-    var href = 'comgooglemaps://?';
-    href += 'saddr=' + sessionStorage.location_lat + ',' + sessionStorage.location_lng + '&';
-    href += 'daddr=' + exchange.latitude + ',' + exchange.longitude + '&';
-    href += 'directionsmode=walking';
-    $('.comgooglemaps').attr('href', href);
-
-    var href = 'http://maps.google.com/?';
-    href += 'saddr=' + sessionStorage.location_lat + ',' + sessionStorage.location_lng + '&';
-    href += 'daddr=' + exchange.latitude + ',' + exchange.longitude;
-    $('.httpsgoogle').attr('href', href);
-
-    var href = 'geo:';
-    href += exchange.latitude + ',' + exchange.longitude;
-    $('.geo').attr('href', href);
-
-    $('.device').html(isAndroid ? 'Android ' : 'iOs ' + 'device').css('font-weight', 'bold').css('color', '#000');
-
-
-};
-*/
-
-// May not be needed, or if needed will require vast change
-// Reason: no 'current exchange/order' anymore, and no need to populate any pages
-// Only thing worth persisting between refreshes is the search params, which stays persisted in the SS
-/*
-restore = function() {
-
-    console.log('restore');
-
-    var exchange = {};
-    var order = {};
-    var value_of_pay_amount = value_of('pay_amount');
-    var value_of_buy_amount = value_of('buy_amount');
-    var def = def_vals();
-
-    searchParams.forEach(function(key) {
-
-        if (key == 'buy_amount') {
-            set('buy_amount',   value_of_buy_amount || (value_of_pay_amount ? null : def['buy_amount']))
-        } else
-        if (key == 'pay_amount') {
-            set('pay_amount',   value_of_pay_amount || (value_of_buy_amount ? null : def['pay_amount']))
-        } else {
-            set(key,            value_of(key)       || def[key])
-        }
-
-    });
-
-    for (var i = 0; i < sessionStorage.length; i++) {
-
-        var key = sessionStorage.key(i);
-        var value = sessionStorage.getItem(key);  if (value == "null") value = null;
-
-        if (key && key.indexOf('exchange_') > -1) {
-
-            exchange[key.slice(9)] = value;
-
-        } else if (key && key.indexOf('order_') > -1) {
-
-            order[key.slice(6)] = value;
-
-        }
-    }
-
-    populate('exchange', exchange);
-    populate('order', order);
-
-    bind_currency_to_autonumeric();
-    bind_forms();
-};
-*/
 
 // populate search params in search form and navbar
 // values are either defaults or taken from ss is this is refresh
 // part of what used to be restore()
-paramsPopulate = function() {
+populateParams = function() {
 
     var value_of_pay_amount = value_of('pay_amount');
     var value_of_buy_amount = value_of('buy_amount');
@@ -212,3 +95,24 @@ paramsPopulate = function() {
     paramsPopulated = true;
 
 };
+
+
+value_of = function(key) {
+    var a = sessionStorage.getItem(key);
+    return (a && a != "null") ? a : null;
+};
+
+// populate a field's value in ss, and in form inputs too if applicable
+set = function(field, value) {
+    sessionStorage.setItem(field, value);
+    if (searchable(field)) {
+        $('form [data-field=' + field + ']').val(value);
+        if (field.indexOf('amount') > -1) {
+            var clean_value = String(value).replace(/[^0-9\.]+/g,"");
+            $('form #' + field + '_val').val(clean_value)
+        }
+        $('.navbar [data-field=' + field + ']').html(value);
+    }
+};
+
+

@@ -242,6 +242,9 @@ function getBearing(startLat,startLong,endLat,endLong){
 }
 
 
+distance = function(location1, location2) {
+    return String(Math.round(google.maps.geometry.spherical.computeDistanceBetween(location1, location2)));
+};
 
 // Get degree between 2 latlan points
 // source: http://www.igismap.com/formula-to-find-bearing-or-heading-angle-between-two-points-latitude-longitude/

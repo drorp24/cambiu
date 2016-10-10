@@ -32,7 +32,8 @@
 
 
         $card.appendTo($('#cards'));
-        populatePlace(exchange);
+        fetchPlace(exchange);
+        populateExchange(exchange, $card);
         slidesAdded.push(index);
     }
 
@@ -54,6 +55,38 @@
 
     currExchange = function() {
         return $('#cards > .swiper-slide-active').data('exchange_id')
+    };
+
+
+    updateExchange = function(exchange_id, data) {
+        $.ajax({
+            type: 'PUT',
+            url: '/exchanges/' + exchange_id,
+            data: data,
+            dataType: 'JSON',
+            success: function (data) {
+                console.log('Exchange successfully updated');
+            },
+            error: function (data) {
+                console.log('There was an error updating the exchange');
+            }
+        });
+    };
+
+    getExchange = function(exchange_id, property) {
+        $.ajax({
+            type: 'GET',
+            url: '/exchanges/' + exchange_id + '/get',
+            data: 'property=' + property,
+            dataType: 'JSON',
+            success: function (data) {
+                console.log('Exchange successfully returned value');
+                console.log(data)
+            },
+            error: function (data) {
+                console.log('There was an error getting value from the exchange');
+            }
+        });
     };
 
 $(document).ready(function() {

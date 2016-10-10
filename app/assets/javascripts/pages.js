@@ -195,7 +195,7 @@ $(document).ready(function() {
 
 
     // PARAMS - populate params from default values and/or ss (for page refreshes)
-    paramsPopulate();
+    populateParams();
 
     // LOCATION - locate user, search and draw map accordingly (geocode and update address too)
     getLocation();
