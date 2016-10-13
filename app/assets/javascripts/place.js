@@ -1,91 +1,103 @@
 fetchPlace = function(exchange) {
 
-    if (exchange.place.id) {
-        getPlaceDetails(exchange.place.id, exchange)
-    } else {
-        getPlace(exchange)
-    }
-
-};
-
-getPlace = function(exchange) {
-
-    if (!exchange.name || !exchange.latitude || !exchange.longitude) {
-        console.log('cannot getPlace without exchange name, lat and lng for ' + String(exchange.id));
-        return
-    }
-
-    var exchange_location = new google.maps.LatLng(exchange.latitude, exchange.longitude);
-
-    var request = {
-        location: exchange_location,
-        name: exchange.name,
-        radius: 100/*,
-        rankBy: google.maps.places.RankBy.DISTANCE*/ // Google doesn't allow to rank by distance if radius is specified and without radius specified it returns zero results
-    };
-
-    var service = new google.maps.places.PlacesService(map);
-
-    service.nearbySearch(
-        request,
-        function(results, status) {nearbySearchCallback(results, status, exchange)}
-    );
-};
+    return new Promise(function(resolve, reject) {
 
 
-nearbySearchCallback = function(results, status, exchange) {
+        function getPlaceId() {
 
-    exchange.place.status.nearbySearch = status;
+            return new Promise(function(resolve, reject) {
 
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-        if (results.length >= 1) {
+                if (exchange.place.id) {
+                    resolve(exchange.place.id)
+                }
 
-            var place_id = results[0].place_id;
-            getPlaceDetails(place_id, exchange);
+                if (!exchange.name || !exchange.latitude || !exchange.longitude) {
+                    reject('exchange ' + exchange.id + ' - exchange name, lat or lng missing');
+                    return
+                }
 
-            if (results.length > 1) {
-            }
+                var request = {
+                    location: new google.maps.LatLng(exchange.latitude, exchange.longitude),
+                    name: exchange.name,
+                    radius: 100/*,
+                     rankBy: google.maps.places.RankBy.DISTANCE*/ // Google doesn't allow to rank by distance if radius is specified and without radius specified it returns zero results
+                };
 
-         } else {
-            console.log('No place id found')
-         }
+                var service = new google.maps.places.PlacesService(map);
 
-    } else {
-        console.log('exchange ' + exchange.id + ' - nearbySearch error: ' + status);
-    }
-};
+                service.nearbySearch(
+                    request,
+                    function(results, status) {
+
+                        exchange.place.status.nearbySearch = status;
+
+                        // TODO: Only consider it a match if GP name matches the cambiu name (Google doesnt check it!)
+                        if (status == google.maps.places.PlacesServiceStatus.OK) {
+                            if (results.length >= 1) {
+                                resolve(results[0].place_id);
+                            } else {
+                                reject('exchange ' + exchange.id + ' - no place id found');
+                                return
+                            }
+                        } else {
+                            reject('exchange ' + exchange.id + ' - nearbySearch error: ' + status);
+                            return
+                        }
+
+                    }
+                )
+
+            })
+        }
 
 
-getPlaceDetails = function(place_id, exchange) {
+         getPlaceDetails = function(place_id) {
 
-    service = new google.maps.places.PlacesService(map);
+             console.log('exchange ' + exchange.id + ' - getPlaceDetails');
 
-    service.getDetails(
-        {placeId: place_id},
-        function(place, status) {getDetailsCallback(place, status, exchange)}
-    );
-};
+               // when getPlaceDetails returns a promise, its resolve does not make fetchPlace resolve too (adopt its state)
+               // as a result, populateExchanges is not invoked
+               // return new Promise(function (resolve, reject) {
 
+                 service = new google.maps.places.PlacesService(map);
 
-getDetailsCallback = function(place, status, exchange) {
+                 service.getDetails(
+                     {placeId: place_id},
+                     function (place, status) {
 
-    exchange.place.status.getDetails = status;
-    if (status != google.maps.places.PlacesServiceStatus.OK) {
-        console.log('exchange ' + exchange.id + ' - getDetails error: ' + status);
-        return
-    }
+                         console.log('exchange ' + exchange.id + ' - getDetailsCallback');
 
-    exchange.place.name =       place.name;
-    exchange.place.address =    place.formatted_address;
-    exchange.place.distance =   distance(new google.maps.LatLng(exchange.latitude, exchange.longitude),place.geometry.location);
-    exchange.place.used =       exchange.place.distance < 150;
+                         exchange.place.status.getDetails = status;
+                         if (status != google.maps.places.PlacesServiceStatus.OK) {
+                             reject('exchange ' + exchange.id + ' - getDetails error: ' + status);
+                             return
+                         }
 
-    if (!exchange.place.used)   return;
+                         exchange.place.distance =       distance(new google.maps.LatLng(exchange.latitude, exchange.longitude),place.geometry.location);
+                         if (exchange.place.distance < 150) {
+                             exchange.place.name =       place.name;
+                             exchange.place.address =    place.formatted_address;
+                             exchange.place.photo =      place.photos && place.photos.length > 0 && place.photos[0];
+                             exchange.place.reviews =    place.reviews;
+                             exchange.place.rating =     place.rating;
+                             if (!exchange.place.id)     updateExchange(exchange.id, {'exchange[place_id]': place.place_id});
+                             resolve(exchange);
+                             console.log('exchange ' + exchange.id + ' - is resolved!!');
+                         } else {
+                             console.log('exchange ' + exchange.id + ' - place too far: ' + exchange.place.distance);
+                             reject('exchange ' + exchange.id + ' - place too far: ' + exchange.place.distance);
+                             return
+                         }
 
-    exchange.place.photo =      place.photos && place.photos.length > 0 && place.photos[0];
-    exchange.place.reviews =    place.reviews;
-    exchange.place.rating =     place.rating;
+                     });
 
-    if (!exchange.place.id)     updateExchange(exchange.id, {'exchange[place_id]': place.place_id});
+ //            });
+
+         };
+
+        getPlaceId().then(getPlaceDetails)
+        .catch(error => {console.warn("fetchPlace catch: " + error)});
+
+    })
 
 };

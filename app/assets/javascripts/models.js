@@ -8,6 +8,8 @@
 populateExchange = function(exchange, $el) {
 
 
+    console.log('exchange ' + exchange.id + ' - populatePlace');
+
     $.each(exchange, function(field, value) {
         $('[data-model=exchange][data-field=' + field + ']').html(value);
     });
@@ -17,7 +19,7 @@ populateExchange = function(exchange, $el) {
         if (exchange.place.photo) {
             var src         = exchange.place.photo.getUrl({'maxWidth': photoWidth, 'maxHeight': photoHeight});
             var html        = '<img src=' + src + '>';
-            $photo.html(html).find('img').css('width', '100%').css('height', height);
+            $photo.html(html).find('img').css('width', '100%').css('height', photoHeight);
         } else {
             var size        = String(photoWidth) + 'x' + String(photoHeight);
             var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
@@ -44,8 +46,7 @@ populateExchange = function(exchange, $el) {
 populateReviews = function(exchange, $el) {
 
     var review_template = $('.review.template');
-
-    $el.find('.reviews_list').empty();
+    var reviews_list = $el.find('.reviews_list').empty();
 
     exchange.place.reviews.forEach(function(review) {
 
