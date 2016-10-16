@@ -23,19 +23,16 @@
      };
 
 
-// TODO: Replace classes with data- attributes, do it in a loop over the data fields, so I dont need to change it whenever I add another field to fetch
     function addCard(exchange, index) {
 
         var $card = $('.card.template').clone().removeClass('template').attr('data-exchange_id', exchange.id).css('height', cardHeight);
         $card.appendTo($('#cards'));
 
+        populateExchange(exchange, $card);
+
         fetchPlace(exchange)
-        .then(function(exchange) {
-                populateExchange(exchange, $card);
-        })
-        .catch(function(error) {
-                console.warn('addCard catch: fetchPlace returned an error: ' + error)
-        });
+        .then(exchange => {populatePlace(exchange, $card)})
+        .catch(error => {console.warn(error)});
 
         slidesAdded.push(index);
     }

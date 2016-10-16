@@ -32,7 +32,8 @@ positionFound = function(position) {
 };
 
 positionError = function(error) {
-    positionDetermined(def_lat, def_lng, 'default', 'Position error: ' + error);
+    var message = error.message ? error.message : error;
+    positionDetermined(def_lat, def_lng, 'default', 'Position error: ' + message);
 };
 
 

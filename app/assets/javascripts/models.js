@@ -5,48 +5,53 @@
 //  1-way binding model -> view
 
 
-populateExchange = function(exchange, $el) {
+populateExchange = function(exchange, $scope) {
+
+    $scope.find('[data-model=exchange][data-field]').each(function() {
+        var $this = $(this);
+        var field = $this.data('field');
+        var value = exchange[field];
+        $this.html(value);
+    });
+
+    var $photo      = $scope.find('.photo');
+    var size        = String(photoWidth) + 'x' + String(photoHeight);
+    var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
+    var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key;
+    var html        = '<img src=' + src + '>';
+    $photo.html(html);
+};
+
+populatePlace = function(exchange, $scope) {
 
 
     console.log('exchange ' + exchange.id + ' - populatePlace');
 
-    $.each(exchange, function(field, value) {
-        $('[data-model=exchange][data-field=' + field + ']').html(value);
-    });
-
-    $photo = $el.find('.photo');
-    if ($photo) {
-        if (exchange.place.photo) {
-            var src         = exchange.place.photo.getUrl({'maxWidth': photoWidth, 'maxHeight': photoHeight});
-            var html        = '<img src=' + src + '>';
-            $photo.html(html).find('img').css('width', '100%').css('height', photoHeight);
-        } else {
-            var size        = String(photoWidth) + 'x' + String(photoHeight);
-            var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
-            var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key;
-            var html        = '<img src=' + src + '>';
-            $photo.html(html);
-        }
-    }
+    $photo = $scope.find('.photo');
+    if ($photo && exchange.place.photo) {
+        var src         = exchange.place.photo.getUrl({'maxWidth': photoWidth, 'maxHeight': photoHeight});
+        var html        = '<img src=' + src + '>';
+        $photo.html(html).find('img').css('width', '100%').css('height', photoHeight);
+     }
 
     var reviews_length = exchange.place.reviews && exchange.place.reviews.length;
     if (reviews_length) {
-        $el.find('[data-field=reviews]').html(reviews_length);
-        $el.find('.review_word').html(pluralize('review', reviews_length));
+        $scope.find('[data-field=reviews]').html(reviews_length);
+        $scope.find('.review_word').html(pluralize('review', reviews_length));
     }
 
     var rating = exchange.rating || exchange.place.rating;
-    if (rating && rating > 0) $el.find('[data-field=rating]').rating('update', rating);
+    if (rating && rating > 0) $scope.find('[data-field=rating]').rating('update', rating);
 
 
     /// Potential other overrides from GP: opening hours, phone, website, google page?! ("more")
 
 };
 
-populateReviews = function(exchange, $el) {
+populateReviews = function(exchange, $scope) {
 
     var review_template = $('.review.template');
-    var reviews_list = $el.find('.reviews_list').empty();
+    var reviews_list = $scope.find('.reviews_list').empty();
 
     exchange.place.reviews.forEach(function(review) {
 

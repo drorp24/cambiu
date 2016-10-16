@@ -96,7 +96,7 @@ fetchPlace = function(exchange) {
          };
 
         getPlaceId().then(getPlaceDetails)
-        .catch(error => {console.warn("fetchPlace catch: " + error)});
+        .catch(error => {console.warn(error)});
 
     })
 
