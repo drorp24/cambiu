@@ -11,7 +11,7 @@ module CurrencyNetMvp
     config.font_assets.origin = '*' 
     config.middleware.use Rack::Deflater
     config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
-    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/deploy"
+#    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/deploy"
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

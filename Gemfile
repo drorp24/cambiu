@@ -72,8 +72,8 @@ gem 'font-awesome-rails'
 group :test, :staging, :production do
   gem 'unicorn'
 end
-#gem "rack-timeout"
 =end
+gem "rack-timeout"
 gem 'google_currency'
 #gem 'google_currency_rails_cache', '~> 1.2' # TODO: How to install
 gem 'tooltipster-rails'
