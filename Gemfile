@@ -19,8 +19,6 @@ gem 'jbuilder', '~> 2.5'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
-#gem 'quiet_assets',        group: :development
-
 group :test, :staging, :production do
   gem "rails_12factor"
 end

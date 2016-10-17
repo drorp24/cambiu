@@ -13,7 +13,7 @@ Rails.application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
-  config.static_cache_control = "public, s-maxage=31536000, max-age=31536000"   
+  config.public_file_server.headers = { 'Cache-Control' => 'public, s-maxage=31536000, max-age=31536000' }
 
   # Don't care if the mailer can't confirm.
   config.action_mailer.raise_delivery_errors = false
@@ -53,5 +53,8 @@ Rails.application.configure do
   config.email_required = false
 
   ENV["REDISTOGO_URL"] = 'redis://localhost:6379/'
+
+  # Suppress logger output for asset requests.
+   config.assets.quiet = true
 end
 Rails.application.routes.default_url_options[:host] = 'localhost:3000'
