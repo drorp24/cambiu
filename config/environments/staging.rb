@@ -13,10 +13,10 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
+  config.static_cache_control = "public, max-age=31536000"   
 
   # Changed to true for heroku: rails now uses CloudFonrt cdn
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-  config.public_file_server.headers = { 'Cache-Control' => 'public, max-age=31536000' }
 
   # Compress JavaScripts and CSS.
   config.assets.compress = true
