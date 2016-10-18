@@ -17,7 +17,6 @@ gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0',          group: :doc
 
 group :test, :staging, :production do
   gem "rails_12factor"
@@ -66,11 +65,6 @@ gem 'bootstrap-sass', '~> 3.3.3'    # use this: enables to include just the need
 gem 'sass', '~> 3.4', '>= 3.4.22'
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 gem 'font-awesome-rails'
-=begin
-group :test, :staging, :production do
-  gem 'unicorn'
-end
-=end
 gem "rack-timeout"
 gem 'google_currency'
 #gem 'google_currency_rails_cache', '~> 1.2' # TODO: How to install
@@ -78,7 +72,7 @@ gem 'tooltipster-rails'
 gem 'ransack', '~> 1.6.6'
 gem 'i18n', '~> 0.7.0'
 gem 'mandrill-api', '~> 1.0.53', require: "mandrill"
-gem 'redis'
+gem 'redis', '~> 3.0'
 gem 'sidekiq'
 gem 'sinatra', github: 'sinatra'
 gem 'serviceworker-rails'
@@ -97,18 +91,3 @@ group :development do
 end
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
-
-
-#gem 'cloudinary'
-#gem 'compass-rails'
-#gem 'chosen-rails'
-
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development

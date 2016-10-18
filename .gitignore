@@ -240,7 +240,11 @@ pip-log.txt
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
-/tmp
+/tmp/*
+!/tmp/.keep
+
+# Ignore Byebug command history file.
+.byebug_history
 
 
 *.rdb

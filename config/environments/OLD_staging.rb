@@ -13,10 +13,15 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.static_cache_control = "public, max-age=31536000"   
+  config.static_cache_control = "public, max-age=31536000"
 
-  # Changed to true for heroku: rails now uses CloudFonrt cdn
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  # Enable Rack::Cache to put a simple HTTP cache in front of your application
+  # Add `rack-cache` to your Gemfile before enabling this.
+  # For large-scale production use, consider using a caching reverse proxy like nginx, varnish or squid.
+  # config.action_dispatch.rack_cache = true
+
+  # Changed to true for heroku: rails now uses CloudFonrt cdn 
+  config.serve_static_files = true
 
   # Compress JavaScripts and CSS.
   config.assets.compress = true
@@ -26,6 +31,9 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
+  # Generate digests for assets URLs.
+  config.assets.digest = true
+  
   # Generate two .css compiled files
   config.assets.precompile += ['application.css', 'boots.css']
 
@@ -35,19 +43,17 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
-  # Mount Action Cable outside main process or domain
-  # config.action_cable.mount_path = nil
-  # config.action_cable.url = 'wss://example.com/cable'
-  # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
-
-  #  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
   # Set to :debug to see everything in the log.
   config.log_level = :debug
-#
+
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  # config.log_tags = [ :subdomain, :uuid ]
+
+  # Use a different logger for distributed setups.
+  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -61,6 +67,8 @@ Rails.application.configure do
                     }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+  # config.action_controller.asset_host = "http://assets.example.com"
+  # config.action_controller.asset_host = "http://d368eop2iyjvb5.cloudfront.net"
   config.action_controller.asset_host = ENV["CLOUDFRONT_DIST"]
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -80,23 +88,25 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  # Use a different logger for distributed setups.
-  # require 'syslog/logger'
-  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
-
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
-    logger.formatter = config.log_formatter
-    config.logger = ActiveSupport::TaggedLogging.new(logger)
-  end
-
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+    
+  config.action_mailer.default_url_options = { host: 'staging.cambiu.com' }
+  
+  config.fb_app_id = '803314713056637'
+  config.fb_app_secret = 'f8535d022dd9afff4c14e8a8c28b5ab7' 
 
-  config.action_mailer.default_url_options = { host: 'www.cambiu.com' }
+  config.use_google_geocoding = true
+
+  config.action_mailer.default_url_options = { host: 'staging.currency-net.com' }
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.perform_caching = false
+
+  ## TODO: Control with AB Testing
+  config.exchange_search_inactive = true
+
+  config.email_required = false
+
 
 end
-Rails.application.routes.default_url_options[:host] = 'www.cambiu.com'
+Rails.application.routes.default_url_options[:host] = 'staging.cambiu.com'
 
