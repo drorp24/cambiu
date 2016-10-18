@@ -93,19 +93,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
     
   config.action_mailer.default_url_options = { host: 'testing.cambiu.com' }
-  
-  config.fb_app_id = '376989465817901'
-  config.fb_app_secret = 'a29bf9274ee952ba90a09f2354f871b2' 
-
-  config.use_google_geocoding = true
-
   config.action_mailer.default_url_options = { host: 'testing.currency-net.com' }
   config.action_mailer.raise_delivery_errors = true
-
-  ## TODO: Control with AB Testing
-  config.exchange_search_inactive = true
-
-  config.email_required = false
 
 
 end

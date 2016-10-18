@@ -43,19 +43,8 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  
-  config.fb_app_id = '1553546578234138'
-  config.fb_app_secret = '90ce76e38c01f6a7eae41c6f37a1bb9a' 
-  
-  config.use_google_geocoding = true
-
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
   config.action_mailer.raise_delivery_errors = true
-
-  ## TODO: Control with AB Testing
-  config.exchange_search_inactive = true
-
-  config.email_required = false
 
   ENV["REDISTOGO_URL"] = 'redis://localhost:6379/'
 
