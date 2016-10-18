@@ -34,3 +34,4 @@
 //= require jquery-qrcode-0.14.0
 //= require sweetalert.min
 //= require swiper.jquery.min
+//= require try.js

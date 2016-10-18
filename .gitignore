@@ -251,3 +251,5 @@ pip-log.txt
 /public/*
 !/public/sw.js.erb
 !/public/manifest.json
+
+node_modules/
