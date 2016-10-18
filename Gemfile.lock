@@ -94,8 +94,6 @@ GEM
     arbre (1.1.1)
       activesupport (>= 3.0.0)
     arel (7.1.4)
-    autonumeric-rails (1.9.46)
-      jquery-rails (>= 2.0.2)
     autoprefixer-rails (6.5.1)
       execjs
     babel-source (5.8.35)
@@ -366,7 +364,6 @@ DEPENDENCIES
   active_admin_importable
   activeadmin!
   activerecord-postgis-adapter
-  autonumeric-rails
   babel-transpiler
   backstretch-rails
   best_in_place!
