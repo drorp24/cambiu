@@ -6,6 +6,7 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require autonumeric
 //= require fetch
 
 //= require init
