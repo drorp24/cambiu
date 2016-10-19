@@ -7,7 +7,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.validate
-//= require autonumeric
 //= require fetch
 
 //= require init
