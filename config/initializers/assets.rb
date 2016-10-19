@@ -5,7 +5,12 @@ Rails.application.config.action_controller.asset_host = ENV["CLOUDFRONT_DIST"]
 
 Rails.application.config.assets.version = '1.0'
 
-# Compress JavaScripts and CSS.
+# Do not compile on the fly
+Rails.application.config.assets.compile = false
 
-# but precompile, based on manifest.js
+# Instead, pre-compile JavaScripts and CSS.
+Rails.application.config.assets.js_compressor = :uglifier
+Rails.application.config.assets.css_compressor = :sass
+
+# Use dependencies on manifest.js
 Rails.application.config.assets.precompile = ["manifest.js"]
