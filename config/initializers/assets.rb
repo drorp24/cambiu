@@ -6,7 +6,7 @@ Rails.application.config.action_controller.asset_host = ENV["CLOUDFRONT_DIST"]
 Rails.application.config.assets.version = '1.0'
 
 # Do not compile on the fly
-Rails.application.config.assets.compile = Rails.env.development?
+Rails.application.config.assets.compile = false
 
 # Instead, pre-compile JavaScripts and CSS.
 Rails.application.config.assets.js_compressor = :uglifier
