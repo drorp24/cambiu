@@ -15,9 +15,17 @@
 // It is here that getLocation() is called (location.js), triggering a search (search.js) that in turn updatesPage (exchanges.js)
 
 $(document).ready(function() {
-    setPage = function (page, id, pane, hash) {
+    setPage = function ({url, page1, id1, pane1, hash, pushState = true}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
 
-        console.log('setPage. page: ' + page + ' id: ' + String(id) + ' pane: ' + String(pane) + ' hash: ' + String(hash) );
+        if (url) {
+            var ppart = break_url(url);
+            var [page, id, pane] = [ppart.page, ppart.id, ppart.pane]
+        } else {
+            var [page, id, pane] = [page1, id1, pane1];
+        }
+
+        console.log('setPage. url: ' + url + ' page: ' + page + ' id: ' + String(id) + ' pane: ' + String(pane) + ' hash: ' + hash + ' pushState: ' + pushState);
+
         var page_el;
         var pane_el;
         var exchange_id;
@@ -89,14 +97,12 @@ $(document).ready(function() {
         }
 
         // PUSH new state (unless invoked from popstate or page reloads)
-        var new_state = make_url(page, id, pane);
-        console.log('window.location.pathname: ' + window.location.pathname)
-        console.log('new_state: ' + new_state)
-        if (window.location.pathname != new_state) {
+        var new_state = url ? url : make_url(page, id, pane);
+        if (pushState) {
             history.pushState(new_state, 'cambiu', new_state);
-            console.log('pushing state: ' + new_state);
+            console.log('pushState is true. Pushing state: ' + new_state);
         } else {
-            console.log('current pathname matches the url; not pushing');
+            console.log('pushState is false. Not pushing anything');
         }
 
         //Update SS with the new active page/pane
@@ -109,13 +115,12 @@ $(document).ready(function() {
 
         var external    = el.data('exchange-delivery_tracking');    if (external && external != 'null') {window.location = external; return}
         var pane        = el.data('href-pane');                     if (pane == 'back')                 {window.history.back();return}
-
         var page        = el.data('href-page');
-        var exchange_id = el.data('href-id');
+        var id          = el.data('href-id');
         var hash        = el.data('href-hash');
 
-        console.log('data-href element clicked. page: ' + page + ' exchange-id: ' + exchange_id + ' pane: ' + pane + ' hash: ' + String(hash));
-        setPage(page, exchange_id, pane, hash);
+        console.log('data-href element clicked. page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + String(hash));
+        setPage({page1: page, id1: id, pane1: pane, hash: hash});
     };
 
     $('body').on('click tap', '[data-href-pane]', (function (e) {
@@ -154,37 +159,9 @@ $(document).ready(function() {
     window.addEventListener("popstate", function (e) {
 
         console.log('pop. e.state: ' + e.state);
-        if (e.state && e.state.length > 0) {
+        if (e.state && e.state.length > 0) setPage({url: e.state, pushState: false});
 
-            var ppart = break_url(e.state);
-            setPage(ppart['page'], ppart['id'], ppart['pane'], null);
-
-        } else if (window.location.hash && window.location.pathname.length > 1) {
-            console.log('... but a hash exists - settingPage according to path');
-            // when user goes to hash it's not pushed to history hence e.state is null in this case
-            // this case is identified by the popstate event and the hash in the location
-            setPage(window.location.pathname.slice(1), window.location.hash.slice(1));
-        }
     });
-
-    initialSetPage = function() {
-
-        // setPage() to current path
-        // replace '/' with 'homepage' or else pushState will get ''
-
-        if (window.location.pathname == '/') {
-            var reload_path = '/homepage'
-        } else if (window.location.pathname == '/exchanges') {
-            var reload_path = '/exchanges/list'
-        }
-        else {
-            var reload_path = window.location.pathname
-        }
-        var hash = window.location.hash ? window.location.hash.slice(1) : null;
-        console.log('re/load. settingPage to: ' + reload_path + ' hash: ' + hash);
-        var ppart = break_url(reload_path);
-        setPage(ppart['page'], ppart['id'], ppart['pane'], hash);
-    };
 
 
 
@@ -201,6 +178,6 @@ $(document).ready(function() {
     getLocation();
 
     // ROUTING - setPage with initial values
-    initialSetPage();
+    setPage({url: window.location.pathname});
 });
 

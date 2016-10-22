@@ -25,7 +25,8 @@
 
     function addCard(exchange, index) {
 
-        var $card = $('.card.template').clone().removeClass('template').attr('data-exchange_id', exchange.id).css('height', cardHeight);
+        var link = {'data-href-page': 'exchanges', 'data-href-id': exchange.id, 'data-href-pane': 'offer'};
+        var $card = $('.card.template').clone().removeClass('template').attr(link).css('height', cardHeight);
         $card.appendTo($('#cards'));
 
         populateExchange(exchange, $card);
@@ -88,11 +89,3 @@
             }
         });
     };
-
-$(document).ready(function() {
-    $('body').on('click tap', '.card.swiper-slide-active', function () {
-        id = $(this).closest('[data-exchange_id]').data('exchange_id');
-        setPage('exchanges', id, 'offer')
-    })
-});
-
