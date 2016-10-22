@@ -36,6 +36,14 @@ GIT
       railties (>= 3.2)
 
 GIT
+  remote: git://github.com/rails/sprockets.git
+  revision: a270576b32d82f7a62ff2dcd82cd979cb777ffb9
+  specs:
+    sprockets (4.0.0.beta4)
+      concurrent-ruby (~> 1.0)
+      rack (> 1, < 3)
+
+GIT
   remote: git://github.com/sinatra/sinatra.git
   revision: af6dad2a6c31e31617712b15f455b2a3d3eb1c06
   specs:
@@ -318,9 +326,6 @@ GEM
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
-    sprockets (4.0.0.beta4)
-      concurrent-ruby (~> 1.0)
-      rack (> 1, < 3)
     sprockets-rails (3.2.0)
       actionpack (>= 4.0)
       activesupport (>= 4.0)
@@ -408,7 +413,7 @@ DEPENDENCIES
   sinatra!
   spring
   spring-watcher-listen (~> 2.0.0)
-  sprockets (~> 4.0.0.beta4)
+  sprockets!
   thin
   tod
   tooltipster-rails
