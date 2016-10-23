@@ -116,7 +116,6 @@ var ratingOptions = {
     readonly: true
 };
 
-
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);

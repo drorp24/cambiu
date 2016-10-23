@@ -186,6 +186,6 @@
 
 $(document).ready(function() {
     $('body').on('click tap', '.nav_icon', function() {
-        renderDirections(findExchange(currExchange()))
+        renderDirections(currExchange())
     });
 });

@@ -7,6 +7,8 @@
 
 populateExchange = function(exchange, $scope) {
 
+//    console.log('exchange ' + exchange.id + ' - populateExchange');
+
     $scope.find('[data-model=exchange][data-field]').each(function() {
         var $this = $(this);
         var field = $this.data('field');
@@ -14,18 +16,20 @@ populateExchange = function(exchange, $scope) {
         $this.html(value);
     });
 
-    var $photo      = $scope.find('.photo');
-    var size        = String(photoWidth) + 'x' + String(photoHeight);
-    var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
-    var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key;
-    var html        = '<img src=' + src + '>';
-    $photo.html(html);
+    var $photo = $scope.find('.photo');
+    if ($photo.length > 0) {
+        var size        = String(photoWidth) + 'x' + String(photoHeight);
+        var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
+        var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key;
+        var html        = '<img src=' + src + '>';
+        $photo.html(html);
+    }
 };
 
 populatePlace = function(exchange, $scope) {
 
 
-    console.log('exchange ' + exchange.id + ' - populatePlace');
+//    console.log('exchange ' + exchange.id + ' - populatePlace');
 
     $photo = $scope.find('.photo');
     if ($photo && exchange.place.photo) {

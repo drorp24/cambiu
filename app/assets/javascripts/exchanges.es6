@@ -39,7 +39,28 @@
     }
 
 
-      findExchange = function(id) {
+    currIndex = () => swiperH.activeIndex;
+
+
+    currExchange = function() {
+
+        var length = exchanges.length;
+        var index = currIndex();
+
+        if (exchanges && length > 0) {
+            if (index < length) {
+                return exchanges[index].properties
+            } else {
+                console.log('index > exchanges length');
+                return null
+            }
+        } else {
+            console.log('exchanges is empty');
+            return null
+        }
+    };
+
+    findExchange = function(id) {
         if (exchanges && exchanges.length > 0) {
             var results = $.grep(exchanges, function(e){ return e.properties.id == id; });
             if (results[0]) {
@@ -53,11 +74,6 @@
             return null
         }
     };
-
-    currExchange = function() {
-        return $('#cards > .swiper-slide-active').data('exchange_id')
-    };
-
 
     updateExchange = function(exchange_id, data) {
         $.ajax({

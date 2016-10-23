@@ -24,90 +24,35 @@ $(document).ready(function() {
             var [page, id, pane] = [page1, id1, pane1];
         }
 
-        console.log('setPage. url: ' + url + ' page: ' + page + ' id: ' + String(id) + ' pane: ' + String(pane) + ' hash: ' + hash + ' pushState: ' + pushState);
+//        console.log('setPage. url: ' + url + ' page: ' + page + ' id: ' + String(id) + ' pane: ' + String(pane) + ' hash: ' + hash + ' pushState: ' + pushState);
 
-        var page_el;
-        var pane_el;
-        var exchange_id;
-        var exchange;
-
-
-        // REVEAL requested page & pane, updating 'active' classes
-        $('.page').removeClass('active');
-        $('.pane').removeClass('active');
-
-        page_el = $('.page[data-page=' + page + ']');
-        page_el.addClass('active');
-        if (desktop && !value_of('videoStopped') && page_el.data('page') !== 'homepage') {
-            replaceVideoWithBackground()
-        }
+        // POP pane into view
         $('body').addClass(page);
 
-        pane_el = $('.pane[data-pane=' + pane + ']');
-        pane_el.addClass('active');
+        var $page = $('.page[data-page=' + page + ']');
+        $('.page').removeClass('active');
+        $page.addClass('active');
+
+        var $pane = $('.pane[data-pane=' + pane + ']');
+        $('.pane').removeClass('active');
+        $pane.addClass('active');
+
+        if (hash) document.getElementsByName(hash)[0].scrollIntoView(true);
 
 
-         if (hash) {
-            if (hash[0] == '#') {
-                hash = hash.slice(1)
-            }
-            document.getElementsByName(hash)[0].scrollIntoView(true);
+        // POPULATE
+         if (pushState && id) {
+            var exchange = (id == 'id') ? currExchange() : findExchange(id);
+            populateExchange(exchange, $pane);
+            populatePlace(exchange, $pane);
         }
 
-// TODO: Remove: no 'current' exchange, no page 'population'
-/*
-        // POPULATE exchange data, (re)render map, directions
-        if (id) {
-
-            if (id == 'id') {
-                exchange_id = value_of('exchange_id');
-                if (!exchange_id) {console.log('href-id is id but ss includes no exchange_id'); return}
-            } else {
-                exchange_id = id
-            }
-
-            exchange = findExchange(exchange_id);
-            if (!exchange) {
-                console.log('Exchanges is empty => page reload. pages doesnt populate, restore() does.');
-            } else {
-                if (!populated(exchange_id)) {
-                    populate('exchange', exchange);
-                }
-                if (pane == 'directions') {
-                    renderDirections(exchange);
-                }
-            }
-
-        }
-*/
-
-        if (pane == 'map' && map) {
-            renderMap(exchange);
-            if (swiperH) swiperH.update(false);
-        }
-
-        // CLEAR SS of all 'exchange_' and 'order_' upon moving to a non exchange-specific page (e.g., /list)
-        // value_of('exchange_id') indicates whether these fields needs clearing, or are clear already
-        // Note: Currently not removing markup: all data- and form exchange-specific fields remain populated
-        if (!exchange_id && value_of('exchange_id')) {
-            console.log('Non exchange-specific page: clearing all exchange_ and order_ vars from ss');
-
-            clear('exchange');
-            clear('order');
-        }
 
         // PUSH new state (unless invoked from popstate or page reloads)
-        var new_state = url ? url : make_url(page, id, pane);
         if (pushState) {
-            history.pushState(new_state, 'cambiu', new_state);
-            console.log('pushState is true. Pushing state: ' + new_state);
-        } else {
-            console.log('pushState is false. Not pushing anything');
+            var newState = url ? url : make_url(page, id, pane);
+            history.pushState(newState, 'cambiu', newState);
         }
-
-        //Update SS with the new active page/pane
-        sessionStorage.page = page;
-        sessionStorage.pane = pane;
 
     };
 
@@ -119,7 +64,6 @@ $(document).ready(function() {
         var id          = el.data('href-id');
         var hash        = el.data('href-hash');
 
-        console.log('data-href element clicked. page: ' + page + ' id: ' + id + ' pane: ' + pane + ' hash: ' + String(hash));
         setPage({page1: page, id1: id, pane1: pane, hash: hash});
     };
 
@@ -156,9 +100,16 @@ $(document).ready(function() {
 
     }));
 
+    stopVideo = function() {
+
+        if (desktop && !value_of('videoStopped'))  {
+            replaceVideoWithBackground()
+        }
+    };
+
     window.addEventListener("popstate", function (e) {
 
-        console.log('pop. e.state: ' + e.state);
+//        console.log('pop. e.state: ' + e.state);
         if (e.state && e.state.length > 0) setPage({url: e.state, pushState: false});
 
     });
