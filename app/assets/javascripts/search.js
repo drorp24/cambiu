@@ -105,7 +105,7 @@ $(document).ready(function() {
 
     });
 
- 
+
     $('.camera').on('click tap', (function() {
         $('#photo').click()
     }));
@@ -128,6 +128,11 @@ $(document).ready(function() {
         if ($('#search_form').valid()) {
             $('#search_form').submit();
         }
+    });
+
+    // supress homepage submit button
+    $('#homepage :submit').click(function(e) {
+        e.preventDefault();
     });
 
 
@@ -157,10 +162,6 @@ $(document).ready(function() {
         }
     });
 
-
-    //
-    // AJAX Callbacks
-    //
 
 
     search = function(reason) {
@@ -204,40 +205,6 @@ $(document).ready(function() {
 
     };
 
-
-
-
-
-    // Before actions
-
-    startLoader = function() {
-
-      // will be required again if only the entire list is presented initially
-        // currently, when only best list is initially displayed, the empty message has to be displayed on the best list part's '#fetch_more' div
-        $('#empty_message').css('display', 'none');
-        $('#result_message').css('display', 'none');
-
-        $('#loader_message').css('display', 'block');
-    };
-
-
-    $('#search_form').on('ajax:before', function() {
-        startLoader();
-        clearList();
-        $('input[type=hidden][id=pay_amount_val]').remove();
-        $('input[type=hidden][id=buy_amount_val]').remove();
-    });
-
-    $('#search_form').on('ajax:success', function(event, data, status, xhr) {
-        console.log('#search_form ajax:success. Starting to updateExchanges...');
-        updateExchanges(data);
-     });
-
-    $('#search_form').on('ajax:error', function(event, xhr, status, error) {
-        console.log('#search_form ajax:error. Error: ' + error);
-        alert('We are unable to process your request at this time. Please try again in a few moments');
-        updateResults(null);
-    });
 
 
 });
