@@ -87,8 +87,6 @@ var clear;
 var make_url;
 var break_url;
 var google_api_key = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
-var photo_width;
-var photo_height;
 var defaults;
 var expiry;
 var watchId;

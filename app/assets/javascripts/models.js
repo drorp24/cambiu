@@ -18,7 +18,8 @@ populateExchange = function(exchange, $scope) {
 
     var $photo = $scope.find('.photo');
     if ($photo.length > 0) {
-        var size        = String(photoWidth) + 'x' + String(photoHeight);
+        var bodyWidth   = $('body').width();
+        var size        = String(bodyWidth) + 'x' + String(bodyWidth);
         var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
         var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key;
         var html        = '<img src=' + src + '>';

@@ -4,7 +4,7 @@
 @import "font-awesome";
 
 // Variables
-$stam: 42;
+$padding: 15px;
 $photoPadding: 15;
 $navbar-background-color: rgba(0, 0, 0, 0.4);
 $user-location-color: #4384f7;
@@ -1025,9 +1025,22 @@ body#cambiu {
   }
 
 
-  .photo, .summary {
-    padding: 15px;
+  .card {
+    .photo, .summary {
+      padding: $padding;
+    }
+    .photo {
+      margin: 0;
+    }
   }
+
+  .photo {
+    margin: -1 * $padding;
+    img {
+      width: 100%;
+    }
+  }
+
 
   .missing {
     border: 1px solid #ccc;
