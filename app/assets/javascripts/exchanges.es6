@@ -20,6 +20,14 @@
 
         initSwipers();
 
+        var ppart = break_url(window.location.pathname);
+        var id = ppart.id;
+        if (id) {
+            var exchange = findExchange(id);
+            var pane = ppart.pane;
+            var $pane = $('.pane[data-pane=' + pane + ']');
+            populateExchange(exchange, $pane)
+        }
      };
 
 

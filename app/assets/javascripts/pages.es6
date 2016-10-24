@@ -15,8 +15,11 @@
 // It is here that getLocation() is called (location.js), triggering a search (search.js) that in turn updatesPage (exchanges.js)
 
 $(document).ready(function() {
-    setPage = function ({url, page1, id1, pane1, hash, pushState = true}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
+    setPage = function ({url, page1, id1, pane1, hash, pushState = true, populate = true}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
 
+        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' pushState: ' + pushState + ' populate: ' + populate);
+
+        // POP pane into view
         if (url) {
             var ppart = break_url(url);
             var [page, id, pane] = [ppart.page, ppart.id, ppart.pane]
@@ -24,9 +27,6 @@ $(document).ready(function() {
             var [page, id, pane] = [page1, id1, pane1];
         }
 
-//        console.log('setPage. url: ' + url + ' page: ' + page + ' id: ' + String(id) + ' pane: ' + String(pane) + ' hash: ' + hash + ' pushState: ' + pushState);
-
-        // POP pane into view
         $('body').addClass(page);
 
         var $page = $('.page[data-page=' + page + ']');
@@ -40,16 +40,17 @@ $(document).ready(function() {
         if (hash) document.getElementsByName(hash)[0].scrollIntoView(true);
 
 
-        // POPULATE
-         if (pushState && id) {
-            var exchange = (id == 'id') ? currExchange() : findExchange(id);
+        // POPULATE (unless triggered by popstate event)
+         if (populate && id) {
+            var exchange = (id == 'curr') ? currExchange() : findExchange(id);
             populateExchange(exchange, $pane);
             populatePlace(exchange, $pane);
         }
 
 
-        // PUSH new state (unless invoked from popstate or page reloads)
+        // PUSH state (unless triggered by popstate or page reloads)
         if (pushState) {
+            var id = (id == 'curr') ? currExchange().id : id;
             var newState = url ? url : make_url(page, id, pane);
             history.pushState(newState, 'cambiu', newState);
         }
@@ -110,7 +111,7 @@ $(document).ready(function() {
     window.addEventListener("popstate", function (e) {
 
 //        console.log('pop. e.state: ' + e.state);
-        if (e.state && e.state.length > 0) setPage({url: e.state, pushState: false});
+        if (e.state && e.state.length > 0) setPage({url: e.state, pushState: false, populate: false});
 
     });
 
@@ -129,6 +130,6 @@ $(document).ready(function() {
     getLocation();
 
     // ROUTING - setPage with initial values
-    setPage({url: window.location.pathname});
+    setPage({url: window.location.pathname, populate: false});
 });
 
