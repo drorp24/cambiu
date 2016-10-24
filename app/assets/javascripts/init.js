@@ -167,10 +167,10 @@ def_vals = function() {
 
     var def = {};
 
-    def['pay_amount']       = null;
+    def['pay_amount']       = 1;
     def['pay_currency']     = 'USD';
-    def['buy_amount']       = 1000;
-    def['buy_currency']     = 'EUR';
+    def['buy_amount']       = null;
+    def['buy_currency']     = 'GBP';
     def['user_lat']         = def_lat;
     def['user_lng']         = def_lng;
     def['location_type']    = 'default';

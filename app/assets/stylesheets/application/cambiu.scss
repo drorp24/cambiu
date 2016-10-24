@@ -1026,11 +1026,16 @@ body#cambiu {
 
 
   .card {
-    .photo, .summary {
-      padding: $padding;
-    }
     .photo {
+      padding: $padding;
       margin: 0;
+    }
+    .summary {
+      height: 100%;
+      [data-field=edited_quote] {
+        font-weight: 300;
+        font-size: 8vw;
+      }
     }
   }
 
