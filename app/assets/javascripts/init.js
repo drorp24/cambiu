@@ -123,9 +123,11 @@ var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 sessionStorage.videoStopped = null;
 
 
-showError = function(error) {
+alertError = function(error) {
+    console.log('alertError');
     console.error(error);
-    alert(error);
+    var userText = 'Oops... this can happen in beta. Reload and try again!\n';
+    alert(userText + error);
 };
 
 logError = function(error) {
@@ -440,6 +442,22 @@ $(document).ready(function() {
         });
 
         updateExchange(exchange_id, {'exchange[rating]': value});
+    });
+
+    // Error reporting
+    // A *centralized* 'catch' for all runtime exception as well as my own 'throw Error' statements that have no try/catch (= meant to stop execution)
+    // (not a real 'catch': they will appear as 'uncaught' in the console)
+    // As long as the 'throw' statement comes with 'new Error' rather than just string, this event gets a JS Error object that include the non-standard '.stack' property
+    // the error.name and error.stack could be sent to server for alerting (email) and persisting
+    // the console shows the stack and includes there source maps! Perhaps it will do the same in production when they are supported by sprockets?
+
+    // Note1: It doesn't catch 'throw' statements at all if the throw including function is invoked by a Promise. Promises don't stop execution
+    // Note2: When throw is Uncaught by browser (whether Promise or not), browser shows source-map'ed stack under the left triangle. Otherwise compressed in the '...'
+
+    window.addEventListener('error', function (e) {
+        console.log('addEventListener: error');
+        var error = e.error;
+        alertError(error);
     });
 
 });

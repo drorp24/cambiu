@@ -50,22 +50,21 @@ positionDetermined = function(lat, lng, type, reason) {
     set('location_reason',  reason);
 
     map_p = drawMap(lat, lng)
-        .catch(showError);
+        .catch(alertError);
 
     map_p
         .then(followUser)
-        .catch(showError);
+        .catch(alertError);
 
 
     search_p =
         search('positionDetermined')
-        .catch(showError);
+        .catch(alertError);
 
 
     search_p
         .then(addCards)
-        .catch(showError);
-
+        .catch(alertError);
 
   // Use for testing - to check all my exchange markers are in place with Google's
     Promise.all([map_p, search_p])
@@ -212,7 +211,7 @@ function searchbox_addListener(searchBox) {
 
         search('search location changed by user')
             .then(addCards)
-            .catch(showError);
+            .catch(alertError);
     });
 }
 function radians(n) {

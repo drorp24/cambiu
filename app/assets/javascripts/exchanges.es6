@@ -55,18 +55,16 @@
         var length = exchanges.length;
         var index = currIndex();
 
-        if (exchanges && length > 0) {
-            if (index < length) {
-                return exchanges[index].properties
+             if (exchanges && length > 0) {
+                if (index < length) {
+                    return exchanges[index].properties
+                } else {
+                    throw new Error('index > exchanges length');
+                }
             } else {
-                console.log('index > exchanges length');
-                return null
+                throw new Error('exchanges is empty');
             }
-        } else {
-            console.log('exchanges is empty');
-            return null
-        }
-    };
+     };
 
     findExchange = function(id) {
         if (exchanges && exchanges.length > 0) {
@@ -74,13 +72,12 @@
             if (results[0]) {
                 return results[0].properties;
             } else {
-                console.log('exchange ' + id + ' was not found in exchanges array');
-                return null
+                throw new Error('exchange ' + id + ' was not found in exchanges array');
             }
         } else {
             console.log('exchanges is empty');
-            return null
-        }
+            throw new Error('exchanges is empty');
+         }
     };
 
     updateExchange = function(exchange_id, data) {
