@@ -1,6 +1,13 @@
     renderMap = function(exchange) {
+
         // TODO: Show selected exchange on map
+
         google.maps.event.trigger(map, 'resize');
+
+        // Added to fix absurd Savyon centering issue
+        if (user_lat && user_lng) {
+            map.setCenter({lat: user_lat, lng: user_lng});
+        }
     };
 
     // render a map around given (lat,lng) set as center

@@ -22,20 +22,23 @@ $(document).ready(function() {
         // POP pane into view
         if (url) {
             var ppart = break_url(url);
-            var [page, id, pane] = [ppart.page, ppart.id, ppart.pane]
+            var [page, id, pane] = [ppart.page || 'homepage', ppart.id, ppart.pane]
         } else {
             var [page, id, pane] = [page1, id1, pane1];
         }
 
         $('body').addClass(page);
 
-        var $page = $('.page[data-page=' + page + ']');
         $('.page').removeClass('active');
-        $page.addClass('active');
+        var $page = $('.page[data-page=' + page + ']');
+         $page.addClass('active');
 
-        var $pane = $('.pane[data-pane=' + pane + ']');
         $('.pane').removeClass('active');
-        $pane.addClass('active');
+        if (pane) {
+            var $pane = $('.pane[data-pane=' + pane + ']');
+            $pane.addClass('active');
+            refresh(pane);
+        }
 
         if (hash) document.getElementsByName(hash)[0].scrollIntoView(true);
 
@@ -55,6 +58,16 @@ $(document).ready(function() {
             history.pushState(newState, 'cambiu', newState);
         }
 
+    };
+
+    // Some parts, like map and swipers, need to be re-rendered once the pane is visible
+    refresh = function(pane) {
+        if (!refreshed && pane == 'map' && map) {
+            console.log('refresh');
+            renderMap(); // Consider generating the map, if this still insists on locating me in Savyon
+            if (swiperH) swiperH.update(false);
+            refreshed = true // do once only
+        }
     };
 
     link = function (el) {
@@ -110,11 +123,10 @@ $(document).ready(function() {
 
     window.addEventListener("popstate", function (e) {
 
-//        console.log('pop. e.state: ' + e.state);
+        console.log('pop. e.state: ' + e.state);
         if (e.state && e.state.length > 0) setPage({url: e.state, pushState: false, populate: false});
 
     });
-
 
 
     // P A G E   R E / L O A D

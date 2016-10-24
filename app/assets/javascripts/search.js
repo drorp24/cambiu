@@ -51,13 +51,6 @@ $(document).ready(function() {
     };
 
 
-    $('#exchanges').on('click','.open_search', function(e) {
-        $('#exchange_params_change').collapse('toggle')
-    });
-
-
-    // Location - all handled at findlocation.js
-
     // Sorting
 
     sort_by = function(sort) {
@@ -112,13 +105,7 @@ $(document).ready(function() {
 
     });
 
-
-    // UI
-
-
-
-    // UI - Display proper symbol on amount fields based on respective currency fields
-
+ 
     $('.camera').on('click tap', (function() {
         $('#photo').click()
     }));
@@ -138,120 +125,10 @@ $(document).ready(function() {
 
     $('[data-ajax=searches]').click(function(e) {
         e.preventDefault();
-        if (mobile) $('#open_params').toggleClass('open');
         if ($('#search_form').valid()) {
             $('#search_form').submit();
-            $('body.mobile.exchanges #new_parameters').collapse('hide');
         }
     });
-
-    $('.open_params').click(function() {
-        $(this).toggleClass('open')
-    });
-    $('#mobile_search [data-ajax]').click(function() {
-        $('.open_params').addClass('open')
-    });
-
-     $('#exchanges_list #fetch_more').click(function(e) {
-        updateList(exchanges, 'more');
-    });
-
-    $('#exchanges_list .remove_more').click(function(e) {
-        removeMore();
-    });
-
-/*
-    $('body').on('click tap', '[data-ajax=createOrder]', (function (e) {
-
-        var exchange_id = $(this).attr('data-exchange-id');
-        var search_id = value_of('search_id');
-        var offer = findExchange(exchange_id);
-        if (!exchange_id || !offer || !search_id) {
-            console.log('Cannot create order: exchange_id, exchange offer or search_id are missing');
-            return
-        }
-
-        $.ajax({
-            type:       'POST',
-            url:        '/orders',
-            data:       {
-                'order[exchange_id]':       exchange_id,
-                'order[search_id]':         search_id,
-                'order[pay]':               offer.pay_amount,
-                'order[buy]':               offer.buy_amount,
-                'order[user_location]':     offer.user_location,
-                'order[base_currency]':     offer.rates['base_currency'],
-                'order[rated_currency]':    offer.rates['rated_currency'],
-                'order[buy_rate]':          offer.rates['buy'],
-                'order[sell_rate]':         offer.rates['sell']
-            },
-            dataType:   'JSON',
-            success:    function (data) {
-                console.log('Order successfully created');
-                populate('order', data)
-                },
-            error:      function (data) {
-                console.log('There was an error creating the order');
-                }
-        });
-
-    }));
-*/
-
- /*   $('body').on('click tap', '[data-ajax=updateOrder]', (function (e) {
-
-        var order_id        = value_of('order_id');
-        var order_status    = $(this).data('order-status');
-        if (!order_id || !order_status) {
-            console.log('Cannot update order: order_id or order_status are missing');
-            return
-        }
-
-        $.ajax({
-            type:       'PUT',
-            url:        '/orders/' + order_id,
-            data:       {
-                'order[status]':            order_status
-             },
-            dataType:   'JSON',
-            success:    function (data) {
-                console.log('Order successfully updated');
-                if (order_status == 'ordered') {
-                    /!*                   swal({
-                     title: "Ordered!",
-                     html: true,
-                     text: "Your order is ready and waiting for you at </br><strong>" + value_of('exchange_name') + '</strong></br>' + value_of('exchange_address'),
-                     type: 'success'
-                     })
-                     *!/
-                     swal({
-                     title: "Ordered",
-                     html: true,
-                     text: '<strong>' + value_of('exchange_name') + '</strong></br>' + value_of('exchange_address'),
-                     type: "success",
-                     showCancelButton: true,
-                     confirmButtonColor: "#DD6B55",
-                     confirmButtonText: "OK",
-                     cancelButtonText: "Directions"
-                     },
-                     function(isConfirm){
-                     if (isConfirm) {
-                     setPage('exchanges', 'id', 'order');
-                     } else {
-                     setPage('exchanges', 'id', 'directions');
-                     }
-                     });
-                 }
-            },
-            error:      function (data) {
-                console.log('There was an error updating the order');
-            }
-        });
-
-    }));
-
-
-*/
 
 
     // Turn location fields into google searchBox's
@@ -281,18 +158,9 @@ $(document).ready(function() {
     });
 
 
-
-
-
-
-
-
-
-
     //
     // AJAX Callbacks
     //
-
 
 
     search = function(reason) {

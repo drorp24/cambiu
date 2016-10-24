@@ -113,6 +113,7 @@ var ratingOptions = {
     size: 'xs',
     readonly: true
 };
+var refreshed = false;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
