@@ -2102,7 +2102,6 @@ body#cambiu {
 //      box-shadow: 0 0 10px #888;
   }
   &.mobile.exchanges .navbar {
-    background-color: $navbar-background-color;
 //    box-shadow: 0px 0px 10px #888;
   }
 
@@ -2132,7 +2131,7 @@ body#cambiu {
       }
     }
     height: $navbar-height;
-    margin-top: 60px;
+    margin-top: 10px;
     margin-left: 8%;
     width: 84%;
     padding-top: 5px;
