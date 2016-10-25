@@ -4,6 +4,7 @@
 @import "font-awesome";
 
 // Variables
+$card-transition-time: 1s;
 $padding: 15px;
 $photoPadding: 15;
 $navbar-background-color: rgba(0, 0, 0, 0.4);
@@ -518,6 +519,13 @@ $inverse-color: #ffffff;
     background-size: cover;
 }
 
+@mixin threedots($width) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: $width;
+}
+
 
 //
 // CROSS-MEDIA
@@ -821,15 +829,6 @@ body#cambiu {
 
 
   // temp
-  .swiper-slide {
-    font-size: 1.8em;
-    font-weight: bold;
-    color: black;
-//    border: 5px solid #eee;
-    // temp
-    text-align: center;
- //   background-color: #fff;
-  }
   .swiper-pagination-fraction {
     font-size: 1.1em;
     bottom: 0;
@@ -1025,26 +1024,89 @@ body#cambiu {
   }
 
 
-  .card {
-    .photo {
-      padding: $padding;
-      margin: 0;
+  .card{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    .item {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 50%;
     }
-    .summary {
-      height: 100%;
+    transition: width $card-transition-time, height $card-transition-time;
+    .photo {
+      transition: padding $card-transition-time;
+      img {
+        width: 80%;
+        height: 100%;
+        transition: width $card-transition-time ease;
+      }
+    }
+    .fullcard {
+      display: none;
+    }
+    &.selected {
+      width: 100vw !important;
+      height: 100vh !important;
+      align-items: flex-start;
+      align-content: stretch;
+      text-align: left;
+      .fullcard {
+        display: block;
+      }
+      .item {
+        flex-basis: 100%;
+        height: 50vh;
+      }
+      .photo {
+        padding: 0;
+        img {
+          width: 100%;
+        }
+      }
+      .data {
+        [data-field=edited_quote] {
+          font-size: 2.5em;
+          margin-top: 0.7em;
+          transition: font-size $card-transition-time;
+        }
+      }
+    }
+    &:not(.selected) {
+      transform: translateX(0px) !important;
+    }
+    .data {
+      padding: $padding;
+      color: #000;
+      font-size: 1em;
+      font-weight: 400;
       [data-field=edited_quote] {
+        font-size: 1.5em;
+        text-align: center;
         font-weight: 300;
-        font-size: 8vw;
+      }
+      [data-field=name] {
+        color: $darken-brand-color;
+        font-size: 1.5em;
+        @include threedots(80%);
+      }
+      [data-field=address] {
+        @include threedots(80%);
+        font-weight: 300;
+        font-size: 1em;
+      }
+      [data-field=rating] {
+        font-weight: 300;
+        font-size: 0.8em;
       }
     }
   }
 
-  .photo {
-    margin: -1 * $padding;
-    img {
-      width: 100%;
-    }
-  }
+
 
 
   .missing {
@@ -1816,12 +1878,6 @@ body#cambiu {
     padding: 6px 6px;
   }
 
-  &.exchange {
-      .es_icon, .es_distance {
-        color: $cn-brand-color;
-      }
-    }
-
   .moneybox {
     margin-top: -30px;
   }
@@ -1937,18 +1993,6 @@ body#cambiu {
           height: $parameters-height;
           margin-top: -3px;
         }
-      }
-    }
-  }
-  &.exchange {
-    .exchange_summary_bg img {
-      @media (max-width: $screen-xs-max) {
-        width: 100%;
-        height: $exchange_summary_bg_img_height_mobile;
-      }
-      @media (min-width: $screen-sm-min) {
-        width: 100%;
-        height: $exchange_summary_bg_img_height;
       }
     }
 

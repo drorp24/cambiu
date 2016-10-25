@@ -14,11 +14,14 @@ initSwipers = function() {
         onSlidePrevEnd: slidePrev
     });
 
+    cardXoffset = String(($('.card').eq(0).position().left + $('#cards').position().left) * -1) + 'px';
 };
 
 
 slideChange = function() {
-    if (directionsDisplay) directionsDisplay.setMap(null)
+    if (directionsDisplay) directionsDisplay.setMap(null);
+    $('.card').removeClass('selected');
+
 };
 
 slideNext = function() {
@@ -40,3 +43,14 @@ addSlide = function(index) {
         console.log('addSlide not needed - slide ' + index + ' exists already');
     }
 };
+
+$(document).ready(function() {
+
+    $('body').on('click tap', '.card', function() {
+        var $this = $(this);
+        $this.css('transform', 'translateX(' + cardXoffset + ')');
+        $this.addClass('selected');
+    });
+
+});
+

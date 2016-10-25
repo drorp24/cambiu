@@ -457,4 +457,8 @@ $(document).ready(function() {
         alertError(error);
     });
 
+    bodyWidth       = $('body').width();
+    bodyHeight      = window.innerHeight;
+    halfBodyHeight  = bodyHeight / 2;
+
 });

@@ -33,8 +33,7 @@
 
     function addCard(exchange, index) {
 
-        var link = {'data-href-page': 'exchanges', 'data-href-id': exchange.id, 'data-href-pane': 'offer'};
-        var $card = $('.card.template').clone().removeClass('template').attr(link).css('height', cardHeight);
+        var $card = $('.card.template').clone().removeClass('template').css('height', cardHeight);
         $card.appendTo($('#cards'));
 
         populateExchange(exchange, $card);
@@ -110,3 +109,4 @@
             }
         });
     };
+
