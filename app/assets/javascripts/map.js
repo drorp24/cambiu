@@ -143,7 +143,7 @@
 
     renderDirections = function (exchange) {
 
-        console.log('renderDirections');
+//        console.log('renderDirections');
 
         origin =            new google.maps.LatLng(user_lat, user_lng);
         destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
@@ -163,8 +163,10 @@
             unitSystem:     google.maps.UnitSystem.METRIC
         };
 
+/*
         console.log('calcRoute. Following is the request:');
         console.log(request);
+*/
 
         directionsService = new google.maps.DirectionsService();
         directionsDisplay = new google.maps.DirectionsRenderer();
@@ -192,7 +194,9 @@
     };
 
 $(document).ready(function() {
-    $('body').on('click tap', '.nav_icon', function() {
+    $('body').on('click tap', '.nav_icon', function(e) {
+        e.stopPropagation();
+        $('.swiper-slide-active').removeClass('selected');
         renderDirections(currExchange())
     });
 });
