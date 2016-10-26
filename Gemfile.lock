@@ -388,7 +388,6 @@ DEPENDENCIES
   jquery-rails
   jquery-validation-rails
   le
-  listen (~> 3.0.5)
   mandrill-api (~> 1.0.53)
   memcachier
   monetize
