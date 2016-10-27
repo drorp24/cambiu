@@ -100,7 +100,6 @@ populateParams = function() {
     });
 
     bind_currency_to_autonumeric();
-    bind_forms();
 
     paramsPopulated = true;
 
@@ -112,17 +111,13 @@ value_of = function(key) {
     return (a && a != "null") ? a : null;
 };
 
-// populate a field's value in ss, and in form inputs too if applicable
+// Populate search params in search form, search bar and ss for persistency (page reloads)
 set = function(field, value) {
+//    console.log('set ' + field + ' to ' + value);
+    $('.params [data-model=search][data-field=' + field + ']').html(value);
+    value = (field.indexOf('amount') > -1) ? String(value).replace(/[^0-9\.]+/g,"") : value;
+    $('form [data-model=search][data-field=' + field + ']').val(value);
     sessionStorage.setItem(field, value);
-    if (searchable(field)) {
-        $('form [data-field=' + field + ']').val(value);
-        if (field.indexOf('amount') > -1) {
-            var clean_value = String(value).replace(/[^0-9\.]+/g,"");
-            $('form #' + field + '_val').val(clean_value)
-        }
-        $('.navbar [data-field=' + field + ']').html(value);
-    }
 };
 
 

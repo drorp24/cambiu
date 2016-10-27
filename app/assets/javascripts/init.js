@@ -166,7 +166,7 @@ def_vals = function() {
 
     var def = {};
 
-    def['pay_amount']       = 1;
+    def['pay_amount']       = '$1.00';
     def['pay_currency']     = 'USD';
     def['buy_amount']       = null;
     def['buy_currency']     = 'GBP';

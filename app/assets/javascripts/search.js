@@ -39,17 +39,6 @@ $(document).ready(function() {
 
     };
 
-    // TODO: Remove when only one form exists!
-    // when a form field changes in one form, it should change in other forms too
-    bind_forms = function() {
-        $('form [data-field]').keyup(function() {
-            var $this = $(this);
-            var field = $this.data('field');
-            var value = $this.val();
-            set(field, value);
-        });
-    };
-
 
     // Sorting
 
@@ -145,15 +134,7 @@ $(document).ready(function() {
         searchbox_addListener(searchBox);
     });
 
-    // Widen location in #new_parameters when clicked
-    $('body.desktop #new_parameters [data-field=location]').click(function() {
-        $('.pac-container').css('transition',
-            'all .5s ease');
-        $('.pac-container').css('width',
-            '300px');
-    });
-
-    // fix their z-index dynamically
+     // fix their z-index dynamically
     $('input[data-field=location]').click(function() {
         if (!pacContainerInitialized) {
             $('.pac-container').css('z-index',
@@ -163,6 +144,22 @@ $(document).ready(function() {
     });
 
 
+
+    $('form [data-model=search][data-field]').keyup(function() {
+
+        var $this = $(this);
+        var field = $this.data('field');
+        var value = $this.val();
+        set(field, value);
+
+    });
+
+    $('form [data-model=search][data-field]').click(function() {
+
+        var $this = $(this);
+        var field = $this.data('field');
+        if (field.indexOf('amount') > -1) $this.val("");
+    });
 
     search = function(reason) {
 

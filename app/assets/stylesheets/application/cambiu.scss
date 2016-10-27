@@ -20,8 +20,7 @@ $green: #27AE60;
 $bg_green: #6db61e;
 $progress-color: #fff;
 $font-family: 'Roboto', sans-serif;
-$navbar-height: 50px;
-$mobile-navbar-height: 70px;
+$navbar-height: 45px;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
@@ -539,30 +538,6 @@ html, body {
 body#cambiu {
 
 
-  .navbar {
-    width: 100vw;
-    min-height: initial;
-  }
-  .navbar_link {
-    font-size: 1.7em;
-    color: #fff;
-    line-height: 30px;
-    font-weight: 400;
-    white-space: nowrap;
-    &.navbar_right, &.navbar_left {
-      line-height: $navbar-height - 10px;
-    }
-    &.navbar_center {
-      text-align: center;
-      .middle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: $navbar-height - 10px;
-      }
-    }
-  }
-
   .page {
     display: none;
     &.active {
@@ -589,8 +564,8 @@ body#cambiu {
     &:not(#exchanges_list):not([data-pane=map]) {
       background-color: #fff;
       padding-bottom: 5vh;
-      padding-left: $pane-padding;
-      padding-right: $pane-padding;
+      padding-left: $padding;
+      padding-right: $padding;
     }
   }
 
@@ -1028,13 +1003,13 @@ body#cambiu {
       flex-shrink: 1;
       flex-basis: 50%;
     }
-    transition: width $card-transition-time, height $card-transition-time;
+    transition: width $card-transition-time, height $card-transition-time, transform $card-transition-time;
     .photo {
-      transition: padding $card-transition-time;
+      transition: padding $card-transition-time + 0.3s;
       img {
         width: 80%;
         height: 100%;
-        transition: width $card-transition-time ease;
+        transition: width $card-transition-time + 0.3s;
       }
     }
     .fullcard {
@@ -1070,7 +1045,6 @@ body#cambiu {
         [data-field=edited_quote] {
           font-size: 2.5em;
           margin-top: 0.7em;
-          transition: font-size $card-transition-time;
         }
       }
     }
@@ -1085,6 +1059,7 @@ body#cambiu {
       [data-field=edited_quote] {
         font-size: 1.5em;
         text-align: center;
+        transition: font-size $card-transition-time + 0.3s;
       }
       [data-field=name] {
         color: $darken-brand-color;
@@ -1127,8 +1102,41 @@ body#cambiu {
     background-color: $brand-color;
     box-shadow: 1px 2px 5px rgba(0,0,0,0.5);
     position: absolute;
+    transition: font-size, $card-transition-time + 0.3s;
   }
 
+  
+  .search_bar {
+    position: absolute;
+    top: $padding * 2;
+    width: 95%;
+    z-index: 2;
+    background-color: lighten(#eee, 5%);
+    color: #666;
+    box-shadow: 1px 1px 7px rgba(0,0,0,0.3);
+    border-radius: 4px;
+    font-size: 1.3em;
+    line-height: 2.5em;
+    font-weight: 300;
+  }
+
+  .params {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+      white-space: nowrap;
+      margin-right: 5px;
+      margin-left: 5px;
+     }
+  }
+  
+  .force-left {
+    position: absolute;
+    left: $padding;
+  }
+  
+  
 
   .missing {
     border: 1px solid #ccc;
@@ -2097,14 +2105,6 @@ body#cambiu {
   }
 
 
-  &.desktop.exchanges .navbar {
-      background-color: $navbar-background-color;
-//      box-shadow: 0 0 10px #888;
-  }
-  &.mobile.exchanges .navbar {
-//    box-shadow: 0px 0px 10px #888;
-  }
-
   .navbar {
     .logo_word {
       color: #fff;
@@ -2118,86 +2118,17 @@ body#cambiu {
       line-height: 50px;
       margin-left: 10px;
     }
-    #navbar_logo {
-      position: absolute;
-      left: 120px;
-      @media (max-width: $screen-xs-max) {
-        left: 0;
-      }
-
-      img {
-        height: 36px;
-        margin-top: 9px;
-      }
-    }
-    height: $navbar-height;
-    margin-top: 10px;
-    margin-left: 8%;
-    width: 84%;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-bottom: 0;
-    font-weight: 400;
-    .navbar-brand {
-      padding-top: 4px;
-      @media (max-width: $screen-xs-max) {
-        span:first-child {
-          background-color: #fff;
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-        }
-      }
-    }
+    padding: 5px;
+    border: none;
+    background-color: rgba(0,0,0,0.5);
+    margin-left: -1 * $padding;
+    font-weight: 300;
+    font-size: 1.5em;
+    width: 100vw;
+    height: 2.5em;
+    color: #fff;
   }
-  .navbar-collapse {
-     &.in {
-      background: rgba(0, 0, 0, 0.7);
-      margin-left: -15px;
-      margin-right: -15px;
-      color: $white;
-      li a {
-        line-height: 35px;
-        margin-bottom: -20px;
-        color: $white;
-        margin-bottom: 10px;
-        font-size: 1.3em;
-        &:hover {
-          color: $brand-color;
-          background: none;
-          }
-      }
-    }
-    &:not(.in)  li  a {
-      line-height: 35px;
-      margin-bottom: -20px;
-      color: white;
-      &:hover, &:active {
-        color: lighten($brand-color, 10%);
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-        background: none;
-      }
-      &:visited, &:focus {
-        background: none;
-      }
-    }
-  }
-  #cn_navbar_logo {
-    img {
-      height: $navbar-height/2;
-      width: auto;
-      display: inline;
-    }
-    span {
-      font-size: 2vh;
-    }
-  }
-  .pseudo_nav_link {
-    margin-left: 70px;
-    position: relative;
-    top: -30px;
-  }
-  .section_anchor {
+   .section_anchor {
     display: block;
     margin-top: $navbar-height * -1;        /* Size of fixed header */
     padding-bottom: $navbar-height;
@@ -3061,24 +2992,6 @@ body#cambiu {
     }
     */
 
-    .params > .exchange_summary_banner {
-      color: #555;
-      font-weight: 400;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-
-      .es_name {
-//        color: darken($brand-color, 15%);
-        font-weight: 300;
-         @media (max-width: $screen-xs-max) {
-          font-size: 3.5vh;
-        }
-        @media (min-width: $screen-sm-min) {
-          font-size: 3vh;
-        }
-      }
-    }
-
-
     .exchange_summary_banner {
        background: linear-gradient(#a8a8ab, #f5f5f5);
       background: linear-gradient(#ffffff, #f5f5f5);
@@ -3559,13 +3472,6 @@ body#cambiu {
     .desktop_only {
       display: none !important;
     }
-    .navbar-toggle.collapsed {
-      margin-right: -15px;
-    }
-    .navbar-toggle .icon-bar {
-      background-color: #fff;
-    }
-
      .getstarted_button_container {
       .getstarted_button {
          width: 100%;

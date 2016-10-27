@@ -15,11 +15,11 @@
   </div>
 
   <div class="form-group col-md-2 col-xs-6 reach-out-right reach-out-left">
-    <input type="text" pattern="\d*" id="pay_amount" data-clicked="pay_amount (list)" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control">
+    <input type="text" pattern="\d*" id="pay_amount" data-clicked="pay_amount (list)" data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control">
   </div>
 
   <div class="form-group col-md-2 col-xs-6 reach-out-left select">
-    <select id="pay_currency" data-field="pay_currency" data-clicked="pay_currency (list)" data-symboltarget="pay_amount" name="search[pay_currency]" class="currency_select select optional text-center form-control">
+    <select id="pay_currency" data-model="search" data-field="pay_currency" data-clicked="pay_currency (list)" data-symboltarget="pay_amount" name="search[pay_currency]" class="currency_select select optional text-center form-control">
       <option selected disabled hidden value=''></option>
       <option data-symbol="￡ " value="GBP">GBP</option>
       <option data-symbol="€ " value="EUR">EUR</option>
@@ -41,11 +41,11 @@
   </div>
 
   <div class="form-group col-md-2 col-xs-6 reach-out-right reach-out-left">
-    <input type="text" pattern="\d*" id="buy_amount" data-field="buy_amount" data-clicked="buy_amount (list)" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control">
+    <input type="text" pattern="\d*" id="buy_amount" data-model="search" data-field="buy_amount" data-clicked="buy_amount (list)" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control">
   </div>
 
   <div class="form-group col-md-2 col-xs-6 reach-out-left select">
-    <select id="buy_currency" data-field="buy_currency" data-clicked="buy_currency (list)" data-symboltarget="buy_amount" name="search[buy_currency]" class="currency_select select optional text-center form-control">
+    <select id="buy_currency" data-model="search" data-field="buy_currency" data-clicked="buy_currency (list)" data-symboltarget="buy_amount" name="search[buy_currency]" class="currency_select select optional text-center form-control">
       <option selected disabled hidden value=''></option>
       <option data-symbol="$ "  value="USD">USD</option>
       <option data-symbol="€ "  value="EUR">EUR</option>
@@ -67,13 +67,13 @@
   </div>
 
   <div class="form-group col-md-4 col-xs-12 reach-out-left reach-out-right">
-    <input type="text" id="location" data-field="location" data-searchbox="true" name="search[location]" class="text-center location search form-control" placeholder="   Change location"
+    <input type="text" id="location" data-model="search" data-field="location" data-searchbox="true" name="search[location]" class="text-center location search form-control" placeholder="   Change location"
            data-analyze="change" data-activity="Search" data-key1="searched" data-val1="location" data-key2="type" data-val2="search" data-key3="location">
   </div>
 
   <div class="hidden" style="display:none">
-    <input type="hidden" name="search[location_lat]"    id="location_lat"     data-field="location_lat">
-    <input type="hidden" name="search[location_lng]"    id="location_lng"     data-field="location_lng">
+    <input type="hidden" name="search[location_lat]"    id="location_lat"     data-model="search" data-field="location_lat">
+    <input type="hidden" name="search[location_lng]"    id="location_lng"     data-model="search" data-field="location_lng">
   </div>
 
   <div class="middle_wrapper mobile_only middle_wrapper help_text col-md-half col-xs-12">

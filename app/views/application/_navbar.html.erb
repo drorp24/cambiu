@@ -1,4 +1,4 @@
-<nav class="navbar navbar-fixed-top flex_parent">
+<nav class="navbar flex_parent">
 
   <% left_id = nil if local_assigns[:left_id].nil? %>
   <% right_id = nil if local_assigns[:right_id].nil? %>
@@ -10,6 +10,11 @@
   </div>
 
   <div class="navbar_link navbar_center middle col-xs-8">
+    <% if center == 'search_params' %>
+      <%= render 'search_params' %>
+    <% else %>
+      <%= center %>
+    <% end %>
   </div>
 
   <div class="navbar_link navbar_right col-xs-2"
