@@ -822,7 +822,7 @@ body#cambiu {
   }
 
   .template {
-    display: none;
+    display: none !important;
   }
 
   .no_padding {
@@ -992,15 +992,17 @@ body#cambiu {
 
   .card{
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     align-content: center;
     text-align: center;
     .item {
+      /*
       flex-grow: 1;
       flex-shrink: 1;
+      */
       flex-basis: 50%;
     }
     transition: width $card-transition-time, height $card-transition-time, transform $card-transition-time;
@@ -1016,6 +1018,7 @@ body#cambiu {
       display: none;
     }
     &.selected {
+      flex-wrap: wrap;
       width: 100vw !important;
       height: 100vh !important;
       align-items: flex-start;

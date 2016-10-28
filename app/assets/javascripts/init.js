@@ -89,7 +89,6 @@ var defaults;
 var expiry;
 var watchId;
 var gcm_apikey = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
-var search;
 var slidesPerView = 1.3;
 var photoAspectRatio = 1;
 var photoPadding = 15;
@@ -166,7 +165,7 @@ def_vals = function() {
 
     var def = {};
 
-    def['pay_amount']       = '$1.00';
+    def['pay_amount']       = '$1,000';
     def['pay_currency']     = 'USD';
     def['buy_amount']       = null;
     def['buy_currency']     = 'GBP';

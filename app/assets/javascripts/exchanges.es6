@@ -12,6 +12,7 @@
         var sort = sort ? sort : value_of('sort');
         exchanges = sort_by(sort);
 
+        $('#cards').empty();
         for (var i = 0; i < Math.min(initialSlides, exchanges.length); i++) {
             var exchange = exchanges[i].properties;
             addCard(exchange, i);

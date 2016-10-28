@@ -112,13 +112,6 @@ $(document).ready(function() {
 
 
 
-    $('[data-ajax=searches]').click(function(e) {
-        e.preventDefault();
-        if ($('#search_form').valid()) {
-            $('#search_form').submit();
-        }
-    });
-
     // supress homepage submit button
     $('#homepage :submit').click(function(e) {
         e.preventDefault();
@@ -189,9 +182,9 @@ $(document).ready(function() {
                 .then(parseJson)
                 .then(function (data) {
                     console.log(':) search completed succesfully');
-                    search = data;
+                    searchResult = data;
                     exchanges = data.exchanges.features;
-                    resolve(search)
+                    resolve(searchResult)
                 })
                 .catch(function (error) {
                     console.log('catch!')
@@ -201,6 +194,15 @@ $(document).ready(function() {
         })
 
     };
+
+
+    $('[data-ajax=searches]').click(function(e) {
+        e.preventDefault();
+        search('form clicked')
+            .then(addCards)
+            .catch(alertError);
+    });
+
 
 
 
