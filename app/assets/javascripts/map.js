@@ -145,10 +145,18 @@
 
 //        console.log('renderDirections');
 
+        if (directionsRenderedFor == exchange.id) return;
+        directionsRenderedFor = exchange.id;
         origin =            new google.maps.LatLng(user_lat, user_lng);
         destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
         calcRoute(origin, destination);
 
+    };
+
+    clearDirections = function() {
+        if (directionsRenderedFor == null) return;
+        directionsDisplay.setMap(null);
+        directionsRenderedFor = null;
     };
 
 
@@ -192,11 +200,3 @@
         var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
         return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
     };
-
-$(document).ready(function() {
-    $('body').on('click tap', '.nav_icon', function(e) {
-        e.stopPropagation();
-        $('.swiper-slide-active').removeClass('selected');
-        renderDirections(currExchange())
-    });
-});

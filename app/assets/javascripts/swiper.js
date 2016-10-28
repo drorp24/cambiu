@@ -19,7 +19,7 @@ initSwipers = function() {
 
 
 slideChange = function() {
-    if (directionsDisplay) directionsDisplay.setMap(null);
+    if (directionsDisplay) clearDirections();
     $('.card').removeClass('selected');
 
 };
@@ -43,14 +43,3 @@ addSlide = function(index) {
         console.log('addSlide not needed - slide ' + index + ' exists already');
     }
 };
-
-$(document).ready(function() {
-
-    $('body').on('click tap', '.card', function() {
-        var $this = $(this);
-        $this.css('transform', 'translateX(' + cardXoffset + ')');
-        $this.addClass('selected');
-    });
-
-});
-

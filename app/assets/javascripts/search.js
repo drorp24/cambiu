@@ -204,6 +204,33 @@ $(document).ready(function() {
     });
 
 
+    $('body').on('click tap', '.card:not(.selected)', function(e) {
+        e.stopPropagation();
+        var $this = $(this);
+        $this.css('transform', 'translate(' + cardXoffset + ', 10px)');
+        $this.addClass('selected');
+    });
+
+    $('body').on('click tap', '.card.selected .actions_line', function(e) {
+        e.stopPropagation();
+        var $currCard = $('.swiper-slide-active');
+        var cardWasSelected = $currCard.hasClass('selected');
+        $currCard.toggleClass('selected');   // toggleClass performed before renderDirection to prevent ui ticks
+        if (cardWasSelected) {
+            renderDirections(currExchange())
+        } else {
+            $currCard.css('transform', 'translate(' + cardXoffset + ', 10px)');
+        }
+    });
+
+
+    $('body').on('click tap', '.nav_icon', function(e) {
+        e.stopPropagation();
+        renderDirections(currExchange());
+        $('.swiper-slide-active').removeClass('selected');
+    });
+
+
 
 
 });

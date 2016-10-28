@@ -111,6 +111,7 @@ var ratingOptions = {
     readonly: true
 };
 var refreshed = false;
+var directionsRenderedFor = null;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 

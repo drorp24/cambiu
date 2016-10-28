@@ -4,6 +4,8 @@
 @import "font-awesome";
 
 // Variables
+$navbar_height: 60px;
+$navbar_background: rgba(0,0,0,0.5);
 $nav_icon_width: 2.5em;
 $card-transition-time: 1s;
 $padding: 15px;
@@ -20,7 +22,6 @@ $green: #27AE60;
 $bg_green: #6db61e;
 $progress-color: #fff;
 $font-family: 'Roboto', sans-serif;
-$navbar-height: 45px;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
@@ -561,13 +562,19 @@ body#cambiu {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       }
     }
-    &:not(#exchanges_list):not([data-pane=map]) {
-      background-color: #fff;
-      padding-bottom: 5vh;
-      padding-left: $padding;
-      padding-right: $padding;
+    &:not([data-pane=map]) {
+      padding-top: $navbar_height;
     }
   }
+
+
+  .action {
+    text-transform: uppercase;
+    color: $brand-color;
+  }
+
+
+
 
   .align-items {
     display: flex;
@@ -1014,6 +1021,14 @@ body#cambiu {
         transition: width $card-transition-time + 0.3s;
       }
     }
+    .actions_line {
+      transition: margin $card-transition-time + 0.3s;
+    }
+    .action {
+      &:before {
+        content: 'explore'
+      }
+    }
     .fullcard {
       display: none;
     }
@@ -1027,7 +1042,18 @@ body#cambiu {
       .fullcard {
         display: block;
       }
-      .item {
+      .action {
+        &:before {
+          content: 'return'
+        }
+      }
+      .explore_icon {
+        &:after {
+          content: "\f078";
+          font-family: fontAwesome;
+        }
+      }
+        .item {
         flex-basis: 100%;
         height: 50vh;
       }
@@ -1050,12 +1076,17 @@ body#cambiu {
           margin-top: 0.7em;
         }
       }
+      .actions_line {
+        width: 100%;
+        margin-left: $padding * -1;
+      }
     }
     &:not(.selected) {
-      transform: translateX(0px) !important;
+      transform: translate(0px, 0px) !important;
     }
     .data {
       padding: $padding;
+      height: 100%;
       color: #000;
       font-size: 1em;
       font-weight: 300;
@@ -1084,6 +1115,7 @@ body#cambiu {
         bottom: 0.1em;
       }
     }
+    font-size: 0.9em;
   }
 
   .rating-container .caption {
@@ -1108,7 +1140,37 @@ body#cambiu {
     transition: font-size, $card-transition-time + 0.3s;
   }
 
-  
+
+  .actions_line {
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    div {
+      display: inline-block;
+    }
+    .action {
+      margin-right: 10px;
+    }
+  }
+
+  .explore_icon {
+    &:after {
+      content: "\f077";
+      font-family: fontAwesome;
+    }
+    width: $nav_icon_width;
+    border-radius: $nav_icon_width / 2;
+    line-height: $nav_icon_width;
+    font-size: 1em;
+    font-weight: 300;
+    text-align: center;
+    color: #000;
+    background-color: #ddd;
+  }
+
+  /*
   .search_bar {
     position: absolute;
     top: $padding * 2;
@@ -1122,6 +1184,7 @@ body#cambiu {
     line-height: 2.5em;
     font-weight: 300;
   }
+  */
 
   .params {
     display: flex;
@@ -2109,27 +2172,18 @@ body#cambiu {
 
 
   .navbar {
-    .logo_word {
-      color: #fff;
-      @media (max-width: $screen-xs-max) {
-        font-weight: 100;
-      }
-      @media (min-width: $screen-sm-min) {
-        font-weight: 300;
-      }
-      text-transform: initial;
-      line-height: 50px;
-      margin-left: 10px;
-    }
+    position: absolute;
+    top: 0;
+    z-index: 2;
     padding: 5px;
     border: none;
-    background-color: rgba(0,0,0,0.5);
-    margin-left: -1 * $padding;
+    background-color: $navbar_background;
     font-weight: 300;
-    font-size: 1.5em;
+    font-size: 1.3em;
     width: 100vw;
-    height: 2.5em;
+    height: $navbar_height;
     color: #fff;
+    box-shadow: 1px 1px 15px rgba(0,0,0,0.5);
   }
    .section_anchor {
     display: block;
