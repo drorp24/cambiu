@@ -71,11 +71,9 @@
 
                   // irritating, but inevitable since i can't stick the user's blue dot to a place on the map (it's always on the screen's center)
                  // re-center map around user *cuurent* position if he drags the map around
-/*
                  setTimeout(function () {
                     showUserPosition(user_lat, user_lng)
                 }, 1000);
-*/
             });
 
 

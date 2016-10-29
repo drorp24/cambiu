@@ -524,7 +524,7 @@ $inverse-color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: $width;
+  max-width: $width;
 }
 
 
@@ -1022,6 +1022,8 @@ body#cambiu {
       }
     }
     .actions_line {
+      width: 50%;
+      margin-left: -1 * $padding;
       transition: margin $card-transition-time + 0.3s;
     }
     .action {
@@ -1081,7 +1083,8 @@ body#cambiu {
       }
       [data-field=duration] {
         position: relative;
-        bottom: 4em;
+        bottom: 3em;
+        font-size: 1.1em;
         color: #fff;
       }
         .actions_line {
@@ -1152,7 +1155,7 @@ body#cambiu {
 
   .actions_line {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1181,7 +1184,8 @@ body#cambiu {
 
   .mapMarker {
     font-size: 1.5em;
-    color: #ddd;
+    color: #bbb;
+    margin-right: 0.5em;
   }
 
   .explore {
