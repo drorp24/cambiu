@@ -179,6 +179,7 @@ class Exchange < ActiveRecord::Base
       bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       gain                                                  = get_amount - bad_amount
+      result[:gain_percent]                                 = ((gain.abs / bad_amount) * 100).round
       result[:gain_amount]                                  = gain.abs.to_money(get_currency).format
       result[:gain_type]                                    = gain < 0 ? 'minus' : 'plus'
       result[:gain_currency]                                = get_currency
@@ -216,6 +217,7 @@ class Exchange < ActiveRecord::Base
       bad_amount                                            = get_amount * bad_rates[transaction.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
       gain                                                  = pay_amount - bad_amount
+      result[:gain_percent]                                 = ((gain.abs / bad_amnount) * 100).round
       result[:gain_amount]                                  = gain.abs.to_money(pay_currency).format
 
       result[:gain_currency]                                = pay_currency
@@ -325,7 +327,6 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:website] = self.website
     exchange_hash[:latitude] = self.latitude
     exchange_hash[:longitude] = self.longitude
-    exchange_hash[:distance] = self.distance_from(center)
 
     quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount')
     exchange_hash[:pay_amount] = quotes[:pay_amount]
@@ -334,6 +335,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:buy_currency] = quotes[:get_currency]
     exchange_hash[:bad_amount] = quotes[:bad_amount]
     exchange_hash[:gain_amount] = quotes[:gain_amount]
+    exchange_hash[:gain_percent] = quotes[:gain_percent]
     exchange_hash[:gain_type] = quotes[:gain_type]
     exchange_hash[:gain_currency] = quotes[:gain_currency]
     exchange_hash[:quote] = quotes[:quote]

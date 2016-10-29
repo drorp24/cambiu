@@ -571,6 +571,7 @@ body#cambiu {
   .action {
     text-transform: uppercase;
     color: $brand-color;
+    margin-left: 1em;
   }
 
 
@@ -1024,7 +1025,7 @@ body#cambiu {
     .actions_line {
       bottom: 1px;
     }
-    .action {
+    .explore {
       &:before {
         content: 'explore'
       }
@@ -1045,12 +1046,12 @@ body#cambiu {
       .actions_line {
         bottom: 20px;
       }
-      .action {
+      .explore {
         &:before {
           content: 'return'
         }
       }
-      .explore {
+      .chevron {
         &:after {
           content: "\f078";
           font-family: fontAwesome;
@@ -1090,6 +1091,9 @@ body#cambiu {
         font-size: 1.1em;
         color: #fff;
       }
+      .comparison {
+        transform: scale(1.5,1.5);
+      }
     }
     &:not(.selected) {
       transform: translate(0px, 0px) !important;
@@ -1105,7 +1109,6 @@ body#cambiu {
         font-size: 1.5em;
         text-align: center;
         transition: font-size $card-transition-time + 0.3s;
-        margin: 10px;
         @include threedots(100%);
       }
       [data-field=name] {
@@ -1165,12 +1168,55 @@ body#cambiu {
     div {
       display: inline-block;
     }
-    .action {
-      margin-right: 10px;
-    }
   }
 
 
+  .comparison {
+//    border: 1px solid red;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    .comparison_item {
+      display: flex;
+    }
+    font-weight: 300;
+    margin-top: -10px;
+    transform: scale(0.8,0.8);
+    color: #888;
+    [data-field=gain_percent] {
+//      border: 1px solid purple;
+      flex-basis: 60%;
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 0.05em;
+      align-items: center;
+      font-size: 3.5em;
+    }
+    .signs {
+      flex-basis: 40%;
+      text-align: left;
+      div {
+//        border: 1px solid blue;
+      }
+      .percentSign {
+        font-size: 2.2em;
+        position: relative;
+        top: 0.15em;
+        height: 53%;
+      }
+      .off {
+        text-transform: uppercase;
+      }
+    }
+  }
+  
+  .comparison_text {
+    text-align: center;
+    text-transform: uppercase;
+  }
+  
+  
+  
 
   .duration {
     display: flex;
@@ -1178,7 +1224,8 @@ body#cambiu {
     justify-content: center;
     [data-field=duration] {
       text-align: center;
-      @include threedots(80%);
+      @include threedots(60%);
+      color: #888;
     }
   }
 
@@ -1186,12 +1233,14 @@ body#cambiu {
   }
 
   .mapMarker {
-    font-size: 1.5em;
+    font-size: 1.4em;
     color: #bbb;
-    margin-right: 0.5em;
+    margin-right: 0.4em;
   }
 
-  .explore {
+  .chevron {
+    position: absolute;
+    right: $padding;
     &:after {
       content: "\f077";
       font-family: fontAwesome;
@@ -2960,25 +3009,6 @@ body#cambiu {
         font-size: 0.9em;
         font-weight: 400;
         color: $green;
-      }
-      .comparison {
-        text-align: center;
-        margin-left: -15px;
-        @media (max-width: $screen-xs-max) {
-          display: none;
-        }
-      }
-      .comparison-d {
-        line-height: 25px;
-        font-size: 0.8em;
-      }
-      .comparison-m {
-      }
-      .comparison-amount {
-        line-height: 25px;
-        font-size: 0.7em;
-        font-weight: 500;
-        color: #333;
       }
       .rounded {
         border-radius: 4px;
