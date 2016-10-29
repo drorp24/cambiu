@@ -354,6 +354,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:place] = {}
     exchange_hash[:place][:id] = self.place_id
     exchange_hash[:place][:status] = {}
+    exchange_hash[:matrix] = {}
 
     exchange_hash
 

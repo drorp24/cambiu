@@ -5,6 +5,15 @@
 //  1-way binding model -> view
 
 
+populateDuration = function(exchange, $scope) {
+
+    console.log('exchange ' + exchange.id + ' - populateDuration');
+
+    $scope.find('[data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
+    $scope.find('[data-model=exchange][data-field=distance]').html(exchange.matrix.distance);
+
+};
+
 populateExchange = function(exchange, $scope) {
 
 //    console.log('exchange ' + exchange.id + ' - populateExchange');

@@ -61,15 +61,9 @@
             google.maps.event.addListenerOnce(map, 'idle', function () {
                 // do something only the first time the map is loaded
 
-                console.log(':) map completed drawing');
+                console.log('map completed drawing');
                 resolve();
 
-                setTimeout(function () {
-                    /*
-                     placeGoogleMarkers(search.exchanges);
-                     radarFade();
-                     */
-                }, 13000);
             });
 
 
@@ -146,9 +140,9 @@
 //        console.log('renderDirections');
 
         if (directionsRenderedFor == exchange.id) return;
-        directionsRenderedFor = exchange.id;
-        origin =            new google.maps.LatLng(user_lat, user_lng);
-        destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
+        var directionsRenderedFor = exchange.id;
+        var origin =            new google.maps.LatLng(user_lat, user_lng);
+        var destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
         calcRoute(origin, destination);
 
     };
@@ -171,11 +165,6 @@
             unitSystem:     google.maps.UnitSystem.METRIC
         };
 
-/*
-        console.log('calcRoute. Following is the request:');
-        console.log(request);
-*/
-
         directionsService = new google.maps.DirectionsService();
         directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -191,6 +180,33 @@
 
     }
 
+    findDuration = function(exchange) {
+
+        return new Promise(function(resolve, reject) {
+
+            var origin =            new google.maps.LatLng(user_lat, user_lng);
+            var destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
+            var request = {
+                origins: [origin],
+                destinations: [destination],
+                travelMode: google.maps.TravelMode.WALKING,
+                unitSystem: google.maps.UnitSystem.METRIC
+            };
+
+            var service = new google.maps.DistanceMatrixService;
+            service.getDistanceMatrix(request, function (response, status) {
+                if (status !== 'OK') {
+                    reject('google.maps.DistanceMatrixService error: ' + status);
+                } else {
+                    exchange.matrix.duration = response.rows[0].elements[0].duration.text;
+                    exchange.matrix.distance = response.rows[0].elements[0].distance.text;
+                    resolve(exchange);
+                }
+            })
+
+        })
+    }
+;
     fromLatLngToPoint = function(lat, lng, map) {
 
         var latLng = new google.maps.LatLng(lat, lng);
@@ -200,3 +216,4 @@
         var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
         return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
     };
+

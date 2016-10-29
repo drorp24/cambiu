@@ -1047,7 +1047,7 @@ body#cambiu {
           content: 'return'
         }
       }
-      .explore_icon {
+      .explore {
         &:after {
           content: "\f078";
           font-family: fontAwesome;
@@ -1070,13 +1070,21 @@ body#cambiu {
         }
       }
       .data {
-        margin-top: -5em; // It's actually .nav_icon's font-size * $nav_icon_width * -1
+        margin-top: -8em; // It's actually .nav_icon's font-size * $nav_icon_width * -1, plus the duration relativity
         [data-field=edited_quote] {
           font-size: 2.5em;
           margin-top: 0.7em;
         }
       }
-      .actions_line {
+      .mapMarker {
+        display: none;
+      }
+      [data-field=duration] {
+        position: relative;
+        bottom: 4em;
+        color: #fff;
+      }
+        .actions_line {
         width: 100%;
         margin-left: $padding * -1;
       }
@@ -1094,6 +1102,7 @@ body#cambiu {
         font-size: 1.5em;
         text-align: center;
         transition: font-size $card-transition-time + 0.3s;
+        margin: 10px;
       }
       [data-field=name] {
         color: $darken-brand-color;
@@ -1155,19 +1164,41 @@ body#cambiu {
     }
   }
 
-  .explore_icon {
+
+
+  .duration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    [data-field=duration] {
+      text-align: center;
+      @include threedots(80%);
+    }
+  }
+
+  .icon {
+  }
+
+  .mapMarker {
+    font-size: 1.5em;
+    color: #ddd;
+  }
+
+  .explore {
     &:after {
       content: "\f077";
       font-family: fontAwesome;
     }
-    width: $nav_icon_width;
-    border-radius: $nav_icon_width / 2;
-    line-height: $nav_icon_width;
     font-size: 1em;
     font-weight: 300;
     text-align: center;
     color: #000;
+    /*
+    width: $nav_icon_width;
+    border-radius: $nav_icon_width / 2;
+    line-height: $nav_icon_width;
     background-color: #ddd;
+    */
   }
 
   /*
@@ -3450,12 +3481,6 @@ body#cambiu {
           line-height: 1.9em;
           }
         }*/
-        .icon {
-          margin-top: -60px;
-          width: 15%;
-          font-size: 1.5em;
-          color: $help-text-color;
-        }
         .middle_wrapper {           // This is the only thing that works for up to one line.
             height: $search-input-height;  // Beyond: replace line-height with: display: table-cell.
             .middle {
