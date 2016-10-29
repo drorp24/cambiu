@@ -5,7 +5,7 @@
 
 // Variables
 $navbar_height: 60px;
-$navbar_background: rgba(0,0,0,0.5);
+$navbar_background: rgba(0,0,0,0.25);
 $nav_icon_width: 2.5em;
 $card-transition-time: 1s;
 $padding: 15px;
@@ -1022,9 +1022,7 @@ body#cambiu {
       }
     }
     .actions_line {
-      width: 50%;
-      margin-left: -1 * $padding;
-      transition: margin $card-transition-time + 0.3s;
+      bottom: 1px;
     }
     .action {
       &:before {
@@ -1044,6 +1042,9 @@ body#cambiu {
       .fullcard {
         display: block;
       }
+      .actions_line {
+        bottom: 20px;
+      }
       .action {
         &:before {
           content: 'return'
@@ -1060,6 +1061,7 @@ body#cambiu {
         height: 50vh;
       }
       .nav_icon {
+        display: block;
         position: relative;
         bottom: $nav_icon_width / 2;
         font-size: 2em;
@@ -1072,6 +1074,7 @@ body#cambiu {
         }
       }
       .data {
+        max-width: 100%;
         margin-top: -8em; // It's actually .nav_icon's font-size * $nav_icon_width * -1, plus the duration relativity
         [data-field=edited_quote] {
           font-size: 2.5em;
@@ -1087,15 +1090,12 @@ body#cambiu {
         font-size: 1.1em;
         color: #fff;
       }
-        .actions_line {
-        width: 100%;
-        margin-left: $padding * -1;
-      }
     }
     &:not(.selected) {
       transform: translate(0px, 0px) !important;
     }
     .data {
+      max-width: 50%; // important in flex, only in the non selected, row mode
       padding: $padding;
       height: 100%;
       color: #000;
@@ -1106,6 +1106,7 @@ body#cambiu {
         text-align: center;
         transition: font-size $card-transition-time + 0.3s;
         margin: 10px;
+        @include threedots(100%);
       }
       [data-field=name] {
         color: $darken-brand-color;
@@ -1139,6 +1140,7 @@ body#cambiu {
   }
 
   .nav_icon {
+    display: none;
     width: $nav_icon_width;
     border-radius: $nav_icon_width / 2;
     line-height: $nav_icon_width;
@@ -1155,7 +1157,8 @@ body#cambiu {
 
   .actions_line {
     position: absolute;
-    bottom: 20px;
+    bottom: 5px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
