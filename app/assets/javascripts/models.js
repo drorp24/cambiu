@@ -42,6 +42,11 @@ populateExchange = function(exchange, $scope) {
         var html        = '<img src=' + src + '>';
         $photo.html(html);
     }
+
+    if (!exchange.gain_percent) {
+        $scope.find('.comparison').css('visibility', 'hidden');
+        $scope.find('.comparison_text').css('visibility', 'hidden');
+    }
 };
 
 populatePlace = function(exchange, $scope) {

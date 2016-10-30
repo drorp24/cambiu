@@ -1025,9 +1025,9 @@ body#cambiu {
     .actions_line {
       bottom: 1px;
     }
-    .explore {
+    .more {
       &:before {
-        content: 'explore'
+        content: 'more'
       }
     }
     .fullcard {
@@ -1046,9 +1046,9 @@ body#cambiu {
       .actions_line {
         bottom: 20px;
       }
-      .explore {
+      .more {
         &:before {
-          content: 'return'
+          content: 'less'
         }
       }
       .chevron {
@@ -1079,6 +1079,7 @@ body#cambiu {
         margin-top: -8em; // It's actually .nav_icon's font-size * $nav_icon_width * -1, plus the duration relativity
         [data-field=edited_quote] {
           font-size: 2.5em;
+          font-weight: 700;
           margin-top: 0.7em;
         }
       }
@@ -1093,6 +1094,19 @@ body#cambiu {
       }
       .comparison {
         transform: scale(1.5,1.5);
+      }
+      .comparison_text {
+        font-size: 0.8em;
+      }
+      .ranking {
+        position: absolute;
+        top: $padding;
+        width: 100%;
+        margin-left: -1 * $padding;
+        .label {
+          background-color: transparent;
+          font-weight: 400 !important;
+        }
       }
     }
     &:not(.selected) {
@@ -1130,8 +1144,25 @@ body#cambiu {
         position: relative;
         bottom: 0.1em;
       }
+      .ranking {
+        text-transform: uppercase;
+        margin-bottom: 0.4em;
+        color: #888;
+        font-size: 1.2em;
+        .label {
+          display: block;
+          padding: 0.4em;
+          font-weight: 300;
+        }
+      }
     }
     font-size: 0.9em;
+    .ranking {
+      visibility: hidden;
+    }
+    &:first-child .ranking {
+      visibility: visible;
+    }
   }
 
   .rating-container .caption {
@@ -1181,7 +1212,7 @@ body#cambiu {
     }
     font-weight: 300;
     margin-top: -10px;
-    transform: scale(0.8,0.8);
+    transform: scale(0.7, 0.7);
     color: #888;
     [data-field=gain_percent] {
 //      border: 1px solid purple;

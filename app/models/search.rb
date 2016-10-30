@@ -83,9 +83,11 @@ class Search < ActiveRecord::Base
     transaction = buy.currency.iso_code != "GBP" ? 'sell' : 'buy'
     direction = pay.amount > 0 ? 'max' : 'min'
 
+=begin
     exchanges_offers = exchanges_offers.select{|exchange_offer| exchange_offer[:rates][transaction.to_sym] != nil}
 
     return [] if exchanges_offers.empty?
+=end
 
     nearest_exchange_offer = exchanges_offers.min_by{|exchange_offer| exchange_offer[:distance]}
     nearest_exchange_offer[:best_at] << 'nearest'

@@ -36,6 +36,7 @@
 
         var $card = $('.card.template').clone().removeClass('template').css('height', cardHeight);
         $card.appendTo($('#cards'));
+        $card.find('.ranking_index').html(index + 1);
 
         populateExchange(exchange, $card);
 
