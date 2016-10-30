@@ -14,7 +14,9 @@ initSwipers = function() {
         onSlidePrevEnd: slidePrev
     });
 
-    cardXoffset = String(($('.card').eq(0).position().left + $('#cards').position().left) * -1) + 'px';
+    var $card = $('.card').eq(0);
+    cardXoffset = String(($card.position().left + $('#cards').position().left) * -1) + 'px';
+    cardHeight = $card.height();
 };
 
 

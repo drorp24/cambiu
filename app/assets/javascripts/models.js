@@ -9,8 +9,17 @@ populateDuration = function(exchange, $scope) {
 
     console.log('exchange ' + exchange.id + ' - populateDuration');
 
-    $scope.find('[data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
-    $scope.find('[data-model=exchange][data-field=distance]').html(exchange.matrix.distance);
+    setTimeout(function(){
+        var $img = $scope.find('img');
+        var bottom = (cardHeight - $img.height()) / 2;
+        var left = $img.position().left;
+        var width = $img.width();
+        var $duration = $scope.find('.duration');
+        $duration.find('[data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
+        $duration.css({'bottom': bottom + 'px', 'left': left + 'px', width: width + 'px'});
+        console.log('imgHeight: '+ $img.height());
+    }, 500);
+
 
 };
 

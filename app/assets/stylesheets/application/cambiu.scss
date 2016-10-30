@@ -1085,11 +1085,11 @@ body#cambiu {
       .mapMarker {
         display: none;
       }
-      [data-field=duration] {
-        position: relative;
-        bottom: 3em;
+      .duration {
+        width: 100% !important;
+        bottom: 53vh !important;
+        left: initial !important;
         font-size: 1.1em;
-        color: #fff;
       }
       .comparison {
         transform: scale(1.5,1.5);
@@ -1222,10 +1222,13 @@ body#cambiu {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    color: #fff;
+    transition: left $card-transition-time + 0.3s;
+//    border: 1px solid red;
     [data-field=duration] {
       text-align: center;
       @include threedots(60%);
-      color: #888;
     }
   }
 
@@ -1234,7 +1237,6 @@ body#cambiu {
 
   .mapMarker {
     font-size: 1.4em;
-    color: #bbb;
     margin-right: 0.4em;
   }
 
