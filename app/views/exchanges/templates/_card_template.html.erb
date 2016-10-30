@@ -11,8 +11,10 @@
       <span data-model="exchange" data-field="duration"></span>
     </div>
 
-    <div class="nav_icon">
+    <div class="nav_icon_container">
+      <div class="nav_icon">
         <i class="fa fa-location-arrow"></i>
+      </div>
     </div>
 
     <div class="data item">
@@ -20,6 +22,7 @@
       <div class="ranking">
         <span class="label label-default">Best</span>
       </div>
+
        <div class="row fullcard">
         <div class="col-xs-7">
           <input data-model="exchange" data-field="rating" class="fullcard ratings rating-loading pull-left">
@@ -31,8 +34,24 @@
           </div>
         </div>
       </div>
-      <div data-model="exchange" data-field="name" class="fullcard"></div>
-      <div data-model="exchange" data-field="address" class="fullcard"></div>
+
+      <div data-model="exchange" data-field="name" class="fullcard text-center"></div>
+
+      <div data-model="exchange" data-field="address" class="fullcard" data-toggle="tooltip"></div>
+
+
+      <div class="row fullcard">
+        <div class="col-xs-4">
+          <div class="open"><a>Open</a></div>
+        </div>
+        <div class="col-xs-8"></div>
+        <div class="col-xs-4 pull-right text-right">
+          <div class="phone_icon">
+            <a><i class="fa fa-phone"></i></a>
+          </div>
+        </div>
+      </div>
+
       <div data-model="exchange" data-field="edited_quote"></div>
       <div class="comparison">
         <div class="comparison_item">

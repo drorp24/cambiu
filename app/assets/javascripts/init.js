@@ -457,8 +457,7 @@ $(document).ready(function() {
         alertError(error);
     });
 
-    bodyWidth       = $('body').width();
+    bodyWidth       = $('body').width().toFixed();
     bodyHeight      = window.innerHeight;
-    halfBodyHeight  = bodyHeight / 2;
-
+    halfBodyHeight  = (bodyHeight / 2).toFixed();
 });

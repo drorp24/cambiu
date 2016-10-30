@@ -75,11 +75,12 @@ fetchPlace = function(exchange) {
 
                          exchange.place.distance =       distance(new google.maps.LatLng(exchange.latitude, exchange.longitude),place.geometry.location);
                          if (exchange.place.distance < 150) {
-                             exchange.place.name =       place.name;
-                             exchange.place.address =    place.formatted_address;
-                             exchange.place.photo =      place.photos && place.photos.length > 0 && place.photos[0];
-                             exchange.place.reviews =    place.reviews;
-                             exchange.place.rating =     place.rating;
+                             exchange.place.name =          place.name;
+                             exchange.place.address =       place.formatted_address;
+                             exchange.place.photo =         place.photos && place.photos.length > 0 && place.photos[0];
+                             exchange.place.reviews =       place.reviews;
+                             exchange.place.rating =        place.rating;
+                             exchange.place.opening_hours = place.opening_hours;
                              if (!exchange.place.id)     updateExchange(exchange.id, {'exchange[place_id]': place.place_id});
                              resolve(exchange);
                              console.log('exchange ' + exchange.id + ' - is resolved!!');

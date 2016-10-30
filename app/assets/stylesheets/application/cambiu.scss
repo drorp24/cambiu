@@ -933,11 +933,7 @@ body#cambiu {
     }
   }
 
-  .rating-container {
-    margin-top: -0.5em;
-  }
-
-   .reviews_list {
+    .reviews_list {
     color: #000;
   }
 
@@ -1061,10 +1057,15 @@ body#cambiu {
         flex-basis: 100%;
         height: 50vh;
       }
+      .nav_icon_container {
+        position: absolute;
+        top: 50vh;
+      }
       .nav_icon {
         display: block;
-        position: relative;
-        bottom: $nav_icon_width / 2;
+        position: absolute;
+        bottom: $nav_icon_width / -2;
+        left: $nav_icon_width / -2;
         font-size: 2em;
         box-shadow: 1px 2px 15px rgba(0,0,0,0.5);
       }
@@ -1076,11 +1077,10 @@ body#cambiu {
       }
       .data {
         max-width: 100%;
-        margin-top: -8em; // It's actually .nav_icon's font-size * $nav_icon_width * -1, plus the duration relativity
         [data-field=edited_quote] {
           font-size: 2.5em;
           font-weight: 700;
-          margin-top: 0.7em;
+          margin-bottom: 0.5em;
         }
       }
       .mapMarker {
@@ -1088,7 +1088,7 @@ body#cambiu {
       }
       .duration {
         width: 100% !important;
-        bottom: 53vh !important;
+        bottom: 56vh !important;
         left: initial !important;
         font-size: 1.1em;
       }
@@ -1129,18 +1129,25 @@ body#cambiu {
         color: $darken-brand-color;
         font-weight: 400;
         font-size: 1.5em;
-        @include threedots(80%);
+        @include threedots(100%);
       }
       [data-field=address] {
-        @include threedots(80%);
         font-size: 1em;
+      }
+      .open {
+        font-weight: 400;
+      }
+      .phone_icon {
+        margin-right: 0;
+        i {
+          font-size: 1.5em;
+        }
       }
       [data-field=rating] {
         font-size: 0.8em;
       }
       .reviews {
-        margin-right: $padding;
-        font-size: 1.3em;
+        font-size: 1.2em;
         position: relative;
         bottom: 0.1em;
       }
@@ -1163,6 +1170,18 @@ body#cambiu {
     &:first-child .ranking {
       visibility: visible;
     }
+    .text-right > div {
+      margin-right: $padding;
+    }
+    .row.fullcard > div {
+      line-height: 2em !important;
+    }
+  }
+
+
+
+  .rating > span {
+    display: flex;
   }
 
   .rating-container .caption {
@@ -1717,15 +1736,6 @@ body#cambiu {
     margin-top: 10vh;
   }
 
-  .open_params {
-    &.open:after {
-      content: 'Find offers';
-    }
-    &:not(.open):after {
-      content: 'Close';
-    }
-
-  }
 
 
   // New Homepage //
@@ -2720,12 +2730,6 @@ body#cambiu {
           color: $darken-brand-color;
           text-transform: uppercase;
           text-decoration: none;
-          &.open:after {
-            content: 'New Search';
-           }
-          &:not(.open):after {
-            content: 'Close';
-          }
         }
         .tag_row {
           display: none;

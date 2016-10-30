@@ -47,6 +47,13 @@ populateExchange = function(exchange, $scope) {
         $scope.find('.comparison').css('visibility', 'hidden');
         $scope.find('.comparison_text').css('visibility', 'hidden');
     }
+
+    var $phone_link = $scope.find('.phone_icon a');
+    if (exchange.phone) {
+        $phone_link.attr('href', 'tel:' + exchange.phone)
+    } else {
+        $phone_link.css('visibility', 'hidden')
+    }
 };
 
 populatePlace = function(exchange, $scope) {
