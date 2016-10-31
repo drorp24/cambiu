@@ -972,7 +972,7 @@ body#cambiu {
       text-overflow: ellipsis;
     }
     [data-field=address] {
-      color: #000;
+      color: #888;
       margin-top: -0.5em;
       font-size: 1em;
       font-weight: 300;
@@ -1047,9 +1047,9 @@ body#cambiu {
           content: 'less'
         }
       }
-      .chevron {
+      .lessmore {
         &:after {
-          content: "\f078";
+          content: "\f077";
           font-family: fontAwesome;
         }
       }
@@ -1290,11 +1290,11 @@ body#cambiu {
     margin-right: 0.4em;
   }
 
-  .chevron {
+  .lessmore {
     position: absolute;
     right: $padding;
     &:after {
-      content: "\f077";
+      content: "\f078";
       font-family: fontAwesome;
     }
     font-size: 1em;
