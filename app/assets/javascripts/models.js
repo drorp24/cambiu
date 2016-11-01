@@ -143,11 +143,15 @@ value_of = function(key) {
 
 // Populate search params in search form, search bar and ss for persistency (page reloads)
 set = function(field, value) {
+
 //    console.log('set ' + field + ' to ' + value);
+
     $('.params [data-model=search][data-field=' + field + ']').html(value);
     value = (field.indexOf('amount') > -1) ? String(value).replace(/[^0-9\.]+/g,"") : value;
-    $('form [data-model=search][data-field=' + field + ']').val(value);
+
+    $('form [data-model=search][data-field=' + field + ']').val(value).trigger('change'); // any .val(x) must be followed by .trigger('change') or the '.is-empty' isnt updated
     sessionStorage.setItem(field, value);
+
 };
 
 

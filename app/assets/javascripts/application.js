@@ -5,8 +5,7 @@
 //
 
 //= require jquery
-//= require jquery_ujs
-//= require jquery.validate
+//= require bootstrap-sprockets
 //= require autonumeric
 //= require fetch
 
@@ -21,7 +20,6 @@
 //= require models
 //= require swiper
 //= require exchanges
-//= require validations
 //= require pages
 //= require upload
 
@@ -34,3 +32,6 @@
 //= require jquery-qrcode-0.14.0
 //= require sweetalert.min
 //= require swiper.jquery.min
+//= require material.min
+//= require ripples.min
+//= require nouislider.min

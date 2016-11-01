@@ -46,8 +46,6 @@ $lightgreybg: #f6f6f6;
 $greybg: #3b3b3b;
 
 $border-radius: 4px;
-$form-control-line-height: 35px;
-$form-control-height: 45px;
 $button-height: 50px;
 $form-text-transform: uppercase;
 $border-bottom: 3px solid #fff;
@@ -57,14 +55,6 @@ $parameters-bg-color: rgba(0,0,0,0.7);
 $exchange_summary_banner_relative_top: -10px;
 $exchange_summary_bg_img_height: 30vh;
 $exchange_summary_bg_img_height_mobile: 75px;
-
-// OLD SEARCH PAGE
-$search-input-height: 44px;
-$input-height-mobile: 40px;
-$help-text-color: #888;
-$inverse-color: #ffffff;
-// OLD SEARCH PAGE END
-
 
 // Mixins
 
@@ -418,96 +408,6 @@ $inverse-color: #ffffff;
 }
 
 
-@mixin search-form-def {
-  text-align: left;
-/*  text-indent: 5% !important; */
-  font-size: 1em;
-  text-transform: uppercase;
-  font-weight: 700;
-  border-radius: $border-radius;
-  line-height: $form-control-line-height;
-  height: $form-control-height;
-}
-
-@mixin search-placeholder {
-  &::-webkit-input-placeholder {
-    @include search-form-def;
-  }
-  &:-moz-placeholder {
-    @include search-form-def;
-  }
-  &::-moz-placeholder {
-    @include search-form-def;
- }
-  &:-ms-input-placeholder {
-    @include search-form-def;
-  }
-}
-
-@mixin placeholder-center-def {
-  text-align: center;
-}
-
-@mixin placeholder-center {
-  &::-webkit-input-placeholder {
-    @include placeholder-center-def;
-  }
-  &:-moz-placeholder {
-    @include placeholder-center-def;
-  }
-  &::-moz-placeholder {
-    @include placeholder-center-def;
- }
-  &:-ms-input-placeholder {
-    @include placeholder-center-def;
-  }
-}
-
-@mixin placeholder-general-def {
-  text-align: left;
-  text-indent: 10px;
-  color: #555;
-  font-weight: 300;
-  text-transform: initial;
-  @media (max-width: $screen-xs-max) {
-    text-indent: 5px;
-  }
-}
-
-@mixin placeholder-general {
-  &::-webkit-input-placeholder {
-    @include placeholder-general-def;
-  }
-  &:-moz-placeholder {
-    @include placeholder-general-def;
-  }
-  &::-moz-placeholder {
-    @include placeholder-general-def;
-  }
-  &:-ms-input-placeholder {
-    @include placeholder-general-def;
-  }
-}
-
-@mixin placeholder-icon-def($code) {
-  font-family: fontAwesome;
-  content: $code + '   ';
-}
-
-@mixin placeholder-icon($code) {
-  &::-webkit-input-placeholder::before {
-    @include placeholder-icon-def($code);
-  }
-  &:-moz-placeholder::before {
-    @include placeholder-icon-def($code);
-  }
-  &::-moz-placeholder::before {
-    @include placeholder-icon-def($code);
- }
-  &:-ms-input-placeholder::before {
-    @include placeholder-icon-def($code);
-  }
-}
 
 @mixin background-img($img) {
     background-image: linear-gradient(
@@ -552,7 +452,7 @@ body#cambiu {
       display: block;
       &[data-pane=map] {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
       }
     }
@@ -562,15 +462,15 @@ body#cambiu {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
       }
     }
-    &:not([data-pane=map]) {
-      padding-top: $navbar_height;
+    .content {
+      padding: 30px;
     }
   }
 
 
   .action {
     text-transform: uppercase;
-    color: $brand-color;
+    color: $brand-color !important;
     margin-left: 1em;
   }
 
@@ -899,41 +799,64 @@ body#cambiu {
 
 
 
-
-  [data-order=desc] span::before {
-      font-family: fontAwesome;
-      content: "\f161" + '    ';
-  }
-
-  [data-order=asc] span::before {
-    font-family: fontAwesome;
-    content: "\f160" + '    ';
-  }
-
-  .offer {
-    background-color: #333;
-    font-size: 1.4em;
-    /*
-    padding-left: $pane-padding;
-    padding-right: $pane-padding;
-    */
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    color: #fff;
-    font-weight:400;
-    font-size: 1.25em;
-    .amounts {
-      font-size: 1.4em;
-      margin-bottom: 5px;
+  // ignore '.has-error' on amounts: autonumeric requires type 'text' but pattern '\d*' (required for numeric keypad) generates this error
+  /*
+  form .pay_amount.form-group.has-error {
+    &.is-focused .form-control {
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#009688), to(#009688)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
+      background-image: -webkit-linear-gradient(#009688, #009688), -webkit-linear-gradient(#D2D2D2, #D2D2D2);
+      background-image: -o-linear-gradient(#009688, #009688), -o-linear-gradient(#D2D2D2, #D2D2D2);
+      background-image: linear-gradient(#009688, #009688), linear-gradient(#D2D2D2, #D2D2D2);
     }
-    .offer_motivation {
-      font-size: 1.2em;
-      color: #aaa;
-      margin-bottom: 5px;
+    .form-control {
+      border: none;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      &:focus {
+        border: none;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+      }
+    }
+    label.control-label {
+      color: #009688;
     }
   }
 
-    .reviews_list {
+  */
+
+
+  form .hidden {
+    display: none;
+  }
+
+  .form-group.label-floating.is-focused label.control-label, .form-group.label-floating:not(.is-empty) label.control-label, .form-group.label-static label.control-label {
+    left: $padding;
+  }
+
+  .form-group.select {
+    display: flex;
+  }
+
+  .form-control {
+    color: #000;
+    font-wiae: 1.2em;
+    font-weight: 400;
+  }
+
+  .help-block {
+    &.required:after {
+      content: 'specify either amount';
+    }
+  }
+
+
+
+
+
+
+
+  .reviews_list {
     color: #000;
   }
 
@@ -956,41 +879,6 @@ body#cambiu {
 
   .review_photo img {
     width: 100%;
-  }
-
-
-  .exchange_info {
-    [data-field=name] {
-      color: $darken-brand-color;
-      font-weight:500;
-      font-size: 1.5em;
-      margin-top: 0.5em;
-      line-height: 1.2em;
-      margin-bottom: 0.3em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    [data-field=address] {
-      color: #888;
-      margin-top: -0.5em;
-      font-size: 1em;
-      font-weight: 300;
-      margin-bottom: 0.5em;
-    }
-  }
-
-  .exchange_photo, .exchange_qrcode {
-    margin-left: $pane-padding * -1;
-    margin-right: $pane-padding * -1;
-  }
-
-  .exchange_qrcode {
-    text-align: center;
-    padding: 10px;
-    canvas {
-      margin-bottom: -5px;
-    }
   }
 
 
@@ -1018,9 +906,6 @@ body#cambiu {
         transition: width $card-transition-time + 0.3s;
       }
     }
-    .actions_line {
-      bottom: 1px;
-    }
     .more {
       &:before {
         content: 'more'
@@ -1038,9 +923,6 @@ body#cambiu {
       text-align: left;
       .fullcard {
         display: block;
-      }
-      .actions_line {
-        bottom: 20px;
       }
       .more {
         &:before {
@@ -1111,6 +993,9 @@ body#cambiu {
     }
     &:not(.selected) {
       transform: translate(0px, 0px) !important;
+      .actions_line {
+        bottom: 1px;
+      }
     }
     .data {
       max-width: 50%; // important in flex, only in the non selected, row mode
@@ -1210,7 +1095,7 @@ body#cambiu {
 
   .actions_line {
     position: absolute;
-    bottom: 5px;
+    bottom: 20px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -1218,6 +1103,10 @@ body#cambiu {
     div {
       display: inline-block;
     }
+  }
+
+  form .actions_line {
+    margin-left: -1 * $padding;
   }
 
 
@@ -1370,9 +1259,6 @@ body#cambiu {
     bottom: 0.2em;
   }
   
-  .valid_by {
-    font-size: 0.7em;
-  }
   .expiry {
     position: fixed;
     right: 15px;
@@ -1435,23 +1321,6 @@ body#cambiu {
     }
   }
 
-  /*
-  input#photo {
-    font-family: FontAwesome;
-  }
-  */
-
-  /*
-  input#photo::before {
-    content: 'hi dror';
-  }
-  */
-
-  /*
-  input#photo::-webkit-file-upload-button {
-    visibility: hidden;
-  }
-  */
 
   #rate_guarantee {
     text-align: center;
@@ -1481,42 +1350,9 @@ body#cambiu {
     }
   }
 
-  select {
-    -webkit-appearance: none;
-  }
 
-  &.desktop.exchanges {
-    #search_form input.form-control[data-field=location] {
-      -webkit-transition: all .5s ease;
-      -moz-transition: all .5s ease;
-      transition: all .5s ease;
-      &:focus {
-        width: 300px;
-      }
-    }
-    .form-control {
-      font-size: 0.85em;
-    }
-  }
 
   // New Homepage //
-
-
- #search_form {
-   .form-control {
-     width: 100%;
-     &:not([type=submit]) {
-       color: #000;
-     }
-   }
-   @media (min-width: $screen-sm-min) {
-     .reach-out-left {
-       select {
-         border-left: none;
-       }
-     }
-   }
- }
 
   .help_text {
     text-align: center;
@@ -1663,13 +1499,6 @@ body#cambiu {
 //      box-shadow: -8px 8px 15px rgba(0, 0, 0, 0.8);
       border-radius: 0;
     }
-    select {
-      -webkit-appearance: none;
-      -webkit-border-radius: 0px;
-    }
-    #location_search {
-      width: 100%;
-    }
     p {
  //     position: absolute;
  //     bottom: 19vmax;
@@ -1685,11 +1514,6 @@ body#cambiu {
       background-color: #fff;
     }
 
-    .form-control {
-      font-size: 1.5vw;
-      line-height: 1.5vw;
-      height: 3vw;
-    }
   }
 
   .homesearch_button {
@@ -2088,9 +1912,6 @@ body#cambiu {
   .well {
     margin-bottom: 0;
   }
-  .form-control {
-    padding: 6px 6px;
-  }
 
   .moneybox {
     margin-top: -30px;
@@ -2112,58 +1933,6 @@ body#cambiu {
   */
   .list-group-item.delivery {
 //    background-color: darken($brand-color, 10%);
-  }
-  .form-control {border-radius: $border-radius;}
-  .validation_errors {
-    .email_msg {
-      color: darken($brand-color, 20%);
-      font-size: 0.9em;
-    }
- //   visibility: hidden;
-      height: 4vh;
-    margin-bottom: 1vh;
-    @media (min-width: $screen-sm-min) {
-      font-size: 2vh;
-    }
-    @media (max-width: $screen-xs-max) {
-      font-size: 2.3vh;
-    }
-
-    @media (min-width: $screen-sm-min) {
-     }
-    @media (max-width: $screen-xs-max) {
-      text-align: center;
-    }
-    padding-left: 15px;
-  }
-  .error_class {
-    color: /*$brand-color*/#555;
-    font-weight: 300;
-    &::before {
-      font-family: fontAwesome;
-      content:"\f071";
-      margin-right: 10px;
-    }
-  }
-  .info_class {
-    color: /*$brand-color*/#555;
-    font-weight: 300;
-    &::before {
-      font-family: fontAwesome;
-      content:"\f05a";
-      margin-right: 10px;
-    }
-  }
-  .valid_class {
-    color: #555;
-    &:not(#distance_slider)::before {
-      font-family: fontAwesome;
-      content:"\f05d" + '    ';
-      margin-right: 10px;
-    }
-  }
-  .empty_class {
-
   }
 
   .parameters {
@@ -2215,68 +1984,6 @@ body#cambiu {
     }
   }
 
-  #exchange_search {
-    @media (min-width: $screen-sm-min) {
-      padding-left: 15px;
-      padding-top: 10px;
-      padding-bottom: 0px;
-    }
-    margin-bottom: 0;
-    border: none;
-    box-shadow: none;
-  }
-
-  .exchange_search_form_title, .general_search_form_title {
-    color: #333;
-    font-weight: 400;
-    text-transform: uppercase;
-   }
-  .exchange_search_form_title {
-    font-size: 1.5vh;
-  }
-  .general_search_form_title {
-    font-size: 1vh;
-  }
-  .exchange_search_form_error {
-    height: 4vh;
-    font-size: 1.7vh;
-    @media (max-width: $screen-xs-max) {
-//      margin-top: 7vh;
-    }
-    @media (min-width: $screen-sm-min) {
-//      margin-top: 2vh;
-    }
-  }
-  .exchange_search_form_title {
-    margin-top: -10px;
-  }
-  .general_search_form_title {
-    margin-bottom: -20px;
-  }
-
-  .exchange_search_form_gain {
-    color: #333;
-    @media (max-width: $screen-xs-max) {
-      font-size: 3.5vh;
-      position: relative;
-      top: 1em;
-    }
-    @media (min-width: $screen-sm-min) {
-      font-size: 2.5vh;
-    }
-
-    text-transform: uppercase;
-    line-height: 3.5vh;
-    font-weight: 500;
-     text-align: center;
-    @media (max-width: $screen-xs-max) {
-      margin-top: 10px;
-      margin-bottom: -15px;
-    }
-
-  }
-
-
   .delivery_method button {
     width: 100%;
   }
@@ -2286,24 +1993,17 @@ body#cambiu {
     &.almost {
       padding-left: 0.5em;
     }
-    input, select, button {
-//      border-left: none;
-    }
   }
   .reach-out-right {
       padding-right: 0;
     &.almost {
       padding-right: 0.5em;
     }
-    input, select {
-//      border-right: none;
-    }
   }
 
 
   .navbar {
-    position: absolute;
-    top: 0;
+    position: static;
     z-index: 2;
     padding: 5px;
     border: none;
@@ -2314,6 +2014,11 @@ body#cambiu {
     height: $navbar_height;
     color: #fff;
     box-shadow: 1px 1px 15px rgba(0,0,0,0.5);
+    margin-bottom: initial;
+  }
+
+  .navbar_link {
+    display: flex;
   }
    .section_anchor {
     display: block;
@@ -2545,135 +2250,19 @@ body#cambiu {
 
   .parameters #exchange_params_wrapper {
     margin-top: $navbar-height;
-    input:not(#getit_button), select, button:not(#search_button) {
-      /*
-      -webkit-appearance: none;
-      -webkit-border-radius: 0px;
-      */
-      font-weight: 400;
-      text-align: center;
-      @media (max-width: $screen-xs-max) {
-        height: 8vh;
-        font-size: 2.5vh;
-      }
-      @media (min-width: $screen-sm-min) {
-        height: 42px;
-        font-size: 1em;
-      }
-    }
   }
   
   &.exchanges {
-    input:not(#getit_button), select, button:not(.sort), #search {
-      -webkit-appearance: none;
-      -webkit-border-radius: 0px;
-
-      //      font-weight: 700;
-      text-align: center;
-      @media (max-width: $screen-xs-max) {
-        height: 8vh;
-        font-size: 2.5vh;
-      }
-      @media (min-width: $screen-sm-min) {
-        /*
-        height: 6.5vh;
-        font-size: 1.5vh;
-        */
-      }
-   }
-    #order_email {
-//      @include placeholder-general;
-      @include placeholder-icon("\f0e0");
-      font-weight: 400;
-      height: 6.5vh;
-      font-size: 1.5vh;
-    }
-    #email_submit.email_submit {
-      font-size: 3vh;
-      font-weight: 400;
-      text-transform: uppercase;
-      @include placeholder-icon("\f0e0");
-      &:hover {
-        background-color: darken($brand-color, 15%);
-      }
-    }
-    #order_email, #order_phone {
-      @media (max-width: $screen-xs-max) {
-        font-size: 2.3vh;
-      }
-      @media (min-width: $screen-sm-min) {
-        font-size: 2.2vh;
-      }
-    }
 
     #order_phone {
       margin-top: 20px;
     }
 
-    #location_search {
-        @include placeholder-icon("\f041");
-      }
-    #search_button {
-      background-color: $brand-color;
-      color: #fff;
-      font-weight: 900;
-      @media (max-width: $screen-xs-max) {
-        font-size: 1.5em !important;
-        height: 50px;
-        margin-top: 20px;
-      }
-      @media (min-width: $screen-sm-min) {
-        height: 40px;
-        margin-top: 1px;
-        font-size: 1em !important;
-      }
-    }
     .text_above {
       text-transform: uppercase;
       font-size: 0.75em;
       color: #555;
     }
-    #search_div {
-      margin-bottom: 1vh;
-      margin-top: 1vh;
-//      border: 1px solid #fff;
-//      border-radius: 4px;
-//      box-shadow: 0px 1px 1px #ccc;
-      @media (max-width: $screen-xs-max) {
-        height: 8vh;
-      }
-      @media (min-width: $screen-sm-min) {
-        height: 26px;
-      }
-      a {
-        padding-top: 0;
-        padding-bottom: 0;
-        @media (max-width: $screen-xs-max) {
-          line-height: 8vh;
-        }
-        @media (min-width: $screen-sm-min) {
-          line-height: 24px;
-        }
-      }
-    }
-      #search {
-        border: none;
-        box-shadow: none;
-        text-transform: uppercase;
-        text-align: center;
-        &:hover {
-          cursor: pointer;
-        }
-        @media (max-width: $screen-xs-max) {
-          background-color: $darken-brand-color;
-          color: #fff;
-          line-height: 6vh;
-         }
-        @media (min-width: $screen-sm-min) {
-          background-color: transparent;
-          color: $darken-brand-color;
-        }
-       }
       #exchanges {
         z-index: 1;
         padding-left: 0;
@@ -2702,26 +2291,12 @@ body#cambiu {
              border: none;
            }
           text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
-          &:hover {
-            #search {
-              text-decoration: underline;
-            }
-          }
           @media (min-width: $screen-sm-min) {
             display: block;
           }
          }
         .open_params_wrapper {
           display: none;
-        }
-        #search_icon {
-          color: #fff;
-          i {
-            font-size: 1.5em;
-            line-height: 2em;
-            position: absolute;
-            left: 15px;
-           }
         }
         #user_location_icon {
           margin-right: 1vw;
@@ -2890,14 +2465,7 @@ body#cambiu {
       .badge {
         background-color: $brand-color;
       }
-    #search_form {
-      .form-control:not(#search) {
-        color: #000;
-      }
-      input, select {
-        font-weight: 400;
-      }
-    }
+
     #exchange_params_wrapper {
       box-shadow: 0 0 5px #888;
       @media (max-width: $screen-xs-max) {
@@ -2918,29 +2486,6 @@ body#cambiu {
       text-transform: uppercase;
       border: none;
 
-      #search_form {
-        .slider_text {
-          position: relative;
-          bottom: 15px;
-          &:first-child {
-            margin-right: 4px;
-          }
-        }
-         #distance_slider, #distance_output {
-          display: inline;
-        }
-        #distance_slider {
-          width: 65%;
-        }
-        #distance_unit {
-          text-transform: initial;
-        }
-         .bootstrap-switch .bootstrap-switch-container {
-          .bootstrap-switch-handle-on, .bootstrap-handle-off, .bbostrap-switch-label {
-            font-size: 0.9em;
-          }
-        }
-      }
     }
     #exchanges_search_banner {
       font-size: 0.9em;
@@ -3300,151 +2845,7 @@ body#cambiu {
         outline: none;
       }
 
-      .order {
-        margin-top: $exchange_summary_banner_relative_top + 25px;
-        .buy_amount {
-          @media (max-width: $screen-xs-max) {
-            font-size: 0.8em;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 1em;
-          }
-        }
-        .buy {
-          @media (max-width: $screen-xs-max) {
-            font-size: 0.9em;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 1.1em;
-          }
-        }
-        .you_chose {
-          font-weight: 300;
-        }
-        .sum {
-          text-align: right;
-          @media (max-width: $screen-xs-max) {
-            font-weight: 900;
-          }
-        }
-        .pay {
-          color: #333;
-          font-weight: 500;
-          @media (max-width: $screen-xs-max) {
-            font-size: 1em;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 1.2em;
-          }
-        }
-        .buy_amount {
-          @media (max-width: $screen-xs-max) {
-            font-size: 1em;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 0.9em;
-          }
-        }
-        .buy_currency {
-          @media (max-width: $screen-xs-max) {
-            font-size: 1em;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 0.9em;
-          }
-        }
-        .pay_amount {
-          @media (max-width: $screen-xs-max) {
-            font-size: 1em;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 0.9em;
-          }
-        }
-        .pay_currency {
-          @media (max-width: $screen-xs-max) {
-            font-size: 1em;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 0.9em;
-          }
-        }
-         .gain_currency {
-          @media (max-width: $screen-xs-max) {
-            font-size: 1em;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 0.9em;
-          }
-        }
-      }
-      .email_form {
-        box-shadow: none;
-        padding: 3%;
-        padding-top: 0;
-        border: none;
-        form {
-          padding-left: 5%;
-          padding-right: 1.5%;
-//          padding-top: 25vh;
-          /*
-          img, p, select, input:not([data-email-part]) {
-            display: none;
-          }
-          */
- //         @media (min-width: $screen-sm-min) {
-   //       }
-          @media (max-width: $screen-xs-max) {
-            input {
-              width: 102%;
-              margin-left: -3%;
-              margin-bottom: 10px;
-            }
-          }
-          #order_email {
-            @include placeholder-general;
-            @include placeholder-icon("\f0e0");
-            @media (max-width: $screen-xs-max) {
-//               margin-top: 30px;
-              text-align: center;
-            }
-          }
-          #order_phone {
-            @include placeholder-general;
-            @include placeholder-icon("\f095");
-             @media (max-width: $screen-xs-max) {
-               margin-top: 30px;
-              text-align: center;
-            }
-          }
-          .email_submit {
-            @media (min-width: $screen-sm-min) {
-              height: 7vh;
-              font-size: 3vh;
-            }
-            @media (max-width: $screen-xs-max) {
-              height: 10vh;
-              font-size: 3.5vh;
-            }
-
-            margin-top: -5px;
-            @media (min-width: $screen-sm-min) {
-            }
-            @media (max-width: $screen-xs-max) {
-              margin-top: 20px;
-            }
-            color: #fff;
-            border-radius: 0;
-          }
-        }
-        .no_thanks {
-          margin-top: 7px;
-          font-weight: 300;
-          @media (min-width: $screen-sm-min) {
-          }
-        }
-      }
-    }
+     }
     #exchange_voucher {
       .qr_code {
         height: 45vh;
@@ -3501,20 +2902,6 @@ body#cambiu {
       
  // OLD SEARCH PAGE
 
-    .bootstrap-switch {
-      border-radius: $border-radius;
-        .bootstrap-switch-label, .bootstrap-switch-handle-off, .bootstrap-switch-handle-on {
-           padding-top: 0;
-          padding-bottom: 0;
-        }     
-      .bootstrap-switch-container {
-        height: $search-input-height;
-      }
-      .bootstrap-switch-handle-on, .bootstrap-switch-handle-off, .bootstrap-switch-label {
-        border-radius: $border-radius;
-        line-height: $search-input-height;
-      }
-    }
       #pay_currency_display {
         display: none;
       }
@@ -3531,83 +2918,6 @@ body#cambiu {
           font-weight: 400;
           text-transform: capitalize;
         }
-      }
-      form {
-        padding-top: 5px;
-        input, select, button, #location, .bootstrap-switch {
-          width: 100%;
-          text-align: center;
-          font-weight: 700;
-          &.part {
-            width: 50%;
-            font-size: 21px;
-          }
-        }
-        #location_search_icon {
-          position: absolute;
-        }
-        .hint_on_input {
-          position: absolute;
-        }/*
-        .bootstrap-switch.bootstrap-switch-large {          
-          .bootstrap-switch-handle-on, .bootstrap-switch-handle-off {
-          font-size: 1em;
-          line-height: 1.9em;
-          }
-        }*/
-        .middle_wrapper {           // This is the only thing that works for up to one line.
-            height: $search-input-height;  // Beyond: replace line-height with: display: table-cell.
-            .middle {
-              height: $search-input-height;
-              vertical-align: middle;
-              text-align: center;
-              line-height: $search-input-height;
-            }
-        }
-        #pay_amount_help {
-          position: absolute;
-          height: $search-input-height;
-          width: 20%;
-          #pay_amount_text {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
-            color: #999999;
-            height: $search-input-height;
-          }
-        }
-        #pay_amount_icon {
-          position: absolute;
-          top: 0;
-          right: 15px;
-          height: $search-input-height;
-          width: 20%;
-          #pay_amount_img {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
-            color: #999999;
-            height: $search-input-height;
-            width: 10%;
-            i {
-              text-align: center;
-            }
-          }
-        }
-        #location {
-          font-size: 1em;
-        }
-        #location_link {
-          margin-left: 10px;
-          text-decoration: underline;
-          color: $inverse-color;
-          &:hover {
-            color: $brand-color;
-          }
-        }
-      }
-      form#new_order {
-        padding-top: 0;
       }
 // OLD SEARCH PAGE
 
@@ -3642,10 +2952,7 @@ body#cambiu {
       .quote {
         font-size: 0.9em;
       }
- /*     input {
-        width: 100%;
-      }
-*/    }
+    }
   
   }
  

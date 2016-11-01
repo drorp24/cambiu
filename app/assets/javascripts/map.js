@@ -196,9 +196,13 @@
                 if (status !== 'OK') {
                     reject('google.maps.DistanceMatrixService error: ' + status);
                 } else {
-                    exchange.matrix.duration = response.rows[0].elements[0].duration.text;
-                    exchange.matrix.distance = response.rows[0].elements[0].distance.text;
-                    resolve(exchange);
+                    if (response && response.rows[0] && response.rows[0].elements[0] && response.rows[0].elements[0].duration) {
+                        exchange.matrix.duration = response.rows[0].elements[0].duration.text;
+                        exchange.matrix.distance = response.rows[0].elements[0].distance.text;
+                        resolve(exchange);
+                    } else {
+                        reject('google.maps.DistanceMatrixService response includes no duration/distance')
+                    }
                 }
             })
 

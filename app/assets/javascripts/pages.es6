@@ -70,47 +70,20 @@ $(document).ready(function() {
         }
     };
 
-    link = function (el) {
+     $('body').on('click tap', '[data-href-pane]', (function (e) {
 
-        var external    = el.data('exchange-delivery_tracking');    if (external && external != 'null') {window.location = external; return}
-        var pane        = el.data('href-pane');                     if (pane == 'back')                 {window.history.back();return}
-        var page        = el.data('href-page');
-        var id          = el.data('href-id');
-        var hash        = el.data('href-hash');
+           // EXTREMELY IMPORTANT! Without it, every pushState will add another push with '#' and popState will be invoked. Pulling hair.
+         e.preventDefault();
+         e.stopPropagation();
 
-        setPage({page1: page, id1: id, pane1: pane, hash: hash});
-    };
+         var el = $(this);
+         var external    = el.data('exchange-delivery_tracking');    if (external && external != 'null') {window.location = external; return}
+         var pane        = el.data('href-pane');                     if (pane == 'back')                 {window.history.back();return}
+         var page        = el.data('href-page');
+         var id          = el.data('href-id');
+         var hash        = el.data('href-hash');
 
-    $('body').on('click tap', '[data-href-pane]', (function (e) {
-        // if clicked element is part of a form, dont move page unless form is valid
-
-        // EXTREMELY IMPORTANT! Without it, every pushState will add another push with '#' and popState will be invoked. Pulling hair.
-        e.preventDefault();
-        // Avoids getting into exchange page when 'order' is clicked even if redirection takes place, probably due to validation
-        e.stopPropagation();
-
-        var $this = $(this);
-        var invoked_form = $this.data('form') ? $($this.data('form')) : null;   // only case: getstarted_button click invokes #search_form form
-        var form = invoked_form ? invoked_form : $this.closest('form');
-
-        if (form.length > 0) {
-            if (form.data('remote-validation')) {
-                // jquery.validate remote doesn't wait for ajax to complete
-                form.validate();
-                form.on('ajax:complete', (function (evt, data, status, xhr) {
-                    console.log('form remote validation completed. Status: ' + status);
-                    if (form.valid()) {
-                        link($this)
-                    }
-                }));
-            } else {
-                if (form.valid()) {
-                    link($this)
-                }
-            }
-        } else {
-            link($this)
-        }
+         setPage({page1: page, id1: id, pane1: pane, hash: hash});
 
     }));
 

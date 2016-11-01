@@ -40,10 +40,6 @@ gem 'nokogiri'
 gem 'diskcached'
 gem 'active_admin_importable'
 gem 'tod'
-gem 'simple_form'
-gem 'jquery-validation-rails'
-#gem 'client_side_validations', github: 'DavyJonesLocker/client_side_validations'
-#gem 'client_side_validations-simple_form', github: 'DavyJonesLocker/client_side_validations-simple_form'
 gem 'backstretch-rails'
 gem 'money'
 #gem 'eu_central_bank'
@@ -58,7 +54,6 @@ gem 'best_in_place', github: 'bernat/best_in_place'
 group :test, :staging, :production do
   gem 'le'
 end
-gem "bootstrap-switch-rails"
 #gem 'actionpack-action_caching'
 gem 'dalli'
 gem 'memcachier'
@@ -66,8 +61,8 @@ gem 'responders', '~> 2.1.0'
 gem 'monetize'
 
 #gem 'twitter-bootstrap-rails'      # dont use it
-gem 'bootstrap-sass', '~> 3.3.3'    # use this: enables to include just the needed modules, gives access to twbs mixins
-gem 'sass', '~> 3.4', '>= 3.4.22'
+gem 'bootstrap-sass', '~> 3.3.6'    # use this: enables to include just the needed modules, gives access to twbs mixins
+#gem 'sass', '~> 3.4', '>= 3.4.22'
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 gem 'font-awesome-rails'
 gem "rack-timeout"

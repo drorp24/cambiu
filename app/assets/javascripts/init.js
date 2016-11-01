@@ -46,7 +46,6 @@ var bind_currency_to_autonumeric;
 var current_url;
 var value_of;
 var current_hash;
-var new_search_validator;
 var is_currency_unique;
 var disable_other_currency;
 var link;
@@ -460,4 +459,36 @@ $(document).ready(function() {
     bodyWidth       = $('body').width().toFixed();
     bodyHeight      = window.innerHeight;
     halfBodyHeight  = (bodyHeight / 2).toFixed();
+
+    $.material.options.validate = false;
+    $.material.init();
+
+    var slider = document.getElementById('slider');
+    var radius = document.getElementById('radius');
+
+    noUiSlider.create(slider, {
+        connect: true,
+        start: 40,
+        range: {
+            min: 0,
+            max: 100
+        },
+        pips: {
+            mode: 'values',
+            values: [20, 80],
+            density: 4
+        },
+        tooltips: [true],
+        format: {
+            to: function ( value ) {
+                return value.toFixed() + ' Km';
+            },
+            from: function ( value ) {
+                return value.replace(' Km', '');
+            }
+        }
+
+    });
+
+
 });
