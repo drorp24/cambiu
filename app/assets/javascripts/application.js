@@ -35,3 +35,4 @@
 //= require material.min
 //= require ripples.min
 //= require nouislider.min
+//= require snackbar.min

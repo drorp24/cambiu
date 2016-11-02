@@ -469,9 +469,7 @@ body#cambiu {
 
 
   .action {
-    text-transform: uppercase;
-    color: $brand-color !important;
-    margin-left: 1em;
+    color: $darken-brand-color !important;
   }
 
 
@@ -825,6 +823,25 @@ body#cambiu {
 
   */
 
+  .snackbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    .message {
+
+    }
+    .button {
+      color: yellow;
+      text-transform: uppercase;
+    }
+  }
+
+
+  .snackbar.snackbar-opened {
+    margin-bottom: 0px !important;
+  }
+
 
   form .hidden {
     display: none;
@@ -1095,7 +1112,7 @@ body#cambiu {
 
   .actions_line {
     position: absolute;
-    bottom: 20px;
+    bottom: 3em;
     width: 100%;
     display: flex;
     align-items: center;

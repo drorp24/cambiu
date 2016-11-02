@@ -144,7 +144,7 @@ value_of = function(key) {
 // Populate search params in search form, search bar and ss for persistency (page reloads)
 set = function(field, value, trigger) {
 
-    console.log('set ' + field + ' to ' + value);
+//    console.log('set ' + field + ' to ' + value);
 
     $('.params [data-model=search][data-field=' + field + ']').html(value);
     value = (field.indexOf('amount') > -1) ? String(value).replace(/[^0-9\.]+/g,"") : value;

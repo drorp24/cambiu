@@ -122,8 +122,8 @@ sessionStorage.videoStopped = null;
 alertError = function(error) {
     console.log('alertError');
     console.error(error);
-    var userText = 'Oops... this can happen in beta. Reload and try again!\n';
-    alert(userText + error);
+    snack(error);
+
 };
 
 logError = function(error) {
@@ -139,27 +139,6 @@ toggleOrder = function($el) {
     return $el;
 };
 
-/*
-def_vals = function() {
-
-    var def = {};
-
-    def['pay_amount']       = null;
-    def['pay_currency']     = 'USD';
-    def['buy_amount']       = 1000;
-    def['buy_currency']     = 'EUR';
-    def['location_lat']     = '51.51574678520366';
-    def['location_lng']     = '-0.16346305847173426';
-    def['location']         = 'London, UK';
-    def['location_short']   = 'London';
-    def['location_type']    = 'default';
-    def['location_default'] = '88 Edgware Rd, London W2, UK';
-    def['sort']             = 'price';
-
-    return def;
-
-};
-*/
 
 def_vals = function() {
 
@@ -173,6 +152,7 @@ def_vals = function() {
     def['user_lng']         = def_lng;
     def['location_type']    = 'default';
     def['sort']             = 'price';
+    def['radius']           = '40';
 
     return def;
 
@@ -195,7 +175,8 @@ var searchParams = [
     'location_reason',
     'location_lat',
     'location_lng',
-    'sort'
+    'sort',
+    'radius'
 ];
 
 searchable = function(field) {
@@ -447,13 +428,38 @@ $(document).ready(function() {
     // the error.name and error.stack could be sent to server for alerting (email) and persisting
     // the console shows the stack and includes there source maps! Perhaps it will do the same in production when they are supported by sprockets?
 
-    // Note1: It doesn't catch 'throw' statements at all if the throw including function is invoked by a Promise. Promises don't stop execution
+    // Note1: It doesn't catch 'throw' statements at all if the throw including function is invoked by a Promise. My promises catch their own errors
     // Note2: When throw is Uncaught by browser (whether Promise or not), browser shows source-map'ed stack under the left triangle. Otherwise compressed in the '...'
+
+    snackHtml = function(arg) {
+        var message = arg.message,
+            buttonName = arg.buttonName || 'dismiss',
+            modalText = arg.modalText || null;
+
+        var $e = $('.snack.template').clone().removeClass('template').addClass('active');
+        $e.find('.message').html(message);
+        if (buttonName) $e.find('.button').html(buttonName);
+        return $e.html();
+    };
+
+    snack = function(message) {
+        $.snackbar({
+            timeout: 500000, //temp
+            htmlAllowed: true,
+            content: snackHtml({
+                message: message,
+                buttonName: 'dismiss'
+            })
+        })
+    };
+
+    $('body').on('click tap', '.snack .button', function() {
+        $('.snackbar.snackbar-opened').snackbar("hide");
+    });
 
     window.addEventListener('error', function (e) {
         console.log('addEventListener: error');
-        var error = e.error;
-        alertError(error);
+        snack(e.error)
     });
 
     bodyWidth       = $('body').width().toFixed();
@@ -489,6 +495,5 @@ $(document).ready(function() {
         }
 
     });
-
 
 });
