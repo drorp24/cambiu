@@ -15,6 +15,7 @@ $(document).ready(function() {
         });
 
         $('.currency_select').change(function() {
+            console.log('currency_select change event triggered');
             var $this   = $(this);
             var field   = $this.data('field');
             var value   = $this.val();
@@ -136,8 +137,10 @@ $(document).ready(function() {
         return field == 'pay_amount' ? 'buy_amount' : 'pay_amount'
     };
 
-    clear = function(field) {
-        set(field, '');
+    clear = function($e) {
+        var field = $e.data('field');
+        console.log('clear ' + field + '. val():' + $e.val());
+        if ($e.val()) set(field, '');
     };
 
     hasError = function($e) {
@@ -154,20 +157,22 @@ $(document).ready(function() {
 
     $('form [data-model=search][data-field]').on('click tap', function() {
 
+        console.log('moving to a new field');
         var $this = $(this);
         var field = $this.data('field');
-        if (amount(field)) clear(field);
+        if (amount(field)) clear($this);
     });
 
     $('form [data-model=search][data-field]').keyup(function() {
 
+        console.log('keying a character');
         var $this = $(this);
         var field = $this.data('field');
         var value = $this.val();
 
         set(field, value);
         if (amount(field) && value) {
-            clear(other(field));
+            clear(brother($this));
             if (hasError($this)) {
                 clearError($this);
                 clearError(brother($this));

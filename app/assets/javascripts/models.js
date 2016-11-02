@@ -142,14 +142,21 @@ value_of = function(key) {
 };
 
 // Populate search params in search form, search bar and ss for persistency (page reloads)
-set = function(field, value) {
+set = function(field, value, trigger) {
 
-//    console.log('set ' + field + ' to ' + value);
+    console.log('set ' + field + ' to ' + value);
 
     $('.params [data-model=search][data-field=' + field + ']').html(value);
     value = (field.indexOf('amount') > -1) ? String(value).replace(/[^0-9\.]+/g,"") : value;
 
-    $('form [data-model=search][data-field=' + field + ']').val(value).trigger('change'); // any .val(x) must be followed by .trigger('change') or the '.is-empty' isnt updated
+    // .trigger('change') is needed to trigger setting or removing the '.is-empty'
+    // select fields can't use it however since they have a 'change' event which in turn calls 'set' again resulting in an endless loop
+    var $formField = $('form [data-model=search][data-field=' + field + ']').val(value);
+    if ($formField.is('select')) {
+        $formField.closest('.form-group').removeClass('is-empty');
+    } else {
+        $formField.trigger('change');
+    }
     sessionStorage.setItem(field, value);
 
 };
