@@ -120,5 +120,8 @@ class Search < ActiveRecord::Base
     @rest=pane
   end
 
+  def radius=(radius)
+    self.distance = radius
+  end
 
 end
