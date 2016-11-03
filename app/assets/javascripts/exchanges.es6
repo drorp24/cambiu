@@ -34,7 +34,7 @@
 
     function addCard(exchange, index) {
 
-        var $card = $('.card.template').clone().removeClass('template').css('height', cardHeight);
+        var $card = $('.ecard.template').clone().removeClass('template').css('height', cardHeight);
         $card.appendTo($('#cards'));
         $card.find('.ranking_index').html(index + 1);
 

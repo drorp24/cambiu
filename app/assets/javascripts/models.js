@@ -149,15 +149,13 @@ set = function(field, value, trigger) {
     $('.params [data-model=search][data-field=' + field + ']').html(value);
     value = (field.indexOf('amount') > -1) ? String(value).replace(/[^0-9\.]+/g,"") : value;
 
-    // .trigger('change') is needed to trigger setting or removing the '.is-empty'
-    // select fields can't use it however since they have a 'change' event which in turn calls 'set' again resulting in an endless loop
     var $formField = $('form [data-model=search][data-field=' + field + ']').val(value);
-    if ($formField.is('select')) {
-        $formField.closest('.form-group').removeClass('is-empty');
+    if (value !== '') {
+        $formField.closest('.form-group').removeClass('is-empty').addClass('is-filled');
     } else {
-        $formField.trigger('change');
+        $formField.closest('.form-group').addClass('is-empty').removeClass('is-filled');
     }
-    sessionStorage.setItem(field, value);
+     sessionStorage.setItem(field, value);
 
 };
 

@@ -271,14 +271,14 @@ $(document).ready(function() {
     };
 
 
-    $('body').on('click tap', '.card:not(.selected)', function(e) {
+    $('body').on('click tap', '.ecard:not(.selected)', function(e) {
         e.stopPropagation();
         var $this = $(this);
         $this.css('transform', 'translate(' + cardXoffset + ', 10px)');
         $this.addClass('selected');
     });
 
-    $('body').on('click tap', '.card.selected .actions_line', function(e) {
+    $('body').on('click tap', '.ecard.selected .actions_line', function(e) {
         e.stopPropagation();
         var $currCard = $('.swiper-slide-active');
         var cardWasSelected = $currCard.hasClass('selected');

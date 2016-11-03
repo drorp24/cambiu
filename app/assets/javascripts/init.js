@@ -339,11 +339,6 @@ display = function(term) {
     }
 };
 // make the mobile navbar collapse when a link is clicked
-$(document).on('click','.navbar-collapse.in',function(e) {
-    if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
-        $(this).collapse('hide');
-    }
-});
     exchange_el = function(feature) {
 
         var exchange_el  = $('.exchange_window.template').clone().removeClass('template');
@@ -376,6 +371,10 @@ $(document).on('click','.navbar-collapse.in',function(e) {
 
 
 $(document).ready(function() {
+
+
+    $('body').bootstrapMaterialDesign();
+
     if (mobile) {
         $('iframe#player').remove();
         $('.desktop_only#map_container').remove();
@@ -465,9 +464,6 @@ $(document).ready(function() {
     bodyWidth       = $('body').width().toFixed();
     bodyHeight      = window.innerHeight;
     halfBodyHeight  = (bodyHeight / 2).toFixed();
-
-    $.material.options.validate = false;
-    $.material.init();
 
     var slider = document.getElementById('slider');
     var radius = document.getElementById('radius');

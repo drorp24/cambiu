@@ -18,7 +18,7 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer',  platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 4.2', '>= 4.2.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -61,7 +61,7 @@ gem 'responders', '~> 2.1.0'
 gem 'monetize'
 
 #gem 'twitter-bootstrap-rails'      # dont use it
-gem 'bootstrap-sass', '~> 3.3.6'    # use this: enables to include just the needed modules, gives access to twbs mixins
+#gem 'bootstrap-sass', '~> 3.3.6'    # use this: enables to include just the needed modules, gives access to twbs mixins
 #gem 'sass', '~> 3.4', '>= 3.4.22'
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 gem 'font-awesome-rails'

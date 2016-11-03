@@ -14,7 +14,7 @@ initSwipers = function() {
         onSlidePrevEnd: slidePrev
     });
 
-    var $card = $('.card').eq(0);
+    var $card = $('.ecard').eq(0);
     cardXoffset = String(($card.position().left + $('#cards').position().left) * -1) + 'px';
     cardHeight = $card.height();
 };
@@ -22,7 +22,7 @@ initSwipers = function() {
 
 slideChange = function() {
     if (directionsDisplay) clearDirections();
-    $('.card').removeClass('selected');
+    $('.ecard').removeClass('selected');
 
 };
 

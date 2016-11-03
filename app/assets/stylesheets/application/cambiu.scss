@@ -1,6 +1,4 @@
 // Imports
-@import "bootstrap-sprockets";
-@import "bootstrap";
 @import "font-awesome";
 
 // Variables
@@ -9,6 +7,7 @@ $navbar_background: rgba(0,0,0,0.25);
 $nav_icon_width: 2.5em;
 $card-transition-time: 1s;
 $padding: 15px;
+$negPadding: -15px;
 $photoPadding: 15;
 $navbar-background-color: rgba(0, 0, 0, 0.4);
 $user-location-color: #4384f7;
@@ -438,6 +437,33 @@ html, body {
 
 body#cambiu {
 
+  /*
+  // must get the original .scss to be able to define for desktop like below (or use any other predefined mixins)
+  // check (or wait) for a rails gem for tbs v4 (otherwise i'd have to include all .scss files myself)
+  @include media-breakpoint-up(xs) {
+
+  }
+  */
+
+
+  background-color: #fff;
+
+  .flex_between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .swiper-wrapper {
+    box-sizing: border-box !important; // truly important...
+  }
+
+
+
+  .noPadding {
+    margin-right: $negPadding;
+    margin-left: $negPadding;
+  }
 
   .page {
     display: none;
@@ -457,11 +483,6 @@ body#cambiu {
       }
     }
      height: 100vh;
-    @media (min-width: $screen-sm-min) {
-      &:not(#exchanges_list), .list-group {
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      }
-    }
     .content {
       padding: 30px;
     }
@@ -505,36 +526,6 @@ body#cambiu {
     }
   }
 
-
-  @media (min-width: $screen-sm-min) {
-    .col-md-half {
-      width: 4.166%;
-      padding: 0;
-      margin-left: -15px;
-      margin-right: -15px;
-    }
-    .col-md-one-and-half {
-      width: 12.495%;
-    }
-    .col-md-1-minus {
-      width: 8%;
-    }
-    .col-md-offset-half {
-      margin-left: 3%;
-    }
-    .col-md-35 {
-      width: 30%;
-    }
-  }
-  @media (max-width: $screen-xs-max) {
-    .col-md-half {
-    }
-    .col-md-one-and-half {
-    }
-    .col-md-1-minus {
-
-    }
-  }
 
 
   #userLoc {
@@ -682,13 +673,28 @@ body#cambiu {
 
   */
 
-.card {
+
+
+.padlessBtn {
+  margin: 0;
+  padding-bottom: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.yellow {
+  color: yellow;
+}
+
+
+.ecard {
   background-color: #fff;
   box-shadow: 0px 1px 15px rgba(0, 0, 0, .2);
   .active_ind {
     height: 3px;
     background-color: #fff;
   }
+
   &.swiper-slide-active .active_ind{
     background-color: $brand-color;
   }
@@ -823,6 +829,15 @@ body#cambiu {
 
   */
 
+
+  .bmd-form-group {
+    padding-top: 0; // important
+  }
+
+  .bmd-label-static {
+    left: inherit; // important
+  }
+
   .snackbar-content {
     display: flex;
     align-items: center;
@@ -830,10 +845,6 @@ body#cambiu {
     padding: 0 10px;
     .message {
 
-    }
-    .button {
-      color: yellow;
-      text-transform: uppercase;
     }
   }
 
@@ -899,7 +910,7 @@ body#cambiu {
   }
 
 
-  .card{
+  .ecard{
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -939,7 +950,7 @@ body#cambiu {
       align-content: stretch;
       text-align: left;
       .fullcard {
-        display: block;
+        display: flex;
       }
       .more {
         &:before {
@@ -976,10 +987,11 @@ body#cambiu {
       }
       .data {
         max-width: 100%;
+        padding-right: $padding;
+        padding-left: $padding;
         [data-field=edited_quote] {
-          font-size: 2.5em;
-          font-weight: 700;
-          margin-bottom: 0.5em;
+          font-size: 1.7em;
+          font-weight: 400;
         }
       }
       .mapMarker {
@@ -992,16 +1004,19 @@ body#cambiu {
         font-size: 1.1em;
       }
       .comparison {
-        transform: scale(1.5,1.5);
+        transform: scale(0.9, 0.9);
       }
       .comparison_text {
-        font-size: 0.8em;
+        font-size: 0.6em;
+        justify-content: center;
+        margin-top: -1.5em;
       }
       .ranking {
         position: absolute;
         top: $padding;
         width: 100%;
         margin-left: -1 * $padding;
+        text-align: center;
         .label {
           background-color: transparent;
           font-weight: 400 !important;
@@ -1011,18 +1026,17 @@ body#cambiu {
     &:not(.selected) {
       transform: translate(0px, 0px) !important;
       .actions_line {
-        bottom: 1px;
+        bottom: 0;
       }
     }
     .data {
       max-width: 50%; // important in flex, only in the non selected, row mode
-      padding: $padding;
       height: 100%;
       color: #000;
       font-size: 1em;
       font-weight: 300;
       [data-field=edited_quote] {
-        font-size: 1.5em;
+        font-size: 1.3em;
         text-align: center;
         transition: font-size $card-transition-time + 0.3s;
         @include threedots(100%);
@@ -1030,14 +1044,16 @@ body#cambiu {
       [data-field=name] {
         color: $darken-brand-color;
         font-weight: 400;
-        font-size: 1.5em;
+        font-size: 1.3em;
         @include threedots(100%);
       }
       [data-field=address] {
-        font-size: 1em;
+        font-size: 0.9em;
       }
       .open {
         font-weight: 400;
+        font-size: 0.9em;
+        color: #555;
       }
       .phone_icon {
         margin-right: 0;
@@ -1049,19 +1065,18 @@ body#cambiu {
         font-size: 0.8em;
       }
       .reviews {
-        font-size: 1.2em;
-        position: relative;
-        bottom: 0.1em;
+        font-size: 1.1em;
       }
       .ranking {
         text-transform: uppercase;
         margin-bottom: 0.4em;
-        color: #888;
-        font-size: 1.2em;
+        color: #fff;
+        font-size: 1em;
         .label {
           display: block;
-          padding: 0.4em;
-          font-weight: 300;
+          font-weight: 400;
+          padding: 0;
+          line-height: 1.8em;
         }
       }
     }
@@ -1080,7 +1095,9 @@ body#cambiu {
     }
   }
 
-
+  .rating {
+    font-size: 0.85em;
+  }
 
   .rating > span {
     display: flex;
@@ -1112,7 +1129,7 @@ body#cambiu {
 
   .actions_line {
     position: absolute;
-    bottom: 3em;
+    bottom: 1.5em;
     width: 100%;
     display: flex;
     align-items: center;
@@ -1132,12 +1149,12 @@ body#cambiu {
     display: flex;
     align-content: center;
     justify-content: center;
+    margin-top: -1em;
     .comparison_item {
       display: flex;
     }
-    font-weight: 300;
-    margin-top: -10px;
-    transform: scale(0.7, 0.7);
+    font-weight: 400;
+    transform: scale(0.6, 0.6);
     color: #888;
     [data-field=gain_percent] {
 //      border: 1px solid purple;
@@ -1184,6 +1201,7 @@ body#cambiu {
 //    border: 1px solid red;
     [data-field=duration] {
       text-align: center;
+      font-weight: 400;
       @include threedots(60%);
     }
   }
@@ -1405,10 +1423,6 @@ body#cambiu {
       overflow: hidden;
       margin-left: -15px;
       margin-right: -15px;
-      @media (max-width: $screen-xs-max) {
-        height: 100vh;
-        background-color: $brand-color;
-      }
     }
 
     #player, #background {
@@ -1468,12 +1482,6 @@ body#cambiu {
           text-align: center;
           font-weight: 100;
           margin-bottom: 0;
-          @media (max-width: $screen-xs-max) {
-            font-size: 6vh;
-          }
-          @media (min-width: $screen-sm-min) {
-            font-size: 3.5vw;
-          }
         }
         p {
           font-weight: 100;
@@ -1539,13 +1547,7 @@ body#cambiu {
     background-color: darken($brand-color, 10%);
     color: #fff;
     border: 1px solid darken($brand-color, 10%);
-    @media (max-width: $screen-xs-max) {
-      font-size: 1.3em;
-    }
-    @media (min-width: $screen-sm-min) {
-      font-size: 1.3vw;
-    }
-    line-height: 17px;
+     line-height: 17px;
     font-weight: 300;
     text-transform: uppercase;
     &:hover {
@@ -1616,12 +1618,6 @@ body#cambiu {
     overflow: hidden;
     /*CSS counters to number the steps*/
     counter-reset: step;
-    @media (max-width: $screen-xs-max) {
-      bottom: 40px;
-      left: -5.5%;
-      width: 100%;
-      height: 25px;
-    }
   }
 
   .powered_by {
@@ -1729,9 +1725,6 @@ body#cambiu {
     -webkit-transform: rotateY(180deg);
   }
 
-  @media (min-width: $screen-sm-min) {
-
-   }
 
 
 
@@ -1970,12 +1963,6 @@ body#cambiu {
         height: $exchange_summary_bg_img_height;
     }
     #exchanges_content {
-      @media (max-width: $screen-xs-max) {
-        margin-top: 0;
-      }
-      @media (min-width: $screen-sm-min) {
-//        margin-top: $parameters-height - 3px;
-      }
       /*
       .list-group-item {
         padding-bottom: 0;
@@ -1986,14 +1973,7 @@ body#cambiu {
     .parameters {
       position: fixed;
 //      display: none;
-      @media (max-width: $screen-xs-max) {
-        height: 0;
-      }
       &.in {
-        @media (min-width: $screen-sm-min) {
-          height: $parameters-height;
-          margin-top: -3px;
-        }
       }
     }
 
@@ -2063,24 +2043,12 @@ body#cambiu {
       margin-bottom: 40px;
       font-weight: $light;
       color: $grey3c;
-      @media (min-width: $screen-sm-min) {
-        font-size: 1.25em;
-      }
-      @media (max-width: $screen-xs-max) {
-        font-size: 1.1em;
-      }
 
     }
     .hdiw_text {
       margin-top: 25px;
       font-weight: $light;
       color: $grey3c;
-      @media (min-width: $screen-sm-min) {
-        font-size: 1.25em;
-      }
-      @media (max-width: $screen-xs-max) {
-        font-size: 1.1em;
-      }
     }
     #hand_icon {
       margin-left: -20px;
@@ -2127,12 +2095,6 @@ body#cambiu {
       margin-top: -10px;
 
       .middle-parent {
-        @media (min-width: $screen-sm-min) {
-          @include middle-parent(120px, 65px);
-        }
-        @media (max-width: $screen-xs-max) {
-          @include middle-parent(100px, 65px);
-        }
       }
 
       .carousel-control {
@@ -2179,30 +2141,10 @@ body#cambiu {
       .testimonial {
         font-style: italic;
         color: $black;
-        @media (max-width: $screen-xs-max){
-          font-size: 1.1em;
-        }
-        @media (min-width: $screen-sm-min){
-          font-size: 1.4em;
-        }
-        font-weight: 400;
+         font-weight: 400;
         margin-top: 7px;
         color: #000;
-        @media (min-width: $screen-sm-min) {
-          margin-left: -20px;
-        }
-      }
-      .credit {
-        color: $lightgreen;
-         @media (min-width: $screen-sm-min) {
-          margin-left: -20px;
-          margin-top: -24px;
-         }
-        @media (max-width: $screen-xs-max){
-          font-size: 0.9em;
-          margin-top: -18px;
-        }
-      }
+       }
     }
   }
 
@@ -2215,13 +2157,7 @@ body#cambiu {
   .map_heading {
     min-height: 100px;
     padding: 0 5px;
-    @media (max-width: $screen-xs-max){
-      line-height: 35px;
-    }
-    @media (min-width: $screen-sm-min) {
-      line-height: 100px;
-    }
-    background-color: $lightgreen;
+     background-color: $lightgreen;
     text-transform: uppercase;
     font-size: 1.5em;
     color: #fff;
@@ -2229,18 +2165,10 @@ body#cambiu {
     border-top: 2px solid $darkgreen;
     p {
       margin-bottom: 0;
-      @media (max-width: $screen-xs-max){
-        line-height: 1.4em;
-        font-size: 0.8em;
-        margin-top: 0.8em;
-      }
     }
   }
 
   .footer {
-    @media (max-width: $screen-xs-max) {
- //     text-align: center;
-    }
     border-top: 5px solid $lightgreen;
     background-color: $lightgreybg;
     padding-top: 25px;
@@ -2285,19 +2213,6 @@ body#cambiu {
         z-index: 1;
         padding-left: 0;
         padding-right: 0;
-        /*
-        @media (min-width: $screen-sm-min) {
-          position: relative;
-          top: 12px;
-        }
-        @media (max-width: $screen-xs-max){
-          position: relative;
-          top:12px;
-        }
-        */
-        @media (max-width: $screen-xs-max){
-          padding-right: 0;
-         }
         #exchanges_items {
           margin-top: -1px;
         }
@@ -2309,10 +2224,7 @@ body#cambiu {
              border: none;
            }
           text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
-          @media (min-width: $screen-sm-min) {
-            display: block;
           }
-         }
         .open_params_wrapper {
           display: none;
         }
@@ -2341,9 +2253,6 @@ body#cambiu {
           margin-top: -5px;
           margin-bottom: -16px;
         }
-        .more {
-          margin-top: 2vh;
-        }
         #fetch_more {
           text-align: center;
           line-height: 3.5em;
@@ -2360,11 +2269,7 @@ body#cambiu {
           border: none;
           background-color: rgba(0,0,0,0.3);
           padding-bottom: 5px;
-          @media (min-width: $screen-sm-min) {
-             .exchanges_search_params_title {
-             }
-          }
-          .exchanges_search_params_title {
+           .exchanges_search_params_title {
             font-size: 1.4em;
             line-height: 1.6em;
             font-weight:400;
@@ -2484,34 +2389,7 @@ body#cambiu {
         background-color: $brand-color;
       }
 
-    #exchange_params_wrapper {
-      box-shadow: 0 0 5px #888;
-      @media (max-width: $screen-xs-max) {
-        background-color: $parameters-bg-color;
-        height: 100vh;
-        margin-top: 85px;
-      }
-       @media (min-width: $screen-sm-min) {
-         height: $parameters-height;
-       }
-
-
-      color: #fff;
-      font-size: 1em;
-      font-weight: 400;
-      line-height: 1.7em;
-      text-align: center;
-      text-transform: uppercase;
-      border: none;
-
-    }
-    #exchanges_search_banner {
-      font-size: 0.9em;
-      text-align: center;
-      height: 3em;
-      color: #333;
-    }
-    #exchanges_content {
+     #exchanges_content {
       z-index: -1;
       font-family: $font-family;
       .list-group-item:not(#exchanges_search_results):not(#exchanges_search_params):not(.open_params_wrapper) {
@@ -2540,10 +2418,6 @@ body#cambiu {
         transform: rotate(45deg);
         text-indent: 1em;
         font-size: 1em;
-        @media (max-width: $screen-xs-max) {
-          text-indent: 0em;
-          font-size: 0.7em;
-        }
       }
       .list_icon {
         font-size: 1.2em;
@@ -2590,21 +2464,6 @@ body#cambiu {
           color: #000;
           line-height: 1em;
       }
-      .distance:not(.button) {
-        font-size: 1.2em;
-        font-weight: 400;
-        color: #333;
-        line-height: 1em;
-      }
-      .quote_currency {
-        font-size: 0.85em;
-        @media (min-width: $screen-sm-min) {
-          display: none;
-        }
-        @media (max-width: $screen-xs-max) {
-          display: none;
-        }
-      }
       .gain {
         font-size: 0.9em;
         font-weight: 400;
@@ -2632,9 +2491,6 @@ body#cambiu {
         text-indent: 0.5em;
       }
       .delivery .service_type {
-        @media (max-width: $screen-xs-max) {
-          color: darken($brand-color, 10%);
-        }
       }
       .appendix {
         color: #888;
@@ -2679,28 +2535,13 @@ body#cambiu {
 
     }
     .getit_parent {
-      /*
-      @media (min-width: $screen-sm-min) {
-        padding-left: 6px;
-      }
-      @media (max-width: $screen-xs-max) {
-        padding-left: 0px;
-      }
-      */
     }
     .getit .btn.btn-default#getit_button {
       border-color: $lightgreen;
       color: $lightgreen;
       text-transform: uppercase;
       font-size: 1.7vh;
-      @media (min-width: $screen-sm-min) {
-//        margin-top: -15px;
-
-      }
-      @media (max-width: $screen-xs-max) {
-//        margin-left: -22px;
-      }
-    }
+     }
     .exchange_row {
       .middle-parent {
         @include middle-parent(70px, 0)
@@ -2748,11 +2589,6 @@ body#cambiu {
       .left {
         margin-left: 15px;
       }
-      @media (max-width: $screen-xs-max) {
-        .right {
-          margin-left: 15px;
-        }
-      }
       .es_icon {
         font-size: 2.5em;
         text-align: center;
@@ -2764,36 +2600,6 @@ body#cambiu {
           content: "m";
         }
       }
-      .es_name {
-        @media (max-width: $screen-xs-max) {
-          font-size: 3vh;
-          margin-bottom: 0.2vh;
-        }
-        @media (min-width: $screen-sm-min) {
-          font-size: 3vh;
-          margin-bottom: 0.2vh;
-          font-weight: 400;
-        }
-        margin-top: 5px;
-        margin-bottom: -10px;
-      }
-      .es_address {
-        @media (max-width: $screen-xs-max) {
-          font-size: 1.8vh;
-         }
-        @media (min-width: $screen-sm-min) {
-          font-size: 2vh;
-        }
-        font-weight: 400;
-        margin-top: 12px;
-      }
-      .es_opening_hours {
-        @media (max-width: $screen-xs-max) {
-        }
-        font-size: 1.8vh;
-        font-weight: 400;
-        margin-bottom: 10px;
-        margin-top: 5px;
       }
     }
 
@@ -2849,16 +2655,6 @@ body#cambiu {
         color: #555;
       }
 
-      .fees {
-        text-transform: uppercase;
-        font-size: 1.5vh;
-        @media (max-width: $screen-xs-max) {
-        }
-        @media (min-width: $screen-sm-min) {
-          line-height: 40px;
-        }
-      }
-
       button[data-service-type] {
         outline: none;
       }
@@ -2887,91 +2683,3 @@ body#cambiu {
       }
     }
   }
-}
-
-//
-// CROSS-MEDIA END
-// Attempt to define things above 
-//
-
-
-
-// desktops
-@media (min-width: $screen-sm-min){
-
-
-  body#cambiu {
-
-    .mobile_only {
-      display: none !important;
-    }
-
-    .getstarted_button_container {
-      .getstarted_button {
-      }
-      img {
-        right: -5px;
-      }
-    }
-
-
-
-    &.exchanges {
-      
- // OLD SEARCH PAGE
-
-      #pay_currency_display {
-        display: none;
-      }
-      #exchange_params_wrapper {
-//        margin: 0;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 0;
-        padding-bottom: 0;
-        color: #555;
-        background-color: #ddd;
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
-        .help_text {
-          font-weight: 400;
-          text-transform: capitalize;
-        }
-      }
-// OLD SEARCH PAGE
-
-      
-      
-      
-     }
-
-  }
-}
-
-
-// mobile
-@media (max-width: $screen-xs-max) {
-
-  body#cambiu {
-
-    .desktop_only {
-      display: none !important;
-    }
-     .getstarted_button_container {
-      .getstarted_button {
-         width: 100%;
-      }
-      img {
-        right: -6%;
-      }
-    }
-
-
-    &.exchanges {
-      .quote {
-        font-size: 0.9em;
-      }
-    }
-  
-  }
- 
-}

@@ -10,7 +10,7 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- ios' installable app -->
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <%= favicon_link_tag 'apple-touch-icon.jpg', rel: 'apple-touch-icon', type: 'image/png' %>
@@ -23,8 +23,9 @@
 
   <%= csrf_meta_tags %>
 
-	<%= stylesheet_link_tag "application", :media => "all"  %>
-	<%= javascript_include_tag "application", async: Rails.env.production?  %>
+  <!-- Though I include BMD's css thru CDN here, I have to include his separate .css file thru asset pipeline too, or else the slider doesnt get materialized  -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.min.css">
+  <%= stylesheet_link_tag "application", :media => "all"  %>
 
 </head>
 
@@ -32,10 +33,12 @@
 
 
 	<%= yield %>
-  <%= bootstrap_flash %>
 
-  <%= render 'google_tag_manager' %>
   <%= render 'google_maps' %>
+
+  <%= javascript_include_tag "application", async: Rails.env.production?  %>
+  <script src="https://cdn.rawgit.com/HubSpot/tether/v1.3.4/dist/js/tether.min.js"></script>
+  <script src="https://cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.iife.min.js"></script>
 
 </body>
 
