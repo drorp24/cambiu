@@ -2,6 +2,8 @@ var radarLoop;
 
 radarScan = function() {
 
+    console.log('radarScan');
+
     var deg = 0;
 
     (function rotate() {

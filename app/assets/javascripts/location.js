@@ -14,8 +14,8 @@ getLocation = function() {
 
         var options = {
             enableHighAccuracy: true,
-            timeout: 30000,
-            maximumAge: 30000
+            timeout: 15000,
+            maximumAge: 15000
         };
 
         navigator.geolocation.getCurrentPosition(
@@ -28,79 +28,99 @@ getLocation = function() {
 
             user.lat = position.coords.latitude;
             user.lng = position.coords.longitude;
-            setPosition(user.lat, user.lng, 'user', 'found');
+            setLocation(user.lat, user.lng, 'user', 'found');
         }
 
         function positionError(error) {
 
             var message = error.message ? error.message : error;
-            setPosition(def.lat, def.lng, 'default', 'Position error: ' + message);
+            setLocation(dfault.lat, dfault.lng, 'default', 'Position error: ' + message);
 
         }
 
-        function setPosition(lat, lng, type, reason) {
+        function setLocation(lat, lng, type, reason) {
 
-            set('location_lat',     location.lat = lat);
-            set('location_lng',     location.lng = lng);
-            set('location_type',    location.type = type);
-            set('location_reason',  location.reason = reason);
+            search.location     = {};
 
-            resolve(location);
+            set('location_lat',     search.location.lat = lat);
+            set('location_lng',     search.location.lng = lng);
+            set('location_type',    search.location.type = type);
+            set('location_reason',  search.location.reason = reason);
+
+            console.log('location set!');
+            resolve(search.location);
 
         }
-
-
     })
+};
 
+
+
+followUser = function() {
+
+
+    console.log('followUser');
+
+    if (!navigator.geolocation) {
+        currPositionError('unsupported');
+        return
+    }
+
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 15000
+    };
+
+    navigator.geolocation.watchPosition(
+        currPositionFound,
+        currPositionError,
+        options
+    );
+
+    function currPositionFound(position) {
+
+        user.lat = position.coords.latitude;
+        user.lng = position.coords.longitude;
+        showUserPosition(user.lat, user.lng);
+    }
+
+    function currPositionError(error) {
+
+        var message = error.message ? error.message : error;
+        console.warn('currPosition error: ' + message);
+
+    }
+
+    function showUserPosition(lat, lng) {
+
+        if (!map || !map.getProjection()) {
+            console.warn('showUserPosition: map isnt ready yet');
+            return
+        }
+
+        var user_latlng = new google.maps.LatLng(lat, lng);
+        map.panTo(user_latlng);
+        $('#userLoc').css('top', centerYpx).css('left', centerXpx);
+
+    }
 
 };
 
 
-// Invoke search, draw map and geocode as soon as position is determined
-positionDetermined = function(lat, lng, type, reason) {
-
-    console.log('positionDetermined: Type: ' + type + '. Reason: ' + reason);
-    console.timeEnd('navigator.geolocation');
-
-    // populate search params
-    set('location_lat',     lat);
-    set('location_lng',     lng);
-    set('location_type',    type);
-    set('location_reason',  reason);
-
-    map_p = drawMap(lat, lng)
-        .catch(alertError);
-
-    map_p
-        .then(followUser)
-        .catch(alertError);
+geocode = function(location) {
 
 
-    search_p =
-        search('positionDetermined')
-        .catch(alertError);
+    // though it looks like a classic case for a promise., i don't want any other function to await on it
+    // returning a promise would mean the next in line would have to wait for geocode to return
+    // but it's not critical. It's anyway called many times
 
+    console.log('geocode');
 
-    search_p
-        .then(addCards)
-        .catch(alertError);
+    var location_latlng = new google.maps.LatLng(location.lat, location.lng);
+    var geocoder = new google.maps.Geocoder();
 
-  // Use for testing - to check all my exchange markers are in place with Google's
-    Promise.all([map_p, search_p])
-        .then(placeGoogleMarkers);
-
-/*
-    Promise.all([map_p, search_p])
-        .then(function() {
-            placeSoftMarkers();
-            radarScan()
-        });
-*/
-
-    var location_latlng =   new google.maps.LatLng(user_lat, user_lng);
-    var geocoder =      new google.maps.Geocoder();
-
-    geocoder.geocode({'latLng': location_latlng}, function(results, status) {
+    geocoder.geocode({'latLng': location_latlng}, function (results, status) {
 
         if (status == google.maps.GeocoderStatus.OK) {
             if (results[1]) {
@@ -114,101 +134,32 @@ positionDetermined = function(lat, lng, type, reason) {
 
     });
 
-};
+    function geocodeFound(result) {
 
+        console.log('geocode found');
 
-// Update formatted address fields
-geocodeFound = function(result) {
+        var location_name = result.formatted_address,
+            location_short = result.address_components[1].short_name;
 
-    console.log('geocode found');
+        set('location',         location_name);
+        set('location_short',   location_short);
 
-    set('user_location',    result.formatted_address);
-    set('location',         result.formatted_address);
-    set('location_short',   result.address_components[1].short_name);
+        search.location.name = location_name;
 
-};
+    }
 
-geocodeError = function(error) {
+    function geocodeError(error) {
 
-    console.log('geocode failed: ' + error);
+        console.log('geocode failed: ' + error);
 
-    set('user_location',    'geocode failed');
-    set('location',         'geocode failed');
-    set('location_short',   'geocode failed');
+        set('location',         'geocode failed');
+        set('location_short',   'geocode failed');
 
-};
-
-
-
-followUser = function() {
-    console.log('followUser')
-    if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(
-            currPositionFound,
-            currPositionError,
-            {
-                enableHighAccuracy: true,
-                timeout: 30000,
-                maximumAge: 30000
-            }
-        )
-    } else {
-        currPositionError('unsupported')
     }
 };
 
-currPositionFound = function(position) {
 
-    // user_lat & user_lng are global variables (non persisted)
-    user_lat = position.coords.latitude;
-    user_lng = position.coords.longitude;
 
-    showUserPosition(user_lat, user_lng);
-//      reportUserPosition(position);
-
-};
-
-currPositionError = function(error) {
-    console.warn('currPositionError: ' + error);
-};
-
-showUserPosition = function(user_lat, user_lng) {
-
-    if (!map || !map.getProjection()) {
-        console.warn('showUserPosition: map isnt ready yet');
-        return
-    }
-
-    var user_latlng = new google.maps.LatLng(user_lat, user_lng);
-    map.panTo(user_latlng);
-    $('#userLoc').css('top', centerYpx).css('left', centerXpx);
-
-};
-
-reportUserPosition = function(position) {
-
-    var user_lat =  position.coords.latitude;
-    var user_lng =  position.coords.longitude;
-    var accuracy =  position.coords.accuracy;
-    var heading =   position.coords.heading;
-    var speed =     position.coords.speed;
-    var d = new Date(position.timestamp);
-    var timestamp = d.toLocaleTimeString();
-
-    var user_latlng = new google.maps.LatLng(user_lat, user_lng);
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'latLng': user_latlng}, function(results, status) {
-
-        if (status == google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-
-                var address = results[1].formatted_address;
-                console.log('Timestamp: ' + timestamp + '\nAddress: ' + address + '\nAccuracy: ' + accuracy + '\nHeading: ' + heading + '\nSpeed: ' + speed)
-
-            }
-        }
-    })
-};
 
 // Handle user location changes
 
@@ -221,16 +172,13 @@ function searchbox_addListener(searchBox) {
             return
         }
         place = places[0];
-        set('location', place.formatted_address);
-        set('location_short', place.name);
-        set('location_lat', place.geometry.location.lat());
-        set('location_lng', place.geometry.location.lng());
-        set('location_type', 'selected');
-        set('location_reason', null);
+        set('location',             search.location.name = place.formatted_address);
+        set('location_short',       search.location.short = place.name);
+        set('location_lat',         search.location.lat = place.geometry.location.lat());
+        set('location_lng',         search.location.lng = place.geometry.location.lng());
+        set('location_type',        search.location.type = 'selected');
+        set('location_reason',      search.location.reason = 'changed by user');
 
-        search('search location changed by user')
-            .then(addCards)
-            .catch(alertError);
     });
 }
 function radians(n) {
@@ -264,31 +212,3 @@ function getBearing(startLat,startLong,endLat,endLong){
 distance = function(location1, location2) {
     return String(Math.round(google.maps.geometry.spherical.computeDistanceBetween(location1, location2)));
 };
-
-// Get degree between 2 latlan points
-// source: http://www.igismap.com/formula-to-find-bearing-or-heading-angle-between-two-points-latitude-longitude/
-/*
- getDeg = function(latA, lngA, latB, lngB) {
-
- var toDeg = 180 / Math.PI;
- var latA = latA / toDeg;
- var lngA = lngA / toDeg;
- var latB = latB / toDeg;
- var lngB = lngB / toDeg;
- var dLng = Math.abs(lngA - lngB);
- var x = Math.cos(latB) * Math.sin(dLng);
- var y = Math.cos(latA) * Math.sin(latB) - Math.sin(latA) * Math.cos(latB) * Math.cos(dLng);
-
- return Math.atan2(x, y) * toDeg;
- };
-
- */
-/*
- stopFollowingUser = function() {
- navigator.geolocation.clearWatch(watchId);
- };
- */
-
-
-
-

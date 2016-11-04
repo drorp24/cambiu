@@ -199,7 +199,8 @@ $(document).ready(function() {
     $('[data-ajax=searches]').click(function(e) {
         e.preventDefault();
         if (inputValid()) {
-            search('form clicked')
+            set('location_reason', 'user search');
+            search(search.location)
                 .then(addCards)
                 .catch(alertError);
             window.history.back();
@@ -221,9 +222,10 @@ $(document).ready(function() {
 
     // programmatic search (e.g., once search location is determined)
 
-    search = function(reason) {
+    search = function(location) {
 
-        console.log('search invoked. Reason: ' + reason);
+        var reason = location.reason ? location.reason : '';
+        console.log('search invoked. ' + reason);
 
         return new Promise(function(resolve, reject) {
 

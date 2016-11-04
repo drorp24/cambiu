@@ -19,12 +19,13 @@
 //= require models
 //= require swiper
 //= require exchanges
-//= require pages
 //= require upload
+//= require pages
+//= require flow
 
 //= require star-rating
-//= require jquery-qrcode-0.14.0
-//= require sweetalert.min
+// require jquery-qrcode-0.14.0
+// require sweetalert.min
 //= require swiper.jquery.min
 //= require nouislider.min
 //= require snackbar.min

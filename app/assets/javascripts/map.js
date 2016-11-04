@@ -5,14 +5,17 @@
         google.maps.event.trigger(map, 'resize');
 
         // Added to fix absurd Savyon centering issue
-        if (user_lat && user_lng) {
-            map.setCenter({lat: user_lat, lng: user_lng});
+        if (user.lat && user.lng) {
+            map.setCenter({lat: user.lat, lng: user.lng});
         }
     };
 
     // render a map around given (lat,lng) set as center
     // to re-center the map use map.center rather than calling all of this
-    drawMap = function (latitude, longitude) {
+    drawMap = function (location) {
+
+        var latitude = location.lat,
+            longitude = location.lng;
 
         return new Promise(function(resolve, reject) {
 
@@ -72,7 +75,7 @@
                   // irritating, but inevitable since i can't stick the user's blue dot to a place on the map (it's always on the screen's center)
                  // re-center map around user *cuurent* position if he drags the map around
                  setTimeout(function () {
-                    showUserPosition(user_lat, user_lng)
+                    showUserPosition(user.lat, user.lng)
                 }, 1000);
             });
 
@@ -139,7 +142,7 @@
 
         if (directionsRenderedFor == exchange.id) return;
         var directionsRenderedFor = exchange.id;
-        var origin =            new google.maps.LatLng(user_lat, user_lng);
+        var origin =            new google.maps.LatLng(user.lat, user.lng);
         var destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
         calcRoute(origin, destination);
 
@@ -182,7 +185,7 @@
 
         return new Promise(function(resolve, reject) {
 
-            var origin =            new google.maps.LatLng(user_lat, user_lng);
+            var origin =            new google.maps.LatLng(user.lat, user.lng);
             var destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
             var request = {
                 origins: [origin],
@@ -201,7 +204,8 @@
                         exchange.matrix.distance = response.rows[0].elements[0].distance.text;
                         resolve(exchange);
                     } else {
-                        reject('google.maps.DistanceMatrixService response includes no duration/distance')
+                        console.log(response)
+                        reject(new Error('google.maps.DistanceMatrixService response includes no duration/distance'))
                     }
                 }
             })

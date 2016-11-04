@@ -97,10 +97,11 @@ var slidesAdded = [];
 var currentSlide = 0;
 var initialSlides = 10;
 var user = {};
-var def = {};
-def.lat = '51.51574678520366';
-def.lng = '-0.16346305847173426';
-var location = {};
+var dfault = {};
+dfault.lat = '51.51574678520366';
+dfault.lng = '-0.16346305847173426';
+var search = {};
+search.location = {};
 var ratingOptions = {
     theme: 'krajee-fa',
     filledStar: '<i class="fa fa-star"></i>',
@@ -119,6 +120,7 @@ var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 var swiperH;
 var cardHeight = null;
 var cardXoffset = null;
+
 
 sessionStorage.videoStopped = null;
 
@@ -152,8 +154,8 @@ def_vals = function() {
     def['pay_currency']     = 'USD';
     def['buy_amount']       = null;
     def['buy_currency']     = 'GBP';
-    def['user_lat']         = def_lat;
-    def['user_lng']         = def_lng;
+    def['user_lat']         = dfault.lat;
+    def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
     def['sort']             = 'price';
     def['radius']           = '40';
