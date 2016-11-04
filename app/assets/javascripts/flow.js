@@ -21,7 +21,7 @@ $(document).ready(function() {
             geocode(location)
         ])
         .then(placeGoogleMarkers)
-        .then(placeSoftMarkers)
+//        .then(placeSoftMarkers)
         .then(radarScan)
     })
     .catch(alertError);

@@ -1,3 +1,4 @@
+/*
 var radarLoop;
 
 radarScan = function() {
@@ -28,3 +29,4 @@ radarStop = function() {
     clearTimeout(radarLoop);
     $('.marker').stop().fadeTo(1,1);
 };
+*/
