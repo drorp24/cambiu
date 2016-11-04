@@ -115,6 +115,9 @@ var directionsRenderedFor = null;
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+var swiperH;
+var cardHeight = null;
+var cardXoffset = null;
 
 sessionStorage.videoStopped = null;
 
@@ -404,7 +407,6 @@ $(document).ready(function() {
 
     photoWidth = Math.round(($('body').width() / slidesPerView / 2) - (2 * photoPadding));
     photoHeight = Math.round(photoWidth / photoAspectRatio);
-    cardHeight = photoHeight + 2 * photoPadding + 3;
 
     $('.ratings').rating(ratingOptions);
 
@@ -491,5 +493,8 @@ $(document).ready(function() {
         }
 
     });
+
+    initSwipers();
+
 
 });

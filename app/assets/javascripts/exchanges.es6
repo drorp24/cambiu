@@ -16,10 +16,7 @@
         for (var i = 0; i < Math.min(initialSlides, exchanges.length); i++) {
             var exchange = exchanges[i].properties;
             addCard(exchange, i);
-            if (i == 0) $('.swiper-container').css('display', 'block')
         }
-
-        initSwipers();
 
         var ppart = break_url(window.location.pathname);
         var id = ppart.id;
@@ -29,12 +26,15 @@
             var $pane = $('.pane[data-pane=' + pane + ']');
             populateExchange(exchange, $pane)
         }
-     };
+
+        setTimeout(function(){progress('end')}, 2500);
+
+    };
 
 
     function addCard(exchange, index) {
 
-        var $card = $('.ecard.template').clone().removeClass('template').css('height', cardHeight);
+        var $card = $('.ecard.template').clone().removeClass('template')
         $card.appendTo($('#cards'));
         $card.find('.ranking_index').html(index + 1);
 
@@ -49,6 +49,8 @@
             .catch(error => {console.warn(error)});
 
         slidesAdded.push(index);
+
+        if (index == 0) $('.swiper-container').css('display', 'block')
     }
 
 

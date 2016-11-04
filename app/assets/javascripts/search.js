@@ -182,6 +182,8 @@ $(document).ready(function() {
 
 
 
+    // User manual search: form validation & submit
+
     inputValid = function() {
         var valid = value_of('pay_amount') || value_of('buy_amount');
         if (!valid) {
@@ -201,13 +203,8 @@ $(document).ready(function() {
                 .then(addCards)
                 .catch(alertError);
             window.history.back();
-
         }
     });
-
-
-
-
 
 
     // fix a (desktop only) irritating bug where by focusing out with a tab from an empty amount field it gets it previous value and clear its brother
@@ -222,12 +219,7 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-
+    // programmatic search (e.g., once search location is determined)
 
     search = function(reason) {
 
@@ -249,6 +241,8 @@ $(document).ready(function() {
                 return response.json()
             }
 
+            progress('start');
+
             fetch('/searches', {
                 method: 'post',
                 body: new FormData(document.getElementById('search_form'))
@@ -259,7 +253,7 @@ $(document).ready(function() {
                     console.log(':) search completed succesfully');
                     searchResult = data;
                     exchanges = data.exchanges.features;
-                    resolve(searchResult)
+                    resolve(searchResult);
                 })
                 .catch(function (error) {
                     console.log('catch!');
@@ -271,9 +265,12 @@ $(document).ready(function() {
     };
 
 
+    // Card interaction
+
     $('body').on('click tap', '.ecard:not(.selected)', function(e) {
         e.stopPropagation();
         var $this = $(this);
+        $('.progress').css('display', 'none');
         $this.css('transform', 'translate(' + cardXoffset + ', 10px)');
         $this.addClass('selected');
     });
@@ -290,13 +287,15 @@ $(document).ready(function() {
         }
     });
 
-
     $('body').on('click tap', '.nav_icon', function(e) {
         e.stopPropagation();
         renderDirections(currExchange());
         $('.swiper-slide-active').removeClass('selected');
     });
 
+
+
+    // Radius slider interaction
 
     function updateRadius ( values, handle, unencoded, tap, positions ) {
         // values: Current slider values;
@@ -317,5 +316,13 @@ $(document).ready(function() {
             slider.noUiSlider.set(80);
         }
     });
+
+    // Progress bar
+
+    progress = function(verb) {
+        $('.progress').css('display', verb == 'start' ? 'block' : 'none')
+    }
+
+
 
 });

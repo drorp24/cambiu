@@ -1,10 +1,6 @@
 initSwipers = function() {
 
     swiperH = new Swiper ('.swiper-container-h', {
-/*
-        pagination: '.swiper-pagination',
-        paginationType: 'fraction',
-*/
         centeredSlides: true,
         spaceBetween: 10,
         slidesPerView: slidesPerView,
@@ -14,9 +10,6 @@ initSwipers = function() {
         onSlidePrevEnd: slidePrev
     });
 
-    var $card = $('.ecard').eq(0);
-    cardXoffset = String(($card.position().left + $('#cards').position().left) * -1) + 'px';
-    cardHeight = $card.height();
 };
 
 

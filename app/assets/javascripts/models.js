@@ -54,6 +54,21 @@ populateExchange = function(exchange, $scope) {
     } else {
         $phone_link.css('visibility', 'hidden')
     }
+
+    // Note: This and populateDuration are delayed to afford the streetview img's to load
+
+    setTimeout(function(){
+        if (!cardHeight || !cardXoffset) {
+            cardHeight = $scope.height();
+            cardXoffset = String(($scope.position().left + $('#cards').position().left) * -1) + 'px';
+        }
+        $scope.css('height', cardHeight);
+        var $img = $photo.find('img');
+        $img.css('height', $img.height());
+        $('.progress').css('bottom', String(cardHeight + 2) + 'px');
+    }, 1000);
+
+
 };
 
 populatePlace = function(exchange, $scope) {
