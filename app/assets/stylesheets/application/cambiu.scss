@@ -1102,21 +1102,20 @@ body#cambiu {
         margin-top: -1.5em;
       }
       .ranking {
-        position: absolute;
-        top: $padding;
-        width: 100%;
-        margin-left: -1 * $padding;
-        text-align: center;
-        .label {
-          background-color: transparent;
-          font-weight: 400 !important;
-        }
+        display: none;
       }
     }
     &:not(.selected) {
       transform: translate(0px, 0px) !important;
+      .data.item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
       .actions_line {
-        bottom: 0;
+        bottom: -3px;
+
       }
     }
     .data {
@@ -1126,7 +1125,9 @@ body#cambiu {
       font-size: 1em;
       font-weight: 300;
       [data-field=edited_quote] {
-        font-size: 1.3em;
+        font-size: 1.5em;
+        font-weight: 500;
+        margin-top: 1rem;
         text-align: center;
         transition: font-size $card-transition-time + 0.3s;
         @include threedots(100%);
@@ -1158,25 +1159,17 @@ body#cambiu {
         font-size: 1.1em;
       }
       .ranking {
-        text-transform: uppercase;
-        margin-bottom: 0.4em;
-        color: #fff;
-        font-size: 1em;
-        .label {
-          display: block;
-          font-weight: 400;
-          padding: 0;
-          line-height: 1.8em;
-        }
+        position: absolute;
+        right: 0.75em;
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 0.75em;
+        border: 2px solid $darken-brand-color;
+        color: $darken-brand-color;
+        font-weight: 500;
       }
     }
     font-size: 0.9em;
-    .ranking {
-      visibility: hidden;
-    }
-    &:first-child .ranking {
-      visibility: visible;
-    }
     .text-right > div {
       margin-right: $padding;
     }
@@ -1244,7 +1237,7 @@ body#cambiu {
       display: flex;
     }
     font-weight: 400;
-    transform: scale(0.6, 0.6);
+    transform: scale(0.7, 0.7);
     color: #888;
     [data-field=gain_percent] {
 //      border: 1px solid purple;

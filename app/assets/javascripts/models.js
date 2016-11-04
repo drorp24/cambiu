@@ -23,7 +23,7 @@ populateDuration = function(exchange, $scope) {
 
 };
 
-populateExchange = function(exchange, $scope) {
+populateExchange = function(exchange, $scope, index) {
 
 //    console.log('exchange ' + exchange.id + ' - populateExchange');
 
@@ -53,6 +53,14 @@ populateExchange = function(exchange, $scope) {
         $phone_link.attr('href', 'tel:' + exchange.phone)
     } else {
         $phone_link.css('visibility', 'hidden')
+    }
+
+    if (exchange.base_rate) {
+        $scope.find('.ranking').html(index + 1);
+    } else {
+        $scope.find('[data-field=edited_quote]').css('margin-top', '0')
+        $scope.find('.comparison').css('display', 'none');
+        $scope.find('.ranking').css('display', 'none');
     }
 
     // Note: This and populateDuration are delayed to afford the streetview img's to load

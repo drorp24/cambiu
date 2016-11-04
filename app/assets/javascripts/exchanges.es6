@@ -27,7 +27,7 @@
             populateExchange(exchange, $pane)
         }
 
-        setTimeout(function(){progress('end')}, 2500);
+        setTimeout(function(){progress('end')}, 3500);
 
     };
 
@@ -38,7 +38,7 @@
         $card.appendTo($('#cards'));
         $card.find('.ranking_index').html(index + 1);
 
-        populateExchange(exchange, $card);
+        populateExchange(exchange, $card, index);
 
         fetchPlace(exchange)
             .then(exchange => {populatePlace(exchange, $card)})
