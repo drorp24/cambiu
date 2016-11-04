@@ -18,7 +18,7 @@ populateDuration = function(exchange, $scope) {
         $duration.find('[data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
         $duration.css({'bottom': bottom + 'px', 'left': left + 'px', width: width + 'px'});
         console.log('imgHeight: '+ $img.height());
-    }, 500);
+    }, 1000);
 
 
 };
