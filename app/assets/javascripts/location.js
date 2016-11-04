@@ -3,56 +3,37 @@
 
 getLocation = function() {
 
-    return new Promise(function(resolve, reject) {
-
-        console.log('getLocation');
-
-        if (!navigator.geolocation) {
-            positionError('unsupported');
-            return
-        }
-
-        var options = {
-            enableHighAccuracy: true,
-            timeout: 30000,
-            maximumAge: 30000
-        };
-
+    if (navigator.geolocation) {
+        console.log('calling navigator.geolocation....');
+        console.time('navigator.geolocation');
         navigator.geolocation.getCurrentPosition(
             positionFound,
             positionError,
-            options
+            {
+                enableHighAccuracy: true,
+                timeout: 30000,
+                maximumAge: 30000
+            }
         );
-
-        function positionFound(position) {
-
-            user.lat = position.coords.latitude;
-            user.lng = position.coords.longitude;
-            setPosition(user.lat, user.lng, 'user', 'found');
-        }
-
-        function positionError(error) {
-
-            var message = error.message ? error.message : error;
-            setPosition(def.lat, def.lng, 'default', 'Position error: ' + message);
-
-        }
-
-        function setPosition(lat, lng, type, reason) {
-
-            set('location_lat',     location.lat = lat);
-            set('location_lng',     location.lng = lng);
-            set('location_type',    location.type = type);
-            set('location_reason',  location.reason = reason);
-
-            resolve(location);
-
-        }
+    }
+    else {
+        positionError('unsupported');
+    }
+};
 
 
-    })
+positionFound = function(position) {
 
+    // user_lat & user_lng are global variables (non persisted)
+    user_lat = position.coords.latitude;
+    user_lng = position.coords.longitude;
 
+    positionDetermined(user_lat, user_lng, 'user', 'found');
+};
+
+positionError = function(error) {
+    var message = error.message ? error.message : error;
+    positionDetermined(def_lat, def_lng, 'default', 'Position error: ' + message);
 };
 
 

@@ -96,11 +96,10 @@ var photoHeight;
 var slidesAdded = [];
 var currentSlide = 0;
 var initialSlides = 10;
-var user = {};
-var def = {};
-def.lat = '51.51574678520366';
-def.lng = '-0.16346305847173426';
-var location = {};
+var user_lat;
+var user_lng;
+var def_lat = '51.51574678520366';
+var def_lng = '-0.16346305847173426';
 var ratingOptions = {
     theme: 'krajee-fa',
     filledStar: '<i class="fa fa-star"></i>',
