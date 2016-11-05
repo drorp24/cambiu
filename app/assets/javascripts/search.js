@@ -224,6 +224,7 @@ $(document).ready(function() {
 
     search = function(location) {
 
+        progress('start');
         var reason = location.reason ? location.reason : '';
         console.log('search invoked. ' + reason);
 
@@ -243,7 +244,6 @@ $(document).ready(function() {
                 return response.json()
             }
 
-            progress('start');
 
             fetch('/searches', {
                 method: 'post',
@@ -252,10 +252,11 @@ $(document).ready(function() {
                 .then(checkStatus)
                 .then(parseJson)
                 .then(function (data) {
-                    console.log(':) search completed succesfully');
-                    searchResult = data;
+                    console.log('search completed succesfully');
+                    searchResult = data.exchanges;
                     exchanges = data.exchanges.features;
                     resolve(searchResult);
+                    if (!openning_scene) setTimeout(function(){progress('end')}, 3500);
                 })
                 .catch(function (error) {
                     console.log('catch!');
@@ -319,11 +320,25 @@ $(document).ready(function() {
         }
     });
 
-    // Progress bar
+    // Radar & Progress bar
+
+
+    animation = function($e, verb) {
+        if (verb == 'start') {
+            $e.removeClass('fadeOut').css('display', 'block')
+        } else {
+            $e.addClass('fadeOut')
+        }
+    };
+
+    radar = function(verb) {
+        animation($('#newradar'), verb)
+    };
 
     progress = function(verb) {
-        $('.progress').css('display', verb == 'start' ? 'block' : 'none')
+        animation($('.progress'), verb)
     }
+
 
 
 

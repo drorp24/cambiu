@@ -9,6 +9,9 @@ $(document).ready(function() {
     console.log('flow');
 
 
+    openning_scene = true;
+    radar('start');
+    progress('start');
     populateParams();
 
     getLocation()
@@ -21,12 +24,12 @@ $(document).ready(function() {
             geocode(location)
         ])
         .then(placeGoogleMarkers)
-//        .then(placeSoftMarkers)
-        .then(radarScan)
+        .then(function() {setTimeout(function(){progress('end'); radar('end')}, 5500)})
     })
     .catch(alertError);
 
     setPage({url: window.location.pathname, populate: false});
+    openning_scene = false;
 
 
 });

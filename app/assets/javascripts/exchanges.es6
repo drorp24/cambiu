@@ -27,8 +27,6 @@
             populateExchange(exchange, $pane)
         }
 
-        setTimeout(function(){progress('end')}, 3500);
-
     };
 
 

@@ -2,6 +2,8 @@
 @import "font-awesome";
 
 // Variables
+$limelight: #EEFF41;
+$limedark: #B2FF59;
 $navbar_height: 60px;
 $navbar_background: rgba(0,0,0,0.30);
 $nav_icon_width: 2.5em;
@@ -445,7 +447,6 @@ body#cambiu {
   }
   */
 
-
   background-color: #fff;
 
   .flex_between {
@@ -459,12 +460,9 @@ body#cambiu {
   }
 
   .fadeOut {
-    visibility: none;
     opacity: 0;
-    transition: display 0s 2s, opacity 2s linear;
+    transition: display 0s 5s, opacity 5s linear;
   }
-
-
 
   .noPadding {
     margin-right: $negPadding;
@@ -483,19 +481,15 @@ body#cambiu {
     &.active {
       display: block;
     }
-     height: 100vh;
+    height: 100vh;
     .content {
       padding: 30px;
     }
   }
 
-
   .action {
     color: $darken-brand-color !important;
   }
-
-
-
 
   .align-items {
     display: flex;
@@ -513,7 +507,6 @@ body#cambiu {
     margin-bottom: 0;
   }
 
-
   #map_container, #directions_map_container {
     position: fixed;
     z-index: 1;
@@ -527,8 +520,6 @@ body#cambiu {
     }
   }
 
-
-
   #userLoc {
     position: absolute;
     background: #45453f;
@@ -539,10 +530,10 @@ body#cambiu {
 
   .marker {
     position: fixed;
-    opacity:0;
+    opacity: 0;
     z-index: 2;
     .fa-stack {
-      -webkit-filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.5));
+      -webkit-filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.5));
     }
     .fa-stack-2x {
       color: $brand-color;
@@ -550,7 +541,7 @@ body#cambiu {
     .fa-stack-1x {
       color: white;
     }
-}
+  }
 
   .pulse1 {
     position: absolute;
@@ -639,22 +630,34 @@ body#cambiu {
       opacity: 0.0;
     }
   }
-
-  #radar{
+  #radar_container {
     display: none;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  #radar {
+    //    display: none;
     position: relative;
     z-index: 2;
-    width:321px;
-    height:321px;
-    background:rgba(0,0,0,0.3) url(https://i.stack.imgur.com/vY6Tl.png);
-    border-radius:321px;
-    overflow:hidden;
+    width: 321px;
+    height: 321px;
+    background: rgba(0, 0, 0, 0.3) url(https://i.stack.imgur.com/vY6Tl.png);
+    border-radius: 321px;
+    overflow: hidden;
   }
-  #rad{
-    position:absolute;
-    width:321px;
-    height:321px;
-    background:url(https://i.stack.imgur.com/fbgUD.png);
+  #rad {
+    position: absolute;
+    width: 321px;
+    height: 321px;
+    background: url(https://i.stack.imgur.com/fbgUD.png);
   }
   /*
   .obj{
@@ -674,36 +677,33 @@ body#cambiu {
 
   */
 
+  .padlessBtn {
+    margin: 0;
+    padding-bottom: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
 
+  .yellow {
+    color: yellow;
+  }
 
-.padlessBtn {
-  margin: 0;
-  padding-bottom: 2px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.yellow {
-  color: yellow;
-}
-
-
-.ecard {
-  background-color: #fff;
-  box-shadow: 0px 1px 15px rgba(0, 0, 0, .2);
-  .active_ind {
-    height: 3px;
+  .ecard {
     background-color: #fff;
-  }
+    box-shadow: 0px 1px 15px rgba(0, 0, 0, .2);
+    .active_ind {
+      height: 3px;
+      background-color: #fff;
+    }
 
-  &.swiper-slide-active .active_ind{
-    background-color: $brand-color;
+    &.swiper-slide-active .active_ind {
+      background-color: $brand-color;
+    }
   }
-}
-.swiper-container {
-  display: none;
-  z-index: 2;
-}
+  .swiper-container {
+    display: none;
+    z-index: 2;
+  }
 
   .swiper-container-h {
     width: 100%;
@@ -714,15 +714,14 @@ body#cambiu {
     padding-top: 10px;
     padding-bottom: 10px;
     box-shadow: 1px 2px 13px rgba(0, 0, 0, .5);
+    z-index: 3;
   }
-
 
   // temp
   .swiper-pagination-fraction {
     font-size: 1.1em;
     bottom: 0;
   }
-
 
   .img-circle {
     border-radius: 50%;
@@ -748,17 +747,13 @@ body#cambiu {
   }
 
   .list-group-item:nth-child(odd) {
-//    background-color: #eee;
+    //    background-color: #eee;
   }
 
-
-  #exchanges_items .list-group-item{
+  #exchanges_items .list-group-item {
     padding-top: 20px;
     padding-bottom: 20px;
   }
-
-
-
 
   .loader {
     margin: 60px auto;
@@ -802,24 +797,84 @@ body#cambiu {
     }
   }
 
+  #newradar {
+  img {
+    z-index: 4;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
 
+    #pulse1, #pulse2 {
+      border-radius:50%;
+      position:absolute;
+      height: 150px; width: 150px;
+      top: 50%; left:50%;
+      border: 2px solid rgba(66, 152, 181, 1);
+      -webkit-animation: pulsate 3s infinite;
+      animation: pulsate 3s infinite;
+      background-color:#4298b5;
+      -webkit-transform:translateX(-50%) translateY(-50%);
+      transform:translateX(-50%) translateY(-50%);
+    }
+    #pulse2 {
+      -webkit-animation: pulsate 3s -.5s infinite;
+      animation: pulsate 3s -.5s infinite;
+    }
+    @-webkit-keyframes pulsate {
+      0%,100% {
+        width:150px;
+        height:150px;
+        opacity:0;
+      }
+      1% { opacity:1; }
+      70% {
+        opacity:0.5;
+      }
+      99.999% {
+        width:950px;
+        height:950px;
+        opacity:0;
+      }
+    }
+    @keyframes pulsate {
+      0%,100% {
+        width:150px;
+        height:150px;
+        opacity:0;
+      }
+      1% { opacity:1; }
+      70% {
+        opacity:0.5;
+      }
+      99.999% {
+        width:950px;
+        height:950px;
+        opacity:0;
+      }
+    }
+}
 
 
   /* Progress Bar */
   .progress {
     z-index: 2;
     position: absolute;
-    display: none;
     height: 12px;
     width: 100%;
     background-color: #acece6;
     background-color: lighten($brand-color, 30%);
+    background-color: $limelight;
     border-radius: 2px;
     background-clip: padding-box;
     overflow: hidden; }
     .indeterminate {
       background-color: #26a69a;
       background-color: $brand-color;
+      background-color: $limedark;
       &:before {
         content: '';
         position: absolute;
@@ -1025,6 +1080,7 @@ body#cambiu {
     }
     .more {
       &:before {
+        visibility: hidden;
         content: 'more'
       }
     }
@@ -1043,6 +1099,7 @@ body#cambiu {
       }
       .more {
         &:before {
+          visibility: visible;
           content: 'less'
         }
       }
@@ -1236,8 +1293,8 @@ body#cambiu {
     .comparison_item {
       display: flex;
     }
-    font-weight: 400;
-    transform: scale(0.7, 0.7);
+    font-weight: 300;
+    transform: scale(0.9, 0.9);
     color: #888;
     [data-field=gain_percent] {
 //      border: 1px solid purple;
@@ -1299,6 +1356,7 @@ body#cambiu {
 
   .lessmore {
     position: absolute;
+    bottom: 10px;
     right: $padding;
     &:after {
       content: "\f078";
@@ -1689,7 +1747,6 @@ body#cambiu {
 
     /*progressbar*/
   #progressbar {
-    display: none;
     position: fixed;
     width: 35%;
     top: 0;

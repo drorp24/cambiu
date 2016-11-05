@@ -101,7 +101,7 @@
 
     placeGoogleMarkers = function() {
         console.log('placeGoogleMarkers');
-        map.data.addGeoJson(search.exchanges);
+        map.data.addGeoJson(searchResult);
     };
 
     clearGoogleMarkers = function() {
@@ -222,4 +222,6 @@
         var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
         return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
     };
+
+
 

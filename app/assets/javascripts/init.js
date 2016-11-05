@@ -127,7 +127,7 @@ sessionStorage.videoStopped = null;
 
 alertError = function(error) {
     console.log('alertError');
-    console.error(error);
+    console.error(new Error(error));
     snack(error);
 
 };
