@@ -92,19 +92,6 @@ followUser = function() {
 
     }
 
-    function showUserPosition(lat, lng) {
-
-        if (!map || !map.getProjection()) {
-            console.warn('showUserPosition: map isnt ready yet');
-            return
-        }
-
-        var user_latlng = new google.maps.LatLng(lat, lng);
-        map.panTo(user_latlng);
-        $('#userLoc').css('top', centerYpx).css('left', centerXpx);
-
-    }
-
 };
 
 
@@ -158,6 +145,19 @@ geocode = function(location) {
     }
 };
 
+
+showUserPosition = function(lat, lng) {
+
+    if (!map || !map.getProjection()) {
+        console.warn('showUserPosition: map isnt ready yet');
+        return
+    }
+
+    var user_latlng = new google.maps.LatLng(lat, lng);
+    map.panTo(user_latlng);
+    $('#userLoc').css('top', centerYpx).css('left', centerXpx);
+
+};
 
 
 

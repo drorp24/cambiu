@@ -256,7 +256,7 @@ $(document).ready(function() {
                     searchResult = data.exchanges;
                     exchanges = data.exchanges.features;
                     resolve(searchResult);
-                    if (!openning_scene) setTimeout(function(){progress('end')}, 3500);
+                    if (!openning) setTimeout(function(){progress('end')}, 3500);
                 })
                 .catch(function (error) {
                     console.log('catch!');
@@ -266,35 +266,6 @@ $(document).ready(function() {
         })
 
     };
-
-
-    // Card interaction
-
-    $('body').on('click tap', '.ecard:not(.selected)', function(e) {
-        e.stopPropagation();
-        var $this = $(this);
-        $('.progress').css('display', 'none');
-        $this.css('transform', 'translate(' + cardXoffset + ', 10px)');
-        $this.addClass('selected');
-    });
-
-    $('body').on('click tap', '.ecard.selected .actions_line', function(e) {
-        e.stopPropagation();
-        var $currCard = $('.swiper-slide-active');
-        var cardWasSelected = $currCard.hasClass('selected');
-        $currCard.toggleClass('selected');   // toggleClass performed before renderDirection to prevent ui ticks
-        if (cardWasSelected) {
-            renderDirections(currExchange())
-        } else {
-            $currCard.css('transform', 'translate(' + cardXoffset + ', 10px)');
-        }
-    });
-
-    $('body').on('click tap', '.nav_icon', function(e) {
-        e.stopPropagation();
-        renderDirections(currExchange());
-        $('.swiper-slide-active').removeClass('selected');
-    });
 
 
 
@@ -319,27 +290,5 @@ $(document).ready(function() {
             slider.noUiSlider.set(80);
         }
     });
-
-    // Radar & Progress bar
-
-
-    animation = function($e, verb) {
-        if (verb == 'start') {
-            $e.removeClass('fadeOut').css('display', 'block')
-        } else {
-            $e.addClass('fadeOut')
-        }
-    };
-
-    radar = function(verb) {
-        animation($('#newradar'), verb)
-    };
-
-    progress = function(verb) {
-        animation($('.progress'), verb)
-    }
-
-
-
 
 });

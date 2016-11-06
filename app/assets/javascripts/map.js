@@ -89,9 +89,6 @@
 
             google.maps.event.addListener(map, 'zoom_changed', function () {
 
-                $('.marker').each(function () {
-                    positionSoftMarker(null, $(this))
-                });
             });
 
 
@@ -108,6 +105,51 @@
         map.data.forEach(function(feature) {
             map.data.remove(feature);
         });
+    };
+
+    addGoogleMarkers = function() {
+
+        console.log('addGoogleMarkers');
+
+        return new Promise(function(resolve, reject) {
+
+            (function loop(i) {
+
+                var timeout = 500;
+                var exchange = exchanges[i].properties;
+                setTimeout(function () {
+
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        optimized: false,
+                        icon: '/logo_no_text.png',
+                        position: {lat: exchange.latitude, lng: exchange.longitude}
+                    });
+
+                    if (--i >= 0) {
+                        loop(i)
+                    } else {
+                        setTimeout(resolve, timeout);
+                    }
+
+                }, timeout);
+
+            })(exchanges.length - 1);
+
+        })
+
+     };
+
+    // define a markers layer and id it so google markers can be styled in css (as '#markerLayer img')
+    // if not needed, then 'optimized: false' should be removed from marker creation
+    idMarkerLayer = function() {
+        console.log('idMarkerLayer');
+        var myoverlay = new google.maps.OverlayView();
+        myoverlay.draw = function () {
+            this.getPanes().markerLayer.id='markerLayer';
+        };
+        myoverlay.setMap(map);
     };
 
     placeSoftMarkers = function() {
@@ -141,11 +183,12 @@
 //        console.log('renderDirections');
 
         if (directionsRenderedFor == exchange.id) return;
-        var directionsRenderedFor = exchange.id;
+        directionsRenderedFor = exchange.id;
+
         var origin =            new google.maps.LatLng(user.lat, user.lng);
         var destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
-        calcRoute(origin, destination);
 
+        calcRoute(origin, destination);
     };
 
     clearDirections = function() {
@@ -222,6 +265,20 @@
         var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
         return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
     };
+
+    // the smooth zoom function
+    function smoothZoom (map, max, cnt) {
+        if (cnt >= max) {
+            return;
+        }
+        else {
+            z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+                google.maps.event.removeListener(z);
+                smoothZoom(map, max, cnt + 1);
+            });
+            setTimeout(function(){map.setZoom(cnt)}, 150); // 80ms is what I found to work well on my system -- it might not work well on all systems
+        }
+    }
 
 
 

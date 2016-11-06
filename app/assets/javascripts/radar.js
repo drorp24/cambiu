@@ -1,4 +1,55 @@
-/*
+// Radar & Progress bar
+
+
+animation = function($e, verb) {
+    if (verb == 'start') {
+        $e.removeClass('fadeOut').css('display', 'block')
+    } else {
+        $e.addClass('fadeOut')
+    }
+};
+
+radar = function(verb) {
+    if (verb == 'remove') {
+        $('#newradar').remove()
+    } else {
+        animation($('#newradar'), verb)
+    }
+};
+
+progress = function(verb) {
+    animation($('.progress'), verb)
+};
+
+openning_scene = function(verb) {
+
+    if (verb == 'start') {
+        radar('start');
+        progress('start');
+        openning = true;
+    } else
+
+    if (verb == 'stop') {
+        radar('stop');
+        progress('stop');
+        openning = false;
+//        setTimeout(function(){radar('remove')}, 5500)
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  authentic scanning radar
 var radarLoop;
 
 radarScan = function() {
@@ -30,3 +81,4 @@ radarStop = function() {
     $('.marker').stop().fadeTo(1,1);
 };
 */
+

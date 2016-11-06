@@ -59,7 +59,7 @@ var findMarker;
 var exchange_el;
 var closeInfowindows;
 var zoom_changed_by_user = true;
-var map_initial_zoom = 12;
+var map_initial_zoom = 10;
 var map_center_changed = false;
 var directionsService;
 var big_marker;
@@ -127,13 +127,13 @@ sessionStorage.videoStopped = null;
 
 alertError = function(error) {
     console.log('alertError');
-    console.error(new Error(error));
+    logError(error);
     snack(error);
 
 };
 
 logError = function(error) {
-    console.error(error);
+    console.error(new Error(error));
 };
 
 
@@ -463,7 +463,8 @@ $(document).ready(function() {
 
     window.addEventListener('error', function (e) {
         console.log('addEventListener: error');
-        snack(e.error)
+        logError(error);
+        snack(error);
     });
 
     bodyWidth       = $('body').width().toFixed();

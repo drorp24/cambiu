@@ -64,7 +64,8 @@ populateExchange = function(exchange, $scope, index) {
     }
 
     // Note: This and populateDuration are delayed to afford the streetview img's to load
-
+    // if img's height is set to 0 (=because img's hasn't loaded yet when this code is executed) then either use the below solution or just give-up setting their height
+    // http://stackoverflow.com/questions/280049/javascript-callback-for-knowing-when-an-image-is-loaded
     setTimeout(function(){
         if (!cardHeight || !cardXoffset) {
             cardHeight = $scope.height();
@@ -72,9 +73,9 @@ populateExchange = function(exchange, $scope, index) {
         }
         $scope.css('height', cardHeight);
         var $img = $photo.find('img');
-        $img.css('height', $img.height());
+        if ($img.height()) $img.css('height', $img.height());
         $('.progress').css('bottom', String(cardHeight + 2) + 'px');
-    }, 1000);
+    }, 2000);
 
 
 };

@@ -49,27 +49,9 @@
         slidesAdded.push(index);
 
         if (index == 0) $('.swiper-container').css('display', 'block')
+
     }
 
-
-    currIndex = () => swiperH.activeIndex;
-
-
-    currExchange = function() {
-
-        var length = exchanges.length;
-        var index = currIndex();
-
-             if (exchanges && length > 0) {
-                if (index < length) {
-                    return exchanges[index].properties
-                } else {
-                    throw new Error('index > exchanges length');
-                }
-            } else {
-                throw new Error('exchanges is empty');
-            }
-     };
 
     findExchange = function(id) {
         if (exchanges && exchanges.length > 0) {
@@ -115,4 +97,59 @@
             }
         });
     };
+
+
+    // Card interaction
+
+    currIndex = () => swiperH.activeIndex;
+
+    currCard = () => $('.swiper-slide-active');
+
+    currExchange = function() {
+
+        var length = exchanges.length;
+        var index = currIndex();
+
+        if (exchanges && length > 0) {
+            if (index < length) {
+                return exchanges[index].properties
+            } else {
+                throw new Error('index > exchanges length');
+            }
+        } else {
+            throw new Error('exchanges is empty');
+        }
+    };
+
+    $('body').on('click tap', '.ecard:not(.selected)', function(e) {
+        e.stopPropagation();
+        var $this = $(this);
+        $('.progress').css('display', 'none');
+        $this.css('transform', 'translate(' + cardXoffset + ', 10px)');
+        $this.addClass('selected');
+    });
+
+    $('body').on('click tap', '.ecard.selected .actions_line, .ecard.selected .nav_icon', function(e) {
+
+        e.stopPropagation();
+        var $navBtn = $('.nav_icon_container');
+        $navBtn.addClass('rotate');
+        renderDirections(currExchange());
+
+        setTimeout(function(){
+
+            currCard().removeClass('selected')
+            $navBtn.removeClass('rotate');
+
+        }, 500);
+
+    });
+
+    $('body').on('click tap', '.nav_icon', function(e) {
+        e.stopPropagation();
+        $('.nav_icon_container').addClass('rotate')
+    });
+
+
+
 
