@@ -32,9 +32,8 @@
 
     function addCard(exchange, index) {
 
-        var $card = $('.ecard.template').clone().removeClass('template')
+        var $card = $('.ecard.template').clone().removeClass('template');
         $card.appendTo($('#cards'));
-        $card.find('.ranking_index').html(index + 1);
 
         populateExchange(exchange, $card, index);
 
@@ -47,55 +46,13 @@
             .catch(error => {console.warn(error)});
 
         slidesAdded.push(index);
-
-        if (index == 0) $('.swiper-container').css('display', 'block')
-
     }
 
-
-    findExchange = function(id) {
-        if (exchanges && exchanges.length > 0) {
-            var results = $.grep(exchanges, function(e){ return e.properties.id == id; });
-            if (results[0]) {
-                return results[0].properties;
-            } else {
-                throw new Error('exchange ' + id + ' was not found in exchanges array');
-            }
-        } else {
-            console.log('exchanges is empty');
-            throw new Error('exchanges is empty');
-         }
-    };
-
-    updateExchange = function(exchange_id, data) {
-        $.ajax({
-            type: 'PUT',
-            url: '/exchanges/' + exchange_id,
-            data: data,
-            dataType: 'JSON',
-            success: function (data) {
-                console.log('Exchange successfully updated');
-            },
-            error: function (data) {
-                console.log('There was an error updating the exchange');
-            }
-        });
-    };
-
-    getExchange = function(exchange_id, property) {
-        $.ajax({
-            type: 'GET',
-            url: '/exchanges/' + exchange_id + '/get',
-            data: 'property=' + property,
-            dataType: 'JSON',
-            success: function (data) {
-                console.log('Exchange successfully returned value');
-                console.log(data)
-            },
-            error: function (data) {
-                console.log('There was an error getting value from the exchange');
-            }
-        });
+    revealCards = function() {
+        $('.swiper-container').css('display', 'block');
+        setTimeout(function() {
+            cardXoffset = String(($('.ecard').eq(0).position().left + $('#cards').position().left) * -1) + 'px';
+        }, 1000)
     };
 
 
@@ -151,5 +108,52 @@
     });
 
 
+
+    // Utility functions
+
+    findExchange = function(id) {
+        if (exchanges && exchanges.length > 0) {
+            var results = $.grep(exchanges, function(e){ return e.properties.id == id; });
+            if (results[0]) {
+                return results[0].properties;
+            } else {
+                throw new Error('exchange ' + id + ' was not found in exchanges array');
+            }
+        } else {
+            console.log('exchanges is empty');
+            throw new Error('exchanges is empty');
+        }
+    };
+
+    updateExchange = function(exchange_id, data) {
+        $.ajax({
+            type: 'PUT',
+            url: '/exchanges/' + exchange_id,
+            data: data,
+            dataType: 'JSON',
+            success: function (data) {
+                console.log('Exchange successfully updated');
+            },
+            error: function (data) {
+                console.log('There was an error updating the exchange');
+            }
+        });
+    };
+
+    getExchange = function(exchange_id, property) {
+        $.ajax({
+            type: 'GET',
+            url: '/exchanges/' + exchange_id + '/get',
+            data: 'property=' + property,
+            dataType: 'JSON',
+            success: function (data) {
+                console.log('Exchange successfully returned value');
+                console.log(data)
+            },
+            error: function (data) {
+                console.log('There was an error getting value from the exchange');
+            }
+        });
+    };
 
 

@@ -8,8 +8,7 @@ $(document).ready(function() {
 
     console.log('flow');
 
-
-    openning_scene('start');
+    start_show();
     populateParams();
 
     getLocation()
@@ -21,14 +20,13 @@ $(document).ready(function() {
                 .then(addCards),
             geocode(location)
         ])
-        .then(idMarkerLayer)
+        .then(stop_show)
         .then(addGoogleMarkers)
-        .then(function()  {smoothZoom(map, 16, map.getZoom())}    )
-        .then(function() {openning_scene('stop')})
+        .then(zoomIn)
+        .then(revealCards)
     })
     .catch(alertError);
 
     setPage({url: window.location.pathname, populate: false});
-
 
 });

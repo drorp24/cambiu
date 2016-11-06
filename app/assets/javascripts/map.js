@@ -63,14 +63,15 @@
 
             google.maps.event.addListenerOnce(map, 'idle', function () {
                 // do something only the first time the map is loaded
+            });
 
-                console.log('map completed drawing');
+            google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
                 resolve();
-
             });
 
 
-             google.maps.event.addListener(map, 'dragend', function () {
+
+            google.maps.event.addListener(map, 'dragend', function () {
 
                   // irritating, but inevitable since i can't stick the user's blue dot to a place on the map (it's always on the screen's center)
                  // re-center map around user *cuurent* position if he drags the map around
@@ -82,9 +83,6 @@
 
             google.maps.event.addListener(map, 'center_changed', function () {
 
-                $('.marker').each(function () {
-                    positionSoftMarker(null, $(this))
-                });
             });
 
             google.maps.event.addListener(map, 'zoom_changed', function () {
@@ -110,6 +108,8 @@
     addGoogleMarkers = function() {
 
         console.log('addGoogleMarkers');
+
+        idMarkerLayer();
 
         return new Promise(function(resolve, reject) {
 
@@ -279,6 +279,10 @@
             setTimeout(function(){map.setZoom(cnt)}, 150); // 80ms is what I found to work well on my system -- it might not work well on all systems
         }
     }
+
+    zoomIn = function() {
+        smoothZoom(map, 16, map.getZoom())
+    };
 
 
 

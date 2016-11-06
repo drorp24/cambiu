@@ -477,9 +477,15 @@ body#cambiu {
   }
 
   .fadeOut {
-    display: none !important;
     opacity: 0;
-    transition: display 5s 5s, opacity 5s linear;
+    transition: display 7s 7s, opacity 7s linear;
+    /* done in code to afford 5s delay or else the radar fades abruptly
+    &#newradar {
+      #pulse3, #pulse4 {
+        @include stopAnimate;
+      }
+    }
+    */
   }
 
   .noPadding {
@@ -826,7 +832,7 @@ body#cambiu {
     transform: translateX(-50%) translateY(-50%);
   }
 
-    #pulse1, #pulse2 {
+    #pulse3, #pulse4 {
       border-radius:50%;
       position:absolute;
       height: 150px; width: 150px;
@@ -838,7 +844,7 @@ body#cambiu {
       -webkit-transform:translateX(-50%) translateY(-50%);
       transform:translateX(-50%) translateY(-50%);
     }
-    #pulse2 {
+    #pulse4 {
       -webkit-animation: pulsate 3s -.5s infinite;
       animation: pulsate 3s -.5s infinite;
     }

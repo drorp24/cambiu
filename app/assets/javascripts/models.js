@@ -58,7 +58,7 @@ populateExchange = function(exchange, $scope, index) {
     if (exchange.base_rate) {
         $scope.find('.ranking').html(index + 1);
     } else {
-        $scope.find('[data-field=edited_quote]').css('margin-top', '0')
+        $scope.find('[data-field=edited_quote]').css('margin-top', '0');
         $scope.find('.comparison').css('display', 'none');
         $scope.find('.ranking').css('display', 'none');
     }
@@ -67,9 +67,8 @@ populateExchange = function(exchange, $scope, index) {
     // if img's height is set to 0 (=because img's hasn't loaded yet when this code is executed) then either use the below solution or just give-up setting their height
     // http://stackoverflow.com/questions/280049/javascript-callback-for-knowing-when-an-image-is-loaded
     setTimeout(function(){
-        if (!cardHeight || !cardXoffset) {
+        if (!cardHeight) {
             cardHeight = $scope.height();
-            cardXoffset = String(($scope.position().left + $('#cards').position().left) * -1) + 'px';
         }
         $scope.css('height', cardHeight);
         var $img = $photo.find('img');

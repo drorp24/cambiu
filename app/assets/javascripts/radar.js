@@ -5,7 +5,12 @@ animation = function($e, verb) {
     if (verb == 'start') {
         $e.removeClass('fadeOut').css('display', 'block')
     } else {
-        $e.addClass('fadeOut')
+        $e.addClass('fadeOut');
+        setTimeout(function() {
+            $e.find('#pulse3').css('animation-name', 'none');
+            $e.find('#pulse4').css('animation-name', 'none');
+            $e.css('display', 'none !important')
+        }, 5000)
     }
 };
 
@@ -21,7 +26,7 @@ progress = function(verb) {
     animation($('.progress'), verb)
 };
 
-openning_scene = function(verb) {
+show = function(verb) {
 
     if (verb == 'start') {
         radar('start');
@@ -33,9 +38,11 @@ openning_scene = function(verb) {
         radar('stop');
         progress('stop');
         openning = false;
-//        setTimeout(function(){radar('remove')}, 5500)
     }
 };
+
+start_show = function() {show('start')};
+stop_show = function() {show('stop')};
 
 
 
