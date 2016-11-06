@@ -115,7 +115,7 @@
 
             (function loop(i) {
 
-                var timeout = 500;
+                var timeout = 250;
                 var exchange = exchanges[i].properties;
                 setTimeout(function () {
 
@@ -276,7 +276,7 @@
                 google.maps.event.removeListener(z);
                 smoothZoom(map, max, cnt + 1);
             });
-            setTimeout(function(){map.setZoom(cnt)}, 150); // 80ms is what I found to work well on my system -- it might not work well on all systems
+            setTimeout(function(){map.setZoom(cnt)}, 300); // 80ms is what I found to work well on my system -- it might not work well on all systems
         }
     }
 

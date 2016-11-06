@@ -18,7 +18,7 @@ populateDuration = function(exchange, $scope) {
         $duration.find('[data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
         $duration.css({'bottom': bottom + 'px', 'left': left + 'px', width: width + 'px'});
         console.log('imgHeight: '+ $img.height());
-    }, 1000);
+    }, 10000);
 
 
 };
@@ -64,7 +64,8 @@ populateExchange = function(exchange, $scope, index) {
     }
 
     // Note: This and populateDuration are delayed to afford the streetview img's to load
-    // if img's height is set to 0 (=because img's hasn't loaded yet when this code is executed) then either use the below solution or just give-up setting their height
+    // This is a better, albeit less guaranteed way to wait, since the below requires setting a separate event on each and every img
+    // If it's not enough just increase the waiting time
     // http://stackoverflow.com/questions/280049/javascript-callback-for-knowing-when-an-image-is-loaded
     setTimeout(function(){
         if (!cardHeight) {
