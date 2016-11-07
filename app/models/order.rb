@@ -14,6 +14,7 @@ class Order < ActiveRecord::Base
     self.expiry = 4.hours.from_now
   end
 
+  attr_accessor :email, :phone
 
   after_commit   :order_notification
 

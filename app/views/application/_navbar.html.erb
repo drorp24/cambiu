@@ -1,11 +1,1 @@
-<% if request.domain == 'cambiu.com' %>
-    <%= render 'navbar_cambiu', logo: 'cambiu' %>
-<% elsif request.domain == 'currency-net.com' %>
-    <%= render 'navbar_cambiu', logo: 'cn' %>
-<% elsif request.domain == 'localhost' %>
-    <% if @mode == 'search' %>
-        <%= render 'navbar_cambiu', logo: 'cambiu' %>
-    <% elsif @mode == 'exchange' %>
-        <%= render 'navbar_cambiu', logo: 'cn' %>
-    <% end %>
-<% end %>
+<%= render 'navbar_cambiu', logo: 'cambiu' %>

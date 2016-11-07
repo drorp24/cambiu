@@ -109,7 +109,7 @@ $(document).ready(function() {
         }
      });
 
-    new_search_validator.form();
+//    new_search_validator.form();
 
     // required since for some reason jquery.validate only validates after reload
     custom_validate = function(form_el) {
