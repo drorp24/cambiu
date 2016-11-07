@@ -39,11 +39,6 @@
             };
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-// TODO: Remove
-             var location_marker = new google.maps.Marker({
-             position: new google.maps.LatLng(latitude, longitude),
-             map: map
-             });
 
             map.data.addListener('click', function (event) {
 

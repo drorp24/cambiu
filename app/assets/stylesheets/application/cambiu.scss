@@ -26,6 +26,12 @@ $font-family: 'Roboto', sans-serif;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
+$brand-color: #FF5722;
+$brand-color: #00E676;
+$brand-color: #2196F3;
+$brand-color: #607D8B;
+$brand-color: #FF1744;
+$brand-color: #FF4081;
 $darken-brand-color: darken($brand-color, 10%);
 $lightgreen: #5FA531;
 $lightgreen: #777;
@@ -512,7 +518,7 @@ body#cambiu {
   }
 
   .action {
-    color: $darken-brand-color !important;
+    color: $brand-color !important;
   }
 
   .align-items {
@@ -1084,6 +1090,9 @@ body#cambiu {
 
 
   .ecard{
+    .actions_line {
+      justify-content: space-between;
+    }
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -1221,7 +1230,7 @@ body#cambiu {
         @include threedots(100%);
       }
       [data-field=name] {
-        color: $darken-brand-color;
+        color: $brand-color;
         font-weight: 400;
         font-size: 1.3em;
         @include threedots(100%);
@@ -1304,7 +1313,7 @@ body#cambiu {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     div {
       display: inline-block;
     }
@@ -1316,6 +1325,9 @@ body#cambiu {
 
 
   .comparison {
+    [data-field=gain_type] {
+      text-transform: uppercase;
+    }
 //    border: 1px solid red;
     display: flex;
     align-content: center;
