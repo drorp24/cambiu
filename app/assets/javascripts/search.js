@@ -145,7 +145,9 @@ $(document).ready(function() {
         if (inputValid()) {
             set('location_reason', 'user search');
             search(search.location)
+                .then(sortExchanges)
                 .then(addCards)
+                .then(function() {swiperH.slideTo(0, 1000, false)})
                 .catch(showError);
             window.history.back();
         }

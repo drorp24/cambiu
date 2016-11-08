@@ -159,14 +159,14 @@
         console.log('sortExchanges. sortkey == ' + sortkey);
         if (exchanges.length == 0) return exchanges;
 
-        if (sort == 'distance') {
+        if (sortkey == 'distance') {
             exchanges.sort(function(a, b){return a.properties.distance - b.properties.distance});
         }
-        else if (sort == 'price') {
+        else if (sortkey == 'price') {
             if (value_of('buy_amount')) {
                 exchanges.sort(function(a, b){return (a.properties.quote ? a.properties.quote : 10000000) - (b.properties.quote ? b.properties.quote : 10000000)});
             } else {
-                exchanges.sort(function(a, b){return (b.properties.quote ? b.properties.quote : 10000000) - (a.properties.quote ? a.properties.quote : 10000000)});
+                exchanges.sort(function(a, b){return (b.properties.quote ? b.properties.quote : 0) - (a.properties.quote ? a.properties.quote : 0)});
             }
         }
 

@@ -7,7 +7,7 @@ $limedark: #B2FF59;
 $navbar_height: 60px;
 $navbar_background: rgba(0,0,0,0.30);
 $nav_icon_width: 2.5em;
-$card-transition-time: 1s;
+$card-transition-time: 0.8s;
 $padding: 15px;
 $negPadding: -15px;
 $photoPadding: 15;
@@ -102,7 +102,7 @@ $exchange_summary_bg_img_height_mobile: 75px;
 }
 
 @mixin rotateReturn {
-  @include animate(rotateReturn, 0.5s, linear, forwards, 0s);
+  @include animate(rotateReturn, 0.3s, linear, forwards, 0s);
 }
 
 
