@@ -5,12 +5,10 @@
 
 
 
-    addCards = function(sort) {
+    addCards = function(exchanges) {
 
         console.log('addCards');
-
-        var sort = sort ? sort : value_of('sort');
-        exchanges = sort_by(sort);
+        console.log(exchanges)
 
         $('#cards').empty();
         for (var i = 0; i < Math.min(initialSlides, exchanges.length); i++) {
@@ -155,5 +153,26 @@
             }
         });
     };
+
+    sortExchanges = function(exchanges, sortkey = 'price') {
+
+        console.log('sortExchanges. sortkey == ' + sortkey);
+        if (exchanges.length == 0) return exchanges;
+
+        if (sort == 'distance') {
+            exchanges.sort(function(a, b){return a.properties.distance - b.properties.distance});
+        }
+        else if (sort == 'price') {
+            if (value_of('buy_amount')) {
+                exchanges.sort(function(a, b){return (a.properties.quote ? a.properties.quote : 10000000) - (b.properties.quote ? b.properties.quote : 10000000)});
+            } else {
+                exchanges.sort(function(a, b){return (b.properties.quote ? b.properties.quote : 10000000) - (a.properties.quote ? a.properties.quote : 10000000)});
+            }
+        }
+
+        return exchanges;
+    };
+
+
 
 

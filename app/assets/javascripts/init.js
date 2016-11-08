@@ -28,8 +28,6 @@ var exchanges_by_price = [];
 var exchanges_by_distance = [];
 var drawMap;
 var clearExchanges;
-var sort_by;
-var sort_ui;
 var set;
 var bind;
 var set_defaults;
@@ -123,27 +121,6 @@ var cardXoffset = null;
 
 
 sessionStorage.videoStopped = null;
-
-
-alertError = function(error) {
-    console.log('alertError');
-    logError(error);
-    snack(error);
-
-};
-
-logError = function(error) {
-    console.error(new Error(error));
-};
-
-
-toggleOrder = function($el) {
-
-    var order       = $el.attr('data-order');
-    var toggledOrder    = order == 'asc' ? 'desc' : 'asc';
-    $el.attr('data-order', toggledOrder);
-    return $el;
-};
 
 
 def_vals = function() {
@@ -425,48 +402,6 @@ $(document).ready(function() {
         updateExchange(exchange_id, {'exchange[rating]': value});
     });
 
-    // Error reporting
-    // A *centralized* 'catch' for all runtime exception as well as my own 'throw Error' statements that have no try/catch (= meant to stop execution)
-    // (not a real 'catch': they will appear as 'uncaught' in the console)
-    // As long as the 'throw' statement comes with 'new Error' rather than just string, this event gets a JS Error object that include the non-standard '.stack' property
-    // the error.name and error.stack could be sent to server for alerting (email) and persisting
-    // the console shows the stack and includes there source maps! Perhaps it will do the same in production when they are supported by sprockets?
-
-    // Note1: It doesn't catch 'throw' statements at all if the throw including function is invoked by a Promise. My promises catch their own errors
-    // Note2: When throw is Uncaught by browser (whether Promise or not), browser shows source-map'ed stack under the left triangle. Otherwise compressed in the '...'
-
-    snackHtml = function(arg) {
-        var message = arg.message,
-            buttonName = arg.buttonName || 'dismiss',
-            modalText = arg.modalText || null;
-
-        var $e = $('.snack.template').clone().removeClass('template').addClass('active');
-        $e.find('.message').html(message);
-        if (buttonName) $e.find('.button').html(buttonName);
-        return $e.html();
-    };
-
-    snack = function(message) {
-        $.snackbar({
-            timeout: 500000, //temp
-            htmlAllowed: true,
-            content: snackHtml({
-                message: message,
-                buttonName: 'dismiss'
-            })
-        })
-    };
-
-    $('body').on('click tap', '.snack .button', function() {
-        $('.snackbar.snackbar-opened').snackbar("hide");
-    });
-
-    window.addEventListener('error', function (e) {
-        console.log('addEventListener: error');
-        logError(error);
-        snack(error);
-    });
-
     bodyWidth       = $('body').width().toFixed();
     bodyHeight      = window.innerHeight;
     halfBodyHeight  = (bodyHeight / 2).toFixed();
@@ -499,6 +434,91 @@ $(document).ready(function() {
     });
 
     initSwipers();
+
+
+    // User messages (snackbar)
+
+    snackHtml = function(arg) {
+        var message = arg.message,
+            buttonName = arg.buttonName || 'dismiss',
+            modalText = arg.modalText || null;
+
+        var $e = $('.snack.template').clone().removeClass('template').addClass('active');
+        $e.find('.message').html(message);
+        if (buttonName) $e.find('.button').html(buttonName);
+        return $e.html();
+    };
+
+    snack = function(message) {
+        $.snackbar({
+            timeout: 500000, //temp
+            htmlAllowed: true,
+            content: snackHtml({
+                message: message,
+                buttonName: 'dismiss'
+            })
+        })
+    };
+
+    $('body').on('click tap', '.snack .button', function() {
+        $('.snackbar.snackbar-opened').snackbar("hide");
+    });
+
+
+    // Error Handling
+
+    logError = function(error) {
+        var stack = error.stack;
+        var message = error.toString();
+        var text = stack ? stack : message;
+        console.error(text);
+        persistError(text);
+    };
+
+    showError = function(error) {
+        logError(error);
+        snack(error);
+
+    };
+
+    persistError = function(text) {
+        $.ajax({
+            type: 'POST',
+            url: '/errors',
+            data: {'error[text]': text},
+            dataType: 'JSON',
+            success: function (data) {
+                console.log('Error successfully updated');
+            },
+            error: function (data) {
+                console.log('There was an error updating the error');
+            }
+        });
+
+    };
+
+/*  Not working
+    persistError = function(text) {
+        fetch('/errors', {
+            method: 'post',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify({
+                'error[text]': text
+            })
+        });
+    };
+*/
+
+    //window.addEventListener catches every error the Promise's .catch doesn't.
+    // It gets the entire 'e'vent rather than only the Error object (as in the case of Promise's catch)
+    // Since log/showError serve both types of catches, it is passed here only the error object part
+    window.addEventListener('error', function (e) {
+        console.log('addEventListener: error');
+         showError(e.error);
+         snack(e.error);
+    });
 
 
 });

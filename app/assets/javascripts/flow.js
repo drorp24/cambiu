@@ -17,6 +17,7 @@ $(document).ready(function() {
             drawMap(location)
                 .then(followUser),
             search(location)
+                .then(sortExchanges)
                 .then(addCards),
             geocode(location)
         ])
@@ -25,7 +26,7 @@ $(document).ready(function() {
         .then(zoomIn)
         .then(revealCards)
     })
-    .catch(alertError);
+    .catch(showError);
 
     setPage({url: window.location.pathname, populate: false});
 

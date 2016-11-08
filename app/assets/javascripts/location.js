@@ -153,12 +153,17 @@ showUserPosition = function(lat, lng) {
         return
     }
 
+    if (typeof lat === 'undefined' && typeof lng === 'undefined') var lat = user.lat, lng = user.lng;
     var user_latlng = new google.maps.LatLng(lat, lng);
     map.panTo(user_latlng);
+    $('#userLoc').css('visibility', 'visible');
     $('#userLoc').css('top', centerYpx).css('left', centerXpx);
 
 };
 
+hideUserPosition = function() {
+    $('#userLoc').css('visibility', 'hidden');
+};
 
 
 // Handle user location changes

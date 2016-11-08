@@ -30,7 +30,7 @@ module CurrencyNetMvp
 }
     config.active_record.raise_in_transactional_callbacks = true
     config.active_job.queue_adapter = :sidekiq
-    config.active_job.queue_name_prefix = "cambiu_#{Rails.env}"
+#    config.active_job.queue_name_prefix = "cambiu_#{Rails.env}"
     config.filter_parameters += [:photo]
     config.action_view.logger = nil
   end

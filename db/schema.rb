@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915112302) do
+ActiveRecord::Schema.define(version: 20161108153634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,11 +25,10 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.string   "author_type",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
   end
-
-  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
-  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
-  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -45,10 +43,9 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
-  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "business_hours", force: :cascade do |t|
     t.integer  "exchange_id"
@@ -59,10 +56,9 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.datetime "updated_at"
     t.time     "open2"
     t.time     "close2"
+    t.index ["exchange_id", "day"], name: "index_business_hours_on_exchange_id_and_day", using: :btree
+    t.index ["exchange_id"], name: "index_business_hours_on_exchange_id", using: :btree
   end
-
-  add_index "business_hours", ["exchange_id", "day"], name: "index_business_hours_on_exchange_id_and_day", using: :btree
-  add_index "business_hours", ["exchange_id"], name: "index_business_hours_on_exchange_id", using: :btree
 
   create_table "chains", force: :cascade do |t|
     t.text     "name"
@@ -88,9 +84,14 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.integer  "order_status"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.index ["emailable_type", "emailable_id"], name: "index_emails_on_emailable_type_and_emailable_id", using: :btree
   end
 
-  add_index "emails", ["emailable_type", "emailable_id"], name: "index_emails_on_emailable_type_and_emailable_id", using: :btree
+  create_table "errors", force: :cascade do |t|
+    t.text     "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "exchanges", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -128,13 +129,12 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.integer  "todo"
     t.integer  "system"
     t.integer  "status"
+    t.index ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
+    t.index ["latitude", "longitude"], name: "index_exchanges_on_latitude_and_longitude", using: :btree
+    t.index ["latitude"], name: "index_exchanges_on_latitude", using: :btree
+    t.index ["longitude"], name: "index_exchanges_on_longitude", using: :btree
+    t.index ["name", "address"], name: "index_exchanges_on_name_and_address", using: :btree
   end
-
-  add_index "exchanges", ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
-  add_index "exchanges", ["latitude", "longitude"], name: "index_exchanges_on_latitude_and_longitude", using: :btree
-  add_index "exchanges", ["latitude"], name: "index_exchanges_on_latitude", using: :btree
-  add_index "exchanges", ["longitude"], name: "index_exchanges_on_longitude", using: :btree
-  add_index "exchanges", ["name", "address"], name: "index_exchanges_on_name_and_address", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.integer  "exchange_id"
@@ -161,11 +161,10 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.string   "rated_currency"
     t.float    "buy_rate"
     t.float    "sell_rate"
+    t.index ["exchange_id"], name: "index_orders_on_exchange_id", using: :btree
+    t.index ["search_id"], name: "index_orders_on_search_id", using: :btree
+    t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
-
-  add_index "orders", ["exchange_id"], name: "index_orders_on_exchange_id", using: :btree
-  add_index "orders", ["search_id"], name: "index_orders_on_search_id", using: :btree
-  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
   create_table "rates", force: :cascade do |t|
     t.integer  "source"
@@ -179,10 +178,9 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.float    "sell"
     t.integer  "admin_user_id"
     t.datetime "last_update"
+    t.index ["admin_user_id"], name: "index_rates_on_admin_user_id", using: :btree
+    t.index ["ratable_id", "ratable_type"], name: "index_rates_on_ratable_id_and_ratable_type", using: :btree
   end
-
-  add_index "rates", ["admin_user_id"], name: "index_rates_on_admin_user_id", using: :btree
-  add_index "rates", ["ratable_id", "ratable_type"], name: "index_rates_on_ratable_id_and_ratable_type", using: :btree
 
   create_table "reviews", force: :cascade do |t|
     t.string   "autor_name"
@@ -191,9 +189,8 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.integer  "exchange_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["exchange_id"], name: "index_reviews_on_exchange_id", using: :btree
   end
-
-  add_index "reviews", ["exchange_id"], name: "index_reviews_on_exchange_id", using: :btree
 
   create_table "s_currencies", force: :cascade do |t|
     t.integer  "source_id"
@@ -201,9 +198,8 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.string   "iso_code",   limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["source_id"], name: "index_s_currencies_on_source_id", using: :btree
   end
-
-  add_index "s_currencies", ["source_id"], name: "index_s_currencies_on_source_id", using: :btree
 
   create_table "searches", force: :cascade do |t|
     t.string   "pay_currency",    limit: 255
@@ -230,9 +226,8 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.string   "location_type",   limit: 255
     t.integer  "service_type",                default: 0
     t.string   "location_reason"
+    t.index ["exchange_id"], name: "index_searches_on_exchange_id", using: :btree
   end
-
-  add_index "searches", ["exchange_id"], name: "index_searches_on_exchange_id", using: :btree
 
   create_table "sources", force: :cascade do |t|
     t.text     "url"
@@ -252,9 +247,8 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.integer  "upload_status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["admin_user_id"], name: "index_uploads_on_admin_user_id", using: :btree
   end
-
-  add_index "uploads", ["admin_user_id"], name: "index_uploads_on_admin_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -290,10 +284,9 @@ ActiveRecord::Schema.define(version: 20160915112302) do
     t.float    "bbox"
     t.string   "location_search",        limit: 255
     t.string   "geocoded_location",      limit: 255
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "visitors", force: :cascade do |t|
     t.integer  "buy_cents"

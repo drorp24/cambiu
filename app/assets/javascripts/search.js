@@ -40,62 +40,6 @@ $(document).ready(function() {
 
     };
 
-
-    // Sorting
-
-    sort_by = function(sort) {
-
-        console.log('sort by ' + sort);
-        if (exchanges.length == 0) return exchanges;
-
-        if (sort == 'distance') {
-             if ($('[data-sort=distance]').data('order') == 'asc') {
-                exchanges.sort(function(a, b){return a.properties.distance - b.properties.distance});
-            } else {
-                exchanges.sort(function(a, b){return b.properties.distance - a.properties.distance});
-            }
-        }
-        else
-        if (sort == 'price') {
-            if ($('[data-sort=price]').data('order') == 'asc') {
-                exchanges.sort(function(a, b){return (a.properties.quote ? a.properties.quote : 10000000) - (b.properties.quote ? b.properties.quote : 10000000)});
-             } else {
-                exchanges.sort(function(a, b){return (b.properties.quote ? b.properties.quote : 10000000) - (a.properties.quote ? a.properties.quote : 10000000)});
-            }
-        } else
-        if (sort == 'reverse') {
-            exchanges.reverse();
-            toggleOrder($('[data-sort].active'));
-        }
-
-/*
-        if (sort != 'reverse') {
-            set('sort', sort);
-            if (!$('[data-sort=' + sort + ']').hasClass('active')) { //if sorted programmatically (otherwise ui already changed that upon user click)
-                $('[data-sort]').removeClass('active');
-                $('[data-sort=' + sort + ']').addClass('active');
-            }
-        }
-*/
-
-        return exchanges;
-     };
-
-    $('[data-sort]').click(function() {
-
-        var $this = $(this);
-        var sort = $this.hasClass('active') ? 'reverse' : $this.data('sort');
-
-        if (sort != 'reverse') {
-            $('[data-sort]').removeClass('active');
-            $('[data-sort=' + sort + ']').addClass('active');
-        }
-
-        updateList(exchanges, 'more', sort);
-
-    });
-
-
     $('.camera').on('click tap', (function() {
         $('#photo').click()
     }));
@@ -202,7 +146,7 @@ $(document).ready(function() {
             set('location_reason', 'user search');
             search(search.location)
                 .then(addCards)
-                .catch(alertError);
+                .catch(showError);
             window.history.back();
         }
     });
@@ -255,7 +199,7 @@ $(document).ready(function() {
                     console.log('search completed succesfully');
                     searchResult = data.exchanges;
                     exchanges = data.exchanges.features;
-                    resolve(searchResult);
+                    resolve(exchanges);
                     if (!openning) setTimeout(function(){progress('end')}, 3500);
                 })
                 .catch(function (error) {

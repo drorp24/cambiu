@@ -65,6 +65,9 @@
             });
 
 
+            google.maps.event.addListener(map, 'drag', function () {
+                hideUserPosition();
+            });
 
             google.maps.event.addListener(map, 'dragend', function () {
 
@@ -89,10 +92,12 @@
         })
     };
 
+/*
     placeGoogleMarkers = function() {
         console.log('placeGoogleMarkers');
         map.data.addGeoJson(searchResult);
     };
+*/
 
     clearGoogleMarkers = function() {
         map.data.forEach(function(feature) {
@@ -110,7 +115,7 @@
 
             (function loop(i) {
 
-                var timeout = 250;
+                var timeout = 200;
                 var exchange = exchanges[i].properties;
                 setTimeout(function () {
 
@@ -118,7 +123,7 @@
                         map: map,
                         animation: google.maps.Animation.DROP,
                         optimized: false,
-                        icon: '/logo_no_text.png',
+                        icon: '/rsz_logo_no_text.png',
                         position: {lat: exchange.latitude, lng: exchange.longitude}
                     });
 
@@ -214,6 +219,7 @@
             console.log('directionsService.route returned with status: ' + status);
             if (status == google.maps.DirectionsStatus.OK) {
                 directionsDisplay.setDirections(response);
+                setTimeout(function() {showUserPosition(user.lat, user.lng)}, 1000);
             }
         });
 
