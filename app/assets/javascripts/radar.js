@@ -22,22 +22,37 @@ radar = function(verb) {
     }
 };
 
-progress = function(verb) {
-    animation($('.progress'), verb)
+progress = function(verb, position) {
+    if (typeof position === 'undefined') position = 'above_snack';
+    animation($('.progress').addClass(position), verb)
 };
+
+searchSnack = function(verb) {
+
+    console.log('mainSnack');
+
+    if (verb == 'start') {
+        snack('Collecting offers...', null)
+    } else {
+        snackHide()
+    }
+};
+
 
 show = function(verb) {
 
     if (verb == 'start') {
+        searchSnack('start');
         radar('start');
-        progress('start');
-        openning = true;
+        progress('start', 'above_snack');
+        inShow = true;
     } else
 
     if (verb == 'stop') {
         radar('stop');
         progress('stop');
-        openning = false;
+        searchSnack('stop');
+        inShow = false;
     }
 };
 

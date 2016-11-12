@@ -7,6 +7,7 @@
 //= require jquery
 //= require autonumeric
 //= require fetch
+//= require snackbar.min
 
 //= require init
 //= require ytplayer
@@ -28,4 +29,3 @@
 // require sweetalert.min
 //= require swiper.jquery.min
 //= require nouislider.min
-//= require snackbar.min

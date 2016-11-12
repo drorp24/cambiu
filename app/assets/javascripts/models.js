@@ -74,7 +74,7 @@ populateExchange = function(exchange, $scope, index) {
         $scope.css('height', cardHeight);
         var $img = $photo.find('img');
         if ($img.height()) $img.css('height', $img.height());
-        $('.progress').css('bottom', String(cardHeight + 2) + 'px');
+//        $('.progress').css('bottom', String(cardHeight + 2) + 'px');
     }, 2000);
 
 

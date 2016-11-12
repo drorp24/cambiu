@@ -21,10 +21,10 @@ $(document).ready(function() {
                 .then(addCards),
             geocode(location)
         ])
-        .then(stop_show)
-        .then(addGoogleMarkers)
-        .then(zoomIn)
-        .then(revealCards)
+            .then(addGoogleMarkers)
+            .then(zoomIn)
+            .then(stop_show)
+            .then(revealCards)
     })
     .catch(showError);
 

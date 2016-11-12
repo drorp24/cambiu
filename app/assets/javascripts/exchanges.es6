@@ -8,7 +8,6 @@
     addCards = function(exchanges) {
 
         console.log('addCards');
-        console.log(exchanges)
 
         $('#cards').empty();
         for (var i = 0; i < Math.min(initialSlides, exchanges.length); i++) {

@@ -269,20 +269,34 @@
 
     // the smooth zoom function
     function smoothZoom (map, max, cnt) {
-        if (cnt >= max) {
-            return;
+
+        return new Promise(function(resolve, reject) {
+
+        increaseZoom(cnt);
+
+        function increaseZoom(cnt) {
+
+            console.log('Increase zoom to: ' + cnt);
+            if (cnt >= max) {
+                resolve();
+                return;
+            }
+            else {
+                z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+                    google.maps.event.removeListener(z);
+                    increaseZoom(cnt + 1);
+                });
+                setTimeout(function(){map.setZoom(cnt)}, 200);
+            }
+
         }
-        else {
-            z = google.maps.event.addListener(map, 'zoom_changed', function(event){
-                google.maps.event.removeListener(z);
-                smoothZoom(map, max, cnt + 1);
-            });
-            setTimeout(function(){map.setZoom(cnt)}, 300); // 80ms is what I found to work well on my system -- it might not work well on all systems
-        }
+
+        })
+
     }
 
     zoomIn = function() {
-        smoothZoom(map, 16, map.getZoom())
+        return smoothZoom(map, 16, map.getZoom())
     };
 
 

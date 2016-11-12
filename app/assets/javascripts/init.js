@@ -57,7 +57,7 @@ var findMarker;
 var exchange_el;
 var closeInfowindows;
 var zoom_changed_by_user = true;
-var map_initial_zoom = 10;
+var map_initial_zoom = 13;
 var map_center_changed = false;
 var directionsService;
 var big_marker;
@@ -440,28 +440,34 @@ $(document).ready(function() {
 
     snackHtml = function(arg) {
         var message = arg.message,
-            buttonName = arg.buttonName || 'dismiss',
-            modalText = arg.modalText || null;
+            button = arg.button,
+            modalText = arg.modalText;
 
         var $e = $('.snack.template').clone().removeClass('template').addClass('active');
         $e.find('.message').html(message);
-        if (buttonName) $e.find('.button').html(buttonName);
+        if (button) $e.find('.button').html(button);
         return $e.html();
     };
 
-    snack = function(message) {
+    snack = function(message, button, timeout) {
+        if (typeof timeout === 'undefined') timeout = null;
+
         $.snackbar({
-            timeout: 500000, //temp
+            timeout: timeout || 500000,
             htmlAllowed: true,
             content: snackHtml({
                 message: message,
-                buttonName: 'dismiss'
+                button: button
             })
         })
     };
 
-    $('body').on('click tap', '.snack .button', function() {
+    snackHide = function() {
         $('.snackbar.snackbar-opened').snackbar("hide");
+    };
+
+    $('body').on('click tap', '.snack .button', function() {
+        hideSnack()
     });
 
 
@@ -515,7 +521,8 @@ $(document).ready(function() {
     // It gets the entire 'e'vent rather than only the Error object (as in the case of Promise's catch)
     // Since log/showError serve both types of catches, it is passed here only the error object part
     window.addEventListener('error', function (e) {
-        console.log('addEventListener: error');
+        console.log('addEventListener. e:');
+        console.log(e);
          showError(e.error);
          snack(e.error);
     });
