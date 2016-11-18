@@ -12,21 +12,20 @@ $(document).ready(function() {
     populateParams();
 
     getLocation()
-        .then(function(location) {
-        return Promise.all([
-            drawMap(location)
-                .then(followUser),
-            search(location)
-                .then(sortExchanges)
-                .then(addCards),
-            geocode(location)
-        ])
-            .then(addGoogleMarkers)
-            .then(zoomIn)
-            .then(stop_show)
-            .then(revealCards)
-    })
-    .catch(showError);
+        .then(
+            function(location) {
+                return Promise.all([drawMap(location), search(location)])
+            })
+        .then(placeGoogleMarkers)
+        .then(sortExchanges)
+        .then(addCards)
+//        .then(followUser)
+        .then(geocode)
+//        .then(wait)
+        .then(revealCards)
+        .then(zoomIn)
+        .then(stop_show)
+        .catch(showError);
 
     setPage({url: window.location.pathname, populate: false});
 

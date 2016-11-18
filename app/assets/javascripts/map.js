@@ -92,12 +92,14 @@
         })
     };
 
-/*
     placeGoogleMarkers = function() {
-        console.log('placeGoogleMarkers');
+        idMarkerLayer();
+        map.data.setStyle({
+            icon: '/rsz_logo_no_text.png',
+            optimized: false
+        });
         map.data.addGeoJson(searchResult);
     };
-*/
 
     clearGoogleMarkers = function() {
         map.data.forEach(function(feature) {
@@ -286,7 +288,7 @@
                     google.maps.event.removeListener(z);
                     increaseZoom(cnt + 1);
                 });
-                setTimeout(function(){map.setZoom(cnt)}, 200);
+                setTimeout(function(){map.setZoom(cnt)}, 700);
             }
 
         }

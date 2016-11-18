@@ -153,7 +153,7 @@
         });
     };
 
-    sortExchanges = function(exchanges, sortkey = 'price') {
+    sortExchanges = function(sortkey = 'price') {
 
         console.log('sortExchanges. sortkey == ' + sortkey);
         if (exchanges.length == 0) return exchanges;

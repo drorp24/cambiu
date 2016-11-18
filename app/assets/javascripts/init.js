@@ -118,6 +118,8 @@ var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 var swiperH;
 var cardHeight = null;
 var cardXoffset = null;
+var exchanges;
+var inShow = true;
 
 
 sessionStorage.videoStopped = null;
@@ -352,8 +354,22 @@ display = function(term) {
         };
     };
 
+wait = function(period) {
+    if (typeof period === 'undefined') period = 5000;
+    return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+            resolve()
+        }, period)
+    })
+};
+
+
 
 $(document).ready(function() {
+
+    if(!navigator.onLine) { // true|false
+        snack('You are currently offline')
+    }
 
 
     $('body').bootstrapMaterialDesign();
@@ -449,8 +465,12 @@ $(document).ready(function() {
         return $e.html();
     };
 
-    snack = function(message, button, timeout) {
+    snack = function(message, button, timeout, $upEl) {
+
         if (typeof timeout === 'undefined') timeout = null;
+        if (typeof $upEl === 'undefined') $upEl = null;
+
+        if ($upEl) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 1s'});
 
         $.snackbar({
             timeout: timeout || 500000,
@@ -462,7 +482,12 @@ $(document).ready(function() {
         })
     };
 
-    snackHide = function() {
+    snackHide = function($downEl) {
+
+        if (typeof $downEl === 'undefined') $downEl = null;
+
+        if ($downEl) $downEl.css({'position': 'fixed', 'bottom': '0'});
+
         $('.snackbar.snackbar-opened').snackbar("hide");
     };
 

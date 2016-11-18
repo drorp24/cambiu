@@ -19,7 +19,7 @@ getLocation = function() {
         };
 
         navigator.geolocation.getCurrentPosition(
-            positionFound,
+            positionError,
             positionError,
             options
         );
@@ -95,7 +95,7 @@ followUser = function() {
 };
 
 
-geocode = function(location) {
+geocode = function(locationArg) {
 
 
     // though it looks like a classic case for a promise., i don't want any other function to await on it
@@ -103,6 +103,8 @@ geocode = function(location) {
     // but it's not critical. It's anyway called many times
 
     console.log('geocode');
+
+    var location = (typeof locationArg === 'undefined') ? search.location : locationArg;
 
     var location_latlng = new google.maps.LatLng(location.lat, location.lng);
     var geocoder = new google.maps.Geocoder();

@@ -105,7 +105,6 @@ $exchange_summary_bg_img_height_mobile: 75px;
   @include animate(rotateReturn, 0.25s, linear, forwards, 0s);
 }
 
-
 @include keyframes(blurFadeInOut) {
   0%{
     opacity: 1;
@@ -167,13 +166,14 @@ $exchange_summary_bg_img_height_mobile: 75px;
 @include keyframes(fadeIn) {
   0% {
     transform: scale(0);
-    opacity: 0.0;
+    opacity: 0;
   }
   60% {
-    transform: scale(1.1);
+    transform: scale(1.5);
+    opacity: 0.5;
   }
   80% {
-    transform: scale(0.9);
+    transform: scale(0.8);
     opacity: 1;
   }
   100% {
@@ -182,8 +182,29 @@ $exchange_summary_bg_img_height_mobile: 75px;
   }
 }
 
+/*
+@include keyframes(randomFadeIn) {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+*/
+
+@mixin randomFadeIn($delay) {
+  @include animate(fadeIn, 1.5s, linear, forwards, $delay);
+}
+
 
 @mixin animate($name, $duration, $timing-function, $fill-mode, $delay) {
+
+  -webkit-animation-name: $name;
+  -moz-animation-name: $name;
+  -o-animation-name: $name;
+  animation-name: $name;
+
   -webkit-animation-duration: $duration;
   -moz-animation-duration: $duration;
   -o-animation-duration: $duration;
@@ -193,11 +214,6 @@ $exchange_summary_bg_img_height_mobile: 75px;
   -moz-animation-timing-function: $timing-function;
   -o-animation-timing-function: $timing-function;
   animation-timing-function: $timing-function;
-
-  -webkit-animation-name: $name;
-  -moz-animation-name: $name;
-  -o-animation-name: $name;
-  animation-name: $name;
 
   -webkit-animation-fill-mode: $fill-mode;
   -moz-animation-fill-mode: $fill-mode;
@@ -573,6 +589,43 @@ body#cambiu {
     }
   }
 
+
+  .scanning:after {
+    content: '';
+    /* make the element cover the whole thing */
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* and sit in front */
+    z-index: 1;
+    /* gradient with a radar like fade */
+    background:
+            linear-gradient(180deg,
+                    rgba(0,0,0,1),
+                    rgba(0,0,0,1) 50%,
+                    rgba(0,255,0,.5) 55%,
+                    rgba(0,255,0,1) 56%,
+                    rgba(0,0,0,1) 56%,
+                    rgba(0,0,0,1)
+            );
+    /* make it big enough so when we slide it around still covers whole image */
+    background-size:     100% 500%;
+    background-repeat:   no-repeat;
+    /* start with the scan bar just off the left side */
+    background-position: center 84%;
+    -webkit-animation:   scan 5s infinite ease;
+  }
+
+  @-webkit-keyframes scan {
+    /* finish with the scan bar just off the right side */
+    100% { background-position: 25% center; }
+  }
+
+
+
   .pulse1 {
     position: absolute;
     left: 20px;
@@ -660,53 +713,6 @@ body#cambiu {
       opacity: 0.0;
     }
   }
-  #radar_container {
-    display: none;
-    position: absolute;
-    z-index: 3;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-  }
-
-  #radar {
-    //    display: none;
-    position: relative;
-    z-index: 2;
-    width: 321px;
-    height: 321px;
-    background: rgba(0, 0, 0, 0.3) url(https://i.stack.imgur.com/vY6Tl.png);
-    border-radius: 321px;
-    overflow: hidden;
-  }
-  #rad {
-    position: absolute;
-    width: 321px;
-    height: 321px;
-    background: url(https://i.stack.imgur.com/fbgUD.png);
-  }
-  /*
-  .obj{
-    position:absolute;
-    width:32px;
-    height:39px;
-    margin-top:-2px;
-    margin-left:-2px;
-    opacity:0;
-    background-image: image_url('logo32.png');
-    -webkit-filter: drop-shadow(9px 12px 8px rgba(0,0,0,0.5));
-    filter: url("data:image/svg+xml;utf8,<svg height='0' xmlns='https://www.w3.org/2000/svg'><filter id='drop-shadow'><feGaussianBlur in='SourceAlpha' stdDeviation='4'/><feOffset dx='12' dy='12' result='offsetblur'/><feFlood flood-color='rgba(0,0,0,0.5)'/><feComposite in2='offsetblur' operator='in'/><feMerge><feMergeNode/><feMergeNode in='SourceGraphic'/></feMerge></filter></svg>#drop-shadow");
-    -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-
-  }
-
-  */
-
   .padlessBtn {
     margin: 0;
     padding-bottom: 2px;
@@ -828,6 +834,7 @@ body#cambiu {
   }
 
   #newradar {
+    display: none;
   img {
     z-index: 4;
     position: absolute;
@@ -909,6 +916,7 @@ body#cambiu {
     background-color: #acece6;
     background-color: lighten($brand-color, 30%);
     background-color: $limelight;
+    background-color: $brand-color;
     border-radius: 2px;
     background-clip: padding-box;
     overflow: hidden; }
@@ -916,6 +924,7 @@ body#cambiu {
       background-color: #26a69a;
       background-color: $brand-color;
       background-color: $limedark;
+      background-color: #D500F9;
       &:before {
         content: '';
         position: absolute;
@@ -2346,6 +2355,29 @@ body#cambiu {
     width: 8vw !important;
     height: 9vw !important;
     @include dropShadow();
+    opacity: 0;
+//    animation-iteration-count: 2;
+  }
+
+  #markerLayer {
+    div:nth-child(2n) img {
+      @include randomFadeIn(0.5s);
+    }
+    div:nth-child(3n) img {
+      @include randomFadeIn(1s);
+    }
+    div:nth-child(4n) img {
+      @include randomFadeIn(1.5s);
+    }
+    div:nth-child(5n) img {
+      @include randomFadeIn(2s);
+    }
+    div:nth-child(6n) img {
+      @include randomFadeIn(2.5s);
+    }
+    div:nth-child(7n) img {
+      @include randomFadeIn(3s);
+    }
   }
 
 

@@ -20,6 +20,14 @@ radar = function(verb) {
     } else {
         animation($('#newradar'), verb)
     }
+/*
+    if (verb == 'start') {
+        $('#newradar').css('display', 'none');
+        $('#map_container').addClass('scanning')
+    } else {
+        $('#map_container').removeClass('scanning')
+    }
+*/
 };
 
 progress = function(verb, position) {
@@ -32,9 +40,9 @@ searchSnack = function(verb) {
     console.log('mainSnack');
 
     if (verb == 'start') {
-        snack('Collecting offers...', null)
+        snack('Scanning for offers...', null, null, $('.swiper-container'))
     } else {
-        snackHide()
+        snackHide($('.swiper-container'))
     }
 };
 
