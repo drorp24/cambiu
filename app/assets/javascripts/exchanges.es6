@@ -53,28 +53,6 @@
     };
 
 
-    // Card interaction
-
-    currIndex = () => swiperH.activeIndex;
-
-    currCard = () => $('.swiper-slide-active');
-
-    currExchange = function() {
-
-        var length = exchanges.length;
-        var index = currIndex();
-
-        if (exchanges && length > 0) {
-            if (index < length) {
-                return exchanges[index].properties
-            } else {
-                throw new Error('index > exchanges length');
-            }
-        } else {
-            throw new Error('exchanges is empty');
-        }
-    };
-
     $('body').on('click tap', '.ecard:not(.selected)', function(e) {
         e.stopPropagation();
         var $this = $(this);
@@ -92,7 +70,7 @@
 
         setTimeout(function(){
 
-            currCard().removeClass('selected')
+            $currCard().removeClass('selected')
             $navBtn.removeClass('rotate');
 
         }, 500);

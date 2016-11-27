@@ -93,7 +93,7 @@ var photoWidth;
 var photoHeight;
 var slidesAdded = [];
 var currentSlide = 0;
-var initialSlides = 10;
+var initialSlides = 3;
 var user = {};
 var dfault = {};
 dfault.lat = '51.51574678520366';
@@ -390,10 +390,12 @@ $(document).ready(function() {
         return $('body').hasClass('home');
     };
 
+/*
     $(function () {
         $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-        if (desktop) $("body").popover({ selector: '[data-toggle=popover]' });
+        $("body").popover({ selector: '[data-toggle=popover]' });
     });
+*/
 
     if (window.matchMedia('(display-mode: standalone)').matches) {
         console.log("Installable app!");
@@ -406,6 +408,7 @@ $(document).ready(function() {
 
     $('.ratings').rating(ratingOptions);
 
+/*
     $('.ratings').on('rating.change', function(event, value, caption) {
         var exchange_id = $(this).attr('data-exchange-id');
         swal({
@@ -417,6 +420,7 @@ $(document).ready(function() {
 
         updateExchange(exchange_id, {'exchange[rating]': value});
     });
+*/
 
     bodyWidth       = $('body').width().toFixed();
     bodyHeight      = window.innerHeight;

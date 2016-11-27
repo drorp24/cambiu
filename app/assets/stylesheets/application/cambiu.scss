@@ -182,7 +182,6 @@ $exchange_summary_bg_img_height_mobile: 75px;
   }
 }
 
-/*
 @include keyframes(randomFadeIn) {
   from {
     opacity: 0;
@@ -191,7 +190,6 @@ $exchange_summary_bg_img_height_mobile: 75px;
     opacity: 1;
   }
 }
-*/
 
 @mixin randomFadeIn($delay) {
   @include animate(fadeIn, 1.5s, linear, forwards, $delay);

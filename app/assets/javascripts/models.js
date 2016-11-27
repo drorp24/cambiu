@@ -85,12 +85,18 @@ populatePlace = function(exchange, $scope) {
 
 //    console.log('exchange ' + exchange.id + ' - populatePlace');
 
+
+    // User photo - currently wildcarded for 2 reasons:
+    // - isn't displayed properly (isn't confined to the card, captures the entire height of the grey ribbon)
+    // - sometimes returned with 403 status, leaving an ugly 'no photo' icon
+/*
     $photo = $scope.find('.photo');
     if ($photo && exchange.place.photo) {
         var src         = exchange.place.photo.getUrl({'maxWidth': bodyWidth, 'maxHeight': halfBodyHeight});
         var html        = '<img src=' + src + '>';
         $photo.html(html);
      }
+*/
 
     var reviews_length = exchange.place.reviews && exchange.place.reviews.length;
     if (reviews_length) {
@@ -115,11 +121,13 @@ populateReviews = function(exchange, $scope) {
 
         var review_el = review_template.clone().removeClass('template');
 
+/*
         if (review.rating) {
             review_el.find('.review_rating input')
                 .rating(ratingOptions)
                 .rating('update', review.rating);
         }
+*/
         if (review.text)                review_el.find('.review_text').html(review.text);
         if (review.author_name)         review_el.find('.review_author').html(review.author_name);
         if (review.profile_photo_url)   review_el.find('.review_photo').html('<img class=img-circle src=' + review.profile_photo_url + '>');
