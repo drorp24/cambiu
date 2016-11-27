@@ -2,6 +2,7 @@ fetchPlace = function(exchange) {
 
     return new Promise(function(resolve, reject) {
 
+
         function getPlaceId() {
 
             return new Promise(function(resolve, reject) {
@@ -52,6 +53,8 @@ fetchPlace = function(exchange) {
 
          getPlaceDetails = function(place_id) {
 
+             console.log('exchange ' + exchange.id + ' - getPlaceDetails');
+
                // when getPlaceDetails returns a promise, its resolve does not make fetchPlace resolve too (adopt its state)
                // as a result, populateExchanges is not invoked
                // return new Promise(function (resolve, reject) {
@@ -94,7 +97,7 @@ fetchPlace = function(exchange) {
          };
 
         getPlaceId().then(getPlaceDetails)
-        .catch(function(error) {console.warn(new Error(error))});
+        .catch(function(error) {console.warn(error)});
 
     })
 
