@@ -20,53 +20,21 @@ slideChange = function() {
 };
 
 slideNext = function() {
-    var nextSlide = currentSlide + initialSlides;
-    if (nextSlide < exchanges.length) {
-        addSlide(nextSlide);
+    var index = currentSlide + initialSlides;
+    if (index < exchanges.length) {
+        addSlide(index);
+        currentSlide ++;
     }
-    currentSlide ++;
-    handleCurrentSlide();
 };
 slidePrev = function() {
     currentSlide --;
-    handleCurrentSlide();
 };
-
-function handleCurrentSlide() {
-    var exchange_id = currExchange().id;
-    console.log('id: ' + exchange_id);
-    map.data.overrideStyle(map.data.getFeatureById(exchange_id), {icon: '/pricest.png'});
-}
 
 addSlide = function(index) {
     if (!slidesAdded.includes(index)) {
         console.log('addSlide ' + index);
-        addCard(exchanges[index].properties, index)
+        addCard(exchanges, index)
     } else {
         console.log('addSlide not needed - slide ' + index + ' exists already');
     }
 };
-
-// Card interaction
-
-//    currIndex = () => swiperH.activeIndex;
-
-$currCard = function() {return $('.swiper-slide-active')};
-
-currExchange = function() {
-
-    var length = exchanges.length;
-//        var index = currIndex();
-
-    if (exchanges && length > 0) {
-        if (currentSlide < length) {
-            return exchanges[currentSlide].properties
-        } else {
-            throw new Error('index > exchanges length');
-        }
-    } else {
-        throw new Error('exchanges is empty');
-    }
-};
-
-

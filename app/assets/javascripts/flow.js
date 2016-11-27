@@ -21,7 +21,7 @@ $(document).ready(function() {
         .then(addCards)
 //        .then(followUser)
         .then(geocode)
-        .then(wait)
+//        .then(wait)
         .then(revealCards)
         .then(zoomIn)
         .then(stop_show)
