@@ -77,6 +77,7 @@ populateExchange = function(exchange, $scope, index) {
 //        $('.progress').css('bottom', String(cardHeight + 2) + 'px');
     }, 2000);
 
+    $scope.find('[data-field=rating]').rating(ratingOptions).rating('update', 0);
 
 };
 
@@ -85,12 +86,18 @@ populatePlace = function(exchange, $scope) {
 
 //    console.log('exchange ' + exchange.id + ' - populatePlace');
 
+    // User photo - currently wildcarded for 2 reasons:
+    // - isn't displayed properly (isn't confined to the card, captures the entire height of the grey ribbon)
+    // - sometimes returned with 403 status, leaving an ugly 'no photo' icon
+
+/*
     $photo = $scope.find('.photo');
     if ($photo && exchange.place.photo) {
         var src         = exchange.place.photo.getUrl({'maxWidth': bodyWidth, 'maxHeight': halfBodyHeight});
         var html        = '<img src=' + src + '>';
         $photo.html(html);
      }
+*/
 
     var reviews_length = exchange.place.reviews && exchange.place.reviews.length;
     if (reviews_length) {
@@ -98,8 +105,8 @@ populatePlace = function(exchange, $scope) {
         $scope.find('.review_word').html(pluralize('review', reviews_length));
     }
 
-    var rating = exchange.rating || exchange.place.rating;
-    if (rating && rating > 0) $scope.find('[data-field=rating]').rating('update', rating);
+    var rating = exchange.rating || exchange.place.rating || 0;
+    if (rating > 0) $scope.find('[data-field=rating]').rating('update', rating);
 
 
     /// Potential other overrides from GP: opening hours, phone, website, google page?! ("more")

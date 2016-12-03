@@ -5,6 +5,8 @@ fetchPlace = function(exchange) {
 
         function getPlaceId() {
 
+            console.log('exchange ' + exchange.id + ' - getPlaceId');
+
             return new Promise(function(resolve, reject) {
 
                 if (exchange.place.id) {
@@ -83,9 +85,8 @@ fetchPlace = function(exchange) {
                              exchange.place.opening_hours = place.opening_hours;
                              if (!exchange.place.id)     updateExchange(exchange.id, {'exchange[place_id]': place.place_id});
                              resolve(exchange);
-                             console.log('exchange ' + exchange.id + ' - is resolved!!');
+                             console.log('exchange ' + exchange.id + ' - PlacesService.getDetails returned a place close enough to the exchange');
                          } else {
-                             console.log('exchange ' + exchange.id + ' - place too far: ' + exchange.place.distance);
                              reject('exchange ' + exchange.id + ' - place too far: ' + exchange.place.distance);
                              return
                          }
@@ -97,7 +98,7 @@ fetchPlace = function(exchange) {
          };
 
         getPlaceId().then(getPlaceDetails)
-        .catch(function(error) {console.warn(error)});
+        .catch(function(error) {console.warn(new Error(error))});
 
     })
 

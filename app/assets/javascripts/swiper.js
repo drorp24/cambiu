@@ -20,21 +20,52 @@ slideChange = function() {
 };
 
 slideNext = function() {
-    var index = currentSlide + initialSlides;
-    if (index < exchanges.length) {
-        addSlide(index);
-        currentSlide ++;
+    var advanceIndex = currentSlide + initialSlides;
+    if (advanceIndex < exchanges.length) {
+        addSlide(advanceIndex);
     }
+    currentSlide ++;
+    handleCurrentSlide();
 };
 slidePrev = function() {
     currentSlide --;
+    handleCurrentSlide();
 };
+
+function handleCurrentSlide() {
+    var exchange_id = currExchange().id;
+    console.log('exchange ' + exchange_id + ' - handleCurrentSlide');
+    map.data.overrideStyle(map.data.getFeatureById(exchange_id), {icon: '/pricest.png'});
+}
 
 addSlide = function(index) {
     if (!slidesAdded.includes(index)) {
         console.log('addSlide ' + index);
-        addCard(exchanges, index)
+        addCard(exchanges[index].properties, index)
     } else {
-        console.log('addSlide not needed - slide ' + index + ' exists already');
+        console.log('addSlide not needed - slide ' + index + ' already exists');
     }
 };
+
+// Card interaction
+
+currIndex = function() {return swiperH.activeIndex};
+
+currCard = function() {return $('.swiper-slide-active')};
+
+currExchange = function() {
+
+    var length = exchanges.length;
+    var index = currIndex();
+
+    if (exchanges && length > 0) {
+        if (index < length) {
+            return exchanges[index].properties
+        } else {
+            throw new Error('index > exchanges length');
+        }
+    } else {
+        throw new Error('exchanges is empty');
+    }
+};
+
