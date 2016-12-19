@@ -19,7 +19,7 @@ slideChange = function() {
     map.data.revertStyle();
     if (directionsDisplay) clearDirections();
     $('.ecard').removeClass('selected');
-
+    map.setZoom(map_initial_zoom);
     highlightCurrentMarker()
 };
 

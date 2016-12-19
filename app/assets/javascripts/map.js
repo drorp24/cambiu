@@ -312,7 +312,7 @@
     }
 
     zoomIn = function() {
-        return smoothZoom(map, 16, map.getZoom())
+        return smoothZoom(map, map_final_zoom, map.getZoom())
     };
 
 
