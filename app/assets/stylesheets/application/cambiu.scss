@@ -89,6 +89,68 @@ $exchange_summary_bg_img_height_mobile: 75px;
   }
 }
 
+@mixin animate($name, $duration, $timing-function, $fill-mode, $delay) {
+
+  -webkit-animation-name: $name;
+  -moz-animation-name: $name;
+  -o-animation-name: $name;
+  animation-name: $name;
+
+  -webkit-animation-duration: $duration;
+  -moz-animation-duration: $duration;
+  -o-animation-duration: $duration;
+  animation-duration: $duration;
+
+  -webkit-animation-timing-function: $timing-function;
+  -moz-animation-timing-function: $timing-function;
+  -o-animation-timing-function: $timing-function;
+  animation-timing-function: $timing-function;
+
+  -webkit-animation-fill-mode: $fill-mode;
+  -moz-animation-fill-mode: $fill-mode;
+  -o-animation-fill-mode: $fill-mode;
+  animation-fill-mode: $fill-mode;
+
+  -webkit-animation-delay: $delay;
+  -moz-animation-delay: $delay;
+  -o-animation-delay: $delay;
+  animation-delay: $delay;
+}
+
+@mixin stopAnimate {
+  -webkit-animation-name: none;
+  -moz-animation-name: none;
+  -o-animation-name: none;
+  animation-name: none;
+}
+
+
+
+@include keyframes(bounce) {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(-20px);
+  }
+  20% {
+    transform: translateY(-30px);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  80% {
+    transform: translateY(0px);
+  }
+}
+
+@mixin bounce {
+  @include animate(bounce, 0.75s, linear, forwards, 0s);
+}
+
 @include keyframes(rotateReturn) {
   0%{
     transform: rotate(0deg);
@@ -195,41 +257,6 @@ $exchange_summary_bg_img_height_mobile: 75px;
   @include animate(fadeIn, 1.5s, linear, forwards, $delay);
 }
 
-
-@mixin animate($name, $duration, $timing-function, $fill-mode, $delay) {
-
-  -webkit-animation-name: $name;
-  -moz-animation-name: $name;
-  -o-animation-name: $name;
-  animation-name: $name;
-
-  -webkit-animation-duration: $duration;
-  -moz-animation-duration: $duration;
-  -o-animation-duration: $duration;
-  animation-duration: $duration;
-
-  -webkit-animation-timing-function: $timing-function;
-  -moz-animation-timing-function: $timing-function;
-  -o-animation-timing-function: $timing-function;
-  animation-timing-function: $timing-function;
-
-  -webkit-animation-fill-mode: $fill-mode;
-  -moz-animation-fill-mode: $fill-mode;
-  -o-animation-fill-mode: $fill-mode;
-  animation-fill-mode: $fill-mode;
-
-  -webkit-animation-delay: $delay;
-  -moz-animation-delay: $delay;
-  -o-animation-delay: $delay;
-  animation-delay: $delay;
-}
-
-@mixin stopAnimate {
-  -webkit-animation-name: none;
-  -moz-animation-name: none;
-  -o-animation-name: none;
-  animation-name: none;
-}
 
 
 @mixin blurFadeInOut {
@@ -529,6 +556,10 @@ body#cambiu {
     .content {
       padding: 30px;
     }
+  }
+
+  .bounce {
+    @include bounce();
   }
 
   .action {
@@ -2352,14 +2383,6 @@ body#cambiu {
     }
   }
 
-  #markerLayer img {
-    width: 8vw !important;
-    height: 9vw !important;
-    @include dropShadow();
-    opacity: 0;
-//    animation-iteration-count: 2;
-  }
-
   #markerLayer {
     div:nth-child(2n) img {
       @include randomFadeIn(0.5s);
@@ -2379,6 +2402,13 @@ body#cambiu {
     div:nth-child(7n) img {
       @include randomFadeIn(3s);
     }
+    img {
+      width: 8vw !important;
+      height: 9vw !important;
+      @include dropShadow();
+      opacity: 0;
+      //    animation-iteration-count: 2;
+     }
   }
 
 

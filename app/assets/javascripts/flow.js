@@ -19,7 +19,7 @@ $(document).ready(function() {
         .then(placeGoogleMarkers)
         .then(sortExchanges)
         .then(addCards)
-//        .then(followUser)
+        .then(followUser)
         .then(geocode)
         .then(wait)
         .then(revealCards)

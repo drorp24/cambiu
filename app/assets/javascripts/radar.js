@@ -49,6 +49,8 @@ searchSnack = function(verb) {
 
 show = function(verb) {
 
+    if (desktop) return;
+
     if (verb == 'start') {
         searchSnack('start');
         radar('start');

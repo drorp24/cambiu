@@ -14,9 +14,13 @@ initSwipers = function() {
 
 
 slideChange = function() {
+
+    $('#markerLayer div').removeClass('bounce');
+    map.data.revertStyle();
     if (directionsDisplay) clearDirections();
     $('.ecard').removeClass('selected');
 
+    highlightCurrentMarker()
 };
 
 slideNext = function() {
@@ -25,18 +29,10 @@ slideNext = function() {
         addSlide(advanceIndex);
     }
     currentSlide ++;
-    handleCurrentSlide();
 };
 slidePrev = function() {
     currentSlide --;
-    handleCurrentSlide();
 };
-
-function handleCurrentSlide() {
-    var exchange_id = currExchange().id;
-    console.log('exchange ' + exchange_id + ' - handleCurrentSlide');
-    map.data.overrideStyle(map.data.getFeatureById(exchange_id), {icon: '/pricest.png'});
-}
 
 addSlide = function(index) {
     if (!slidesAdded.includes(index)) {

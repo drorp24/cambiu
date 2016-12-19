@@ -19,7 +19,7 @@ getLocation = function() {
         };
 
         navigator.geolocation.getCurrentPosition(
-            positionError,
+            positionFound,
             positionError,
             options
         );

@@ -94,9 +94,12 @@
 
     placeGoogleMarkers = function() {
         idMarkerLayer();
-        map.data.setStyle({
-            icon: '/rsz_logo_no_text.png',
-            optimized: false
+        map.data.setStyle(function(feature) {
+            return {
+                icon: '/rsz_logo_no_text.png',
+                optimized: false,
+                zIndex: feature.getProperty('id')
+            }
         });
         map.data.addGeoJson(searchResult);
     };
@@ -105,6 +108,17 @@
         map.data.forEach(function(feature) {
             map.data.remove(feature);
         });
+    };
+
+    highlightCurrentMarker = function() {
+
+        var id = currExchange().id;
+        var style = 'z-index: ' + String(id);
+        var div = 'div[style*="' + style + '"]';
+
+        map.data.overrideStyle(map.data.getFeatureById(id), {icon: '/pricest.png'});
+        $('#markerLayer ' + div).addClass('bounce');
+
     };
 
     addGoogleMarkers = function() {

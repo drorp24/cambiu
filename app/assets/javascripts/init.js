@@ -120,7 +120,7 @@ var cardHeight = null;
 var cardXoffset = null;
 var exchanges;
 var inShow = true;
-
+var currExchangeId = null;
 
 sessionStorage.videoStopped = null;
 
@@ -137,7 +137,7 @@ def_vals = function() {
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
     def['sort']             = 'price';
-    def['radius']           = '40';
+    def['radius']           = '5';
 
     return def;
 
@@ -429,14 +429,14 @@ $(document).ready(function() {
 
     noUiSlider.create(slider, {
         connect: true,
-        start: 40,
+        start: 5,
         range: {
             min: 0,
-            max: 100
+            max: 15
         },
         pips: {
             mode: 'values',
-            values: [20, 80],
+            values: [5, 10],
             density: 4
         },
         tooltips: [true],
@@ -472,7 +472,7 @@ $(document).ready(function() {
         if (typeof timeout === 'undefined') timeout = null;
         if (typeof $upEl === 'undefined') $upEl = null;
 
-        if ($upEl) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 1s'});
+        if ($upEl) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
 
         $.snackbar({
             timeout: timeout || 500000,

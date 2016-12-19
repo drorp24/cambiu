@@ -230,10 +230,10 @@ $(document).ready(function() {
     slider.noUiSlider.on('update', updateRadius);
 
     slider.noUiSlider.on('change', function ( values, handle, unencoded ) {
-        if ( unencoded[0] < 20 ) {
-            slider.noUiSlider.set(20);
-        } else if ( unencoded[0] > 80 ) {
-            slider.noUiSlider.set(80);
+        if ( unencoded[0] < 5 ) {
+            slider.noUiSlider.set(5);
+        } else if ( unencoded[0] > 10 ) {
+            slider.noUiSlider.set(10);
         }
     });
 
