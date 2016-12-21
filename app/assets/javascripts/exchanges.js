@@ -133,9 +133,12 @@
         });
     };
 
-    sortExchanges = function(sortkey = 'price') {
+    sortExchanges = function(sortkey) {
 
+
+        if (typeof sortkey === 'undefined') var sortkey = 'price';
         console.log('sortExchanges. sortkey == ' + sortkey);
+
         if (exchanges.length == 0) return exchanges;
 
         if (sortkey == 'distance') {
