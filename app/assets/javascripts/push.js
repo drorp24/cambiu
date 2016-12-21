@@ -7,6 +7,7 @@ window.onload = function() {
     console.log('push is not supported')
   }
 
+/* SW registration is done in serviceworker-companion.js
   if ('serviceWorker' in navigator) {
     console.log('service worker is supported');
     navigator.serviceWorker.register('/sw.js').then(function() {
@@ -25,6 +26,7 @@ window.onload = function() {
   } else {
     console.log('service worker is not supported')
   }
+*/
 
 };
 

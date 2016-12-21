@@ -11,7 +11,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
-  "start_url": "/exchanges",
+  "start_url": "/",
   "theme_color": "#FF6E3A",
   "background_color": "white"
 }

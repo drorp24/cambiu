@@ -250,7 +250,7 @@ pip-log.txt
 *.rdb
 /public/*
 !/public/sw.js.erb
-!/public/manifest.json
+!/app/assets/javascripts/manifest.json
 /public/assets/*
 
 node_modules/

@@ -13,4 +13,4 @@ Rails.application.config.assets.js_compressor = :uglifier
 Rails.application.config.assets.css_compressor = :sass
 
 # Use dependencies on manifest.js
-Rails.application.config.assets.precompile = ["manifest.js"]
+Rails.application.config.assets.precompile += %w[serviceworker.js manifest.json]

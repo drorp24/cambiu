@@ -96,7 +96,7 @@
         idMarkerLayer();
         map.data.setStyle(function(feature) {
             return {
-                icon: '/rsz_logo_no_text.png',
+                icon: '/logo_no_text.png',
                 optimized: false,
                 zIndex: feature.getProperty('id')
             }
