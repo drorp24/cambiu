@@ -12,7 +12,7 @@
 //= require init
 //= require ytplayer
 //= require radar
-// require push
+//= require push
 //= require search
 //= require map
 //= require place
@@ -25,7 +25,5 @@
 //= require flow
 
 //= require star-rating
-// require jquery-qrcode-0.14.0
-// require sweetalert.min
 //= require swiper.jquery.min
 //= require nouislider.min

@@ -251,5 +251,6 @@ pip-log.txt
 /public/*
 !/public/sw.js.erb
 !/public/manifest.json
+/public/assets/*
 
 node_modules/
