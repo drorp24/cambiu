@@ -1,11 +1,21 @@
-// app/assets/javascripts/serviceworker.js.erb
+// O F F L I N E    C A C H E
+// Based on the following:
+// Basic recipe: https://github.com/rossta/serviceworker-rails
+// Advanced: https://jakearchibald.com/2014/offline-cookbook/#on-network-response
+
 console.log('[Service Worker] Hello world!');
 
 function onInstall(event) {
   console.log('[Serviceworker]', "Installing", event);
   event.waitUntil(
       caches.open('cached-assets-v3').then(function prefill(cache) {
-        return cache.addAll([
+ /*       cache.addAll(
+            // load here files that should *not* fail the entire promise if any of them fails loading
+            // as opposed to the next, critical list, where if *any* fails, the swerviceworker won't ever be activated, it will be abandoned
+        );
+*/        return cache.addAll([
+          "/",
+          "/exchanges/map",
           "/assets/application-d7f56f9c9477158e29697cec3f9077c9a86241a819842637398f70ddab2ddb6b.js",
           "/assets/application.debug-f9d253ca22fcb78d033de5eb06a61c9ea337ac47048ff4dc80f1ce7a9fdfd225.css",
           "//fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900",
@@ -36,5 +46,25 @@ function onActivate(event) {
   );
 }
 
-self.addEventListener('install', onInstall)
-self.addEventListener('activate', onActivate)
+
+// Offline-first strategy
+function onFetch(event) {
+
+  var request = event.request;
+
+/*
+  if (!request.url.match(/^https?:\/\/example.com/) ) { return; }
+  if (request.method !== 'GET') { return; }
+*/
+
+  event.respondWith(
+      caches.match(event.request).then(function(response) {
+//        console.log('response: ', response);
+        return response || fetch(event.request);
+      })
+  );
+}
+
+self.addEventListener('install', onInstall);
+self.addEventListener('activate', onActivate);
+//self.addEventListener('fetch', onFetch);
