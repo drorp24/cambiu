@@ -4,12 +4,12 @@ ruby '2.3.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0'
 
-# Support ES6
+# Support ES6: The *NON* commented lines are the only ones working together
 #gem 'sprockets', '~> 4.0.0.beta4'
 #gem 'sprockets', github: "rails/sprockets"
-#gem 'babel-transpiler'
+gem 'babel-transpiler'
 gem "sprockets", "~> 4.x"
-gem "babel-schmooze-sprockets"
+#gem "babel-schmooze-sprockets"
 
 # Use postgresql as the database for Active Record
 gem 'pg'
