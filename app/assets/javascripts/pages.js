@@ -4,20 +4,13 @@
 //
 //   -  replace active html, manipulate browser history (setPage),
 
-setPage = function (arg) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
+setPage = function ({url, page1, id1, pane1, hash, pushState, populate}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
 
 //        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' pushState: ' + pushState + ' populate: ' + populate);
 
 
-    var url         = arg.url;
-    var page1       = arg.page1;
-    var id1         = arg.id1;
-    var pane1       = arg.pane1;
-    var hash        = arg.hash;
-    var pushState   = arg.pushState;
-    var populate    = arg.populate;
     if (typeof pushState === 'undefined') var pushState = true;
-    if (typeof populate === 'undefined') var populate = true;
+    if (typeof pushState === 'undefined') var populate = true;
 
     // POP pane into view
     if (url) {
