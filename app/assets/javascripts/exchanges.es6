@@ -37,12 +37,12 @@
         populateExchange(exchange, $card, index);
 
         fetchPlace(exchange)
-            .then(function(exchange)  {populatePlace(exchange, $card)})
-            .catch(function(error)  {console.warn(error)});
+            .then(exchange => {populatePlace(exchange, $card)})
+            .catch(error => {console.warn(error)});
 
         findDuration(exchange)
-            .then(function(exchange)  {populateDuration(exchange, $card)})
-            .catch(function(error)  {console.warn(error)});
+            .then(exchange => {populateDuration(exchange, $card)})
+            .catch(error => {console.warn(error)});
 
         slidesAdded.push(index);
     }
