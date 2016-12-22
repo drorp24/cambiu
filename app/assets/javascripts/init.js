@@ -122,6 +122,7 @@ var cardXoffset = null;
 var exchanges;
 var inShow = true;
 var currExchangeId = null;
+var currentSnack = null;
 
 sessionStorage.videoStopped = null;
 
@@ -460,27 +461,33 @@ $(document).ready(function() {
     snackHtml = function(arg) {
         var message = arg.message,
             button = arg.button,
-            modalText = arg.modalText;
+            modalText = arg.modalText,
+            klass = arg.klass;
 
         var $e = $('.snack.template').clone().removeClass('template').addClass('active');
         $e.find('.message').html(message);
+        if (klass) $e.find('.snackIcon').addClass(klass);
         if (button) $e.find('.button').html(button);
         return $e.html();
     };
 
-    snack = function(message, button, timeout, $upEl) {
+    snack = function(message, button, timeout, $upEl, klass) {
 
-        if (typeof timeout === 'undefined') timeout = null;
-        if (typeof $upEl === 'undefined') $upEl = null;
+        if (typeof timeout === 'undefined') var timeout = null;
+        if (typeof $upEl === 'undefined') var $upEl = null;
+        if (typeof klass === 'undefined') var klass = null;
 
         if ($upEl) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
 
-        $.snackbar({
+        if (currentSnack) currentSnack.snackbar("hide");
+
+        currentSnack = $.snackbar({
             timeout: timeout || 500000,
             htmlAllowed: true,
             content: snackHtml({
                 message: message,
-                button: button
+                button: button,
+                klass: klass
             })
         })
     };
