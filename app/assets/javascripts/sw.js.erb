@@ -19,8 +19,8 @@ function onInstall(event) {
 */        return cache.addAll([
           "/",
           "/exchanges/map",
-          "/assets/application-d7f56f9c9477158e29697cec3f9077c9a86241a819842637398f70ddab2ddb6b.js",
-          "/assets/application.debug-f9d253ca22fcb78d033de5eb06a61c9ea337ac47048ff4dc80f1ce7a9fdfd225.css",
+          <%= Rails.env.development? ? "/assets/application.js" : asset_path('application.js') %>,
+          <%= Rails.env.development? ? "/assets/application.css" : asset_path('application.css') %>,
           "//fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900",
           "//fonts.googleapis.com/icon?family=Material+Icons",
           "//cdn.rawgit.com/HubSpot/tether/v1.3.4/dist/js/tether.min.js",
