@@ -1,5 +1,5 @@
 class AddLogoToExchange < ActiveRecord::Migration
   def change
-    add_column :'exchanges.js', :logo, :string
+    add_column :exchanges, :logo, :string
   end
 end

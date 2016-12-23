@@ -1,5 +1,5 @@
 class AddCaptionToExchanges < ActiveRecord::Migration
   def change
-    add_column :'exchanges.js', :caption, :string
+    add_column :exchanges, :caption, :string
   end
 end

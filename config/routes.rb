@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   end
   namespace :api do
     namespace :v1 do
-      resources :'exchanges.js'
+      resources :exchanges
     end
   end
 
