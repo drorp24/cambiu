@@ -5,7 +5,7 @@
 
 console.log('[Service Worker] Hello world!');
 
-var version = 'v9';
+var version = 'v3';
 
 function onInstall(event) {
   console.log('[Serviceworker]', version, "Installing");
@@ -113,7 +113,7 @@ function onFetch(event) {
             /* We return the cached response immediately if there is one, and fall
              back to waiting on the network as usual.
              */
-//            if (cached) console.log('[Serviceworker]: returning cached ' + event.request.url);
+            if (cached) console.log('[Serviceworker]: fetch response from cache', event.request.url);
             return cached || networked;
 
             function fetchedFromNetwork(response) {
@@ -122,7 +122,7 @@ function onFetch(event) {
                */
               var cacheCopy = response.clone();
 
- //             console.log('[Serviceworker]: fetch response from network.', event.request.url);
+//              console.log('[Serviceworker]: fetch response from network', event.request.url);
 
               caches
               // We open a cache to store the response for this request.
