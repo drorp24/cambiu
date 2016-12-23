@@ -1,0 +1,17 @@
+{
+  "name": "cambiu",
+  "short_name": "cambiu",
+  "gcm_sender_id": "782066572329",
+  "icons": [
+    {
+      "src": "https://d368eop2iyjvb5.cloudfront.net/assets/logo_no_text-d0d25dbe743d1ff7537be68b641b9837cd0b0dca57bb375573e79de5d030262b.png",
+      "type": "image/png"
+    }
+  ],
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "theme_color": "#FF6E3A",
+  "background_color": "yellow"
+}
