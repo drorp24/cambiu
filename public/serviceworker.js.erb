@@ -17,7 +17,14 @@ function onInstall(event) {
              // as opposed to the next, critical list, where if *any* fails, the swerviceworker won't ever be activated, it will be abandoned
              );
              */        return cache.addAll([
-                "/",
+            <% if Rails.env.development? %>
+            "/assets/application.js",
+            "/assets/application.css",
+            <% else %>
+            "<%= asset_path('application.js') %>",
+            "<%= asset_path('application.css') %>",
+            <% end %>
+            "/",
                 "/exchanges/map",
                 "//fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900",
                 "//fonts.googleapis.com/icon?family=Material+Icons",
