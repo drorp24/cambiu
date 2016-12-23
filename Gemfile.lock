@@ -391,6 +391,7 @@ DEPENDENCIES
   sinatra!
   spring
   spring-watcher-listen (~> 2.0.0)
+  sprockets (~> 4.x)
   thin
   tod
   tooltipster-rails
