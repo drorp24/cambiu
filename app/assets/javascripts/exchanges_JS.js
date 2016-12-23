@@ -133,7 +133,9 @@ getExchange = function(exchange_id, property) {
     });
 };
 
-sortExchanges = function(sortkey = 'price') {
+sortExchanges = function(sortkey) {
+
+    if (typeof sortkey === 'undefined' || !sortkey) var sortkey = 'price';
 
     console.log('sortExchanges. sortkey == ' + sortkey);
     if (exchanges.length == 0) return exchanges;
