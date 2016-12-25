@@ -4,7 +4,8 @@
   "gcm_sender_id": "782066572329",
   "icons": [
     {
-      "src": "https://d368eop2iyjvb5.cloudfront.net/assets/logo_no_text-d0d25dbe743d1ff7537be68b641b9837cd0b0dca57bb375573e79de5d030262b.png",
+      "src": "https://d368eop2iyjvb5.cloudfront.net/assets/Cambiu_Logo-af01f354740bf0158be9ea1df2f7743c249ba20d27deb1440d9202e92971ecce.png",
+      "sizes": "72x72 96x96 144x144 128x128 256x256",
       "type": "image/png"
     }
   ],
