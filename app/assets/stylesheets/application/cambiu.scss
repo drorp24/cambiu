@@ -595,14 +595,6 @@ body#cambiu {
     }
   }
 
-  #userLoc {
-    position: absolute;
-    background: #45453f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .marker {
     position: fixed;
     opacity: 0;
@@ -654,11 +646,20 @@ body#cambiu {
   }
 
 
+  #userLoc {
+    position: absolute;
+    background: #45453f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+  }
+
 
   .pulse1 {
     position: absolute;
-    left: 20px;
-    top: 20px;
     width: 20px;
     height: 20px;
     border: 3px solid #fff;
@@ -668,6 +669,8 @@ body#cambiu {
     background-color: $user-location-color;
     z-index: 10;
     @include dropShadow;
+    left: 20px;
+    bottom: 20px;
   }
 
   .pulse2 {
@@ -677,9 +680,10 @@ body#cambiu {
     border-radius: 60px;
     background-color: $user-location-color-light;
     z-index: 10;
+    bottom: 0;
+    left: 0;
   }
   .dot {
-    position: absolute;
     border: 20px solid $user-location-color-medium;
     background: transparent;
     -webkit-border-radius: 60px;
