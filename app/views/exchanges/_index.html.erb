@@ -1,9 +1,7 @@
 <div class="container-fluid">
-  <a name="exchanges"></a>
-  <div id="exchanges_page">
 
-    <div class="row" id="exchanges_content">
-      <div id="exchanges" class="col-md-4 col-xs-12 col-md-offset-half">
+    <div class="row">
+      <div id="exchanges" class="col-xs-12">
         <%= render 'exchanges/search/index' %>
         <%= render 'exchanges/map/index' %>
         <%= render 'exchanges/reviews/index' %>
@@ -12,12 +10,6 @@
         <%= render 'exchanges/try/index' %>
        </div>
     </div>
-
-    <div id="map_container" class="desktop_only">
-      <div id="map-canvas" data-clicked="map"></div>
-    </div>
-  </div>
-
 
 </div>
 

@@ -170,7 +170,7 @@ $(document).ready(function() {
 
     search = function(location) {
 
-        if (!inShow) progress('start', 'below_navbar');
+        if (!inShow) start_search();
         var reason = location.reason ? location.reason : '';
         console.log('search invoked. ' + reason);
 
@@ -202,7 +202,7 @@ $(document).ready(function() {
                     searchResult = data.exchanges;
                     exchanges = data.exchanges.features;
                     resolve(exchanges);
-                    if (!inShow) { setTimeout(function() {progress('stop')}), 3500}
+                    if (!inShow) {setTimeout(function() {stop_search()}, 1500)};
                 })
                 .catch(function (error) {
                     console.log('catch!');

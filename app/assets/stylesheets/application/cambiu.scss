@@ -2,6 +2,9 @@
 @import "font-awesome";
 
 // Variables
+$boldblue: #3392FF;
+$violet: #C870F4;
+$eightiesgreen: #20CFBB;
 $limelight: #EEFF41;
 $limedark: #B2FF59;
 $navbar_height: 60px;
@@ -511,7 +514,29 @@ body#cambiu {
   }
   */
 
+  @media (min-width: 768px) {
+    .mobile_only {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .desktop_only {
+      display: none !important;
+    }
+  }
+
+  .content {
+    padding: 30px;
+  }
+
   background-color: #fff;
+
+  .mobile_background {
+    font-size: 1em;
+    height: 100vh;
+    width: 100vw;
+  }
 
   .flex_between {
     display: flex;
@@ -521,6 +546,48 @@ body#cambiu {
 
   .swiper-wrapper {
     box-sizing: border-box !important; // truly important...
+  }
+
+  .swiper-wrapper-intro {
+    text-align: center;
+    color: #fff;
+    font-size: 1.3rem;
+  }
+
+  .intro-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    &:nth-child(1) {
+      background-color: $brand-color;
+    }
+    &:nth-child(2) {
+      background-color: $boldblue;
+    }
+    &:nth-child(3) {
+      background-color: $eightiesgreen;
+    }
+    &:nth-child(4) {
+      background-color: $violet;
+    }
+    button {
+      position: absolute;
+      left: 0;
+      width: 80vw;
+      left: 10vw;
+      bottom: 25vh;
+      font-size: 1.6rem;
+      color: #fff !important;
+    }
+  }
+
+  .swiper-pagination {
+    width: 100vw;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #fff;
   }
 
   .fadeOut {
@@ -553,9 +620,6 @@ body#cambiu {
       display: block;
     }
     height: 100vh;
-    .content {
-      padding: 30px;
-    }
   }
 
   .bounce {
@@ -769,7 +833,7 @@ body#cambiu {
       background-color: $brand-color;
     }
   }
-  .swiper-container {
+  .swiper-container-h {
     display: none;
     z-index: 2;
   }
@@ -886,7 +950,7 @@ body#cambiu {
       border: 2px solid rgba(66, 152, 181, 1);
       -webkit-animation: pulsate 3s infinite;
       animation: pulsate 3s infinite;
-      background-color:#4298b5;
+      background-color: lighten(#4298b5, 40%);
       -webkit-transform:translateX(-50%) translateY(-50%);
       transform:translateX(-50%) translateY(-50%);
     }
@@ -900,9 +964,9 @@ body#cambiu {
         height:150px;
         opacity:0;
       }
-      1% { opacity:1; }
+      1% { opacity:0.6; }
       70% {
-        opacity:0.5;
+        opacity:0.4;
       }
       99.999% {
         width:950px;
@@ -916,9 +980,9 @@ body#cambiu {
         height:150px;
         opacity:0;
       }
-      1% { opacity:1; }
+      1% { opacity:0.6; }
       70% {
-        opacity:0.5;
+        opacity:0.4;
       }
       99.999% {
         width:950px;
@@ -2671,152 +2735,7 @@ body#cambiu {
         background-color: $brand-color;
       }
 
-     #exchanges_content {
-      z-index: -1;
-      font-family: $font-family;
-      .list-group-item:not(#exchanges_search_results):not(#exchanges_search_params):not(.open_params_wrapper) {
-//        z-index: 40000;
-        &:hover {
-          background-color: lighten($brand-color, 35%);
-          background-color: #eee;
-        }
-      }
-       .delivery_bg {
-        position: absolute;
-        right: 0px;
-        top: 0px;
-        width: 14%;
-        min-height: 70px;
-        background-color: $brand-color;
-        transform: skewX(45deg);
-        transform-origin: 0px 0px 0px;
-        color: #fff;
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
-       }
-      .delivery_text {
-        color: white;
-        position: absolute;
-        right: 0px;
-        transform: rotate(45deg);
-        text-indent: 1em;
-        font-size: 1em;
-      }
-      .list_icon {
-        font-size: 1.2em;
-        font-weight: 400;
-        color: #888;
-        margin-left: -0.3em;
-      }
-      .distance:not(button) {
-        width: 100%;
-        display: inline;
-         &::before {
-          font-family: fontAwesome;
-          content: "\f041" + '    ';
-        }
-        &::after {
-          content: "m";
-        }
-      }
-      .name {
-        font-weight: 300;
-        color: #000;
-        font-size: 1.1em;
-        margin-top: 0.2em;
-        margin-bottom: 0.2em;
-      }
-       .units-d {
-        font-size: 0.9em;
-        font-weight: 100;
-        display: inline;
-      }
-      .units-m {
-        display: none;
-      }
-      .middle-parent {
-        .middle-child {
-          height: 35px;
-          vertical-align: middle;
-          display: table-cell;
-        }
-      }
-        .quote, .quote_currency {
-        font-weight: 700;
-          font-size: 1.3em;
-          color: #000;
-          line-height: 1em;
-      }
-      .gain {
-        font-size: 0.9em;
-        font-weight: 400;
-        color: $green;
-      }
-      .rounded {
-        border-radius: 4px;
-      }
-      .service_type {
-        display: none;
-        text-transform: uppercase;
-        color: #888;
-        line-height: 1.1em;
-        font-size: 0.75em;
-
-      }
-      .you {
-        font-size: 0.65em;
-        position: absolute;
-        text-transform: uppercase;
-        text-align: center;
-        bottom: 2.5em;
-        color: #555;
-        font-weight: 300;
-        text-indent: 0.5em;
-      }
-      .delivery .service_type {
-      }
-      .appendix {
-        color: #888;
-        font-weight: 300;
-        font-size: 1.2em;
-         padding-bottom: 0.3em;
-        .base_rate {
-
-        }
-        .gains {
-          .gain_type {
-            &.plus:after {
-              content: ' Extra';
-            }
-            &.minus:after {
-              content: ' Save';
-            }
-          }
-          .gain_amount {
-            font-weight: 700;
-            color: $darkengreen;
-          }
-          .gain_tooltip {
-            color: #555;
-          }
-        }
-        .tooltip {
-          width: 100%;
-        }
-        .tooltip-inner {
-          width: 15em;
-          background-color: #fff;
-        }
-        .tooltip-arrow {
-          border-right-color: #fff;
-        }
-      }
-
-      .distance_and_quote {
-        margin-top: 0.3em;
-      }
-
-    }
-    .getit_parent {
+     .getit_parent {
     }
     .getit .btn.btn-default#getit_button {
       border-color: $lightgreen;

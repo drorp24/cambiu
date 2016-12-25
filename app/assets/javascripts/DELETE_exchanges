@@ -48,7 +48,7 @@ function addCard(exchange, index) {
 }
 
 revealCards = function() {
-    $('.swiper-container').css('display', 'block');
+    $('.swiper-container-h').css('display', 'block');
     setTimeout(function() {
         cardXoffset = String(($('.ecard').eq(0).position().left + $('#cards').position().left) * -1) + 'px';
     }, 1000)

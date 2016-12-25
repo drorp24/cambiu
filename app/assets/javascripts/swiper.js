@@ -10,6 +10,11 @@ initSwipers = function() {
         onSlidePrevEnd: slidePrev
     });
 
+    swiperIntro = new Swiper ('.swiper-container-intro', {
+        slidesPerView: 1,
+        pagination: '.swiper-pagination'
+    });
+
 };
 
 

@@ -52,16 +52,14 @@ show = function(verb) {
     if (desktop) return;
 
     if (verb == 'start') {
-        searchSnack('start');
         radar('start');
-        progress('start', 'above_snack');
+//        start_search();  // needs to be when the search really takes place, or else it's a mess
         inShow = true;
     } else
 
     if (verb == 'stop') {
         radar('stop');
-        progress('stop');
-        searchSnack('stop');
+//        stop_search();
         inShow = false;
     }
 };
@@ -69,12 +67,15 @@ show = function(verb) {
 start_show = function() {show('start')};
 stop_show = function() {show('stop')};
 
+start_search = function() {
+    searchSnack('start');
+    progress('start', 'above_snack');
+};
 
-
-
-
-
-
+stop_search = function() {
+    searchSnack('stop');
+    progress('stop', 'above_snack');
+};
 
 
 

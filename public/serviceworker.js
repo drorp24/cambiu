@@ -1,14 +1,16 @@
 // O F F L I N E    C A C H E
+// Currently, the one in /public is the one being used. Gem serviceworker-rails doesnt work.
+// If it ever works - copy this file *again* to its asset-pipelined folder (/assets/javascripts)
 // Based on the following:
 // Basic recipe: https://github.com/rossta/serviceworker-rails
 // Advanced: https://jakearchibald.com/2014/offline-cookbook/#on-network-response
 
-console.log('[Service Worker] Hello world!');
+console.log('[Serviceworker] Hello world!');
 
-var version = 'public';
+var version = 'public9';
 
 function onInstall(event) {
-    console.log('[Serviceworker]', version, "Installing");
+    console.log('[Serviceworker]', version, "Installing: populating cache with files...");
     self.skipWaiting();
     event.waitUntil(
         caches.open(version + '_pages').then(function prefill(cache) {
@@ -26,6 +28,9 @@ function onInstall(event) {
                 "offline.html"
             ]);
         })
+            .then(function() {
+                console.log('[Serviceworker]', version, '... installed!');
+            })
     );
 }
 
@@ -33,7 +38,7 @@ function onActivate(event) {
     /* Just like with the install event, event.waitUntil blocks activate on a promise.
      Activation will fail unless the promise is fulfilled.
      */
-    console.log('[Serviceworker]', version, ' activate event in progress.');
+    console.log('[Serviceworker]', version, ' activating: replacing cache...');
 
     event.waitUntil(
         caches
@@ -58,7 +63,7 @@ function onActivate(event) {
                 );
             })
             .then(function() {
-                console.log('[Serviceworker]', version, ' activate completed.');
+                console.log('[Serviceworker]', version, '... activated!');
             })
     );
 }
@@ -106,7 +111,7 @@ function onFetch(event) {
                 /* We return the cached response immediately if there is one, and fall
                  back to waiting on the network as usual.
                  */
-                if (cached) console.log('[Serviceworker]: fetch response from cache', event.request.url);
+//                if (cached) console.log('[Serviceworker]: fetch response from cache', version, event.request.url);
                 return cached || networked;
 
                 function fetchedFromNetwork(response) {

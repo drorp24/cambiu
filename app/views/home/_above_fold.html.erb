@@ -1,4 +1,4 @@
-<div class="above_fold" data-clicked="above_fold" style="display: <%= (request.url.include? 'exchanges') ? 'none' : 'block' %>" >
+<div class="above_fold row" data-clicked="above_fold" style="display: <%= (request.url.include? 'exchanges') ? 'none' : 'block' %>" >
 
   <div id="above_folder_background" class="background-wrap desktop_only">
 
@@ -18,16 +18,28 @@
 
   </div>
 
-  <div id="mobile_search" class="background-wrap mobile_only">
+  <div class="mobile_background mobile_only">
 
-    <div class="intro">
-      <p>Best currency exchange offers right where you are.</p>
-    </div>
-
-    <div class="mobilesearch">
-      <div class="open_params_wrapper list-group-item mobile_only text-center">
-        <a class="open_params open" data-href-page="exchanges" data-href-id="" data-href-pane="map"></a>
+    <div class="swiper-container swiper-container-intro">
+      <div class="swiper-wrapper swiper-wrapper-intro">
+        <div class="swiper-slide intro-slide content">
+          <p>Best currency exchange offers right where you are.</p>
+          <button class="btn" data-href-page="exchanges" data-href-pane="map">Get an offer</button>
+        </div>
+        <div class="swiper-slide intro-slide content">
+          <p>Slide 2</p>
+          <button class="btn" data-href-page="exchanges" data-href-pane="map">Get an offer</button>
+        </div>
+        <div class="swiper-slide intro-slide content">
+          <p>Slide 3</p>
+          <button class="btn" data-href-page="exchanges" data-href-pane="map">Get an offer</button>
+        </div>
+        <div class="swiper-slide intro-slide content">
+          <p>Slide 4</p>
+          <button class="btn" data-href-page="exchanges" data-href-pane="map">Get an offer</button>
+        </div>
       </div>
+      <div class="swiper-pagination"></div>
     </div>
 
   </div>
