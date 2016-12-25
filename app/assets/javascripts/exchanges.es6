@@ -75,7 +75,7 @@
             currCard().removeClass('selected')
             $navBtn.removeClass('rotate');
 
-        }, 500);
+        }, 150);
 
     });
 
