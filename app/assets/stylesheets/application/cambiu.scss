@@ -1004,7 +1004,7 @@ body#cambiu {
       bottom: 60px;
     }
     &.below_navbar {
-      top: 60px;
+      top: 65px;
     }
     &.fadeOut {
       display: none;
@@ -1013,7 +1013,8 @@ body#cambiu {
     background-color: #acece6;
     background-color: lighten($brand-color, 30%);
     background-color: $limelight;
-    background-color: $brand-color;
+    background-color: $limedark;
+//    background-color: $brand-color;
     border-radius: 2px;
     background-clip: padding-box;
     overflow: hidden; }

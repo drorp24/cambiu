@@ -54,12 +54,14 @@ show = function(verb) {
     if (verb == 'start') {
         radar('start');
 //        start_search();  // needs to be when the search really takes place, or else it's a mess
+        progress('start', 'below_navbar');
         inShow = true;
     } else
 
     if (verb == 'stop') {
         radar('stop');
 //        stop_search();
+        progress('stop');
         inShow = false;
     }
 };
