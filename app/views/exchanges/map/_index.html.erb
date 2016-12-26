@@ -1,7 +1,7 @@
 <div class="pane" data-pane="map">
 
 
-  <%= render partial: 'navbar', locals: {left_pane: 'search', left_icon: 'search', center: 'search_params', right_pane: nil, right_icon: 'shopping-basket'} %>
+  <%= render partial: 'navbar', locals: {left_pane: 'search', left_icon: 'search', center: 'search_params', right_pane: nil, right_icon: 'bars'} %>
 
   <div id="map_container" class="mobile_only">
     <div id="map-canvas" data-clicked="map"></div>
@@ -24,6 +24,17 @@
       <!-- Exchange cards go here -->
     </div>
     <div class="swiper-pagination"></div>
+  </div>
+
+  <div id="best_offer"
+       title="Best offer"
+       data-toggle="popover"
+       data-content="<i class='fa fa-trophy'></i> Cambiu's choice"
+       data-placement="top"
+       data-selector=".best.ecard"
+       data-viewport=".swiper-container-h"
+       data-trigger="manual"
+       data-html = "true">
   </div>
 
 

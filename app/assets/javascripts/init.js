@@ -392,12 +392,10 @@ $(document).ready(function() {
         return $('body').hasClass('home');
     };
 
-/*  No use of tooltips / popovers at the moment
     $(function () {
         $("body").tooltip({ selector: '[data-toggle=tooltip]' });
         $("body").popover({ selector: '[data-toggle=popover]' });
     });
-*/
 
     if (window.matchMedia('(display-mode: standalone)').matches) {
         console.log("Installable app!");
@@ -562,5 +560,12 @@ $(document).ready(function() {
          snack(e.error);
     });
 
+    $('body').click(function(e) {
+        hide_best();
+    });
+
+    $('.navbar').click(function(e) {
+        hide_best();
+    });
 
 });

@@ -25,6 +25,7 @@ $(document).ready(function() {
         .then(revealCards)
         .then(zoomIn)
         .then(stop_show)
+        .then(show_best)
         .catch(showError);
 
     setPage({url: window.location.pathname, populate: false});

@@ -77,41 +77,15 @@ stop_search = function() {
     progress('stop', 'above_snack');
 };
 
-
-
-
-
-
-/*  authentic scanning radar
-var radarLoop;
-
-radarScan = function() {
-
-    console.log('radarScan');
-
-    var deg = 0;
-
-    (function rotate() {
-        $('#rad').css({transform: 'rotate('+ deg +'deg)'});
-        $('.marker[data-atDeg='+deg+']').stop().fadeTo(400,1).fadeTo(1000,0.35);
-
-        // LOOP
-        radarLoop = setTimeout(function() {
-            deg = ++deg%360;
-            rotate();
-        }, 10);
-
-    })();
+show_best = function() {
+    $('#best_offer').popover('show');
+    var $popover = $('.popover');
+    $popover.css('transform', 'initial');
+    $popover.css('bottom', cardHeight + 35 + 'px');
+    $popover.css('left',(windowWidth - $popover.width())/2 + 'px');
+    $popover.addClass('bounce');
 };
 
-radarFade = function() {
-    $('#radar').fadeTo(5000, 0)
+hide_best = function() {
+    $('#best_offer').popover('hide');
 };
-
-radarStop = function() {
-    $('#radar').remove();
-    clearTimeout(radarLoop);
-    $('.marker').stop().fadeTo(1,1);
-};
-*/
-

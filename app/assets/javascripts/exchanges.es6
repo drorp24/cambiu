@@ -57,6 +57,7 @@
 
     $('body').on('click tap', '.ecard:not(.selected)', function(e) {
         e.stopPropagation();
+        $('#best_offer').popover('hide');
         var $this = $(this);
         $('.progress').css('display', 'none');
         $this.css('transform', 'translate(' + cardXoffset + ', 10px)');
@@ -66,6 +67,7 @@
     $('body').on('click tap', '.ecard.selected .actions_line, .ecard.selected .nav_icon', function(e) {
 
         e.stopPropagation();
+        $('#best_offer').popover('hide');
         var $navBtn = $('.nav_icon_container');
         $navBtn.addClass('rotate');
         renderDirections(currExchange());

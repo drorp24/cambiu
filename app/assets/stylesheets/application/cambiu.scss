@@ -577,7 +577,7 @@ body#cambiu {
       width: 80vw;
       left: 10vw;
       bottom: 25vh;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       color: #fff !important;
     }
   }
@@ -1445,13 +1445,16 @@ body#cambiu {
 
   .actions_line {
     position: absolute;
-    bottom: 1.5em;
+    bottom: 2rem;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     div {
       display: inline-block;
+    }
+    .btn {
+      font-size: 1.3rem;
     }
   }
 
@@ -1574,9 +1577,11 @@ body#cambiu {
     max-width: 100%;
     div {
       white-space: nowrap;
-      margin-right: 5px;
-      margin-left: 5px;
+      margin-right: 0.5rem;
      }
+    div:empty {
+      margin-right: 0;
+    }
   }
   
   .force-left {
@@ -1907,19 +1912,19 @@ body#cambiu {
   }
 
   .popover {
-//    z-index:  100000;
-    color: #333;
-    font-size: 0.9em;
-    max-width: 49%;
-//    margin-top: 12px;
-    background-color: #f7f7f7;
-    /*
-    background-color: rgba(0,0,0,0.6);
+    max-width: 8rem;
+    background-color: $brand-color;
+    font-size: 1.3rem;
+    border-radius: 5px;
     color: #fff;
-    */
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.7);
+    top: initial;
+    bottom: 150px;
+    text-align: center;
   }
-  .popover.top .arrow:after {
-    border-top-color: #f7f7f7;
+
+  .popover.bs-tether-element-attached-bottom .popover-arrow:after, .popover.popover-top .popover-arrow:after {
+    border-top-color: $brand-color;
   }
 
     /*progressbar*/
@@ -2322,7 +2327,8 @@ body#cambiu {
     z-index: 2;
     padding: 5px;
     border: none;
-    background-color: $navbar_background;
+//    background-color: $navbar_background;
+    background-color: $brand-color;
     font-weight: 400;
     font-size: 1.3em;
     width: 100vw;
@@ -2334,6 +2340,7 @@ body#cambiu {
 
   .navbar_link {
     display: flex;
+    justify-content: center;
   }
    .section_anchor {
     display: block;

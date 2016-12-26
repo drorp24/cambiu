@@ -27,6 +27,8 @@ populateExchange = function(exchange, $scope, index) {
 
 //    console.log('exchange ' + exchange.id + ' - populateExchange');
 
+    if (index == 0) $scope.addClass('best');
+
     $scope.find('[data-model=exchange][data-field]').each(function() {
         var $this = $(this);
         var field = $this.data('field');
