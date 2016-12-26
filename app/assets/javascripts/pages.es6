@@ -6,9 +6,10 @@
 
 setPage = function ({url, page1, id1, pane1, hash, pushState = true, populate = true}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
 
-//        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' pushState: ' + pushState + ' populate: ' + populate);
+        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' pushState: ' + pushState + ' populate: ' + populate);
 
     // POP pane into view
+//    if (page1 = 'homepage') var url = 'homepage';
     if (url) {
         var ppart = break_url(url);
         var [page, id, pane] = [ppart.page || 'homepage', ppart.id, ppart.pane]
@@ -51,11 +52,21 @@ setPage = function ({url, page1, id1, pane1, hash, pushState = true, populate = 
 
 // Some parts, like map and swipers, need to be re-rendered once the pane is visible
 refresh = function(pane) {
-    if (!refreshed && pane == 'map' && map) {
-        console.log('refresh');
+    if (!map_refreshed && pane == 'map' && map) {
+        console.log('Entering pane: map - re-render map & refresh swiperH');
         renderMap(); // Consider generating the map, if this still insists on locating me in Savyon
         if (swiperH) swiperH.update(false);
-        refreshed = true // do once only
+        map_refreshed = true; // do once only
+    }
+    if (!help_refreshed && pane == 'help' && swiperIntro) {
+        console.log('Entering pane: help - refresh swiperIntro');
+         swiperIntro.update(false);
+        help_refreshed = true; // do once only
+    }
+    if (pane == map) {
+        $('.exchanges #exchanges').css('z-index', '2')
+    } else {
+        $('.exchanges #exchanges').css('z-index', '3')
     }
 };
 

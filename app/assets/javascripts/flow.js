@@ -23,11 +23,20 @@ $(document).ready(function() {
         .then(geocode)
         .then(wait)
         .then(revealCards)
-        .then(zoomIn)
         .then(stop_show)
+        .then(zoomIn)
         .then(show_best)
         .catch(showError);
 
-    setPage({url: window.location.pathname, populate: false});
+    setProperPage();
 
 });
+
+function setProperPage() {
+     if (mobile && window.location.pathname == '/') {
+        setPage({page1: 'exchanges', pane1: 'help', populate: false});
+    } else {
+        setPage({url: window.location.pathname, populate: false});
+    }
+}
+

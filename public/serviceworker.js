@@ -7,7 +7,7 @@
 
 console.log('[Serviceworker] Hello world!');
 
-var version = 'public6';
+var version = 'public5';
 
 function onInstall(event) {
     console.log('[Serviceworker]', version, "Installing: populating cache with files...");

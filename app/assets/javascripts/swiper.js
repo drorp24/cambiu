@@ -11,7 +11,6 @@ initSwipers = function() {
     });
 
     swiperIntro = new Swiper ('.swiper-container-intro', {
-        slidesPerView: 1,
         pagination: '.swiper-pagination'
     });
 

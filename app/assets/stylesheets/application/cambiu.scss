@@ -1576,7 +1576,7 @@ body#cambiu {
     justify-content: center;
     align-items: center;
     max-width: 100%;
-    div {
+    div, i {
       white-space: nowrap;
       margin-right: 0.5rem;
      }
@@ -2331,12 +2331,15 @@ body#cambiu {
 //    background-color: $navbar_background;
     background-color: $brand-color;
     font-weight: 400;
-    font-size: 1.3em;
+    font-size: 1.4em;
     width: 100vw;
     height: $navbar_height;
     color: #fff;
     box-shadow: 1px 1px 10px rgba(0,0,0,0.7);
     margin-bottom: initial;
+    .material-icons {
+      font-size: 1.3em;
+    }
   }
 
   .navbar_link {
