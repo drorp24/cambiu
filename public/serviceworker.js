@@ -14,12 +14,14 @@ function onInstall(event) {
     self.skipWaiting();
     event.waitUntil(
         caches.open(version + '_pages').then(function prefill(cache) {
-           cache.addAll(
+/*
+           cache.addAll([
              // load here files that should *not* fail the entire promise if any of them fails loading
              // as opposed to the next, critical list, where if *any* fails, the swerviceworker won't ever be activated, it will be abandoned
                "http://localhost:3000/assets/application.debug-d8954523fb2144e8d700b8e80c5c285b78116110bd664ba1e37f64ce862a9f19.css",
                "http://localhost:3000/assets/application.debug-3baed0d235d83efd95775720824a67ff7aab33f7a55d657d7e60a5fa72fc9174.js"
-            );
+            ]);
+*/
             return cache.addAll([
                 "/",
                 "/exchanges/map",
