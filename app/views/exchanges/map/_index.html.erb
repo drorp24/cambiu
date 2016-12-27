@@ -19,11 +19,13 @@
   </div>
 
 
-  <div class="swiper-container swiper-container-h swiper-container-horizontal">
-    <div id="cards" class="swiper-wrapper">
-      <!-- Exchange cards go here -->
+  <div class="swiper-container-container">
+    <div class="swiper-container swiper-container-h swiper-container-horizontal">
+      <div id="cards" class="swiper-wrapper">
+        <!-- Exchange cards go here -->
+      </div>
+      <div class="swiper-pagination"></div>
     </div>
-    <div class="swiper-pagination"></div>
   </div>
 
   <div id="best_offer"
@@ -31,8 +33,8 @@
        data-toggle="popover"
        data-content="<i class='fa fa-trophy'></i> Cambiu's choice"
        data-placement="top"
-       data-selector=".best.ecard"
-       data-viewport=".swiper-container-h"
+       data-selector=".swiper-container-container"
+       data-viewport=".swiper-container-container"
        data-trigger="manual"
        data-html = "true">
   </div>

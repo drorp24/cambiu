@@ -42,17 +42,6 @@
 
             map.data.addListener('click', function (event) {
 
-// TODO: fix to show card instead of infoWindow - UNLESS I USE HOMEMADE MARKERS. anyway not use infoWindow.
-                /*
-                 var content = exchange_el(event.feature).det[0];
-                 var infowindow = new google.maps.InfoWindow({
-                 content: content
-                 });
-                 var anchor = new google.maps.MVCObject();
-                 anchor.set("position",event.latLng);
-                 infowindow.open(map, anchor);
-                 */
-
             });
 
 
@@ -65,8 +54,12 @@
             });
 
 
-            google.maps.event.addListener(map, 'drag', function () {
-                hideUserPosition();
+            google.maps.event.addListener(map, 'dragstart', function () {
+                hide_best();
+            });
+
+            google.maps.event.addListener(map, 'click', function () {
+                hide_best();
             });
 
             google.maps.event.addListener(map, 'dragend', function () {

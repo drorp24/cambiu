@@ -113,7 +113,7 @@ function onFetch(event) {
                 /* We return the cached response immediately if there is one, and fall
                  back to waiting on the network as usual.
                  */
-//                if (cached) console.log('[Serviceworker]: fetch response from cache', version, event.request.url);
+                if (cached) console.log('[Serviceworker]: fetch response from cache', version, event.request.url);
                 return cached || networked;
 
                 function fetchedFromNetwork(response) {
