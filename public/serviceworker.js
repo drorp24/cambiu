@@ -7,7 +7,7 @@
 
 console.log('[Serviceworker] Hello world!');
 
-var version = 'public5';
+var version = 'public15';
 
 function onInstall(event) {
     console.log('[Serviceworker]', version, "Installing: populating cache with files...");
@@ -22,6 +22,7 @@ function onInstall(event) {
                "http://localhost:3000/assets/application.debug-3baed0d235d83efd95775720824a67ff7aab33f7a55d657d7e60a5fa72fc9174.js"
             ]);
 */
+/*
             return cache.addAll([  // NOTICE: This is *counter* the async / loadCSS spirit, that strives for perceived performance and lazily loads everything else later
                 "/exchanges/help",
                 "/exchanges/map",
