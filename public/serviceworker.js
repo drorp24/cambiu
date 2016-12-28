@@ -22,7 +22,8 @@ function onInstall(event) {
                "http://localhost:3000/assets/application.debug-3baed0d235d83efd95775720824a67ff7aab33f7a55d657d7e60a5fa72fc9174.js"
             ]);
 */
-            return cache.addAll([
+/*
+            return cache.addAll([  // NOTICE: This is *counter* the async / loadCSS spirit, that strives for perceived performance and lazily loads everything else later
                 "/exchanges/help",
                 "/exchanges/map",
                 "//fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900",
@@ -31,6 +32,9 @@ function onInstall(event) {
                 "//cdn.rawgit.com/FezVrasta/bootstrap-material-design/dist/dist/bootstrap-material-design.iife.min.js",
                 "offline.html"
             ]);
+*/
+
+            return Promise.resolve()
         })
             .then(function() {
                 console.log('[Serviceworker]', version, '... installed!');
