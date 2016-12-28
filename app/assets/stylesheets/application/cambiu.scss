@@ -7,7 +7,7 @@ $violet: #C870F4;
 $eightiesgreen: #20CFBB;
 $limelight: #EEFF41;
 $limedark: #B2FF59;
-$navbar_height: 60px;
+$navbar_height: 70px;
 $navbar_background: rgba(0,0,0,0.30);
 $nav_icon_width: 2.5em;
 $card-transition-time: 0.6s;
@@ -1447,6 +1447,7 @@ body#cambiu {
 
   .actions_line {
     position: absolute;
+    left: 0;
     bottom: 2rem;
     width: 100%;
     display: flex;
@@ -1458,10 +1459,6 @@ body#cambiu {
     .btn {
       font-size: 1.3rem;
     }
-  }
-
-  form .actions_line {
-    margin-left: -1 * $padding;
   }
 
 
@@ -2335,6 +2332,7 @@ body#cambiu {
     font-size: 1.4em;
     width: 100vw;
     height: $navbar_height;
+    padding-top: 10px;
     color: #fff;
     box-shadow: 1px 1px 10px rgba(0,0,0,0.7);
     margin-bottom: initial;
