@@ -23,7 +23,7 @@ function onInstall(event) {
             ]);
 */
             return cache.addAll([
-                "/",
+                "/exchanges/help",
                 "/exchanges/map",
                 "//fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900",
                 "//fonts.googleapis.com/icon?family=Material+Icons",
