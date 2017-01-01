@@ -143,13 +143,8 @@ $(document).ready(function() {
     $('[data-ajax=searches]').click(function(e) {
         e.preventDefault();
         if (inputValid()) {
-            set('location_reason', 'user search');
-            search(search.location)
-                .then(sortExchanges)
-                .then(addCards)
-                .then(function() {swiperH.slideTo(0, 1000, false)})
-                .catch(showError);
-            window.history.back();
+            setPage({page1: 'exchanges', pane1: 'map'});
+            search_and_show(search.location);
         }
     });
 
@@ -170,9 +165,8 @@ $(document).ready(function() {
 
     search = function(location) {
 
-        if (!inShow) start_search();
         var reason = location.reason ? location.reason : '';
-        console.log('search invoked. ' + reason);
+        console.log('search invoked, reason: ' + reason);
 
         return new Promise(function(resolve, reject) {
 
@@ -202,7 +196,6 @@ $(document).ready(function() {
                     searchResult = data.exchanges;
                     exchanges = data.exchanges.features;
                     resolve(exchanges);
-                    if (!inShow) {setTimeout(function() {stop_search()}, 1500)};
                 })
                 .catch(function (error) {
                     console.log('catch!');

@@ -7,9 +7,15 @@
 
     addCards = function(exchanges) {
 
+        $('#cards').empty();
+
+        if (exchanges.length == 0) {
+            snack('No information in this area yet. Try another location', 'ok', null, null, 'oops');
+            return;
+        }
+
         console.log('addCards');
 
-        $('#cards').empty();
         for (var i = 0; i < Math.min(initialSlides, exchanges.length); i++) {
             var exchange = exchanges[i].properties;
             addCard(exchange, i);
@@ -48,6 +54,10 @@
     }
 
     revealCards = function() {
+        if (exchanges.length == 0) {
+            $('.swiper-container-h').css('display', 'none');
+            return;
+        }
         $('.swiper-container').css('display', 'block');
         setTimeout(function() {
             cardXoffset = String(($('.ecard').eq(0).position().left + $('#cards').position().left) * -1) + 'px';

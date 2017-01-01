@@ -28,14 +28,14 @@ getLocation = function() {
 
             user.lat = position.coords.latitude;
             user.lng = position.coords.longitude;
-            setLocation(user.lat, user.lng, 'user', 'found');
+            setLocation(user.lat, user.lng, 'user', 'positionFound');
         }
 
         function positionError(error) {
 
             var message = error.message ? error.message : error;
-            setLocation(dfault.lat, dfault.lng, 'default', 'Position error: ' + message);
-            snack('We couldn\'t locate you. Have you given us permission to?', null, null, $('.swiper-container'), 'oops')
+            setLocation(dfault.lat, dfault.lng, 'default', 'PositionError: ' + message);
+            snack('We couldn\'t locate you. Have you given us the permission to?', null, null, $('.swiper-container'), 'oops')
 
         }
 
@@ -48,7 +48,7 @@ getLocation = function() {
             set('location_type',    search.location.type = type);
             set('location_reason',  search.location.reason = reason);
 
-            console.log('location set!');
+            console.log('location set!', search.location);
             resolve(search.location);
 
         }
@@ -64,6 +64,11 @@ followUser = function() {
 
     if (!navigator.geolocation) {
         currPositionError('unsupported');
+        return
+    }
+
+    if (search.location.type != 'user') {
+        console.log('search location is not the user\'s location: not following user');
         return
     }
 
@@ -103,9 +108,10 @@ geocode = function(locationArg) {
     // returning a promise would mean the next in line would have to wait for geocode to return
     // but it's not critical. It's anyway called many times
 
-    console.log('geocode');
+    console.log('geocode', locationArg);
 
     var location = (typeof locationArg === 'undefined') ? search.location : locationArg;
+    if (location.name) {console.log('location.name exists: ' + location.name + ' - not geocoding'); return;}
 
     var location_latlng = new google.maps.LatLng(location.lat, location.lng);
     var geocoder = new google.maps.Geocoder();
@@ -173,7 +179,6 @@ hideUserPosition = function() {
 
 function searchbox_addListener(searchBox) {
     google.maps.event.addListener(searchBox, 'places_changed', function () {
-        console.log('Location changed by user');
         var places = searchBox.getPlaces();
         if (places.length == 0) {
             set_default_location('Location changed by user, but getPlaces found no place');
@@ -186,7 +191,7 @@ function searchbox_addListener(searchBox) {
         set('location_lng',         search.location.lng = place.geometry.location.lng());
         set('location_type',        search.location.type = 'selected');
         set('location_reason',      search.location.reason = 'changed by user');
-
+        console.log('Location changed by user:', search.location);
     });
 }
 function radians(n) {

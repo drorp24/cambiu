@@ -238,36 +238,6 @@ mapPan = function() {
     map.panBy(-0.17 * screen.width, -0.05 * screen.height)
 };
 
-highlight = function(id) {
-
-    var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
-    var big_parent  =   iw_content.parent().parent().parent();
-    var o_z_index   =   big_parent.css('z-index');
-
-    big_parent.find('[style*="background-color: rgb(255, 255, 255)"]').css('background-color', '#ddd').addClass('highlight_bg');
-    big_parent.attr('data-o-z-index', o_z_index).css('z-index', '1000');
-//    big_parent.find('.exchange_window_best_at').css('background-color', '#555');
-//    iw_content.css('color', '#fff')/*.css('text-shadow', '0px 1px 0px rgba(0, 0, 0, 1)')*/;
-
-};
-
-unhighlight = function(id) {
-
-    if (id == 'all') {
-        $('.highlight_bg').css('background-color', 'rgb(255, 255, 255)');
-        return
-    }
-
-    var iw_content  =   $('.exchange_window_sum[data-id=' + id + ']');
-    var big_parent  =   iw_content.parent().parent().parent();
-    var o_z_index   =   big_parent.data('o-z-index');
-
-    big_parent.find('.highlight_bg').css('background-color', 'rgb(255, 255, 255)').removeClass('highlight_bg');
-    big_parent.css('z-index', o_z_index);
-    iw_content.css('color', '#444').css('text-shadow', 'none');
-
-};
-
 isNumber = function (obj) { return !isNaN(parseFloat(obj)) };
 
 urlParameters = function() {
@@ -476,7 +446,7 @@ $(document).ready(function() {
         if (typeof $upEl === 'undefined') var $upEl = null;
         if (typeof klass === 'undefined') var klass = null;
 
-        if ($upEl) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
+        if ($upEl && !inShow) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
 
         if (currentSnack) currentSnack.snackbar("hide");
 
@@ -501,7 +471,7 @@ $(document).ready(function() {
     };
 
     $('body').on('click tap', '.snack .button', function() {
-        hideSnack()
+        snackHide()
     });
 
 
@@ -564,6 +534,7 @@ $(document).ready(function() {
     $('body').click(function(e) {
         hide_best();
     });
+
 
     $('.navbar').click(function(e) {
         hide_best();

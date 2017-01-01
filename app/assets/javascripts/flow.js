@@ -8,29 +8,27 @@ $(document).ready(function() {
 
     console.log('flow');
 
-    start_show();
     populateParams();
+    getLocation().then(search_and_show);
+    setProperPage();
 
-    getLocation()
-        .then(
-            function(location) {
-                return Promise.all([drawMap(location), search(location)])
-            })
+});
+
+search_and_show = function(location) {
+    start_show();
+    return Promise.all([showMap(location), search(location)])
         .then(placeGoogleMarkers)
         .then(sortExchanges)
         .then(addCards)
         .then(followUser)
         .then(geocode)
-        .then(wait)
+//        .then(wait)
         .then(revealCards)
         .then(stop_show)
         .then(zoomIn)
         .then(show_best)
         .catch(showError);
-
-    setProperPage();
-
-});
+};
 
 function setProperPage() {
      if (mobile && window.location.pathname == '/') {

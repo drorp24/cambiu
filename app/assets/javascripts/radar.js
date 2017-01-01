@@ -80,6 +80,7 @@ stop_search = function() {
 };
 
 show_best = function() {
+    if (exchanges.length == 0) return;
     $('#best_offer').popover('show');
     var $popover = $('.popover');
     $popover.css('transform', 'initial');

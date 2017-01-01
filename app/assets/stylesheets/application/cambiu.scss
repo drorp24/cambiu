@@ -623,6 +623,24 @@ body#cambiu {
     height: 100vh;
   }
 
+  &[data-pane=help] {
+    .progress {
+      visibility: hidden;
+    }
+   }
+
+  .popover {
+    visibility: hidden;
+  }
+
+  &[data-pane=map] {
+    .progress {
+      visibility: visible;
+    }
+    .popover {
+      visibility: visible;
+    }
+  }
   .bounce {
     @include bounce();
   }
@@ -1164,6 +1182,11 @@ body#cambiu {
         color: yellow;
       }
     }
+  }
+
+  .snackbar-content .button {
+    font-size: 30px;
+    font-weight: 300;
   }
 
 

@@ -7,7 +7,7 @@
 
 console.log('[Serviceworker] Hello world!');
 
-var version = 'public15';
+var version = 'public1'; // Change version for any change in serviceworker.js
 
 function onInstall(event) {
     console.log('[Serviceworker]', version, "Installing: populating cache with files...");
@@ -88,7 +88,7 @@ function onFetch(event) {
         /* If we don't block the event as shown below, then the request will go to
          the network as usual.
          */
-        console.log('[Serviceworker]: fetch event ignored.', event.request.method, event.request.url);
+//        console.log('[Serviceworker]: fetch event ignored.', event.request.method, event.request.url);
         return;
     }
     /* Similar to event.waitUntil in that it blocks the fetch event on a promise.

@@ -27,6 +27,7 @@ setPage = function ({url, page1, id1, pane1, hash, pushState = true, populate = 
     if (pane) {
         var $pane = $('.pane[data-pane=' + pane + ']');
         $pane.addClass('active');
+        $('body').attr('data-pane', pane);
         refresh(pane);
     }
 

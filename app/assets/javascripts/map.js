@@ -1,28 +1,31 @@
-    renderMap = function(exchange) {
-
-        // TODO: Show selected exchange on map
-
-        google.maps.event.trigger(map, 'resize');
-
-        // Added to fix absurd Savyon centering issue
-        if (user.lat && user.lng) {
-            map.setCenter({lat: user.lat, lng: user.lng});
-        }
-    };
-
-    // render a map around given (lat,lng) set as center
-    // to re-center the map use map.center rather than calling all of this
-    drawMap = function (location) {
+     // render a map around given (lat,lng) set as center
+    // if map exists already then it will only pan to given location
+    showMap = function (location) {
 
         var latitude = location.lat,
             longitude = location.lng;
 
         return new Promise(function(resolve, reject) {
 
-            console.log('drawMap');
+            console.log('showMap');
 
             if (!latitude || !longitude) {
-                reject(Error('seriously! no params given!'))
+                reject(Error('showMap: no params given!'))
+            }
+
+            if (map) {
+
+                console.log('map exists already. Panning');
+
+                map.setZoom(map_initial_zoom);
+                map.panTo(location);
+
+                google.maps.event.addListener(map, 'bounds_changed', function () {
+                    console.log('map is panned');
+                    resolve();
+                });
+
+                return;
             }
 
             var mapOptions = {
@@ -50,6 +53,7 @@
             });
 
             google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
+                console.log('Map is drawn');
                 resolve();
             });
 
@@ -80,12 +84,46 @@
 
             });
 
+        })
+    };
 
+    panMap = function (location) {
+
+        var latitude = location.lat,
+            longitude = location.lng;
+
+        return new Promise(function(resolve, reject) {
+
+            console.log('panMap');
+
+            if (!latitude || !longitude) {
+                reject(Error('panMap: no params given!'))
+            }
+
+            map.panTo(location);
+
+            google.maps.event.addListener(map, 'bounds_changed', function () {
+                console.log('map is panned');
+                resolve();
+            });
 
         })
     };
 
-    placeGoogleMarkers = function() {
+     renderMap = function(exchange) {
+
+         // TODO: Show selected exchange on map
+
+         google.maps.event.trigger(map, 'resize');
+
+         // Added to fix absurd Savyon centering issue
+         if (user.lat && user.lng) {
+             map.setCenter({lat: user.lat, lng: user.lng});
+         }
+     };
+
+
+     placeGoogleMarkers = function() {
         idMarkerLayer();
         map.data.setStyle(function(feature) {
             return {
@@ -305,6 +343,9 @@
     }
 
     zoomIn = function() {
+        if (exchanges.length == 0) {
+            return;
+        }
         return smoothZoom(map, map_final_zoom, map.getZoom())
     };
 
