@@ -573,10 +573,8 @@ body#cambiu {
 
    //MOVE INLINE in case I use LOADCSS
   .intro-slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
+    padding-top: 10vh;
     &:nth-child(1) {
       background-color: $brand-color-c;
     }
@@ -606,9 +604,7 @@ body#cambiu {
       margin-top: 1vh;
     }
     .intro_logo {
-      position: absolute;
-      top: 10vh;
-      img{
+       img{
         width: 25vw;
         top: 10vh;
       }
@@ -616,6 +612,7 @@ body#cambiu {
     .intro_text {
       font-weight: 100;
       font-size: 1.5rem;
+      margin-top: 2rem;
     }
   }
 
