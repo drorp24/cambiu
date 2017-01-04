@@ -363,10 +363,12 @@ $(document).ready(function() {
         return $('body').hasClass('home');
     };
 
+/*
     $(function () {
         $("body").tooltip({ selector: '[data-toggle=tooltip]' });
         $("body").popover({ selector: '[data-toggle=popover]' });
     });
+*/
 
     if (window.matchMedia('(display-mode: standalone)').matches) {
         console.log("Installable app!");

@@ -19,7 +19,6 @@ initSwipers = function() {
 
 slideChange = function() {
 
-    $('#best_offer').popover('hide');
     $('#markerLayer div').removeClass('bounce');
     map.data.revertStyle();
     if (directionsDisplay) clearDirections();

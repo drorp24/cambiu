@@ -81,12 +81,7 @@ stop_search = function() {
 
 show_best = function() {
     if (exchanges.length == 0) return;
-    $('#best_offer').popover('show');
-    var $popover = $('.popover');
-    $popover.css('transform', 'initial');
-    $popover.css('bottom', cardHeight + 35 + 'px');
-    $popover.css('left',(windowWidth - $popover.width())/2 + 'px');
-    $popover.addClass('bounce');
+    $('.ranking').first().addClass('bounce');
 };
 
 hide_best = function() {

@@ -127,7 +127,7 @@
         idMarkerLayer();
         map.data.setStyle(function(feature) {
             return {
-                icon: '/logo_no_text.png',
+                icon: '/new_logo_31_43.png',
                 optimized: false,
                 zIndex: feature.getProperty('id')
             }

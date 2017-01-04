@@ -1,7 +1,17 @@
 // Imports
 @import "font-awesome";
+@font-face {
+  font-family: "typoRound";
+  font-weight: bold;
+  font-style: normal;
+  src: font-url('typo_round_bold_demo.otf') format('opentype');
+}
 
 // Variables
+$brand-color-a: rgb(255, 23, 95);
+$brand-color-b: rgb(255, 118, 0);
+$brand-gradient: linear-gradient($brand-color-a, $brand-color-b);
+$brand-color-c: rgb(70, 71, 73);
 $boldblue: #3392FF;
 $violet: #C870F4;
 $eightiesgreen: #20CFBB;
@@ -35,6 +45,7 @@ $brand-color: #2196F3;
 $brand-color: #607D8B;
 $brand-color: #FF1744;
 $brand-color: #FF4081;
+$brand-color: rgb(255, 23, 95);
 $darken-brand-color: darken($brand-color, 10%);
 $lightgreen: #5FA531;
 $lightgreen: #777;
@@ -280,6 +291,12 @@ $exchange_summary_bg_img_height_mobile: 75px;
 }
 @mixin fadeIn {
   @include animate(fadeIn, 1.5s, ease-in-out, both, 15s);
+}
+
+@mixin centerize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /*
 @-webkit-keyframes blurFadeInOut{
@@ -561,13 +578,14 @@ body#cambiu {
     align-items: center;
     height: 100vh;
     &:nth-child(1) {
-      background-color: $brand-color;
+      background-color: $brand-color-c;
     }
     &:nth-child(2) {
       background-color: $boldblue;
+      background-color: $brand-color-a;
     }
     &:nth-child(3) {
-      background-color: $eightiesgreen;
+      background-color: $boldblue;
     }
     &:nth-child(4) {
       background-color: $violet;
@@ -579,7 +597,25 @@ body#cambiu {
       left: 10vw;
       bottom: 25vh;
       font-size: 1.5rem;
+      font-family: typoRound;
       color: #fff !important;
+    }
+    .intro_title {
+      font-family: typoRound;
+      font-size: 10vw;
+      margin-top: 1vh;
+    }
+    .intro_logo {
+      position: absolute;
+      top: 10vh;
+      img{
+        width: 25vw;
+        top: 10vh;
+      }
+    }
+    .intro_text {
+      font-weight: 100;
+      font-size: 1.5rem;
     }
   }
 
@@ -842,7 +878,7 @@ body#cambiu {
 
   .ecard {
     background-color: #fff;
-    box-shadow: 0px 1px 15px rgba(0, 0, 0, .2);
+    box-shadow: 0px 1px 15px rgba(0, 0, 0, .6);
     .active_ind {
       height: 3px;
       background-color: #fff;
@@ -862,7 +898,7 @@ body#cambiu {
     position: fixed;
     bottom: 0;
     left: 0;
-    background-color: #eee;
+    background-color: rgba(0, 0, 0, 0.2);
     padding-top: 10px;
     padding-bottom: 10px;
     box-shadow: 1px 2px 13px rgba(0, 0, 0, .5);
@@ -1338,8 +1374,7 @@ body#cambiu {
         padding-right: $padding;
         padding-left: $padding;
         [data-field=edited_quote] {
-          font-size: 1.7em;
-          font-weight: 400;
+           font-weight: 400;
         }
       }
       .mapMarker {
@@ -1365,6 +1400,8 @@ body#cambiu {
     }
     &:not(.selected) {
       transform: translate(0px, 0px) !important;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
       .data.item {
         display: flex;
         flex-direction: column;
@@ -1375,6 +1412,7 @@ body#cambiu {
         bottom: 5px;
 
       }
+      padding-right: 5px;
     }
     .data {
       max-width: 50%; // important in flex, only in the non selected, row mode
@@ -1383,12 +1421,10 @@ body#cambiu {
       font-size: 1em;
       font-weight: 300;
       [data-field=edited_quote] {
-        font-size: 1.5em;
         font-weight: 500;
-        margin-top: 1rem;
         text-align: center;
         transition: font-size $card-transition-time + 0.3s;
-        @include threedots(100%);
+        @include threedots(75%);
       }
       [data-field=name] {
         color: $brand-color;
@@ -1417,14 +1453,14 @@ body#cambiu {
         font-size: 1.1em;
       }
       .ranking {
-        position: absolute;
-        right: 0.75em;
-        width: 1.5em;
-        height: 1.5em;
-        border-radius: 0.75em;
-        border: 2px solid $darken-brand-color;
-        color: $darken-brand-color;
+        @include centerize;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 1.1rem;
+        background: $brand-gradient;
+        color: #fff;
         font-weight: 500;
+        margin-right: 5px;
       }
     }
     font-size: 0.9em;
@@ -1434,6 +1470,14 @@ body#cambiu {
     .row.fullcard > div {
       line-height: 2em !important;
     }
+  }
+
+  .quote_and_ranking {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
   }
 
   .rating {
@@ -1461,7 +1505,7 @@ body#cambiu {
     font-weight: 300;
     text-align: center;
     color: #fff;
-    background-color: $brand-color;
+    background: $brand-gradient;
     box-shadow: 1px 2px 5px rgba(0,0,0,0.5);
     position: absolute;
     transition: font-size, $card-transition-time + 0.3s;
@@ -1559,7 +1603,7 @@ body#cambiu {
   }
 
   .lessmore {
-    margin-right: $padding;
+    margin-right: $padding + 5px;
     &:after {
       content: "\f078";
       font-family: fontAwesome;
@@ -1937,6 +1981,7 @@ body#cambiu {
     max-width: 8rem;
     background-color: $brand-color;
     font-size: 1.3rem;
+    font-family: typoRound;
     border-radius: 5px;
     color: #fff;
     box-shadow: 1px 1px 10px rgba(0,0,0,0.7);
@@ -2351,6 +2396,8 @@ body#cambiu {
     border: none;
 //    background-color: $navbar_background;
     background-color: $brand-color;
+    background: $brand-gradient;
+    font-family: typoRound;
     font-weight: 400;
     font-size: 1.4em;
     width: 100vw;

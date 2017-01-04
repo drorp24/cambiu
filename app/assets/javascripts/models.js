@@ -58,7 +58,11 @@ populateExchange = function(exchange, $scope, index) {
     }
 
     if (exchange.base_rate) {
-        $scope.find('.ranking').html(index + 1);
+        if (index == 0) {
+            $scope.find('.ranking').html('<i class="fa fa-trophy"></i>')
+        } else {
+            $scope.find('.ranking').html(index + 1);
+        }
     } else {
         $scope.find('[data-field=edited_quote]').css('margin-top', '0');
         $scope.find('.comparison').css('display', 'none');

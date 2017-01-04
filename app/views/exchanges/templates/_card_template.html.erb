@@ -19,8 +19,6 @@
 
     <div class="data item">
 
-      <div class="ranking"></div>
-
       <div class="fullcard flex_between">
         <input data-model="exchange" data-field="rating" class="form-control fullcard pull-left">
         <div class="reviews" data-href-page="exchanges" data-href-id="curr" data-href-pane="reviews">
@@ -41,7 +39,10 @@
         </div>
       </div>
 
-      <div data-model="exchange" data-field="edited_quote"></div>
+      <div class="quote_and_ranking">
+        <span data-model="exchange" data-field="edited_quote"></span>
+        <span class="ranking"></span>
+      </div>
       <div class="comparison">
         <div class="comparison_item">
           <div data-model="exchange" data-field="gain_percent"></div>
