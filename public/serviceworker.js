@@ -7,7 +7,7 @@
 
 console.log('[Serviceworker] Hello world!');
 
-var version = 'public100'; // Change version for any change in serviceworker.js
+var version = 'public1'; // Change version for any change in serviceworker.js
 
 function onInstall(event) {
     console.log('[Serviceworker]', version, "Installing: populating cache with files...");
@@ -119,7 +119,7 @@ function onFetch(event) {
                 /* We return the cached response immediately if there is one, and fall
                  back to waiting on the network as usual.
                  */
-                if (cached) console.log('[Serviceworker]: fetch response from cache', version, event.request.url);
+//                if (cached) console.log('[Serviceworker]: fetch response from cache', version, event.request.url);
                 return cached || networked;
 
                 function fetchedFromNetwork(response) {
