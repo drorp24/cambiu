@@ -897,7 +897,6 @@ body#cambiu {
     left: 0;
     background-color: rgba(0, 0, 0, 0.2);
     padding-top: 10px;
-    padding-bottom: 10px;
     box-shadow: 1px 2px 13px rgba(0, 0, 0, .5);
     z-index: 3;
   }
@@ -1304,6 +1303,7 @@ body#cambiu {
     }
     transition: width $card-transition-time, transform $card-transition-time, height $card-transition-time ;
     .photo {
+      max-height: 80%;
       img {
         width: 80%;
         transition: width $card-transition-time, height $card-transition-time;
