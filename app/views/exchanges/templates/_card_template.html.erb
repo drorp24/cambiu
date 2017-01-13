@@ -11,6 +11,11 @@
       <span data-model="exchange" data-field="duration"></span>
     </div>
 
+    <div class="ranking_container">
+      <div class="ranking"></div>
+    </div>
+
+
     <div class="nav_icon_container">
       <div class="nav_icon">
         <i class="fa fa-location-arrow"></i>
@@ -19,7 +24,7 @@
 
     <div class="data item">
 
-      <div class="fullcard flex_between">
+      <div class="fullcard rating_and_reviews flex_between">
         <input data-model="exchange" data-field="rating" class="form-control fullcard pull-left">
         <div class="reviews" data-href-page="exchanges" data-href-id="curr" data-href-pane="reviews">
           <span data-model="exchange" data-field="reviews"></span>
@@ -39,11 +44,20 @@
         </div>
       </div>
 
-      <div class="quote_and_ranking">
-        <span data-model="exchange" data-field="edited_quote"></span>
-        <span class="ranking"></span>
+      <div class="minicard quote">
+          <span data-model="exchange" data-field="edited_quote_rounded"></span>
       </div>
-      <div class="comparison">
+      <div class="fullcard">
+        <div class="quote flex_between">
+          <span data-model="exchange" data-field="pay_rounded threedots"></span>
+          <span><i class="material-icons">arrow_forward</i></span>
+          <span data-model="exchange" data-field="get_rounded threedots"></span>
+        </div>
+        <div class="base_rate">
+          <span data-model="exchange" data-field="base_rate"></span>
+        </div>
+      </div>
+      <div class="minicard comparison">
         <div class="comparison_item">
           <div data-model="exchange" data-field="gain_percent"></div>
           <div class="signs">
@@ -51,8 +65,21 @@
             <div data-model="exchange" data-field="gain_type"></div>
           </div>
         </div>
+        <div class="comparison_text fullcard text-center">other offer in this area</div>
+        </div>
+
+      <div class="fullcard order_comments">
+        <p class="stretch">
+          <span>Amount was rounded</span>
+          <span>Why?</span>
+        </p>
+        <p class="stretch">
+          <span>Administration fee may apply</span>
+          <span>Why?</span>
+        </p>
+        <p>[placeholder for fees]</p>
+        <p>[placeholder for order total]</p>
       </div>
-      <div class="comparison_text fullcard text-center">other offer in this area</div>
 
     </div>
 

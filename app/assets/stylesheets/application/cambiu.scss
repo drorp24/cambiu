@@ -8,6 +8,7 @@
 }
 
 // Variables
+$rankingSize: 8vw;
 $brand-color-a: rgb(255, 23, 95);
 $brand-color-b: rgb(255, 118, 0);
 $brand-gradient: linear-gradient($brand-color-a, $brand-color-b);
@@ -86,6 +87,10 @@ $exchange_summary_bg_img_height_mobile: 75px;
   -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
   */
+}
+
+@mixin boxShadow {
+  box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.7);
 }
 
 @mixin keyframes($animationName) {
@@ -561,6 +566,10 @@ body#cambiu {
     align-items: center;
   }
 
+
+  .threedots {
+    @include threedots(85%);
+  }
   .swiper-wrapper {
     box-sizing: border-box !important; // truly important...
   }
@@ -895,9 +904,9 @@ body#cambiu {
     position: fixed;
     bottom: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.2);
+//    background-color: rgba(0, 0, 0, 0.2);
     padding-top: 10px;
-    box-shadow: 1px 2px 13px rgba(0, 0, 0, .5);
+//    box-shadow: 1px 2px 13px rgba(0, 0, 0, .5);
     z-index: 3;
   }
 
@@ -1287,6 +1296,26 @@ body#cambiu {
 
 
   .ecard{
+    .ranking_container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+    .ranking {
+      width: $rankingSize;
+      height: $rankingSize;
+      border-radius: $rankingSize / 2;
+      font-size: $rankingSize / 2;
+      position: absolute;
+      top: $rankingSize / -2;
+      left: $rankingSize / -2;
+      @include centerize;
+      background: $brand-gradient;
+      color: #fff;
+      font-weight: 500;
+      @include boxShadow;
+    }
+    height: 33vw;
     .actions_line {
       justify-content: space-between;
     }
@@ -1297,15 +1326,15 @@ body#cambiu {
     align-items: center;
     align-content: center;
     text-align: center;
-    height: 126px;
     .item {
       flex-basis: 50%;
     }
     transition: width $card-transition-time, transform $card-transition-time, height $card-transition-time ;
     .photo {
-      max-height: 80%;
+      height: 85%;
       img {
-        width: 80%;
+        height: 100% !important;
+        width: 85%;
         transition: width $card-transition-time, height $card-transition-time;
       }
     }
@@ -1330,15 +1359,18 @@ body#cambiu {
       align-content: stretch;
       text-align: left;
       .fullcard {
-        display: flex;
+        display: block;
         input.hide {
           display: none;
         }
       }
+      .minicard {
+        display: none;
+      }
       .more {
         &:before {
           visibility: visible;
-          content: 'less'
+          content: 'directions'
         }
       }
       .lessmore {
@@ -1373,6 +1405,9 @@ body#cambiu {
           width: 100%;
           height: 50vh !important;
         }
+      }
+      .rating_and_reviews {
+        display: flex;
       }
       .data {
         max-width: 100%;
@@ -1411,7 +1446,7 @@ body#cambiu {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
       }
       .actions_line {
         bottom: 5px;
@@ -1457,16 +1492,6 @@ body#cambiu {
       .reviews {
         font-size: 1.1em;
       }
-      .ranking {
-        @include centerize;
-        width: 2.2rem;
-        height: 2.2rem;
-        border-radius: 1.1rem;
-        background: $brand-gradient;
-        color: #fff;
-        font-weight: 500;
-        margin-right: 5px;
-      }
     }
     font-size: 0.9em;
     .text-right > div {
@@ -1477,12 +1502,19 @@ body#cambiu {
     }
   }
 
-  .quote_and_ranking {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.2rem;
+  .minicard.quote {
+    @include threedots(100%);
+    font-size: 6vw;
+    font-weight: 400;
+  }
+
+  .fullcard .quote {
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: #888;
+  }
+
+  .quote_and_base_rate {
   }
 
   .rating {
@@ -1539,14 +1571,16 @@ body#cambiu {
       text-transform: uppercase;
     }
 //    border: 1px solid red;
+    /*
     display: flex;
     align-content: center;
     justify-content: center;
+    */
     margin-top: -1em;
     .comparison_item {
       display: flex;
     }
-    font-weight: 300;
+    font-weight: 100;
     transform: scale(0.9, 0.9);
     color: #888;
     [data-field=gain_percent] {
@@ -1556,7 +1590,7 @@ body#cambiu {
       justify-content: flex-end;
       margin-right: 0.05em;
       align-items: center;
-      font-size: 3.5em;
+      font-size: 14vw;
     }
     .signs {
       flex-basis: 40%;
@@ -1565,10 +1599,13 @@ body#cambiu {
 //        border: 1px solid blue;
       }
       .percentSign {
-        font-size: 2.2em;
+        font-size: 8vw;
         position: relative;
-        top: 0.15em;
+        top: 2vw;
         height: 53%;
+      }
+      [data-field=gain_type] {
+        font-size: 3vw;
       }
       .off {
         text-transform: uppercase;
@@ -2402,7 +2439,6 @@ body#cambiu {
 //    background-color: $navbar_background;
     background-color: $brand-color;
     background: $brand-gradient;
-    font-family: typoRound;
     font-weight: 400;
     font-size: 1.4em;
     width: 100vw;

@@ -69,7 +69,7 @@
         e.stopPropagation();
         var $this = $(this);
         $('.progress').css('display', 'none');
-        $this.css('transform', 'translate(' + cardXoffset + ', 10px)');
+        $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
         $this.addClass('selected');
     });
 
