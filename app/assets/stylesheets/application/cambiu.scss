@@ -13,6 +13,7 @@ $brand-color-a: rgb(255, 23, 95);
 $brand-color-b: rgb(255, 118, 0);
 $brand-gradient: linear-gradient($brand-color-a, $brand-color-b);
 $brand-color-c: rgb(70, 71, 73);
+$brand-color-c-t: rgba(70, 71, 73, 0.5);
 $boldblue: #3392FF;
 $violet: #C870F4;
 $eightiesgreen: #20CFBB;
@@ -566,6 +567,21 @@ body#cambiu {
     align-items: center;
   }
 
+  .flex_around {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .flex_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .text-center {
+    text-align: center;
+  }
 
   .threedots {
     @include threedots(85%);
@@ -1316,9 +1332,6 @@ body#cambiu {
       @include boxShadow;
     }
     height: 33vw;
-    .actions_line {
-      justify-content: space-between;
-    }
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -1339,10 +1352,6 @@ body#cambiu {
       }
     }
     .more {
-      position: relative;
-      left: 40%;
-      width: 20%;
-      text-align: center;
       &:before {
         visibility: hidden;
         content: 'more'
@@ -1408,6 +1417,7 @@ body#cambiu {
       }
       .rating_and_reviews {
         display: flex;
+        margin-bottom: -4vw;
       }
       .data {
         max-width: 100%;
@@ -1424,7 +1434,7 @@ body#cambiu {
         width: 100% !important;
         bottom: 56vh !important;
         left: initial !important;
-        font-size: 1.1em;
+        font-size: 5vw;
       }
       .comparison {
         transform: scale(1.2, 1.2);
@@ -1458,7 +1468,7 @@ body#cambiu {
       max-width: 50%; // important in flex, only in the non selected, row mode
       height: 100%;
       color: #000;
-      font-size: 1em;
+      font-size: 5vw;
       font-weight: 300;
       [data-field=edited_quote] {
         font-weight: 500;
@@ -1467,17 +1477,17 @@ body#cambiu {
         @include threedots(75%);
       }
       [data-field=name] {
-        color: $brand-color;
+        color: $brand-color-c;
         font-weight: 400;
-        font-size: 1.3em;
+        font-size: 6vw;
         @include threedots(100%);
       }
       [data-field=address] {
-        font-size: 0.9em;
+        font-size: 4vw;
       }
       .open {
         font-weight: 400;
-        font-size: 0.9em;
+        font-size: 4vw;
         color: #555;
       }
       .phone_icon {
@@ -1502,19 +1512,41 @@ body#cambiu {
     }
   }
 
+  .better {
+    margin-top: 4vw;
+    color: $brand-color-a;
+    font-size: 5vw;
+    text-transform: uppercase;
+    [data-field=gain_percent] {
+      margin-right: -1vw;
+    }
+  }
+
   .minicard.quote {
     @include threedots(100%);
     font-size: 6vw;
     font-weight: 400;
+    color: #000;
   }
 
   .fullcard .quote {
-    font-size: 1.7rem;
+    font-size: 7.5vw;
     font-weight: 500;
-    color: #888;
+    color: $brand-color-c;
   }
 
-  .quote_and_base_rate {
+  .norates {
+    display: none;
+    text-align: center;
+  }
+
+  .into {
+    margin-right: 2vw;
+    margin-left: 2vw;
+  }
+
+  .base_rate {
+    font-size: 4vw;
   }
 
   .rating {
@@ -1552,16 +1584,14 @@ body#cambiu {
   .actions_line {
     position: absolute;
     left: 0;
-    bottom: 2rem;
+    bottom: 1.5rem;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     div {
       display: inline-block;
     }
-    .btn {
-      font-size: 1.3rem;
+    font-size: 5vw !important;
+    button {
+      font-size: 5vw !important;
     }
   }
 
@@ -1645,7 +1675,11 @@ body#cambiu {
   }
 
   .lessmore {
+    &:first-child {
+      visibility: hidden;
+    }
     margin-right: $padding + 5px;
+    margin-left: $padding + 5px;
     &:after {
       content: "\f078";
       font-family: fontAwesome;
@@ -2436,16 +2470,15 @@ body#cambiu {
     z-index: 2;
     padding: 5px;
     border: none;
-//    background-color: $navbar_background;
-    background-color: $brand-color;
-    background: $brand-gradient;
+    background-color: $brand-color-c-t;
     font-weight: 400;
     font-size: 1.4em;
     width: 100vw;
     height: $navbar_height;
     padding-top: 10px;
     color: #fff;
-    box-shadow: 1px 1px 10px rgba(0,0,0,0.7);
+//    box-shadow: 1px 1px 10px rgba(0,0,0,0.7);
+    border-bottom: 1px solid $brand-color-c;
     margin-bottom: initial;
     .material-icons {
       font-size: 1.3em;

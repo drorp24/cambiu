@@ -63,9 +63,11 @@ populateExchange = function(exchange, $scope, index) {
             $scope.find('.ranking').html(index + 1);
         }
     } else {
-        $scope.find('[data-field=edited_quote]').css('margin-top', '0');
+        $scope.find('[data-field=edited_quote_rounded]').css('margin-top', '0');
         $scope.find('.comparison').css('display', 'none');
         $scope.find('.ranking').css('display', 'none');
+        $scope.find('.norates').css('display', 'block');
+        $scope.find('.quote_section').css('display', 'none');
     }
 
 

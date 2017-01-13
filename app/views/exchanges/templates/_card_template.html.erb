@@ -15,7 +15,6 @@
       <div class="ranking"></div>
     </div>
 
-
     <div class="nav_icon_container">
       <div class="nav_icon">
         <i class="fa fa-location-arrow"></i>
@@ -36,27 +35,45 @@
 
       <div data-model="exchange" data-field="address" class="fullcard" data-toggle="tooltip"></div>
 
-
-      <div class="fullcard flex_between">
-        <div class="open"><a>Open</a></div>
-        <div class="phone_icon">
-          <a><i class="fa fa-phone"></i></a>
+      <div class="fullcard">
+        <div class="flex_between">
+          <div class="open"><a>Open</a></div>
+          <div class="phone_icon">
+            <a><i class="fa fa-phone"></i></a>
+          </div>
         </div>
       </div>
 
       <div class="minicard quote">
           <span data-model="exchange" data-field="edited_quote_rounded"></span>
       </div>
-      <div class="fullcard">
-        <div class="quote flex_between">
-          <span data-model="exchange" data-field="pay_rounded threedots"></span>
-          <span><i class="material-icons">arrow_forward</i></span>
-          <span data-model="exchange" data-field="get_rounded threedots"></span>
+
+      <div class="fullcard quote_section">
+
+        <div class="better flex_center">
+          <span>
+            <span data-model="exchange" data-field="gain_percent"></span>
+            <span>% better &nbsp;</span>
+          </span>
+          <i class="material-icons">help_outline</i>
         </div>
-        <div class="base_rate">
-          <span data-model="exchange" data-field="base_rate"></span>
+
+        <div class="quote flex_center">
+          <span data-model="exchange" data-field="pay_rounded" class="threedotes"></span>
+          <i class="into material-icons">arrow_forward</i>
+          <span data-model="exchange" data-field="get_rounded" class="threedots"></span>
         </div>
+
+        <div class="bast_rate">
+          <div data-model="exchange" data-field="base_rate" class="text-center"></div>
+        </div>
+
       </div>
+
+      <div class="norates">
+        No rates
+      </div>
+
       <div class="minicard comparison">
         <div class="comparison_item">
           <div data-model="exchange" data-field="gain_percent"></div>
@@ -65,25 +82,11 @@
             <div data-model="exchange" data-field="gain_type"></div>
           </div>
         </div>
-        <div class="comparison_text fullcard text-center">other offer in this area</div>
         </div>
-
-      <div class="fullcard order_comments">
-        <p class="stretch">
-          <span>Amount was rounded</span>
-          <span>Why?</span>
-        </p>
-        <p class="stretch">
-          <span>Administration fee may apply</span>
-          <span>Why?</span>
-        </p>
-        <p>[placeholder for fees]</p>
-        <p>[placeholder for order total]</p>
-      </div>
-
     </div>
 
-    <div class="actions_line">
+    <div class="actions_line flex_between">
+      <div class="lessmore icon"></div>
       <div class="more action padlessBtn"></div>
       <div class="lessmore icon"></div>
     </div>
