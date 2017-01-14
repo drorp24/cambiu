@@ -1377,6 +1377,9 @@ body#cambiu {
       text-align: left;
       .fullcard {
         display: block;
+        &.flex {
+          display: flex;
+        }
         input.hide {
           display: none;
         }
@@ -1520,6 +1523,13 @@ body#cambiu {
     }
   }
 
+
+  .quote_section {
+    flex-direction: column;
+    position: absolute;
+    bottom: 15vh;
+  }
+
   .better {
     margin-top: 4vw;
     color: $brand-color-a;
@@ -1592,7 +1602,7 @@ body#cambiu {
   .actions_line {
     position: absolute;
     left: 0;
-    bottom: 1.5rem;
+    bottom: 3vh;
     width: 100%;
     div {
       display: inline-block;
