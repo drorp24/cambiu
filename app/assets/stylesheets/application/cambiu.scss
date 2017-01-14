@@ -21,7 +21,7 @@ $limelight: #EEFF41;
 $limedark: #B2FF59;
 $navbar_height: 70px;
 $navbar_background: rgba(0,0,0,0.30);
-$nav_icon_width: 2.5em;
+$nav_icon_width: 10vh;
 $card-transition-time: 0.6s;
 $padding: 15px;
 $negPadding: -15px;
@@ -596,6 +596,7 @@ body#cambiu {
   }
   .swiper-wrapper {
     box-sizing: border-box !important; // truly important...
+    z-index: 4;
   }
 
   .swiper-wrapper-intro {
@@ -1320,6 +1321,10 @@ body#cambiu {
 
 
   .ecard{
+    .minicard {
+      @include flexbox();
+    }
+
     .ranking_container {
       position: absolute;
       top: 50%;
@@ -1350,6 +1355,9 @@ body#cambiu {
     .item {
       flex-basis: 50%;
     }
+    .absolutely_positioned {
+      position: absolute;
+    }
     transition: width $card-transition-time, transform $card-transition-time, height $card-transition-time ;
     .photo {
       height: 85%;
@@ -1366,6 +1374,7 @@ body#cambiu {
       }
     }
     .fullcard {
+      width: 100%;
       display: none;
     }
     &.selected {
@@ -1413,7 +1422,7 @@ body#cambiu {
         position: absolute;
         bottom: $nav_icon_width / -2;
         left: $nav_icon_width / -2;
-        font-size: 2em;
+        font-size: $nav_icon_width / 2;
         box-shadow: 1px 2px 15px rgba(0,0,0,0.5);
       }
       .rotate {
@@ -1428,7 +1437,16 @@ body#cambiu {
       }
       .rating_and_reviews {
         @include flexbox();
-        margin-bottom: -4vw;
+        height: 12%;
+      }
+      .name {
+        height: 12%;
+      }
+      .address {
+        height: 8%;
+      }
+      .open_and_phone {
+        height: 8%;
       }
       .data {
         max-width: 100%;
@@ -1443,7 +1461,7 @@ body#cambiu {
       }
       .duration {
         width: 100% !important;
-        bottom: 56vh !important;
+        bottom: 52vh + $nav_icon_width / 2  !important;
         left: initial !important;
         font-size: 5vw;
       }
@@ -1526,12 +1544,10 @@ body#cambiu {
 
   .quote_section {
     flex-direction: column;
-    position: absolute;
-    bottom: 15vh;
+    height: 40%;
   }
 
   .better {
-    margin-top: 4vw;
     color: $brand-color-a;
     font-size: 5vw;
     text-transform: uppercase;
@@ -1540,11 +1556,12 @@ body#cambiu {
     }
   }
 
-  .minicard.quote {
+  .minicard .quote {
     @include threedots(100%);
     font-size: 6vw;
     font-weight: 400;
     color: #000;
+    margin-bottom: 3vw;
   }
 
   .fullcard .quote {
@@ -1600,6 +1617,13 @@ body#cambiu {
 
 
   .actions_line {
+    font-size: 5vw !important;
+    button {
+      font-size: 5vw !important;
+    }
+  }
+
+  .minicard .actions_line {
     position: absolute;
     left: 0;
     bottom: 3vh;
@@ -1607,10 +1631,10 @@ body#cambiu {
     div {
       display: inline-block;
     }
-    font-size: 5vw !important;
-    button {
-      font-size: 5vw !important;
-    }
+  }
+
+  .fullcard .actions_line {
+    height: 20%;
   }
 
 
@@ -2485,7 +2509,7 @@ body#cambiu {
 
   .navbar {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     padding: 5px;
     border: none;
     background-color: $brand-color-c-t;
