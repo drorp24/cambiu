@@ -616,10 +616,10 @@ body#cambiu {
     height: 100vh;
     padding: $pane-padding * 2;
     .illustration {
-      height: 60%;
+      height: 55%;
     }
     .message {
-      height:30%;
+      height:35%;
       .title {
         font-weight: 500;
         font-size: 6vw;
@@ -2568,6 +2568,7 @@ body#cambiu {
     padding: 5px;
     border: none;
     background-color: $brand-color-c-t;
+    background-color: rgba(0, 0, 0, 0.5);
     font-weight: 400;
     font-size: 1.4em;
     width: 100vw;
