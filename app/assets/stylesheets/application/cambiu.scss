@@ -13,7 +13,7 @@ $brand-color-a: rgb(255, 23, 95);
 $brand-color-b: rgb(255, 118, 0);
 $brand-gradient: linear-gradient($brand-color-a, $brand-color-b);
 $brand-color-c: rgb(70, 71, 73);
-$brand-color-c-t: rgba(70, 71, 73, 0.5);
+$brand-color-c-t: rgba(70, 71, 73, 0.7);
 $boldblue: #3392FF;
 $violet: #C870F4;
 $eightiesgreen: #20CFBB;
@@ -602,15 +602,52 @@ body#cambiu {
   .swiper-wrapper-intro {
     text-align: center;
     color: #fff;
-    font-size: 1.3rem;
+    font-size: 5.5vw;
   }
 
    //MOVE INLINE in case I use LOADCSS
   .intro-slide {
+    > div {
+      @include flexbox();
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
     height: 100vh;
-    padding-top: 10vh;
+    padding: $pane-padding * 2;
+    .illustration {
+      height: 60%;
+    }
+    .message {
+      height:30%;
+      .title {
+        font-weight: 500;
+        font-size: 6vw;
+      }
+      .getOffer {
+        font-family: typoRound;
+        text-transform: uppercase;
+      }
+    }
+    .slide {
+      height: 10%;
+      justify-content: flex-end;
+      padding-bottom: 2vh;
+      font-size: 4.5vw;
+      /*
+      .material-icons {
+        font-size: 4.5vw;
+      }
+      */
+      text-transform: uppercase;
+      .slide_line {
+        width: 100%;
+      }
+    }
     &:nth-child(1) {
       background-color: $brand-color-c;
+      background-color: #ccc;
+      color: $brand-color-c;
     }
     &:nth-child(2) {
       background-color: $boldblue;
@@ -622,15 +659,13 @@ body#cambiu {
     &:nth-child(4) {
       background-color: $violet;
     }
+    img {
+      height: 80%;
+    }
     button {
-      position: absolute;
-      left: 0;
-      width: 80vw;
-      left: 10vw;
-      bottom: 25vh;
-      font-size: 1.5rem;
+      font-size: 6vw;
       font-family: typoRound;
-      color: #fff !important;
+      color: inherit !important;
     }
     .intro_title {
       font-family: typoRound;
@@ -1571,8 +1606,7 @@ body#cambiu {
   }
 
   .fullcard .quote {
-    font-size: 7.5vw;
-    font-weight: 500;
+    font-size: 7vw;
     color: $brand-color-c;
   }
 

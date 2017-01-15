@@ -3,31 +3,57 @@
   <div class="mobile_background mobile_only">
 
     <div class="swiper-container swiper-container-intro">
+
       <div class="swiper-wrapper swiper-wrapper-intro">
-        <div class="swiper-slide intro-slide content">
-          <div class="intro_logo">
-            <div><%= image_tag 'new_logo.png' %></div>
-            <div class="intro_title">cambiu</div>
-          </div>
-          <div class="intro_text">
-            <p>Best exchange rates <br> wherever you are.</p>
-          </div>
-          <button class="btn" data-href-page="exchanges" data-href-pane="map">Get an offer</button>
-        </div>
-        <div class="swiper-slide intro-slide content">
-          <p>Slide 2</p>
-          <button class="btn" data-href-page="exchanges" data-href-pane="map">Get an offer</button>
-        </div>
-        <div class="swiper-slide intro-slide content">
-          <p>Slide 3</p>
-          <button class="btn" data-href-page="exchanges" data-href-pane="map">Get an offer</button>
-        </div>
-        <div class="swiper-slide intro-slide content">
-          <p>Slide 4</p>
-          <button class="btn" data-href-page="exchanges" data-href-pane="map">Get an offer</button>
-        </div>
+
+        <%= render partial: 'exchanges/help/template',
+                   locals: {
+                      illustration: 'cambiu_vertical.png',
+                      title: nil,
+                      text: "Best exchange rates <br> you'll ever find.".html_safe,
+                      getOffer: true,
+                      left: nil,
+                      right: "<span onclick=swiperIntro.slideNext()>How we do it</span>".html_safe
+                    }
+        %>
+
+        <%= render partial: 'exchanges/help/template',
+                   locals: {
+                       illustration: nil,
+                       title: 'You have something to offer',
+                       text: 'The currency you pay with may be worth a lot to some merchants.',
+                       getOffer: false,
+                       left: "<span data-href-page=exchanges data-href-pane=map>skip</span>".html_safe,
+                       right: "<i class=material-icons onclick=swiperIntro.slideNext()>keyboard_arrow_right</i>".html_safe
+                   }
+        %>
+
+        <%= render partial: 'exchanges/help/template',
+                   locals: {
+                       illustration: nil,
+                       title: 'So you deserve an offer',
+                       text: "We get you offers that are <br> tailor-made to your needs.".html_safe,
+                       getOffer: false,
+                       left: "<span data-href-page=exchanges data-href-pane=map>skip</span>".html_safe,
+                       right: "<i class=material-icons onclick=swiperIntro.slideNext()>keyboard_arrow_right</i>".html_safe
+                   }
+        %>
+
+        <%= render partial: 'exchanges/help/template',
+                   locals: {
+                       illustration: nil,
+                       title: 'Have more to spend',
+                       text: "Click to get our best offer. <br> We'll even walk you there.".html_safe,
+                       getOffer: true,
+                       left: nil,
+                       right: nil
+                   }
+        %>
+
       </div>
+
       <div class="swiper-pagination"></div>
+
     </div>
 
   </div>

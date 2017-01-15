@@ -1,0 +1,32 @@
+<div class="swiper-slide intro-slide">
+
+  <div class="illustration">
+    <% if illustration %>
+      <%= image_tag illustration %>
+    <% else %>
+      Illustration
+    <% end %>
+  </div>
+
+  <div class="message">
+    <% if title %>
+      <p class="title"><%= title %></p>
+    <% end %>
+    <p class="text"><%= text %></p>
+    <% if getOffer %>
+        <button class="getOffer btn" data-href-page="exchanges" data-href-pane="map">Get an offer</button>
+    <% end %>
+  </div>
+
+  <div class="slide">
+    <div class="slide_line">
+      <% if left %>
+          <div class="pull-left"><%= left %></div>
+      <% end %>
+      <% if right %>
+          <div class="pull-right"><%= right %></div>
+      <% end %>
+    </div>
+  </div>
+
+</div>
