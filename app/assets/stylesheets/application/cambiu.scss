@@ -1542,6 +1542,12 @@ body#cambiu {
   }
 
 
+  .no_quote_section {
+    display: none;
+    flex-direction: column;
+    height: 40%;
+  }
+
   .quote_section {
     flex-direction: column;
     height: 40%;
@@ -1572,7 +1578,25 @@ body#cambiu {
 
   .norates {
     display: none;
+    width: 80%;
     text-align: center;
+    .no_rates_icon {
+      font-size: 3rem;
+      color: #888;
+    }
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .norate .lessmore {
+    visibility: hidden;
+  }
+
+  .minicard {
+    .no_rates_text {
+      display: none;
+    }
   }
 
   .into {
@@ -1628,9 +1652,6 @@ body#cambiu {
     left: 0;
     bottom: 3vh;
     width: 100%;
-    div {
-      display: inline-block;
-    }
   }
 
   .fullcard .actions_line {
