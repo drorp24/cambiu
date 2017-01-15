@@ -7,7 +7,7 @@
 
 console.log('[Serviceworker] Hello world!');
 
-var version = 'public4'; // Change version for any change in serviceworker.js
+var version = 'public5'; // Change version for any change in serviceworker.js
 
 function onInstall(event) {
     console.log('[Serviceworker]', version, "Installing: populating cache with files...");
