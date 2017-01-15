@@ -1393,13 +1393,13 @@ body#cambiu {
     .absolutely_positioned {
       position: absolute;
     }
-    transition: width $card-transition-time, transform $card-transition-time, height $card-transition-time ;
+    transition: /*width $card-transition-time, transform $card-transition-time,*/ height $card-transition-time ;
     .photo {
       height: 85%;
       img {
         height: 100% !important;
         width: 85%;
-        transition: width $card-transition-time, height $card-transition-time;
+//        transition: width $card-transition-time, height $card-transition-time;
       }
     }
     .more {
@@ -1537,7 +1537,7 @@ body#cambiu {
       [data-field=edited_quote] {
         font-weight: 500;
         text-align: center;
-        transition: font-size $card-transition-time + 0.3s;
+//        transition: font-size $card-transition-time + 0.3s;
         @include threedots(75%);
       }
       [data-field=name] {
@@ -1670,7 +1670,7 @@ body#cambiu {
     background: $brand-gradient;
     box-shadow: 1px 2px 5px rgba(0,0,0,0.5);
     position: absolute;
-    transition: font-size, $card-transition-time + 0.3s;
+//    transition: font-size, $card-transition-time + 0.3s;
   }
 
 
@@ -1754,7 +1754,7 @@ body#cambiu {
     justify-content: center;
     position: absolute;
     color: #fff;
-    transition: left $card-transition-time + 0.3s;
+//    transition: left $card-transition-time + 0.3s;
 //    border: 1px solid red;
     [data-field=duration] {
       text-align: center;
@@ -2254,15 +2254,6 @@ body#cambiu {
   }
 
   /* flip speed goes here */
-  .flipper {
-    transition: 1s;
-    -webkit-transition: 1s;
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-
-    position: relative;
-  }
-
   /* hide back of pane during swap */
   .front, .back {
     backface-visibility: hidden;
