@@ -141,6 +141,7 @@ def_vals = function() {
     def['location_type']    = 'default';
     def['sort']             = 'price';
     def['radius']           = '10';
+    def['version']          = '0.0.0';
 
     return def;
 
@@ -164,7 +165,8 @@ var searchParams = [
     'location_lat',
     'location_lng',
     'sort',
-    'radius'
+    'radius',
+    'version'
 ];
 
 searchable = function(field) {

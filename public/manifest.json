@@ -13,6 +13,6 @@
   "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
-  "theme_color": "FF175F",
+  "theme_color": "#FF175F",
   "background_color": "yellow"
 }

@@ -7,13 +7,13 @@
 
 console.log('[Serviceworker] Hello world!');
 
-var version = 'public1'; // Change version for any change in serviceworker.js
+var version = '0.6.3';
 
 function onInstall(event) {
     console.log('[Serviceworker]', version, "Installing: populating cache with files...");
     self.skipWaiting();
     event.waitUntil(
-        caches.open(version + '_pages').then(function prefill(cache) {
+        caches.open(version).then(function prefill(cache) {
 /*
            cache.addAll([
              // load here files that should *not* fail the entire promise if any of them fails loading
@@ -46,6 +46,7 @@ function onActivate(event) {
     /* Just like with the install event, event.waitUntil blocks activate on a promise.
      Activation will fail unless the promise is fulfilled.
      */
+    send_message_to_all_clients({'version': version});
     console.log('[Serviceworker]', version, ' activating: replacing cache...');
 
     event.waitUntil(
@@ -132,7 +133,7 @@ function onFetch(event) {
 
                     caches
                     // We open a cache to store the response for this request.
-                        .open(version + '_pages')
+                        .open(version)
                         .then(function add(cache) {
                             /* We store the response for this request. It'll later become
                              available to caches.match(event.request) calls, when looking
@@ -181,7 +182,42 @@ function onFetch(event) {
     );
 }
 
+function onMessage(event){
+    console.log("SW Received Message: ", event.data);
+    version = event.data.version;
+}
+
+
+function send_message_to_client(client, msg){
+    return new Promise(function(resolve, reject){
+        var msg_chan = new MessageChannel();
+
+        msg_chan.port1.onmessage = function(event){
+            if(event.data.error){
+                reject(event.data.error);
+            }else{
+                resolve(event.data);
+            }
+        };
+
+        client.postMessage(msg, [msg_chan.port2]);
+    });
+}
+
+function send_message_to_all_clients(msg){
+    clients.matchAll().then(function(clients) {
+        clients.forEach(function(client)  {
+            send_message_to_client(client, msg).then(
+                function(m)  {console.log("SW Received Message: " + m)}
+            );
+        })
+    })
+}
+
+
 
 self.addEventListener('install', onInstall);
 self.addEventListener('activate', onActivate);
 self.addEventListener('fetch', onFetch);
+self.addEventListener('message', onMessage);
+
