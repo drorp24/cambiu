@@ -8,6 +8,7 @@
 }
 
 // Variables
+$release: "0.7.5";
 $rankingSize: 8vw;
 $brand-color-a: rgb(255, 23, 95);
 $brand-color-b: rgb(255, 118, 0);
@@ -644,10 +645,23 @@ body#cambiu {
         width: 100%;
       }
     }
+    .release {
+      display: none;
+    }
     &:nth-child(1) {
       background-color: $brand-color-c;
       background-color: #ccc;
       color: $brand-color-c;
+      .release {
+        display: block;
+        position: absolute;
+        left: 5vw;
+        top: 5vw;
+        font-size: 4vw;
+        &:after {
+          content: $release;
+        }
+      }
     }
     &:nth-child(2) {
       background-color: $boldblue;
@@ -1632,6 +1646,19 @@ body#cambiu {
     .no_rates_text {
       display: none;
     }
+  }
+
+  .norate {
+    &.contract .no_rates_action:before {
+      content: "No rates "
+    }
+    &.no_contract .no_rates_action:before {
+      content: "Join "
+    }
+  }
+
+  .no_rates_action i {
+    margin-left: 3vw;
   }
 
   .into {

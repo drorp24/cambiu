@@ -69,7 +69,7 @@ populateExchange = function(exchange, $scope, index) {
         $scope.find('.norates').css('display', 'block');
         $scope.find('.quote_section').css('display', 'none');
         $scope.find('.no_quote_section').css('display', 'flex');
-        $scope.addClass('norate');
+        $scope.addClass('norate').addClass(exchange.contract ? 'contract' : 'no_contract');
     }
 
 
