@@ -9,7 +9,9 @@ $(document).ready(function() {
     console.log('flow');
 
     populateParams();
-    getLocation().then(search_and_show);
+    getLocation()
+        .then(search_and_show)
+        .catch(showError);
     setProperPage();
 
 });
