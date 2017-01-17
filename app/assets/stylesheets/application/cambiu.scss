@@ -8,6 +8,7 @@
 }
 
 // Variables
+$swiper_bullets_bottom: 5vh;
 $rankingSize: 8vw;
 $brand-color-a: rgb(255, 23, 95);
 $brand-color-b: rgb(255, 118, 0);
@@ -599,6 +600,19 @@ body#cambiu {
   .threedots {
     @include threedots(85%);
   }
+
+
+  //Swiper.js customisations
+
+  .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal .swiper-pagination-bullets {
+    bottom: $swiper_bullets_bottom;
+    width: initial;
+  }
+
+  .swiper-container-horizontal  .swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 5px;
+  }
+
   .swiper-wrapper {
     box-sizing: border-box !important; // truly important...
     z-index: 4;
@@ -621,12 +635,8 @@ body#cambiu {
 
   .form-group.label-floating.is-focused label.control-label, .form-group.label-floating:not(.is-empty) label.control-label, .form-group.label-static label.control-label {
     left: $padding;
-  }
-
-  .form-group.label-floating:not(.is-empty) label.control-label {
     top: -8vw;
     font-size: 4vw;
-    color: #888;
     font-weight: 300;
   }
 
@@ -680,6 +690,28 @@ body#cambiu {
     height: 100vh - $navbar_height;
   }
 
+  .slide {
+    height: 10%;
+    justify-content: flex-end;
+    padding-bottom: 2vh;
+    font-size: 4vw;
+    /*
+    .material-icons {
+      font-size: 4.5vw;
+    }
+    */
+    text-transform: uppercase;
+    .slide_line {
+      position: absolute;
+      bottom: 5vh;
+      left: 0;
+      width: 100%;
+      padding-left: 3 * $padding;
+      padding-right: 3 * $padding;
+    }
+  }
+
+
   .intro-slide {
     > div {
       @include flexbox();
@@ -697,24 +729,12 @@ body#cambiu {
         font-weight: 500;
         font-size: 6vw;
       }
+      .text:first-of-type {
+        text-transform: uppercase;
+      }
       .getOffer {
         font-family: typoRound;
         text-transform: uppercase;
-      }
-    }
-    .slide {
-      height: 10%;
-      justify-content: flex-end;
-      padding-bottom: 2vh;
-      font-size: 4.5vw;
-      /*
-      .material-icons {
-        font-size: 4.5vw;
-      }
-      */
-      text-transform: uppercase;
-      .slide_line {
-        width: 100%;
       }
     }
     .version {
@@ -1203,7 +1223,7 @@ body#cambiu {
       bottom: 60px;
     }
     &.below_navbar {
-      top: 65px;
+      top: $navbar_height + 1vh;
     }
     &.fadeOut {
       display: none;

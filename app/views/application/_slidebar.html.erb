@@ -1,0 +1,10 @@
+<div class="slide">
+  <div class="slide_line">
+    <% if left %>
+        <div onclick="<%= swiper %>.slidePrev();" class="pull-left flex_center column"><%= left %></div>
+    <% end %>
+    <% if right %>
+        <div  onclick="<%= swiper %>.slideNext();" class="pull-right flex_center column"><%= right %></div>
+    <% end %>
+  </div>
+</div>

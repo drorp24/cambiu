@@ -21,15 +21,6 @@
     <% end %>
   </div>
 
-  <div class="slide">
-    <div class="slide_line">
-      <% if left %>
-          <div class="pull-left"><%= left %></div>
-      <% end %>
-      <% if right %>
-          <div class="pull-right"><%= right %></div>
-      <% end %>
-    </div>
-  </div>
+  <%= render partial: 'slidebar', locals: {swiper: 'swiperIntro', left: left, right: right} %>
 
 </div>
