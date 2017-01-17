@@ -193,7 +193,7 @@ set = function(field, value, trigger) {
     $('.params [data-model=search][data-field=' + field + ']').html(value);
     value = (field.indexOf('amount') > -1) ? String(value).replace(/[^0-9\.]+/g,"") : value;
 
-    var $formField = $('form [data-model=search][data-field=' + field + ']').val(value);
+    var $formField = $('#search_form [data-model=search][data-field=' + field + ']').val(value);
     if (value !== '') {
         $formField.closest('.form-group').removeClass('is-empty').addClass('is-filled');
     } else {

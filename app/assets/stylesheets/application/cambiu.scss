@@ -8,7 +8,6 @@
 }
 
 // Variables
-$release: "0.7.5";
 $rankingSize: 8vw;
 $brand-color-a: rgb(255, 23, 95);
 $brand-color-b: rgb(255, 118, 0);
@@ -20,7 +19,7 @@ $violet: #C870F4;
 $eightiesgreen: #20CFBB;
 $limelight: #EEFF41;
 $limedark: #B2FF59;
-$navbar_height: 70px;
+$navbar_height: 10vh;
 $navbar_background: rgba(0,0,0,0.30);
 $nav_icon_width: 10vh;
 $card-transition-time: 0.6s;
@@ -606,7 +605,33 @@ body#cambiu {
     font-size: 5.5vw;
   }
 
+  .swiper-slide-search {
+    background-color: #ccc;
+  }
+
+
+  .search_section {
+    height: 40%;
+  }
+
+  .search_heading {
+    font-size: 10vw;
+    color: #888;
+    font-weight: 900;
+  }
+
+
+
    //MOVE INLINE in case I use LOADCSS
+
+  .fullscreen {
+    height: 100vh;
+  }
+
+  .fullscreen_navbar {
+    height: 100vh - $navbar_height;
+  }
+
   .intro-slide {
     > div {
       @include flexbox();
@@ -614,7 +639,6 @@ body#cambiu {
       justify-content: center;
       align-items: center;
     }
-    height: 100vh;
     padding: $pane-padding * 2;
     .illustration {
       height: 55%;
@@ -645,22 +669,19 @@ body#cambiu {
         width: 100%;
       }
     }
-    .release {
+    .version {
       display: none;
     }
     &:nth-child(1) {
       background-color: $brand-color-c;
       background-color: #ccc;
       color: $brand-color-c;
-      .release {
+      .version {
         display: block;
         position: absolute;
         left: 5vw;
         top: 5vw;
         font-size: 4vw;
-        &:after {
-          content: $release;
-        }
       }
     }
     &:nth-child(2) {
@@ -697,10 +718,6 @@ body#cambiu {
       font-size: 1.5rem;
       margin-top: 2rem;
     }
-  }
-
-  .swiper-pagination {
-    width: 100vw;
   }
 
   .swiper-pagination-bullet-active {
@@ -1327,7 +1344,6 @@ body#cambiu {
 
   .form-control {
     color: #000;
-    font-wiae: 1.2em;
     font-weight: 400;
   }
 
@@ -1640,12 +1656,6 @@ body#cambiu {
 
   .norate .lessmore {
     visibility: hidden;
-  }
-
-  .minicard {
-    .no_rates_text {
-      display: none;
-    }
   }
 
   .norate {
@@ -2589,7 +2599,7 @@ body#cambiu {
     background-color: $brand-color-c-t;
     background-color: rgba(0, 0, 0, 0.5);
     font-weight: 400;
-    font-size: 1.4em;
+    font-size: 3vh;
     width: 100vw;
     height: $navbar_height;
     padding-top: 10px;
@@ -2598,7 +2608,7 @@ body#cambiu {
     border-bottom: 1px solid $brand-color-c;
     margin-bottom: initial;
     .material-icons {
-      font-size: 1.3em;
+      font-size: 4vh;
     }
   }
 

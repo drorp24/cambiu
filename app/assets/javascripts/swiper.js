@@ -11,8 +11,18 @@ initSwipers = function() {
     });
 
     swiperIntro = new Swiper ('.swiper-container-intro', {
-        pagination: '.swiper-pagination'
+        pagination: '.swiper-pagination-intro'
     });
+
+    swiperSearch = new Swiper ('.swiper-container-search', {
+        centeredSlides: true,
+        slidesPerView: 1,
+        pagination: '.swiper-pagination-search'
+    });
+
+    swiperTry = new Swiper ('.swiper-container-try', {
+     });
+
 
 };
 

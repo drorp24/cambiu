@@ -187,7 +187,7 @@ $(document).ready(function() {
 
             fetch('/searches', {
                 method: 'post',
-                body: new FormData(document.getElementById('search_form'))
+                body: new URLSearchParams($( "input, select" ).serialize())
             })
                 .then(checkStatus)
                 .then(parseJson)
