@@ -112,6 +112,7 @@ var ratingOptions = {
 };
 var map_refreshed = false;
 var help_refreshed = false;
+var search_refreshed = false;
 var directionsRenderedFor = null;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);

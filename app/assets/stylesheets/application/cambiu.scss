@@ -587,6 +587,11 @@ body#cambiu {
     align-items: center;
   }
 
+  .column {
+    flex-direction: column;
+    align-items: inherit;
+  }
+
   .text-center {
     text-align: center;
   }
@@ -605,19 +610,62 @@ body#cambiu {
     font-size: 5.5vw;
   }
 
-  .swiper-slide-search {
-    background-color: #ccc;
+  .swiper-pagination-search {
+    .swiper-pagination-bullet-active {
+      background: #000;
+    }
+  }
+
+
+  // Bootstrap Material Design customisations
+
+  .form-group.label-floating.is-focused label.control-label, .form-group.label-floating:not(.is-empty) label.control-label, .form-group.label-static label.control-label {
+    left: $padding;
+  }
+
+  .form-group.label-floating:not(.is-empty) label.control-label {
+    top: -8vw;
+    font-size: 4vw;
+    color: #888;
+    font-weight: 300;
+  }
+
+  .form-control {
+    font-size: 5.5vw;
   }
 
 
   .search_section {
-    height: 40%;
+    &.pay, &.get {
+      height: 40%;
+      padding: 10px;
+      &:first-of-type {
+        border-bottom: 1px solid #fff;
+      }
+    }
+    &.invoke {
+      height: 20%;
+      .btn {
+        font-size: 5vw;
+      }
+    }
   }
 
   .search_heading {
     font-size: 10vw;
-    color: #888;
+    color: #ddd;
     font-weight: 900;
+  }
+
+  .search_option {
+    .search_option_text {
+      font-size: 5vw;
+      font-weight: 300;
+      color: #888;
+    }
+    .toggle {
+      transform: scale(1.25, 1.25);
+    }
   }
 
 
@@ -1325,10 +1373,6 @@ body#cambiu {
 
   form .hidden {
     display: none;
-  }
-
-  .form-group.label-floating.is-focused label.control-label, .form-group.label-floating:not(.is-empty) label.control-label, .form-group.label-static label.control-label {
-    left: $padding;
   }
 
   .form-group.select {

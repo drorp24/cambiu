@@ -1,86 +1,92 @@
 
-<div class="row">
-
-    <div class="search_section pay">
+    <div class="search_section pay flex_between column">
 
       <div class="search_heading">Pay</div>
 
-      <div class="form-group pay_amount label-floating col-xs-6">
-        <label for="pay_amount" class="control-label">Pay</label>
-        <input type="tel" pattern="\d*" id="pay_amount" data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control">
-        <p class="help-block"></p>
-      </div>
+      <div class="row">
 
-      <div class="form-group pay_currency label-floating select col-xs-6">
-        <label for="pay_currency" class="control-label">Pay currency</label>
-        <select id="pay_currency" data-model="search" data-field="pay_currency" data-symboltarget="pay_amount" name="search[pay_currency]" class="currency_select select optional text-center form-control">
-          <option selected disabled hidden value=''></option>
-          <option data-symbol="￡ " value="GBP">GBP</option>
-          <option data-symbol="€ " value="EUR">EUR</option>
-          <option data-symbol="$ " value="USD">USD</option>
-          <option data-symbol="$ " value="AUD">AUD</option>
-          <option data-symbol="$ " value="CAD">CAD</option>
-          <option data-symbol="￥ " value="JPY">JPY</option>
-          <option data-symbol="¥ " value="CNY">CNY</option>
-          <option data-symbol="$ " value="HKD">HKD</option>
-          <option data-symbol="₪ " value="ILS">ILS</option>
-          <option data-symbol="kr " value="NOK">NOK</option>
-        </select>
-        <span class="form-control text-right"><i class="material-icons pull-right">arrow_drop_down</i></span>
+        <div class="form-group pay_amount label-floating col-xs-6">
+          <label for="pay_amount" class="control-label">Pay</label>
+          <input type="tel" pattern="\d*" id="pay_amount" data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control">
+          <p class="help-block"></p>
+        </div>
+
+        <div class="form-group pay_currency label-floating select col-xs-6">
+          <label for="pay_currency" class="control-label">Pay currency</label>
+          <select id="pay_currency" data-model="search" data-field="pay_currency" data-symboltarget="pay_amount" name="search[pay_currency]" class="currency_select select optional text-center form-control">
+            <option selected disabled hidden value=''></option>
+            <option data-symbol="￡ " value="GBP">GBP</option>
+            <option data-symbol="€ " value="EUR">EUR</option>
+            <option data-symbol="$ " value="USD">USD</option>
+            <option data-symbol="$ " value="AUD">AUD</option>
+            <option data-symbol="$ " value="CAD">CAD</option>
+            <option data-symbol="￥ " value="JPY">JPY</option>
+            <option data-symbol="¥ " value="CNY">CNY</option>
+            <option data-symbol="$ " value="HKD">HKD</option>
+            <option data-symbol="₪ " value="ILS">ILS</option>
+            <option data-symbol="kr " value="NOK">NOK</option>
+          </select>
+          <span class="form-control text-right"><i class="material-icons pull-right">arrow_drop_down</i></span>
+        </div>
+
       </div>
 
       <div class="search_option">
         <div class="togglebutton">
-          <label>
-            Pay with credit
+          <label class="flex_between">
+            <span class="search_option_text">Pay with credit</span>
             <input type="checkbox">
+            <span class="toggle"></span>
           </label>
         </div>
       </div>
 
     </div>
 
-    <div class="search_section get">
+    <div class="search_section get flex_between column">
 
-      <div class="search_heading">Pay</div>
+      <div class="search_heading">Get</div>
 
-      <div class="form-group buy_amount label-floating col-xs-6">
-        <label for="buy_amount" class="control-label">Get</label>
-        <input type="tel" pattern="\d*" id="buy_amount" data-model="search" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control">
-        <p class="help-block"></p>
-      </div>
+      <div class="row">
 
-      <div class="form-group buy_currency label-floating select col-xs-6">
-        <label for="buy_currency" class="control-label">Get currency</label>
-        <select id="buy_currency" data-model="search" data-field="buy_currency" data-symboltarget="buy_amount" name="search[buy_currency]" class="currency_select select optional text-center form-control">
-          <option selected disabled hidden value=''></option>
-          <option data-symbol="$ "  value="USD">USD</option>
-          <option data-symbol="€ "  value="EUR">EUR</option>
-          <option data-symbol="￡ " value="GBP">GBP</option>
-          <option data-symbol="$ "  value="AUD">AUD</option>
-          <option data-symbol="$ "  value="CAD">CAD</option>
-          <option data-symbol="￥ " value="JPY">JPY</option>
-          <option data-symbol="¥ " value="CNY">CNY</option>
-          <option data-symbol="$ " value="HKD">HKD</option>
-          <option data-symbol="₪ " value="ILS">ILS</option>
-          <option data-symbol="kr " value="NOK">NOK</option>
-        </select>
-        <span class="form-control text-right"><i class="material-icons pull-right">arrow_drop_down</i></span>
+        <div class="form-group buy_amount label-floating col-xs-6">
+          <label for="buy_amount" class="control-label">Get</label>
+          <input type="tel" pattern="\d*" id="buy_amount" data-model="search" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control">
+          <p class="help-block"></p>
+        </div>
+
+        <div class="form-group buy_currency label-floating select col-xs-6">
+          <label for="buy_currency" class="control-label">Get currency</label>
+          <select id="buy_currency" data-model="search" data-field="buy_currency" data-symboltarget="buy_amount" name="search[buy_currency]" class="currency_select select optional text-center form-control">
+            <option selected disabled hidden value=''></option>
+            <option data-symbol="$ "  value="USD">USD</option>
+            <option data-symbol="€ "  value="EUR">EUR</option>
+            <option data-symbol="￡ " value="GBP">GBP</option>
+            <option data-symbol="$ "  value="AUD">AUD</option>
+            <option data-symbol="$ "  value="CAD">CAD</option>
+            <option data-symbol="￥ " value="JPY">JPY</option>
+            <option data-symbol="¥ " value="CNY">CNY</option>
+            <option data-symbol="$ " value="HKD">HKD</option>
+            <option data-symbol="₪ " value="ILS">ILS</option>
+            <option data-symbol="kr " value="NOK">NOK</option>
+          </select>
+          <span class="form-control text-right"><i class="material-icons pull-right">arrow_drop_down</i></span>
+        </div>
+
       </div>
 
       <div class="search_option">
         <div class="togglebutton">
-          <label>
-            Get it delivered
+          <label class="flex_between">
+            <span class="search_option_text">Get by delivery</span>
             <input type="checkbox">
+            <span class="toggle"></span>
           </label>
         </div>
       </div>
 
   </div>
 
-  <div class="actions_line flex_center">
-    <button type="submit" class="action btn" data-ajax="searches">find offers</button>
-  </div>
-
-</div>
+    <div class="search_section invoke flex_center">
+      <button type="submit" class="action btn" data-ajax="searches">find offers</button>
+    </div>

@@ -64,6 +64,11 @@ refresh = function(pane) {
          swiperIntro.update(false);
         help_refreshed = true; // do once only
     }
+    if (!search_refreshed && pane == 'search' && swiperSearch) {
+        console.log('Entering pane: search - refresh swiperSearch');
+        swiperSearch.update(false);
+        search_refreshed = true; // do once only
+    }
     if (pane == map) {
         $('.exchanges #exchanges').css('z-index', '2')
     } else {
