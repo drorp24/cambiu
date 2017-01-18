@@ -70,6 +70,8 @@
 
                   // irritating, but inevitable since i can't stick the user's blue dot to a place on the map (it's always on the screen's center)
                  // re-center map around user *cuurent* position if he drags the map around
+                console.log('dragend event');
+
                  setTimeout(function () {
                     showUserPosition(user.lat, user.lng)
                 }, 1000);
@@ -143,7 +145,7 @@
 
     highlightCurrentMarker = function() {
 
-        var id = currExchange().id;
+        var id = currentExchange().id;
         var style = 'z-index: ' + String(id);
         var div = 'div[style*="' + style + '"]';
 

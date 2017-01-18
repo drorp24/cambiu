@@ -78,7 +78,7 @@ followUser = function() {
         maximumAge: 15000
     };
 
-    navigator.geolocation.watchPosition(
+    userWatch = navigator.geolocation.watchPosition(
         currPositionFound,
         currPositionError,
         options
@@ -93,6 +93,7 @@ followUser = function() {
 
     function currPositionError(error) {
 
+        hideUserPosition();
         var message = error.message ? error.message : error;
         console.warn('currPosition error: ' + message);
 
@@ -157,6 +158,13 @@ geocode = function(locationArg) {
 
 showUserPosition = function(lat, lng) {
 
+    console.log('show user position');
+
+    if (search.location.type != 'user') {
+        console.log('search location is not the user\'s location: not showing user position');
+        return
+    }
+
     if (!map || !map.getProjection()) {
         console.warn('showUserPosition: map isnt ready yet');
         return
@@ -191,7 +199,10 @@ function searchbox_addListener(searchBox) {
         set('location_lng',         search.location.lng = place.geometry.location.lng());
         set('location_type',        search.location.type = 'selected');
         set('location_reason',      search.location.reason = 'changed by user');
-        console.log('Location changed by user:', search.location);
+        console.log('Location changed by user to: ', search.location);
+        console.log('Stopping userWatch');
+        if (userWatch) navigator.geolocation.clearWatch(userWatch);
+        $('#userLoc').hide();
     });
 }
 function radians(n) {

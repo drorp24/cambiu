@@ -8,9 +8,10 @@
     addCards = function(exchanges) {
 
         $('#cards').empty();
+        slidesAdded = [];
 
         if (exchanges.length == 0) {
-            snack('No information in this area yet. Try another location', 'ok', null, null, 'oops');
+            snack('No information in this area yet. Try a different location', 'ok', null, null, 'oops');
             return;
         }
 
@@ -79,11 +80,11 @@
         $('#best_offer').popover('hide');
         var $navBtn = $('.nav_icon_container');
         $navBtn.addClass('rotate');
-        renderDirections(currExchange());
+        renderDirections(currentExchange());
 
         setTimeout(function(){
 
-            currCard().removeClass('selected')
+            currentCard().removeClass('selected')
             $navBtn.removeClass('rotate');
 
         }, 150);

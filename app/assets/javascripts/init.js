@@ -93,7 +93,6 @@ var photoPadding = 15;
 var photoWidth;
 var photoHeight;
 var slidesAdded = [];
-var currentSlide = 0;
 var initialSlides = 3;
 var user = {};
 var dfault = {};
@@ -405,15 +404,15 @@ $(document).ready(function() {
 
     noUiSlider.create(slider, {
         connect: true,
-        start: 5,
+        start: Number(def('radius')),
         range: {
             min: 0,
-            max: 15
+            max: 30
         },
         pips: {
             mode: 'values',
-            values: [5, 10],
-            density: 4
+            values: [0, 5, 10, 15, 20, 25, 30],
+            density: 5
         },
         tooltips: [true],
         format: {

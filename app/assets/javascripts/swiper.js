@@ -38,14 +38,15 @@ slideChange = function() {
 };
 
 slideNext = function() {
-    var advanceIndex = currentSlide + initialSlides;
+    var currentIndex = currIndex();
+    console.log('slideNext. currentIndex: ' + currentIndex);
+    var advanceIndex = currentIndex + initialSlides;
     if (advanceIndex < exchanges.length) {
+        console.log('adding slide ' + advanceIndex);
         addSlide(advanceIndex);
     }
-    currentSlide ++;
 };
 slidePrev = function() {
-    currentSlide --;
 };
 
 addSlide = function(index) {
@@ -61,16 +62,16 @@ addSlide = function(index) {
 
 currIndex = function() {return swiperH.activeIndex};
 
-currCard = function() {return $('.swiper-slide-active')};
+currentCard = function() {return $('.swiper-slide-active')};
 
-currExchange = function() {
+currentExchange = function() {
 
-    var length = exchanges.length;
-    var index = currIndex();
+    var exchangesLength = exchanges.length;
+    var currentIndex = currIndex();
 
-    if (exchanges && length > 0) {
-        if (index < length) {
-            return exchanges[index].properties
+    if (exchanges && exchangesLength > 0) {
+        if (currentIndex < exchangesLength) {
+            return exchanges[currentIndex].properties
         } else {
             throw new Error('index > exchanges length');
         }

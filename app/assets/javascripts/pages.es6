@@ -36,7 +36,7 @@ setPage = function ({url, page1, id1, pane1, hash, pushState = true, populate = 
 
     // POPULATE (unless triggered by popstate event)
      if (populate && id) {
-        var exchange = (id == 'curr') ? currExchange() : findExchange(id);
+        var exchange = (id == 'curr') ? currentExchange() : findExchange(id);
         populateExchange(exchange, $pane);
         populatePlace(exchange, $pane);
     }
@@ -44,7 +44,7 @@ setPage = function ({url, page1, id1, pane1, hash, pushState = true, populate = 
 
     // PUSH state (unless triggered by popstate or page reloads)
     if (pushState) {
-        var id = (id == 'curr') ? currExchange().id : id;
+        var id = (id == 'curr') ? currentExchange().id : id;
         var newState = url ? url : make_url(page, id, pane);
         history.pushState(newState, 'cambiu', newState);
     }

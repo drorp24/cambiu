@@ -558,8 +558,12 @@ body#cambiu {
     }
   }
 
+  .hidden {
+    display: none;
+  }
   .content {
     padding: 30px;
+    padding-top: 0;
   }
 
   background-color: #fff;
@@ -644,9 +648,15 @@ body#cambiu {
     font-size: 5.5vw;
   }
 
+  .form-group .clear {
+    &:first-child {
+      visibility: hidden;
+    }
+  }
+
 
   .search_section {
-    &.pay, &.get {
+    &.pay, &.get, &.where, &.radius {
       height: 40%;
       padding: 10px;
       &:first-of-type {
@@ -669,7 +679,7 @@ body#cambiu {
 
   .search_option {
     .search_option_text {
-      font-size: 5vw;
+      font-size: 4.5vw;
       font-weight: 300;
       color: #888;
     }
@@ -679,6 +689,10 @@ body#cambiu {
   }
 
 
+
+  #slider {
+    width: 85%;
+  }
 
    //MOVE INLINE in case I use LOADCSS
 
@@ -733,7 +747,6 @@ body#cambiu {
         text-transform: uppercase;
       }
       .getOffer {
-        font-family: typoRound;
         text-transform: uppercase;
       }
     }
@@ -742,8 +755,7 @@ body#cambiu {
     }
     &:nth-child(1) {
       background-color: $brand-color-c;
-      background-color: #ccc;
-      color: $brand-color-c;
+      color: #fff;
       .version {
         display: block;
         position: absolute;
@@ -753,21 +765,19 @@ body#cambiu {
       }
     }
     &:nth-child(2) {
-      background-color: $boldblue;
       background-color: $brand-color-a;
     }
     &:nth-child(3) {
-      background-color: $boldblue;
+      background-color: $brand-color-b;
     }
     &:nth-child(4) {
-      background-color: $violet;
+      background-color: $boldblue;
     }
     img {
       height: 80%;
     }
     button {
       font-size: 6vw;
-      font-family: typoRound;
       color: inherit !important;
     }
     .intro_title {
@@ -1150,7 +1160,29 @@ body#cambiu {
   }
 
   #newradar {
+    transition: display 3s 3s, opacity 3s linear;
     display: none;
+    #pulse3, #pulse4 {
+      border-radius:50%;
+      position:absolute;
+      height: 150px; width: 150px;
+      top: 50%; left:50%;
+      border: 2px solid rgba(66, 152, 181, 1);
+    }
+    &.pulsating {
+      display: block;
+      #pulse3, #pulse4 {
+         -webkit-animation: pulsate 3s infinite;
+        animation: pulsate 3s infinite;
+        background-color: lighten(#4298b5, 40%);
+        -webkit-transform:translateX(-50%) translateY(-50%);
+        transform:translateX(-50%) translateY(-50%);
+      }
+      #pulse4 {
+        -webkit-animation: pulsate 3s -.5s infinite;
+        animation: pulsate 3s -.5s infinite;
+      }
+    }
   img {
     z-index: 4;
     position: absolute;
@@ -1161,22 +1193,6 @@ body#cambiu {
     transform: translateX(-50%) translateY(-50%);
   }
 
-    #pulse3, #pulse4 {
-      border-radius:50%;
-      position:absolute;
-      height: 150px; width: 150px;
-      top: 50%; left:50%;
-      border: 2px solid rgba(66, 152, 181, 1);
-      -webkit-animation: pulsate 3s infinite;
-      animation: pulsate 3s infinite;
-      background-color: lighten(#4298b5, 40%);
-      -webkit-transform:translateX(-50%) translateY(-50%);
-      transform:translateX(-50%) translateY(-50%);
-    }
-    #pulse4 {
-      -webkit-animation: pulsate 3s -.5s infinite;
-      animation: pulsate 3s -.5s infinite;
-    }
     @-webkit-keyframes pulsate {
       0%,100% {
         width:150px;
@@ -1214,7 +1230,7 @@ body#cambiu {
 
   /* Progress Bar */
   .progress {
-    z-index: 2;
+    z-index: 3;
     position: absolute;
     margin-bottom: 0;
     height: 8px;
@@ -1224,10 +1240,6 @@ body#cambiu {
     }
     &.below_navbar {
       top: $navbar_height + 1vh;
-    }
-    &.fadeOut {
-      display: none;
-      transition: none;
     }
     background-color: #acece6;
     background-color: lighten($brand-color, 30%);
@@ -1355,6 +1367,7 @@ body#cambiu {
   }
 
   .snackbar-content {
+    font-size: 2.5vh;
     @include flexbox();
     width: 100%;
     align-items: center;
@@ -1368,7 +1381,7 @@ body#cambiu {
 
   .snackbar.snackbar-opened {
     margin-bottom: 0px !important;
-    height: 60px;
+    height: 10vh;
     @include flexbox();
   }
 
@@ -1386,8 +1399,8 @@ body#cambiu {
   }
 
   .snackbar-content .button {
-    font-size: 30px;
-    font-weight: 300;
+    font-size: 3.5vh;
+    font-weight: 500;
   }
 
 
@@ -1407,8 +1420,8 @@ body#cambiu {
   }
 
   .form-control {
-    color: #000;
-    font-weight: 400;
+    color: #555;
+    font-weight: 500;
   }
 
   .help-block {

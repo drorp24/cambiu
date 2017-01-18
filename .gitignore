@@ -253,6 +253,5 @@ pip-log.txt
 /public/assets/*
 
 node_modules/
-app/assets/javascripts/EXAMPLE_manifest.json.erb
 
 app/assets/javascripts/EXAMPLE_serviceworker.js.erb

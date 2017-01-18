@@ -99,7 +99,7 @@ $(document).ready(function() {
         return $('.form-group [data-model=search][data-field=' + other($e.data('field')) + ']');
     };
 
-    $('form [data-model=search][data-field]').on('click tap', function() {
+    $('#search_form [data-model=search][data-field]').on('click tap', function() {
 
         console.log('moving to a new field');
         var $this = $(this);
@@ -107,7 +107,7 @@ $(document).ready(function() {
         if (amount(field)) clear($this);
     });
 
-    $('form [data-model=search][data-field]').keyup(function() {
+    $('#search_form [data-model=search][data-field]').keyup(function() {
 
         console.log('keying a character');
         var $this = $(this);
@@ -225,9 +225,13 @@ $(document).ready(function() {
     slider.noUiSlider.on('change', function ( values, handle, unencoded ) {
         if ( unencoded[0] < 5 ) {
             slider.noUiSlider.set(5);
-        } else if ( unencoded[0] > 10 ) {
-            slider.noUiSlider.set(10);
+        } else if ( unencoded[0] > 30 ) {
+            slider.noUiSlider.set(30);
         }
     });
 
+});
+
+$('#search_form .location .clear').click(function() {
+   set('location', '')
 });

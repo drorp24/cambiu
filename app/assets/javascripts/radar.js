@@ -3,13 +3,12 @@
 
 animation = function($e, verb) {
     if (verb == 'start') {
-        $e.removeClass('fadeOut').css('display', 'block')
+        $e.removeClass('fadeOut');
+        $e.addClass('pulsating');
     } else {
         $e.addClass('fadeOut');
         setTimeout(function() {
-            $e.find('#pulse3').css('animation-name', 'none');
-            $e.find('#pulse4').css('animation-name', 'none');
-            $e.css('display', 'none !important')
+            $e.removeClass('pulsating')
         }, 5000)
     }
 };
@@ -53,14 +52,12 @@ show = function(verb) {
 
     if (verb == 'start') {
         radar('start');
-//        start_search();  // needs to be when the search really takes place, or else it's a mess
         progress('start', 'below_navbar');
         inShow = true;
     } else
 
     if (verb == 'stop') {
         radar('stop');
-//        stop_search();
         progress('stop');
         inShow = false;
     }

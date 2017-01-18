@@ -68,11 +68,11 @@ $('body').on('click tap', '.ecard.selected .actions_line, .ecard.selected .nav_i
     e.stopPropagation();
     var $navBtn = $('.nav_icon_container');
     $navBtn.addClass('rotate');
-    renderDirections(currExchange());
+    renderDirections(currentExchange());
 
     setTimeout(function(){
 
-        currCard().removeClass('selected')
+        currentCard().removeClass('selected')
         $navBtn.removeClass('rotate');
 
     }, 500);

@@ -49,7 +49,7 @@ setPage = function (arg) {   // for some absurd reason, it won't accept keys 'pa
 
     // POPULATE (unless triggered by popstate event)
     if (populate && id) {
-        var exchange = (id == 'curr') ? currExchange() : findExchange(id);
+        var exchange = (id == 'curr') ? currentExchange() : findExchange(id);
         populateExchange(exchange, $pane);
         populatePlace(exchange, $pane);
     }
@@ -57,7 +57,7 @@ setPage = function (arg) {   // for some absurd reason, it won't accept keys 'pa
 
     // PUSH state (unless triggered by popstate or page reloads)
     if (pushState) {
-        var id = (id == 'curr') ? currExchange().id : id;
+        var id = (id == 'curr') ? currentExchange().id : id;
         var newState = url ? url : make_url(page, id, pane);
         history.pushState(newState, 'cambiu', newState);
     }
