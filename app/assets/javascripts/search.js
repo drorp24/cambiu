@@ -129,14 +129,26 @@ $(document).ready(function() {
     // User manual search: form validation & submit
 
     inputValid = function() {
-        var valid = value_of('pay_amount') || value_of('buy_amount');
-        if (!valid) {
+
+        var amountValid = value_of('pay_amount') || value_of('buy_amount');
+
+        if (!amountValid) {
             $('.form-group.pay_amount').addClass('has-error is-focused').find('.help-block').addClass('required');
             $('.form-group.buy_amount').addClass('has-error').find('.help-block').addClass('required');
         } else {
             $('.form-group.pay_amount').removeClass('has-error is-focused').find('.help-block').removeClass('required');
             $('.form-group.buy_amount').removeClass('has-error').find('.help-block').removeClass('required');
         }
+
+        var locationValid = !locationDirty;
+
+        if (!locationValid) {
+            $('.form-group.location').addClass('has-error is-focused').find('.help-block').addClass('required');
+         } else {
+            $('.form-group.location').removeClass('has-error is-focused').find('.help-block').removeClass('required');
+        }
+
+        valid = amountValid && locationValid;
         return valid;
     };
 
@@ -230,8 +242,30 @@ $(document).ready(function() {
         }
     });
 
-});
 
-$('#search_form .location .clear').click(function() {
-   set('location', '')
+    $('#search_form .location .clear').click(function() {
+        if (!$(this).parent().find('input#location').prop('disabled')) {
+            set('location', '')
+        }
+    });
+
+    $(".search_section.where input[type=checkbox]").change(function() {
+        var $locationInput = $('.search_section.where input#location');
+        if(this.checked) {
+            getLocation().then(geocode);
+            $locationInput.prop("disabled", true);
+            $locationInput.removeClass('active');
+            $('.search_section.where').addClass('on');
+        } else {
+            $locationInput.prop("disabled", false);
+            $locationInput.addClass('active');
+            set('location', '');
+            $('.search_section.where').removeClass('on');
+        }
+    });
+
+    disable_location = function() {
+        $('.search_section.where input#location').prop("disabled", true);
+    }
+
 });

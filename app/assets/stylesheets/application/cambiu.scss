@@ -8,6 +8,8 @@
 }
 
 // Variables
+$label_font_size: 3.5vw;
+$form_font_size: 5vw;
 $swiper_bullets_bottom: 5vh;
 $rankingSize: 8vw;
 $brand-color-a: rgb(255, 23, 95);
@@ -640,18 +642,32 @@ body#cambiu {
   .form-group.label-floating.is-focused label.control-label, .form-group.label-floating:not(.is-empty) label.control-label, .form-group.label-static label.control-label {
     left: $padding;
     top: -8vw;
-    font-size: 4vw;
-    font-weight: 300;
+    font-size: $label_font_size;
+    font-weight: 400;
+    color: #888;
   }
 
-  .form-control {
+  .form-group.label-floating label.control-label, .form-group.label-placeholder label.control-label {
+    font-size: $form_font_size;
+  }
+
+  .form-control, .clear {
     font-size: 5.5vw;
   }
 
+  .clear {
+    position: relative;
+    right: 5.5vw;
+  }
+
   .form-group .clear {
-    &:first-child {
+    &:first-of-type {
       visibility: hidden;
     }
+  }
+
+  .search_section.on .location label {
+    display: none;
   }
 
 
@@ -659,15 +675,18 @@ body#cambiu {
     &.pay, &.get, &.where, &.radius {
       height: 40%;
       padding: 10px;
-      &:first-of-type {
-        border-bottom: 1px solid #fff;
-      }
+      margin-top: 5%;
+      border: 5px solid #eee;
     }
     &.invoke {
-      height: 20%;
+      height: 12%;
       .btn {
         font-size: 5vw;
       }
+    }
+    .form-group.radius {
+      position: relative;
+      top: -5vh;
     }
   }
 
@@ -679,15 +698,22 @@ body#cambiu {
 
   .search_option {
     .search_option_text {
-      font-size: 4.5vw;
-      font-weight: 300;
-      color: #888;
+      font-size: $form_font_size;
+      font-weight: 400;
+      color: #aaa;
     }
     .toggle {
       transform: scale(1.25, 1.25);
     }
   }
 
+
+  .search_section.where input#location {
+    color: #aaa;
+    &.active {
+      color: #555;
+    }
+  }
 
 
   #slider {

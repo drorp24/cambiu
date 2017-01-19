@@ -124,6 +124,7 @@ var exchanges;
 var inShow = true;
 var currExchangeId = null;
 var currentSnack = null;
+var locationDirty = false;
 
 sessionStorage.videoStopped = null;
 
@@ -446,6 +447,8 @@ $(document).ready(function() {
 
     snack = function(message, button, timeout, $upEl, klass) {
 
+        console.log('snack called with message: ' + message);
+
         if (typeof timeout === 'undefined') var timeout = null;
         if (typeof $upEl === 'undefined') var $upEl = null;
         if (typeof klass === 'undefined') var klass = null;
@@ -543,5 +546,8 @@ $(document).ready(function() {
     $('.navbar').click(function(e) {
         hide_best();
     });
+
+    $('.search_section.where input#location').prop("disabled", true);
+    $('input#location').attr('placeholder', '')
 
 });

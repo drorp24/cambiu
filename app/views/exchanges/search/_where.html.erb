@@ -1,19 +1,31 @@
-<div class="search_section where flex_around column">
+<div class="search_section where on flex_between column">
 
   <div class="search_heading">Location</div>
 
-      <div class="flex_center form-group location label-floating">
+
+  <div class="search_option">
+    <div class="togglebutton">
+      <label class="flex_between">
+        <span class="search_option_text">Where I'm at</span>
+        <input type="checkbox" checked="">
+        <span class="toggle"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="flex_center form-group location label-floating">
 <!--
         <label for="location" class="control-label">Where to look for</label>
 -->
-        <span class="clear"><i class=material-icons>clear</i></span>
-        <input type="text" id="location" data-model="search" data-field="location" data-searchbox="true" name="search[location]" class="text-center location search form-control" placeholder="   Change location">
-        <span class="clear"><i class=material-icons>clear</i></span>
-      </div>
+    <label for="location" class="control-label">Select location</label>
+    <span class="clear"><i class=material-icons>clear</i></span>
+    <input type="text" id="location" data-model="search" data-field="location" data-searchbox="true" name="search[location]" class="text-center location search form-control">
+    <span class="clear"><i class=material-icons>clear</i></span>
+  </div>
 
 </div>
 
-<div class="search_section radius flex_around column">
+<div class="search_section radius flex_between column">
 
   <div class="search_heading">Radius</div>
 

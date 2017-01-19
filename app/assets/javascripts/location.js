@@ -192,6 +192,7 @@ function searchbox_addListener(searchBox) {
             set_default_location('Location changed by user, but getPlaces found no place');
             return
         }
+        locationDirty = false;
         place = places[0];
         set('location',             search.location.name = place.formatted_address);
         set('location_short',       search.location.short = place.name);
@@ -201,7 +202,7 @@ function searchbox_addListener(searchBox) {
         set('location_reason',      search.location.reason = 'changed by user');
         console.log('Location changed by user to: ', search.location);
         console.log('Stopping userWatch');
-        if (userWatch) navigator.geolocation.clearWatch(userWatch);
+        if (typeof userWatch !== 'undefined' && userWatch) navigator.geolocation.clearWatch(userWatch);
         $('#userLoc').hide();
     });
 }
@@ -236,3 +237,7 @@ function getBearing(startLat,startLong,endLat,endLong){
 distance = function(location1, location2) {
     return String(Math.round(google.maps.geometry.spherical.computeDistanceBetween(location1, location2)));
 };
+
+$('.location').keyup(function() {
+    locationDirty = true;
+});
