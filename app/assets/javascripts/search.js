@@ -140,7 +140,7 @@ $(document).ready(function() {
             $('.form-group.buy_amount').removeClass('has-error').find('.help-block').removeClass('required');
         }
 
-        var locationValid = !locationDirty;
+        var locationValid = $('input#location').val() && !locationDirty;
 
         if (!locationValid) {
             $('.form-group.location').addClass('has-error is-focused').find('.help-block').addClass('required');

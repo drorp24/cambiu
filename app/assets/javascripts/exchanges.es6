@@ -11,7 +11,7 @@
         slidesAdded = [];
 
         if (exchanges.length == 0) {
-            snack('No information in this area yet. Try a different location', 'ok', null, null, 'oops');
+            snack('No information in this area yet. Try a different location', 'ok', null, null, 'oops', {page: 'exchanges', pane: 'search'});
             return;
         }
 

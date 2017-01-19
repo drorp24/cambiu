@@ -436,22 +436,25 @@ $(document).ready(function() {
         var message = arg.message,
             button = arg.button,
             modalText = arg.modalText,
-            klass = arg.klass;
+            klass = arg.klass,
+            link = arg.link;
 
         var $e = $('.snack.template').clone().removeClass('template').addClass('active');
         $e.find('.message').html(message);
         if (klass) $e.find('.snackIcon').addClass(klass);
         if (button) $e.find('.button').html(button);
+        if (button && link) $e.find('.button').attr({'data-href-page': link.page, 'data-href-pane': link.pane});
         return $e.html();
     };
 
-    snack = function(message, button, timeout, $upEl, klass) {
+    snack = function(message, button, timeout, $upEl, klass, link) {
 
         console.log('snack called with message: ' + message);
 
         if (typeof timeout === 'undefined') var timeout = null;
         if (typeof $upEl === 'undefined') var $upEl = null;
         if (typeof klass === 'undefined') var klass = null;
+        if (typeof link === 'undefined') var link = null;
 
         if ($upEl && !inShow) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
 
@@ -463,7 +466,8 @@ $(document).ready(function() {
             content: snackHtml({
                 message: message,
                 button: button,
-                klass: klass
+                klass: klass,
+                link: link
             })
         })
     };
@@ -478,6 +482,7 @@ $(document).ready(function() {
     };
 
     $('body').on('click tap', '.snack .button', function() {
+        console.log('snack clicked')
         snackHide()
     });
 
