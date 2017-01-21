@@ -11,7 +11,7 @@
         slidesAdded = [];
 
         if (exchanges.length == 0) {
-            snack('No information in this area yet. Try a different location', 'ok', null, null, 'oops', {page: 'exchanges', pane: 'search'});
+            snack("No information in this area yet. <br> Click 'OK' to search elsewhere.", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
             return;
         }
 

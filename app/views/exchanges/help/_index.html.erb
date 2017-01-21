@@ -1,63 +1,14 @@
 <div class="pane" data-pane="help">
 
-  <div class="mobile_background mobile_only">
+  <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'arrow_back', center: 'Help', right_pane: 'none', right_icon: ''} %>
 
-    <div class="swiper-container swiper-container-intro">
-
-      <div class="swiper-wrapper swiper-wrapper-intro">
-
-        <%= render partial: 'exchanges/help/template',
-                   locals: {
-                      illustration: 'cambiu_vertical_white.png',
-                      title: nil,
-                      text: "World's first <br> currency marketplace.".html_safe,
-                      getOffer: true,
-                      left: nil,
-                      right: "How we do it"
-                    }
-        %>
-
-        <%= render partial: 'exchanges/help/template',
-                   locals: {
-                       illustration: nil,
-                       title: 'You have something to offer',
-                       text: 'The currency you pay may be worth a lot to some merchants.',
-                       getOffer: false,
-                       left: "<span data-href-page=exchanges data-href-pane=map>skip</span>".html_safe,
-                       right: "<i class=material-icons>keyboard_arrow_right</i>".html_safe
-                   }
-        %>
-
-        <%= render partial: 'exchanges/help/template',
-                   locals: {
-                       illustration: nil,
-                       title: 'So we inform merchants',
-                       text: "And get you offers that are <br> tailor-made to your needs.".html_safe,
-                       getOffer: false,
-                       left: "<span data-href-page=exchanges data-href-pane=map>skip</span>".html_safe,
-                       right: "<i class=material-icons>keyboard_arrow_right</i>".html_safe
-                   }
-        %>
-
-        <%= render partial: 'exchanges/help/template',
-                   locals: {
-                       illustration: nil,
-                       title: 'Find your best offer',
-                       text: "Have more to spend. <br> Thank us later.".html_safe,
-                       getOffer: true,
-                       left: nil,
-                       right: nil
-                   }
-        %>
-
-      </div>
-
-      <div class="flex_center">
-        <div class="swiper-pagination swiper-pagination-intro"></div>
-      </div>
-
+  <div class="content">
+    <div class="help_topic flex_center">Why do we enable unsuported features?</div>
+    <div class="help_content flex_center column">
+      <p>It's important for us to know how needed some features are - so we know when to provide them.</p>
+      <p >This is done for a limited time only.</p>
+      <p>Apologize for any inconvenience!</p>
     </div>
-
   </div>
 
 </div>

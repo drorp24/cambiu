@@ -4,7 +4,7 @@ if (navigator.serviceWorker) {
             console.log('[Page] Service worker registered!');
         })
         .catch(function(err){
-            snack("SW registration failed with error " + err , null, null, $('.swiper-container'), 'oops');
+            snack("SW registration failed with error " + err , {$upEl: $('.swiper-container'), klass: 'oops'});
         });
 }
 

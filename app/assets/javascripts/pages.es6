@@ -69,7 +69,7 @@ refresh = function(pane) {
         swiperSearch.update(false);
         search_refreshed = true; // do once only
     }
-    if (pane == 'search') snackHide();
+    if (currentSnack) snackHide();
     if (pane == map) {
         $('.exchanges #exchanges').css('z-index', '2')
     } else {

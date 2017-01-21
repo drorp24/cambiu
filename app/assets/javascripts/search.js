@@ -264,8 +264,20 @@ $(document).ready(function() {
         }
     });
 
-    disable_location = function() {
-        $('.search_section.where input#location').prop("disabled", true);
-    }
+    $(".search_section.pay input[type=checkbox]").change(function() {
+        if(this.checked) {
+            snack('Sorry, this feature is not supported yet', {button: '<i class="material-icons">help_outline</i>', link: {page: 'exchanges', pane: 'help'}})
+        } else {
+            snackHide()
+        }
+    });
+
+    $(".search_section.get input[type=checkbox]").change(function() {
+        if(this.checked) {
+            snack('Sorry, this feature is not supported yet', {button: '<i class="material-icons">help_outline</i>', link: {page: 'exchanges', pane: 'help'}})
+        } else{
+            snackHide()
+        }
+     });
 
 });

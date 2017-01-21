@@ -434,10 +434,9 @@ $(document).ready(function() {
 
     snackHtml = function(arg) {
         var message = arg.message,
-            button = arg.button,
-            modalText = arg.modalText,
-            klass = arg.klass,
-            link = arg.link;
+            button = typeof arg.button === 'undefined' ? null : arg.button,
+            klass = typeof arg.klass === 'undefined' ? null : arg.klass,
+            link = typeof arg.link === 'undefined' ? null:  arg.link;
 
         var $e = $('.snack.template').clone().removeClass('template').addClass('active');
         $e.find('.message').html(message);
@@ -447,42 +446,44 @@ $(document).ready(function() {
         return $e.html();
     };
 
-    snack = function(message, button, timeout, $upEl, klass, link) {
+//    snack = function(message, button, timeout, $upEl, klass, link) {
+    snack = function(message, options) {
 
         console.log('snack called with message: ' + message);
 
-        if (typeof timeout === 'undefined') var timeout = null;
-        if (typeof $upEl === 'undefined') var $upEl = null;
-        if (typeof klass === 'undefined') var klass = null;
-        if (typeof link === 'undefined') var link = null;
+//          Suppressed since it can now also happen when switched back to 'where I'm at' while still on the (white) search page
+//        if ($upEl && !inShow) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
 
-        if ($upEl && !inShow) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
+        if (typeof options === 'undefined') options = {};
 
         if (currentSnack) currentSnack.snackbar("hide");
 
         currentSnack = $.snackbar({
-            timeout: timeout || 500000,
+            timeout: options.timeout || 500000,
             htmlAllowed: true,
             content: snackHtml({
                 message: message,
-                button: button,
-                klass: klass,
-                link: link
+                button: options.button,
+                klass: options.klass,
+                link: options.link
             })
         })
     };
 
     snackHide = function($downEl) {
 
+        console.log('snackHide');
+
         if (typeof $downEl === 'undefined') $downEl = null;
 
-        if ($downEl) $downEl.css({'position': 'fixed', 'bottom': '0'});
+//        if ($downEl) $downEl.css({'position': 'fixed', 'bottom': '0'});
 
         $('.snackbar.snackbar-opened').snackbar("hide");
+        currentSnack = null;
     };
 
-    $('body').on('click tap', '.snack .button', function() {
-        console.log('snack clicked')
+    $('body#cambiu').on('click tap', '.snackbar', function() {
+        console.log('snack clicked');
         snackHide()
     });
 

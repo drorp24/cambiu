@@ -34,18 +34,6 @@ progress = function(verb, position) {
     animation($('.progress').addClass(position), verb)
 };
 
-searchSnack = function(verb) {
-
-    console.log('mainSnack');
-
-    if (verb == 'start') {
-        snack('Scanning for offers...', null, null, $('.swiper-container'))
-    } else {
-        snackHide($('.swiper-container'))
-    }
-};
-
-
 show = function(verb) {
 
     if (desktop) return;
@@ -65,16 +53,6 @@ show = function(verb) {
 
 start_show = function() {show('start')};
 stop_show = function() {show('stop')};
-
-start_search = function() {
-    searchSnack('start');
-    progress('start', 'above_snack');
-};
-
-stop_search = function() {
-    searchSnack('stop');
-    progress('stop', 'above_snack');
-};
 
 show_best = function() {
     if (exchanges.length == 0) return;

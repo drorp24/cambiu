@@ -35,7 +35,7 @@ getLocation = function() {
 
             var message = error.message ? error.message : error;
             setLocation(dfault.lat, dfault.lng, 'default', 'PositionError: ' + message);
-            snack('We couldn\'t locate you. Have you given us the permission to?', null, null, $('.swiper-container'), 'oops')
+            snack('We couldn\'t locate you. Have you given us the permission to?', {upEl: $('.swiper-container'), klass: 'oops'})
 
         }
 
