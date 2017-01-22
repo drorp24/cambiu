@@ -34,17 +34,22 @@ window.addEventListener('beforeinstallprompt', function(e) {
 
 // To post a message TO the sw
 function post_to_sw(msg){
-    navigator.serviceWorker.controller.postMessage(msg);
+    if (navigator.serviceWorker) {
+        navigator.serviceWorker.controller.postMessage(msg)
+    }
 }
 
 // To receive a message coming FROM the service worker
-navigator.serviceWorker.addEventListener('message', function(event){
+if (navigator.serviceWorker) {
 
-    console.log("Client 1 Received Message: ", event.data);
+    navigator.serviceWorker.addEventListener('message', function (event) {
+
+        console.log("Client 1 Received Message: ", event.data);
 //      set('version', version = event.data.version);
 //      $('.version').html(version);
 
 //    Uncomment the following line to respond back to the calling sw
 //    event.ports[0].postMessage("Client 1 Says 'Hello back!'");
 
-});
+    });
+}
