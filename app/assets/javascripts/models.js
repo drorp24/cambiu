@@ -174,7 +174,7 @@ populateParams = function() {
     });
 
     bind_currency_to_autonumeric();
-    $('.version').html(sessionStorage.version);
+    $('.version').html(version);
     paramsPopulated = true;
 
 };

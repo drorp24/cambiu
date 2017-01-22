@@ -5,6 +5,7 @@
 //
 
 //= require jquery
+//= require serviceworker-companion
 //= require autonumeric
 //= require fetch
 //= require snackbar.min
@@ -27,5 +28,3 @@
 //= require star-rating
 //= require swiper.jquery.min
 //= require nouislider.min
-
-//= require serviceworker-companion

@@ -1,3 +1,6 @@
+var version = '0.7.6';
+//post_to_sw({version: version});
+
 if (navigator.serviceWorker) {
     navigator.serviceWorker.register('/serviceworker.js', { scope: './' })
         .then(function(reg) {
@@ -37,9 +40,9 @@ function post_to_sw(msg){
 // To receive a message coming FROM the service worker
 navigator.serviceWorker.addEventListener('message', function(event){
 
-//    console.log("Client 1 Received Message: ", event.data);
-      set('version', version = event.data.version);
-      $('.version').html(version);
+    console.log("Client 1 Received Message: ", event.data);
+//      set('version', version = event.data.version);
+//      $('.version').html(version);
 
 //    Uncomment the following line to respond back to the calling sw
 //    event.ports[0].postMessage("Client 1 Says 'Hello back!'");

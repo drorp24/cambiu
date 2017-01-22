@@ -7,6 +7,7 @@
 
 console.log('[Serviceworker] Hello world!');
 
+//var version;
 var version = '0.7.6';
 
 function onInstall(event) {
@@ -38,6 +39,7 @@ function onInstall(event) {
         })
             .then(function() {
                 console.log('[Serviceworker]', version, '... installed!');
+                return self.skipWaiting();
             })
     );
 }
@@ -46,7 +48,7 @@ function onActivate(event) {
     /* Just like with the install event, event.waitUntil blocks activate on a promise.
      Activation will fail unless the promise is fulfilled.
      */
-    send_message_to_all_clients({'version': version});
+//    send_message_to_all_clients({'version': version});
     console.log('[Serviceworker]', version, ' activating: replacing cache...');
 
     event.waitUntil(
@@ -73,6 +75,7 @@ function onActivate(event) {
             })
             .then(function() {
                 console.log('[Serviceworker]', version, '... activated!');
+                return self.clients.claim();
             })
     );
 }
