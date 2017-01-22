@@ -6,6 +6,7 @@
 
 //= require jquery
 //= require serviceworker-companion
+//= require URLSearchParams_polyfill
 //= require autonumeric
 //= require fetch
 //= require snackbar.min
