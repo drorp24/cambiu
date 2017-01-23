@@ -499,6 +499,7 @@ $(document).ready(function() {
     };
 
     showError = function(error) {
+        console.log('showError');
         logError(error);
         snack(error);
 

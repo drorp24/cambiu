@@ -34,7 +34,7 @@ getLocation = function() {
         function positionError(error) {
 
             var message = error.message ? error.message : error;
-            setLocation(dfault.lat, dfault.lng, 'default', 'PositionError: ' + message);
+            setLocation(Number(dfault.lat), Number(dfault.lng), 'default', 'PositionError: ' + message);
             snack('We couldn\'t locate you. Have you given us the permission to?', {upEl: $('.swiper-container'), klass: 'oops'})
 
         }
@@ -159,11 +159,11 @@ geocode = function(locationArg) {
 
 showUserPosition = function(lat, lng) {
 
-    console.log('show user position');
-
     if (search.location.type != 'user') {
         console.log('search location is not the user\'s location: not showing user position');
-        return
+        return;
+    } else {
+        console.log('show user position');
     }
 
     if (!map || !map.getProjection()) {
@@ -185,6 +185,7 @@ hideUserPosition = function() {
 
 
 // Handle user location changes
+// Changing back to 'where i'm at' is in search.js
 
 function searchbox_addListener(searchBox) {
     google.maps.event.addListener(searchBox, 'places_changed', function () {
@@ -202,8 +203,8 @@ function searchbox_addListener(searchBox) {
         set('location_type',        search.location.type = 'selected');
         set('location_reason',      search.location.reason = 'changed by user');
         console.log('Location changed by user to: ', search.location);
-        console.log('Stopping userWatch');
-        if (typeof userWatch !== 'undefined' && userWatch) navigator.geolocation.clearWatch(userWatch);
+//        console.log('Stopping userWatch');
+//        if (typeof userWatch !== 'undefined' && userWatch) navigator.geolocation.clearWatch(userWatch);
         $('#userLoc').hide();
     });
 }

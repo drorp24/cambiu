@@ -20,7 +20,7 @@
                 map.setZoom(map_initial_zoom);
                 map.panTo(location);
 
-                google.maps.event.addListener(map, 'bounds_changed', function () {
+                google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
                     console.log('map is panned');
                     resolve();
                 });
@@ -319,6 +319,7 @@
     // the smooth zoom function
     function smoothZoom (map, max, cnt) {
 
+        console.log('smoothZoom', max, cnt);
         return new Promise(function(resolve, reject) {
 
         increaseZoom(cnt);
@@ -331,7 +332,7 @@
                 return;
             }
             else {
-                z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+                z = google.maps.event.addListenerOnce(map, 'zoom_changed', function(event){
                     google.maps.event.removeListener(z);
                     increaseZoom(cnt + 1);
                 });
@@ -345,6 +346,7 @@
     }
 
     zoomIn = function() {
+        console.log('zoomIn');
         if (exchanges.length == 0) {
             return;
         }
