@@ -3,6 +3,8 @@ require 'nokogiri'
 require 'open-uri'
 require "erb"
 include ERB::Util
+#require 'openssl'
+#OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 class Scraping
 
@@ -12,15 +14,16 @@ class Scraping
 
     begin
 
+
       if chain_name
         raise "No such chain: #{chain_name}" unless chain = Chain.find_by(name: chain_name)
-        chain.update(rates_source: 'scraping', rates_update: DateTime.now)
+        chain.update(currency: 'GBP', rates_source: 'scraping', rates_update: DateTime.now)
         chain.exchanges.each do |exchange|
-          exchange.update(rates_source: 'scraping')
+          exchange.update(rates_policy: 'chain', rates_source: 'scraping')
         end
       elsif exchange_name
         raise "No such exchange: #{exchange_name}" unless exchange = Exchange.find_by(name: exchange_name)
-        exchange.update(rates_source: 'scraping')
+        exchange.update(rates_policy: 'individual', rates_source: 'scraping')
       else
         raise "Neither chain nor exchange were passed in"
       end
@@ -45,7 +48,81 @@ class Scraping
 
   def self.parse_rates(url, doc, chain, exchange)
 
-    if url == "http://www.bfcexchange.co.uk"
+    if url == "http://finance.debenhams.com/travel-money/exchange-rates"
+
+      doc.css('table tbody tr:not(:first-child):not(.hiddenrow)').each do |li|
+        currency_name = li.css('td')[0].text.strip
+        currency   =
+            case currency_name
+              when 'Japanese Yen'
+                'JPY'
+              when 'Canadian Dollar'
+                'CAD'
+              when 'Australian Dollar'
+                'AUD'
+              when 'US Dollar'
+                'USD'
+              when 'Euro'
+                'EUR'
+              when 'Norwegian Kroner'
+                'NOK'
+              else
+                nil
+            end
+        next unless Currency.updatable.include? currency
+        sell = li.css('td')[1].text.strip
+        buy = li.css('td')[2].text.strip
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
+    elsif url == "https://www.travelex.co.uk/currency/exchange-rates"
+
+      doc.css('.currency-holder .row:not(.title)').each do |li|
+        currency = li.css('span')[1][/\(.*?\)/]
+        next unless Currency.updatable.include? currency
+        buy = li.css('span')[2]
+        sell = nil
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
+    elsif url == "https://www.uaeexchange.com/gbr-foreign-exchange"
+
+      doc.css('table tr[class]').each do |li|
+        currency = li.css('td')[1].text
+        next unless Currency.updatable.include? currency
+        buy = li.css('td')[2].text
+        sell = li.css('td')[3].text
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
+    elsif url == "https://www.iceplc.com/travel-money/exchange-rates"
+
+      doc.css('#fullCurrencyList .ProductCell').each do |li|
+        currency_name = li.css('td')[1].text.strip
+        currency   =
+        case currency_name
+          when 'Japanese Yen'
+            'JPY'
+          when 'Canadian Dollar'
+            'CAD'
+          when 'Australian Dollar'
+            'AUD'
+          when 'US Dollar'
+            'USD'
+          when 'Euro'
+            'EUR'
+          when 'Norwegian Krone'
+            'NOK'
+          else
+            nil
+        end
+        next unless Currency.updatable.include? currency
+        buy = li.css('td')[2].text.strip
+        sell = nil
+        rate_update(currency, buy, sell, chain, exchange)
+      end
+
+    elsif url == "http://www.bfcexchange.co.uk"
 
       doc.css('#tabs-1 ul li').each do |li|
         currency    = li.css('span')[0].text.strip

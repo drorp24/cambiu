@@ -94,3 +94,4 @@ group :development do
 end
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
+#gem 'openssl'

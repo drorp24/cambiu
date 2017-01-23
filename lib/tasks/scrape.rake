@@ -6,6 +6,11 @@ namespace :rates do
     Rails.logger.info "Started periodic scraping task"
     Rails.logger.info " "
 
+    Scraping.update('Debenhams',              nil, "http://finance.debenhams.com/travel-money/exchange-rates")
+    Scraping.update('Travelex',               nil, "https://www.travelex.co.uk/currency/exchange-rates")
+    Scraping.update('UAE',                    nil, "https://www.uaeexchange.com/gbr-foreign-exchange")
+    Scraping.update('ICE',                    nil, "https://www.iceplc.com/travel-money/exchange-rates")
+
     Scraping.update('BFC',                    nil, "http://www.bfcexchange.co.uk")
     Scraping.update('Cheque Centre',          nil, "http://www.chequecentre.co.uk/foreign-currency")
     Scraping.update('Eurochange PLC',         nil, "https://www.eurochange.co.uk/exchangerates.aspx")
