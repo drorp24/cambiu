@@ -20,7 +20,7 @@
                 map.setZoom(map_initial_zoom);
                 map.panTo(location);
 
-                google.maps.event.addListener(map, 'bounds_changed', function () {
+                google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
                     console.log('map is panned');
                     resolve();
                 });
@@ -59,11 +59,9 @@
 
 
             google.maps.event.addListener(map, 'dragstart', function () {
-                hide_best();
             });
 
             google.maps.event.addListener(map, 'click', function () {
-                hide_best();
             });
 
             google.maps.event.addListener(map, 'dragend', function () {
@@ -318,6 +316,7 @@
 
     // the smooth zoom function
     function smoothZoom (map, max, cnt) {
+        console.log('smoothZoom', max, cnt);
 
         return new Promise(function(resolve, reject) {
 
@@ -331,8 +330,8 @@
                 return;
             }
             else {
-                z = google.maps.event.addListener(map, 'zoom_changed', function(event){
-                    google.maps.event.removeListener(z);
+                z = google.maps.event.addListenerOnce(map, 'zoom_changed', function(event){
+//                    google.maps.event.removeListener(z);
                     increaseZoom(cnt + 1);
                 });
                 setTimeout(function(){map.setZoom(cnt)}, 700);
@@ -345,6 +344,7 @@
     }
 
     zoomIn = function() {
+        console.log('zoomIn');
         if (exchanges.length == 0) {
             return;
         }
