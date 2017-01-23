@@ -34,6 +34,7 @@ class Scraping
 
     rescue => e
 
+      chain.update(rates_update: nil) if chain
       Rails.logger.info "parsing " + url + " failed:"
       Rails.logger.info e
 
