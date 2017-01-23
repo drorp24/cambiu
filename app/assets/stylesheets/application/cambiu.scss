@@ -715,18 +715,9 @@ body#cambiu {
   }
 
 
-  .search_section.where {
-    &.on .form-group label {
-      color: #888 !important;
-    }
-    &:not(.on) .form-group label {
-      color: #333 !important;
-    }
-  }
-
   .search_section.where input#location {
     @include threedots(100%);
-    color: #888;
+    color: #aaa;
     &.active {
       color: #555;
     }

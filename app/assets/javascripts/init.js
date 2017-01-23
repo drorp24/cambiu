@@ -499,7 +499,6 @@ $(document).ready(function() {
     };
 
     showError = function(error) {
-        console.log('showError');
         logError(error);
         snack(error);
 
@@ -543,6 +542,15 @@ $(document).ready(function() {
         console.log(e);
          showError(e.error);
          snack(e.error);
+    });
+
+    $('body').click(function(e) {
+        hide_best();
+    });
+
+
+    $('.navbar').click(function(e) {
+        hide_best();
     });
 
     $('.search_section.where input#location').prop("disabled", true);
