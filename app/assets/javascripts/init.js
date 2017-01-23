@@ -545,6 +545,15 @@ $(document).ready(function() {
          snack(e.error);
     });
 
+    $('body').click(function(e) {
+        hide_best();
+    });
+
+
+    $('.navbar').click(function(e) {
+        hide_best();
+    });
+
     $('.search_section.where input#location').prop("disabled", true);
     $('input#location').attr('placeholder', '')
 

@@ -59,9 +59,11 @@
 
 
             google.maps.event.addListener(map, 'dragstart', function () {
+                hide_best();
             });
 
             google.maps.event.addListener(map, 'click', function () {
+                hide_best();
             });
 
             google.maps.event.addListener(map, 'dragend', function () {
