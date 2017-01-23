@@ -59,10 +59,10 @@ refresh = function(pane) {
         if (swiperH) swiperH.update(false);
         map_refreshed = true; // do once only
     }
-    if (!help_refreshed && pane == 'help' && swiperIntro) {
-        console.log('Entering pane: help - refresh swiperIntro');
+    if (!intro_refreshed && pane == 'intro' && swiperIntro) {
+        console.log('Entering pane: intro - refresh swiperIntro');
          swiperIntro.update(false);
-        help_refreshed = true; // do once only
+        intro_refreshed = true; // do once only
     }
     if (!search_refreshed && pane == 'search' && swiperSearch) {
         console.log('Entering pane: search - refresh swiperSearch');

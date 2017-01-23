@@ -110,7 +110,7 @@ var ratingOptions = {
     readonly: true
 };
 var map_refreshed = false;
-var help_refreshed = false;
+var intro_refreshed = false;
 var search_refreshed = false;
 var directionsRenderedFor = null;
 
