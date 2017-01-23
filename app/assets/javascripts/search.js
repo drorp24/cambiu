@@ -251,22 +251,8 @@ $(document).ready(function() {
 
     $(".search_section.where input[type=checkbox]").change(function() {
         var $locationInput = $('.search_section.where input#location');
-        locationDirty = false;
         if(this.checked) {
-                var user_location_name = (search.location.type == 'user' && search.location.name) ? search.location.name : null;
-                if (user.lat && user.lng) {
-                set('location_lat',     search.location.lat = user.lat);
-                set('location_lng',     search.location.lng = user.lng);
-                set('location_type',    search.location.type = 'user');
-                set('location_reason',  search.location.reason = "where i'm at");
-                if (user_location_name) {
-                    set('location',  user_location_name);
-                } else {
-                    geocode(search.location);
-                }
-            } else {
-                getLocation().then(geocode);
-            }
+            getLocation().then(geocode);
             $locationInput.prop("disabled", true);
             $locationInput.removeClass('active');
             $('.search_section.where').addClass('on');
