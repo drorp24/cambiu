@@ -142,6 +142,7 @@ geocode = function(locationArg) {
         set('location_short',   location_short);
 
         search.location.name = location_name;
+        search.location.short = location_short;
 
     }
 
