@@ -58,7 +58,3 @@ show_best = function() {
     if (exchanges.length == 0) return;
     $('.ranking').first().addClass('bounce');
 };
-
-hide_best = function() {
-    $('#best_offer').popover('hide');
-};
