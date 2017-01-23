@@ -254,14 +254,11 @@ $(document).ready(function() {
         locationDirty = false;
         if(this.checked) {
                 var user_location_name = (search.location.type == 'user' && search.location.name) ? search.location.name : null;
-                var user_location_short = (search.location.type == 'user' && search.location.short) ? search.location.short : null;
                 if (user.lat && user.lng) {
                 set('location_lat',     search.location.lat = user.lat);
                 set('location_lng',     search.location.lng = user.lng);
                 set('location_type',    search.location.type = 'user');
                 set('location_reason',  search.location.reason = "where i'm at");
-                set('location',         search.location.name = user_location_name);
-                set('location_short',  search.location.short = user_location_short);
                 if (user_location_name) {
                     set('location',  user_location_name);
                 } else {
