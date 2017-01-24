@@ -18,17 +18,13 @@ class Extract
       if chain_name
 
         raise "No such chain: #{chain_name}" unless chain = Chain.find_by(name: chain_name)
-        chain.update(currency: 'GBP', rates_source: rates_source, rates_update: DateTime.now)
-        chain.rates.update_all(buy: nil, sell: nil)
-        chain.exchanges.each do |exchange|
-          exchange.update(rates_policy: 'chain', rates_source: rates_source)
-        end
+        chain.rates.update_all(buy: nil, sell: nil, source: rates_source, admin_user_id: nil)
+        chain.exchanges.update_all(rates_policy: 'chain', rates_source: rates_source)
 
       elsif exchange_name
 
         raise "No such exchange: #{exchange_name}" unless exchange = Exchange.find_by(name: exchange_name)
-        exchange.update(rates_policy: 'individual', rates_source: rates_source, rates_update: DateTime.now)
-        exchange.rates.update_all(buy: nil, sell: nil)
+        exchange.rates.update_all(buy: nil, sell: nil, source: rates_source, admin_user_id: nil)
 
       else
         raise "Neither chain nor exchange were passed in"
@@ -40,13 +36,14 @@ class Extract
 
     rescue => e
 
-      chain.update(rates_update: nil, rates_error: e) if chain
-      exchange.update(rates_update: nil, rates_error: e) if exchange
-      Rails.logger.info "parsing " + url + " failed:"
-      Rails.logger.info e
+      chain.update(rates_source: rates_source, rates_update: nil, rates_error: e) if chain
+      exchange.update(rates_policy: 'individual', rates_source: rates_source, rates_update: nil, rates_error: e) if exchange
+      Rails.logger.info "parsing " + url + " failed:", e
 
     else
 
+      chain.update(rates_source: rates_source, rates_update: DateTime.now, rates_error: nil) if chain
+      exchange.update(rates_policy: 'individual', rates_source: rates_source, rates_update: DateTime.now, rates_error: nil) if exchange
       Rails.logger.info "parsing " + url + " succeeded"
 
     end
@@ -141,14 +138,23 @@ class Extract
         rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
-    elsif url == "https://www.bfcexchange.co.uk"
+    elsif url == "https://www.bfcexchange.co.uk/currency-exchange-rates?atype=exchange&continent=europe"
 
-      doc.css('#tabs-1 ul li').each do |li|
-        currency    = li.css('span')[0].text.strip
-        next unless Currency.updatable.include? currency
-        buy         = li.css('span')[1].text.strip
-        sell        = li.css('span')[2].text.strip
-        rate_update(currency, buy, sell, chain, exchange, rates_source)
+      ['europe', 'america', 'asia', 'australasia'].each do |continent|
+
+        unless continent == 'Europe'
+          url = "https://www.bfcexchange.co.uk/currency-exchange-rates?atype=exchange&continent=#{continent}"
+          raise "No such url: #{url}" unless doc = Nokogiri::HTML(open(url))
+        end
+
+        doc.css('.bfc-currency-exchange-rates-row.exchange').each do |li|
+          currency = li.css('span')[0].css('span')[1].css('span')[0].text
+          next unless Currency.updatable.include? currency
+          buy = li.css('span.bfc-country-main-buy-wrapper span')[1].text
+          sell = li.css('span.bfc-country-main-sell-wrapper span')[1].text
+          rate_update(currency, buy, sell, chain, exchange, rates_source)
+        end
+
       end
 
     elsif url == "http://www.chequecentre.co.uk/foreign-currency"
@@ -189,7 +195,7 @@ class Extract
         rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
-    elsif url == "https://www.eurochange.co.uk/travel-money/sell-exchange-rates"
+      doc = Nokogiri::HTML(open("https://www.eurochange.co.uk/travel-money/sell-exchange-rates"))
 
       doc.css('.exchange-rates').each do |li|
         currency_name = li.css('li')[0].css('span')[1].text
@@ -220,6 +226,7 @@ class Extract
         buy = li.css('li')[1].text.split(':')[1].strip
         sell = nil
         rate_update(currency, buy, sell, chain, exchange, rates_source)
+
       end
 
     elsif url == "https://www.thomasexchangeglobal.co.uk/exchange-rates-check-exchange-rates.php"
@@ -337,7 +344,7 @@ class Extract
 
     else
 
-      raise "Dont know how to parse that url"
+      raise "Dont have a rule for that specific url"
 
     end
 
