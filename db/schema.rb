@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108153634) do
+ActiveRecord::Schema.define(version: 20170124124608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20161108153634) do
     t.integer  "rates_source"
     t.datetime "rates_update"
     t.string   "currency"
+    t.text     "rates_error"
   end
 
   create_table "emails", force: :cascade do |t|
@@ -129,6 +130,8 @@ ActiveRecord::Schema.define(version: 20161108153634) do
     t.integer  "todo"
     t.integer  "system"
     t.integer  "status"
+    t.text     "rates_error"
+    t.datetime "rates_update"
     t.index ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
     t.index ["latitude", "longitude"], name: "index_exchanges_on_latitude_and_longitude", using: :btree
     t.index ["latitude"], name: "index_exchanges_on_latitude", using: :btree

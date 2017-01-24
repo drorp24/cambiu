@@ -4,7 +4,7 @@ require 'open-uri'
 require "erb"
 include ERB::Util
 require 'openssl'
-OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+#OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 class Extract
 
@@ -26,7 +26,7 @@ class Extract
       elsif exchange_name
 
         raise "No such exchange: #{exchange_name}" unless exchange = Exchange.find_by(name: exchange_name)
-        exchange.update(rates_policy: 'individual', rates_source: rates_source)
+        exchange.update(rates_policy: 'individual', rates_source: rates_source, rates_update: DateTime.now)
 
       else
         raise "Neither chain nor exchange were passed in"
@@ -38,7 +38,8 @@ class Extract
 
     rescue => e
 
-      chain.update(rates_update: nil) if chain
+      chain.update(rates_update: nil, rates_error: e) if chain
+      exchange.update(rates_update: nil, rates_error: e) if exchange
       Rails.logger.info "parsing " + url + " failed:"
       Rails.logger.info e
 

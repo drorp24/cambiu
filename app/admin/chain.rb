@@ -43,7 +43,9 @@ ActiveAdmin.register Chain do
       f.input     :url
       f.input     :currency
       f.input     :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Test', 'test'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']], include_blank: false
-      f.input     :rates_update, input_html: { :disabled => true }
+      f.input     :rates_update, as: :string, input_html: { :disabled => true }
+      f.input     :rates_error, as: :string, input_html: { :disabled => true }
+      f.input     :updated_at, as: :string, input_html: { :disabled => true }
     end
     f.actions
 

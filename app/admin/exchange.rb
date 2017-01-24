@@ -233,6 +233,8 @@ form do |f|
       f.input     :comment, as: :text
       f.input     :error, input_html: { :disabled => true }
       f.input     :created_at, as: :string, input_html: { :disabled => true }
+      f.input     :rates_update, as: :string, input_html: { :disabled => true }
+      f.input     :rates_error, as: :string, input_html: { :disabled => true }
       f.input     :updated_at, as: :string, input_html: { :disabled => true }
       f.input     :admin_user_s, as: :string, label: "By", input_html: { :disabled => true }
       f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
