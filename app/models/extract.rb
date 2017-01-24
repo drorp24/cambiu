@@ -6,31 +6,35 @@ include ERB::Util
 require 'openssl'
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
-class Scraping
+class Extract
 
 
-  # Generic envelope. Works for all html pages whose rates are in 'table tbody tr' elements
-  def self.update(chain_name=nil, exchange_name=nil, url)
+  def self.update(chain_name=nil, exchange_name=nil, url, format)
 
     begin
 
+      rates_source = format == 'html' ? 'scraping' : 'xml'
 
       if chain_name
+
         raise "No such chain: #{chain_name}" unless chain = Chain.find_by(name: chain_name)
-        chain.update(currency: 'GBP', rates_source: 'scraping', rates_update: DateTime.now)
+        chain.update(currency: 'GBP', rates_source: rates_source, rates_update: DateTime.now)
         chain.exchanges.each do |exchange|
-          exchange.update(rates_policy: 'chain', rates_source: 'scraping')
+          exchange.update(rates_policy: 'chain', rates_source: rates_source)
         end
+
       elsif exchange_name
+
         raise "No such exchange: #{exchange_name}" unless exchange = Exchange.find_by(name: exchange_name)
-        exchange.update(rates_policy: 'individual', rates_source: 'scraping')
+        exchange.update(rates_policy: 'individual', rates_source: rates_source)
+
       else
         raise "Neither chain nor exchange were passed in"
       end
 
-      raise "No such url: #{url}" unless doc = Nokogiri::HTML(open(url))
+      raise "No such url: #{url}" unless doc = format == 'html' ? Nokogiri::HTML(open(url)) : Nokogiri::XML(open(url))
 
-      parse_rates(url, doc, chain, exchange)
+      parse_rates(url, doc, chain, exchange, rates_source)
 
     rescue => e
 
@@ -44,12 +48,21 @@ class Scraping
 
     end
 
+  end
 
-    end
+  def self.parse_rates(url, doc, chain, exchange, rates_source)
 
-  def self.parse_rates(url, doc, chain, exchange)
+    if url == "http://www.ace-fx.com/feed/affrates"
 
-    if url == "http://finance.debenhams.com/travel-money/exchange-rates"
+      doc.css('rate').each do |rate|
+        currency  = rate['code']
+        next unless Currency.updatable.include? currency
+        buy       = rate['buyrate']
+        sell      = rate['sellrate']
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
+      end
+
+    elsif url == "http://finance.debenhams.com/travel-money/exchange-rates"
 
       doc.css('table tbody tr:not(:first-child):not(.hiddenrow)').each do |li|
         currency_name = li.css('td')[0].text.strip
@@ -73,7 +86,7 @@ class Scraping
         next unless Currency.updatable.include? currency
         sell = li.css('td')[1].text.strip
         buy = li.css('td')[2].text.strip
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "https://www.travelex.co.uk/currency/exchange-rates"
@@ -85,7 +98,7 @@ class Scraping
         next unless Currency.updatable.include? currency
         buy = li.css('span')[2]
         sell = nil
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "https://www.uaeexchange.com/gbr-foreign-exchange"
@@ -95,7 +108,7 @@ class Scraping
         next unless Currency.updatable.include? currency
         buy = li.css('td')[2].text
         sell = li.css('td')[3].text
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "https://www.iceplc.com/travel-money/exchange-rates"
@@ -122,7 +135,7 @@ class Scraping
         next unless Currency.updatable.include? currency
         buy = li.css('td')[2].text.strip
         sell = nil
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "http://www.bfcexchange.co.uk"
@@ -132,7 +145,7 @@ class Scraping
         next unless Currency.updatable.include? currency
         buy         = li.css('span')[1].text.strip
         sell        = li.css('span')[2].text.strip
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "http://www.chequecentre.co.uk/foreign-currency"
@@ -158,7 +171,7 @@ class Scraping
         next unless currency
         buy        =  tr.css('td')[1].text.strip
         sell       =  tr.css('td')[2].text.strip
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "https://www.eurochange.co.uk/travel-money/exchange-rates"
@@ -170,7 +183,7 @@ class Scraping
         next unless Currency.updatable.include? currency
         sell = li.css('li')[2].text.split(':')[1].strip
         buy = nil
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "https://www.eurochange.co.uk/travel-money/sell-exchange-rates"
@@ -203,8 +216,7 @@ class Scraping
         next unless Currency.updatable.include? currency
         buy = li.css('li')[1].text.split(':')[1].strip
         sell = nil
-        puts currency.to_s + ": " + buy if currency
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "https://www.thomasexchangeglobal.co.uk/exchange-rates-check-exchange-rates.php"
@@ -239,7 +251,7 @@ class Scraping
         next unless currency
         buy        =  tr.css('td')[2].text
         sell       =  tr.css('td')[3].text
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "https://cecltd.com/?q=exchange-rates"
@@ -249,7 +261,7 @@ class Scraping
         next unless Currency.updatable.include? currency
         buy        =  tr.css('td')[5].text.strip
         sell       =  tr.css('td')[6].text.strip
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "https://www.thomasexchange.co.uk/i_banknote_rates.asp"
@@ -283,7 +295,7 @@ class Scraping
         next unless currency
         buy        =  tr.css('td')[1].text
         sell       =  tr.css('td')[2].text
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     elsif url == "http://www.natwest.com/tools/personal/currency_rates"
@@ -317,7 +329,7 @@ class Scraping
         next unless currency
         sell        =  tr.css('td')[1].text
         buy         =  tr.css('td')[2].text
-        rate_update(currency, buy, sell, chain, exchange)
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
     else
@@ -329,12 +341,12 @@ class Scraping
 
   end
 
-  def self.rate_update(currency, buy, sell, chain, exchange)
+  def self.rate_update(currency, buy, sell, chain, exchange, rates_source)
     return nil unless Currency.updatable.include? currency
     rate = chain ? chain.rates.where(currency: currency).first_or_create! : exchange.rates.where(currency: currency).first_or_create!
     buy   ||=   rate.buy
     sell  ||=   rate.sell
-    rate.update(source: 'scraping', currency: currency, buy: buy, sell: sell, last_update: DateTime.now, admin_user_id: nil)
+    rate.update(source: rates_source, currency: currency, buy: buy, sell: sell, last_update: DateTime.now, admin_user_id: nil)
   end
 
 
