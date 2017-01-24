@@ -17,7 +17,7 @@ class Chain < ActiveRecord::Base
   validates :name, uniqueness: true, on: :create
 
   before_create do
-    self.no_rates!
+    self.rates_source = 'no_rates'
     self.currency = 'GBP'
   end
 

@@ -9,7 +9,7 @@ namespace :rates do
     Extract.update('Ace-FX', nil, "http://www.ace-fx.com/feed/affrates", 'xml')
     Extract.update('Debenhams', nil, "http://finance.debenhams.com/travel-money/exchange-rates", 'html')
     Extract.update('Travelex', nil, "https://www.travelex.co.uk/currency/exchange-rates", 'html')
-    Extract.update('UAE', nil, "https://www.uaeexchange.com/gbr-foreign-exchange", 'html')
+    Extract.update('UAE Exchange', nil, "https://www.uaeexchange.com/gbr-foreign-exchange", 'html')
     Extract.update('ICE', nil, "https://www.iceplc.com/travel-money/exchange-rates", 'html')
     Extract.update('Eurochange PLC', nil, "https://www.eurochange.co.uk/travel-money/exchange-rates", 'html')
     Extract.update('Eurochange PLC', nil, "https://www.eurochange.co.uk/travel-money/sell-exchange-rates", 'html')
