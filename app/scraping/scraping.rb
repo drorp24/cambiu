@@ -79,7 +79,9 @@ class Scraping
     elsif url == "https://www.travelex.co.uk/currency/exchange-rates"
 
       doc.css('.currency-holder .row:not(.title)').each do |li|
-        currency = li.css('span')[1][/\(.*?\)/]
+        text_with_currency = li.css('span')[1]
+        text_with_currency =~ /.*\((.*)\)/
+        currency = $1
         next unless Currency.updatable.include? currency
         buy = li.css('span')[2]
         sell = nil
@@ -159,46 +161,23 @@ class Scraping
         rate_update(currency, buy, sell, chain, exchange)
       end
 
-    elsif url == "https://www.eurochange.co.uk/exchangerates.aspx"
+    elsif url == "https://www.eurochange.co.uk/travel-money/exchange-rates"
 
-      doc.css('table.ERTable tr').each do |tr|
-        next unless tr.css('td span').count > 0
-        currency_name =  tr.css('td span')[0].text.strip
-        currency      =
-            case currency_name
-              when 'Japanese Yen'
-                'JPY'
-              when 'Canadian Dollar'
-                'CAD'
-              when 'Australian Dollar'
-                'AUD'
-              when 'US Dollar'
-                'USD'
-              when 'Euro'
-                'EUR'
-              when 'Israeli Shekels'
-                'ILS'
-              when 'Hong Kong Dollar'
-                'HKD'
-              when 'Chinese Yuan'
-                'CNY'
-              when 'Norwegian Krone'
-                'NOK'
-              else
-                nil
-            end
-        next unless currency
-        sell        =  tr.css('td')[1].text.strip
-        buy       =  nil
+      doc.css('.exchange-rates').each do |li|
+        text_with_currency = li.css('li')[1].text
+        text_with_currency =~ /.*\((.*)\)/
+        currency = $1
+        next unless Currency.updatable.include? currency
+        sell = li.css('li')[2].text.split(':')[1].strip
+        buy = nil
         rate_update(currency, buy, sell, chain, exchange)
       end
 
-    elsif url == "https://www.eurochange.co.uk/buybackexchangerates.aspx"
+    elsif url == "https://www.eurochange.co.uk/travel-money/sell-exchange-rates"
 
-      doc.css('table.ERTable tr').each do |tr|
-        next unless tr.css('td span').count > 0
-        currency_name =  tr.css('td span')[0].text.strip
-        currency      =
+      doc.css('.exchange-rates').each do |li|
+        currency_name = li.css('li')[0].css('span')[1].text
+        currency   =
             case currency_name
               when 'Japanese Yen'
                 'JPY'
@@ -210,20 +189,21 @@ class Scraping
                 'USD'
               when 'Euro'
                 'EUR'
-              when 'Israeli Shekels'
+              when 'Norwegian Krone'
+                'NOK'
+              when 'Israeli Shekel'
                 'ILS'
               when 'Hong Kong Dollar'
                 'HKD'
               when 'Chinese Yuan'
                 'CNY'
-              when 'Norwegian Krone'
-                'NOK'
               else
                 nil
             end
-        next unless currency
-        sell        =  nil
-        buy       =  tr.css('td')[1].text.strip
+        next unless Currency.updatable.include? currency
+        buy = li.css('li')[1].text.split(':')[1].strip
+        sell = nil
+        puts currency.to_s + ": " + buy if currency
         rate_update(currency, buy, sell, chain, exchange)
       end
 
