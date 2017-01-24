@@ -19,6 +19,7 @@ class Extract
 
         raise "No such chain: #{chain_name}" unless chain = Chain.find_by(name: chain_name)
         chain.update(currency: 'GBP', rates_source: rates_source, rates_update: DateTime.now)
+        chain.rates.update_all(buy: nil, sell: nil)
         chain.exchanges.each do |exchange|
           exchange.update(rates_policy: 'chain', rates_source: rates_source)
         end
@@ -27,6 +28,7 @@ class Extract
 
         raise "No such exchange: #{exchange_name}" unless exchange = Exchange.find_by(name: exchange_name)
         exchange.update(rates_policy: 'individual', rates_source: rates_source, rates_update: DateTime.now)
+        exchange.rates.update_all(buy: nil, sell: nil)
 
       else
         raise "Neither chain nor exchange were passed in"
