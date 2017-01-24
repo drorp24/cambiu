@@ -38,7 +38,8 @@ class Extract
 
       chain.update(rates_source: rates_source, rates_update: nil, rates_error: e) if chain
       exchange.update(rates_policy: 'individual', rates_source: rates_source, rates_update: nil, rates_error: e) if exchange
-      Rails.logger.info "parsing " + url + " failed: " + e
+      Rails.logger.info "parsing " + url + " failed: "
+      Rails.logger.info e
 
     else
 
