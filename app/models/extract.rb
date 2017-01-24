@@ -138,7 +138,7 @@ class Extract
         rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 
-    elsif url == "http://www.bfcexchange.co.uk"
+    elsif url == "https://www.bfcexchange.co.uk"
 
       doc.css('#tabs-1 ul li').each do |li|
         currency    = li.css('span')[0].text.strip
