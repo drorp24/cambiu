@@ -1,10 +1,11 @@
 ActiveAdmin.register Search do
 
   config.filters = false
+  config.clear_action_items!
 
   scope :all
   scope :london
-  scope :telaviv
+  scope 'Tel Aviv', :telaviv
   scope :other
   scope :empty
   
@@ -23,11 +24,26 @@ ActiveAdmin.register Search do
     column :location_reason
     column 'Issues' do |search|
       count = search.issues.count
-      if count > 0
- #       link_to status_tag(count, :red), admin_search_issues_path(search)
-      end
+#      status_tag(count, :red) if count > 0
+      link_to status_tag(count.to_s + ' issue'.pluralize(count), :red), admin_search_issues_path(search) if count > 0
     end
     column 'Created', :created_at
+  end
+
+  ActiveAdmin.register Error, as: 'Issue' do
+
+    config.filters = false
+    config.clear_action_items!
+    config.batch_actions = true
+
+    controller do
+
+      def index
+        @collection = Error.where(search_id: params[:id]).page(params[:page]).per(10)
+      end
+
+    end
+
   end
 
 end

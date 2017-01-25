@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get 'exchanges/*pane',              to: 'home#index'
   get 'exchanges/:id/*pane',          to: 'home#index'
 
+  get 'admin/searches/:id/issues',          to: 'admin/issues#index', as: 'admin_search_issues'
+
   resources :exchanges
 
   resources :errors
@@ -43,6 +45,7 @@ Rails.application.routes.draw do
   resources :rates
   resources :visitors
   namespace :admin do
+    resources :issues
  #   resources :rates
     resources :exchanges do
       resources :rates
@@ -52,6 +55,7 @@ Rails.application.routes.draw do
     end
     resource :searches do
       resources :issues
+      resources :errors
     end
   end
   namespace :api do

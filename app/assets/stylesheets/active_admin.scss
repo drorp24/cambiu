@@ -22,6 +22,14 @@ body.active_admin {
   }
 }
 
+body.admin_searches .status_tag {
+  display: none;
+}
+
+body.admin_searches a .status_tag {
+  display: inline;
+}
+
 .purr {
   width: 100%;
   padding: 10px;
