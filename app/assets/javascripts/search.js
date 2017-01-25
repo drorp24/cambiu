@@ -206,6 +206,7 @@ $(document).ready(function() {
                 .then(function (data) {
                     console.log('search completed succesfully');
                     searchResult = data.exchanges;
+                    searchId = data.search;
                     exchanges = data.exchanges.features;
                     resolve(exchanges);
                 })

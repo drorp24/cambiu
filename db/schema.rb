@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124124608) do
+ActiveRecord::Schema.define(version: 20170125193146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,8 @@ ActiveRecord::Schema.define(version: 20170124124608) do
     t.text     "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "search_id"
+    t.index ["search_id"], name: "index_errors_on_search_id", using: :btree
   end
 
   create_table "exchanges", force: :cascade do |t|
@@ -301,6 +303,7 @@ ActiveRecord::Schema.define(version: 20170124124608) do
     t.string   "email",        limit: 255
   end
 
+  add_foreign_key "errors", "searches"
   add_foreign_key "orders", "searches"
   add_foreign_key "reviews", "exchanges"
 end
