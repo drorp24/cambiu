@@ -1,7 +1,6 @@
 class Search < ActiveRecord::Base
 #  belongs_to :exchange
   has_many  :orders
-  has_many :issues, foreign_key: "search_id", class_name: "Error"
 #  validates :email, presence: true#, on: :update #allow_nil: true #unless: Proc.new { |a| a.email.blank? }
 #  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   enum service_type: [ :collection, :delivery ]
@@ -9,21 +8,6 @@ class Search < ActiveRecord::Base
   attr_accessor :fetch, :mode, :hash, :distance_slider
 
   validate :valid_input, on: :create
-
-#  scope :negate, ->(scope) { where(scope.where_values.reduce(:and).not) }
-
-  scope :london, -> {where("location like ?", "%London%") }
-  scope :telaviv, -> {where("location like ?", "%Tel%Aviv%") }
-  scope :other, -> {where.not("location like ? OR location like ?", "%Tel%Aviv%", "%London%") }
-  scope :empty, -> {where(location: nil) }
-
-=begin
-  scope :notlondon, -> {negate(london)}
-  scope :nottelaviv, -> {negate(telaviv)}
-  scope :other, -> {notlondon.merge(Search.nottelaviv)}
-=end
-
-
 
   def valid_input
      if

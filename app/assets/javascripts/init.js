@@ -125,8 +125,6 @@ var inShow = true;
 var currExchangeId = null;
 var currentSnack = null;
 var locationDirty = false;
-var searchResult;
-var searchId = null;
 
 sessionStorage.videoStopped = null;
 
@@ -511,7 +509,7 @@ $(document).ready(function() {
         $.ajax({
             type: 'POST',
             url: '/errors',
-            data: {'error[text]': text, 'error[search_id]': searchId},
+            data: {'error[text]': text},
             dataType: 'JSON',
             success: function (data) {
                 console.log('Error successfully updated');
