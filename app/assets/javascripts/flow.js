@@ -6,6 +6,8 @@
 
 $(document).ready(function() {
 
+        if (desktop) return;
+
     console.log('flow');
 
     populateParams();
