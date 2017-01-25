@@ -231,7 +231,6 @@ GEM
     omniauth-oauth2 (1.4.0)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
-    openssl (2.0.2)
     orm_adapter (0.5.0)
     pg (0.19.0)
     pg (0.19.0-x64-mingw32)
@@ -378,7 +377,6 @@ DEPENDENCIES
   newrelic_rpm
   nokogiri
   omniauth-facebook
-  openssl
   pg
   puma (~> 3.0)
   rack-timeout
