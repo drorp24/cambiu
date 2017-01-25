@@ -50,6 +50,9 @@ Rails.application.routes.draw do
     resources :chains do
       resources :rates
     end
+    resource :searches do
+      resources :issues
+    end
   end
   namespace :api do
     namespace :v1 do
