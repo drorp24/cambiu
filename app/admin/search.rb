@@ -36,6 +36,13 @@ ActiveAdmin.register Search do
     config.clear_action_items!
     config.batch_actions = true
 
+    index do
+      selectable_column
+      id_column
+      column :message
+      column 'Created', :created_at
+    end
+
     controller do
 
       def index

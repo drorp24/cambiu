@@ -497,7 +497,7 @@ $(document).ready(function() {
         var message = error.toString();
         var text = stack ? stack : message;
         console.error(text);
-        persistError(text);
+        persistError(message, text);
     };
 
     showError = function(error) {
@@ -507,11 +507,11 @@ $(document).ready(function() {
 
     };
 
-    persistError = function(text) {
+    persistError = function(message, text) {
         $.ajax({
             type: 'POST',
             url: '/errors',
-            data: {'error[text]': text, 'error[search_id]': searchId},
+            data: {'error[message]': message, 'error[text]': text, 'error[search_id]': searchId},
             dataType: 'JSON',
             success: function (data) {
                 console.log('Error successfully updated');
