@@ -196,24 +196,33 @@ $(document).ready(function() {
                 return response.json()
             }
 
-
-            fetch('/searches', {
-                method: 'post',
-                body: new URLSearchParams($( "input, select" ).serialize())
-            })
-                .then(checkStatus)
-                .then(parseJson)
-                .then(function (data) {
-                    console.log('search completed succesfully');
-                    searchResult = data.exchanges;
-                    searchId = data.search;
-                    exchanges = data.exchanges.features;
-                    resolve(exchanges);
+            function fetchData() {
+                return fetch('/searches', {
+                    method: 'post',
+                    body: new URLSearchParams($( "#search_form input, #search_form select" ).serialize())
                 })
-                .catch(function (error) {
-                    console.log('catch!');
-                    reject(error)
-            });
+            }
+
+            function finish (data) {
+                console.log('search completed succesfully');
+                searchResult = data.exchanges;
+                searchId = data.search;
+                exchanges = data.exchanges.features;
+                resolve(exchanges);
+            }
+
+            function report(error) {
+                console.log('catch!');
+                reject(error)
+            }
+
+
+            geocode(location)
+            .then(fetchData)
+            .then(checkStatus)
+            .then(parseJson)
+            .then(finish)
+            .catch(report);
 
         })
 

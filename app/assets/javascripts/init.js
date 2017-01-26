@@ -100,6 +100,7 @@ dfault.lat = '51.51574678520366';
 dfault.lng = '-0.16346305847173426';
 var search = {};
 search.location = {};
+search.user = {};
 var ratingOptions = {
     theme: 'krajee-fa',
     filledStar: '<i class="fa fa-star"></i>',

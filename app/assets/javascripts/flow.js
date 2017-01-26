@@ -25,8 +25,6 @@ search_and_show = function(location) {
         .then(sortExchanges)
         .then(addCards)
         .then(followUser)
-        .then(geocode)
-//        .then(wait)
         .then(revealCards)
         .then(stop_show)
         .then(zoomIn)

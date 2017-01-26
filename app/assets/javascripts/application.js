@@ -15,10 +15,10 @@
 //= require ytplayer
 //= require radar
 //= require push
+//= require location
 //= require search
 //= require map
 //= require place
-//= require location
 //= require models
 //= require swiper
 //= require exchanges

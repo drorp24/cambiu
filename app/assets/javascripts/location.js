@@ -42,11 +42,21 @@ getLocation = function() {
         function setLocation(lat, lng, type, reason) {
 
             search.location     = {};
+            search.user = {};
 
             set('location_lat',     search.location.lat = lat);
             set('location_lng',     search.location.lng = lng);
             set('location_type',    search.location.type = type);
             set('location_reason',  search.location.reason = reason);
+            if (type == 'user') {
+                set('user_lat',         search.user.lat = lat);  // search.user.lat is the *initial* user position, as opposed to user.lat/lng which changes as the user walks
+                set('user_lng',         search.user.lng = lng);  // it is passed to 'search' entity where it is persisted
+                set('user_location',    search.user.location = null);
+            } else {
+                set('user_lat',         search.user.lat = null);  // search.user.lat is the *initial* user position, as opposed to user.lat/lng which changes as the user walks
+                set('user_lng',         search.user.lng = null);  // it is passed to 'search' entity where it is persisted
+                set('user_location',    search.user.location = 'Unknown');
+            }
 
             console.log('location set!', search.location);
             resolve(search.location);
@@ -105,55 +115,69 @@ followUser = function() {
 geocode = function(locationArg) {
 
 
-    // though it looks like a classic case for a promise., i don't want any other function to await on it
-    // returning a promise would mean the next in line would have to wait for geocode to return
-    // but it's not critical. It's anyway called many times
+    return new Promise(function(resolve, reject) {
 
-    console.log('geocode', locationArg);
+        console.log('geocode', locationArg);
 
-    var location = (typeof locationArg === 'undefined') ? search.location : locationArg;
-    if (location.name) {console.log('location.name exists: ' + location.name + ' - not geocoding'); return;}
-
-    var location_latlng = new google.maps.LatLng(location.lat, location.lng);
-    var geocoder = new google.maps.Geocoder();
-
-    geocoder.geocode({'latLng': location_latlng}, function (results, status) {
-
-        if (status == google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-                geocodeFound(results[1]);
-            } else {
-                geocodeError('no results');
-            }
-        } else {
-            geocodeError('failed');
+        var location = (typeof locationArg === 'undefined') ? search.location : locationArg;
+        if (location.name) {
+            console.log('location.name exists: ' + location.name + ' - not geocoding');
+            resolve(location.name);
+            return;
         }
 
-    });
+        var location_latlng = new google.maps.LatLng(location.lat, location.lng);
+        var geocoder = new google.maps.Geocoder();
 
-    function geocodeFound(result) {
+        geocoder.geocode({'latLng': location_latlng}, function (results, status) {
 
-        console.log('geocode found');
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    geocodeFound(results[1]);
+                } else {
+                    geocodeError('no results');
+                }
+            } else {
+                geocodeError(status);
+            }
 
-        var location_name = result.formatted_address,
-            location_short = result.address_components[1].short_name;
+        });
 
-        set('location',         location_name);
-        set('location_short',   location_short);
+        function geocodeFound(result) {
 
-        search.location.name = location_name;
-        search.location.short = location_short;
+            console.log('geocode found');
 
-    }
+            var location_name = result.formatted_address,
+                location_short = result.address_components[1].short_name;
 
-    function geocodeError(error) {
+            set('location',         search.location.name = location_name);
+            set('location_short',   search.location.short = location_short);
 
-        console.log('geocode failed: ' + error);
+            if (sessionStorage.location_type == 'user') {
+                set('user_location', search.user.location = location_name);
+            }
 
-        set('location',         'geocode failed');
-        set('location_short',   'geocode failed');
+            resolve(location_name);
 
-    }
+        }
+
+        function geocodeError(status) {
+
+            var message = 'geocode error: ' + status;
+
+            console.log('message');
+
+            set('location',         search.location.name = message);
+            set('location_short',   search.location.short = message);
+
+            if (sessionStorage.location.type == 'user') {
+                set('user_location', search.user.location = message);
+            }
+
+            // reject would halt the execution flow!
+            resolve(message);
+        }
+    })
 };
 
 
