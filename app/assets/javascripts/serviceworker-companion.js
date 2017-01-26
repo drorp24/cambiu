@@ -1,4 +1,4 @@
-var version = '0.7.7';
+var version = '0.7.8';
 //post_to_sw({version: version});
 
 if (navigator.serviceWorker) {
