@@ -62,3 +62,16 @@ show_best = function() {
 hide_best = function() {
     $('#best_offer').popover('hide');
 };
+
+measureMapExperience = function() {
+    if (typeof getOfferClicked === 'undefined') return;
+    var now = new Date().getTime();
+    var map_experience = now - getOfferClicked;
+    console.log("User-perceived map experience: " + map_experience);
+    ga('send', 'timing', 'User-perceived', 'From GET OFFER to zoomed-in map', map_experience);
+};
+
+postAnimations = function() {
+    show_best();
+    measureMapExperience();
+};

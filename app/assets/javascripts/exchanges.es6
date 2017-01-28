@@ -67,11 +67,13 @@
 
 
     $('body').on('click tap', '.ecard:not(.selected)', function(e) {
+
         e.stopPropagation();
         var $this = $(this);
-        $('.progress').css('display', 'none');
         $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
         $this.addClass('selected');
+        currentExchangeActivity('tap', 'card');
+
     });
 
     $('body').on('click tap', '.ecard.selected .actions_line, .ecard.selected .nav_icon', function(e) {
@@ -81,10 +83,11 @@
         var $navBtn = $('.nav_icon_container');
         $navBtn.addClass('rotate');
         renderDirections(currentExchange());
+        currentExchangeActivity('tap', 'directions');
 
         setTimeout(function(){
 
-            currentCard().removeClass('selected')
+            currentCard().removeClass('selected');
             $navBtn.removeClass('rotate');
 
         }, 150);
@@ -163,6 +166,33 @@
 
         return exchanges;
     };
+
+
+    currentExchange = function() {
+
+        var exchangesLength = exchanges.length;
+        var currentIndex = currIndex();
+
+        if (exchanges && exchangesLength > 0) {
+            if (currentIndex < exchangesLength) {
+                return exchanges[currentIndex].properties
+            } else {
+                throw new Error('index > exchanges length');
+            }
+        } else {
+            throw new Error('exchanges is empty');
+        }
+    };
+
+    currentExchangeActivity = function(category, action) {
+
+        var currExchange = currentExchange();
+        var name = currExchange.name ? currExchange.name : "";
+        var id = currExchange.id ? currExchange.id : "";
+        ga('send', 'event', category, action, name, {id: id});
+
+    };
+
 
 
 

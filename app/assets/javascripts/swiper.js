@@ -63,20 +63,3 @@ addSlide = function(index) {
 currIndex = function() {return swiperH.activeIndex};
 
 currentCard = function() {return $('.swiper-slide-active')};
-
-currentExchange = function() {
-
-    var exchangesLength = exchanges.length;
-    var currentIndex = currIndex();
-
-    if (exchanges && exchangesLength > 0) {
-        if (currentIndex < exchangesLength) {
-            return exchanges[currentIndex].properties
-        } else {
-            throw new Error('index > exchanges length');
-        }
-    } else {
-        throw new Error('exchanges is empty');
-    }
-};
-

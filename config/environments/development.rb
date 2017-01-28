@@ -55,5 +55,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   #config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  config.ga_tracking_code = 'UA-91021177-3'
+
 end
 Rails.application.routes.default_url_options[:host] = 'localhost:3000'

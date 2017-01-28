@@ -320,6 +320,7 @@ class Exchange < ActiveRecord::Base
 
     exchange_hash[:id] = self.id
     exchange_hash[:name] = self.name
+    exchange_hash[:name] += (" - " + self.nearest_station) if self.nearest_station.present?
     exchange_hash[:name_s] = self.name_s
     exchange_hash[:address] = self.address
     exchange_hash[:open_today] = self.todays_hours

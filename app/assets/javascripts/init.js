@@ -343,7 +343,6 @@ wait = function(period) {
 };
 
 
-
 $(document).ready(function() {
 
     if(!navigator.onLine) { // true|false

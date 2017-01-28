@@ -207,6 +207,7 @@ $(document).ready(function() {
                 console.log('search completed succesfully');
                 searchResult = data.exchanges;
                 searchId = data.search;
+                ga('set', {searchId: searchId});
                 exchanges = data.exchanges.features;
                 resolve(exchanges);
             }
@@ -306,5 +307,10 @@ $(document).ready(function() {
             snackHide()
         }
      });
+
+    $('.getOffer').click(function() {
+        getOfferClicked = new Date().getTime();
+        console.log('just set getOfferClicked')
+    })
 
 });

@@ -49,6 +49,9 @@ setPage = function ({url, page1, id1, pane1, hash, pushState = true, populate = 
         history.pushState(newState, 'cambiu', newState);
     }
 
+    // Update ga of the new page url
+    ga('set', {page: url || make_url(page, id, pane)});
+
 };
 
 // Some parts, like map and swipers, need to be re-rendered once the pane is visible

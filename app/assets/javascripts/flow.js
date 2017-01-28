@@ -28,7 +28,7 @@ search_and_show = function(location) {
         .then(revealCards)
         .then(stop_show)
         .then(zoomIn)
-        .then(show_best)
+        .then(postAnimations)
         .catch(showError);
 };
 

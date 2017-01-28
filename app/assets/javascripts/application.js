@@ -13,7 +13,7 @@
 
 //= require init
 //= require ytplayer
-//= require radar
+//= require animations
 //= require push
 //= require location
 //= require search

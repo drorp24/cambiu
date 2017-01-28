@@ -80,6 +80,8 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
 
+  config.ga_tracking_code = 'UA-91021177-2'
+
 end
 Rails.application.routes.default_url_options[:host] = 'staging.cambiu.com'
 
