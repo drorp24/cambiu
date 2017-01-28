@@ -46,7 +46,7 @@ ActiveAdmin.register Search do
     controller do
 
       def index
-        @collection = Error.where(search_id: params[:id]).page(params[:page]).per(10)
+        @collection = Error.where(search_id: params[:id]).order(id: :desc).page(params[:page]).per(10)
       end
 
     end
