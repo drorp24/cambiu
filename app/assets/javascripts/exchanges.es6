@@ -189,7 +189,7 @@
         var currExchange = currentExchange();
         var name = currExchange.name ? currExchange.name : "";
         var id = currExchange.id ? currExchange.id : "";
-        ga('send', 'event', category, action, name, id);
+        ga('send', 'event', category, action, name, {id: id});
 
     };
 
