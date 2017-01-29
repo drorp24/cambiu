@@ -74,7 +74,7 @@
         var $this = $(this);
         $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
         $this.addClass('selected');
-        gaEvent('tap', 'card');
+        gaEvent('Tap', 'Card');
 
     });
 
@@ -85,7 +85,7 @@
         var $navBtn = $('.nav_icon_container');
         $navBtn.addClass('rotate');
         renderDirections(currentExchange());
-        gaEvent('tap', 'directions');
+        gaEvent('Tap', 'Directions');
 
         setTimeout(function(){
 

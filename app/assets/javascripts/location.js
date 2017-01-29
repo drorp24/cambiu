@@ -316,10 +316,12 @@ function checkUserDistances() {
     }
 
     if (distance_from_exchange_delta < 0) {
-        console.log('Getting closer to exchange')
+        console.log('Walk towards exchange');
+        gaEvent('Walk', 'Towards exchange');
     } else
     if (distance_from_exchange_delta > 0) {
-        console.log('Getting further away from exchange')
+        console.log('Walk away from exchange');
+        gaEvent('Walk', 'Away from exchange');
     }
 }
 
