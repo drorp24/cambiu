@@ -128,9 +128,20 @@ var currentSnack = null;
 var locationDirty = false;
 var searchResult;
 var searchId = null;
+var prev_distance_from_exchange = null;
+var prev_distance_from_initial_location = null;
 
 sessionStorage.videoStopped = null;
 
+
+gaEvent = function(category, action) {
+
+    var currExchange = currentExchange();
+    var name = currExchange && currExchange.name ? currExchange.name : "";
+    var id = currExchange && currExchange.id ? currExchange.id : "";
+    ga('send', 'event', category, action, name, {id: id});
+
+};
 
 def_vals = function() {
 

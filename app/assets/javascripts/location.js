@@ -70,45 +70,50 @@ getLocation = function() {
 
 followUser = function() {
 
+    return new Promise(function(resolve, reject) {
 
-    console.log('followUser');
+        console.log('followUser');
 
-    if (!navigator.geolocation) {
-        currPositionError('unsupported');
-        return
-    }
+        if (!navigator.geolocation) {
+            currPositionError('unsupported');
+            return
+        }
 
-    if (search.location.type != 'user') {
-        console.log('search location is not the user\'s location: not following user');
-        return
-    }
+        if (search.location.type != 'user') {
+            console.log('search location is not the user\'s location: not following user');
+            return
+        }
 
-    var options = {
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 15000
-    };
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 15000
+        };
 
-    userWatch = navigator.geolocation.watchPosition(
-        currPositionFound,
-        currPositionError,
-        options
-    );
+        userWatch = navigator.geolocation.watchPosition(
+            currPositionFound,
+            currPositionError,
+            options
+        );
 
-    function currPositionFound(position) {
+        function currPositionFound(position) {
 
-        user.lat = position.coords.latitude;
-        user.lng = position.coords.longitude;
-        showUserPosition(user.lat, user.lng);
-    }
+            user.lat = position.coords.latitude;
+            user.lng = position.coords.longitude;
+            showUserPosition(user.lat, user.lng);
+            resolve(user);
+        }
 
-    function currPositionError(error) {
+        function currPositionError(error) {
 
-        hideUserPosition();
-        var message = error.message ? error.message : error;
-        console.warn('currPosition error: ' + message);
+            hideUserPosition();
+            var message = error.message ? error.message : error;
+            console.warn('currPosition error: ' + message);
+            reject(message);
 
-    }
+        }
+
+    })
 
 };
 
@@ -268,3 +273,58 @@ distance = function(location1, location2) {
 $('.location').keyup(function() {
     locationDirty = true;
 });
+
+function checkUserDistances() {
+
+    if (!(user && user.lat && user.lng)) return;
+
+    var user_initial_location = search.user;
+    var user_current_location = user;
+    var distance_from_initial_location, distance_from_initial_location_delta;
+    var distance_from_exchange, distance_from_exchange_delta;
+    var currExchange = currentExchange();
+
+    if (user_initial_location && user_current_location) {
+        distance_from_initial_location =
+            distance(
+                new google.maps.LatLng(user_initial_location.lat, user_initial_location.lng),
+                new google.maps.LatLng(user_current_location.lat, user_current_location.lng)
+            );
+    }
+    if (currExchange && user_current_location) {
+        distance_from_exchange =
+            distance(
+                new google.maps.LatLng(currExchange.latitude, currExchange.longitude),
+                new google.maps.LatLng(user_current_location.lat, user_current_location.lng)
+        );
+    }
+
+    if (distance_from_initial_location) {
+        console.log('User distance from initial location: ' + distance_from_initial_location + 'm');
+        if (prev_distance_from_initial_location) {
+            distance_from_initial_location_delta = distance_from_initial_location - prev_distance_from_initial_location;
+        }
+        prev_distance_from_initial_location = distance_from_initial_location;
+    }
+
+    if (distance_from_exchange) {
+        console.log('User distance from exchange: ' + distance_from_exchange + 'm');
+        if (prev_distance_from_exchange) {
+            distance_from_exchange_delta = distance_from_exchange - prev_distance_from_exchange;
+        }
+        prev_distance_from_exchange = distance_from_exchange;
+    }
+
+    if (distance_from_exchange_delta < 0) {
+        console.log('Getting closer to exchange')
+    } else
+    if (distance_from_exchange_delta > 0) {
+        console.log('Getting further away from exchange')
+    }
+}
+
+checkUserLocation = function() {
+    userLocationCheck = window.setInterval(function(){
+        checkUserDistances();
+    }, 3000);
+};

@@ -24,11 +24,12 @@ search_and_show = function(location) {
         .then(placeGoogleMarkers)
         .then(sortExchanges)
         .then(addCards)
-        .then(followUser)
         .then(revealCards)
         .then(stop_show)
         .then(zoomIn)
         .then(postAnimations)
+        .then(followUser)
+        .then(checkUserLocation)
         .catch(showError);
 };
 

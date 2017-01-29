@@ -24,6 +24,7 @@
 
         highlightCurrentMarker();
 
+/*
         var ppart = break_url(window.location.pathname);
         var id = ppart.id;
         if (id) {
@@ -32,6 +33,7 @@
             var $pane = $('.pane[data-pane=' + pane + ']');
             populateExchange(exchange, $pane)
         }
+*/
 
     };
 
@@ -72,7 +74,7 @@
         var $this = $(this);
         $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
         $this.addClass('selected');
-        currentExchangeActivity('tap', 'card');
+        gaEvent('tap', 'card');
 
     });
 
@@ -83,7 +85,7 @@
         var $navBtn = $('.nav_icon_container');
         $navBtn.addClass('rotate');
         renderDirections(currentExchange());
-        currentExchangeActivity('tap', 'directions');
+        gaEvent('tap', 'directions');
 
         setTimeout(function(){
 
@@ -183,17 +185,6 @@
             throw new Error('exchanges is empty');
         }
     };
-
-    currentExchangeActivity = function(category, action) {
-
-        var currExchange = currentExchange();
-        var name = currExchange.name ? currExchange.name : "";
-        var id = currExchange.id ? currExchange.id : "";
-        ga('send', 'event', category, action, name, {id: id});
-
-    };
-
-
 
 
 
