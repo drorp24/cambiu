@@ -68,7 +68,7 @@ measureMapExperience = function() {
     var now = new Date().getTime();
     var map_experience = now - getOfferClicked;
     console.log("User-perceived map experience: " + map_experience);
-    ga('send', 'timing', 'User-perceived', 'From GET OFFER to zoomed-in map', map_experience);
+    gaTiming('User-perceived', 'From GET OFFER to zoomed-in map', map_experience);
 };
 
 postAnimations = function() {

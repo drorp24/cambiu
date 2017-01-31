@@ -43,10 +43,10 @@
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 
+
             map.data.addListener('click', function (event) {
 
             });
-
 
             google.maps.event.addListenerOnce(map, 'idle', function () {
                 // do something only the first time the map is loaded
@@ -126,16 +126,32 @@
 
 
      placeGoogleMarkers = function() {
-        idMarkerLayer();
-        map.data.setStyle(function(feature) {
-            return {
-                icon: '/new_logo_31_43.png',
-                optimized: false,
-                zIndex: feature.getProperty('id')
-            }
-        });
-        map.data.addGeoJson(searchResult);
-    };
+
+        markers = [];
+        var markerClusterer = new MarkerClusterer(map, markers, {imagePath: '/assets/m'});
+
+        google.maps.event.addListener(map.data, 'addfeature', function (e) {
+
+             var marker = new google.maps.Marker({
+                 position: e.feature.getGeometry().get(),
+                 title: e.feature.getProperty('name'),
+                 exchange_id: e.feature.getProperty('id'),
+                 map: map
+             });
+
+             markers.push(marker);
+             markerClusterer.addMarker(marker);
+
+
+//               bounds.extend(e.feature.getGeometry().get());
+//               map.fitBounds(bounds);
+//               map.setCenter(e.feature.getGeometry().get());
+         });
+
+        exchangesLayer = map.data.addGeoJson(searchResult);
+        map.data.setMap(null);
+
+     };
 
     clearGoogleMarkers = function() {
         map.data.forEach(function(feature) {

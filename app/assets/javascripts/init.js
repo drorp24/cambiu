@@ -130,6 +130,8 @@ var searchResult;
 var searchId = null;
 var prev_distance_from_exchange = null;
 var prev_distance_from_initial_location = null;
+var features = [];
+var markers = [];
 
 sessionStorage.videoStopped = null;
 
@@ -141,6 +143,10 @@ gaEvent = function(category, action) {
     var id = currExchange && currExchange.id ? currExchange.id : "";
     ga('send', 'event', category, action, name, {id: id});
 
+};
+
+gaTiming = function(category, variable, value) {
+    ga('send', 'timing', category,  variable, value);
 };
 
 def_vals = function() {
@@ -419,6 +425,7 @@ $(document).ready(function() {
     noUiSlider.create(slider, {
         connect: true,
         start: Number(def('radius')),
+        connect: [true, false],
         range: {
             min: 0,
             max: 10

@@ -700,7 +700,7 @@ body#cambiu {
     width: 8vw;
     height: 8vw;
     left: -4vw;
-    top: -4vw;
+    top: -3vw;
     border: 1vw solid;
     &:before, &:after {
       background: transparent;
@@ -715,8 +715,12 @@ body#cambiu {
     bottom: 150%;
   }
   .noUi-target {
-    border: 5px solid #D3D3D3;
-    border-radius: 5px;
+    height: 3vw;
+    border-radius: 2vw;
+  }
+
+  .noUi-connect {
+    border-radius: 2vw;
   }
 
   .search_heading {
