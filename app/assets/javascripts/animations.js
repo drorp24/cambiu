@@ -71,7 +71,14 @@ measureMapExperience = function() {
     gaTiming('User-perceived', 'From GET OFFER to zoomed-in map', map_experience);
 };
 
+function removeMapCurtain() {
+    setTimeout(function() {
+        $('#map_curtain').removeClass('on');
+    }, 2000)
+}
+
 postAnimations = function() {
     show_best();
     measureMapExperience();
+    removeMapCurtain();
 };

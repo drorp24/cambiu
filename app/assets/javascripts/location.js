@@ -19,7 +19,7 @@ getLocation = function() {
         };
 
         navigator.geolocation.getCurrentPosition(
-            positionError,
+            positionFound,
             positionError,
             options
         );
@@ -35,7 +35,7 @@ getLocation = function() {
 
             var message = error.message ? error.message : error;
             setLocation(Number(dfault.lat), Number(dfault.lng), 'default', 'PositionError: ' + message);
-            snack('We couldn\'t locate you. Have you given us the permission to?', {upEl: $('.swiper-container'), klass: 'oops'})
+            snack('We couldn\'t locate you. Have you given us the permission to?', {upEl: $('.swiper-container'), klass: 'oops', timeout: 3000});
             persistError('positionError', message);
 
         }
@@ -204,8 +204,11 @@ showUserPosition = function(lat, lng) {
     if (typeof lat === 'undefined' && typeof lng === 'undefined') var lat = user.lat, lng = user.lng;
     var user_latlng = new google.maps.LatLng(lat, lng);
     map.panTo(user_latlng);
+
+/*  ??
     $('#userLoc').css('visibility', 'visible');
     $('#userLoc').css('top', centerYpx).css('left', centerXpx);
+*/
 
 };
 

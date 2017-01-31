@@ -17,7 +17,7 @@
 
                 console.log('map exists already. Panning');
 
-                map.setZoom(map_initial_zoom);
+                map.setZoom(map_current_zoom);
                 map.panTo(location);
 
                 google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
@@ -30,7 +30,7 @@
 
             var mapOptions = {
                 center: new google.maps.LatLng(latitude, longitude),
-                zoom: map_initial_zoom,
+                zoom: map_current_zoom,
                 scaleControl: true,
                 zoomControlOptions: {
                     position: google.maps.ControlPosition.RIGHT_CENTER
@@ -127,6 +127,7 @@
 
      placeGoogleMarkers = function() {
 
+        idMarkerLayer();
         markers = [];
         var markerClusterer = new MarkerClusterer(map, markers, {imagePath: '/assets/m'});
 
@@ -136,7 +137,7 @@
                  position: e.feature.getGeometry().get(),
                  title: e.feature.getProperty('name'),
                  exchange_id: e.feature.getProperty('id'),
-                 map: map
+                 icon: '<%= asset_path "32px_white.png" %>'
              });
 
              markers.push(marker);
@@ -148,8 +149,8 @@
 //               map.setCenter(e.feature.getGeometry().get());
          });
 
-        exchangesLayer = map.data.addGeoJson(searchResult);
         map.data.setMap(null);
+        exchangesLayer = map.data.addGeoJson(searchResult);
 
      };
 
@@ -275,7 +276,7 @@
         };
 
         directionsService = new google.maps.DirectionsService();
-        directionsDisplay = new google.maps.DirectionsRenderer();
+        directionsDisplay = new google.maps.DirectionsRenderer({preserveViewport: true});
 
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById("directionsPanel"));
@@ -284,7 +285,7 @@
             console.log('directionsService.route returned with status: ' + status);
             if (status == google.maps.DirectionsStatus.OK) {
                 directionsDisplay.setDirections(response);
-                setTimeout(function() {showUserPosition(user.lat, user.lng)}, 1000);
+//                setTimeout(function() {showUserPosition(user.lat, user.lng)}, 1000);
             }
         });
 
@@ -313,7 +314,7 @@
                         exchange.matrix.distance = response.rows[0].elements[0].distance.text;
                         resolve(exchange);
                     } else {
-                        console.log(response)
+                        console.log(response);
                         reject(new Error('google.maps.DistanceMatrixService response includes no duration/distance'))
                     }
                 }
@@ -336,29 +337,47 @@
     function smoothZoom (map, max, cnt) {
 
         console.log('smoothZoom', max, cnt);
+      console.log('exchange[0] is: ' + exchanges[0].properties.name + ', no??');
         return new Promise(function(resolve, reject) {
 
-        increaseZoom(cnt);
+          increaseZoom(cnt);
 
-        function increaseZoom(cnt) {
+          function increaseZoom(cnt) {
 
-            console.log('Increase zoom to: ' + cnt);
-            if (cnt >= max) {
+              var zoom = map.getZoom();
+              if (!map.getBounds().contains(new google.maps.LatLng(exchanges[0].properties.latitude, exchanges[0].properties.longitude))) {
+
+                console.log('cnt is: ' + cnt + ', map zoom is: ' + zoom + ' and map no longer includes best exchange - decreasing zoom by 1');
+                map_current_zoom = zoom - 1;
+                map.setZoom(map_current_zoom);
+                $('#map_curtain').addClass('on');
                 resolve();
                 return;
-            }
-            else {
+
+              } else
+
+              if (cnt >= max) {
+
+                console.log('cnt is: ' + cnt + ', map zoom is: ' + zoom + ' and no further zoom in required');
+                map_current_zoom = zoom;
+                $('#map_curtain').addClass('on');
+                resolve();
+                return;
+
+              } else {
+
+                console.log('cnt is: ' + cnt + ', map zoom is: ' + zoom + ' and further zoom is required');
                 z = google.maps.event.addListenerOnce(map, 'zoom_changed', function(event){
                     google.maps.event.removeListener(z);
                     increaseZoom(cnt + 1);
                 });
                 setTimeout(function(){map.setZoom(cnt)}, 700);
-            }
 
-        }
+              }
+
+          }
 
         })
-
     }
 
     zoomIn = function() {
