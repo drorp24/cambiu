@@ -239,17 +239,17 @@ $(document).ready(function() {
         // unencoded: Slider values without formatting;
         // tap: Event was caused by the user tapping the slider (boolean);
         // positions: Left offset of the handles in relation to the slider
-        radius.value = unencoded[0].toFixed();
+        radius.value = unencoded[0].toFixed(1);
     }
 
 
     slider.noUiSlider.on('update', updateRadius);
 
     slider.noUiSlider.on('change', function ( values, handle, unencoded ) {
-        if ( unencoded[0] < 5 ) {
-            slider.noUiSlider.set(5);
-        } else if ( unencoded[0] > 30 ) {
-            slider.noUiSlider.set(30);
+        if ( unencoded[0] < 0.1 ) {
+            slider.noUiSlider.set(0.1);
+        } else if ( unencoded[0] > 10 ) {
+            slider.noUiSlider.set(10);
         }
     });
 

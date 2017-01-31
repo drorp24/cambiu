@@ -109,7 +109,7 @@ followUser = function() {
             hideUserPosition();
             var message = error.message ? error.message : error;
             console.warn('currPosition error: ' + message);
-            reject(message);
+            reject('currPositionError: ' + message);
 
         }
 

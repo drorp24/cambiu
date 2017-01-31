@@ -696,6 +696,28 @@ body#cambiu {
   .noUi-value.noUi-value-horizontal.noUi-value-large {
     font-weight: 100;
   }
+  .noUi-handle {
+    width: 8vw;
+    height: 8vw;
+    left: -4vw;
+    top: -4vw;
+    border: 1vw solid;
+    &:before, &:after {
+      background: transparent;
+    }
+    &.noUi-active {
+      transform: scale3d(1.5, 1.5, 1);
+      -webkit-transform: scale3d(1.5, 1.5, 1);
+    }
+  }
+  .noUi-tooltip {
+    width: 4rem;
+    bottom: 150%;
+  }
+  .noUi-target {
+    border: 5px solid #D3D3D3;
+    border-radius: 5px;
+  }
 
   .search_heading {
     font-size: 10vw;

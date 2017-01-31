@@ -155,7 +155,7 @@ def_vals = function() {
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
     def['sort']             = 'price';
-    def['radius']           = '10';
+    def['radius']           = '5';
     def['version']          = '0.0.0';
 
     return def;
@@ -421,17 +421,21 @@ $(document).ready(function() {
         start: Number(def('radius')),
         range: {
             min: 0,
-            max: 30
+            max: 10
         },
         pips: {
             mode: 'values',
-            values: [0, 5, 10, 15, 20, 25, 30],
-            density: 5
+            values: [0, 5, 10],
+            density: 10
         },
         tooltips: [true],
         format: {
             to: function ( value ) {
-                return value.toFixed() + ' Km';
+                if (value < 1) {
+                    return (value * 1000).toFixed() + ' m';
+                } else {
+                    return value.toFixed() + ' Km';
+                }
             },
             from: function ( value ) {
                 return value.replace(' Km', '');
