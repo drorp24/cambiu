@@ -300,7 +300,7 @@ function checkUserDistances() {
     }
 
     if (distance_from_initial_location) {
-        console.log('User distance from initial location: ' + distance_from_initial_location + 'm');
+//        console.log('User distance from initial location: ' + distance_from_initial_location + 'm');
         if (prev_distance_from_initial_location) {
             distance_from_initial_location_delta = distance_from_initial_location - prev_distance_from_initial_location;
         }
@@ -308,7 +308,7 @@ function checkUserDistances() {
     }
 
     if (distance_from_exchange) {
-        console.log('User distance from exchange: ' + distance_from_exchange + 'm');
+//        console.log('User distance from exchange: ' + distance_from_exchange + 'm');
         if (prev_distance_from_exchange) {
             distance_from_exchange_delta = distance_from_exchange - prev_distance_from_exchange;
         }
@@ -328,5 +328,5 @@ function checkUserDistances() {
 checkUserLocation = function() {
     userLocationCheck = window.setInterval(function(){
         checkUserDistances();
-    }, 3000);
+    }, 30000);
 };

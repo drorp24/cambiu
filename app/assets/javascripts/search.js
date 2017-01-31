@@ -292,9 +292,14 @@ $(document).ready(function() {
         }
     });
 
+    function unsupported(feature) {
+        snack('Sorry, this feature is not supported yet', {button: '<i class="material-icons">help_outline</i>', link: {page: 'exchanges', pane: 'help'}});
+        gaEvent('Feature', feature);
+    }
+
     $(".search_section.pay input[type=checkbox]").change(function() {
         if(this.checked) {
-            snack('Sorry, this feature is not supported yet', {button: '<i class="material-icons">help_outline</i>', link: {page: 'exchanges', pane: 'help'}})
+            unsupported('Pay by credit');
         } else {
             snackHide()
         }
@@ -302,7 +307,7 @@ $(document).ready(function() {
 
     $(".search_section.get input[type=checkbox]").change(function() {
         if(this.checked) {
-            snack('Sorry, this feature is not supported yet', {button: '<i class="material-icons">help_outline</i>', link: {page: 'exchanges', pane: 'help'}})
+            unsupported('Delivery');
         } else{
             snackHide()
         }
