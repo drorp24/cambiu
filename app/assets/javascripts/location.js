@@ -321,10 +321,12 @@ function checkUserDistances() {
     if (distance_from_exchange_delta < 0) {
         console.log('Walk towards exchange');
         gaEvent('Walk', 'Towards exchange');
+        map.setZoom(map_final_zoom);
     } else
     if (distance_from_exchange_delta > 0) {
         console.log('Walk away from exchange');
         gaEvent('Walk', 'Away from exchange');
+        map.setZoom(map_final_zoom);
     }
 }
 
