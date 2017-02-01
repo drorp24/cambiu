@@ -5,10 +5,15 @@
 
 
 
-    addCards = function(exchanges) {
-
+    initCards = function() {
         $('#cards').empty();
         slidesAdded = [];
+        swiperH.slideTo(0, 100, false);
+    };
+
+    addCards = function(exchanges) {
+
+        initCards();
 
         if (exchanges.length == 0) {
             snack("No information in this area yet. <br> Click 'OK' to search elsewhere.", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
