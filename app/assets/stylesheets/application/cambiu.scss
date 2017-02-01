@@ -8,6 +8,7 @@
 }
 
 // Variables
+$userLocRadius: 30px;
 $label_font_size: 3.5vw;
 $form_font_size: 5vw;
 $swiper_bullets_bottom: 5vh;
@@ -1019,16 +1020,22 @@ body#cambiu {
     100% { background-position: 25% center; }
   }
 
-
   #userLoc {
+    visibility: hidden;
     position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-1 * $userLocRadius, -1 * $userLocRadius);
     background: #45453f;
     @include flexbox();
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
+    width: $userLocRadius * 2;
+    height: $userLocRadius * 2;
     background-color: transparent;
+    &.show {
+      visibility: visible;
+    }
   }
 
 
@@ -1043,8 +1050,6 @@ body#cambiu {
     background-color: $user-location-color;
     z-index: 10;
     @include dropShadow;
-    left: 20px;
-    bottom: 20px;
   }
 
   .pulse2 {
@@ -1054,8 +1059,6 @@ body#cambiu {
     border-radius: 60px;
     background-color: $user-location-color-light;
     z-index: 10;
-    bottom: 0;
-    left: 0;
   }
   .dot {
     border: 20px solid $user-location-color-medium;
