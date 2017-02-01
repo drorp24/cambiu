@@ -318,20 +318,28 @@ function checkUserDistances() {
         prev_distance_from_exchange = distance_from_exchange;
     }
 
-    if (distance_from_exchange_delta < 0) {
-        console.log('Walk towards exchange');
+    if (distance_from_exchange_delta < -10) {
+        console.log('Walk towards exchange. Zooming in.');
         gaEvent('Walk', 'Towards exchange');
         map.setZoom(map_final_zoom);
     } else
-    if (distance_from_exchange_delta > 0) {
-        console.log('Walk away from exchange');
+    if (distance_from_exchange_delta > 10) {
+        console.log('Walk away from exchange. Zooming in.');
         gaEvent('Walk', 'Away from exchange');
         map.setZoom(map_final_zoom);
     }
 }
 
-checkUserLocation = function() {
-    userLocationCheck = window.setInterval(function(){
+checkUserPosition = function() {
+
+    if (search.location.type != 'user') {
+        console.log('search location is not the user\'s location: not checking user position');
+        return;
+    } else {
+        console.log('checkUserPosition');
+    }
+
+    userPositionCheck = window.setInterval(function(){
         checkUserDistances();
     }, 30000);
 };

@@ -29,7 +29,7 @@ search_and_show = function(location) {
         .then(zoomIn)
         .then(postAnimations)
         .then(followUser)
-        .then(checkUserLocation)
+        .then(checkUserPosition)
         .catch(showError);
 };
 
