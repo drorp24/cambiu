@@ -68,7 +68,7 @@ gem 'monetize'
 #gem 'sass', '~> 3.4', '>= 3.4.22'
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 gem 'font-awesome-rails'
-gem "rack-timeout"
+#gem "rack-timeout"
 gem 'google_currency'
 #gem 'google_currency_rails_cache', '~> 1.2' # TODO: How to install
 gem 'tooltipster-rails'

@@ -13,20 +13,21 @@ ActiveAdmin.register Exchange do
   # TODO: update opening hours in the search
   active_admin_importable do |model, hash|
 
+    columns = Exchange.column_names - Exchange.unexported_columns
     begin
 
       # TODO: if hash[:system] == 'remove' then logically cancel the record and return. Exclude cancelled records from search!
 
-      if hash[:name].nil?
+      if hash[:name].blank?
         puts "no name or empty line"
         next
       end
 
-      e = Exchange.find_by_either(hash[:id], hash[:name])
-      (Exchange.column_names - Exchange.unexported_columns).each do |column_name|
-        e.send(column_name + '=', hash[column_name.to_sym])
+      e = Exchange.find_by_either(hash[:id], hash[:name], hash[:nearest_station])
+      columns.each do |column|
+        e.send(column + '=', hash[column.to_sym])
       end
-      e.chain_id        = Chain.where(name: hash[:chain]).first_or_create.id if hash[:chain]
+      e.chain_id        = Chain.where(name: hash[:chain]).first_or_create.id if hash[:chain].present?
 #      e.admin_user_id   = current_admin_user.id if current_admin_user
       e.geocode! unless e.latitude and e.longitude
 
@@ -75,6 +76,7 @@ ActiveAdmin.register Exchange do
 
 
   filter :name
+  filter :nearest_station
   filter :chain
 =begin
   filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Test', 'test'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']]

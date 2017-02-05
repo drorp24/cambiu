@@ -56,6 +56,13 @@ class Exchange < ActiveRecord::Base
 
 
   def do_geocoding
+    puts ""
+    puts ""
+    puts ""
+    puts "Exchange #{self.id} - geocoding"
+    puts ""
+    puts ""
+    puts ""
     geocode
     self.system = nil if geocode?
   end
@@ -81,12 +88,23 @@ class Exchange < ActiveRecord::Base
     ["id", "created_at", "updated_at", "latitude", "longitude", "chain_id", "rating", "admin_user_id", "place_id", "error"]
   end
 
-  def self.find_by_either(id, name)
+  def self.find_by_either(id, name, nearest_station)
+
     if id.present? && id != '0'
-      return Exchange.find_by_id(id) || Exchange.new(error: "Exchange with id #{id} doesnt exist", system: 'error')
-    elsif name
-      return Exchange.find_by(name: name) || Exchange.create(name: name)
+      e = Exchange.find_by_id(id)
+      return e if e
     end
+
+    if name.present?
+      if nearest_station.blank?
+        return Exchange.find_by(name: name) || Exchange.new(name: name)
+      else
+        return Exchange.find_by(name: name, nearest_station: nearest_station) || Exchange.new(name: name, nearest_station: nearest_station)
+      end
+    end
+
+    return Exchange.new(error: "Both id and name are missing", system: 'error')
+
   end
 
   def self.days
