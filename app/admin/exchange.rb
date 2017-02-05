@@ -16,8 +16,6 @@ ActiveAdmin.register Exchange do
     columns = Exchange.column_names - Exchange.unexported_columns
     begin
 
-      # TODO: if hash[:system] == 'remove' then logically cancel the record and return. Exclude cancelled records from search!
-
       if hash[:name].blank?
         puts "no name or empty line"
         next
@@ -109,6 +107,7 @@ ActiveAdmin.register Exchange do
         link_to exchange.chain.rates_source ? exchange.chain.rates_source.titleize : '', admin_chain_rates_path(exchange.chain_id)
       end
     end
+    column(:status) {|exchange| status_tag(exchange.status, exchange.status_color) if exchange.status }
 #    actions
   end
   

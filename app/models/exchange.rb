@@ -32,7 +32,7 @@ class Exchange < ActiveRecord::Base
   enum rates_policy:  [:individual, :chain]
   enum todo:          [:verify, :call, :meet]
   enum system:        [:remove, :geocode, :error]
-  enum status:        [:active, :removed]
+  enum status:        [:removed]
 
   accepts_nested_attributes_for :business_hours
   accepts_nested_attributes_for :rates
@@ -43,7 +43,9 @@ class Exchange < ActiveRecord::Base
   validates :rates_url, allow_blank: true, :format => {:with => URI.regexp}
 
   after_validation :do_geocoding, if: ->(exchange){ (exchange.latitude.blank? or exchange.address_changed?) and exchange.address.present? }
+  after_validation :remove, if: ->(exchange){ exchange.remove? }
 
+  scope :active, -> {where(status: nil)}
   scope :contract, -> { where(contract: true) }
   scope :no_contract, -> { where(contract: false) }
   scope :with_real_rates, -> { where("rates_source > 2") }
@@ -59,7 +61,7 @@ class Exchange < ActiveRecord::Base
     puts ""
     puts ""
     puts ""
-    puts "Exchange #{self.id} - geocoding"
+    puts "Exchange #{self.id} - geocoded"
     puts ""
     puts ""
     puts ""
@@ -68,12 +70,20 @@ class Exchange < ActiveRecord::Base
   end
 
   def remove
-    todo = nil if remove?
+    return if removed?
+    puts ""
+    puts ""
+    puts ""
+    puts "Exchange #{self.id} - removed"
+    puts ""
+    puts ""
+    puts ""
     removed!
+    self.update_columns(system: nil) if remove?
   end
 
   def system_color
-    [:grey, :black, :red][Exchange.systems[system]]
+    [:red, :blue, :black][Exchange.systems[system]]
   end
 
   def todo_color
@@ -81,7 +91,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def status_color
-    :black if removed?
+    :red if removed?
   end
 
   def self.unexported_columns
