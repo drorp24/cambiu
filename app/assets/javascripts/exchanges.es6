@@ -187,7 +187,7 @@
                 throw new Error('index > exchanges length');
             }
         } else {
-            throw new Error('exchanges is empty');
+            return null
         }
     };
 

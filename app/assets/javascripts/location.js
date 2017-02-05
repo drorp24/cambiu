@@ -251,12 +251,13 @@ $('.location').keyup(function() {
 function checkUserDistances() {
 
     if (!(user && user.lat && user.lng)) return;
+    var currExchange = currentExchange();
+    if (!currExchange) return;
 
     var user_initial_location = search.user;
     var user_current_location = user;
     var distance_from_initial_location, distance_from_initial_location_delta;
     var distance_from_exchange, distance_from_exchange_delta;
-    var currExchange = currentExchange();
 
     if (user_initial_location && user_current_location) {
         distance_from_initial_location =

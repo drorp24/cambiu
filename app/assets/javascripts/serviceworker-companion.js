@@ -1,6 +1,7 @@
 (function() {
 
     var version = '0.8.0';
+    window.version = version;
 //post_to_sw({version: version});
 
     if (location.pathname.indexOf('admin') > -1) {

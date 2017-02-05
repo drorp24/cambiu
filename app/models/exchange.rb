@@ -276,7 +276,8 @@ class Exchange < ActiveRecord::Base
         base_currency: base_currency,
         buy: nil,
         sell: nil,
-        error: nil
+        error: nil,
+        updated: nil
     }
 
     rated_rates = find_rate(rated_currency)
@@ -293,6 +294,11 @@ class Exchange < ActiveRecord::Base
 
     result[:buy]  = rated_rates[:buy]   /   base_rates[:buy]
     result[:sell] = rated_rates[:sell]  /   base_rates[:sell]
+    result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
+    if (Date.today - result[:updated].to_date).to_i > 1
+      result[:error] = "Stale rates"
+      return result
+    end
 
     return result
 
@@ -303,11 +309,13 @@ class Exchange < ActiveRecord::Base
     result = {
         buy: nil,
         sell: nil,
-        error: nil
+        error: nil,
+        updated: nil
     }
     if currency == self.currency
       result[:buy]  = 1
       result[:sell] = 1
+      result[:updated] = Time.zone.now
       return result
     end
 
@@ -318,6 +326,7 @@ class Exchange < ActiveRecord::Base
         value = rec.send(kind)
         if value
           result[kind.to_sym] = value
+          result[:updated] ||= rec.updated_at
         else
           result[:error] = currency + ' ' + kind + ' rate is missing'
           return result
@@ -346,6 +355,9 @@ class Exchange < ActiveRecord::Base
 
     exchange_hash = {}
 
+    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount')
+    return {} if quotes[:error].present?
+
     exchange_hash[:id] = self.id
     exchange_hash[:name] = self.name
     exchange_hash[:name] += (" - " + self.nearest_station) if self.nearest_station.present?
@@ -357,7 +369,6 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:latitude] = self.latitude
     exchange_hash[:longitude] = self.longitude
 
-    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount')
     exchange_hash[:pay_amount] = quotes[:pay_amount]
     exchange_hash[:pay_currency] = quotes[:pay_currency]
     exchange_hash[:buy_amount] = quotes[:get_amount]

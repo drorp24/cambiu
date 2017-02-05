@@ -62,7 +62,8 @@ class Search < ActiveRecord::Base
     exchanges = Exchange.active.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
     exchanges.each do |exchange|
-      exchanges_offers << exchange.offer(center, pay, buy)
+      offer = exchange.offer(center, pay, buy)
+      exchanges_offers << offer unless offer[:errors].any?
     end
 
 #    exchanges_offers = indicate_best(exchanges_offers, pay, buy) if exchanges.any?
