@@ -16,8 +16,8 @@ ActiveAdmin.register Exchange do
     columns = Exchange.column_names - Exchange.unexported_columns
     begin
 
-      if hash[:name].blank?
-        puts "no name or empty line"
+      if hash[:name].blank? or hash[:address].blank?
+        puts "no name and address or empty line"
         next
       end
 
@@ -65,13 +65,14 @@ ActiveAdmin.register Exchange do
 =end
 
   scope :all
+  scope :live_rates
+  scope :stale
   scope :todo
   scope :unverified
   scope :no_contract
   scope :no_rates
   scope :system
   scope :error
-
 
   filter :name
   filter :nearest_station
@@ -296,7 +297,8 @@ form do |f|
         best_in_place rate, :sell_s, :as => :input
       end
       column :last_update do |rate|
-        rate.last_update.in_time_zone('Jerusalem') if rate.last_update
+        update = rate.last_update || rate.updated_at
+        update.in_time_zone('Jerusalem') if update
       end
       column "By", :admin_user_s
       actions defaults: false

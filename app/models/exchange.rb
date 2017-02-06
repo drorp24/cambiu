@@ -25,14 +25,14 @@ class Exchange < ActiveRecord::Base
   has_one     :ils_rate,    -> {where(currency: 'ILS')}       ,class_name: "Rate",  as: :ratable
   has_one     :nok_rate,    -> {where(currency: 'NOK')}       ,class_name: "Rate",  as: :ratable
 
-  has_many    :reviews
+  has_many    :reviews,  :dependent => :destroy
 
   enum business_type: [ :exchange, :bank, :post_office, :other ]
   enum rates_source:  [ :no_rates, :test, :manual, :xml, :scraping ]
   enum rates_policy:  [:individual, :chain]
   enum todo:          [:verify, :call, :meet]
   enum system:        [:remove, :geocode, :error]
-  enum status:        [:removed]
+  enum status:        [:removed, :stale]
 
   accepts_nested_attributes_for :business_hours
   accepts_nested_attributes_for :rates
@@ -51,20 +51,27 @@ class Exchange < ActiveRecord::Base
   scope :with_real_rates, -> { where("rates_source > 2") }
   scope :verified, -> {where.not(todo: 'verify')}
   scope :unverified, -> {where(todo: 'verify')}
-  scope :rates, -> {where("rates_source > 2") }
-  scope :no_rates, -> {where("rates_source <= 2") }
+  scope :rates, -> {where("rates_source > 1") }
+  scope :no_rates, -> {where("rates_source <= 1") }
   scope :todo, -> {where.not(todo: nil) }
   scope :system, -> {where.not(system: nil) }
 
 
+  def self.live_rates
+    self.rates.active
+  end
+
+  def rates_are_stale?
+    return false if rates.empty?
+    (Date.today - rates.first.updated_at.to_date).to_i > 1
+  end
+
+  def clear_status
+    self.status = nil
+  end
+
   def do_geocoding
-    puts ""
-    puts ""
-    puts ""
     puts "Exchange #{self.id} - geocoded"
-    puts ""
-    puts ""
-    puts ""
     geocode
     self.system = nil if geocode?
   end
@@ -91,7 +98,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def status_color
-    :red if removed?
+    [:red, :brown][Exchange.statuses[status]]
   end
 
   def self.unexported_columns
