@@ -48,6 +48,7 @@ class Exchange < ActiveRecord::Base
   before_create do
     self.currency = 'GBP' if currency.blank?
     self.rates_source = 'no_rates' if rates_source.blank?
+    self.business_type = 'exchange' unless business_type.present?
   end
 
 
