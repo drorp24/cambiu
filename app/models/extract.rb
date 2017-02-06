@@ -134,8 +134,8 @@ class Extract
             nil
         end
         next unless Currency.updatable.include? currency
-        buy = li.css('td')[2].text.strip
-        sell = nil
+        sell = li.css('td')[2].text.strip
+        buy = nil
         rate_update(currency, buy, sell, chain, exchange, rates_source)
       end
 

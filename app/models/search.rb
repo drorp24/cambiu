@@ -59,11 +59,11 @@ class Search < ActiveRecord::Base
     pay_rate  = (pay.currency.iso_code.downcase + '_rate').to_sym
     buy_rate  = (buy.currency.iso_code.downcase + '_rate').to_sym
 
-    exchanges = Exchange.active.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+    exchanges = Exchange.live_rates.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
     exchanges.each do |exchange|
       offer = exchange.offer(center, pay, buy)
-      exchanges_offers << offer unless offer[:errors].any?
+      exchanges_offers << offer unless (offer[:errors].any? and !Rails.env.development?)
     end
 
 #    exchanges_offers = indicate_best(exchanges_offers, pay, buy) if exchanges.any?

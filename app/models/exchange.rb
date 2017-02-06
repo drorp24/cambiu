@@ -45,6 +45,12 @@ class Exchange < ActiveRecord::Base
   after_validation :do_geocoding, if: ->(exchange){ (exchange.latitude.blank? or exchange.address_changed?) and exchange.address.present? }
   after_validation :remove, if: ->(exchange){ exchange.remove? }
 
+  before_create do
+    self.currency = 'GBP' if currency.blank?
+    self.rates_source = 'no_rates' if rates_source.blank?
+  end
+
+
   scope :active, -> {where(status: nil)}
   scope :contract, -> { where(contract: true) }
   scope :no_contract, -> { where(contract: false) }
@@ -363,7 +369,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash = {}
 
     quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount')
-    return {} if quotes[:error].present?
+    return {} if quotes[:error].present? and !Rails.env.development?
 
     exchange_hash[:id] = self.id
     exchange_hash[:name] = self.name

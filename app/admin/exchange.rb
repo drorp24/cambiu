@@ -77,6 +77,7 @@ ActiveAdmin.register Exchange do
   filter :name
   filter :nearest_station
   filter :chain
+  filter :id
 =begin
   filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Test', 'test'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']]
   filter :chain
