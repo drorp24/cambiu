@@ -46,9 +46,10 @@ class Exchange < ActiveRecord::Base
   after_validation :remove, if: ->(exchange){ exchange.remove? }
 
   before_create do
-    self.currency = 'GBP' if currency.blank?
-    self.rates_source = 'no_rates' if rates_source.blank?
-    self.business_type = 'exchange' unless business_type.present?
+    self.currency = 'GBP'             if currency.blank?
+    self.rates_source = 'no_rates'    if rates_source.blank?
+    self.rates_policy = 'individual'  if rates_policy.blank?
+    self.business_type = 'exchange'   if business_type.blank?
   end
 
 
