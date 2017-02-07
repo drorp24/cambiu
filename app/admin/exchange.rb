@@ -67,10 +67,10 @@ ActiveAdmin.register Exchange do
   scope :all
   scope :live_rates
   scope :stale
+  scope :no_rates
   scope :todo
   scope :unverified
   scope :no_contract
-  scope :no_rates
   scope :system
   scope :error
 
