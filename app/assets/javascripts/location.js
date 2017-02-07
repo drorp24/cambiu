@@ -186,6 +186,23 @@ geocode = function(locationArg) {
 };
 
 
+function geocodeExchange(exchange) {
+
+    var geocoder = new google.maps.Geocoder();
+    var address = exchange.address;
+
+    geocoder.geocode({'address': address}, function(results, status) {
+
+        if (status === 'OK') {
+            console.log('hurray', results[0].geometry.location.lat(), results[0].geometry.location.lng());
+        } else {
+            console.log('Geocode was not successful for the following reason: ' + status);
+        }
+
+    })
+}
+
+
 // Handle user location changes
 // Changing back to 'where i'm at' is in search.js
 

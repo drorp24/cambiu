@@ -79,6 +79,7 @@
         var $this = $(this);
         $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
         $this.addClass('selected');
+        populateStreetview(currentExchange());
         gaEvent('Tap', 'Card');
 
     });

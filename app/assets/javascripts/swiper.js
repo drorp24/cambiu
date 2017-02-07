@@ -41,7 +41,7 @@ slideChange = function() {
 slideNext = function() {
     var currentIndex = currIndex();
     console.log('slideNext. currentIndex: ' + currentIndex);
-    var advanceIndex = currentIndex + initialSlides;
+    var advanceIndex = currentIndex + initialSlides -1;
     if (advanceIndex < exchanges.length) {
         console.log('adding slide ' + advanceIndex);
         addSlide(advanceIndex);

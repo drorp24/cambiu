@@ -378,8 +378,7 @@ class Exchange < ActiveRecord::Base
     return {} if quotes[:error].present? and !Rails.env.development?
 
     exchange_hash[:id] = self.id
-    exchange_hash[:name] = self.name
-    exchange_hash[:name] += (" - " + self.nearest_station) if self.nearest_station.present?
+    exchange_hash[:name] = self.fullname
     exchange_hash[:name_s] = self.name_s
     exchange_hash[:address] = self.address
     exchange_hash[:open_today] = self.todays_hours
@@ -421,6 +420,18 @@ class Exchange < ActiveRecord::Base
 
 
     exchange_hash
+
+  end
+
+  def fullname
+
+    if nearest_station.present?
+      return name + ' - ' + nearest_station
+    elsif chain and (chain.name != name)
+      return chain.name + ' - ' + name
+    else
+      return name
+    end
 
   end
 

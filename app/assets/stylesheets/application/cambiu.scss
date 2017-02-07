@@ -1864,6 +1864,7 @@ body#cambiu {
   }
 
   .nav_icon {
+    z-index: 1;
     display: none;
     width: $nav_icon_width;
     border-radius: $nav_icon_width / 2;
@@ -1954,6 +1955,7 @@ body#cambiu {
   
 
   .duration {
+    z-index: 1;
     @include flexbox();
     align-items: center;
     justify-content: center;

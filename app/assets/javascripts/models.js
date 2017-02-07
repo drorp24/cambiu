@@ -5,6 +5,17 @@
 //  1-way binding model -> view
 
 
+populateStreetview = function(exchange) {
+
+    var sv = new google.maps.StreetViewService();
+    var panorama = new google.maps.StreetViewPanorama(document.getElementById('streetview' + exchange.id));
+    sv.getPanorama({location: {lat: exchange.latitude, lng: exchange.longitude}, radius: 50},
+        function(data, status) {
+            processSVData(panorama, data, status)
+    });
+
+};
+
 populateDuration = function(exchange, $scope) {
 
     console.log('exchange ' + exchange.id + ' - populateDuration');
@@ -27,6 +38,8 @@ populateExchange = function(exchange, $scope, index) {
 //    console.log('exchange ' + exchange.id + ' - populateExchange');
 
     if (index == 0) $scope.addClass('best');
+
+    $scope.find('#streetview').attr('id', 'streetview' + exchange.id);
 
     $scope.find('[data-model=exchange][data-field]').each(function() {
         var $this = $(this);
@@ -204,3 +217,17 @@ set = function(field, value, trigger) {
 };
 
 
+function processSVData(panorama, data, status) {
+    if (status === 'OK') {
+
+        panorama.setPano(data.location.pano);
+        panorama.setPov({
+            heading: 270,
+            pitch: 0
+        });
+        panorama.setVisible(true);
+
+     } else {
+        console.error('Street View data not found for this location.');
+    }
+}
