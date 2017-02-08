@@ -8,7 +8,14 @@
 populateStreetview = function(exchange) {
 
     var sv = new google.maps.StreetViewService();
-    var panorama = new google.maps.StreetViewPanorama(document.getElementById('streetview' + exchange.id));
+    var panorama = new google.maps.StreetViewPanorama(document.getElementById('streetview' + exchange.id),
+        {
+            linksControl: false,
+            addressControl: false,
+            fullscreenControl: false,
+            enableCloseButton: false
+        }
+    );
     sv.getPanorama({
         location: {lat: exchange.latitude, lng: exchange.longitude},
         radius: 50,
