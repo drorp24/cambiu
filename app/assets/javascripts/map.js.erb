@@ -57,11 +57,13 @@
 
             google.maps.event.addListener(map.data, 'addfeature', function (e) {
 
+              console.log('addfeature event. feature: ', e.feature, 'best_at: ', e.feature.getProperty('best_at'));
+
               var marker = new google.maps.Marker({
                 position: e.feature.getGeometry().get(),
                 title: e.feature.getProperty('name'),
                 exchange_id: e.feature.getProperty('id'),
-                icon: e.feature.getProperty('best_at').includes('price') ? '<%= asset_path "48px_blue_white.png" %>' : '<%= asset_path "32px_white_shadow.png" %>'
+                icon: e.feature.getProperty('best_at').includes('best') ? '<%= asset_path "32px_blue_white.png" %>' : '<%= asset_path "32px_white_shadow.png" %>'
               });
 
               markerClusterer.addMarker(marker);

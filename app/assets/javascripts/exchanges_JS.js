@@ -133,11 +133,11 @@ getExchange = function(exchange_id, property) {
     });
 };
 
-sortExchanges = function(sortkey) {
+rank = function(sortkey) {
 
     if (typeof sortkey === 'undefined' || !sortkey) var sortkey = 'price';
 
-    console.log('sortExchanges. sortkey == ' + sortkey);
+    console.log('rank. sortkey == ' + sortkey);
     if (exchanges.length == 0) return exchanges;
 
     if (sortkey == 'distance') {

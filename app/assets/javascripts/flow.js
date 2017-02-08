@@ -21,9 +21,9 @@ $(document).ready(function() {
 search_and_show = function(location) {
     start_show();
     return Promise.all([showMap(location), search(location)])
-        .then(placeGoogleMarkers)
-        .then(sortExchanges)
+        .then(rank)
         .then(addCards)
+        .then(placeGoogleMarkers)
         .then(revealCards)
         .then(stop_show)
         .then(zoomIn)
