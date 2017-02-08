@@ -1,7 +1,9 @@
 ActiveAdmin.register Exchange do
 
   permit_params :id, :name, :address, :email, :latitude, :longitude, :country, :opens, :closes,:website, :email, :note, :phone, :atm, :source, :business_type, :chain, :city, :region, :rating, :nearest_station,
-                :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id, :rates_source, :contract, :rates_policy
+                :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id, :rates_source, :contract, :rates_policy,
+                :todo, :chain_name, :contact, :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close, :rates_url, :comment
+
 =begin
     rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
     business_hours_attributes: [:id, :day, :open1, :close1, :open2, :close2]
