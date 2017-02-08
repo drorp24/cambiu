@@ -28,6 +28,16 @@
                 return;
             }
 
+            var myStyles =[
+              {
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [
+                  { visibility: "off" }
+                ]
+              }
+            ];
+
             var mapOptions = {
                 center: new google.maps.LatLng(latitude, longitude),
                 zoom: map_current_zoom,
@@ -38,8 +48,10 @@
                 streetViewControlOptions: {
                     position: google.maps.ControlPosition.RIGHT_CENTER
                 },
-                mapTypeControl: false
+                mapTypeControl: false,
+                styles: myStyles
             };
+
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
             google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
