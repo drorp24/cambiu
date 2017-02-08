@@ -9,7 +9,11 @@ populateStreetview = function(exchange) {
 
     var sv = new google.maps.StreetViewService();
     var panorama = new google.maps.StreetViewPanorama(document.getElementById('streetview' + exchange.id));
-    sv.getPanorama({location: {lat: exchange.latitude, lng: exchange.longitude}, radius: 50},
+    sv.getPanorama({
+        location: {lat: exchange.latitude, lng: exchange.longitude},
+        radius: 50,
+        source: google.maps.StreetViewSource.OUTDOOR
+    },
         function(data, status) {
             processSVData(panorama, data, status)
     });
@@ -52,7 +56,7 @@ populateExchange = function(exchange, $scope, index) {
     if ($photo.length > 0) {
         var size        = String(bodyWidth) + 'x' + String(halfBodyHeight);
         var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
-        var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key;
+        var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key + '&source=google.maps.StreetViewSource.OUTDOOR';
         var html        = '<img src=' + src + '>';
         $photo.html(html);
     }

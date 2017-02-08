@@ -1650,6 +1650,7 @@ body#cambiu {
         left: 50vw;
       }
       .nav_icon {
+        z-index: 1;
         display: block;
         position: absolute;
         bottom: $nav_icon_width / -2;
