@@ -5,7 +5,7 @@
 
 
 
-    initCards = function() {
+    clearPrevSearch = function() {
         $('#cards').empty();
         slidesAdded = [];
         swiperH.slideTo(0, 100, false);
@@ -13,7 +13,7 @@
 
     addCards = function(exchanges) {
 
-        initCards();
+        clearPrevSearch();
 
         if (exchanges.length == 0) {
             snack("No information in this area yet. <br> Click 'OK' to search elsewhere.", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
@@ -156,23 +156,42 @@
         });
     };
 
-    sortExchanges = function(sortkey = 'price') {
+    rank = function() {
 
-        console.log('sortExchanges. sortkey == ' + sortkey);
         if (exchanges.length == 0) return exchanges;
+        console.log('rank');
 
-        if (sortkey == 'distance') {
-            exchanges.sort(function(a, b){return a.properties.distance - b.properties.distance});
-        }
-        else if (sortkey == 'price') {
-            if (value_of('buy_amount')) {
-                exchanges.sort(function(a, b){return (a.properties.quote ? a.properties.quote : 10000000) - (b.properties.quote ? b.properties.quote : 10000000)});
-            } else {
-                exchanges.sort(function(a, b){return (b.properties.quote ? b.properties.quote : 0) - (a.properties.quote ? a.properties.quote : 0)});
-            }
-        }
+        exchanges.sort(function(a, b) {compare(a.properties, b.properties)});
+
+        exchanges[0].properties.best_at.push('best');
 
         return exchanges;
+    };
+
+
+    compare = function(a, b, distance_factor = 1) {
+        // a & b compete who gets the lower grade
+        // the result returned is a_grade - b_grade
+        // if this result is negative, a won, otherwise b won
+
+        var a_grade, b_grade;
+
+        if (value_of('buy_amount')) {
+            a_grade = a.quote || 10000000;
+            b_grade = b.quote || 10000000;
+        } else {
+            a_grade = a.quote * -1 || 0;
+            b_grade = b.quote * -1 || 0;
+        }
+
+        a_grade += a.distance * distance_factor;
+        b_grade += b.distance * distance_factor;
+
+/*
+        var diff = a_grade - b_grade;
+        console.log(diff < 0 ? "A is better" : (diff == 0 ? "Both are equivalent" : "B is better"));
+*/
+        return a_grade - b_grade;
     };
 
 

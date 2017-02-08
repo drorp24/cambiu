@@ -415,7 +415,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:place][:id] = self.place_id
     exchange_hash[:place][:status] = {}
     exchange_hash[:matrix] = {}
-#    exchange_hash[:distance] = self.distance_from(center) # remove if not required!
+    exchange_hash[:distance] = self.distance_from(center) # remove if not required!
     exchange_hash[:contract] = self.contract
 
 
