@@ -1040,7 +1040,7 @@ body#cambiu {
 
 
   .pulse1 {
-    position: absolute;
+//    position: absolute;
     width: 20px;
     height: 20px;
     border: 3px solid #fff;
@@ -1053,7 +1053,7 @@ body#cambiu {
   }
 
   .pulse2 {
-    position: absolute;
+    position: relative;
     width: 60px;
     height: 60px;
     border-radius: 60px;
@@ -1061,6 +1061,7 @@ body#cambiu {
     z-index: 10;
   }
   .dot {
+    position: absolute;
     border: 20px solid $user-location-color-medium;
     background: transparent;
     -webkit-border-radius: 60px;
