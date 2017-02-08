@@ -582,7 +582,7 @@ class Exchange < ActiveRecord::Base
     currency = chain.currency || 'GBP'
     rates_source = chain.rates_source || 'no_rates'
     chain.update(currency: currency, rates_source: rates_source)
-    self.update(chain_id: chain.id)
+    self.update(chain_id: chain.id, rates_source: chain? ? chain.rates_source : 'no_rates')
   end
 
   def rates
