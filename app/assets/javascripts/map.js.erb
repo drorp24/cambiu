@@ -19,12 +19,7 @@
 
                 map.setZoom(map_current_zoom);
                 map.panTo(location);
-
-                google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
-                    console.log('map is panned');
-                    resolve();
-                });
-
+                resolve();
                 return;
             }
 
@@ -66,7 +61,7 @@
                 position: e.feature.getGeometry().get(),
                 title: e.feature.getProperty('name'),
                 exchange_id: e.feature.getProperty('id'),
-                icon: '<%= asset_path "32px_white_shadow.png" %>'
+                icon: e.feature.getProperty('best_at').includes('price') ? '<%= asset_path "48px_blue_white.png" %>' : '<%= asset_path "32px_white_shadow.png" %>'
               });
 
               markerClusterer.addMarker(marker);
