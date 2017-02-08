@@ -65,6 +65,7 @@
               });
 
               markerClusterer.addMarker(marker);
+              markers.push(marker);
 
             });
 
@@ -161,6 +162,9 @@
 
     placeGoogleMarkers = function() {
       markerClusterer = new MarkerClusterer(map, markers, {imagePath: '/m'});
+      markerClusterer.clearMarkers();
+      markers.forEach(function(marker) {marker.setMap(null)});
+      markers = [];
       map.data.setMap(null);
       exchangesLayer = map.data.addGeoJson(searchResult);
     };

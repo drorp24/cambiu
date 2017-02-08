@@ -127,7 +127,6 @@ var searchId = null;
 var prev_distance_from_exchange = null;
 var prev_distance_from_initial_location = null;
 var features = [];
-var markers = [];
 
 sessionStorage.videoStopped = null;
 
