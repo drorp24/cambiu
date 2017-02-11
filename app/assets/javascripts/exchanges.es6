@@ -161,7 +161,7 @@
         if (exchanges.length == 0) return exchanges;
         console.log('rank');
 
-        exchanges.sort(function(a, b) {compare(a.properties, b.properties)});
+        exchanges.sort(function(a, b) {return compare(a.properties, b.properties)});
 
         exchanges[0].properties.best_at.push('best');
 
@@ -192,6 +192,13 @@
         console.log(diff < 0 ? "A is better" : (diff == 0 ? "Both are equivalent" : "B is better"));
 */
         return a_grade - b_grade;
+    };
+
+    rankCheck = function() {
+
+        exchanges.forEach((exchange) => {
+            console.log('quote: ', exchange.properties.edited_quote, 'distance: ', exchange.properties.distance)
+        })
     };
 
 

@@ -164,7 +164,7 @@ def_vals = function() {
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
     def['sort']             = 'price';
-    def['radius']           = '10';
+    def['radius']           = '5';
     def['version']          = '0.0.0';
 
     return def;
