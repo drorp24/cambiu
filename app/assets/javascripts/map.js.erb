@@ -57,13 +57,15 @@
 
             google.maps.event.addListener(map.data, 'addfeature', function (e) {
 
-              console.log('addfeature event. feature: ', e.feature, 'best_at: ', e.feature.getProperty('best_at'));
+              var exchange_id = e.feature.getProperty('id');
 
               var marker = new google.maps.Marker({
                 position: e.feature.getGeometry().get(),
                 title: e.feature.getProperty('name'),
-                exchange_id: e.feature.getProperty('id'),
-                icon: e.feature.getProperty('best_at').includes('best') ? '<%= asset_path "32px_blue_white.png" %>' : '<%= asset_path "32px_white_shadow.png" %>'
+                exchange_id: exchange_id,
+                zIndex: exchange_id,
+                optimized: false,
+                icon: e.feature.getProperty('best_at').includes('best') ? '<%= asset_path "48px_blue_white.png" %>' : '<%= asset_path "48px_white.png" %>'
               });
 
               markerClusterer.addMarker(marker);
@@ -153,8 +155,8 @@
         var style = 'z-index: ' + String(id);
         var div = 'div[style*="' + style + '"]';
 
-        map.data.overrideStyle(map.data.getFeatureById(id), {icon: '/pricest.png'});
-        $('#markerLayer ' + div).addClass('bounce');
+        $('#markerLayer img').removeClass('selected');
+        $('#markerLayer ' + div +  ' img').addClass('selected');
 
     };
 
@@ -167,10 +169,13 @@
     placeGoogleMarkers = function() {
       markerClusterer = new MarkerClusterer(map, markers, {imagePath: '/m'});
       markerClusterer.clearMarkers();
-      markers.forEach(function(marker) {marker.setMap(null)});
+      markers.forEach(function (marker) {
+        marker.setMap(null)
+      });
       markers = [];
       map.data.setMap(null);
       exchangesLayer = map.data.addGeoJson(searchResult);
+      idMarkerLayer();
     };
 
 
@@ -193,6 +198,7 @@
                         animation: google.maps.Animation.DROP,
                         optimized: false,
                         icon: '/rsz_logo_no_text.png',
+                        zIndex: exchange.id,
                         position: {lat: exchange.latitude, lng: exchange.longitude}
                     });
 
@@ -254,7 +260,7 @@
         if (directionsRenderedFor == exchange.id) return;
         directionsRenderedFor = exchange.id;
 
-        var origin =            new google.maps.LatLng(user.lat, user.lng);
+        var origin =            new google.maps.LatLng(search.location.lat, search.location.lng);
         var destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
 
         calcRoute(origin, destination);

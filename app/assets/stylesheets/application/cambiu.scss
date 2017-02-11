@@ -2930,32 +2930,39 @@ body#cambiu {
   }
 
   #markerLayer {
-    div:nth-child(2n) img {
-      @include randomFadeIn(0.5s);
+    /*
+
+      div:nth-child(2n) img {
+        @include randomFadeIn(0.5s);
+      }
+      div:nth-child(3n) img {
+        @include randomFadeIn(1s);
+      }
+      div:nth-child(4n) img {
+        @include randomFadeIn(1.5s);
+      }
+      div:nth-child(5n) img {
+        @include randomFadeIn(2s);
+      }
+      div:nth-child(6n) img {
+        @include randomFadeIn(2.5s);
+      }
+      div:nth-child(7n) img {
+        @include randomFadeIn(3s);
+      }
+    */
+
+      img {
+        height: 26px !important;
+        width: 28px !important;
+        @include dropShadow();
+        &.selected {
+          height: 44px !important;
+          width: 48px !important;
+        }
+        transition: all 0.25s;
+      }
     }
-    div:nth-child(3n) img {
-      @include randomFadeIn(1s);
-    }
-    div:nth-child(4n) img {
-      @include randomFadeIn(1.5s);
-    }
-    div:nth-child(5n) img {
-      @include randomFadeIn(2s);
-    }
-    div:nth-child(6n) img {
-      @include randomFadeIn(2.5s);
-    }
-    div:nth-child(7n) img {
-      @include randomFadeIn(3s);
-    }
-    img {
-      width: 8vw !important;
-      height: 9vw !important;
-      @include dropShadow();
-      opacity: 0;
-      //    animation-iteration-count: 2;
-     }
-  }
 
 
   .map {
