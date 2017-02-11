@@ -2956,7 +2956,7 @@ body#cambiu {
         height: 26px !important;
         width: 28px !important;
         @include dropShadow();
-        &.selected {
+        &.current {
           height: 44px !important;
           width: 48px !important;
         }

@@ -58,17 +58,19 @@
             google.maps.event.addListener(map.data, 'addfeature', function (e) {
 
               var exchange_id = e.feature.getProperty('id');
+              var best = e.feature.getProperty('best_at').includes('best');
 
               var marker = new google.maps.Marker({
+                map: map,
                 position: e.feature.getGeometry().get(),
                 title: e.feature.getProperty('name'),
                 exchange_id: exchange_id,
                 zIndex: exchange_id,
                 optimized: false,
-                icon: e.feature.getProperty('best_at').includes('best') ? '<%= asset_path "48px_blue_white.png" %>' : '<%= asset_path "48px_white.png" %>'
+                icon: best ? '<%= asset_path "32px_blue_white.png" %>' : '<%= asset_path "48px_white.png" %>'
               });
 
-              markerClusterer.addMarker(marker);
+              if (!best) markerClusterer.addMarker(marker);
               markers.push(marker);
 
             });
@@ -149,14 +151,12 @@
 
     highlightCurrentMarker = function() {
 
-// TODO: ReWrite
-
         var id = currentExchange().id;
         var style = 'z-index: ' + String(id);
         var div = 'div[style*="' + style + '"]';
 
         $('#markerLayer img').removeClass('selected');
-        $('#markerLayer ' + div +  ' img').addClass('selected');
+        $('#markerLayer ' + div +  ' img').addClass('current');
 
     };
 
@@ -175,9 +175,30 @@
       markers = [];
       map.data.setMap(null);
       exchangesLayer = map.data.addGeoJson(searchResult);
+      highlightCurrentMarker();
       idMarkerLayer();
     };
 
+/*  TODO: Remove
+     placeBestMarker = function() {
+
+
+       var exchange = exchanges[0].properties;
+
+       var marker = new google.maps.Marker({
+         position: {lat: exchange.latitude, lng: exchange.longitude},
+         map: map,
+         title: exchange.name,
+         exchange_id: exchange.id,
+         zIndex: exchange.id,
+         optimized: false,
+         icon: '<%= asset_path "32px_blue_white.png" %>'
+       });
+
+       markers.push(marker);
+
+     };
+*/
 
     addGoogleMarkers = function() {
 
