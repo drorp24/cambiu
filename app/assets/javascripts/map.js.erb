@@ -151,7 +151,9 @@
 
     highlightCurrentMarker = function() {
 
-        var id = currentExchange().id;
+        var currExchange = currentExchange();
+        if (!currExchange) return;
+        var id = currExchange.id;
         var style = 'z-index: ' + String(id);
         var div = 'div[style*="' + style + '"]';
 
