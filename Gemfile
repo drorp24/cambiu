@@ -31,7 +31,7 @@ group :test, :staging, :production do
 end
 
 gem 'activeadmin', github: 'activeadmin'
-gem 'inherited_resources', github: 'activeadmin/inherited_resources'
+#gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'devise'
 gem 'activerecord-postgis-adapter'
 gem 'geocoder'
