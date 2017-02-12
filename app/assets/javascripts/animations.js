@@ -79,6 +79,7 @@ function removeMapCurtain() {
 
 postAnimations = function() {
     show_best();
+    highlightCurrentMarker();
     measureMapExperience();
     removeMapCurtain();
 };
