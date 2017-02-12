@@ -99,8 +99,8 @@ search.location = {};
 search.user = {};
 var ratingOptions = {
     theme: 'krajee-fa',
-    filledStar: '<i class="fa fa-star"></i>',
-    emptyStar: '<i class="fa fa-star-o"></i>',
+    filledStar: '<i class="material-icons">star_rate</i>',
+    emptyStar: '<i class="material-icons">star_border</i>',
     showClear: false,
     showCaption: false,
     size: 'xs',
