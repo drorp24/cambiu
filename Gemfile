@@ -67,7 +67,8 @@ gem 'monetize'
 #gem 'bootstrap-sass', '~> 3.3.6'    # use this: enables to include just the needed modules, gives access to twbs mixins
 #gem 'sass', '~> 3.4', '>= 3.4.22'
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
-gem 'font-awesome-rails'
+#gem 'font-awesome-rails'
+gem 'font-awesome-sass', '~> 4.7.0' # that's the official fontawesome ruby gem
 #gem "rack-timeout"
 gem 'google_currency'
 #gem 'google_currency_rails_cache', '~> 1.2' # TODO: How to install
