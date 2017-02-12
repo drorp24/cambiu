@@ -86,8 +86,6 @@ Rails.application.configure do
 
   config.ga_tracking_code = 'UA-91021177-1'
 
-#  config.font_assets.origin = 'https://www.cambiu.com'
-
 end
 Rails.application.routes.default_url_options[:host] = 'www.cambiu.com'
 
