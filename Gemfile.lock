@@ -18,16 +18,6 @@ GIT
       sprockets (< 4.1)
 
 GIT
-  remote: git://github.com/activeadmin/inherited_resources.git
-  revision: 4434f0ae72f790cf371728838c927c338100555d
-  specs:
-    inherited_resources (1.6.0)
-      actionpack (>= 3.2, < 5.1)
-      has_scope (~> 0.6)
-      railties (>= 3.2, < 5.1)
-      responders
-
-GIT
   remote: git://github.com/bernat/best_in_place.git
   revision: 332eda290cb133683a99d43a30321bab27d85e70
   specs:
@@ -144,8 +134,6 @@ GEM
     ffi (1.9.14)
     ffi (1.9.14-x64-mingw32)
     ffi (1.9.14-x86-mingw32)
-    font-awesome-sass (4.7.0)
-      sass (>= 3.2)
     font_assets (0.1.14)
       rack
     formtastic (3.1.4)
@@ -163,6 +151,11 @@ GEM
     httpi (1.1.1)
       rack
     i18n (0.7.0)
+    inherited_resources (1.7.0)
+      actionpack (>= 3.2, < 5.1)
+      has_scope (~> 0.6)
+      railties (>= 3.2, < 5.1)
+      responders
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -358,13 +351,11 @@ DEPENDENCIES
   delayed_job_active_record
   devise
   diskcached
-  font-awesome-sass (~> 4.7.0)
   font_assets
   geocoder
   google_currency
   httpi (~> 1.1.0)
   i18n (~> 0.7.0)
-  inherited_resources!
   jbuilder (~> 2.5)
   jquery-rails (~> 4.2, >= 4.2.1)
   le
