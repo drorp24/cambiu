@@ -1,4 +1,8 @@
 
+gaTiming = function(category, variable, value) {
+    ga('send', 'timing', category,  variable, value);
+};
+
 (function onLoad() {
     var now = new Date().getTime();
     var page_load_time = now - performance.timing.navigationStart;
@@ -12,7 +16,11 @@ gaTiming = function(category, variable, value) {
 };
 
 
-tagSession = function(tagObj) {
+tagSession = function(obj = {}) {
+
+    var tagObj = Object.assign(obj, {utm_source: utm_source});
+    console.log('tagSession', tagObj);
+
     ga('set', tagObj);
     __insp.push(['tagSession',tagObj]);
 };
@@ -25,4 +33,6 @@ report = function(category, action) {
     ga('send', 'event', category, action, name, {id: id});
 
 };
+
+
 

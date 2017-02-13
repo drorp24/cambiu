@@ -35,7 +35,7 @@ search_and_show = function(location) {
 
 function setProperPage() {
      if (mobile && window.location.pathname == '/') {
-        setPage({page1: 'exchanges', pane1: 'intro', populate: false});
+        setPage({page1: 'exchanges', pane1: 'intro', search: location.search, populate: false});
     } else {
         setPage({url: window.location.pathname, populate: false});
     }

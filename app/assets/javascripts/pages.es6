@@ -4,9 +4,9 @@
 //
 //   -  replace active html, manipulate browser history (setPage),
 
-setPage = function ({url, page1, id1, pane1, hash, pushState = true, populate = true}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
+setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, populate = true}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
 
-        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' pushState: ' + pushState + ' populate: ' + populate);
+        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populate: ' + populate);
 
     // POP pane into view
 //    if (page1 = 'homepage') var url = 'homepage';
@@ -16,6 +16,10 @@ setPage = function ({url, page1, id1, pane1, hash, pushState = true, populate = 
     } else {
         var [page, id, pane] = [page1, id1, pane1];
     }
+
+    // tag the session as soon as page is visited, with ref parameter or without it
+    if (search) utm_source = new URLSearchParams(search).get('utm_source');
+    tagSession();
 
     $('body').addClass(page);
 
