@@ -67,7 +67,7 @@
         $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
         $this.addClass('selected');
         populateStreetview(currentExchange());
-        gaEvent('Tap', 'Card');
+        report('Tap', 'Card');
 
     });
 
@@ -78,7 +78,7 @@
         var $navBtn = $('.nav_icon_container');
         $navBtn.addClass('rotate');
         renderDirections(currentExchange());
-        gaEvent('Tap', 'Directions');
+        report('Tap', 'Directions');
 
         setTimeout(function(){
 

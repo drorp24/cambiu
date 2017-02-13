@@ -307,16 +307,16 @@ function checkUserDistances() {
         prev_distance_from_exchange = distance_from_exchange;
     }
 
-    if (distance_from_exchange_delta < -10) {
+    if (distance_from_exchange_delta < -50) {
         console.log('prev_distance_from_exchange : ', prev_distance_from_exchange, 'distance_from_exchange: ', distance_from_exchange);
         console.log('Walk towards exchange. Zooming in.');
-        gaEvent('Walk', 'Towards exchange');
+        report('Walk', 'Towards exchange');
         map.setZoom(map_final_zoom);
     } else
-    if (distance_from_exchange_delta > 10) {
+    if (distance_from_exchange_delta > 50) {
         console.log('prev_distance_from_exchange : ', prev_distance_from_exchange, 'distance_from_exchange: ', distance_from_exchange);
         console.log('Walk away from exchange. Zooming in.');
-        gaEvent('Walk', 'Away from exchange');
+        report('Walk', 'Away from exchange');
         map.setZoom(map_final_zoom);
     }
 }

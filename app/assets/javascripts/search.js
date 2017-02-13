@@ -207,12 +207,12 @@ $(document).ready(function() {
                 console.log('search completed succesfully');
                 searchResult = data.exchanges;
                 searchId = data.search;
-                ga('set', {searchId: searchId});
+                tagSession({searchId: searchId});
                 exchanges = data.exchanges.features;
                 resolve(exchanges);
             }
 
-            function report(error) {
+            function squil(error) {
                 console.log('catch!');
                 reject(error)
             }
@@ -223,7 +223,7 @@ $(document).ready(function() {
             .then(checkStatus)
             .then(parseJson)
             .then(finish)
-            .catch(report);
+            .catch(squil);
 
         })
 
@@ -294,7 +294,7 @@ $(document).ready(function() {
 
     function unsupported(feature) {
         snack('Sorry, this feature is not supported yet', {button: '<i class="material-icons">help_outline</i>', link: {page: 'exchanges', pane: 'help'}});
-        gaEvent('Feature', feature);
+        report('Feature', feature);
     }
 
     $(".search_section.pay input[type=checkbox]").change(function() {

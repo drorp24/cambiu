@@ -10,6 +10,7 @@
 //= require autonumeric
 //= require fetch
 //= require snackbar.min
+//= require analysis
 
 //= require init
 //= require ytplayer
