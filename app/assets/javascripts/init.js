@@ -125,10 +125,10 @@ var locationDirty = false;
 var searchResult;
 var searchId = null;
 var prev_distance_from_exchange = null;
-var prev_distance_from_initial_location = null;
 var features = [];
 var utm_source = null;
 var surveyRequested = false;
+var arrivedToExchange = false;
 
 sessionStorage.videoStopped = null;
 

@@ -267,48 +267,59 @@ $('.location').keyup(function() {
 
 function checkUserDistances() {
 
-    if (arrivedToExchange) return;
-
     if (!(user && user.lat && user.lng)) return;
-    var user_current_location = user;
-
     var currExchange = currentExchange();
     if (!currExchange) return;
 
-    var distance_from_exchange =
-        distance(
-            new google.maps.LatLng(currExchange.latitude, currExchange.longitude),
-            new google.maps.LatLng(user_current_location.lat, user_current_location.lng)
-    );
+//    var user_initial_location = search.user;
+    var user_current_location = user;
+//    var distance_from_initial_location, distance_from_initial_location_delta;
+    var distance_from_exchange, distance_from_exchange_delta;
 
-    if (!distance_from_exchange) return;
-
-    if (distance_from_exchange < 50) {
-        report('Arrived', 'To exchange');
-        arrivedToExchange = true;
-        return
+ /*   if (user_initial_location && user_current_location) {
+        distance_from_initial_location =
+            distance(
+                new google.maps.LatLng(user_initial_location.lat, user_initial_location.lng),
+                new google.maps.LatLng(user_current_location.lat, user_current_location.lng)
+            );
+    }
+*/    if (currExchange && user_current_location) {
+        distance_from_exchange =
+            distance(
+                new google.maps.LatLng(currExchange.latitude, currExchange.longitude),
+                new google.maps.LatLng(user_current_location.lat, user_current_location.lng)
+        );
     }
 
-    if (prev_distance_from_exchange) {
-
-        var distance_from_exchange_delta = distance_from_exchange - prev_distance_from_exchange;
-
-        if (distance_from_exchange_delta < -50) {
-            console.log('prev_distance_from_exchange : ', prev_distance_from_exchange, 'distance_from_exchange: ', distance_from_exchange);
-            console.log('Walk towards exchange. Zooming in.');
-            report('Walk', 'Towards exchange');
-            map.setZoom(map_final_zoom);
+/*
+    if (distance_from_initial_location) {
+        console.log('User distance from initial location: ' + distance_from_initial_location + 'm');
+        if (prev_distance_from_initial_location) {
+            distance_from_initial_location_delta = distance_from_initial_location - prev_distance_from_initial_location;
         }
-
-        if (distance_from_exchange_delta > 50) {
-            console.log('prev_distance_from_exchange : ', prev_distance_from_exchange, 'distance_from_exchange: ', distance_from_exchange);
-            console.log('Walk away from exchange. Zooming in.');
-            report('Walk', 'Away from exchange');
-            map.setZoom(map_final_zoom);
-        }
+        prev_distance_from_initial_location = distance_from_initial_location;
     }
+*/
 
-    prev_distance_from_exchange = distance_from_exchange;
+    if (distance_from_exchange) {
+//        console.log('User distance from exchange: ' + distance_from_exchange + 'm');
+        if (prev_distance_from_exchange) {
+            distance_from_exchange_delta = distance_from_exchange - prev_distance_from_exchange;
+            if (distance_from_exchange_delta < -50) {
+                console.log('prev_distance_from_exchange : ', prev_distance_from_exchange, 'distance_from_exchange: ', distance_from_exchange);
+                console.log('Walk towards exchange. Zooming in.');
+                report('Walk', 'Towards exchange');
+                map.setZoom(map_final_zoom);
+            } else
+            if (distance_from_exchange_delta > 50) {
+                console.log('prev_distance_from_exchange : ', prev_distance_from_exchange, 'distance_from_exchange: ', distance_from_exchange);
+                console.log('Walk away from exchange. Zooming in.');
+                report('Walk', 'Away from exchange');
+                map.setZoom(map_final_zoom);
+            }
+        }
+        prev_distance_from_exchange = distance_from_exchange;
+    }
 
 }
 
