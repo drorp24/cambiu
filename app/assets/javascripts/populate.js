@@ -5,6 +5,13 @@
 //  1-way binding model -> view
 
 
+populateHelp = function(help, $scope) {
+
+    $scope.find('.help_topic').html(help.topic);
+    $scope.find('.help_content').html(help.content);
+
+};
+
 populateStreetview = function(exchange) {
 
     var sv = new google.maps.StreetViewService();

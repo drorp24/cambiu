@@ -447,10 +447,16 @@ $(document).ready(function() {
             link = typeof arg.link === 'undefined' ? null:  arg.link;
 
         var $e = $('.snack.template').clone().removeClass('template').addClass('active');
+        var help_topic = link && link.help ? link.help.topic : null;
+        var help_content = link && link.help ? link.help.content : null;
+
         $e.find('.message').html(message);
         if (klass) $e.find('.snackIcon').addClass(klass);
         if (button) $e.find('.button').html(button);
-        if (button && link) $e.find('.button').attr({'data-href-page': link.page, 'data-href-pane': link.pane});
+
+        if (button && link) {
+            $e.find('.button').attr({'data-href-page': link.page, 'data-href-pane': link.pane, 'data-help-topic': help_topic, 'data-help-content': help_content});
+        }
         return $e.html();
     };
 

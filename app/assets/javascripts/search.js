@@ -293,7 +293,20 @@ $(document).ready(function() {
     });
 
     function unsupported(feature) {
-        snack('Sorry, this feature is not supported yet', {button: '<i class="material-icons">help_outline</i>', link: {page: 'exchanges', pane: 'help'}});
+        snack('Sorry, this feature is not supported yet', {
+            button: '<i class="material-icons">help_outline</i>',
+            link: {
+                page: 'exchanges',
+                pane: 'help',
+                help: {
+                    topic: 'Why do we enable unsuported features?',
+                    content:
+                        "<p>It's important for us to know how needed some features are - so we know when to provide them.</p>" +
+                        "<p >This is done for a limited time only.</p>" +
+                        "<p>Apologize for any inconvenience!</p>"
+                }
+            }
+        });
         report('Feature', feature);
     }
 

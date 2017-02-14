@@ -20,7 +20,7 @@
 //= require search
 //= require map
 //= require place
-//= require models
+//= require populate
 //= require swiper
 //= require exchanges
 //= require upload

@@ -4,9 +4,9 @@
 //
 //   -  replace active html, manipulate browser history (setPage),
 
-setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, populate = true}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
+setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, populate = true, help_topic = null, help_content = null}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
 
-        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populate: ' + populate);
+        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populate: ' + populate + ' help_topic: ' + help_topic);
 
     // POP pane into view
 //    if (page1 = 'homepage') var url = 'homepage';
@@ -43,6 +43,10 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
         var exchange = (id == 'curr') ? currentExchange() : findExchange(id);
         populateExchange(exchange, $pane);
         populatePlace(exchange, $pane);
+    }
+
+    if (help_topic) {
+        populateHelp({topic: help_topic, content: help_content}, $pane);
     }
 
 
@@ -91,13 +95,15 @@ refresh = function(pane) {
      e.stopPropagation();
 
      var el = $(this);
-     var external    = el.data('exchange-delivery_tracking');    if (external && external != 'null') {window.location = external; return}
-     var pane        = el.data('href-pane');                     if (pane == 'back')                 {window.history.back();return}
-     var page        = el.data('href-page');
-     var id          = el.data('href-id');
-     var hash        = el.data('href-hash');
+     var external       = el.data('exchange-delivery_tracking');    if (external && external != 'null') {window.location = external; return}
+     var pane           = el.data('href-pane');                     if (pane == 'back')                 {window.history.back();return}
+     var page           = el.data('href-page');
+     var id             = el.data('href-id');
+     var hash           = el.data('href-hash');
+     var help_topic     = el.data('help-topic');
+     var help_content   = el.data('help-content');
 
-     setPage({page1: page, id1: id, pane1: pane, hash: hash});
+     setPage({page1: page, id1: id, pane1: pane, hash: hash, help_topic: help_topic, help_content: help_content});
      hideDialog();
 
 }));
