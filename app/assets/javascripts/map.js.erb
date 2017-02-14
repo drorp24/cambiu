@@ -334,7 +334,7 @@
 
         return new Promise(function(resolve, reject) {
 
-            var origin =            new google.maps.LatLng(user.lat, user.lng);
+            var origin =            new google.maps.LatLng(search.location.lat, search.location.lng);
             var destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
             var request = {
                 origins: [origin],

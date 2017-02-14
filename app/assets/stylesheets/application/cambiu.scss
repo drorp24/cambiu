@@ -1768,6 +1768,12 @@ body#cambiu {
       }
     }
     &:not(.selected) {
+      .duration {
+        bottom: 2vw;
+        left: 3vw;
+        width: 31vw;
+        font-size: 4.5vw;
+      }
       transform: translate(0px, 0px) !important;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
@@ -2024,7 +2030,7 @@ body#cambiu {
     [data-field=duration] {
       text-align: center;
       font-weight: 400;
-      @include threedots(60%);
+      @include threedots(75%);
     }
   }
 

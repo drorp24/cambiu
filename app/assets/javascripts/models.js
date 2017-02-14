@@ -28,20 +28,8 @@ populateStreetview = function(exchange) {
 };
 
 populateDuration = function(exchange, $scope) {
-
-    console.log('exchange ' + exchange.id + ' - populateDuration');
-
-    setTimeout(function(){
-        var $img = $scope.find('img');
-        var bottom = (cardHeight - $img.height()) / 2;
-        var left = $img.position().left;
-        var width = $img.width();
-        var $duration = $scope.find('.duration');
-        $duration.find('[data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
-        $duration.css({'bottom': bottom + 'px', 'left': left + 'px', width: width + 'px'});
-    }, 2000);
-
-
+//    console.log('exchange ' + exchange.id + ' - populateDuration');
+    $scope.find('.duration [data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
 };
 
 populateExchange = function(exchange, $scope, index) {
@@ -59,13 +47,13 @@ populateExchange = function(exchange, $scope, index) {
         $this.html(value);
     });
 
-    var $photo = $scope.find('.photo');
-    if ($photo.length > 0) {
+    var $streetview = $scope.find('.photo .streetview');
+    if ($streetview.length > 0) {
         var size        = String(bodyWidth) + 'x' + String(halfBodyHeight);
         var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
         var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key + '&source=google.maps.StreetViewSource.OUTDOOR';
         var html        = '<img src=' + src + '>';
-        $photo.html(html);
+        $streetview.html(html);
     }
 
     if (!exchange.gain_percent) {
