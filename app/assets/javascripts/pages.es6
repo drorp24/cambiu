@@ -98,6 +98,7 @@ refresh = function(pane) {
      var hash        = el.data('href-hash');
 
      setPage({page1: page, id1: id, pane1: pane, hash: hash});
+     hideDialog();
 
 }));
 

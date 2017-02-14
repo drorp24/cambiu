@@ -62,7 +62,7 @@
 
     $('body').on('click tap', '.ecard:not(.selected)', function(e) {
 
-        e.stopPropagation();
+//        e.stopPropagation();
         var $this = $(this);
         $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
         $this.addClass('selected');
@@ -73,7 +73,7 @@
 
     $('body').on('click tap', '.ecard.selected .actions_line, .ecard.selected .nav_icon', function(e) {
 
-        e.stopPropagation();
+//        e.stopPropagation();
         $('#best_offer').popover('hide');
         var $navBtn = $('.nav_icon_container');
         $navBtn.addClass('rotate');
@@ -90,7 +90,7 @@
     });
 
     $('body').on('click tap', '.nav_icon', function(e) {
-        e.stopPropagation();
+//        e.stopPropagation();
         $('.nav_icon_container').addClass('rotate')
     });
 

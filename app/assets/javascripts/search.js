@@ -313,9 +313,24 @@ $(document).ready(function() {
         }
      });
 
-    $('.getOffer').click(function() {
-        getOfferClicked = new Date().getTime();
-        console.log('just set getOfferClicked')
-    })
+
+    // pointer-events important!
+    showDialog = function() {
+        $('#myModal').modal('show');
+        $('.modal').css('pointer-events', 'all');
+        surveyRequested = true;
+    };
+
+    hideDialog = function() {
+        $('#myModal').modal('hide');
+        $('.modal').css('pointer-events', 'none');
+    };
+
+
+    $('body').on('click tap', function() {
+        if ($('body').hasClass('modal-open')) {
+            hideDialog();
+        }
+    });
 
 });

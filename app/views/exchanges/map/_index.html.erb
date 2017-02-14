@@ -1,7 +1,7 @@
 <div class="pane" data-pane="map">
 
 
-  <%= render partial: 'navbar', locals: {left_pane: 'intro', left_icon: 'info_outline', center: 'search_params', right_pane: "search", right_icon: 'search'} %>
+  <%= render partial: 'navbar', locals: {left_pane: 'survey', left_icon: 'assignment', center: 'search_params', right_pane: "search", right_icon: 'search'} %>
 
   <div id="map_container" class="mobile_only">
     <div id="map-canvas" data-clicked="map"></div>
@@ -29,6 +29,7 @@
   </div>
 
   <%= render 'exchanges/templates/progressbar' %>
+  <%= render 'exchanges/templates/dialog' %>
 
 <!--
   <%= image_tag '48px_blue_white.png', id: 'test' %>

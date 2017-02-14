@@ -549,6 +549,52 @@ body#cambiu {
   }
   */
 
+  button[data-target='#myModal'] {
+  z-index: 2;
+}
+
+  .modal {
+    pointer-events: none;
+    z-index: 1;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-dialog {
+//    pointer-events: all;
+    width: 75vw;
+  }
+
+  .modal-title {
+    font-size: 5vw;
+    font-weight: 400;
+    color: #555;
+  }
+
+  .modal-body {
+    font-size: 4vw;
+    color: #555;
+  }
+
+  .modal-footer button.btn {
+    font-size: 3.5vw;
+    &.btn-default {
+      color: #888;
+    }
+  }
+
+  .modal-backdrop {
+    z-index: 2;
+  }
+
+  .modal-content .modal-footer button+button {
+    margin-bottom: 0;
+  }
+
+  .modal-content .modal-footer {
+    padding: 16px;
+  }
 
   .segmanta-embed, .segmanta-widget, .segmanta-resume-overlay, .segmanta-iframe, .height-full {
     height: 90vh !important;
