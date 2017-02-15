@@ -150,6 +150,8 @@ populateReviews = function(exchange, $scope) {
     var review_template = $('.review.template');
     var reviews_list = $scope.find('.reviews_list').empty();
 
+    if (!exchange.place || !exchange.place.reviews || !exchange.place.reviews.length > 0) return;
+
     exchange.place.reviews.forEach(function(review) {
 
         var review_el = review_template.clone().removeClass('template');

@@ -329,6 +329,7 @@ $(document).ready(function() {
 
     // pointer-events important!
     showDialog = function() {
+        if (pane == 'survey') return;
         $('#myModal').modal('show');
         $('.modal').css('pointer-events', 'all');
         surveyRequested = true;
@@ -347,7 +348,7 @@ $(document).ready(function() {
     });
 
     $('body').on('click tap', '.list-group-item', function() {
-        console.log('click caught')
+        console.log('click caught');
         $(this).find('.list-group-item-text').toggleClass('expand');
     })
 

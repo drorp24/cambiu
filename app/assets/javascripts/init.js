@@ -129,6 +129,9 @@ var features = [];
 var utm_source = null;
 var surveyRequested = false;
 var arrivedToExchange = false;
+var page = null;
+var id = null;
+var pane = null;
 
 sessionStorage.videoStopped = null;
 

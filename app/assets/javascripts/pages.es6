@@ -12,9 +12,9 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
 //    if (page1 = 'homepage') var url = 'homepage';
     if (url) {
         var ppart = break_url(url);
-        var [page, id, pane] = [ppart.page || 'homepage', ppart.id, ppart.pane]
+         [page, id, pane] = [ppart.page || 'homepage', ppart.id, ppart.pane]
     } else {
-        var [page, id, pane] = [page1, id1, pane1];
+         [page, id, pane] = [page1, id1, pane1];
     }
 
     // tag the session as soon as page is visited, with ref parameter or without it
