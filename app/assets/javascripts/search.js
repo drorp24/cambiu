@@ -346,4 +346,9 @@ $(document).ready(function() {
         }
     });
 
+    $('body').on('click tap', '.list-group-item', function() {
+        console.log('click caught')
+        $(this).find('.list-group-item-text').toggleClass('expand');
+    })
+
 });

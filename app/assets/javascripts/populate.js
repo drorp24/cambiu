@@ -160,8 +160,12 @@ populateReviews = function(exchange, $scope) {
                 .rating('update', review.rating);
         }
         if (review.text)                review_el.find('.review_text').html(review.text);
-        if (review.author_name)         review_el.find('.review_author').html(review.author_name);
-        if (review.profile_photo_url)   review_el.find('.review_photo').html('<img class=img-circle src=' + review.profile_photo_url + '>');
+        if (review.author_name)         review_el.find('.list-group-item-heading').html(review.author_name);
+        if (review.profile_photo_url)   {
+            review_el.find('.row-picture').addClass('photo').find('.review_photo').attr('src', review.profile_photo_url);
+        } else {
+            review_el.find('.row-picture').addClass('icon');
+        }
 
         reviews_list.append(review_el);
 
