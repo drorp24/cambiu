@@ -53,20 +53,22 @@ class Exchange < ActiveRecord::Base
   end
 
 
+  scope :online_rates, -> { where("rates_source > 2") }
+  scope :real_rates, -> {where("rates_source > 1") }
+  scope :any_rates, -> {where("rates_source > 0") }
+  scope :no_rates, -> {where("rates_source == 0") }
   scope :active, -> {where(status: nil)}
+
   scope :contract, -> { where(contract: true) }
   scope :no_contract, -> { where(contract: false) }
-  scope :with_real_rates, -> { where("rates_source > 2") }
   scope :verified, -> {where.not(todo: 'verify')}
   scope :unverified, -> {where(todo: 'verify')}
-  scope :rates, -> {where("rates_source > 1") }
-  scope :no_rates, -> {where("rates_source <= 1") }
   scope :todo, -> {where.not(todo: nil) }
   scope :system, -> {where.not(system: nil) }
 
 
-  def self.live_rates
-    self.rates.active
+  def self.with_rates
+    self.any_rates.active
   end
 
   def rates_are_stale?
@@ -591,7 +593,11 @@ class Exchange < ActiveRecord::Base
     else
       super
     end
-   end
+  end
+
+  def delete_rates
+    Rate.where(ratable_type: 'Exchange', ratable_id: self.id).delete_all
+  end
 
   def name_s
     chain = self.chain

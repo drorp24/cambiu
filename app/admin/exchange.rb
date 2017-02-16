@@ -343,11 +343,13 @@ form do |f|
           return
         else
 
+=begin
           if params[:exchange_id]
             redirect_to new_admin_exchange_rate_path(ratable_id) and return
           elsif params[:chain_id]
             redirect_to new_admin_chain_rate_path(ratable_id) and return
           end
+=end
 
         end
 
@@ -355,6 +357,7 @@ form do |f|
 
       def new
 
+=begin
         if params[:exchange_id]
           ratable_type = 'Exchange'
           ratable_id = params[:exchange_id]
@@ -374,6 +377,7 @@ form do |f|
         elsif params[:chain_id]
           redirect_to admin_chain_rates_path(ratable_id), notice: notice
         end
+=end
 
       end
 

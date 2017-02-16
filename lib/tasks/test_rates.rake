@@ -1,37 +1,31 @@
 namespace :rates do
-  desc "populate rates"
+  desc "populate test rates"
   task :populate => :environment do
 
-    sell_low  = 0.95
-    sell_high = 0.98
-    buy_low   = 1.02
-    buy_high  = 1.150
-    eur = Bank.exchange(1, 'GBP', 'EUR').amount
-    usd = Bank.exchange(1, 'GBP', 'USD').amount
-    aud = Bank.exchange(1, 'GBP', 'AUD').amount
-    cad = Bank.exchange(1, 'GBP', 'CAD').amount
-    jpy = Bank.exchange(1, 'GBP', 'JPY').amount
 
-    Exchange.find_each do |exchange|
-      exchange.update(currency: 'GBP')
-      next if exchange.has_real_rates?
-      e_eur_sell  = eur * rand(sell_low..sell_high)
-      e_eur_buy   = eur * rand(buy_low..buy_high)
-      e_usd_sell  = usd * rand(sell_low..sell_high)
-      e_usd_buy   = usd * rand(buy_low..buy_high)
-      e_aud_sell  = aud * rand(sell_low..sell_high)
-      e_aud_buy   = aud * rand(buy_low..buy_high)
-      e_cad_sell  = cad * rand(sell_low..sell_high)
-      e_cad_buy   = cad * rand(buy_low..buy_high)
-      e_jpy_sell  = jpy * rand(sell_low..sell_high)
-      e_jpy_buy   = jpy * rand(buy_low..buy_high)
-      exchange.update(rates_source: 'test')
-      exchange.rates.where(currency: 'EUR').first_or_create.update(source: 'test', service_type: 0, currency: 'EUR', buy: e_eur_buy, sell: e_eur_sell)
-      exchange.rates.where(currency: 'USD').first_or_create.update(source: 'test', service_type: 0, currency: 'USD', buy: e_usd_buy, sell: e_usd_sell)
-      exchange.rates.where(currency: 'AUD').first_or_create.update(source: 'test', service_type: 0, currency: 'AUD', buy: e_aud_buy, sell: e_aud_sell)
-      exchange.rates.where(currency: 'CAD').first_or_create.update(source: 'test', service_type: 0, currency: 'CAD', buy: e_cad_buy, sell: e_cad_sell)
-      exchange.rates.where(currency: 'JPY').first_or_create.update(source: 'test', service_type: 0, currency: 'JPY', buy: e_jpy_buy, sell: e_jpy_sell)
+    currencies = %w[EUR USD AUD CAD JPY]
+    factors = {'buy' => {'low' => 1.02, 'high' => 1.15}, 'sell' => {'low' => 0.95, 'high' => 0.98}}
+
+    benchmark_rates = Chain.where(name: 'Debenhams').first.rates
+    benchmark = {}
+    currencies.each do |currency|
+      next unless rate = benchmark_rates.where(currency: currency).first
+      benchmark[currency] = {'buy' => rate.buy, 'sell' => rate.sell}
     end
 
+    Exchange.no_rates.find_each do |exchange|
+
+      exchange.update(rates_source: 'test', status: nil)
+      exchange.rates.delete_all
+
+      benchmark.keys.each do |currency|
+        e_rate = {}
+        ['buy', 'sell'].each { |kind| e_rate[kind] = benchmark[currency][kind] * rand(factors[kind]['low']..factors[kind]['high'])}
+        exchange.rates.where(currency: currency).first_or_create.update(source: 'test', buy: e_rate['buy'], sell: e_rate['sell'])
+      end
+
+     end
+
   end
+
 end
