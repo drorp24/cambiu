@@ -56,7 +56,7 @@ class Exchange < ActiveRecord::Base
   scope :online_rates, -> { where("rates_source > 2") }
   scope :real_rates, -> {where("rates_source > 1") }
   scope :any_rates, -> {where("rates_source > 0") }
-  scope :no_rates, -> {where("rates_source == 0") }
+  scope :no_rates, -> {where("rates_source = 0") }
   scope :active, -> {where(status: nil)}
 
   scope :contract, -> { where(contract: true) }
@@ -115,7 +115,7 @@ class Exchange < ActiveRecord::Base
     ["id", "created_at", "updated_at", "latitude", "longitude", "chain_id", "rating", "admin_user_id", "place_id", "error"]
   end
 
-  def self.find_by_either(id, name, nearest_station)
+  def self.identify_by_either(id, name, nearest_station, address)
 
     if id.present? && id != '0'
       e = Exchange.find_by_id(id)
@@ -124,9 +124,9 @@ class Exchange < ActiveRecord::Base
 
     if name.present?
       if nearest_station.blank?
-        return Exchange.find_by(name: name) || Exchange.new(name: name)
+        return Exchange.find_by(name: name, address: address) || Exchange.new(name: name, address: address)
       else
-        return Exchange.find_by(name: name, nearest_station: nearest_station) || Exchange.new(name: name, nearest_station: nearest_station)
+        return Exchange.find_by(name: name, address: address, nearest_station: nearest_station) || Exchange.new(name: name, nearest_station: nearest_station)
       end
     end
 

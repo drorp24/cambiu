@@ -23,19 +23,17 @@ ActiveAdmin.register Exchange do
         next
       end
 
-      e = Exchange.find_by_either(hash[:id], hash[:name], hash[:nearest_station])
+      exchange = Exchange.identify_by_either(hash[:id], hash[:name], hash[:nearest_station], hash[:address])
       columns.each do |column|
-        e.send(column + '=', hash[column.to_sym])
+        exchange.send(column + '=', hash[column.to_sym])
       end
-      e.chain_id        = Chain.where(name: hash[:chain]).first_or_create.id if hash[:chain].present?
-#      e.admin_user_id   = current_admin_user.id if current_admin_user
-      e.geocode! unless e.latitude and e.longitude
+      exchange.chain_id        = Chain.where(name: hash[:chain]).first_or_create.id if hash[:chain].present?
 
-      e.save!
+      exchange.save!
 
-    rescue => ee
+    rescue => e
  #      e.save validate: false
-      puts "ee: #{ee}"
+      puts "e: #{e}"
       puts "e.error: #{e.error}" if e
       puts ""
     end
@@ -67,9 +65,12 @@ ActiveAdmin.register Exchange do
 =end
 
   scope :all
-  scope :live_rates
-  scope :stale
+  scope :online_rates
+  scope :real_rates
+  scope :any_rates
   scope :no_rates
+
+  scope :stale
   scope :todo
   scope :unverified
   scope :no_contract
