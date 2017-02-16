@@ -23,7 +23,7 @@ ActiveAdmin.register Exchange do
         next
       end
 
-      exchange = Exchange.identify_by_either(hash[:id], hash[:name], hash[:nearest_station], hash[:address])
+      exchange = Exchange.identify_by_either(hash[:id], hash[:name], hash[:address], hash[:nearest_station])
       columns.each do |column|
         exchange.send(column + '=', hash[column.to_sym])
       end
@@ -75,6 +75,7 @@ ActiveAdmin.register Exchange do
   scope :unverified
   scope :no_contract
   scope :system
+  scope :removed
   scope :error
 
   filter :name

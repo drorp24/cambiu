@@ -115,22 +115,23 @@ class Exchange < ActiveRecord::Base
     ["id", "created_at", "updated_at", "latitude", "longitude", "chain_id", "rating", "admin_user_id", "place_id", "error"]
   end
 
-  def self.identify_by_either(id, name, nearest_station, address)
+  def self.identify_by_either(id, name, address, nearest_station)
 
-    if id.present? && id != '0'
-      e = Exchange.find_by_id(id)
-      return e if e
-    end
+    return Exchange.new(error: "Both name and address are missing", system: 'error') unless name.present? and address.present?
 
-    if name.present?
-      if nearest_station.blank?
-        return Exchange.find_by(name: name, address: address) || Exchange.new(name: name, address: address)
-      else
-        return Exchange.find_by(name: name, address: address, nearest_station: nearest_station) || Exchange.new(name: name, nearest_station: nearest_station)
-      end
-    end
+    exchange = Exchange.find_by(id: id) if id.present? && id != '0'
+    return exchange if exchange
 
-    return Exchange.new(error: "Both id and name are missing", system: 'error')
+    # Best way is to identify by name + address combination, since nearest_station is not unique
+    # Also, if there exists already an exchange with no nearest_station and now nearest_station is present, the record must be identified without nearest_station or else there would be duplicate
+
+    exchange = Exchange.find_by(name: name, address: address)
+    return exchange if exchange
+
+    exchange = Exchange.find_by(name: name, nearest_station: nearest_station) if nearest_station.present?
+    return exchange if exchange
+
+    return Exchange.new
 
   end
 
