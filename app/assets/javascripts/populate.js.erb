@@ -313,15 +313,3 @@ populateStaticStreeview = function(exchange, $scope) {
 
     }
 };
-
-
-populatePage = function() {
-  var url = break_url(location.pathname);
-  if (!url.id || url.pane != 'reviews') return;
-
-  var exchange = currentExchange();
-  var $scope = currentCard();
-  populateReviews(exchange, $scope);
-};
-
-
