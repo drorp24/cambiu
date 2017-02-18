@@ -558,6 +558,7 @@ body#cambiu {
 
 .list-group {
   .list-group-item {
+    cursor: pointer;  // else not clickable!
     .list-group-item-text {
       color: rgba(0, 0, 0, 0.80);
       font-size: 4vw;
