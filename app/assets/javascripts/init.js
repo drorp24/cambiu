@@ -103,7 +103,6 @@ var ratingOptions = {
     emptyStar: '<i class="material-icons">star_border</i>',
     showClear: false,
     showCaption: false,
-    size: 'xs',
     readonly: true
 };
 var map_refreshed = false;
