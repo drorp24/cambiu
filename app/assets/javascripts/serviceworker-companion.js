@@ -1,6 +1,6 @@
 (function() {
 
-    var version = '0.8.3';
+    var version = '0.8.4';
     window.version = version;
 //post_to_sw({version: version});
 
