@@ -291,7 +291,7 @@ populateStaticStreeview = function(exchange, $scope) {
 
     if (exchange.pano && exchange.pano.status == "ZERO_RESULTS") {
 
-        var src = '<%= image_tag 'def_streetview.png' %>';
+        var src = '<%= asset_path 'def_streetview.png' %>';
         var html = '<img src=' + src + '>';
 
         var $mini_streetview = $scope.find('.minicard .streetview');

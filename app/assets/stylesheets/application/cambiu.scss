@@ -1731,6 +1731,13 @@ body#cambiu {
       height: 50vh;
     }
 
+    .fullcard .streetview {
+      height: 100%;
+      img {
+        height: 100%;
+      }
+    }
+
     .fullcard {
       width: 100%;
       display: none;
