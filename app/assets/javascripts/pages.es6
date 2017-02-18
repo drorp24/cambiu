@@ -28,7 +28,7 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
         populateHelp({topic: help_topic, content: help_content}, $pane);
     }
 
-    if (pane == 'reviews') {
+    if (populate && pane == 'reviews') {
         var exchange = currentExchange();
         populateReviews(exchange, $pane);
     }
@@ -109,8 +109,9 @@ refresh = function(pane) {
      var hash           = el.data('href-hash');
      var help_topic     = el.data('help-topic');
      var help_content   = el.data('help-content');
+     var populate       = el.data('populate');
 
-     setPage({page1: page, id1: id, pane1: pane, hash: hash, help_topic: help_topic, help_content: help_content});
+     setPage({page1: page, id1: id, pane1: pane, hash: hash, help_topic: help_topic, help_content: help_content, populate: populate});
      hideDialog();
 
 }));
@@ -129,8 +130,3 @@ stopVideo = function() {
         replaceVideoWithBackground()
     }
 };
-
-window.onbeforeunload = function() {
-    return "Dude, are you sure you want to leave? Think of the kittens!";
-}
-
