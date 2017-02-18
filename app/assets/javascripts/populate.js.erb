@@ -14,7 +14,7 @@ populateHelp = function(help, $scope) {
 
 populateStreetview = function(exchange) {
 
-    if (exchange.pano && exchange.pano.status == "ZERO_RESULTS") return;
+    /*if (exchange.pano && exchange.pano.status == "ZERO_RESULTS")*/ return;
 
     var sv = new google.maps.StreetViewService();
     var panorama = new google.maps.StreetViewPanorama(document.getElementById('streetview' + exchange.id),
@@ -306,8 +306,10 @@ populateStaticStreeview = function(exchange, $scope) {
         var html = '<img src=' + src + '>';
 
         var $mini_streetview = $scope.find('.minicard .streetview');
+        var $full_streetview = $scope.find('.fullcard .streetview');
 
         $mini_streetview.html(html);
+        $full_streetview.html(html);
 
     }
 };
