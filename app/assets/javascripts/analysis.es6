@@ -22,7 +22,7 @@ tagSession = function(obj = {}) {
     console.log('tagSession', tagObj);
 
     ga('set', tagObj);
-    __insp.push(['tagSession',tagObj]);
+//    __insp.push(['tagSession',tagObj]);
 };
 
 report = function(category, action) {
