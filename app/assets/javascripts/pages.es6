@@ -21,15 +21,26 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
     if (search) utm_source = new URLSearchParams(search).get('utm_source');
     tagSession();
 
+    var $page = $('.page[data-page=' + page + ']');
+    var $pane = $('.pane[data-pane=' + pane + ']');
+
+    if (help_topic) {
+        populateHelp({topic: help_topic, content: help_content}, $pane);
+    }
+
+    if (pane == 'reviews') {
+        var exchange = currentExchange();
+        populateReviews(exchange, $pane);
+    }
+
+
     $('body').addClass(page);
 
     $('.page').removeClass('active');
-    var $page = $('.page[data-page=' + page + ']');
      $page.addClass('active');
 
     $('.pane').removeClass('active');
     if (pane) {
-        var $pane = $('.pane[data-pane=' + pane + ']');
         $pane.addClass('active');
         $('body').attr('data-pane', pane);
         refresh(pane);
@@ -43,10 +54,6 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
         var exchange = (id == 'curr') ? currentExchange() : findExchange(id);
         populateExchange(exchange, $pane);
         populatePlace(exchange, $pane);
-    }
-
-    if (help_topic) {
-        populateHelp({topic: help_topic, content: help_content}, $pane);
     }
 
 
