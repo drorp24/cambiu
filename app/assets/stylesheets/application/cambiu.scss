@@ -1716,11 +1716,8 @@ body#cambiu {
     .photo {
       height: 85%;
       img {
+        height: 27vw !important;
         width: 85%;
-        height: 100% !important;
-        &.def_streetview {
-          height: 27vw !important;
-        }
       }
     }
     .more {
