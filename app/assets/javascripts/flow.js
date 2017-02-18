@@ -28,8 +28,8 @@ search_and_show = function(location) {
         .then(stop_show)
         .then(zoomIn)
         .then(postAnimations)
-        .then(followUser)
-        .then(checkUserPosition)
+//        .then(followUser)
+//        .then(checkUserPosition)
         .catch(showError);
 };
 
