@@ -14,8 +14,6 @@ populateHelp = function(help, $scope) {
 
 populateStreetview = function(exchange) {
 
-    if (exchange.pano && exchange.pano.status == "ZERO_RESULTS") return;
-
     var sv = new google.maps.StreetViewService();
     var panorama = new google.maps.StreetViewPanorama(document.getElementById('streetview' + exchange.id),
         {
@@ -31,34 +29,10 @@ populateStreetview = function(exchange) {
         source: google.maps.StreetViewSource.OUTDOOR
     },
         function(data, status) {
-            processSVData(exchange, panorama, data, status)
+            processSVData(panorama, data, status)
     });
 
 };
-
-
-function processSVData(exchange, panorama, data, status) {
-  if (status === 'OK') {
-
-    panorama.setPano(data.location.pano);
-    panorama.setPov({
-      heading: 0,
-      pitch: 0
-    });
-    panorama.setVisible(true);
-
-  } else {
-
-/*
-    var $streetview = $('#streetview' + exchange.id);
-    var src = '<%= asset_path 'def_streetview.png' %>';
-    var html = '<img src=' + src + '>';
-    $('#streetview').html(html);
-*/
-
-    console.error('Street View data not found for this location.');
-  }
-}
 
 populateDuration = function(exchange, $scope) {
 //    console.log('exchange ' + exchange.id + ' - populateDuration');
@@ -80,7 +54,14 @@ populateExchange = function(exchange, $scope, index) {
         $this.html(value);
     });
 
-    getPano(exchange).then(function(pano) {populateStaticStreeview(exchange, $scope)});
+    var $streetview = $scope.find('.photo .streetview');
+    if ($streetview.length > 0) {
+        var size        = String(bodyWidth) + 'x' + String(halfBodyHeight);
+        var location    = String(exchange.latitude) + ',' + String(exchange.longitude);
+        var src         = 'https://maps.googleapis.com/maps/api/streetview?size=' + size + '&location=' + location + '&key=' + google_api_key + '&source=google.maps.StreetViewSource.OUTDOOR';
+        var html        = '<img src=' + src + '>';
+        $streetview.html(html);
+    }
 
     if (!exchange.gain_percent) {
         $scope.find('.comparison').css('visibility', 'hidden');
@@ -247,67 +228,18 @@ set = function(field, value, trigger) {
 
 };
 
-getPano = function(exchange) {
 
-    return new Promise(function(resolve, reject) {
+function processSVData(panorama, data, status) {
+    if (status === 'OK') {
 
-        var url = streetviewUrl(exchange, {metadata: true});
-        fetch(url)
-            .then(function(stream) {return(stream.json())})
-            .then(function(jsonString) {
-                exchange.pano = jsonString;
-                resolve(jsonString);
-            })
-            .catch(showError)
+        panorama.setPano(data.location.pano);
+        panorama.setPov({
+            heading: 270,
+            pitch: 0
+        });
+        panorama.setVisible(true);
 
-    })
-
-};
-
-streetviewUrl = function(exchange, options) {
-
-    console.log(exchange.best_at[0] == 'best');
-
-    var metadata    = options.metadata;
-    var size        = bodyWidth + 'x' + halfBodyHeight;
-    var url;
-
-    url = 'https://maps.googleapis.com/maps/api/streetview';
-    if (metadata) url += '/metadata';
-    url += '?size=' + size;
-    if (exchange.pano && exchange.pano.pano_id) {
-        url += '&pano=' + exchange.pano.pano_id;
-    } else {
-        url += '&location=' + exchange.latitude + ',' + exchange.longitude;
+     } else {
+        console.error('Street View data not found for this location.');
     }
-    url += '&key=' + google_api_key;
-
-    return url;
-};
-
-populateStaticStreeview = function(exchange, $scope) {
-
-//    console.log('populateStaticStreetview. Pano: ', exchange.pano);
-
-    if (exchange.pano && exchange.pano.status == "ZERO_RESULTS") {
-
-        var src = '<%= image_tag 'def_streetview.png' %>';
-        var html = '<img src=' + src + '>';
-
-        var $mini_streetview = $scope.find('.minicard .streetview');
-        var $full_streetview = $scope.find('.fullcard .streetview');
-
-        $mini_streetview.html(html);
-        $full_streetview.html(html);
-
-    } else {
-
-        var src = streetviewUrl(exchange, {metadata: false});
-        var html = '<img src=' + src + '>';
-
-        var $mini_streetview = $scope.find('.minicard .streetview');
-
-        $mini_streetview.html(html);
-
-    }
-};
+}
