@@ -15,6 +15,8 @@ namespace :exchanges do
     Exchange.where(rates_policy: nil).update_all(rates_policy: 'individual')
     Exchange.where(business_type: nil).update_all(business_type: 'exchange')
 
+    Chain.where(rates_source: 'scraping').each{|chain| chain.exchanges.where.not(rates_source: 'scraping').each{|exchange| exchange.update(rates_source: 'scraping')}}
+
     Rails.logger.info " "
     Rails.logger.info "Finished Exchanges Cleanse task"
     Rails.logger.info " "
