@@ -74,7 +74,6 @@ ActiveAdmin.register Exchange do
   scope :todo
   scope :unverified
   scope :no_contract
-  scope :system
   scope :removed
   scope :error
 
@@ -110,7 +109,7 @@ ActiveAdmin.register Exchange do
       if    exchange.individual?
         link_to exchange.rates_source ? exchange.rates_source.titleize : '', admin_exchange_rates_path(exchange)
       elsif exchange.chain?
-        link_to exchange.chain.rates_source ? exchange.chain.rates_source.titleize : '', admin_chain_rates_path(exchange.chain_id)
+#        link_to exchange.chain.rates_source ? exchange.chain.rates_source.titleize : '', admin_chain_rates_path(exchange.chain_id)
       end
     end
     column(:status) {|exchange| status_tag(exchange.status, exchange.status_color) if exchange.status }
@@ -273,13 +272,32 @@ form do |f|
 
     config.clear_action_items!
 
-    action_item :add_rate, only: :index do
-      if    params[:exchange_id]
-        link_to 'Add Rate', new_admin_exchange_rate_path(params[:exchange_id])
-      elsif params[:chain_id]
-        link_to 'Add Rate', new_admin_chain_rate_path(params[:chain_id])
+    active_admin_importable do |model, hash|
+
+#      columns = Exchange.column_names - Exchange.unexported_columns
+      begin
+
+        chain = Chain.find_by(name: hash[:chain_name])
+        unless chain
+          puts "no name and address or empty line"
+          next
+        end
+
+        unless chain.manual?
+          raise "Not a manual feed chain"
+          next
+        end
+
+        chain.rates.where(currency: hash[:curreny_code]).first_or_create.update(source: 'manual', currency: hash[:curreny_code], sell: hash[:sell_rate], buy: hash[:buy_rate])
+
+      rescue => e
+        puts "e: #{e}"
+        puts ""
       end
-      end
+
+    end
+
+
 
 =begin
     scope :collection
