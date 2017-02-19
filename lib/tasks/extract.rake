@@ -16,7 +16,7 @@ namespace :rates do
 
     Extract.update('Cheque Centre', nil, "http://www.chequecentre.co.uk/foreign-currency", 'html')
     Extract.update('Thomas exchange global', nil, "https://www.thomasexchangeglobal.co.uk/exchange-rates-check-exchange-rates.php", 'html')
-    Extract.update('CEC ltd', nil, "https://cecltd.com/?q=exchange-rates", 'html')
+    Extract.update('CEC', nil, "https://cecltd.com/?q=exchange-rates", 'html')
     Extract.update(nil, 'Thomas Exchange UK', "https://www.thomasexchange.co.uk/i_banknote_rates.asp", 'html')
 
     Extract.update(nil, 'Natwest', "http://www.natwest.com/tools/personal/currency_rates", 'html')
