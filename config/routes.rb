@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     end
     resources :chains do
       resources :rates
+      resources :exchanges
     end
     resource :searches do
       resources :issues

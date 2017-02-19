@@ -89,7 +89,7 @@ ActiveAdmin.register Exchange do
   filter :region
 =end
 
-  config.batch_actions = true
+  config.batch_actions = false
 
   index do
     selectable_column
@@ -176,6 +176,15 @@ ActiveAdmin.register Exchange do
 
 
   controller do
+
+    before_filter :only => :index do
+      @per_page = 10
+    end
+
+    # working...
+    def scoped_collection
+      params[:chain_id] ? super.where(chain_id: params[:chain_id]) : super
+    end
 
     def new
       @exchange = Exchange.new(admin_user_id: current_admin_user.id, currency: "GBP", rates_source: 0, contract: true)

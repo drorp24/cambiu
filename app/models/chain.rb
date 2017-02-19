@@ -1,5 +1,5 @@
 class Chain < ActiveRecord::Base
-  has_many :exchanges
+  has_many :exchanges, :dependent => :restrict_with_exception
   has_many :rates, as: :ratable
 
   has_one     :gbp_rate,    -> {where(currency: 'GBP')}       ,class_name: "Rate", as: :ratable

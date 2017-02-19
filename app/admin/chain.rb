@@ -9,7 +9,9 @@ ActiveAdmin.register Chain do
     column :name do |chain|
       link_to chain.name, admin_chain_path(chain)
     end
-    column :url
+    column :exchanges do |chain|
+        link_to "View exchanges", admin_chain_exchanges_path(chain)
+    end
     column :currency
     column :rates_source do |chain|
       chain.rates_source.titleize if chain.rates_source
@@ -53,9 +55,9 @@ ActiveAdmin.register Chain do
 
       controller do
 
-    def show
-      redirect_to edit_admin_chain_path(params[:id])
-    end
+        def show
+          redirect_to edit_admin_chain_path(params[:id])
+        end
 
   end
 
