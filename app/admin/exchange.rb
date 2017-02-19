@@ -109,7 +109,11 @@ ActiveAdmin.register Exchange do
       if    exchange.individual?
         link_to exchange.rates_source ? exchange.rates_source.titleize : '', admin_exchange_rates_path(exchange)
       elsif exchange.chain?
-#        link_to exchange.chain.rates_source ? exchange.chain.rates_source.titleize : '', admin_chain_rates_path(exchange.chain_id)
+        if exchange.chain
+          link_to exchange.chain.rates_source ? exchange.chain.rates_source.titleize : '', admin_chain_rates_path(exchange.chain_id)
+        else
+          "exchange has no chain"
+        end
       end
     end
     column(:status) {|exchange| status_tag(exchange.status, exchange.status_color) if exchange.status }
