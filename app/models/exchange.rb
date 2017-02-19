@@ -72,7 +72,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def rates_are_stale?
-    return false if self.individual? and (has_no_real_rates or rates.empty?)
+    return false if (self.individual? and has_no_real_rates) or rates.empty?
     (Date.today - rates.first.updated_at.to_date).to_i > 1
   end
 
