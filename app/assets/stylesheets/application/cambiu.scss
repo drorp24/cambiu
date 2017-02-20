@@ -9,8 +9,8 @@
 
 // Variables
 $userLocRadius: 30px;
-$label_font_size: 3.5vw;
-$form_font_size: 5vw;
+$label_font_size: 2vh;
+$form_font_size: 3vh;
 $swiper_bullets_bottom: 5vh;
 $rankingSize: 8vw;
 $brand-color-a: rgb(255, 23, 95);
@@ -754,8 +754,10 @@ body#cambiu {
     width: 100%;
   }
 
-  .swiper-container-intro .swiper-pagination-bullets {
-    bottom: 15vh;
+  .swiper-container-intro {
+    .swiper-pagination-bullets, .slide .slide_line {
+      bottom: 15vh;
+    }
   }
 
   .swiper-container-horizontal  .swiper-pagination-bullets .swiper-pagination-bullet {
@@ -795,7 +797,7 @@ body#cambiu {
   }
 
   .form-control, .clear {
-    font-size: 5.5vw;
+    font-size: 3vh;
   }
 
   .clear {
@@ -816,15 +818,17 @@ body#cambiu {
 
   .search_section {
     &.pay, &.get, &.where, &.radius {
-      height: 40%;
+      height: 34vh;
       padding: 10px;
       margin-top: 5%;
-      border-bottom: 4px double #eee;
+      @media screen and (orientation:portrait) {
+        border-bottom: 4px double #eee;
+      }
     }
     &.invoke {
-      height: 12%;
+      height: 10vh;
       .btn {
-        font-size: 5vw;
+        font-size: 3vh;
       }
     }
     .form-group.radius {
@@ -867,12 +871,17 @@ body#cambiu {
   }
 
   .search_heading {
-    font-size: 10vw;
+    font-size: 12vmin;
     color: #ddd;
     font-weight: 900;
   }
 
+
+
   .search_option {
+    @media screen and (orientation:landscape) {
+      display: none;
+    }
     .search_option_text {
       font-size: $form_font_size;
       font-weight: 300;
@@ -919,7 +928,7 @@ body#cambiu {
     height: 10%;
     justify-content: flex-end;
     padding-bottom: 2vh;
-    font-size: 4vw;
+    font-size: 2.5vh;
     /*
     .material-icons {
       font-size: 4.5vw;
@@ -928,7 +937,7 @@ body#cambiu {
     text-transform: uppercase;
     .slide_line {
       position: absolute;
-      bottom: 15vh;
+      bottom: 5vh;
       left: 0;
       width: 100%;
       padding-left: 3 * $padding;
@@ -1760,6 +1769,7 @@ body#cambiu {
       height: 100%;
       img {
         height: 100%;
+        width: 100%;
       }
     }
 
@@ -1959,7 +1969,7 @@ body#cambiu {
 
   .better {
     color: $brand-color-a;
-    font-size: 7vw;
+    font-size: 7vmin;
     font-weight: 100;
     text-transform: uppercase;
     [data-field=gain_percent] {
@@ -1976,7 +1986,7 @@ body#cambiu {
   }
 
   .fullcard .quote {
-    font-size: 6vw;
+    font-size: 7vmin;
     letter-spacing: -0.3vw;
     color: #000;
   }
