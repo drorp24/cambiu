@@ -234,8 +234,8 @@ set = function(field, value, trigger) {
 
 //    console.log('set ' + field + ' to ' + value);
 
-    $('.params [data-model=search][data-field=' + field + ']').html(value);
     value = (field.indexOf('amount') > -1) ? String(value).replace(/[^0-9\.]+/g,"") : value;
+    $('.params [data-model=search][data-field=' + field + ']').html(value);
 
     var $formField = $('#search_form [data-model=search][data-field=' + field + ']').val(value);
     if (value !== '') {

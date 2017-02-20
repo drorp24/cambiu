@@ -12,7 +12,7 @@
     if (navigator.serviceWorker) {
         navigator.serviceWorker.register('/serviceworker.js', { scope: './' })
             .then(function(reg) {
-                console.log('[Page] Service worker registered!');
+                console.log('[Page] Service worker registered with scope: ', reg.scope);
             })
             .catch(function(err){
                 snack("SW registration failed with error " + err , {$upEl: $('.swiper-container'), klass: 'oops'});
