@@ -13,7 +13,7 @@ namespace :rates do
       benchmark[currency] = {'buy' => rate.buy, 'sell' => rate.sell}
     end
 
-    Exchange.no_rates.find_each do |exchange|
+    Exchange.with_no_real_rates.find_each do |exchange|
 
       exchange.update(rates_source: 'test', status: nil)
       exchange.rates.delete_all

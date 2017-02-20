@@ -57,6 +57,8 @@ class Exchange < ActiveRecord::Base
   scope :real_rates, -> {where("rates_source > 1") }
   scope :any_rates, -> {where("rates_source > 0") }
   scope :no_rates, -> {where("rates_source = 0") }
+  scope :no_real_rates, -> { where("rates_source < 2") }
+
   scope :active, -> {where(status: nil)}
 
   scope :contract, -> { where(contract: true) }
@@ -69,6 +71,10 @@ class Exchange < ActiveRecord::Base
 
   def self.with_rates
     self.any_rates.active
+  end
+
+  def self.with_no_real_rates
+    self.no_real_rates.active
   end
 
   def rates_are_stale?
