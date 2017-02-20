@@ -754,6 +754,10 @@ body#cambiu {
     width: 100%;
   }
 
+  .swiper-container-intro .swiper-pagination-bullets {
+    bottom: 15vh;
+  }
+
   .swiper-container-horizontal  .swiper-pagination-bullets .swiper-pagination-bullet {
     margin: 0 5px;
   }
@@ -924,11 +928,14 @@ body#cambiu {
     text-transform: uppercase;
     .slide_line {
       position: absolute;
-      bottom: 5vh;
+      bottom: 15vh;
       left: 0;
       width: 100%;
       padding-left: 3 * $padding;
       padding-right: 3 * $padding;
+      i.material-icons {
+        font-size: 6vw;
+      }
     }
   }
 
@@ -942,10 +949,10 @@ body#cambiu {
     }
     padding: $pane-padding * 2;
     .illustration {
-      height: 65%;
+      height: 55%;
     }
     .message {
-      height:35%;
+      height:25%;
       .title {
         font-weight: 500;
         font-size: 6vw;
