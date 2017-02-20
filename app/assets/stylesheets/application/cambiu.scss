@@ -539,6 +539,23 @@ html, body {
 //  height: 100%;
 }
 
+
+/* portrait */
+@media screen and (orientation:portrait) {
+  /* portrait-specific styles */
+  body {
+    font-size: 1em;
+  }
+}
+/* landscape */
+@media screen and (orientation:landscape) {
+  /* landscape-specific styles */
+  body {
+    font-size: 1em;
+  }
+}
+
+
 body#cambiu {
 
   /*

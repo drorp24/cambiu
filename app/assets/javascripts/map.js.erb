@@ -289,7 +289,14 @@
 
       if (!surveyRequested) {
         setTimeout(function () {
-          showDialog();
+          showDialog({
+            title:    'Help us improve!',
+            body:     'Will you fill out a short survey?',
+            default:  'Maybe later',
+            primary:  'Sure',
+            pane:     'survey'
+          });
+          surveyRequested = true;
         }, 30000)
       }
 

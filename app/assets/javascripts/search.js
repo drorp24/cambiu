@@ -328,11 +328,18 @@ $(document).ready(function() {
 
 
     // pointer-events important!
-    showDialog = function() {
+    showDialog = function(options) {
         if (pane == 'survey') return;
+        var $modal = $('#myModal');
+        $modal.find('.modal-title').html(options.title);
+        $modal.find('.modal-body').html(options.body);
+        $modal.find('.btn-default').html(options.default);
+        $modal.find('.btn-primary').html(options.primary);
+        if (options.pane) {
+            $modal.find('.btn-primary').attr({'data-href-page': 'exchanges', 'data-href-pane': options.pane});
+        }
         $('#myModal').modal('show');
         $('.modal').css('pointer-events', 'all');
-        surveyRequested = true;
     };
 
     hideDialog = function() {
