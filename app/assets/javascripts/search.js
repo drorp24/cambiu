@@ -239,7 +239,7 @@ $(document).ready(function() {
         // unencoded: Slider values without formatting;
         // tap: Event was caused by the user tapping the slider (boolean);
         // positions: Left offset of the handles in relation to the slider
-        radius.value = unencoded[0].toFixed();
+        radius.value = unencoded[0].toFixed(3);
         set('radius', radius.value);
     }
 
