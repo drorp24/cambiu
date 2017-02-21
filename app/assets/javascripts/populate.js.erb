@@ -14,7 +14,7 @@ populateHelp = function(help, $scope) {
 
 populateStreetview = function(exchange) {
 
-    if (exchange.pano && exchange.pano.status == "ZERO_RESULTS") return;
+    /*if (exchange.pano && exchange.pano.status == "ZERO_RESULTS")*/ return;
 
     var sv = new google.maps.StreetViewService();
     var panorama = new google.maps.StreetViewPanorama(document.getElementById('streetview' + exchange.id),
