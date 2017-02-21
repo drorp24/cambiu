@@ -33,7 +33,9 @@ slideChange = function() {
     map.data.revertStyle();
     if (directionsDisplay) clearDirections();
     $('.ecard').removeClass('selected');
-//    map.setZoom(map_current_zoom);
+//    map.setZoom(16);
+//    focusOn(currentExchange());
+    renderDirections(currentExchange());
     highlightCurrentMarker();
     prev_distance_from_exchange = null;
 };

@@ -17,7 +17,7 @@
 
                 console.log('map exists already. Panning');
 
-                map.setZoom(map_current_zoom);
+                map.setZoom(map_initial_zoom);
                 map.panTo(location);
                 resolve();
                 return;
@@ -151,12 +151,17 @@
 
         var currExchange = currentExchange();
         if (!currExchange) return;
+
         var id = currExchange.id;
-        var style = 'z-index: ' + String(id);
-        var div = 'div[style*="' + style + '"]';
 
         $('#markerLayer img').removeClass('current');
-        $('#markerLayer ' + div +  ' img').addClass('current');
+        $('#markerLayer div').each(function() {
+          var $this = $(this);
+          if ($this.css('z-index') == id) {
+            $this.find('img').addClass('current');
+            return false;
+          }
+        })
 
     };
 
@@ -286,6 +291,7 @@
       calcRoute(origin, destination);
 
       if (!surveyRequested) {
+        surveyRequested = true;
         setTimeout(function () {
           showDialog({
             title:    'Help us improve!',
@@ -294,8 +300,7 @@
             primary:  'Sure',
             pane:     'survey'
           });
-          surveyRequested = true;
-        }, 30000)
+        }, 90000)
       }
 
     };
@@ -381,7 +386,6 @@
     function smoothZoom (map, max, cnt) {
 
         console.log('smoothZoom', max, cnt);
-      console.log('exchange[0] is: ' + exchanges[0].properties.name + ', no??');
         return new Promise(function(resolve, reject) {
 
           increaseZoom(cnt);
@@ -389,10 +393,10 @@
           function increaseZoom(cnt) {
 
               var zoom = map.getZoom();
-              if (!map.getBounds().contains(new google.maps.LatLng(exchanges[0].properties.latitude, exchanges[0].properties.longitude))) {
+              if (!map.getBounds().contains(new google.maps.LatLng(within_radius[0].properties.latitude, within_radius[0].properties.longitude))) {
 
-                console.log('cnt is: ' + cnt + ', map zoom is: ' + zoom + ' and map no longer includes best exchange - decreasing zoom by 1');
-                map_current_zoom = zoom - 1;
+                console.log('cnt is: ' + cnt + ', map zoom is: ' + zoom + ' and map no longer includes best exchange - decreasing zoom by 2');
+                map_current_zoom = zoom - 2;
                 map.setZoom(map_current_zoom);
                 $('#map_curtain').addClass('on');
                 resolve();
@@ -426,11 +430,18 @@
 
     zoomIn = function() {
         console.log('zoomIn');
-        if (exchanges.length == 0) {
+        if (within_radius.length == 0) {
             return;
         }
         return smoothZoom(map, map_final_zoom, map.getZoom())
     };
+
+     focusOn = function(exchange) {
+
+       map.panTo({lat: exchange.latitude, lng: exchange.longitude});
+       map.setZoom(16);
+
+     };
 
 
 

@@ -158,7 +158,7 @@
     };
 
 
-    compare = function(a, b, distance_factor = 1) {
+    compare = function(a, b, distance_factor = 1.5) {
         // a & b compete who gets the lower grade
         // the result returned is a_grade - b_grade
         // if this result is negative, a won, otherwise b won
