@@ -4,7 +4,7 @@ namespace :rates do
 
 
     currencies = %w[EUR USD AUD CAD JPY]
-    factors = {'buy' => {'low' => 1.02, 'high' => 1.15}, 'sell' => {'low' => 0.95, 'high' => 0.98}}
+    factors = {'buy' => {'low' => 1.005, 'high' => 1.02}, 'sell' => {'low' => 0.98, 'high' => 0.9905}}
 
     benchmark_rates = Chain.where(name: 'Debenhams').first.rates
     benchmark = {}
