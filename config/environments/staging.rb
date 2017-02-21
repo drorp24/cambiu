@@ -82,6 +82,8 @@ Rails.application.configure do
 
   config.ga_tracking_code = 'UA-91021177-2'
 
+  config.inspectlet_wid = '913033689'
+
 end
 Rails.application.routes.default_url_options[:host] = 'staging.cambiu.com'
 

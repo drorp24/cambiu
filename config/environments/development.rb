@@ -56,6 +56,8 @@ Rails.application.configure do
   #config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.ga_tracking_code = 'UA-91021177-3'
+  config.inspectlet_wid = ''
+
 
 end
 Rails.application.routes.default_url_options[:host] = 'localhost:3000'
