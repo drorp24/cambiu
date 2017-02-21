@@ -49,11 +49,11 @@ class Search < ActiveRecord::Base
     center          = [location_lat, location_lng]
     box             = Geocoder::Calculations.bounding_box(center, distance)
 
-    exchange_offers(exchange_id, location, center, box, pay, buy)
+    exchange_offers(exchange_id, location, center, box, pay, buy, distance)
 
   end
 
-  def exchange_offers(exchange_id, location, center, box, pay, buy)
+  def exchange_offers(exchange_id, location, center, box, pay, buy, distance)
 
     exchanges_offers = []
     pay_rate  = (pay.currency.iso_code.downcase + '_rate').to_sym
@@ -67,7 +67,7 @@ class Search < ActiveRecord::Base
 
 
     exchanges.each do |exchange|
-      offer = exchange.offer(center, pay, buy)
+      offer = exchange.offer(center, pay, buy, distance)
       exchanges_offers << offer unless (offer[:errors].any? and !Rails.env.development?)
     end
 

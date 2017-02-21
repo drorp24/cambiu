@@ -148,11 +148,13 @@
         if (exchanges.length == 0) return exchanges;
         console.log('rank');
 
-        exchanges.sort(function(a, b) {return compare(a.properties, b.properties)});
+        within_radius = $.grep(exchanges, function(e){ return e.properties.distance < sessionStorage.radius; });
+        if (within_radius.length > 0) {
+            within_radius.sort(function(a, b) {return compare(a.properties, b.properties)});
+            within_radius[0].properties.best_at.push('best');
+        }
 
-        exchanges[0].properties.best_at.push('best');
-
-        return exchanges;
+        return within_radius;
     };
 
 

@@ -207,6 +207,11 @@ class Exchange < ActiveRecord::Base
     end
 =end
 
+    if params[:distance] > params[:radius]
+      result[:errors]           <<   'Out of radius'
+      return result
+    end
+
     if currency.nil?
       result[:errors]           <<   'No local currency defined for that exchange'
       return result
@@ -379,11 +384,13 @@ class Exchange < ActiveRecord::Base
     'system'
   end
 
-  def offer(center, pay, buy)
+  def offer(center, pay, buy, radius)
 
     exchange_hash = {}
 
-    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount')
+    exchange_hash[:distance] = self.distance_from(center) # remove if not required!
+
+    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount', radius: radius, distance: exchange_hash[:distance])
     return {} if quotes[:error].present? and !Rails.env.development?
 
     exchange_hash[:id] = self.id
@@ -424,7 +431,6 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:place][:id] = self.place_id
     exchange_hash[:place][:status] = {}
     exchange_hash[:matrix] = {}
-    exchange_hash[:distance] = self.distance_from(center) # remove if not required!
     exchange_hash[:contract] = self.contract
 
 

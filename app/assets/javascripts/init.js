@@ -131,6 +131,7 @@ var arrivedToExchange = false;
 var page = null;
 var id = null;
 var pane = null;
+var within_radius = [];
 
 sessionStorage.videoStopped = null;
 
