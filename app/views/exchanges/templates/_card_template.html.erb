@@ -24,11 +24,8 @@
 
       <div class="comparison">
         <div class="comparison_item">
-          <div data-model="exchange" data-field="gain_percent"></div>
-          <div class="signs">
-            <div class="percentSign">%</div>
-            <div data-model="exchange" data-field="gain_type"></div>
-          </div>
+          <div data-model="exchange" data-field="gain_type"></div>
+          <div data-model="exchange" data-field="gain_amount"></div>
         </div>
       </div>
 
@@ -84,17 +81,19 @@
         <div class="quote_section flex_center">
 
            <div class="better flex_center">
-          <span>
-            <span data-model="exchange" data-field="gain_percent"></span>
-            <span>% better &nbsp;</span>
-          </span>
-            <i class="material-icons"
-               data-href-page="exchanges"
-               data-href-pane="help"
-               data-help-topic="Better than what?"
-               data-help-content="<p>That is how better the rate is from an actual offer in the vicinity.</p><p>That's your gain from using Cambiu.</p>">
-              help_outline
-            </i>
+             <div class="comparison">
+               <div class="comparison_item">
+                 <div data-model="exchange" data-field="gain_type"></div>
+                 <div data-model="exchange" data-field="gain_amount"></div>
+                 <i class="material-icons flex_center"
+                    data-href-page="exchanges"
+                    data-href-pane="help"
+                    data-help-topic="Compared with what?"
+                    data-help-content="<p>That is how much more you get versus actual offer in the vicinity.</p><p>That's your gain from using Cambiu.</p>">
+                   help_outline
+                 </i>
+               </div>
+             </div>
           </div>
 
           <div class="quote flex_center">

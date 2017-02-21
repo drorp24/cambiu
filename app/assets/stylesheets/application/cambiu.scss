@@ -1908,10 +1908,7 @@ body#cambiu {
       color: #000;
       font-size: 5vw;
       font-weight: 300;
-      [data-field=edited_quote] {
-        font-weight: 500;
-        text-align: center;
-//        transition: font-size $card-transition-time + 0.3s;
+      [data-field=edited_quote], [data-field=edited_quote_rounded] {
         @include threedots(75%);
       }
       [data-field=name] {
@@ -1980,7 +1977,7 @@ body#cambiu {
 
   .minicard .quote {
     @include threedots(100%);
-    font-size: 6vw;
+    font-size: 7.5vw;
     font-weight: 400;
     color: #000;
     margin-bottom: 3vw;
@@ -1990,6 +1987,7 @@ body#cambiu {
     font-size: 7vmin;
     letter-spacing: -0.3vw;
     color: #000;
+    font-weight: 400;
   }
 
   .norates {
@@ -2098,10 +2096,16 @@ body#cambiu {
     margin-top: -1em;
     .comparison_item {
       @include flexbox();
+      [data-field=gain_type] {
+        margin-right: 0.5em;
+      }
+      i {
+        margin-left: 0.3em;
+      }
     }
-    font-weight: 100;
+    font-weight: 900;
     transform: scale(0.9, 0.9);
-    color: #888;
+    color: $brand-color-a;
     [data-field=gain_percent] {
 //      border: 1px solid purple;
       flex-basis: 60%;
