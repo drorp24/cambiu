@@ -193,6 +193,8 @@
 
     currentExchange = function() {
 
+
+        var exchanges = within_radius;
         var exchangesLength = exchanges.length;
         var currentIndex = currIndex();
 
