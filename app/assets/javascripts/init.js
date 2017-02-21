@@ -148,7 +148,7 @@ def_vals = function() {
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
     def['sort']             = 'price';
-    def['radius']           = '5';
+    def['radius']           = '1';
     def['version']          = '0.0.0';
 
     return def;
@@ -410,26 +410,25 @@ $(document).ready(function() {
     var radius = document.getElementById('radius');
 
     noUiSlider.create(slider, {
-        connect: true,
-        start: Number(def('radius')),
         connect: [true, false],
+        start: Number(def('radius')),
         range: {
             min: 0,
-            max: 10
+            max: 2
         },
         pips: {
             mode: 'values',
-            values: [0, 5, 10],
+            values: [0, 1, 2],
             density: 10
         },
         tooltips: [true],
         format: {
             to: function ( value ) {
-                if (value < 1) {
+//                if (value < 1) {
                     return (value * 1000).toFixed() + ' m';
-                } else {
-                    return value.toFixed() + ' Km';
-                }
+//                } else {
+//                    return value.toFixed() + ' Km';
+//                }
             },
             from: function ( value ) {
                 return value.replace(' Km', '');
