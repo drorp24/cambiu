@@ -70,7 +70,7 @@
                 icon: best ? '<%= asset_path "48px_white.png" %>' : '<%= asset_path "48_48_grey.png" %>'
               });
 
-//              if (!best) markerClusterer.addMarker(marker);
+              if (!best) markerClusterer.addMarker(marker);
               markers.push(marker);
 
             });
@@ -177,8 +177,12 @@
 
     placeGoogleMarkers = function() {
 
-//      markerClusterer = new MarkerClusterer(map, markers, {imagePath: '/m'});
-//      markerClusterer.clearMarkers();
+      markerClusterer = new MarkerClusterer(map, markers, {
+        imagePath: '/m',
+        maxZoom: 14,
+        zoomOnClick: true
+      });
+      markerClusterer.clearMarkers();
       markers.forEach(function (marker) {
         marker.setMap(null)
       });
@@ -406,8 +410,8 @@
               var zoom = map.getZoom();
               if (!map.getBounds().contains(new google.maps.LatLng(within_radius[0].properties.latitude, within_radius[0].properties.longitude))) {
 
-                console.log('cnt is: ' + cnt + ', map zoom is: ' + zoom + ' and map no longer includes best exchange - decreasing zoom by 2');
-                map_current_zoom = zoom - 2;
+                console.log('cnt is: ' + cnt + ', map zoom is: ' + zoom + ' and map no longer includes best exchange - decreasing zoom by 1');
+                map_current_zoom = zoom - 1;
                 map.setZoom(map_current_zoom);
                 $('#map_curtain').addClass('on');
                 resolve();
