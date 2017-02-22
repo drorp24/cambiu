@@ -68,7 +68,7 @@ class Search < ActiveRecord::Base
 
     exchanges.each do |exchange|
       offer = exchange.offer(center, pay, buy, distance)
-      exchanges_offers << offer unless (offer[:errors].any? and offer[:errors][0] != 'Out of radius' and !Rails.env.development?)
+      exchanges_offers << offer #unless (offer[:errors].any? and offer[:errors][0] != 'Out of radius' and !Rails.env.development?)
     end
 
 #    exchanges_offers = indicate_best(exchanges_offers, pay, buy) if exchanges.any?

@@ -12,7 +12,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/?utm_source=homescreen",
   "theme_color": "#FF175F",
   "background_color": "yellow"
 }

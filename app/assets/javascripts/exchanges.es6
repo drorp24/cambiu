@@ -11,19 +11,19 @@
         swiperH.slideTo(0, 100, false);
     };
 
-    addCards = function(exchanges) {
+    addCards = function() {
 
         clearPrevSearch();
 
-        if (exchanges.length == 0) {
+        if (within_radius.length == 0) {
             snack("No information in this area yet. <br> Click 'OK' to search elsewhere.", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
             return;
         }
 
         console.log('addCards');
 
-        for (var i = 0; i < Math.min(initialSlides, exchanges.length); i++) {
-            var exchange = exchanges[i].properties;
+        for (var i = 0; i < Math.min(initialSlides, within_radius.length); i++) {
+            var exchange = within_radius[i].properties;
             addCard(exchange, i);
         }
 
@@ -145,16 +145,24 @@
 
     rank = function() {
 
-        if (exchanges.length == 0) return exchanges;
-        console.log('rank');
+        return new Promise(function(resolve, reject) {
 
-        within_radius = $.grep(exchanges, function(e){ return e.properties.distance < sessionStorage.radius; });
-        if (within_radius.length > 0) {
-            within_radius.sort(function(a, b) {return compare(a.properties, b.properties)});
-            within_radius[0].properties.best_at.push('best');
-        }
+            if (exchanges.length == 0) resolve(exchanges);
+            console.log('rank');
 
-        return within_radius;
+            within_radius = $.grep(exchanges, function (e) {
+                return e.properties.distance < sessionStorage.radius /*&& e.properties.errors.length == 0*/;
+            });
+            if (within_radius.length > 0) {
+                within_radius.sort(function (a, b) {
+                    return compare(a.properties, b.properties)
+                });
+                within_radius[0].properties.best_at.push('best');
+            }
+
+            resolve(within_radius);
+
+        })
     };
 
 

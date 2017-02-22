@@ -388,7 +388,7 @@ class Exchange < ActiveRecord::Base
 
     exchange_hash = {}
 
-    exchange_hash[:distance] = self.distance_from(center) # remove if not required!
+    exchange_hash[:distance] = self.distance_from(center) # TODO: calculate it myself
 
     quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount', radius: radius, distance: exchange_hash[:distance])
     return {} if quotes[:error].present? and !Rails.env.development?
