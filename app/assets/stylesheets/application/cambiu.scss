@@ -3155,7 +3155,6 @@ body#cambiu {
           width: 32px !important;
           left: 29px !important;
           top: 61px !important;
-          @include dropShadow2();
           transition: all 0.25s;
         }
       }
@@ -3164,9 +3163,10 @@ body#cambiu {
         z-index: 10000 !important;
         img {
           opacity: 1 !important;
+          @include dropShadow2();
           height: 44px !important;
           width: 44px !important;
-          left: 22px !important;
+          left: 28px !important;
           top: 49px !important;
         }
       }
