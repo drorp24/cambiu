@@ -133,6 +133,7 @@ var page = null;
 var id = null;
 var pane = null;
 var within_radius = [];
+var markersShaded = false;
 
 sessionStorage.videoStopped = null;
 

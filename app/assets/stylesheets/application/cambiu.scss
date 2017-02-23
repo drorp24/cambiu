@@ -102,6 +102,15 @@ $exchange_summary_bg_img_height_mobile: 75px;
   */
 }
 
+@mixin dropShadow2 {
+  -webkit-filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.3));
+  /*
+  filter: url("data:image/svg+xml;utf8,<svg height='0' xmlns='https://www.w3.org/2000/svg'><filter id='drop-shadow'><feGaussianBlur in='SourceAlpha' stdDeviation='4'/><feOffset dx='12' dy='12' result='offsetblur'/><feFlood flood-color='rgba(0,0,0,0.5)'/><feComposite in2='offsetblur' operator='in'/><feMerge><feMergeNode/><feMergeNode in='SourceGraphic'/></feMerge></filter></svg>#drop-shadow");
+  -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+  */
+}
+
 @mixin boxShadow {
   box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.7);
 }
@@ -3139,16 +3148,29 @@ body#cambiu {
       }
     */
 
-      img {
-        height: 26px !important;
-        width: 28px !important;
-        @include dropShadow();
-        &.current {
-          height: 44px !important;
-          width: 48px !important;
+      div {
+        z-index: inherit;
+        img { // The left and top are per img size, currently 96px. Change them if img size changes else the marker position wont be precise.
+          height: 32px !important;
+          width: 32px !important;
+          left: 29px !important;
+          top: 61px !important;
+          @include dropShadow2();
+          transition: all 0.25s;
         }
-        transition: all 0.25s;
       }
+
+      div.current  {
+        z-index: 10000 !important;
+        img {
+          opacity: 1 !important;
+          height: 44px !important;
+          width: 44px !important;
+          left: 22px !important;
+          top: 49px !important;
+        }
+      }
+
     }
 
 

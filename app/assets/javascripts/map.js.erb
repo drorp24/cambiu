@@ -67,7 +67,7 @@
                 zIndex: exchange_id,
                 optimized: false,
 //                icon: best ? '<%= asset_path "48px_blue_white_in_back.png" %>' : '<%= asset_path "48px_white.png" %>'
-                icon: best ? '<%= asset_path "48px_white.png" %>' : '<%= asset_path "48_48_grey.png" %>'
+                icon: best ? '<%= asset_path "48px_white.png" %>' : '<%= asset_path "96_96.png" %>'
               });
 
               if (!best) markerClusterer.addMarker(marker);
@@ -152,16 +152,22 @@
 
     highlightCurrentMarker = function() {
 
-        var currExchange = currentExchange();
-        if (!currExchange) return;
+      var currExchange = currentExchange();
+      if (!currExchange) return;
+      var id = currExchange.id;
 
-        var id = currExchange.id;
+      renderDirections(currExchange);
 
-        $('#markerLayer img').removeClass('current');
+      if (!markersShaded) {
+        $('#markerLayer div img').css('opacity', '0.35');
+        markersShaded = true;
+      }
+
+      $('#markerLayer div').removeClass('current');
         $('#markerLayer div').each(function() {
           var $this = $(this);
           if ($this.css('z-index') == id) {
-            $this.find('img').addClass('current');
+            $this.addClass('current');
             return false;
           }
         })
@@ -179,7 +185,7 @@
 
       markerClusterer = new MarkerClusterer(map, markers, {
         imagePath: '/m',
-        maxZoom: 14,
+        maxZoom: 13,
         zoomOnClick: true
       });
       markerClusterer.clearMarkers();
@@ -189,9 +195,11 @@
       markers = [];
       map.data.setMap(null);
 
+/*
       map.data.setStyle({
-        icon: '<%= asset_path "32_32_grey.png" %>'
+        icon: '<%= asset_path "96_96.png" %>'
       });
+*/
       exchangesLayer = map.data.addGeoJson(searchResult);
       idMarkerLayer();
     };

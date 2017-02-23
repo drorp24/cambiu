@@ -35,7 +35,6 @@ slideChange = function() {
     $('.ecard').removeClass('selected');
 //    map.setZoom(16);
 //    focusOn(currentExchange());
-    renderDirections(currentExchange());
     highlightCurrentMarker();
     prev_distance_from_exchange = null;
 };
