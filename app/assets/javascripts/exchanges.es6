@@ -17,7 +17,7 @@
         clearPrevSearch();
 
         if (within_radius.length == 0) {
-            snack("No information in this area yet. <br> Click 'OK' to search elsewhere.", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
+            snack("No offers for this currency pair. <br> Click OK to try a different one", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
             return;
         }
 
@@ -152,7 +152,7 @@
             console.log('rank');
 
             within_radius = $.grep(exchanges, function (e) {
-                return e.properties.distance < sessionStorage.radius /*&& e.properties.errors.length == 0*/;
+                return e.properties.distance < sessionStorage.radius && e.properties.errors.length == 0;
             });
             if (within_radius.length > 0) {
                 within_radius.sort(function (a, b) {

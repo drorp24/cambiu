@@ -240,6 +240,9 @@ class Exchange < ActiveRecord::Base
       bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       gain                                                  = get_amount - bad_amount
+      if gain < 0
+        result[:errors]               <<   'Worse than bad rate'
+      end
       result[:gain_percent]                                 = ((gain.abs / bad_amount) * 100).round
       result[:gain_amount]                                  = gain.abs.to_money(get_currency).format
       result[:gain_type]                                    = gain < 0 ? 'save' : 'save'
@@ -278,6 +281,9 @@ class Exchange < ActiveRecord::Base
       bad_amount                                            = get_amount * bad_rates[transaction.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
       gain                                                  = pay_amount - bad_amount
+      if gain < 0
+        result[:errors]               <<   'Worse than bad rate'
+      end
       result[:gain_percent]                                 = ((gain.abs / bad_amount) * 100).round
       result[:gain_amount]                                  = gain.abs.to_money(pay_currency).format
 

@@ -38,10 +38,12 @@ class ApplicationController < ActionController::Base
 
   protected
   
+=begin
   def set_http_cache_headers
     expires_in 1.month, public: true
     fresh_when last_modified: Date.new(2015, 1, 1), public: true
   end
+=end
 
   def find_guest_user
     @guest_user = User.find(session[:user_id]) if session[:user_id]
