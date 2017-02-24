@@ -548,6 +548,9 @@ html, body {
 //  height: 100%;
 }
 
+.gmnoprint {
+  display: none;
+}
 
 /* portrait */
 @media screen and (orientation:portrait) {
@@ -1741,6 +1744,9 @@ body#cambiu {
       color: #fff;
       font-weight: 500;
       @include boxShadow;
+      img {
+        width: 100%;
+      }
     }
     height: 33vw;
     @include flexbox();
@@ -3150,30 +3156,45 @@ body#cambiu {
       }
     */
 
-      div {
-        z-index: inherit;
-        img { // The left and top are per img size, currently 96px. Change them if img size changes else the marker position wont be precise.
-          height: 32px !important;
-          width: 32px !important;
-          left: 29px !important;
-          top: 61px !important;
-          transition: all 0.25s;
-        }
-      }
 
-      div.current  {
-        z-index: 10000 !important;
-        img {
-          opacity: 1 !important;
-          @include dropShadow2();
-          height: 44px !important;
-          width: 44px !important;
-          left: 28px !important;
-          top: 49px !important;
-        }
+    div {
+      z-index: inherit;
+      img { // The left and top are per img size, currently 96px. Change them if img size changes else the marker position wont be precise.
+        height: 32px !important;
+        width: 32px !important;
+        left: 29px !important;
+        top: 61px !important;
+        transition: all 0.25s;
+        opacity: 0.55 !important;
       }
-
     }
+
+    div.current  {
+      z-index: 9999 !important;
+      img.imgCurrent {
+        opacity: 1 !important;
+        @include dropShadow2();
+        height: 45px !important;
+        width: 43px !important;
+        left: 26px !important;
+        top: 51px !important;
+      }
+    }
+
+    div.best[style]  {
+      z-index: 10000 !important;
+      img.imgBest {
+        opacity: 1 !important;
+        @include dropShadow2();
+        height: 56px !important;
+        width: 54px !important;
+        left: 23px !important;
+        top: 38px !important;
+      }
+    }
+
+
+  }
 
 
   .map {

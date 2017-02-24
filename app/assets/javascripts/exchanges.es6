@@ -9,6 +9,7 @@
         $('#cards').empty();
         slidesAdded = [];
         swiperH.slideTo(0, 100, false);
+        if (directionsDisplay) clearDirections();
     };
 
     addCards = function() {

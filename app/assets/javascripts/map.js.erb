@@ -37,6 +37,7 @@
                 center: new google.maps.LatLng(latitude, longitude),
                 zoom: map_current_zoom,
                 scaleControl: true,
+                zoomControl: true,
                 zoomControlOptions: {
                     position: google.maps.ControlPosition.RIGHT_CENTER
                 },
@@ -65,12 +66,12 @@
                 title: e.feature.getProperty('name'),
                 exchange_id: exchange_id,
                 zIndex: exchange_id,
-                optimized: false,
+                  optimized: false,
 //                icon: best ? '<%= asset_path "48px_blue_white_in_back.png" %>' : '<%= asset_path "48px_white.png" %>'
-                icon: best ? '<%= asset_path "48px_white.png" %>' : '<%= asset_path "96_96.png" %>'
+                icon: best ? '<%= asset_path "1_96_96.png" %>' : '<%= asset_path "96_96.png" %>'
               });
 
-              if (!best) markerClusterer.addMarker(marker);
+//              if (!best) markerClusterer.addMarker(marker);
               markers.push(marker);
 
             });
@@ -150,27 +151,12 @@
         });
     };
 
-    highlightCurrentMarker = function() {
+    fitBounds = function(exchange) {
 
-      var currExchange = currentExchange();
-      if (!currExchange) return;
-      var id = currExchange.id;
-
-      renderDirections(currExchange);
-
-      if (!markersShaded) {
-        $('#markerLayer div img').css('opacity', '0.35');
-        markersShaded = true;
-      }
-
-      $('#markerLayer div').removeClass('current');
-        $('#markerLayer div').each(function() {
-          var $this = $(this);
-          if ($this.css('z-index') == id) {
-            $this.addClass('current');
-            return false;
-          }
-        })
+      bounds  = new google.maps.LatLngBounds();
+      bounds.extend(new google.maps.LatLng(search.location.lat, search.location.lng));
+      bounds.extend(new google.maps.LatLng(exchange.latitude, exchange.longitude));
+      map.fitBounds(bounds);
 
     };
 
@@ -183,25 +169,25 @@
 
     placeGoogleMarkers = function() {
 
+/*
       markerClusterer = new MarkerClusterer(map, markers, {
         imagePath: '/m',
         maxZoom: 13,
         zoomOnClick: true
       });
       markerClusterer.clearMarkers();
+ */
+
       markers.forEach(function (marker) {
         marker.setMap(null)
       });
       markers = [];
       map.data.setMap(null);
 
-/*
-      map.data.setStyle({
-        icon: '<%= asset_path "96_96.png" %>'
-      });
-*/
       exchangesLayer = map.data.addGeoJson(searchResult);
+
       idMarkerLayer();
+      setTimeout(markBest, 1000);
     };
 
 
@@ -264,17 +250,6 @@
 
      };
 
-    // define a markers layer and id it so google markers can be styled in css (as '#markerLayer img')
-    // NOTE!! if not needed, then 'optimized: false' should be removed from marker creation
-    idMarkerLayer = function() {
-        console.log('idMarkerLayer');
-        var myoverlay = new google.maps.OverlayView();
-        myoverlay.draw = function () {
-            this.getPanes().markerLayer.id='markerLayer';
-        };
-        myoverlay.setMap(map);
-    };
-
     placeSoftMarkers = function() {
         console.log('placeSoftMarkers');
         exchanges.forEach(placeSoftMarker);
@@ -323,14 +298,14 @@
             primary:  'Sure',
             pane:     'survey'
           });
-        }, 90000)
+        }, 30000)
       }
 
     };
 
 
     clearDirections = function() {
-        if (directionsRenderedFor == null) return;
+//        if (directionsRenderedFor == null) return;
         directionsDisplay.setMap(null);
         directionsRenderedFor = null;
     };
@@ -418,8 +393,8 @@
               var zoom = map.getZoom();
               if (!map.getBounds().contains(new google.maps.LatLng(within_radius[0].properties.latitude, within_radius[0].properties.longitude))) {
 
-                console.log('cnt is: ' + cnt + ', map zoom is: ' + zoom + ' and map no longer includes best exchange - decreasing zoom by 1');
-                map_current_zoom = zoom - 1;
+                console.log('cnt is: ' + cnt + ', map zoom is: ' + zoom + ' and map no longer includes best exchange - decreasing zoom by 2');
+                map_current_zoom = zoom - 2;
                 map.setZoom(map_current_zoom);
                 $('#map_curtain').addClass('on');
                 resolve();
@@ -467,4 +442,67 @@
      };
 
 
+  ///
+  /// markerLayer manipulation
+  ///
+
+   // define a markers layer and id it so google markers can be styled in css (as '#markerLayer img')
+   // NOTE!! if not needed, then 'optimized: false' should be removed from marker creation
+
+  idMarkerLayer = function() {
+   console.log('idMarkerLayer');
+   var myoverlay = new google.maps.OverlayView();
+   myoverlay.draw = function () {
+     this.getPanes().markerLayer.id='markerLayer';
+   };
+   myoverlay.setMap(map);
+  };
+
+
+  function titleCase(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
+
+  zIndex = function($e) {
+   var style = $e.attr('style');
+   if (!style) return;
+   return style.slice(style.indexOf('z-index') + 9, style.lastIndexOf(';'));
+  };
+
+
+  markerLayerAddClass = function(id, klass) {
+
+   $('#markerLayer > div').each(function() {
+
+       var $this = $(this);
+
+       if (zIndex($this) == id) {
+         $this.addClass(klass);
+         $this.find('img').addClass('img' + titleCase(klass));
+         return false
+       }
+   })
+  };
+
+  markBest = function() {
+
+    if (within_radius.length == 0) return;
+
+    var bestId = within_radius[0].properties.id;
+    markerLayerAddClass(bestId, 'best');
+
+  };
+
+  highlightCurrentMarker = function() {
+
+    var currExchange = currentExchange();
+    if (!currExchange) return;
+    var currId = currExchange.id;
+
+//    renderDirections(currExchange);
+
+    $('#markerLayer div').removeClass('current');
+    $('#markerLayer div img').removeClass('imgCurrent');
+
+    markerLayerAddClass(currId, 'current');
+
+  };
 

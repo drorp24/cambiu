@@ -96,7 +96,9 @@ populateExchange = function(exchange, $scope, index) {
 
     if (exchange.base_rate) {
         if (index == 0) {
-            $scope.find('.ranking').html('<i class="fa fa-trophy"></i>')
+          var src = '<%= asset_path 'circle_crown.png' %>';
+          var html = '<img src=' + src + '>';
+          $scope.find('.ranking').html(html);
         } else {
             $scope.find('.ranking').html(index + 1);
         }
