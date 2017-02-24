@@ -148,7 +148,13 @@ $(document).ready(function() {
             $('.form-group.location').removeClass('has-error is-focused').find('.help-block').removeClass('required');
         }
 
-        valid = amountValid && locationValid;
+        var currencyValid = $('.form-group #pay_currency').val() != $('.form-group #buy_currency').val();
+
+        if (!currencyValid) {
+            $('.form-group.pay_currency').addClass('has-error is-focused').find('.help-block').addClass('required');
+        }
+
+        valid = amountValid && locationValid && currencyValid;
         return valid;
     };
 
