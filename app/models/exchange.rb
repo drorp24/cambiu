@@ -438,10 +438,24 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:place][:status] = {}
     exchange_hash[:matrix] = {}
     exchange_hash[:contract] = self.contract
-    exchange_hash[:photo] = self.photo && (asset = Rails.application.assets.find_asset('exchanges/' + self.photo)) ? ENV["CLOUDFRONT_DIST"] + '/assets/' + asset.digest_path : nil
+    exchange_hash[:photo] = photo_url
 
 
     exchange_hash
+
+  end
+
+  def photo_url
+
+    return nil unless self.photo
+
+    if Rails.application.assets_manifest.assets.any? and url = Rails.application.assets_manifest.assets['exchanges/' + self.photo]
+      return ENV["CLOUDFRONT_DIST"] + '/assets/' + url
+    elsif Rails.application.assets and url = Rails.application.assets.find_asset('exchanges/' + self.photo)
+      return ENV["CLOUDFRONT_DIST"] || "" + '/assets/' + url.digest_path
+    else
+      return nil
+    end
 
   end
 
