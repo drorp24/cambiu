@@ -289,30 +289,35 @@ streetviewUrl = function(exchange, options) {
 
 populateStaticStreeview = function(exchange, $scope) {
 
-//    console.log('populateStaticStreetview. Pano: ', exchange.pano);
+//console.log('populateStaticStreetview. Pano: ', exchange.pano);
 
-    if (exchange.pano && exchange.pano.status == "ZERO_RESULTS") {
+  var $mini_streetview = $scope.find('.minicard .streetview');
+  var $full_streetview = $scope.find('.fullcard .streetview');
+
+  if (exchange.photo) {
+
+        var src = exchange.photo;
+        var html = '<img src=' + src + '>';
+
+        $mini_streetview.html(html);
+        $full_streetview.html(html);
+
+    } else if (exchange.pano && exchange.pano.status == "ZERO_RESULTS") {
 
         var src = '<%= asset_path 'def_streetview.png' %>';
         var html = '<img src=' + src + '>';
 
-        var $mini_streetview = $scope.find('.minicard .streetview');
-        var $full_streetview = $scope.find('.fullcard .streetview');
-
         $mini_streetview.html(html);
         $full_streetview.html(html);
 
-    } else {
+      } else {
 
         var src = streetviewUrl(exchange, {metadata: false});
         var html = '<img src=' + src + '>';
 
-        var $mini_streetview = $scope.find('.minicard .streetview');
-        var $full_streetview = $scope.find('.fullcard .streetview');
-
         $mini_streetview.html(html);
         $full_streetview.html(html);
 
-    }
-};
+      }
+ };
 
