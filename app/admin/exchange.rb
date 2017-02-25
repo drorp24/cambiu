@@ -2,7 +2,7 @@ ActiveAdmin.register Exchange do
 
   permit_params :id, :name, :address, :email, :latitude, :longitude, :country, :opens, :closes,:website, :email, :note, :phone, :atm, :source, :business_type, :chain, :city, :region, :rating, :nearest_station,
                 :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id, :rates_source, :contract, :rates_policy,
-                :todo, :chain_name, :contact, :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close, :rates_url, :comment
+                :todo, :chain_name, :contact, :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close, :rates_url, :comment, :photo
 
 =begin
     rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
@@ -232,6 +232,7 @@ form do |f|
       f.input     :chain_name, label: 'Chain'
       f.input     :name
       f.input     :nearest_station
+      f.input     :photo
       f.input     :contact
       f.input     :address
       f.input     :phone, as: :phone

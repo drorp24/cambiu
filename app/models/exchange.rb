@@ -438,6 +438,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:place][:status] = {}
     exchange_hash[:matrix] = {}
     exchange_hash[:contract] = self.contract
+    exchange_hash[:photo] = self.photo && (asset = Rails.application.assets.find_asset('exchanges/' + self.photo)) ? ENV["CLOUDFRONT_DIST"] + '/assets/' + asset.digest_path : nil
 
 
     exchange_hash
