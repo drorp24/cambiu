@@ -94,11 +94,12 @@ ActiveAdmin.register Exchange do
   index do
     selectable_column
     id_column
-    column(:todo)   {|exchange| status_tag(exchange.todo, exchange.todo_color) if exchange.todo }
-    column(:system) {|exchange| status_tag(exchange.system, exchange.system_color) if exchange.system }
+#    column(:todo)   {|exchange| status_tag(exchange.todo, exchange.todo_color) if exchange.todo }
+#    column(:system) {|exchange| status_tag(exchange.system, exchange.system_color) if exchange.system }
     column :chain
     column :name
     column :nearest_station
+    column :address
     column :contract
 #    column :address
     column :phone
