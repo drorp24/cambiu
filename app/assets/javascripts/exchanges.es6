@@ -79,7 +79,11 @@
         var $navBtn = $('.nav_icon_container');
         $navBtn.addClass('rotate');
         renderDirections(currentExchange());
-        report('Tap', 'Directions');
+        if ($(this).is('.actions_line')) {
+            report('Tap', 'Directions');
+        } else {
+            report('Tap', 'DirectionsBtn');
+        }
 
         setTimeout(function(){
 

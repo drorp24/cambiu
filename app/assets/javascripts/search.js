@@ -253,6 +253,10 @@ $(document).ready(function() {
 
     slider.noUiSlider.on('update', updateRadius);
 
+    slider.noUiSlider.on('end', function() {
+        report('Tap', 'Radius');
+    });
+
     slider.noUiSlider.on('change', function ( values, handle, unencoded ) {
         if ( unencoded[0] < 0.1 ) {
             slider.noUiSlider.set(0.1);
@@ -365,6 +369,28 @@ $(document).ready(function() {
     $('body').on('click tap', '.list-group-item', function() {
         console.log('click caught');
         $(this).find('.list-group-item-text').toggleClass('expand');
+    });
+
+
+    $('.phone_icon').on('click tap', function() {
+        report('Tap', 'Phone');
+    });
+
+    $('.swiper-slide.a .getOffer.btn').on('click tap', function() {
+        report('Tap', 'Get an offer (1)')
+    });
+
+    $('.swiper-slide.d .getOffer.btn').on('click tap', function() {
+        report('Tap', 'Get an offer (4)')
+    });
+
+    $('.swiper-slide.b .slide_line .left').on('click tap', function() {
+        report('Tap', 'Skip (2)')
+    });
+
+    $('.swiper-slide.c .slide_line .left').on('click tap', function() {
+        report('Tap', 'Skip (3)')
     })
+
 
 });
