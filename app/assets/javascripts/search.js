@@ -102,6 +102,7 @@ $(document).ready(function() {
     $('#search_form [data-model=search][data-field]').on('click tap', function() {
 
         console.log('moving to a new field');
+        if ($('#search_form .location').hasClass('is-focused')) console.log('focus!');
         var $this = $(this);
         var field = $this.data('field');
         if (amount(field)) clear($this);
