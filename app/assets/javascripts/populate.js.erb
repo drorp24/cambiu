@@ -12,9 +12,10 @@ populateHelp = function(help, $scope) {
 
 };
 
+// To supress live streetview - comment the if, leave return only
 populateStreetview = function(exchange) {
 
-    if (exchange.pano && exchange.pano.status == "ZERO_RESULTS") return;
+    if (exchange.photo || (exchange.pano && exchange.pano.status == "ZERO_RESULTS")) return;
 
     var sv = new google.maps.StreetViewService();
     var panorama = new google.maps.StreetViewPanorama(document.getElementById('streetview' + exchange.id),
