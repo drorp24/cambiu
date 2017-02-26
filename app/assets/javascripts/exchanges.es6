@@ -148,6 +148,7 @@
         });
     };
 
+    // To include 'worse than bad rate' change the grep condition below
     rank = function() {
 
         return new Promise(function(resolve, reject) {
@@ -156,7 +157,9 @@
             console.log('rank');
 
             within_radius = $.grep(exchanges, function (e) {
-                return e.properties.distance < sessionStorage.radius && e.properties.errors.length == 0;
+                return e.properties.distance < sessionStorage.radius &&
+                      (e.properties.errors.length == 0 ||
+                      (e.properties.errors.length == 1 && e.properties.errors[0] == 'Worse than bad rate'));
             });
             if (within_radius.length > 0) {
                 within_radius.sort(function (a, b) {
