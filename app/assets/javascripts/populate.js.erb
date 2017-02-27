@@ -83,7 +83,7 @@ populateExchange = function(exchange, $scope, index) {
 
     getPano(exchange).then(function(pano) {populateStaticStreeview(exchange, $scope)});
 
-    if (!exchange.gain_amount || exchange.errors.length > 0 && exchange.errors[0] == 'Worse than bad rate') {
+    if (!exchange.gain || exchange.gain < 0) {
         $scope.find('.comparison').css('visibility', 'hidden');
         $scope.find('.comparison_text').css('visibility', 'hidden');
     }

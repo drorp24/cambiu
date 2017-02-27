@@ -190,6 +190,7 @@ class Exchange < ActiveRecord::Base
         edited_quote:     nil,
         edited_quote_rounded: nil,
         bad_amount:       nil,
+        gain:             0,
         gain_amount:      gain_amount   = 0,
         gain_currency:    gain_currency = nil,
         real_rates:       has_real_rates?,
@@ -239,13 +240,10 @@ class Exchange < ActiveRecord::Base
       end
       bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
-      gain                                                  = get_amount - bad_amount
-      if gain < 0
-        result[:errors]               <<   'Worse than bad rate'
-      end
-      result[:gain_percent]                                 = ((gain.abs / bad_amount) * 100).round
-      result[:gain_amount]                                  = gain.abs.to_money(get_currency).format
-      result[:gain_type]                                    = gain < 0 ? 'save' : 'save'
+      result[:gain]                                         = get_amount - bad_amount
+      result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
+      result[:gain_amount]                                  = result[:gain].to_money(get_currency).format
+      result[:gain_type]                                    = result[:gain] < 0 ? 'save' : 'save'
       result[:gain_currency]                                = get_currency
 
       result[:pay_amount]                                   = pay_amount.to_money(pay_currency).format
@@ -280,15 +278,12 @@ class Exchange < ActiveRecord::Base
 
       bad_amount                                            = get_amount * bad_rates[transaction.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
-      gain                                                  = pay_amount - bad_amount
-      if gain < 0
-        result[:errors]               <<   'Worse than bad rate'
-      end
-      result[:gain_percent]                                 = ((gain.abs / bad_amount) * 100).round
-      result[:gain_amount]                                  = gain.abs.to_money(pay_currency).format
+      result[:gain]                                         = bad_amount - pay_amount
+      result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
+      result[:gain_amount]                                  = result[:gain].to_money(pay_currency).format
 
       result[:gain_currency]                                = pay_currency
-      result[:gain_type]                                    = gain < 0 ? 'save' : 'save'
+      result[:gain_type]                                    = result[:gain] < 0 ? 'save' : 'save'
       result[:get_amount]                                   = get_amount.to_money(get_currency).format(:disambiguate => true)
 
       if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
@@ -439,6 +434,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:matrix] = {}
     exchange_hash[:contract] = self.contract
     exchange_hash[:photo] = photo_url
+    exchange_hash[:gain] = quotes[:gain]
 
 
     exchange_hash

@@ -153,19 +153,23 @@
 
         return new Promise(function(resolve, reject) {
 
-            if (exchanges.length == 0) resolve(exchanges);
             console.log('rank');
 
+            within_radius = [];
+            if (exchanges.length == 0) resolve(exchanges);
+
             within_radius = $.grep(exchanges, function (e) {
-                return e.properties.distance < sessionStorage.radius &&
-                      (e.properties.errors.length == 0 ||
-                      (e.properties.errors.length == 1 && e.properties.errors[0] == 'Worse than bad rate'));
+                return e.properties.distance < sessionStorage.radius && e.properties.errors.length == 0;
             });
+
             if (within_radius.length > 0) {
+
                 within_radius.sort(function (a, b) {
-                    return compare(a.properties, b.properties)
+                    return grade(a) - grade(b);
                 });
+
                 within_radius[0].properties.best_at.push('best');
+
             }
 
             resolve(within_radius);
@@ -173,36 +177,23 @@
         })
     };
 
-
-    compare = function(a, b, distance_factor = 1.5) {
-        // a & b compete who gets the lower grade
-        // the result returned is a_grade - b_grade
-        // if this result is negative, a won, otherwise b won
-
-        var a_grade, b_grade;
+    grade = function(exchange, distance_factor = 1.5) {
 
         if (value_of('buy_amount')) {
-            a_grade = a.quote || 10000000;
-            b_grade = b.quote || 10000000;
+            result = Number(exchange.properties.quote) || 10000000;
         } else {
-            a_grade = a.quote * -1 || 0;
-            b_grade = b.quote * -1 || 0;
+            result = Number(exchange.properties.quote) * -1 || 0;
         }
+        result += exchange.properties.distance * distance_factor;
+        exchange.grade = result;
+        return result;
 
-        a_grade += a.distance * distance_factor;
-        b_grade += b.distance * distance_factor;
-
-/*
-        var diff = a_grade - b_grade;
-        console.log(diff < 0 ? "A is better" : (diff == 0 ? "Both are equivalent" : "B is better"));
-*/
-        return a_grade - b_grade;
     };
 
     rankCheck = function() {
 
-        exchanges.forEach((exchange) => {
-            console.log('quote: ', exchange.properties.edited_quote, 'distance: ', exchange.properties.distance)
+        within_radius.forEach((exchange) => {
+            console.log('quote: ', exchange.properties.quote, 'distance: ', exchange.properties.distance, 'grade: ', exchange.grade)
         })
     };
 
