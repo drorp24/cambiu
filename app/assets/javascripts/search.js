@@ -260,8 +260,8 @@ $(document).ready(function() {
     slider.noUiSlider.on('change', function ( values, handle, unencoded ) {
         if ( unencoded[0] < 0.1 ) {
             slider.noUiSlider.set(0.1);
-        } else if ( unencoded[0] > 2 ) {
-            slider.noUiSlider.set(2);
+        } else if ( unencoded[0] > 5 ) {
+            slider.noUiSlider.set(5);
         }
     });
 

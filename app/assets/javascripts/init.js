@@ -416,11 +416,11 @@ $(document).ready(function() {
         start: Number(def('radius')),
         range: {
             min: 0,
-            max: 2
+            max: 5
         },
         pips: {
             mode: 'values',
-            values: [0, 1, 2],
+            values: [0, 1, 2, 3, 4, 5],
             density: 10
         },
         tooltips: [true],
