@@ -53,7 +53,18 @@ class Extract
 
   def self.parse_rates(url, doc, chain, exchange, rates_source)
 
-    if url == "http://www.ace-fx.com/feed/affrates"
+    if url == "http://bestexchange.co.uk"
+
+      doc.css('.views-table tbody tr').each do |tr|
+        currency  = tr.css('td')[1].text.strip
+        next unless Currency.updatable.include? currency
+        buy       = tr.css('td')[2].text.strip
+        sell      = tr.css('td')[3].text.strip
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
+      end
+
+
+    elsif url == "http://www.ace-fx.com/feed/affrates"
 
       doc.css('rate').each do |rate|
         currency  = rate['code']

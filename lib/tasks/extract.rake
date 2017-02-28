@@ -21,6 +21,8 @@ namespace :rates do
 
     Extract.update(nil, 'Natwest', "http://www.natwest.com/tools/personal/currency_rates", 'html')
 
+    Extract.update('Best Exchange', nil, "http://bestexchange.co.uk", 'html')
+
     Rails.logger.info " "
     Rails.logger.info "Finished periodic extract task"
     Rails.logger.info " "
