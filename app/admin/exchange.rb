@@ -292,7 +292,7 @@ form do |f|
 #      columns = Exchange.column_names - Exchange.unexported_columns
       begin
 
-        chain = Chain.find_by(name: hash[:chain_name])
+        chain = Chain.find_by(name: hash[:chain ])
         unless chain
           puts "no name and address or empty line"
           next
@@ -303,7 +303,7 @@ form do |f|
           next
         end
 
-        chain.rates.where(currency: hash[:curreny_code]).first_or_create.update(source: 'manual', currency: hash[:curreny_code], sell: hash[:sell_rate], buy: hash[:buy_rate])
+        chain.rates.where(currency: hash[:currency_code]).first_or_create.update(source: 'manual', currency: hash[:currency_code], sell: hash[:sell_rate], buy: hash[:buy_rate])
 
       rescue => e
         puts "e: #{e}"
