@@ -1,11 +1,13 @@
-class Api::V1::ExchangesController < Api::V1::BaseController
-  def index
-    @exchanges = Exchange.all
-    render json: @exchanges, :callback => params['callback']
-  end
+module Api
+  module V1
 
-  def show
-    @exchange = Exchange.find_by_id params[:id]
-    render json: @exchange, :callback => params['callback']
+    class ExchangesController < ApplicationController
+
+      def index
+        render json: Exchange.entire_list(params)
+      end
+
+    end
+
   end
 end

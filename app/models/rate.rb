@@ -4,7 +4,7 @@ class Rate < ActiveRecord::Base
   belongs_to :admin_user
 
   enum service_type: [ :collection, :delivery ]
-  enum source: [ :manual, :xml, :scraping, :test ]
+  enum source: [ :manual, :xml, :scraping, :test, :ratefeed ]
 
   validates :sell, numericality: true, allow_nil: true
   validates :buy, numericality: true, allow_nil: true
@@ -16,6 +16,34 @@ class Rate < ActiveRecord::Base
 
   before_update :currency_is_not_local
 #  before_create :initialize_default_values
+
+
+  def self.identify_by_either(params)
+
+    return Rate.new.errors.add(:base, 'missing parameters')     unless
+          params[:currency].present?                            and
+         (params[:buy].present? or params[:sell].present?)      and
+         (params[:chain].present? or params[:name].present?)
+
+    if params[:chain] and chain = Chain.find_by(name: params[:chain])
+      rate = Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
+      if rate
+        return rate
+      else
+        return Rate.new.errors.add(:base, 'rate not found for this chain')
+      end
+    end
+
+    if params[:name] and exchange = Exchange.find_by(name: params[:name])
+      rate = Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
+      if rate
+        return rate
+      else
+        return Rate.new.errors.add(:base, 'rate not found for this exchange')
+      end
+    end
+
+  end
 
   def display_name
     split = $request.path.split('/')

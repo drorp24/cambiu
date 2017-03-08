@@ -69,6 +69,50 @@ class Exchange < ActiveRecord::Base
   scope :system, -> {where.not(system: nil) }
 
 
+  def self.entire_list(params)
+
+    return {error: 'Missing parameters'} unless params[:country].present? and params[:city].present?
+
+    return Exchange.active.limit(5)  # TODO: Remove limit
+                    .where(country: params[:country], city: params[:city])
+                    .select(:name, :nearest_station, :address, :phone, :latitude, :longitude,
+                            :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close)
+
+  end
+
+
+  def self.entire_rates(params)
+
+    return {error: 'Missing parameters'} unless params[:country].present? and params[:city].present?
+
+    exchanges = Exchange.active.limit(5)  # TODO: Remove limit
+                    .where(country: params[:country], city: params[:city])
+                    .select(:id, :name, :rates_policy)
+
+    rates = []
+
+    exchanges.each do |exchange|
+
+      exchange.rates.each do |rate|
+
+        rate_h = {}
+
+        rate_h[:exchange_id]    = exchange.id
+        rate_h[:exchange_name]  = exchange.name
+        rate_h[:currency]       = rate.currency
+        rate_h[:buy]            = rate.buy
+        rate_h[:sell]           = rate.sell
+        rate_h[:updated_at]     = rate.updated_at
+
+        rates << rate_h
+
+      end
+    end
+
+    return rates
+
+  end
+
   def self.with_rates
     self.any_rates.active
   end
