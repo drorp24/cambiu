@@ -18,7 +18,7 @@ module Api
       end
 
       def rate_params
-        params.permit(:chain, :name, :currency, :buy, :sell)
+        params.permit(:country, :city, :chain, :name, :currency, :buy, :sell)
       end
 
     end

@@ -4,7 +4,11 @@ module Api
     class ExchangesController < ApplicationController
 
       def index
-        render json: Exchange.entire_list(params)
+        render json: Exchange.entire_list(exchange_params)
+      end
+
+      def exchange_params
+        params.permit(:country, :city)
       end
 
     end

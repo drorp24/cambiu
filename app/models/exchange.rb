@@ -71,7 +71,7 @@ class Exchange < ActiveRecord::Base
 
   def self.entire_list(params)
 
-    return {error: 'Missing parameters'} unless params[:country].present? and params[:city].present?
+    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
 
     return Exchange.active.limit(5)  # TODO: Remove limit
                     .where(country: params[:country], city: params[:city])
@@ -83,7 +83,7 @@ class Exchange < ActiveRecord::Base
 
   def self.entire_rates(params)
 
-    return {error: 'Missing parameters'} unless params[:country].present? and params[:city].present?
+    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
 
     exchanges = Exchange.active.limit(5)  # TODO: Remove limit
                     .where(country: params[:country], city: params[:city])
