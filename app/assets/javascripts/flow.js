@@ -6,7 +6,10 @@
 
 $(document).ready(function() {
 
-        if (desktop) return;
+    if (desktop) {
+        console.log('not mobile - returning');
+        return;
+    }
 
     console.log('flow');
 
