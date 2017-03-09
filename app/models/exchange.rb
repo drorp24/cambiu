@@ -75,7 +75,7 @@ class Exchange < ActiveRecord::Base
 
     return Exchange.active.limit(5)  # TODO: Remove limit
                     .where(country: params[:country], city: params[:city])
-                    .select(:name, :nearest_station, :address, :phone, :latitude, :longitude,
+                    .select(:id, :name, :nearest_station, :address, :phone, :latitude, :longitude,
                             :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close)
 
   end

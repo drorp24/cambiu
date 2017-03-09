@@ -18,9 +18,16 @@ class Rate < ActiveRecord::Base
 #  before_create :initialize_default_values
 
 
+  def self.with(property, error)
+    rate = Rate.new
+    rate.errors.add(property, error)
+    return rate
+  end
+
+  # If the referred chain/exchange doesnt already have a rate for the referred currency, it will be accepted iff there are other currencies with rates in our system
   def self.identify_by_either(params)
 
-    return Rate.new.errors.add(:base, 'missing parameters')     unless
+    return with 'parameters', 'missing' unless
           params[:currency].present?                            and
          (params[:buy].present? or params[:sell].present?)      and
          (params[:chain].present? or params[:name].present?)
@@ -29,8 +36,10 @@ class Rate < ActiveRecord::Base
       rate = Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
       if rate
         return rate
+      elsif Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id)
+        return Rate.new(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
       else
-        return Rate.new.errors.add(:base, 'rate not found for this chain')
+        return with 'chain', 'no rates defined for that chain'
       end
     end
 
@@ -38,8 +47,10 @@ class Rate < ActiveRecord::Base
       rate = Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
       if rate
         return rate
+      elsif Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id)
+        return Rate.new(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
       else
-        return Rate.new.errors.add(:base, 'rate not found for this exchange')
+        return with 'exchange', 'no rates defined for that exchange'
       end
     end
 
