@@ -89,27 +89,33 @@ class Exchange < ActiveRecord::Base
                     .where(country: params[:country], city: params[:city])
                     .select(:id, :name, :rates_policy)
 
-    rates = []
+    exchanges_list = []
 
     exchanges.each do |exchange|
+
+      exchange_h = {}
+      exchange_h[:exchange_id]    = exchange.id
+      exchange_h[:exchange_name]  = exchange.name
+      exchange_h[:rates] = []
 
       exchange.rates.each do |rate|
 
         rate_h = {}
 
-        rate_h[:exchange_id]    = exchange.id
-        rate_h[:exchange_name]  = exchange.name
         rate_h[:currency]       = rate.currency
         rate_h[:buy]            = rate.buy
         rate_h[:sell]           = rate.sell
         rate_h[:updated_at]     = rate.updated_at
 
-        rates << rate_h
+        exchange_h[:rates] << rate_h
 
       end
+
+      exchanges_list << exchange_h
+      
     end
 
-    return rates
+    return exchanges_list
 
   end
 
