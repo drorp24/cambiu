@@ -24,7 +24,7 @@ additionalParams = {
 };
 
 exchangesGet = function() {
-    apigClient.exchangesGet(apiParams, {}, {})
+    apigClient.exchangesGet(apiParams, '', '')
         .then(function(result){
             console.log('exchangesGet success', result)
         }).catch( function(result){
@@ -33,7 +33,7 @@ exchangesGet = function() {
 };
 
 ratesGet = function() {
-    apigClient.ratesGet(apiParams, {}, {})
+    apigClient.ratesGet(apiParams, '', '')
         .then(function(result){
             console.log('ratesGet success', result)
         }).catch( function(result){
@@ -42,7 +42,7 @@ ratesGet = function() {
 };
 
 ratesPost = function() {
-    apigClient.ratesGet(apiParams, body, {})
+    apigClient.ratesGet(apiParams, body, '')
         .then(function(result){
             console.log('ratesPost success', result)
         }).catch( function(result){

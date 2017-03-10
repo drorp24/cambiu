@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   respond_to :html
 
-#  before_action :show_request_headers
-#  before_action :require_authentication,:if => Proc.new { |c| c.request.path.include? "/api/"}
+  before_action :show_request_headers
+  before_action :require_authentication,:if => Proc.new { |c| c.request.path.include? "/api/"}
 
   protect_from_forgery with: :exception
   
