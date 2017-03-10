@@ -138,6 +138,7 @@ var markersShaded = false;
 sessionStorage.videoStopped = null;
 
 
+
 def_vals = function() {
 
     var def = {};

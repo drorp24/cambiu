@@ -4,16 +4,17 @@ class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   respond_to :html
 
-  before_action :require_authentication,:if => Proc.new { |c| c.request.headers['X-SSL-Auth']}
+#  before_action :show_request_headers
+#  before_action :require_authentication,:if => Proc.new { |c| c.request.path.include? "/api/"}
 
   protect_from_forgery with: :exception
   
   before_action :configure_permitted_parameters, if: :devise_controller?
 #  before_action :authenticate_user!
 
-  before_action :pass_request
+#  before_action :pass_request
 
-  before_action :detect_browser
+#  before_action :detect_browser
 
   private
   def detect_browser
@@ -41,8 +42,18 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def show_request_headers
+    puts ""
+    puts request.path.include? "/api/"
+    puts ""
+    puts "request headers:"
+    puts ""
+    request.headers.each {|key, value| puts key, value}
+    puts ""
+  end
+
   def require_authentication
-    unless current_certificate.verify(public_key)
+    unless request.headers['X-SSL-Auth'] and current_certificate.verify(public_key)
       head :forbidden
     end
   end

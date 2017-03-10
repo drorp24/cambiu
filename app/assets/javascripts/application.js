@@ -11,6 +11,9 @@
 //= require fetch
 //= require snackbar.min
 //= require analysis
+//= require apigClient
+//= require_tree ./lib
+//= require aws_api_gateway
 
 //= require init
 //= require ytplayer
