@@ -112,7 +112,7 @@ class Exchange < ActiveRecord::Base
       end
 
       exchanges_list << exchange_h
-      
+
     end
 
     return exchanges_list

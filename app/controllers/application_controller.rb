@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   respond_to :html
 
+  before_action :require_authentication,:if => Proc.new { |c| c.request.headers['X-SSL-Auth']}
+
   protect_from_forgery with: :exception
   
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -34,6 +36,27 @@ class ApplicationController < ActionController::Base
 
   def pass_request
     $request = request
+  end
+
+
+  private
+
+  def require_authentication
+    unless current_certificate.verify(public_key)
+      head :forbidden
+    end
+  end
+
+  def public_key
+    @public_key ||= OpenSSL::PKey::RSA.new(ENV['AUTH_PUBLIC_KEY']||1)
+  end
+
+  def current_certificate
+    @current_certificate ||= OpenSSL::X509::Certificate.new(request.headers['X-SSL-Auth'])
+  end
+
+  def current_client
+    current_certificate.issuer.to_a.assoc('OU')[1]
   end
 
   protected
