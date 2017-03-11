@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   respond_to :html
 
   before_action :show_request_headers
-  before_action :require_authentication,:if => Proc.new { |c| c.request.path.include? "/api/"}
+#  before_action :require_authentication,:if => Proc.new { |c| c.request.path.include? "/api/"}
 
   protect_from_forgery with: :exception
   
@@ -44,11 +44,10 @@ class ApplicationController < ActionController::Base
 
   def show_request_headers
     puts ""
-    puts request.path.include? "/api/"
-    puts ""
     puts "request headers:"
     puts ""
-    request.headers.each {|key, value| puts key, value}
+  #  request.headers.each {|key, value| puts key, value}
+    pp request.headers.env.select{|k, _| k.in?(ActionDispatch::Http::Headers::CGI_VARIABLES) || k =~ /^HTTP_/}
     puts ""
   end
 
