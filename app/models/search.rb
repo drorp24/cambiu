@@ -41,7 +41,7 @@ class Search < ActiveRecord::Base
     return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
     return if         location_lat.blank? or location_lng.blank?
 
-    self.distance      ||=  20
+    self.distance      =  50
     self.distance_unit ||= "km"
 
     pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
@@ -55,23 +55,16 @@ class Search < ActiveRecord::Base
 
   def exchange_offers(exchange_id, location, center, box, pay, buy, distance)
 
-    exchanges_offers = []
     pay_rate  = (pay.currency.iso_code.downcase + '_rate').to_sym
     buy_rate  = (buy.currency.iso_code.downcase + '_rate').to_sym
 
-=begin
     exchanges = Exchange.with_rates.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
-=end
 
-    exchanges = Exchange.with_rates.geocoded.where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
-
-
+    exchanges_offers = []
     exchanges.each do |exchange|
       offer = exchange.offer(center, pay, buy, distance)
       exchanges_offers << offer #unless (offer[:errors].any? and offer[:errors][0] != 'Out of radius' and !Rails.env.development?)
     end
-
-#    exchanges_offers = indicate_best(exchanges_offers, pay, buy) if exchanges.any?
 
     geoJsonize(exchanges_offers)
 
