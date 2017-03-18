@@ -42,7 +42,7 @@ ratesGet = function() {
 };
 
 ratesPost = function() {
-    apigClient.ratesGet(apiParams, body, '')
+    apigClient.ratesPost(apiParams, body, '')
         .then(function(result){
             console.log('ratesPost success', result)
         }).catch( function(result){
