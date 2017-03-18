@@ -28,36 +28,41 @@ getLocation = function() {
 
             user.lat = position.coords.latitude;
             user.lng = position.coords.longitude;
-            setLocation(user.lat, user.lng, 'user', 'positionFound');
+
+            var center = nearest_center(user.lat, user.lng);
+
+            if (center.distance < 100) {
+                setLocation(user.lat, user.lng, 'user', 'positionFound', user.lat, user.lng, null);
+            } else {
+                setLocation(center.lat, center.lng, 'nearest', 'nothingAroundUser', user.lat, user.lng, null);
+                showingOffersIn(center.name);
+            }
         }
 
         function positionError(error) {
 
             var message = error.message ? error.message : error;
-            setLocation(Number(dfault.lat), Number(dfault.lng), 'default', 'PositionError: ' + message);
+            setLocation(Number(dfault.lat), Number(dfault.lng), 'default', 'PositionError: ' + message, null, null, 'Unknown');
             snack('We couldn\'t locate you. Have you given us the permission to?', {upEl: $('.swiper-container'), klass: 'oops', timeout: 3000});
             persistError('positionError', message);
 
         }
 
-        function setLocation(lat, lng, type, reason) {
+        function setLocation(location_lat, location_lng, type, reason, user_lat, user_lng, user_location) {
+
+            // search.user.lat is the *initial* user position, as opposed to user.lat/lng which changes as the user walks
+            // it is passed to 'search' entity where it is persisted
 
             search.location     = {};
-            search.user = {};
+            search.user         = {};
 
-            set('location_lat',     search.location.lat = lat);
-            set('location_lng',     search.location.lng = lng);
-            set('location_type',    search.location.type = type);
-            set('location_reason',  search.location.reason = reason);
-            if (type == 'user') {
-                set('user_lat',         search.user.lat = lat);  // search.user.lat is the *initial* user position, as opposed to user.lat/lng which changes as the user walks
-                set('user_lng',         search.user.lng = lng);  // it is passed to 'search' entity where it is persisted
-                set('user_location',    search.user.location = null);
-            } else {
-                set('user_lat',         search.user.lat = null);  // search.user.lat is the *initial* user position, as opposed to user.lat/lng which changes as the user walks
-                set('user_lng',         search.user.lng = null);  // it is passed to 'search' entity where it is persisted
-                set('user_location',    search.user.location = 'Unknown');
-            }
+            set('location_lat',     search.location.lat         = location_lat);
+            set('location_lng',     search.location.lng         = location_lng);
+            set('location_type',    search.location.type        = type);
+            set('location_reason',  search.location.reason      = reason);
+            set('user_lat',         search.user.lat             = user_lat);
+            set('user_lng',         search.user.lng             = user_lng);
+            set('user_location',    search.user.location        = user_location);
 
             console.log('location set!', search.location);
             resolve(search.location);
@@ -351,3 +356,46 @@ showUserPosition = function(lat, lng) {
 hideUserPosition = function() {
     $('#userLoc').removeClass('show');
 };
+
+
+function nearest_center(lat, lng) {
+
+    // Currently, it checks London only
+    // When we have more, loop over all centers leaving out the nearest: lat, lng, distance
+
+    var distance_from_nearest_center =
+        distance(
+            new google.maps.LatLng(lat, lng),
+            new google.maps.LatLng(Number(dfault.lat), Number(dfault.lng))
+        )/1000;
+
+    var nearest_center_lat = Number(dfault.lat),
+        nearest_center_lng = Number(dfault.lng);
+
+    return {
+        lat:        nearest_center_lat,
+        lng:        nearest_center_lng,
+        name:       'London',
+        distance:   distance_from_nearest_center
+    }
+
+}
+
+function showingOffersIn(city) {
+    snack('No offers where you are. <br> Showing offers in ' + city + '.', {
+        button: '<i class="material-icons">help_outline</i>',
+        klass: 'oops',
+        timeout: 5000,
+        link: {
+            page: 'exchanges',
+            pane: 'help',
+            help: {
+                topic: 'Why are you showing offers in ' + city + '?',
+                content:
+                "<p>No offers in your vicinity, but you may find interest in our " + city + " offers.</p>" +
+                "<p>Soon, our network will grow, expanding to more cities.</p>" +
+                "<p>Stay tuned!</p>"
+            }
+        }
+    });
+}

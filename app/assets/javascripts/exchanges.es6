@@ -17,7 +17,7 @@
         clearPrevSearch();
 
         if (within_radius.length == 0) {
-            snack("No offers for this currency pair. <br> Click OK to try a different one", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
+            snack("No offer for these parameters. <br> Click OK to change them", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
             return;
         }
 
