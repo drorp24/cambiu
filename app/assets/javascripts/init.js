@@ -134,6 +134,8 @@ var id = null;
 var pane = null;
 var within_radius = [];
 var markersShaded = false;
+var locationMsgInformed = false;
+var nearest;
 
 sessionStorage.videoStopped = null;
 

@@ -35,7 +35,6 @@ getLocation = function() {
                 setLocation(user.lat, user.lng, 'user', 'positionFound', user.lat, user.lng, null);
             } else {
                 setLocation(center.lat, center.lng, 'nearest', 'nothingAroundUser', user.lat, user.lng, null);
-                showingOffersIn(center.name);
             }
         }
 
@@ -372,16 +371,19 @@ function nearest_center(lat, lng) {
     var nearest_center_lat = Number(dfault.lat),
         nearest_center_lng = Number(dfault.lng);
 
-    return {
+    nearest =
+    {
         lat:        nearest_center_lat,
         lng:        nearest_center_lng,
         name:       'London',
         distance:   distance_from_nearest_center
-    }
+    };
+
+    return nearest;
 
 }
 
-function showingOffersIn(city) {
+showingOffersIn = function(city) {
     snack('No offers where you are. <br> Showing offers in ' + city + '.', {
         button: '<i class="material-icons">help_outline</i>',
         klass: 'oops',
@@ -398,4 +400,12 @@ function showingOffersIn(city) {
             }
         }
     });
-}
+};
+
+locationMsg = function(location) {
+    if (pane != 'map' || locationMsgInformed) return;
+    if (location.type == 'nearest' && nearest && nearest.name) {
+        showingOffersIn(nearest.name);
+        locationMsgInformed = true;
+    }
+};

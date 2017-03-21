@@ -50,6 +50,7 @@
 
             google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
               console.log('Map is drawn');
+              locationMsg(location);
               resolve();
             });
 
@@ -136,12 +137,10 @@
 
          // TODO: Show selected exchange on map
 
-         google.maps.event.trigger(map, 'resize');
+       google.maps.event.trigger(map, 'resize');
+       locationMsg(search.location);
 
-         // Added to fix absurd Savyon centering issue
-         if (user.lat && user.lng) {
-             map.setCenter({lat: user.lat, lng: user.lng});
-         }
+
      };
 
 
