@@ -80,6 +80,7 @@ gem 'redis', '~> 3.3', '>= 3.3.1'
 gem 'sidekiq'
 gem 'sinatra', github: 'sinatra'
 gem 'serviceworker-rails'
+gem 'browser'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
