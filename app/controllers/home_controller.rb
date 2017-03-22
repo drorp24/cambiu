@@ -10,7 +10,7 @@ class HomeController < ApplicationController
     puts @browser.device.mobile?
     puts ""
     puts ""
-    redirect_to 'http://cambiu.frontdev.com.ua' unless @browser.device.mobile?
+    redirect_to ENV['LANDING_URL'] unless Rails.env.development?
   end
 
 end
