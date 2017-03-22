@@ -10,7 +10,11 @@ class HomeController < ApplicationController
     puts @browser.device.mobile?
     puts ""
     puts ""
-    redirect_to ENV['LANDING_URL'] unless Rails.env.development?
+    redirect_to ENV['LANDING_URL'] || 'http://join.cambiu.com' #unless Rails.env.development?
+  end
+
+  def app
+    render :index
   end
 
 end
