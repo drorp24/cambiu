@@ -33,5 +33,6 @@ module CurrencyNetMvp
 #    config.active_job.queue_name_prefix = "cambiu_#{Rails.env}"
     config.filter_parameters += [:photo]
     config.action_view.logger = nil
+    OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ciphers] += ':DES-CBC3-SHA'
   end
 end

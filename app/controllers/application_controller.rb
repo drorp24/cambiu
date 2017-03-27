@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 #  before_action :authenticate_user!
 
-#  before_action :pass_request
+  before_action :pass_request
 
   before_action :detect_browser
 
