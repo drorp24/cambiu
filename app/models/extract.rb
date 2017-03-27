@@ -53,7 +53,18 @@ class Extract
 
   def self.parse_rates(url, doc, chain, exchange, rates_source)
 
-    if url == "http://bestexchange.co.uk"
+    if url == "http://www.netdania.com/quotes/forex-sterling"
+
+      doc.css('.nd-ql-tbl-results table tbody tr').each do |tr|
+        currency  = tr.css('td')[0].css('a').text.split('/')[1]
+        next unless Currency.updatable.include? currency
+        high = tr.css('td')[7].text.strip.to_f
+        low = tr.css('td')[8].text.strip.to_f
+        buy = sell = (high + low) / 2
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
+      end
+
+    elsif url == "http://bestexchange.co.uk"
 
       doc.css('.views-table tbody tr').each do |tr|
         currency  = tr.css('td')[1].text.strip

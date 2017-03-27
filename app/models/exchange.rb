@@ -27,7 +27,7 @@ class Exchange < ActiveRecord::Base
 
   has_many    :reviews,  :dependent => :destroy
 
-  enum business_type: [ :exchange, :bank, :post_office, :other ]
+  enum business_type: [ :exchange, :bank, :post_office, :other, :inter ]
   enum rates_source:  [ :no_rates, :test, :manual, :xml, :scraping ]
   enum rates_policy:  [:individual, :chain]
   enum todo:          [:verify, :call, :meet]
@@ -212,6 +212,10 @@ class Exchange < ActiveRecord::Base
 
   def self.bad
     @bank ||= self.bank.first
+  end
+
+  def self.interbank
+    @inter ||= self.inter.first
   end
 
   def self.bad_rate(pay_currency, get_currency)

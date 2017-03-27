@@ -20,6 +20,7 @@ namespace :rates do
     Extract.update(nil, 'Thomas Exchange UK', "https://www.thomasexchange.co.uk/i_banknote_rates.asp", 'html')
 
     Extract.update(nil, 'Natwest', "http://www.natwest.com/tools/personal/currency_rates", 'html')
+    Extract.update(nil, 'netdania', "http://www.netdania.com/quotes/forex-sterling", 'html')
 
     Extract.update('Best Exchange', nil, "http://bestexchange.co.uk", 'html')
 
