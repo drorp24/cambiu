@@ -73,21 +73,29 @@ class Exchange < ActiveRecord::Base
 
     return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
 
+# TODO: Remove limit
+# TODO: Right now these two are just excel fields, some times populated other not. Return when meaningful.
+
     return Exchange.active.limit(5)  # TODO: Remove limit
-                    .where(country: params[:country], city: params[:city])
                     .select(:id, :name, :nearest_station, :address, :phone, :latitude, :longitude,
                             :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close)
+#                    .where(country: params[:country], city: params[:city])
 
   end
 
 
-  def self.entire_rates(params)
+  def self.rates_list(params)
 
     return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
 
-    exchanges = Exchange.active.limit(5)  # TODO: Remove limit
-                    .where(country: params[:country], city: params[:city])
-                    .select(:id, :name, :rates_policy)
+    selected_exchanges = params[:type] && params[:type] == 'reference' ? Exchange.inter : Exchange.active
+
+# TODO: Remove limit
+# TODO: Right now these two are just excel fields, some times populated other not. Return when meaningful.
+
+    exchanges = selected_exchanges.limit(5)
+                    .select(:id, :name, :rates_policy, :chain_id)
+#                    .where(country: params[:country], city: params[:city])
 
     exchanges_list = []
 

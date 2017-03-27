@@ -5,7 +5,7 @@ module Api
       skip_before_action :verify_authenticity_token # TODO: Replace with verify_API_key
 
       def index
-        render json: Exchange.entire_rates(rate_params)
+        render json: Exchange.rates_list(rate_params)
       end
 
       def create
@@ -18,7 +18,7 @@ module Api
       end
 
       def rate_params
-        params.permit(:country, :city, :chain, :name, :currency, :buy, :sell)
+        params.permit(:country, :city, :chain, :name, :nearest_station, :currency, :buy, :sell, :type)
       end
 
     end
