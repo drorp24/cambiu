@@ -21,4 +21,13 @@ class Chain < ActiveRecord::Base
     self.currency = 'GBP'
   end
 
+  def self.entire_list(params)
+
+    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
+
+    return Chain.all.select(:id, :name)
+
+  end
+
+
 end
