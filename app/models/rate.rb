@@ -32,25 +32,34 @@ class Rate < ActiveRecord::Base
          (params[:buy].present? or params[:sell].present?)      and
          (params[:chain].present? or params[:name].present?)
 
-    if params[:chain] and chain = Chain.find_by(name: params[:chain])
-      rate = Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
-      if rate
-        return rate
-      elsif Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id)
-        return Rate.new(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
+    if params[:chain]
+      if chain = Chain.find_by(name: params[:chain])
+        rate = Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
+        if rate
+          return rate
+        elsif Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id)
+          return Rate.new(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
+        else
+          return with 'chain', 'no rates defined for that chain'
+        end
       else
-        return with 'chain', 'no rates defined for that chain'
+        return with 'chain', 'no sucn chain'
       end
     end
 
-    if params[:name] and exchange = Exchange.find_by(name: params[:name])
-      rate = Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
-      if rate
-        return rate
-      elsif Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id)
-        return Rate.new(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
+    if params[:name]
+      exchange = params[:nearest_station] ? Exchange.find_by(name: params[:name], nearest_station: params[:nearest_stration]) : Exchange.find_by(name: params[:name])
+      if exchange
+        rate = Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
+        if rate
+          return rate
+        elsif Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id)
+          return Rate.new(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
+        else
+          return with 'exchange', 'no rates defined for that exchange'
+        end
       else
-        return with 'exchange', 'no rates defined for that exchange'
+        return with 'exchange', 'no such exchange'
       end
     end
 

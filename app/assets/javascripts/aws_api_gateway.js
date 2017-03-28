@@ -57,13 +57,13 @@ ratesPost = function() {
 sidekixCClient = apigClientFactory.newClient({
     accessKey: 'AKIAJWKBZ7VJ6MDB6SHA',
     secretKey: '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',
-    region: 'eu-west-2' // OPTIONAL: The region where the API is deployed, by default this parameter is set to us-east-1
+    region: 'us-west-2' // OPTIONAL: The region where the API is deployed, by default this parameter is set to us-east-1
 });
 
 ratefeedCClient = apigClientFactory.newClient({
     accessKey: 'AKIAIY6K5IKEXG7EGC6A',
     secretKey: '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',
-    region: 'eu-west-2' // OPTIONAL: The region where the API is deployed, by default this parameter is set to us-east-1
+    region: 'us-west-2' // OPTIONAL: The region where the API is deployed, by default this parameter is set to us-east-1
 });
 
 //Using API Keys
@@ -81,7 +81,7 @@ ratefeedAClient = apigClientFactory.newClient({
 sidekixClient = apigClientFactory.newClient({
     accessKey: 'AKIAJWKBZ7VJ6MDB6SHA',
     secretKey: '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',
-    region: 'eu-west-2',
+    region: 'us-west-2',
     apiKey: 'YUFJqqGvWW51noXnbkeEn3AiTMVKJxxbagzKY8mZ'
 });
 

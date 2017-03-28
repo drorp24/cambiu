@@ -13,7 +13,7 @@ module Api
         if rate and rate.errors.empty? and rate.update(buy: rate_params[:buy], sell: rate_params[:sell], source: 'ratefeed')
           render json: {status: 'ok'}
         else
-          render json: {errors: rate.errors.any? ? rate.errors : 'rate was not updated'}
+          render json: {errors: rate && rate.errors.any? ? rate.errors : 'rate was not updated'}
         end
       end
 
