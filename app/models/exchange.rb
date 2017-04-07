@@ -76,7 +76,7 @@ class Exchange < ActiveRecord::Base
 # TODO: Right now these two are just excel fields, some times populated other not. Return when meaningful.
 
     return Exchange.active
-                    .select(:id, :chain_id, :name, :nearest_station, :currency, :address, :phone, :latitude, :longitude,
+                    .select(:id, :chain_id, :name, :nearest_station, :rates_policy, :currency, :address, :phone, :latitude, :longitude,
                             :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close)
 #                    .where(country: params[:country], city: params[:city])
 
@@ -104,6 +104,7 @@ class Exchange < ActiveRecord::Base
       exchange_h[:exchange_id]    = exchange.id
       exchange_h[:exchange_name]  = exchange.name
       exchange_h[:exchange_currency]  = exchange.currency
+      exchange_h[:rates_policy]  = exchange.rates_policy
       exchange_h[:rates] = []
 
       exchange.rates.each do |rate|
