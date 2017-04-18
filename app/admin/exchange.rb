@@ -34,7 +34,7 @@ ActiveAdmin.register Exchange do
     rescue => e
  #      e.save validate: false
       puts "e: #{e}"
-      puts "e.error: #{e.error}" if e
+#      puts "e.error: #{e.error}" if e && e.error
       puts ""
     end
 
