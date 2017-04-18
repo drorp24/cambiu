@@ -81,6 +81,10 @@ gem 'sidekiq'
 gem 'sinatra', github: 'sinatra'
 gem 'serviceworker-rails'
 gem 'browser'
+#gem 'derailed', group: :development
+gem 'derailed_benchmarks', group: :development
+gem 'stackprof', group: :development
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
