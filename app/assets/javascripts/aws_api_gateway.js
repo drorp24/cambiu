@@ -1,10 +1,4 @@
 apigClient = apigClientFactory.newClient();
-
-apiParams = {
-    //This is where any header, path, or querystring request params go. The key is the parameter named as defined in the API
-    'country': 'UK',
-    'city': 'London'
-};
 body = {
     //This is where you define the body of the request
     'chain': '`Debenhams',

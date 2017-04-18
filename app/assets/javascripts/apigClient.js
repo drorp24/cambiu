@@ -83,6 +83,42 @@ apigClientFactory.newClient = function (config) {
     
     
     
+    apigClient.chainsGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, ['city', 'country'], ['body']);
+        
+        var chainsGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/chains').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['city', 'country']),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(chainsGetRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
+    apigClient.chainsOptions = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var chainsOptionsRequest = {
+            verb: 'options'.toUpperCase(),
+            path: pathComponent + uritemplate('/chains').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(chainsOptionsRequest, authType, additionalParams, config.apiKey);
+    };
+    
+    
     apigClient.exchangesGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
@@ -122,13 +158,13 @@ apigClientFactory.newClient = function (config) {
     apigClient.ratesGet = function (params, body, additionalParams) {
         if(additionalParams === undefined) { additionalParams = {}; }
         
-        apiGateway.core.utils.assertParametersDefined(params, ['city', 'country'], ['body']);
+        apiGateway.core.utils.assertParametersDefined(params, ['city', 'type', 'country'], ['body']);
         
         var ratesGetRequest = {
             verb: 'get'.toUpperCase(),
             path: pathComponent + uritemplate('/rates').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
             headers: apiGateway.core.utils.parseParametersToObject(params, []),
-            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['city', 'country']),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, ['city', 'type', 'country']),
             body: body
         };
         
