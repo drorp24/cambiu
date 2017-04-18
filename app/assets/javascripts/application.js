@@ -16,7 +16,6 @@
 //= require aws_api_gateway
 
 //= require init
-//= require ytplayer
 //= require animations
 //= require push
 //= require location

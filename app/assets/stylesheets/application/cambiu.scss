@@ -1322,7 +1322,7 @@ body#cambiu {
 
   .swiper-container-h {
     width: 100%;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
 //    background-color: rgba(0, 0, 0, 0.2);
@@ -1748,7 +1748,7 @@ body#cambiu {
         width: 100%;
       }
     }
-    height: 33vw;
+    height: 33vmin;
     @include flexbox();
     flex-wrap: nowrap;
     flex-direction: row;

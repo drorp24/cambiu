@@ -616,6 +616,7 @@ $(document).ready(function() {
 
 // Add a media query change listener
     mql.addListener(function(m) {
+        if (desktop) return;
         if ($('#search_form .location').hasClass('is-focused')) return;
         if(m.matches) {   // Changed to portrait
             hideDialog();

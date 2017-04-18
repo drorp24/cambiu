@@ -6,11 +6,6 @@
 
 $(document).ready(function() {
 
-    if (desktop) {
-        console.log('not mobile - returning');
-        return;
-    }
-
     console.log('flow');
 
     populateParams();
