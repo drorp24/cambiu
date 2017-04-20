@@ -585,6 +585,13 @@ body#cambiu {
     cursor: pointer;  // else not clickable!
     padding-top: 1.5vh;
     padding-bottom: 1.5vh;
+    &.ecard  {
+      height: 22vh !important;
+      .photo img {
+        height: 18vh !important;
+        margin-left: -15%;
+      }
+    }
     .list-group-item-text {
       color: rgba(0, 0, 0, 0.80);
       font-size: 4vmin;
@@ -1076,9 +1083,11 @@ body#cambiu {
     height: 100vh;
     background: #fff;
     &[data-list] {
-      background: #eee;
       height: initial !important;
       min-height: 100vh;
+    }
+    &[data-pane="reviews"] {
+      background: #eee;
     }
     &[data-pane=cards] {
       background: none;
@@ -1720,6 +1729,7 @@ body#cambiu {
     }
   }
 
+
   .fullcard {
     width: 100%;
     display: none;
@@ -1753,9 +1763,6 @@ body#cambiu {
       }
     }
     height: 33vw;
-    @media (min-width: $screen-md-min) {
-      height: 22vh;
-    }
     @include flexbox();
     flex-wrap: nowrap;
     flex-direction: row;
@@ -1774,9 +1781,6 @@ body#cambiu {
       height: 85%;
       img {
         height: 27vw !important;
-        @media (min-width: $screen-md-min) {
-          height: 15vh !important;
-        }
         width: 85%;
       }
     }
@@ -1921,7 +1925,6 @@ body#cambiu {
         bottom: 5px;
 
       }
-      padding-right: 5px;
       transition: initial;
     }
     .data {
