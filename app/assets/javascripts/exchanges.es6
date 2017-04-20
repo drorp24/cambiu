@@ -1,54 +1,95 @@
 //
 //  E X C H A N G E S
 //
-//  Uses the exchanges buffer returned by search form callback to update all markup
+// Responsible for displaying offers to the user
+//
+// - selecting which of the returned exchanges is fit to display as offer
+// - ranking the offers algorithmically
+// - displaying them to fit either mobile or desktop layouts by invoking populate.js and defining its $scope
 
 
+    // return 'offers' = 'exchanges' worth displaying, ranked
+     selectOffers = function() {
+
+        return new Promise(function(resolve, reject) {
+
+            console.log('selectOffers');
+
+            offers = [];
+            if (exchanges.length == 0) resolve(exchanges);
+
+            offers = $.grep(exchanges, function (e) {
+                return e.properties.distance < sessionStorage.radius && e.properties.errors.length == 0;
+            });
+
+            if (offers.length > 0) {
+
+                offers.sort(function (a, b) {
+                    return grade(a) - grade(b);
+                });
+
+                offers[0].properties.best_at.push('best');
+
+            }
+
+            resolve(offers);
+
+        })
+    };
+
+    function no(offers) {
+        if (offers.length == 0) {
+            snack("No offer for these parameters. <br> Click OK to change them", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
+            return true;
+        }
+    }
 
     clearPrevSearch = function() {
-        $('#cards').empty();
-        slidesAdded = [];
-        swiperH.slideTo(0, 100, false);
+        if (mode == 'mobile' || mode == 'both') {
+            $('#cards').empty();
+            slidesAdded = [];
+            swiperH.slideTo(0, 100, false);
+        }
+        if (mode == 'desktop' || mode == 'both') {
+            $('.exchanges_list').empty();
+        }
         if (directionsDisplay) clearDirections();
     };
 
-    addCards = function() {
+    displayOffers = function() {
 
         clearPrevSearch();
 
-        if (within_radius.length == 0) {
-            snack("No offer for these parameters. <br> Click OK to change them", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
-            return;
-        }
+        if (no(offers)) return;
 
-        console.log('addCards');
+        console.log('displayOffers');
 
-        for (var i = 0; i < Math.min(initialSlides, within_radius.length); i++) {
-            var exchange = within_radius[i].properties;
-            addCard(exchange, i);
+        for (var i = 0; i < Math.min(initialSlides, offers.length); i++) {
+            var offer = offers[i].properties;
+            addOffer(offer, i);
         }
 
     };
 
 
-    function addCard(exchange, index) {
+    function addOffer(offer, index) {
 
-        var $card = $('.ecard.template').clone().removeClass('template');
-        $card.appendTo($('#cards'));
+        if (mode == 'mobile' || mode == 'both') {
+            var $scope = $('.ecard.template').clone().removeClass('template');
+            $scope.appendTo($('#cards'));
+            populate(offer, $scope, index);
+            slidesAdded.push(index);
+        }
+        if (mode == 'desktop' || mode == 'both') {
+            var $scope = $('.listItem.template').clone().removeClass('template');
+            $scope.appendTo($('.exchanges_list'));
+            populate(offer, $scope, index);
+        }
 
-        populateExchange(exchange, $card, index);
-
-        fetchPlace(exchange)
-            .then(exchange => {populatePlace(exchange, $card)})
-            .catch(error => {console.warn(error)});
-
-        findDuration(exchange)
-            .then(exchange => {populateDuration(exchange, $card)})
-            .catch(error => {console.warn(error)});
-
-        slidesAdded.push(index);
     }
 
+
+     // TODO: looks like 'offers' should be checked, not 'exchanges'
     revealCards = function() {
         if (exchanges.length == 0) {
             $('.swiper-container-h').css('display', 'none');
@@ -103,6 +144,23 @@
 
     // Utility functions
 
+    currentExchange = function() {
+
+        var exchanges = offers;
+        var exchangesLength = exchanges.length;
+        var currentIndex = currIndex();
+
+        if (exchanges && exchangesLength > 0) {
+            if (currentIndex < exchangesLength) {
+                return exchanges[currentIndex].properties
+            } else {
+                throw new Error('index > exchanges length');
+            }
+        } else {
+            return null
+        }
+    };
+
     findExchange = function(id) {
         if (exchanges && exchanges.length > 0) {
             var results = $.grep(exchanges, function(e){ return e.properties.id == id; });
@@ -148,35 +206,6 @@
         });
     };
 
-    // To include 'worse than bad rate' change the grep condition below
-    rank = function() {
-
-        return new Promise(function(resolve, reject) {
-
-            console.log('rank');
-
-            within_radius = [];
-            if (exchanges.length == 0) resolve(exchanges);
-
-            within_radius = $.grep(exchanges, function (e) {
-                return e.properties.distance < sessionStorage.radius && e.properties.errors.length == 0;
-            });
-
-            if (within_radius.length > 0) {
-
-                within_radius.sort(function (a, b) {
-                    return grade(a) - grade(b);
-                });
-
-                within_radius[0].properties.best_at.push('best');
-
-            }
-
-            resolve(within_radius);
-
-        })
-    };
-
     grade = function(exchange, distance_factor = 1.5) {
 
         if (value_of('buy_amount')) {
@@ -192,29 +221,9 @@
 
     rankCheck = function() {
 
-        within_radius.forEach((exchange) => {
+        offers.forEach((exchange) => {
             console.log('quote: ', exchange.properties.quote, 'distance: ', exchange.properties.distance, 'grade: ', exchange.grade)
         })
     };
-
-
-    currentExchange = function() {
-
-
-        var exchanges = within_radius;
-        var exchangesLength = exchanges.length;
-        var currentIndex = currIndex();
-
-        if (exchanges && exchangesLength > 0) {
-            if (currentIndex < exchangesLength) {
-                return exchanges[currentIndex].properties
-            } else {
-                throw new Error('index > exchanges length');
-            }
-        } else {
-            return null
-        }
-    };
-
 
 

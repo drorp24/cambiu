@@ -5,6 +5,73 @@
 //  1-way binding model -> view
 
 
+populate = function(exchange, $scope, index) {
+
+  populateExchange(exchange, $scope, index);
+
+  fetchPlace(exchange)
+      .then(function(exchange) {populatePlace(exchange, $scope)})
+      .catch(function(error) {console.warn(error)});
+
+  findDuration(exchange)
+      .then(function(exchange) {populateDuration(exchange, $scope)})
+      .catch(function(error) {console.warn(error)});
+
+};
+
+populateExchange = function(exchange, $scope, index) {
+
+//    console.log('exchange ' + exchange.id + ' - populateExchange');
+
+  if (index == 0) $scope.addClass('best');
+
+  $scope.find('#streetview').attr('id', 'streetview' + exchange.id);
+
+  $scope.find('[data-model=exchange][data-field]').each(function() {
+    var $this = $(this);
+    var field = $this.data('field');
+    var value = exchange[field];
+    $this.html(value);
+  });
+
+  getPano(exchange).then(function(pano) {populateStaticStreeview(exchange, $scope)});
+
+  if (!exchange.gain || exchange.gain < 0) {
+    $scope.find('.comparison').css('visibility', 'hidden');
+    $scope.find('.comparison_text').css('visibility', 'hidden');
+  }
+
+  var $phone_link = $scope.find('.phone_icon a');
+  if (exchange.phone) {
+    $phone_link.attr('href', 'tel:' + exchange.phone)
+  } else {
+    $phone_link.css('visibility', 'hidden')
+  }
+
+  if (exchange.base_rate) {
+    if (index == 0) {
+      var src = '<%= asset_path 'circle_crown.png' %>';
+      var html = '<img src=' + src + '>';
+      $scope.find('.ranking').html(html);
+    } else {
+      $scope.find('.ranking').html(index + 1);
+    }
+  } else {
+    $scope.find('[data-field=edited_quote_rounded]').css('margin-top', '0');
+    $scope.find('.comparison').css('display', 'none');
+    $scope.find('.ranking').css('display', 'none');
+    $scope.find('.norates').css('display', 'block');
+    $scope.find('.quote_section').css('display', 'none');
+    $scope.find('.no_quote_section').css('display', 'flex');
+    $scope.addClass('norate').addClass(exchange.contract ? 'contract' : 'no_contract');
+  }
+
+    $scope.find('[data-field=rating]').rating(ratingOptions).rating('update', 0);
+
+};
+
+
+
 populateHelp = function(help, $scope) {
 
     $scope.find('.help_topic').html(help.topic);
@@ -66,74 +133,6 @@ populateDuration = function(exchange, $scope) {
     $scope.find('.duration [data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
 };
 
-populateExchange = function(exchange, $scope, index) {
-
-//    console.log('exchange ' + exchange.id + ' - populateExchange');
-
-    if (index == 0) $scope.addClass('best');
-
-    $scope.find('#streetview').attr('id', 'streetview' + exchange.id);
-
-    $scope.find('[data-model=exchange][data-field]').each(function() {
-        var $this = $(this);
-        var field = $this.data('field');
-        var value = exchange[field];
-        $this.html(value);
-    });
-
-    getPano(exchange).then(function(pano) {populateStaticStreeview(exchange, $scope)});
-
-    if (!exchange.gain || exchange.gain < 0) {
-        $scope.find('.comparison').css('visibility', 'hidden');
-        $scope.find('.comparison_text').css('visibility', 'hidden');
-    }
-
-    var $phone_link = $scope.find('.phone_icon a');
-    if (exchange.phone) {
-        $phone_link.attr('href', 'tel:' + exchange.phone)
-    } else {
-        $phone_link.css('visibility', 'hidden')
-    }
-
-    if (exchange.base_rate) {
-        if (index == 0) {
-          var src = '<%= asset_path 'circle_crown.png' %>';
-          var html = '<img src=' + src + '>';
-          $scope.find('.ranking').html(html);
-        } else {
-            $scope.find('.ranking').html(index + 1);
-        }
-    } else {
-        $scope.find('[data-field=edited_quote_rounded]').css('margin-top', '0');
-        $scope.find('.comparison').css('display', 'none');
-        $scope.find('.ranking').css('display', 'none');
-        $scope.find('.norates').css('display', 'block');
-        $scope.find('.quote_section').css('display', 'none');
-        $scope.find('.no_quote_section').css('display', 'flex');
-        $scope.addClass('norate').addClass(exchange.contract ? 'contract' : 'no_contract');
-    }
-
-
-    // REMOVE: a. not needed for smooth transition b. interfers with debugging
-    //insert a 'height' property to the card and img tag, so that the height property can be 'transition'ed in the css3, making them 'expand' smoothly
-
-    // Note: This and populateDuration are delayed to afford the streetview img's to load
-    // This is a better, albeit less guaranteed way to wait, since the below requires setting a separate event on each and every img
-    // If it's not enough just increase the waiting time
-    // http://stackoverflow.com/questions/280049/javascript-callback-for-knowing-when-an-image-is-loaded
-/*
-    setTimeout(function(){
-        if (!cardHeight) {
-            cardHeight = $scope.height();
-        }
-        $scope.css('height', cardHeight);
-        var $img = $photo.find('img');
-        if ($img.height()) $img.css('height', $img.height());
-    }, 2000);
-*/
-    $scope.find('[data-field=rating]').rating(ratingOptions).rating('update', 0);
-
-};
 
 populatePlace = function(exchange, $scope) {
 
@@ -147,7 +146,7 @@ populatePlace = function(exchange, $scope) {
 /*
     $photo = $scope.find('.photo');
     if ($photo && exchange.place.photo) {
-        var src         = exchange.place.photo.getUrl({'maxWidth': bodyWidth, 'maxHeight': halfBodyHeight});
+        var src         = exchange.place.photo.getUrl({'maxWidth': streetviewWidth, 'maxHeight': halfBodyHeight});
         var html        = '<img src=' + src + '>';
         $photo.html(html);
      }
@@ -272,7 +271,7 @@ streetviewUrl = function(exchange, options) {
     console.log(exchange.best_at[0] == 'best');
 
     var metadata    = options.metadata;
-    var size        = bodyWidth + 'x' + halfBodyHeight;
+    var size        = streetviewWidth + 'x' + streetviewHeight;
     var url;
 
     url = 'https://maps.googleapis.com/maps/api/streetview';

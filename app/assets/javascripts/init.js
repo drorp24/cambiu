@@ -1,6 +1,8 @@
 var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
+var mode = mobile ? 'mobile' : 'desktop';
+var mode = 'both'; // TODO: Remove. For testing only.
 var windowWidth = $(window).width();
 var windowHeight = $(window).height();
 var isAndroid = /(android)/i.test(navigator.userAgent);
@@ -90,7 +92,7 @@ var photoPadding = 15;
 var photoWidth;
 var photoHeight;
 var slidesAdded = [];
-var initialSlides = 3;
+var initialSlides = (mode == 'mobile') ? 3 : 5;
 var user = {};
 var dfault = {};
 dfault.lat = '51.51574678520366';
@@ -132,7 +134,7 @@ var arrivedToExchange = false;
 var page = null;
 var id = null;
 var pane = null;
-var within_radius = [];
+var offers = [];
 var markersShaded = false;
 var locationMsgInformed = false;
 var nearest;
@@ -407,9 +409,8 @@ $(document).ready(function() {
     });
 */
 
-    bodyWidth       = $('body').width().toFixed();
-    bodyHeight      = window.innerHeight;
-    halfBodyHeight  = (bodyHeight / 2).toFixed();
+    streetviewWidth       = mobile ? $('body').width().toFixed() : ($('body').width() / 3).toFixed();
+    streetviewHeight      = mobile ? (window.innerHeight / 2).toFixed() : (streetviewWidth / 2).toFixed();
 
     var slider = document.getElementById('slider');
     var radius = document.getElementById('radius');

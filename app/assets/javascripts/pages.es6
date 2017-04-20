@@ -71,12 +71,15 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
 
 // Some parts, like map and swipers, need to be re-rendered once the pane is visible
 refresh = function(pane) {
-    if (!map_refreshed && pane == 'map' && map) {
+    // perhaps no refresh of map is needed: since it's not part of a specific pane ('map') as it used to be, it now never disappears.
+    /*
+    if (!map_refreshed && pane == 'cards' && map) {
         console.log('Entering pane: map - re-render map & refresh swiperH');
         renderMap(); // Consider generating the map, if this still insists on locating me in Savyon
         if (swiperH) swiperH.update(false);
         map_refreshed = true; // do once only
     }
+*/
     if (!intro_refreshed && pane == 'intro' && swiperIntro) {
         console.log('Entering pane: intro - refresh swiperIntro');
          swiperIntro.update(false);
@@ -88,11 +91,13 @@ refresh = function(pane) {
         search_refreshed = true; // do once only
     }
     if (currentSnack) snackHide();
-    if (pane == map) {
+/*
+    if (pane == 'cards') {
         $('.exchanges #exchanges').css('z-index', '2')
     } else {
         $('.exchanges #exchanges').css('z-index', '3')
     }
+*/
 };
 
  $('body').on('click tap', '[data-href-pane]', (function (e) {

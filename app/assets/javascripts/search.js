@@ -162,7 +162,7 @@ $(document).ready(function() {
     $('[data-ajax=searches]').click(function(e) {
         e.preventDefault();
         if (inputValid()) {
-            setPage({page1: 'exchanges', pane1: 'map'});
+            setPage({page1: 'exchanges', pane1: (mode == 'mobile') ? 'cards' : 'list'});
             search_and_show(search.location);
         }
     });

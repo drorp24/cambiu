@@ -1,20 +1,40 @@
 <div class="container-fluid">
 
-    <div class="row">
+  <div id="map_container">
+
+    <div id="map-canvas"></div>
+
+    <div id="userLoc">
+      <div class="dot"></div>
+      <div class="pulse2 flex_center">
+        <div class="pulse1"></div>
+      </div>
+    </div>
+
+    <div id="newradar">
+      <div id='pulse3'></div>
+      <div id='pulse4'></div>
+    </div>
+
+  </div>
+
+  <div class="row">
       <div id="exchanges" class="col-xs-12 col-md-4">
         <%= render 'exchanges/intro/index' %>
+        <%= render 'exchanges/cards/index' %>
+        <%= render 'exchanges/list/index' %>
         <%= render 'exchanges/search/index' %>
-        <%= render 'exchanges/map/index' %>
         <%= render 'exchanges/help/index' %>
-        <%= render 'exchanges/try/index' %>
-        <%= render 'exchanges/survey/index' %>
         <%= render 'exchanges/reviews/index' %>
+        <%= render 'exchanges/survey/index' %>
+        <%= render 'exchanges/try/index' %>
       </div>
     </div>
 
 </div>
 
+<%= render 'exchanges/templates/card_template' %>
+<%= render 'exchanges/templates/listItem_template' %>
 <%= render 'exchanges/templates/dialog' %>
 <%= render 'exchanges/templates/snack_template' %>
-<%= render 'exchanges/templates/card_template' %>
 <%= render 'exchanges/templates/review_template' %>

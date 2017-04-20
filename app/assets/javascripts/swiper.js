@@ -43,7 +43,7 @@ slideNext = function() {
     var currentIndex = currIndex();
     console.log('slideNext. currentIndex: ' + currentIndex);
     var advanceIndex = currentIndex + initialSlides -1;
-    if (advanceIndex < within_radius.length) {
+    if (advanceIndex < offers.length) {
         console.log('adding slide ' + advanceIndex);
         addSlide(advanceIndex);
     }
@@ -54,7 +54,7 @@ slidePrev = function() {
 addSlide = function(index) {
     if (!slidesAdded.includes(index)) {
         console.log('addSlide ' + index);
-        addCard(within_radius[index].properties, index)
+        addOffer(offers[index].properties, index)
     } else {
         console.log('addSlide not needed - slide ' + index + ' already exists');
     }
