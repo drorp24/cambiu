@@ -1,9 +1,12 @@
 (function() {
 
-    return; // TODO: remove!
+  var version = '0.9.3';
+  window.version = version;
 
-    var version = '0.9.3';
-    window.version = version;
+    <% if Rails.env.development? %>
+      return;
+    <% end %>
+
 //post_to_sw({version: version});
 
     if (location.pathname.indexOf('admin') > -1) {
