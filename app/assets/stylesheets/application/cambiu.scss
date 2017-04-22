@@ -665,8 +665,12 @@ body#cambiu {
 
 
 .col-md-pane {
-  flex: 0 0 $paneWidth;
-  max-width: $paneWidth;
+  flex: 0 0 100%;
+  max-width: 100%;
+  @include desktop {
+    flex: 0 0 $paneWidth;
+    max-width: $paneWidth;
+  }
 }
 
 .list-group {
