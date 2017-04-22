@@ -108,6 +108,9 @@
         var $this = $(this);
         $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
         $this.addClass('selected');
+        $('.listItem.active').removeClass('active');
+        $this.closest('.listItem').addClass('active');
+        $('.listItem:not(.active)').hide();
         populateStreetview(currentExchange());
         report('Tap', 'Card');
 
@@ -126,9 +129,13 @@
             report('Tap', 'DirectionsBtn');
         }
 
+        $('.listItem.active').removeClass('active');
+        $('.listItem').show();
+
         setTimeout(function(){
 
             currentCard().removeClass('selected');
+            if ($('.active.pane').data('pane') == 'list') $('.selected.ecard').removeClass('selected');
             $navBtn.removeClass('rotate');
 
         }, 150);

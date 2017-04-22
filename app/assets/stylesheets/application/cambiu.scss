@@ -674,7 +674,9 @@ body#cambiu {
 }
 
 .list-group {
+  padding: 0;
   .list-group-item {
+    padding: 0;
     &:not(.selected) {
       .duration {
         @include vleft(3vw);
@@ -688,12 +690,10 @@ body#cambiu {
       }
     }
       cursor: pointer;  // else not clickable!
-    padding-top: 1.5vh;
-    padding-bottom: 1.5vh;
-    &.ecard  {
-      height: 22vh !important;
+    &.ecard:not(.selected)  {
+      height: 17vh;
       .photo img {
-        height: 18vh !important;
+        height: 17vh !important;
         margin-left: -15%;
       }
     }
@@ -741,7 +741,7 @@ body#cambiu {
 }
 
   .listItem {
-    border-bottom: 5px solid #eee;
+    border-bottom: 1vh solid #eee;
   }
 
 
@@ -1897,6 +1897,7 @@ body#cambiu {
     .photo {
       height: 85%;
       img {
+        transition: height $card-transition-time;
         height: 27vw !important;
         @include desktop {
           height: 27vw * $paneRatio !important;
@@ -1957,10 +1958,16 @@ body#cambiu {
         .item {
         flex-basis: 100%;
         height: 50vh;
+        @include desktop {
+          height: 45vh;
+        }
       }
       .nav_icon_container {
         position: absolute;
         top: 50vh;
+        @include desktop {
+          top: 45vh;
+        }
         @include vleft(50vw);
       }
       .nav_icon {
@@ -2009,6 +2016,9 @@ body#cambiu {
       .duration {
         width: 100% !important;
         bottom: 52vh + $nav_icon_width / 2  !important;
+        @include desktop {
+          bottom: 57vh + $nav_icon_width / 2  !important;
+        }
         left: initial !important;
         @include vfont-size(5vw);
       }
@@ -2048,7 +2058,7 @@ body#cambiu {
         bottom: 5px;
 
       }
-      transition: initial;
+//      transition: initial;
     }
     .data {
       max-width: 50%; // important in flex, only in the non selected, row mode
