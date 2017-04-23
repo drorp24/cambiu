@@ -20,7 +20,7 @@ search_and_show = function(location) {
     start_show();
     return Promise.all([showMap(location), search(location)])
         .then(selectOffers)
-        .then(displayOffers)
+        .then(populateOffers)
         .then(placeGoogleMarkers)
         .then(revealCards)
         .then(stop_show)

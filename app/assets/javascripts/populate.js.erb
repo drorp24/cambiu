@@ -25,6 +25,8 @@ populateExchange = function(exchange, $scope, index) {
 
   if (index == 0) $scope.addClass('best');
 
+  $scope.find('.ecard').addBack('.ecard').attr('data-exchange-id', exchange.id);
+
   $scope.find('#streetview').attr('id', 'streetview' + exchange.id);
 
   $scope.find('[data-model=exchange][data-field]').each(function() {

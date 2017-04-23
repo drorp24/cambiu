@@ -56,13 +56,13 @@
         if (directionsDisplay) clearDirections();
     };
 
-    displayOffers = function() {
+    populateOffers = function() {
 
         clearPrevSearch();
 
         if (no(offers)) return;
 
-        console.log('displayOffers');
+        console.log('populateOffers');
 
         for (var i = 0; i < Math.min(initialSlides, offers.length); i++) {
             var offer = offers[i].properties;
@@ -153,18 +153,22 @@
 
     currentExchange = function() {
 
-        var exchanges = offers;
-        var exchangesLength = exchanges.length;
-        var currentIndex = currIndex();
+        var offersLength = offers.length;
 
-        if (exchanges && exchangesLength > 0) {
-            if (currentIndex < exchangesLength) {
-                return exchanges[currentIndex].properties
+        if (offers && offersLength > 0) {
+
+            var currentIndex = currIndex();
+            if (currentIndex > 0 && currentIndex < offersLength) {
+                return offers[currentIndex].properties
+
             } else {
-                throw new Error('index > exchanges length');
+
+                var selected_exchange_id = $('.selected').length && $('.selected').data('exchange-id');
+                if (selected_exchange_id) {
+                    return findExchange(selected_exchange_id)
+                }
             }
-        } else {
-            return null
+
         }
     };
 
