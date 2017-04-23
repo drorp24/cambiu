@@ -742,6 +742,9 @@ body#cambiu {
 
   .listItem {
     border-bottom: 1vh solid #eee;
+    &:hover {
+      background: #eee;
+    }
   }
 
 

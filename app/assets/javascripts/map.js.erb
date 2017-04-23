@@ -469,6 +469,9 @@
 
   markerLayerAddClass = function(id, klass) {
 
+
+    // TODO: Use $.grep!
+
    $('#markerLayer > div').each(function() {
 
        var $this = $(this);
@@ -504,4 +507,15 @@
     markerLayerAddClass(currId, 'current');
 
   };
+
+   $('body').on('mouseover', '.listItem', function(e) {
+     console.log('hover')
+     var currId = $(this).find('.ecard').data('exchange-id');
+     $('#markerLayer div').removeClass('current');
+     $('#markerLayer div img').removeClass('imgCurrent');
+
+     markerLayerAddClass(currId, 'current');
+   });
+
+
 
