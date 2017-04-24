@@ -75,13 +75,13 @@
     function addOffer(offer, index) {
 
         if (mode == 'mobile' || mode == 'both') {
-            var $scope = $('.ecard.template').clone().removeClass('template');
+            var $scope = $('.swiper-slide.ecard.template').clone().removeClass('template');
             $scope.appendTo($('#cards'));
             populate(offer, $scope, index);
             slidesAdded.push(index);
         }
         if (mode == 'desktop' || mode == 'both') {
-            var $scope = $('.listItem.template').clone().removeClass('template');
+            var $scope = $('.list-group-item.ecard.template').clone().removeClass('template');
             $scope.appendTo($('.exchanges_list'));
             populate(offer, $scope, index);
         }
@@ -194,7 +194,7 @@
     select = function($this) {
 
         $this.addClass('selected');
-        $('.listItem .ecard:not(.selected)').hide();
+        $('.list-group-item.ecard:not(.selected)').hide();
         $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
 
         populateStreetview(currentExchange());
@@ -206,7 +206,7 @@
     unselect = function($this) {
 
         $('.selected.ecard').removeClass('selected');
-        $('.listItem .ecard').show();
+        $('.list-group-item.ecard').show();
 
     };
 

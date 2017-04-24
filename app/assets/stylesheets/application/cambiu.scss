@@ -11,7 +11,7 @@
 
 $tablet-width: 768px;
 $desktop-width: 1024px;
-$paneRatio: 0.3;
+$paneRatio: 0.27;
 $paneWidth: $paneRatio * 100%;
 
 @mixin tablet {
@@ -91,6 +91,12 @@ p {
   }
 }
 
+@mixin vpadding($size) {
+  padding: $size;
+  @include desktop {
+    padding: $size * $paneRatio;
+  }
+}
 
 $screen-md-min: 992px;
 $userLocRadius: 30px;
@@ -664,6 +670,11 @@ body#cambiu {
   */
 
 
+[data-action], [data-href] {
+  cursor: pointer;
+}
+
+
 .col-md-pane {
   flex: 0 0 100%;
   max-width: 100%;
@@ -696,6 +707,9 @@ body#cambiu {
         height: 17vh !important;
         margin-left: -15%;
       }
+    }
+    &.ecard.selected {
+      cursor: initial;
     }
     .list-group-item-text {
       color: rgba(0, 0, 0, 0.80);
@@ -740,11 +754,20 @@ body#cambiu {
   }
 }
 
-  .listItem {
-    .ecard {
-      border-bottom: 1vh solid #eee;
-      &:hover:not(.selected) {
-        background: #eee;
+ .list-group-item.ecard {
+    border-bottom: 1vh solid #eee;
+    &:hover:not(.selected) {
+      background: #eee;
+    }
+    .minicard {
+      .ranking_container {
+        left: 47%;
+      }
+      .photo .streetview img {
+        width: 100%;
+      }
+      .lessmore.icon {
+        visibility: hidden;
       }
     }
   }
@@ -1443,6 +1466,10 @@ body#cambiu {
     color: yellow;
   }
 
+  .swiper-slide {
+    @include vpadding(3vw);
+  }
+
   #cards .ecard {
     box-shadow: 0px 1px 15px rgba(0, 0, 0, .6);
   }
@@ -1907,7 +1934,7 @@ body#cambiu {
         @include desktop {
           height: 27vw * $paneRatio !important;
         }
-        width: 85%;
+        width: 97%;
       }
     }
     .more {
@@ -3151,6 +3178,9 @@ body#cambiu {
     margin-bottom: initial;
     .material-icons {
       font-size: 4vh;
+    }
+    &:hover {
+      cursor: pointer;
     }
   }
 

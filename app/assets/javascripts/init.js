@@ -3,6 +3,8 @@ var mobile = media == 'mobile';
 var desktop = media == 'desktop';
 var mode = mobile ? 'mobile' : 'desktop';
 var mode = 'both'; // TODO: Remove. For testing only.
+// if (mobile) - single-pane; true in mobile devices and iFrames narrower than 767px.  EXAMPLE: if (mobile) close pane when showing directions.   If (desktop) - side by side panes.
+// if (mode == mobile) - best fit for a single-pane, though it can exists in desktop too. EXAMPLE: if (mode == mobile) create vertical list rather than horizontal cards.
 var windowWidth = $(window).width();
 var windowHeight = $(window).height();
 var isAndroid = /(android)/i.test(navigator.userAgent);
