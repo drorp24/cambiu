@@ -92,7 +92,7 @@ var photoPadding = 15;
 var photoWidth;
 var photoHeight;
 var slidesAdded = [];
-var initialSlides = (mode == 'mobile') ? 3 : 5;
+var initialSlides = (mode == 'mobile') ? 3 : 50;
 var user = {};
 var dfault = {};
 dfault.lat = '51.51574678520366';

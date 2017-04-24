@@ -28,8 +28,8 @@
                     return grade(a) - grade(b);
                 });
 
+                offers.map((offer, index) => {offer.properties.rank = index; return offer});
                 offers[0].properties.best_at.push('best');
-
             }
 
             resolve(offers);
@@ -100,52 +100,6 @@
             cardXoffset = String(($('.ecard').eq(0).position().left + $('#cards').position().left) * -1) + 'px';
         }, 1000)
     };
-
-
-    $('body').on('click tap', '.ecard:not(.selected)', function(e) {
-
-//        e.stopPropagation();
-        var $this = $(this);
-        $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
-        $this.addClass('selected');
-        $('.listItem.active').removeClass('active');
-        $this.closest('.listItem').addClass('active');
-        $('.listItem:not(.active)').hide();
-        populateStreetview(currentExchange());
-        report('Tap', 'Card');
-
-    });
-
-    $('body').on('click tap', '.ecard.selected .actions_line, .ecard.selected .nav_icon', function(e) {
-
-//        e.stopPropagation();
-        $('#best_offer').popover('hide');
-        var $navBtn = $('.nav_icon_container');
-        $navBtn.addClass('rotate');
-        renderDirections(currentExchange());
-        if ($(this).is('.actions_line')) {
-            report('Tap', 'Directions');
-        } else {
-            report('Tap', 'DirectionsBtn');
-        }
-
-        $('.listItem.active').removeClass('active');
-        $('.listItem').show();
-
-        setTimeout(function(){
-
-            currentCard().removeClass('selected');
-            if ($('.active.pane').data('pane') == 'list') $('.selected.ecard').removeClass('selected');
-            $navBtn.removeClass('rotate');
-
-        }, 150);
-
-    });
-
-    $('body').on('click tap', '.nav_icon', function(e) {
-//        e.stopPropagation();
-        $('.nav_icon_container').addClass('rotate')
-    });
 
 
 
@@ -237,4 +191,33 @@
         })
     };
 
+    select = function($this) {
 
+        $this.addClass('selected');
+        $('.listItem .ecard:not(.selected)').hide();
+        $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
+
+        populateStreetview(currentExchange());
+        report('Tap', 'Card');
+        clearDirections();
+
+    };
+
+    unselect = function($this) {
+
+        $('.selected.ecard').removeClass('selected');
+        $('.listItem .ecard').show();
+
+    };
+
+
+
+//  EVENTS
+
+$('body').on('click tap', '.ecard:not(.selected)', function(e) {
+    select($(this));
+});
+
+$('body').on('click tap', '.ecard.selected .lessmore.icon', function(e) {
+    unselect($(this));
+});

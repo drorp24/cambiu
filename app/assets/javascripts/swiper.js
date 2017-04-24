@@ -29,12 +29,9 @@ initSwipers = function() {
 
 slideChange = function() {
 
-    $('#markerLayer div').removeClass('bounce');
     map.data.revertStyle();
     if (directionsDisplay) clearDirections();
     $('.ecard').removeClass('selected');
-//    map.setZoom(16);
-//    focusOn(currentExchange());
     highlightCurrentMarker();
     prev_distance_from_exchange = null;
 };

@@ -69,7 +69,7 @@
                 zIndex: exchange_id,
                   optimized: false,
 //                icon: best ? '<%= asset_path "48px_blue_white_in_back.png" %>' : '<%= asset_path "48px_white.png" %>'
-                icon: best ? '<%= asset_path "4.png" %>' : '<%= asset_path "96_96.png" %>'
+                icon: best ? '<%= asset_path "rank1.png" %>' : '<%= asset_path "96_96.png" %>'
               });
 
 //              if (!best) markerClusterer.addMarker(marker);
@@ -305,7 +305,7 @@
 
     clearDirections = function() {
 //        if (directionsRenderedFor == null) return;
-        directionsDisplay.setMap(null);
+        if (directionsDisplay) directionsDisplay.setMap(null);
         directionsRenderedFor = null;
     };
 
@@ -367,9 +367,19 @@
             })
 
         })
-    }
-;
-    fromLatLngToPoint = function(lat, lng, map) {
+    };
+
+
+
+     $('body').on('click tap', '[data-action=directions]', function(e) {
+       renderDirections(currentExchange());
+       if (mobile) unselect($(this));
+       report('Tap', 'Directions');
+     });
+
+
+
+     fromLatLngToPoint = function(lat, lng, map) {
 
         var latLng = new google.maps.LatLng(lat, lng);
         var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
@@ -458,21 +468,23 @@
   };
 
 
-  function titleCase(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
-
-  zIndex = function($e) {
-   var style = $e.attr('style');
-   if (!style) return;
-   return style.slice(style.indexOf('z-index') + 9, style.lastIndexOf(';'));
+  markerLayerClear = function() {
+     $('#markerLayer div').removeClass('current');
+     $('#markerLayer div img').removeClass('imgCurrent');
   };
 
 
   markerLayerAddClass = function(id, klass) {
 
+    function titleCase(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
 
-    // TODO: Use $.grep!
+     function zIndex($e) {
+      var style = $e.attr('style');
+      if (!style) return;
+      return style.slice(style.indexOf('z-index') + 9, style.lastIndexOf(';'));
+    }
 
-   $('#markerLayer > div').each(function() {
+    $('#markerLayer > div').each(function() {
 
        var $this = $(this);
 
@@ -484,6 +496,7 @@
    })
   };
 
+
   markBest = function() {
 
     if (offers.length == 0) return;
@@ -493,6 +506,7 @@
 
   };
 
+
   highlightCurrentMarker = function() {
 
     var currExchange = currentExchange();
@@ -501,21 +515,21 @@
 
 //    renderDirections(currExchange);
 
-    $('#markerLayer div').removeClass('current');
-    $('#markerLayer div img').removeClass('imgCurrent');
-
+    markerLayerClear();
     markerLayerAddClass(currId, 'current');
 
   };
 
-   $('body').on('mouseover', '.listItem', function(e) {
-     console.log('hover')
-     var currId = $(this).find('.ecard').data('exchange-id');
-     $('#markerLayer div').removeClass('current');
-     $('#markerLayer div img').removeClass('imgCurrent');
 
+  $('body').on('mouseover', '.ecard:not(.selected)', function(e) {
+
+     console.log('hover');
+     var currId = $(this).find('.ecard').data('exchange-id');
+
+     markerLayerClear();
      markerLayerAddClass(currId, 'current');
-   });
+
+  });
 
 
 
