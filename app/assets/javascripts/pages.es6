@@ -51,7 +51,7 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
 
     // POPULATE (unless triggered by popstate event)
      if (populate && id) {
-        var exchange = (id == 'curr') ? currentExchange() : findExchange(id);
+        var exchange = (id == 'curr') ? currentExchange() : exchangeHash[id];
         populateExchange(exchange, $pane);
         populatePlace(exchange, $pane);
     }

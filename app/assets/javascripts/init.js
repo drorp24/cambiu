@@ -140,6 +140,7 @@ var offers = [];
 var markersShaded = false;
 var locationMsgInformed = false;
 var nearest;
+var exchangeHash = {};
 
 sessionStorage.videoStopped = null;
 
@@ -195,6 +196,7 @@ pluralize = function(word, count) {
 };
 
 
+/*
 best = function(exchanges) {
 
     var best = [];
@@ -218,6 +220,7 @@ best = function(exchanges) {
     return best.concat(rest);
 
 };
+*/
 
 
 

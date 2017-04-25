@@ -216,6 +216,8 @@ $(document).ready(function() {
                 searchId = data.search;
                 tagSession({search: searchId});
                 exchanges = data.exchanges.features;
+                exchangeHash = {};
+                for (var exchange of exchanges) {exchangeHash[exchange.properties.id] = exchange.properties}
                 resolve(exchanges);
             }
 

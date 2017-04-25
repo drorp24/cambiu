@@ -208,7 +208,7 @@ function geocodeExchange(exchange) {
 
 
 // Handle user location changes
-// Changing back to 'where i'm at' is in search.js
+// Changing back to 'where i'm at' is in search.es6
 
 function searchbox_addListener(searchBox) {
     google.maps.event.addListener(searchBox, 'places_changed', function () {

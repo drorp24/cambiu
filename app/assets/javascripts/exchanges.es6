@@ -28,7 +28,8 @@
                     return grade(a) - grade(b);
                 });
 
-                offers.map((offer, index) => {offer.properties.rank = index; return offer});
+//                offers.map((offer, index) => {offer.properties.rank = index; return offer});
+
                 offers[0].properties.best_at.push('best');
             }
 
@@ -119,13 +120,14 @@
 
                 var selected_exchange_id = $('.selected').length && $('.selected').data('exchange-id');
                 if (selected_exchange_id) {
-                    return findExchange(selected_exchange_id)
+                    return exchangeHash[selected_exchange_id]
                 }
             }
 
         }
     };
 
+/*  Retired: exchangeHash replaces it
     findExchange = function(id) {
         if (exchanges && exchanges.length > 0) {
             var results = $.grep(exchanges, function(e){ return e.properties.id == id; });
@@ -139,6 +141,7 @@
             throw new Error('exchanges is empty');
         }
     };
+*/
 
     updateExchange = function(exchange_id, data) {
         $.ajax({
