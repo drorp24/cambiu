@@ -102,13 +102,12 @@ followUser = function() {
 
             user.lat = position.coords.latitude;
             user.lng = position.coords.longitude;
-            showUserPosition(user.lat, user.lng);
             resolve(user);
         }
 
         function currPositionError(error) {
 
-            hideUserPosition();
+            hideSearchLocation();
             var message = error.message ? error.message : error;
             console.warn('currPosition error: ' + message);
 //            reject('currPositionError: ' + message);
@@ -230,7 +229,7 @@ function searchbox_addListener(searchBox) {
         if (typeof userWatch !== 'undefined' && userWatch) navigator.geolocation.clearWatch(userWatch);
         if (typeof userPositionCheck !== 'undefined' && userPositionCheck) clearInterval(userPositionCheck);
 
-        hideUserPosition();
+        hideSearchLocation();
     });
 }
 function radians(n) {
@@ -330,30 +329,26 @@ checkUserPosition = function() {
     }, 30000);
 };
 
-showUserPosition = function(lat, lng) {
+showSearchLocation = function(lat, lng) {
 
-    if (search.location.type != 'user') {
-        console.log('search location is not the user\'s location: not showing user position');
-        return;
-    } else {
-        console.log('show user position');
-    }
+
+    console.log('showSearchLocation');
 
     if (!map || !map.getProjection()) {
-        console.warn('showUserPosition: map isnt ready yet');
+        console.warn('showSearchLocation: map isnt ready yet');
         return
     }
 
-    if (typeof lat === 'undefined' && typeof lng === 'undefined') var lat = user.lat, lng = user.lng;
-    var user_latlng = new google.maps.LatLng(lat, lng);
-    map.panTo(user_latlng);
+    if (typeof lat === 'undefined' && typeof lng === 'undefined') var lat = search.location.lat, lng = search.location.lng;
+    var search_latlng = new google.maps.LatLng(lat, lng);
+    map.panTo(search_latlng);
 
-    $('#userLoc').addClass('show');
+    $('#searchLoc').addClass('show');
 
 };
 
-hideUserPosition = function() {
-    $('#userLoc').removeClass('show');
+hideSearchLocation = function() {
+    $('#searchLoc').removeClass('show');
 };
 
 

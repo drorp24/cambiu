@@ -12,7 +12,8 @@
 $tablet-width: 768px;
 $desktop-width: 1024px;
 $paneRatio: 0.27;
-$paneWidth: $paneRatio * 100%;
+$infoPaneWidth: $paneRatio * 100%;
+$mapPaneWidth: (1 - $paneRatio) * 100%;
 
 @mixin tablet {
   @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
@@ -99,7 +100,7 @@ p {
 }
 
 $screen-md-min: 992px;
-$userLocRadius: 30px;
+$searchLocRadius: 30px;
 $label_font_size: 2vh;
 $form_font_size: 3vh;
 $swiper_bullets_bottom: 5vh;
@@ -682,12 +683,24 @@ body#cambiu {
 }
 
 
-.col-md-pane {
+.info-pane {
   flex: 0 0 100%;
   max-width: 100%;
   @include desktop {
-    flex: 0 0 $paneWidth;
-    max-width: $paneWidth;
+    flex: 0 0 $infoPaneWidth;
+    max-width: $infoPaneWidth;
+  }
+}
+
+.map-pane {
+  flex: 0 0 100%;
+  max-width: 100%;
+  width: 100%; //meaingless in desktop but helpful in mobile
+  position: absolute; // makes the map pane interleave with cards pane in mobile (and any transparent pane if needed)
+  @include desktop {
+    position: static;
+    flex: 0 0 $mapPaneWidth;
+    max-width: $mapPaneWidth;
   }
 }
 
@@ -709,9 +722,15 @@ body#cambiu {
     }
       cursor: pointer;  // else not clickable!
     &.ecard:not(.selected)  {
-      height: 17vh;
+      height: 20vmax;
+      @include desktop {
+        height: 8vw !important;
+      }
       .photo img {
-        height: 17vh !important;
+        height: 20vmax !important;
+        @include desktop {
+          height: 8vw !important;
+        }
         margin-left: -15%;
       }
     }
@@ -1243,6 +1262,9 @@ body#cambiu {
     }
     &[data-pane=cards] {
       background: none;
+      @include desktop {
+        background: #aaa;
+      }
     }
     box-shadow: 0px 1px 15px rgba(0, 0, 0, .6);
   }
@@ -1296,7 +1318,7 @@ body#cambiu {
   }
 
   #map_container, #directions_map_container {
-    position: fixed;
+    position: relative;
     z-index: 1;
     width: 100%;
     padding-right: 0;
@@ -1358,18 +1380,18 @@ body#cambiu {
     100% { background-position: 25% center; }
   }
 
-  #userLoc {
+  #searchLoc {
     visibility: hidden;
     position: absolute;
-    top: 50vh;
-    @include vleft(50vw);
-    transform: translate(-1 * $userLocRadius, -1 * $userLocRadius);
+    top: 50%;
+    left: 50%;
+    transform: translate(-1 * $searchLocRadius, -1 * $searchLocRadius);
     background: #45453f;
     @include flexbox();
     align-items: center;
     justify-content: center;
-    width: $userLocRadius * 2;
-    height: $userLocRadius * 2;
+    width: $searchLocRadius * 2;
+    height: $searchLocRadius * 2;
     background-color: transparent;
     &.show {
       visibility: visible;
@@ -1488,6 +1510,7 @@ body#cambiu {
       background-color: $brand-color;
     }
   }
+
   .swiper-container-h {
     display: none;
     z-index: 2;
@@ -3360,26 +3383,16 @@ body#cambiu {
       }
     }
 
-    div.current  {
+    div.current {
       z-index: 9999 !important;
-      img.imgCurrent {
-        opacity: 1 !important;
-        height: 45px !important;
-        width: 43px !important;
-        left: 26px !important;
-        top: 51px !important;
-      }
-    }
-
-    div.best[style]  {
-      z-index: 10000 !important;
-      img.imgBest {
-        opacity: 1 !important;
-        @include dropShadow2();
-        height: 56px !important;
-        width: 54px !important;
-        left: 23px !important;
-        top: 38px !important;
+      img {
+        &.img_current, &.img_best {
+          height: 45px !important;
+          width: 43px !important;
+          left: 26px !important;
+          top: 51px !important;
+          border-radius: 23px;
+        }
       }
     }
 
@@ -3461,7 +3474,8 @@ body#cambiu {
       color: #555;
     }
       #exchanges {
-        z-index: 1;
+        position: relative;
+        z-index: 2;
         padding-left: 0;
         padding-right: 0;
         #exchanges_items {

@@ -2,13 +2,11 @@
 
   <%= render partial: 'navbar', locals: {left_pane: 'survey', left_icon: 'assignment', center: 'search_params', right_pane: "search", right_icon: 'search'} %>
 
-  <div class="swiper-container-container">
-    <div class="swiper-container swiper-container-h swiper-container-horizontal">
-      <div id="cards" class="swiper-wrapper">
-        <!-- Exchange cards go here -->
-      </div>
-      <div class="swiper-pagination"></div>
+  <div class="swiper-container swiper-container-h swiper-container-horizontal">
+    <div id="cards" class="swiper-wrapper">
+      <!-- Exchange cards go here -->
     </div>
+    <div class="swiper-pagination"></div>
   </div>
 
   <%= render 'exchanges/templates/progressbar' %>

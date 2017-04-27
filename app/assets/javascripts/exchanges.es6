@@ -28,8 +28,8 @@
                     return grade(a) - grade(b);
                 });
 
-//                offers.map((offer, index) => {offer.properties.rank = index; return offer});
-
+//              offers.map((offer, index) => {offer.properties.rank = index; return offer});
+                for (let [index, offer] of offers.entries()) {exchangeHash[offer.id].rank = index + 1}
                 offers[0].properties.best_at.push('best');
             }
 
@@ -224,3 +224,13 @@ $('body').on('click tap', '.ecard:not(.selected)', function(e) {
 $('body').on('click tap', '.ecard.selected .lessmore.icon', function(e) {
     unselect($(this));
 });
+
+zoomIn2 = function() {
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend(new google.maps.LatLng(search.location.lat ,search.location.lng));
+    for (offer of offers.slice(0, 5)) {bounds.extend(new google.maps.LatLng(offer.properties.latitude ,offer.properties.longitude))}
+    map.fitBounds(bounds);
+};
+
+
+
