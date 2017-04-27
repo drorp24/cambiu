@@ -58,18 +58,40 @@
 
             google.maps.event.addListener(map.data, 'addfeature', function (e) {
 
+//              var best =        e.feature.getProperty('best_at').includes('best');
+
+              var position    = e.feature.getGeometry().get();
+              var name =        e.feature.getProperty('name');
               var exchange_id = e.feature.getProperty('id');
-              var best = e.feature.getProperty('best_at').includes('best');
+              var rank =        e.feature.getProperty('rank');
+              var errors =      e.feature.getProperty('errors');
+              var eIcon;
+
+              if (rank) {
+                switch(rank) {
+                  case 0:  eIcon =  '<%= asset_path 'circle-crown.png' %>'; break;
+                  case 1:  eIcon =  '<%= asset_path 'rank2.png' %>'; break;
+                  case 2:  eIcon =  '<%= asset_path 'rank3.png' %>'; break;
+                  case 3:  eIcon =  '<%= asset_path 'rank4.png' %>'; break;
+                  case 4:  eIcon =  '<%= asset_path 'rank5.png' %>'; break;
+                  default: eIcon =  '<%= asset_path 'norank.png' %>'; break;
+                }
+              } else {
+                if (errors.length) {
+                  eIcon = '<%= asset_path 'lightgrey.png' %>';
+                } else {
+                  eIcon = '<%= asset_path 'grey.png' %>'
+                }
+              }
 
               var marker = new google.maps.Marker({
-                map: map,
-                position: e.feature.getGeometry().get(),
-                title: e.feature.getProperty('name'),
-                exchange_id: exchange_id,
-                zIndex: exchange_id,
-                  optimized: false,
-//                icon: best ? '<%= asset_path "48px_blue_white_in_back.png" %>' : '<%= asset_path "48px_white.png" %>'
-                icon: best ? '<%= asset_path "rank1.png" %>' : '<%= asset_path "96_96.png" %>'
+                map:          map,
+                position:     position,
+                title:        name,
+                exchange_id:  exchange_id,
+                zIndex:       exchange_id,
+                optimized:    false,
+                icon:         eIcon
               });
 
 //              if (!best) markerClusterer.addMarker(marker);
@@ -191,28 +213,7 @@
 
 
 
-/*  TODO: Remove
-     placeBestMarker = function() {
-
-
-       var exchange = exchanges[0].properties;
-
-       var marker = new google.maps.Marker({
-         position: {lat: exchange.latitude, lng: exchange.longitude},
-         map: map,
-         title: exchange.name,
-         exchange_id: exchange.id,
-         zIndex: exchange.id,
-         optimized: false,
-         icon: '<%= asset_path "32px_blue_white.png" %>'
-       });
-
-       markers.push(marker);
-
-     };
-*/
-
-    addGoogleMarkers = function() {
+ /*   addGoogleMarkers = function() {
 
         console.log('addGoogleMarkers');
 
@@ -248,8 +249,8 @@
         })
 
      };
-
-    placeSoftMarkers = function() {
+*/
+ /*   placeSoftMarkers = function() {
         console.log('placeSoftMarkers');
         exchanges.forEach(placeSoftMarker);
     };
@@ -273,7 +274,7 @@
         $marker.css({left: point.x - point_width / 2, top: point.y - point_height / 2});
         return $marker;
     };
-
+ */
 
     renderDirections = function (exchange) {
 
@@ -449,7 +450,6 @@
        map.setZoom(16);
 
      };
-
 
   ///
   /// markerLayer manipulation

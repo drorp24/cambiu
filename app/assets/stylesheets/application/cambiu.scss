@@ -206,6 +206,10 @@ $exchange_summary_bg_img_height_mobile: 75px;
   box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.7);
 }
 
+@mixin boxShadow2 {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
 @mixin keyframes($animationName) {
   @-webkit-keyframes #{$animationName} {
     @content;
@@ -640,7 +644,10 @@ html, body {
 }
 
 .gmnoprint {
-  display: none;
+//  display: none;
+  img {
+    max-width: none;
+  }
 }
 
 /* portrait */
@@ -1466,10 +1473,6 @@ body#cambiu {
     color: yellow;
   }
 
-  .swiper-slide {
-    @include vpadding(3vw);
-  }
-
   #cards .ecard {
     box-shadow: 0px 1px 15px rgba(0, 0, 0, .6);
   }
@@ -1887,6 +1890,7 @@ body#cambiu {
   .ecard{
     .minicard {
       @include flexbox();
+      @include vpadding(3vw);
     }
 
     .ranking_container {
@@ -1898,7 +1902,8 @@ body#cambiu {
       @include vwidth($rankingSize);
       @include vheight($rankingSize);
       @include vborder-radius($rankingSize / 2);
-      @include vfont-size($rankingSize / 2);
+      @include vfont-size($rankingSize * 0.75);
+      font-weight: 900 !important;
       position: absolute;
       @include vtop($rankingSize / -2);
       @include vleft($rankingSize / -2);
@@ -1991,7 +1996,7 @@ body#cambiu {
         flex-basis: 100%;
         height: 50vh;
         @include desktop {
-          height: 45vh;
+          height: 40vh;
         }
       }
       .nav_icon_container {
@@ -3349,8 +3354,9 @@ body#cambiu {
         width: 32px !important;
         left: 29px !important;
         top: 61px !important;
+        border-radius: 16px;
         transition: all 0.25s;
-        opacity: 0.55 !important;
+        @include boxShadow2;
       }
     }
 
@@ -3358,7 +3364,6 @@ body#cambiu {
       z-index: 9999 !important;
       img.imgCurrent {
         opacity: 1 !important;
-        @include dropShadow2();
         height: 45px !important;
         width: 43px !important;
         left: 26px !important;
