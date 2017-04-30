@@ -112,15 +112,19 @@
 
         if (offers && offersLength > 0) {
 
-            var currentIndex = currIndex();
-            if (currentIndex > 0 && currentIndex < offersLength) {
-                return offers[currentIndex].properties
+            if ($('.active.pane').data('pane') == 'cards') {
+                var currentIndex = currIndex();
+                if (currentIndex < offersLength) {
+                    return offers[currentIndex].properties
+                }
 
             } else {
 
                 var selected_exchange_id = $('.selected').length && $('.selected').data('exchange-id');
                 if (selected_exchange_id) {
                     return exchangeHash[selected_exchange_id]
+                } else {
+                    return offers[0].properties
                 }
             }
 
@@ -213,6 +217,16 @@
 
     };
 
+    listAddClass = function(klass, exchange_id) {
+        $('.list-group-item.ecard:not(.selected)').removeClass(klass);
+        $('.list-group-item.ecard:not(.selected)[data-exchange-id=' + exchange_id + ']').addClass(klass);
+
+    };
+
+    listRemoveClass = function(klass, exchange_id) {
+        $('.list-group-item.ecard:not(.selected)[data-exchange-id=' + exchange_id + ']').removeClass(klass);
+
+    };
 
 
 //  EVENTS
@@ -229,7 +243,6 @@ $('body').on('mouseover', '.ecard:not(.selected)', function(e) {
 
     var currId = $(this).data('exchange-id');
 
-    markerLayerClear();
     markerLayerAddClass(currId, 'current');
 
 });

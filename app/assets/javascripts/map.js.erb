@@ -94,26 +94,20 @@
                 icon:         eIcon
               });
 
+
+              google.maps.event.addListener(marker, 'mouseover', function () {
+                listAddClass('hover', this.exchange_id);
+              });
+
+              google.maps.event.addListener(marker, 'mouseout', function () {
+                listRemoveClass('hover', this.exchange_id);
+              });
+
 //              if (!best) markerClusterer.addMarker(marker);
               markers.push(marker);
 
             });
 
-
-          map.data.addListener('click', function(event) {
-            document.getElementById('info-box').textContent =
-                event.feature.getProperty('name') + " Dror";
-            console.log(event.feature.id);
-            $('.list-group-item[data-exchange-id=' + event.feature.id + ']').hover();
-          });
-
-/*
-          google.maps.event.addListener(marker, 'click', function () {
-            // do something with this marker ...
-            this.setTitle('I am clicked');
-            console.log(this);
-          });
-*/
 
 
           google.maps.event.addListenerOnce(map, 'idle', function () {
@@ -140,7 +134,6 @@
 
             google.maps.event.addListenerOnce(map, 'click', function () {
                 hide_best();
-              alert('ayy!')
             });
 
 
@@ -223,7 +216,6 @@
       exchangesLayer = map.data.addGeoJson(searchResult);
 
       idMarkerLayer();
-      setTimeout(markBest, 1000);
     };
 
 
@@ -483,21 +475,21 @@
   };
 
 
-  markerLayerClear = function() {
-     $('#markerLayer div').removeClass('current');
-     $('#markerLayer div img').removeClass('imgCurrent');
-  };
-
 
   markerLayerAddClass = function(id, klass) {
 
-//    function titleCase(string) { return string.charAt(0).toUpperCase() + string.slice(1); }
+    function markerLayerClear(klass) {
+      $('#markerLayer div').removeClass(klass);
+      $('#markerLayer div img').removeClass('img_' + klass);
+    }
 
-     function zIndex($e) {
+    function zIndex($e) {
       var style = $e.attr('style');
       if (!style) return;
       return style.slice(style.indexOf('z-index') + 9, style.lastIndexOf(';'));
     }
+
+    markerLayerClear(klass);
 
     $('#markerLayer > div').each(function() {
 
@@ -512,16 +504,6 @@
   };
 
 
-  markBest = function() {
-
-    if (offers.length == 0) return;
-
-    var bestId = offers[0].properties.id;
-    markerLayerAddClass(bestId, 'best');
-
-  };
-
-
   highlightCurrentMarker = function() {
 
     var currExchange = currentExchange();
@@ -530,7 +512,6 @@
 
 //    renderDirections(currExchange);
 
-    markerLayerClear();
     markerLayerAddClass(currId, 'current');
 
   };

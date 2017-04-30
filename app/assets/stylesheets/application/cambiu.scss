@@ -736,6 +736,9 @@ body#cambiu {
     }
     &.ecard.selected {
       cursor: initial;
+      .nav_icon {
+        bottom: 0 !important;
+      }
     }
     .list-group-item-text {
       color: rgba(0, 0, 0, 0.80);
@@ -782,7 +785,7 @@ body#cambiu {
 
  .list-group-item.ecard {
     border-bottom: 1vh solid #eee;
-    &:hover:not(.selected) {
+    &:hover:not(.selected), &.hover:not(.selected) {
       background: #eee;
     }
     .minicard {
@@ -1326,7 +1329,7 @@ body#cambiu {
     top: 0;
     left: 0;
     #map-canvas, #directions-map-canvas {
-      height: 100%;
+      height: 100vh;
     }
   }
 
@@ -3347,29 +3350,6 @@ body#cambiu {
   }
 
   #markerLayer {
-    /*
-
-      div:nth-child(2n) img {
-        @include randomFadeIn(0.5s);
-      }
-      div:nth-child(3n) img {
-        @include randomFadeIn(1s);
-      }
-      div:nth-child(4n) img {
-        @include randomFadeIn(1.5s);
-      }
-      div:nth-child(5n) img {
-        @include randomFadeIn(2s);
-      }
-      div:nth-child(6n) img {
-        @include randomFadeIn(2.5s);
-      }
-      div:nth-child(7n) img {
-        @include randomFadeIn(3s);
-      }
-    */
-
-
     div {
       z-index: inherit;
       img { // The left and top are per img size, currently 96px. Change them if img size changes else the marker position wont be precise.
@@ -3383,10 +3363,14 @@ body#cambiu {
       }
     }
 
+    div.best {
+      z-index: 9999 !important;
+    }
+
     div.current {
       z-index: 9999 !important;
       img {
-        &.img_current, &.img_best {
+        &.img_current {
           height: 45px !important;
           width: 43px !important;
           left: 26px !important;

@@ -52,7 +52,7 @@ show = function(verb) {
 };
 
 start_show = function() {show('start')};
-stop_show = function() {show('stop')};
+stop_show = function() {console.log('stop_show'); show('stop')};
 
 show_best = function() {
     if (exchanges.length == 0) return;
@@ -78,8 +78,9 @@ function removeMapCurtain() {
 }
 
 postAnimations = function() {
+    console.log('postAnimations');
     show_best();
-    highlightCurrentMarker();
+    setTimeout(highlightCurrentMarker, 2000);
     measureMapExperience();
     removeMapCurtain();
 };
