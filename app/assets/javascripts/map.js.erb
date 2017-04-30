@@ -67,7 +67,7 @@
               var errors =      e.feature.getProperty('errors');
               var eIcon;
 
-              if (rank) {
+              if (rank && rank < 5) {
                 switch(rank) {
                   case 1:  eIcon =  '<%= asset_path 'circle_crown.png' %>'; break;
                   case 2:  eIcon =  '<%= asset_path 'rank2.png' %>'; break;
@@ -100,23 +100,9 @@
             });
 
 
-          map.data.addListener('click', function(event) {
-            document.getElementById('info-box').textContent =
-                event.feature.getProperty('name') + " Dror";
-            console.log(event.feature.id);
-            $('.list-group-item[data-exchange-id=' + event.feature.id + ']').hover();
-          });
-
-/*
-          google.maps.event.addListener(marker, 'click', function () {
-            // do something with this marker ...
-            this.setTitle('I am clicked');
-            console.log(this);
-          });
-*/
 
 
-          google.maps.event.addListenerOnce(map, 'idle', function () {
+            google.maps.event.addListenerOnce(map, 'idle', function () {
                 // do something only the first time the map is loaded
             });
 
@@ -140,7 +126,6 @@
 
             google.maps.event.addListenerOnce(map, 'click', function () {
                 hide_best();
-              alert('ayy!')
             });
 
 
@@ -534,5 +519,17 @@
     markerLayerAddClass(currId, 'current');
 
   };
+
+
+  $('body').on('mouseover', '.ecard:not(.selected)', function(e) {
+
+     var currId = $(this).data('exchange-id');
+    console.log(currId);
+
+     markerLayerClear();
+     markerLayerAddClass(currId, 'current');
+
+  });
+
 
 
