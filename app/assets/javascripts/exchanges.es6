@@ -225,6 +225,16 @@ $('body').on('click tap', '.ecard.selected .lessmore.icon', function(e) {
     unselect($(this));
 });
 
+$('body').on('mouseover', '.ecard:not(.selected)', function(e) {
+
+    var currId = $(this).data('exchange-id');
+
+    markerLayerClear();
+    markerLayerAddClass(currId, 'current');
+
+});
+
+
 zoomIn2 = function() {
     var bounds = new google.maps.LatLngBounds();
     bounds.extend(new google.maps.LatLng(search.location.lat ,search.location.lng));
