@@ -99,10 +99,10 @@ p {
   }
 }
 
+$form-label-floating-size: 3.5vw;
+$form-font-size: 5.5vw;
 $screen-md-min: 992px;
 $searchLocRadius: 30px;
-$label_font_size: 2vh;
-$form_font_size: 3vh;
 $swiper_bullets_bottom: 5vh;
 $rankingSize: 8vw;
 $brand-color-a: rgb(255, 23, 95);
@@ -970,17 +970,23 @@ body#cambiu {
   .form-group.label-floating.is-focused label.control-label, .form-group.label-floating:not(.is-empty) label.control-label, .form-group.label-static label.control-label {
     left: $padding;
     @include vtop(-8vw);
-    font-size: $label_font_size;
-    font-weight: 400;
-    color: #888;
+    @include vfont-size($form-label-floating-size);
+    font-weight: 300;
+    color: #aaa;
   }
 
   .form-group.label-floating label.control-label, .form-group.label-placeholder label.control-label {
-    font-size: $form_font_size;
+    @include vfont-size($form-font-size);
+  }
+
+  .form-group label.control-label {
+    @include vfont-size($form-label-floating-size);
+    color: #aaa !important;
+    font-weight: 300 !important;
   }
 
   .form-control, .clear {
-    font-size: 3vh;
+    @include vfont-size($form-font-size);
   }
 
   .clear {
@@ -1007,14 +1013,12 @@ body#cambiu {
       height: 34vh;
       padding: 10px;
       margin-top: 5%;
-      @media screen and (orientation:portrait) {
-        border-bottom: 4px double #eee;
-      }
+      border-bottom: 4px double #eee;
     }
     &.invoke {
       height: 10vh;
       .btn {
-        font-size: 3vh;
+        @include vfont-size($form-font-size);
       }
     }
     .form-group.radius {
@@ -1075,11 +1079,8 @@ body#cambiu {
 
 
   .search_option {
-    @media screen and (orientation:landscape) {
-      display: none;
-    }
     .search_option_text {
-      font-size: $form_font_size;
+      @include vfont-size($form-font-size);
       font-weight: 300;
       color: #aaa;
     }
@@ -1124,7 +1125,7 @@ body#cambiu {
     height: 10%;
     justify-content: flex-end;
     padding-bottom: 2vh;
-    font-size: 2.5vh;
+    @include vfont-size($form-font-size);
     /*
     .material-icons {
       font-size: 4.5vw;
@@ -1136,6 +1137,7 @@ body#cambiu {
       bottom: 5vh;
       left: 0;
       width: 100%;
+      cursor: pointer;
       padding-left: 3 * $padding;
       padding-right: 3 * $padding;
       i.material-icons {
@@ -3200,7 +3202,7 @@ body#cambiu {
     background-color: $brand-color-c-t;
     background-color: rgba(0, 0, 0, 0.5);
     font-weight: 400;
-    font-size: 3vh;
+    @include vfont-size($form-font-size);
     height: $navbar_height;
     padding-top: 10px;
     color: #fff;
@@ -3350,7 +3352,7 @@ body#cambiu {
   }
 
   #markerLayer {
-    div {
+    div { // both the div and its img need a special class: the div for the z-index, the img for the size.
       z-index: inherit;
       img { // The left and top are per img size, currently 96px. Change them if img size changes else the marker position wont be precise.
         height: 32px !important;
@@ -3368,13 +3370,13 @@ body#cambiu {
     }
 
     div.current {
-      z-index: 9999 !important;
+      z-index: 9999 !important; // the !important enables leaving the original z-index of the element intact, so that info doesn't disappear for temporal change
       img {
         &.img_current {
           height: 45px !important;
           width: 43px !important;
           left: 26px !important;
-          top: 51px !important;
+          top: 48px !important;
           border-radius: 23px;
         }
       }

@@ -80,7 +80,10 @@ function removeMapCurtain() {
 postAnimations = function() {
     console.log('postAnimations');
     show_best();
-    setTimeout(highlightCurrentMarker, 2000);
+    setTimeout(function() { // instead of promisifying the markers and waiting for all of them to show up
+        highlightCurrentMarker();
+        markerLayerAddClass(offers[0].properties.id, 'best');
+    }, 2000);
     measureMapExperience();
     removeMapCurtain();
 };
