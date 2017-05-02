@@ -96,6 +96,7 @@
 
 
               google.maps.event.addListener(marker, 'mouseover', function () {
+                console.log('map hover over ' + this.exchange_id);
                 listAddClass('hover', this.exchange_id);
               });
 

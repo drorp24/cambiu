@@ -19,7 +19,7 @@
             if (exchanges.length == 0) resolve(exchanges);
 
             offers = $.grep(exchanges, function (e) {
-                return e.properties.distance < sessionStorage.radius && e.properties.errors.length == 0;
+                return /*e.properties.distance < sessionStorage.radius &&*/ e.properties.errors.length == 0;
             });
 
             if (offers.length > 0) {
@@ -55,6 +55,7 @@
             $('.exchanges_list').empty();
         }
         if (directionsDisplay) clearDirections();
+        resetPaging();
     };
 
     populateOffers = function() {
@@ -65,26 +66,25 @@
 
         console.log('populateOffers');
 
-        for (var i = 0; i < Math.min(initialSlides, offers.length); i++) {
-            var offer = offers[i].properties;
-            addOffer(offer, i);
-        }
+        page = 1;
+        populatePage(page);
+        $('.pagination').addClass('active');
 
     };
 
 
-    function addOffer(offer, index) {
+    function addOffer(offer, index, page) {
 
         if (mode == 'mobile' || mode == 'both') {
             var $scope = $('.swiper-slide.ecard.template').clone().removeClass('template');
             $scope.appendTo($('#cards'));
-            populate(offer, $scope, index);
+            populate(offer, $scope, index, page);
             slidesAdded.push(index);
         }
         if (mode == 'desktop' || mode == 'both') {
             var $scope = $('.list-group-item.ecard.template').clone().removeClass('template');
             $scope.appendTo($('.exchanges_list'));
-            populate(offer, $scope, index);
+            populate(offer, $scope, index, page);
         }
 
     }
@@ -200,6 +200,7 @@
 
     select = function($this) {
 
+        $('.pagination').css('display', 'none');
         $this.addClass('selected');
         $('.list-group-item.ecard:not(.selected)').hide();
         $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
@@ -212,8 +213,9 @@
 
     unselect = function($this) {
 
+        $('.pagination').css('display', 'flex');
         $('.selected.ecard').removeClass('selected');
-        $('.list-group-item.ecard').show();
+        $('.list-group-item.ecard[data-page=' + page + ']').show();
 
     };
 
@@ -253,6 +255,106 @@ zoomIn2 = function() {
     bounds.extend(new google.maps.LatLng(search.location.lat ,search.location.lng));
     for (offer of offers.slice(0, 5)) {bounds.extend(new google.maps.LatLng(offer.properties.latitude ,offer.properties.longitude))}
     map.fitBounds(bounds);
+};
+
+
+// LIST PAGING
+
+
+
+function populatePagination (fromResult, toResult, prev, next) {
+
+    if ($('.active.pane').data('pane') != 'list') return;
+
+    $('[data-model=page][data-field=fromResult]').html(fromResult);
+    $('[data-model=page][data-field=toResult]').html(toResult);
+    if (prev) {
+        $('.pagination .prev').addClass('active');
+    } else {
+        $('.pagination .prev').removeClass('active');
+    }
+    if (next) {
+        $('.pagination .next').addClass('active');
+    } else {
+        $('.pagination .next').removeClass('active');
+    }
+
+
+}
+
+function unpopulatePagination() {
+
+    populatePagination('', '', false, false);
+    $('.pagination').removeClass('active');
+
+}
+
+function showPage(page) {
+    $('.list-group .ecard[data-page=' + page + ']').css('display', 'flex');
+}
+
+function hidePages() {
+    $('.list-group .ecard[data-page]').css('display', 'none');
+}
+
+
+
+populatePage = function(page) {
+
+    var offersLength  = offers.length;
+    var fromResult    = (resultsPerPage * (page -1)) + 1;
+    var toResult      = Math.min(resultsPerPage * page, offersLength);
+    var prev          = fromResult > resultsPerPage;
+    var next          = toResult < offersLength;
+
+    if ($('.active.pane').data('pane') == 'list') {
+        hidePages();
+        if  (pagesAdded.includes(page)) {
+            showPage(page);
+            populatePagination(fromResult, toResult, prev, next);
+            return
+        }
+    }
+
+
+    for (var result = fromResult; result <= toResult; result++) {
+        var offer = offers[result -1].properties;                       // results talks user languages so starts with 1, but the offers array starts with 0
+        addOffer(offer, result -1, page);
+    }
+
+    populatePagination(fromResult, toResult, prev, next);
+    showPage(page)
+    pagesAdded.push(page);
+
+};
+
+
+nextPage = function() {
+
+    if (offers.length > resultsPerPage * page) {
+        page += 1;
+        populatePage(page);
+    } else {
+        console.log('No more results to page')
+    }
+
+};
+
+prevPage = function() {
+
+    if (page > 1) {
+        page -= 1;
+        populatePage(page);
+    } else {
+        console.log('No previous page')
+    }
+
+};
+
+resetPaging = function() {
+    page = 0;
+    pagesAdded = [];
+    unpopulatePagination();
 };
 
 

@@ -99,6 +99,20 @@ p {
   }
 }
 
+@mixin vmargin-left($size) {
+  margin-left: $size;
+  @include desktop {
+    margin-left: $size * $paneRatio;
+  }
+}
+
+@mixin vline-height($size) {
+  line-height: $size;
+  @include desktop {
+    line-height: $size * $paneRatio;
+  }
+}
+
 $form-label-floating-size: 3.5vw;
 $form-font-size: 5.5vw;
 $screen-md-min: 992px;
@@ -677,6 +691,9 @@ body#cambiu {
   }
   */
 
+  #exchanges.page > .container-fluid  > .row {
+    overflow: hidden;
+  }
 
 [data-action], [data-href] {
   cursor: pointer;
@@ -722,14 +739,11 @@ body#cambiu {
     }
       cursor: pointer;  // else not clickable!
     &.ecard:not(.selected)  {
-      height: 20vmax;
-      @include desktop {
-        height: 8vw !important;
-      }
-      .photo img {
+        height: 16vh !important;
+       .photo img {
         height: 20vmax !important;
         @include desktop {
-          height: 8vw !important;
+          height:16vh !important;
         }
         margin-left: -15%;
       }
@@ -811,7 +825,27 @@ body#cambiu {
   }
 
 
-
+  .pagination {
+    height: 8vh;
+    visibility: hidden;
+    @include vpadding(3vw);
+    @include vfont-size(5vw);
+    color: #888;
+    i {
+      cursor: pointer;
+      @include vfont-size(10vw);
+      color: #ccc;
+      &.active {
+        color: #555;
+      }
+    }
+    &.active {
+      visibility: visible;
+    }
+    span {
+      @include vmargin-left(2vw);
+    }
+  }
 
   button[data-target='#myModal'] {
   z-index: 2;
@@ -1267,10 +1301,6 @@ body#cambiu {
     }
     height: 100vh;
     background: #fff;
-    &[data-list] {
-      height: initial !important;
-      min-height: 100vh;
-    }
     &[data-pane="reviews"] {
       background: #eee;
     }
@@ -1939,7 +1969,7 @@ body#cambiu {
       @include vwidth($rankingSize);
       @include vheight($rankingSize);
       @include vborder-radius($rankingSize / 2);
-      @include vfont-size($rankingSize * 0.75);
+      @include vfont-size($rankingSize * 0.6);
       font-weight: 900 !important;
       position: absolute;
       @include vtop($rankingSize / -2);
@@ -2189,6 +2219,7 @@ body#cambiu {
   .quote_section {
     flex-direction: column;
     height: 40%;
+    @include vline-height(10vw);
   }
 
 

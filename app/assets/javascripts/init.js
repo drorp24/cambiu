@@ -94,7 +94,7 @@ var photoPadding = 15;
 var photoWidth;
 var photoHeight;
 var slidesAdded = [];
-var initialSlides = (mode == 'mobile') ? 3 : 50;
+var pagesAdded = [];
 var user = {};
 var dfault = {};
 dfault.lat = '51.51574678520366';
@@ -141,6 +141,8 @@ var markersShaded = false;
 var locationMsgInformed = false;
 var nearest;
 var exchangeHash = {};
+var page;
+var resultsPerPage = 5;
 
 sessionStorage.videoStopped = null;
 

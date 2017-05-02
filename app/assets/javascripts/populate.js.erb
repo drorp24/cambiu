@@ -5,9 +5,9 @@
 //  1-way binding model -> view
 
 
-populate = function(exchange, $scope, index) {
+populate = function(exchange, $scope, index, page) {
 
-  populateExchange(exchange, $scope, index);
+  populateExchange(exchange, $scope, index, page);
 
   fetchPlace(exchange)
       .then(function(exchange) {populatePlace(exchange, $scope)})
@@ -19,13 +19,13 @@ populate = function(exchange, $scope, index) {
 
 };
 
-populateExchange = function(exchange, $scope, index) {
+populateExchange = function(exchange, $scope, index, page) {
 
 //    console.log('exchange ' + exchange.id + ' - populateExchange');
 
   if (index == 0) $scope.addClass('best');
 
-  $scope.find('.ecard').addBack('.ecard').attr('data-exchange-id', exchange.id);
+  $scope.find('.ecard').addBack('.ecard').attr({'data-exchange-id': exchange.id, 'data-page': page});
 
   $scope.find('#streetview').attr('id', 'streetview' + exchange.id);
 

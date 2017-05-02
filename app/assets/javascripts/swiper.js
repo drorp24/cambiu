@@ -39,7 +39,7 @@ slideChange = function() {
 slideNext = function() {
     var currentIndex = currIndex();
     console.log('slideNext. currentIndex: ' + currentIndex);
-    var advanceIndex = currentIndex + initialSlides -1;
+    var advanceIndex = currentIndex + resultsPerPage -1;
     if (advanceIndex < offers.length) {
         console.log('adding slide ' + advanceIndex);
         addSlide(advanceIndex);
