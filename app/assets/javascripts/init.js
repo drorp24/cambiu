@@ -587,53 +587,64 @@ $(document).ready(function() {
 
 
 
- /*
-        function rotate(el, degs) {
-            iedegs = degs/90;
-            if (iedegs < 0) iedegs += 4;
-            transform = 'rotate('+degs+'deg)';
-            iefilter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+iedegs+')';
-            styles = {
-                transform: transform,
-                '-webkit-transform': transform,
-                '-moz-transform': transform,
-                '-o-transform': transform,
-                filter: iefilter,
-                '-ms-filter': iefilter
-            };
-            $(el).css(styles);
-        }
-*/
 
-/*
-    landscape = function() {return window.matchMedia("(orientation: landscape)").matches;};
-    portrait =  function() {return window.matchMedia("(orientation: portrait)").matches;};
-*/
+    // Prevent (or warn against) screen rotation
 
-// Find matches
-    var mql = window.matchMedia("(orientation: portrait)");
-
-// If there are matches, we're in portrait
-    if(mql.matches) {
-        // Portrait orientation
+    if (screen.orientation && screen.orientation.type)   {      // i.e., if screen.orientation is supported
+        screen.orientation.lock('portrait')
+            .then(function() {console.log('screen.orientation.lock succeeded')})
+            .catch(function() {
+                console.log('screen.orientation.lock didnt succeed. Calling warnWhenRotated instead');
+                warnWhenRotated();
+            })
     } else {
-        // Landscape orientation
+        console.log('screen.orientation API isnt supported. Calling warnWhenRotated instead');
+        warnWhenRotated()
     }
 
-// Add a media query change listener
-    mql.addListener(function(m) {
-        if (desktop) return;
-        if ($('#search_form .location').hasClass('is-focused')) return;
-        if(m.matches) {   // Changed to portrait
-            hideDialog();
+
+
+    function warnWhenRotated() {
+        // Find matches
+        var mql = window.matchMedia("(orientation: portrait)");
+
+        // If there are matches, we're in portrait
+        if(mql.matches) {
+            // Portrait orientation
+        } else {
+            // Landscape orientation
         }
-        else {  // Changed to landscape
-            showDialog({
-                title:    'Woopsy!',
-                body:     'For best experience, please rotate',
-                default:  '',
-                primary:  ''
-            });
+
+        function keyboardRaised() {
+            return $('.is-focused').length
         }
-    });
+
+        // Add a media query change listener
+        mql.addListener(function(m) {
+
+            if (desktop) return;
+
+            if(m.matches) {             // Changed to portrait
+                hideDialog();
+            }
+            else {                      // Changed to landscape
+
+                if (keyboardRaised()) return;
+
+                showDialog({
+                     title:    'Woopsy!',
+                     body:     'For best experience, please rotate',
+                     default:  '',
+                     primary:  ''
+                     });
+                 }
+        });
+
+    }
+
+
+
+
+
+
 });

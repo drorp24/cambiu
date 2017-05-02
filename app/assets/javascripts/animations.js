@@ -55,7 +55,6 @@ start_show = function() {show('start')};
 stop_show = function() {console.log('stop_show'); show('stop')};
 
 show_best = function() {
-    if (exchanges.length == 0) return;
     $('.ranking').first().addClass('bounce');
 };
 
@@ -79,11 +78,13 @@ function removeMapCurtain() {
 
 postAnimations = function() {
     console.log('postAnimations');
-    show_best();
-    setTimeout(function() { // instead of promisifying the markers and waiting for all of them to show up
-        highlightCurrentMarker();
-        markerLayerAddClass(offers[0].properties.id, 'best');
-    }, 2000);
+    if (offers.length) {
+        show_best();
+        setTimeout(function() { // instead of promisifying the markers and waiting for all of them to show up
+            highlightCurrentMarker();
+            markerLayerAddClass(offers[0].properties.id, 'best');
+        }, 2000);
+    }
     measureMapExperience();
     removeMapCurtain();
 };

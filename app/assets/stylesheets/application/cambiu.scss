@@ -738,6 +738,15 @@ body#cambiu {
       cursor: initial;
       .nav_icon {
         bottom: 0 !important;
+        @include desktop {
+          bottom: -5vh !important;
+        }
+      }
+      .item {
+        height: 45vh;
+      }
+      .duration {
+        bottom: 60vh !important;
       }
     }
     .list-group-item-text {
