@@ -372,12 +372,8 @@ $(document).ready(function() {
 
     if (mobile) {
         $('iframe#player').remove();
-        $('.desktop_only#map_container').remove();
-        $('#exchange_params_change').removeClass('in');
-    } else
-    if (desktop) {
-        $('.mobile_only#map_container').remove();
     }
+
     $('body').addClass(media);
     production = function() {
         return $('body').hasClass('production');

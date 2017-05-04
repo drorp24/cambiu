@@ -750,14 +750,11 @@ body#cambiu {
     }
     &.ecard.selected {
       cursor: initial;
-      .nav_icon {
-        bottom: 0 !important;
-        @include desktop {
-          bottom: -5vh !important;
-        }
-      }
       .item {
         height: 45vh;
+      }
+      .nav_icon_container {
+        top: 45vh;
       }
       .duration {
         bottom: 60vh !important;
@@ -2062,16 +2059,10 @@ body#cambiu {
         .item {
         flex-basis: 100%;
         height: 50vh;
-        @include desktop {
-          height: 40vh;
-        }
       }
       .nav_icon_container {
         position: absolute;
         top: 50vh;
-        @include desktop {
-          top: 45vh;
-        }
         @include vleft(50vw);
       }
       .nav_icon {

@@ -17,6 +17,9 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
          [page, id, pane] = [page1, id1, pane1];
     }
 
+    if (pane == 'display') pane = value_of('display') || (mobile ? 'cards' : 'list');
+    if (pane == 'list' || pane == 'cards') sessionStorage.display = pane;
+
     // tag the session as soon as page is visited, with ref parameter or without it
     if (search) utm_source = new URLSearchParams(search).get('utm_source');
     tagSession();
