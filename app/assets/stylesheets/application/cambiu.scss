@@ -713,7 +713,8 @@ body#cambiu {
   flex: 0 0 100%;
   max-width: 100%;
   width: 100%; //meaingless in desktop but helpful in mobile
-  position: absolute; // makes the map pane interleave with cards pane in mobile (and any transparent pane if needed)
+  position: absolute; // together with 'left: 0' makes the map pane interleave with cards pane in mobile (and any transparent pane if needed)
+  left: 0;
   @include desktop {
     position: static;
     flex: 0 0 $mapPaneWidth;
