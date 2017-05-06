@@ -246,7 +246,7 @@ $('body').on('mouseover', '.ecard:not(.selected)', function(e) {
 zoomIn2 = function() {
     var bounds = new google.maps.LatLngBounds();
     bounds.extend(new google.maps.LatLng(search.location.lat ,search.location.lng));
-    for (offer of offers.slice(0, 5)) {bounds.extend(new google.maps.LatLng(offer.properties.latitude ,offer.properties.longitude))}
+    for (offer of offers.slice(0, 1)) {bounds.extend(new google.maps.LatLng(offer.properties.latitude ,offer.properties.longitude))}
     map.fitBounds(bounds);
 };
 
