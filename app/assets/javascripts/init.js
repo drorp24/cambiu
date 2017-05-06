@@ -114,6 +114,7 @@ var ratingOptions = {
 var map_refreshed = false;
 var intro_refreshed = false;
 var search_refreshed = false;
+var cards_refreshed = false;
 var directionsRenderedFor = null;
 
 var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
@@ -121,7 +122,6 @@ var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 var Safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
 var swiperH;
 var cardHeight = null;
-var cardXoffset = null;
 var exchanges;
 var inShow = true;
 var currExchangeId = null;
@@ -146,6 +146,7 @@ var page;
 var resultsPerPage = 5;
 
 sessionStorage.videoStopped = null;
+var cardXoffset;
 
 
 
@@ -642,6 +643,10 @@ $(document).ready(function() {
 
     }
 
+    var bodyWidth = $('body').width();
+    var cardWidth = bodyWidth / slidesPerView - 2.3;
+    var offset = (bodyWidth - cardWidth) / -2;
+    cardXoffset = String(offset) + 'px';
 
 
 

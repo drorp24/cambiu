@@ -92,14 +92,7 @@
 
      // TODO: looks like 'offers' should be checked, not 'exchanges'
     revealCards = function() {
-        if (exchanges.length == 0) {
-            $('.swiper-container-h').css('display', 'none');
-            return;
-        }
-        $('.swiper-container').css('display', 'block');
-        setTimeout(function() {
-            cardXoffset = String(($('.ecard').eq(0).position().left + $('#cards').position().left) * -1) + 'px';
-        }, 1000)
+        $('.swiper-container-h').css('display', offers.length == 0 ? 'none' : 'block');
     };
 
 
@@ -323,7 +316,7 @@ populatePage = function(page) {
     }
 
     populatePagination(fromResult, toResult, prev, next);
-    showPage(page)
+    showPage(page);
     pagesAdded.push(page);
 
 };
