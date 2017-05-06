@@ -2,7 +2,8 @@ var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'deskto
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
 var mode = mobile ? 'mobile' : 'desktop';
-var mode = 'both'; // TODO: Remove. For testing only.
+var mode = 'both'; // Never do this. For testing only, do the following, later remove that too leaving the original (first) one
+var mode = mobile ? 'mobile' : 'both';
 // if (mobile) - single-pane; true in mobile devices and iFrames narrower than 767px.  EXAMPLE: if (mobile) close pane when showing directions.   If (desktop) - side by side panes.
 // if (mode == mobile) - best fit for a single-pane, though it can exists in desktop too. EXAMPLE: if (mode == mobile) create vertical list rather than horizontal cards.
 var windowWidth = $(window).width();
