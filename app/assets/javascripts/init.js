@@ -236,6 +236,7 @@ make_url = function(page, id, pane) {
 
 break_url = function(url) {
 
+    if (url[url.length - 1] == '/') url = url.substring(0, url.length - 1);
     var split_url = url.split('/');
     var page = split_url[1];
     if (split_url.length == 4) {
