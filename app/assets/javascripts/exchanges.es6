@@ -208,6 +208,7 @@
     unselect = function($this) {
 
         $('.selected.ecard').removeClass('selected');
+        if (isSafari2) $('.swiper-container-h').css('bottom', '60px');
         if ($('.active.pane').data('pane') == 'list') {
             $('.pagination').css('display', 'flex');
             $('.list-group-item.ecard[data-page=' + page + ']').show();
