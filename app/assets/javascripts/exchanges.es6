@@ -196,6 +196,7 @@
         $('.pagination').css('display', 'none');
         $this.addClass('selected');
         $('.list-group-item.ecard:not(.selected)').hide();
+        $('.swiper-container-h').css('bottom', '0px');
         if ($('.active.pane').data('pane') == 'cards') $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
 
         populateStreetview(currentExchange());
