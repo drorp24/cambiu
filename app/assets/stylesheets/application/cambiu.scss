@@ -781,15 +781,13 @@ body#cambiu {
       padding-right: 0;
       img, i {
         display: none;
-        @include vwidth(20vw);
+        width: 25%;
+        margin-right: 5%;
         @include vheight(20vw);
         @include vfont-size(20vw);
         line-height: initial;
       }
       &.photo {
-        margin-right: 5%;
-        margin-left: 5%;
-        margin-top: 5%;
         img {
           display: block;
         }

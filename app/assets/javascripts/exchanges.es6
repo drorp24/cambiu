@@ -196,7 +196,7 @@
         $('.pagination').css('display', 'none');
         $this.addClass('selected');
         $('.list-group-item.ecard:not(.selected)').hide();
-        if ($('.active.pane').data('pane') == 'cards') $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
+        $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
 
         populateStreetview(currentExchange());
         report('Tap', 'Card');
