@@ -32,7 +32,7 @@ slideChange = function() {
     map.data.revertStyle();
     if (directionsDisplay) clearDirections();
     $('.ecard').removeClass('selected');
-    highlightCurrentMarker();
+    if (desktop) highlightCurrentMarker();
     prev_distance_from_exchange = null;
 };
 
