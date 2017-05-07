@@ -691,6 +691,15 @@ body#cambiu {
   }
   */
 
+  &[data-pane=cards] .info-pane {
+    pointer-events: none;
+    .active.pane {
+      nav.navbar, .swiper-container.swiper-container-h {
+        pointer-events: all;
+      }
+    }
+  }
+
   #exchanges.page > .container-fluid  > .row {
     overflow: hidden;
   }
