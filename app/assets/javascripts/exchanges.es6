@@ -206,9 +206,11 @@
 
     unselect = function($this) {
 
-        $('.pagination').css('display', 'flex');
         $('.selected.ecard').removeClass('selected');
-        $('.list-group-item.ecard[data-page=' + page + ']').show();
+        if ($('.active.pane').data('pane') == 'list') {
+            $('.pagination').css('display', 'flex');
+            $('.list-group-item.ecard[data-page=' + page + ']').show();
+        }
 
     };
 
