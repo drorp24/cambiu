@@ -654,20 +654,24 @@ $(document).ready(function() {
     cardXoffset = String(offset) + 'px';
 
     function fixSafari() {
-        console.log('$(window).height() - window.innerHeight: ', String(Math.floor(($(window).height() - window.innerHeight))) + 'px');
-        if (isSafari) {
-            console.log('isSafari');
-            $('.swiper-container-h').css('bottom', String(Math.floor(($(window).height() - window.innerHeight))) + 'px')
-        }
-        else if (isSafari2) {
-            console.log('isSafari2');
-            $('.swiper-container-h').css('bottom', String(Math.floor(($(window).height() - window.innerHeight))) + 'px')
+
+        var heightDiff = $(window).height() - window.innerHeight;
+        var heightDiffPx = String(Math.floor(heightDiff)) + 'px';
+        console.log('$(window).height() - window.innerHeight: ', heightDiff);
+
+        if (isSafari || isSafari2) {
+
+            console.log(isSafari ? 'isSafari' : 'isSafari2');
+            $('.swiper-container-h').css('bottom', heightDiff ? heightDiffPx : '44px');
+
         } else {
+
             console.log('is not Safari')
+
         }
     }
 
-    setTimeout(fixSafari, 1000);
+    setTimeout(fixSafari, 1500);
 
 
 
