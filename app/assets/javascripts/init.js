@@ -662,7 +662,7 @@ $(document).ready(function() {
         if (isSafari || isSafari2) {
 
             console.log(isSafari ? 'isSafari' : 'isSafari2');
-            $('.swiper-container-h').css('bottom', heightDiff ? heightDiffPx : '44px');
+            $('.swiper-container-h').css('bottom', heightDiff ? heightDiffPx : '60px');
 
         } else {
 
