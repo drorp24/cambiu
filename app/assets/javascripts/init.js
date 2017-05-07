@@ -653,17 +653,21 @@ $(document).ready(function() {
     var offset = (bodyWidth - cardWidth) / -2;
     cardXoffset = String(offset) + 'px';
 
-    console.log('$(window).height() - window.innerHeight: ', String(Math.floor(($(window).height() - window.innerHeight))) + 'px');
-    if (isSafari) {
-        console.log('isSafari');
-        $('.swiper-container-h').css('bottom', String(Math.floor(($(window).height() - window.innerHeight))) + 'px')
-    }
-    else if (isSafari2) {
+    function fixSafari() {
+        console.log('$(window).height() - window.innerHeight: ', String(Math.floor(($(window).height() - window.innerHeight))) + 'px');
+        if (isSafari) {
+            console.log('isSafari');
+            $('.swiper-container-h').css('bottom', String(Math.floor(($(window).height() - window.innerHeight))) + 'px')
+        }
+        else if (isSafari2) {
             console.log('isSafari2');
             $('.swiper-container-h').css('bottom', String(Math.floor(($(window).height() - window.innerHeight))) + 'px')
-    } else {
-        console.log('is not Safari')
+        } else {
+            console.log('is not Safari')
+        }
     }
+
+    setTimeout(fixSafari, 1000);
 
 
 
