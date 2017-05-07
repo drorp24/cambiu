@@ -650,7 +650,10 @@ $(document).ready(function() {
     cardXoffset = String(offset) + 'px';
 
     if (isSafari) {
+        console.log('isSafari, setting bottom to ', String(Math.floor(($(window).height() - window.innerHeight))) + 'px');
         $('.swiper-container-h').css('bottom', String(Math.floor(($(window).height() - window.innerHeight))) + 'px')
+    } else {
+        console.log('is not Safari')
     }
 
 
