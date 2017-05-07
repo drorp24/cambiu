@@ -7,6 +7,10 @@ var mode = mobile ? 'mobile' : 'both';
 // if (mobile) - single-pane; true in mobile devices and iFrames narrower than 767px.  EXAMPLE: if (mobile) close pane when showing directions.   If (desktop) - side by side panes.
 // if (mode == mobile) - best fit for a single-pane, though it can exists in desktop too. EXAMPLE: if (mode == mobile) create vertical list rather than horizontal cards.
 var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
+function isSafari1(ua) {
+    return /^((?!chrome).)*safari/i.test(ua) && ua.toLowerCase().indexOf(' version/')>-1 && ua.toLowerCase().indexOf('mqqbrowser')==-1;
+}
+var isSafari2 = isSafari1(navigator.userAgent);
 var windowWidth = $(window).width();
 var windowHeight = $(window).height();
 var isAndroid = /(android)/i.test(navigator.userAgent);
@@ -649,9 +653,14 @@ $(document).ready(function() {
     var offset = (bodyWidth - cardWidth) / -2;
     cardXoffset = String(offset) + 'px';
 
+    console.log('$(window).height() - window.innerHeight: ', String(Math.floor(($(window).height() - window.innerHeight))) + 'px');
     if (isSafari) {
-        console.log('isSafari, setting bottom to ', String(Math.floor(($(window).height() - window.innerHeight))) + 'px');
+        console.log('isSafari');
         $('.swiper-container-h').css('bottom', String(Math.floor(($(window).height() - window.innerHeight))) + 'px')
+    }
+    else if (isSafari2) {
+            console.log('isSafari2');
+            $('.swiper-container-h').css('bottom', String(Math.floor(($(window).height() - window.innerHeight))) + 'px')
     } else {
         console.log('is not Safari')
     }
