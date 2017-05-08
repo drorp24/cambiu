@@ -20,7 +20,16 @@ ActiveAdmin.register Chain do
     column :rates_update do |rate|
       rate.rates_update.in_time_zone('Jerusalem') if rate.rates_update
     end
+
+
+    actions defaults: false do |chain|
+      link_to('Upload rates', update_rates_admin_chain_path(chain)) if chain.xmlable?
+    end
+
+
+
   end
+
 
     sidebar "Rates", only: [:show, :edit] do
     table_for chain.rates do |r|
@@ -54,6 +63,15 @@ ActiveAdmin.register Chain do
   end
 
       controller do
+
+        def update_rates
+        end
+
+        def extract
+          chain = Chain.find(params[:id])
+          Extract.update(chain.name, nil, params[:extract][:file].tempfile, 'xmlFile')
+          redirect_to collection_path, notice: "Rates were successfully updated"
+        end
 
         def show
           redirect_to edit_admin_chain_path(params[:id])

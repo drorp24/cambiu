@@ -51,6 +51,10 @@ Rails.application.routes.draw do
       resources :rates
     end
     resources :chains do
+      member do
+        get 'update_rates'
+        post 'extract'
+      end
       resources :rates
       resources :exchanges
     end

@@ -21,6 +21,10 @@ class Chain < ActiveRecord::Base
     self.currency = 'GBP'
   end
 
+  def xmlable?
+    name.include? 'TMS'
+  end
+
   def self.entire_list(params)
 
     return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?

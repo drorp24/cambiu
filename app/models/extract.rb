@@ -14,8 +14,10 @@ class Extract
     begin
 
       rates_source = format == 'html' ? 'scraping' : 'xml'
+      filename = url.class == Tempfile ? "XML file" : url
 
-      if chain_name
+
+          if chain_name
 
         raise "No such chain: #{chain_name}" unless chain = Chain.find_by(name: chain_name)
         chain.rates.update_all(buy: nil, sell: nil, source: rates_source, admin_user_id: nil)
@@ -30,7 +32,7 @@ class Extract
         raise "Neither chain nor exchange were passed in"
       end
 
-      raise "No such url: #{url}" unless doc = format == 'html' ? Nokogiri::HTML(open(url)) : Nokogiri::XML(open(url))
+      raise "No such url: #{url}" unless doc = format == 'html' ? Nokogiri::HTML(open(url)) : (format == 'xml' ? Nokogiri::XML(open(url)) : File.open(url) { |f| Nokogiri::XML(f) })
 
       parse_rates(url, doc, chain, exchange, rates_source)
 
@@ -45,7 +47,7 @@ class Extract
 
       chain.update(rates_source: rates_source, rates_update: DateTime.now, rates_error: nil) if chain
       exchange.update(rates_policy: 'individual', rates_source: rates_source, rates_update: DateTime.now, rates_error: nil) if exchange
-      Rails.logger.info "parsing " + url + " succeeded"
+      Rails.logger.info "parsing " + filename + " succeeded"
 
     end
 
@@ -53,7 +55,19 @@ class Extract
 
   def self.parse_rates(url, doc, chain, exchange, rates_source)
 
-    if url == "http://www.netdania.com/quotes/forex-sterling"
+    if chain.name.include? 'TMS'
+
+      doc.css('record').each do |rate|
+        currency  = rate.css('Code').text
+        next unless Currency.updatable.include? currency
+        buy = nil
+        sell      = rate.css('RATE').text
+        puts sell
+        rate_update(currency, buy, sell, chain, exchange, rates_source)
+      end
+
+
+    elsif url == "http://www.netdania.com/quotes/forex-sterling"
 
       doc.css('.nd-ql-tbl-results table tbody tr').each do |tr|
         currency  = tr.css('td')[0].css('a').text.split('/')[1]
