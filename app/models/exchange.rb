@@ -27,7 +27,7 @@ class Exchange < ActiveRecord::Base
 
   has_many    :reviews,  :dependent => :destroy
 
-  enum business_type: [ :exchange, :bank, :post_office, :other, :inter ]
+  enum business_type: [ :exchange, :bank, :post_office, :other, :reference ]
   enum rates_source:  [ :no_rates, :test, :manual, :xml, :scraping ]
   enum rates_policy:  [:individual, :chain]
   enum todo:          [:verify, :call, :meet]
@@ -75,56 +75,68 @@ class Exchange < ActiveRecord::Base
 
 # TODO: Right now these two are just excel fields, some times populated other not. Return when meaningful.
 
-    return Exchange.active
-                    .select(:id, :chain_id, :name, :nearest_station, :rates_policy, :currency, :address, :phone, :latitude, :longitude,
-                            :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close)
-#                    .where(country: params[:country], city: params[:city])
+    begin
+
+      return Exchange.active
+                      .select(:id, :chain_id, :name, :nearest_station, :rates_policy, :currency, :address, :phone, :latitude, :longitude,
+                              :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close)
+                      .where(country: params[:country], city: params[:city])
+
+    rescue => e
+
+      return {errors: {'API error': e}}
+
+    end
+
 
   end
 
 
   def self.rates_list(params)
 
-    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
+    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present? and params[:type].present?
 
-    selected_exchanges = params[:type] && params[:type] == 'reference' ? Exchange.inter : Exchange.active
+    begin
 
-# TODO: Remove limit
-# TODO: Right now these two are just excel fields, some times populated other not. Return when meaningful.
+      exchanges = Exchange.send(params[:type])
+                      .select(:id, :name, :rates_policy, :chain_id, :currency)
+                      .where(country: params[:country], city: params[:city])
 
-    exchanges = selected_exchanges
-                    .select(:id, :name, :rates_policy, :chain_id, :currency)
-#                    .where(country: params[:country], city: params[:city])
+      exchanges_list = []
 
-    exchanges_list = []
+      exchanges.each do |exchange|
 
-    exchanges.each do |exchange|
+        exchange_h = {}
+        exchange_h[:exchange_id]    = exchange.id
+        exchange_h[:exchange_name]  = exchange.name
+        exchange_h[:exchange_currency]  = exchange.currency
+        exchange_h[:rates_policy]  = exchange.rates_policy
+        exchange_h[:rates] = []
 
-      exchange_h = {}
-      exchange_h[:exchange_id]    = exchange.id
-      exchange_h[:exchange_name]  = exchange.name
-      exchange_h[:exchange_currency]  = exchange.currency
-      exchange_h[:rates_policy]  = exchange.rates_policy
-      exchange_h[:rates] = []
+        exchange.rates.each do |rate|
 
-      exchange.rates.each do |rate|
+          rate_h = {}
 
-        rate_h = {}
+          rate_h[:currency]       = rate.currency
+          rate_h[:buy]            = rate.buy
+          rate_h[:sell]           = rate.sell
+          rate_h[:updated_at]     = rate.updated_at
 
-        rate_h[:currency]       = rate.currency
-        rate_h[:buy]            = rate.buy
-        rate_h[:sell]           = rate.sell
-        rate_h[:updated_at]     = rate.updated_at
+          exchange_h[:rates] << rate_h
 
-        exchange_h[:rates] << rate_h
+        end
+
+        exchanges_list << exchange_h
 
       end
 
-      exchanges_list << exchange_h
+      return exchanges_list
+
+    rescue => e
+
+      return {errors: {'API error': e}}
 
     end
-
-    return exchanges_list
 
   end
 

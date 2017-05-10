@@ -29,7 +29,16 @@ class Chain < ActiveRecord::Base
 
     return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
 
-    return Chain.all.select(:id, :name)
+    begin
+
+      return Chain.all.select(:id, :name)
+
+    rescue => e
+
+      return {errors: {'API error': e}}
+
+    end
+
 
   end
 
