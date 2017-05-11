@@ -55,7 +55,7 @@ class Extract
 
   def self.parse_rates(url, doc, chain, exchange, rates_source)
 
-    if chain.name.include? 'TMS'
+    if chain and chain.name.include? 'TMS'
 
       doc.css('record').each do |rate|
         currency  = rate.css('Code').text
