@@ -31,7 +31,7 @@ oxr.secure_connection = true
 # Set the base currency for all rates. By default, USD is used.
 # OpenExchangeRates only allows USD as base currency
 # for the free plan users.
-oxr.source = 'GBP'
+# oxr.source = 'GBP'  # TODO: Remove once multi-cities is implemented
 
 Money.default_bank = oxr
 
