@@ -18,6 +18,30 @@ class Rate < ActiveRecord::Base
 #  before_create :initialize_default_values
 
 
+  def update_by_params(params)
+
+    return false unless self.ratable && (params[:buy] || params[:sell])
+
+    if params[:type].present? and params[:type] == 'reference'
+      updated_currency = params[:currency]
+      base_currency    = self.ratable.currency
+      reference_rate   = Money.default_bank.get_rate(updated_currency, base_currency)
+      sell_markup      = 1 + (params[:sell] / 100)
+      buy_markdown     = 1 - (params[:buy] / 100)
+      sell             = reference_rate * sell_markup
+      buy              = reference_rate * buy_markdown
+    else
+      sell             = params[:sell]
+      buy              = params[:buy]
+    end
+
+    self.buy = buy
+    self.sell = sell
+    self.source = 'ratefeed'
+    self.save
+
+  end
+
   def self.with(property, error)
     rate = Rate.new
     rate.errors.add(property, error)
