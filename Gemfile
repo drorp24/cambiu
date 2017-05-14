@@ -84,6 +84,7 @@ gem 'browser'
 #gem 'derailed', group: :development
 gem 'derailed_benchmarks', group: :development
 gem 'stackprof', group: :development
+gem 'money-open-exchange-rates'
 
 
 group :development, :test do

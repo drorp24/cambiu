@@ -1,9 +1,42 @@
 require 'money'
+
+=begin
 require 'money/bank/google_currency'
 require 'json'
 MultiJson.engine = :json_gem
 Money.default_bank = Money::Bank::GoogleCurrency.new
 Money::Bank::GoogleCurrency.ttl_in_seconds = 86400
+=end
+
+require 'money/bank/open_exchange_rates_bank'
+oxr = Money::Bank::OpenExchangeRatesBank.new
+oxr.cache = 'oxr_cache.json'
+oxr.app_id = 'e01797cb4dff4450bd34f794abce9600'
+oxr.update_rates
+
+# (optional)
+# set the seconds after than the current rates are automatically expired
+# by default, they never expire, in this example 1 day.
+oxr.ttl_in_seconds = 86400
+# (optional)
+# use https to fetch rates from Open Exchange Rates
+# disabled by default to support free-tier users
+# see https://openexchangerates.org/documentation#https
+oxr.secure_connection = true
+# (optional)
+# set historical date of the rate
+# see https://openexchangerates.org/documentation#historical-data
+#oxr.date = '2015-01-01'
+# (optional)
+# Set the base currency for all rates. By default, USD is used.
+# OpenExchangeRates only allows USD as base currency
+# for the free plan users.
+oxr.source = 'GBP'
+
+Money.default_bank = oxr
+
+
+
 Monetize.assume_from_symbol = true
 Money::Currency.register({
    :priority            => 1,
@@ -33,7 +66,7 @@ Money::Currency.register({
 Money::Currency.register({
    :priority            => 1,
    :iso_code            => "ILS",
-   :name                => "New Isralie Sheqel",
+   :name                => "New Israeli Sheqel",
    :symbol              => "₪",
    :symbol_first        => true,
    :subunit             => "Agorot",

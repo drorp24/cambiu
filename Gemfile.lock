@@ -206,6 +206,9 @@ GEM
     money (6.7.1)
       i18n (>= 0.6.4, <= 0.7.0)
       sixarm_ruby_unaccent (>= 1.1.1, < 2)
+    money-open-exchange-rates (0.7.0)
+      monetize (~> 1.4)
+      money (~> 6.7)
     money-rails (1.7.0)
       activesupport (>= 3.0)
       monetize (~> 1.4.0)
@@ -379,6 +382,7 @@ DEPENDENCIES
   memcachier
   monetize
   money
+  money-open-exchange-rates
   money-rails
   newrelic_rpm
   nokogiri
