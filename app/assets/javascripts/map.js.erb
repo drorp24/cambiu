@@ -318,6 +318,7 @@
 //        if (directionsRenderedFor == null) return;
         if (directionsDisplay) directionsDisplay.setMap(null);
         directionsRenderedFor = null;
+      $('.nav_button').removeClass('rotate');
     };
 
 
@@ -385,7 +386,8 @@
      $('body').on('click tap', '[data-action=directions]', function(e) {
        console.log('[data-action=directions] clicked');
        renderDirections(currentExchange());
-       unselect($(this));
+       if (mobile) unselect($(this));
+       $(this).addClass('rotate');
        report('Tap', 'Directions');
      });
 

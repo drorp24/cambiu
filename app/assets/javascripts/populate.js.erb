@@ -132,7 +132,7 @@ function processSVData(exchange, panorama, data, status) {
 
 populateDuration = function(exchange, $scope) {
 //    console.log('exchange ' + exchange.id + ' - populateDuration');
-    $scope.find('.duration [data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
+    $scope.find('[data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
 };
 
 

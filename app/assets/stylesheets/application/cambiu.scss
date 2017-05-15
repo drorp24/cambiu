@@ -73,6 +73,12 @@ p {
     left: $size * $paneRatio;
   }
 }
+@mixin vright($size) {
+  right: $size;
+  @include desktop {
+    right: $size * $paneRatio;
+  }
+}
 @mixin vfont-size($size) {
   font-size: $size;
   @include desktop {
@@ -113,6 +119,10 @@ p {
   }
 }
 
+$formGreen: #009688;
+$nav_button_top: 35vh;
+$nav_button_right: 7vw;
+$nav_button_width: 7vh;
 $form-label-floating-size: 3.5vw;
 $form-font-size: 5.5vw;
 $screen-md-min: 992px;
@@ -131,7 +141,7 @@ $limelight: #EEFF41;
 $limedark: #B2FF59;
 $navbar_height: 10vh;
 $navbar_background: rgba(0,0,0,0.30);
-$nav_icon_width: 10vh;
+$order_button_width: 10vh;
 $card-transition-time: 0.6s;
 $padding: 15px;
 $negPadding: -15px;
@@ -734,9 +744,10 @@ body#cambiu {
 .list-group {
   padding: 0;
   .list-group-item {
+    line-height: 1.5;
     padding: 0;
     &:not(.selected) {
-      .duration {
+      .minicard .duration {
         @include vleft(3vw);
         width: 41vw;
         @include desktop {
@@ -763,11 +774,14 @@ body#cambiu {
       .item {
         height: 45vh;
       }
-      .nav_icon_container {
+      .order_button_container {
         top: 45vh;
       }
+      .nav_button_container {
+        top: $nav_button_top - 5vh;
+      }
       .duration {
-        bottom: 60vh !important;
+        bottom: $nav_button_top + 10vh !important;
       }
     }
     .list-group-item-text {
@@ -814,6 +828,10 @@ body#cambiu {
     padding-right: 16px;
   }
 }
+
+  .white {
+    color: #fff;
+  }
 
  .list-group-item.ecard {
     border-bottom: 1vh solid #eee;
@@ -2079,20 +2097,48 @@ body#cambiu {
         flex-basis: 100%;
         height: 50vh;
       }
-      .nav_icon_container {
+      .order_button_container {
         position: absolute;
         top: 50vh;
         @include vleft(50vw);
       }
-      .nav_icon {
+      .order_button {
         z-index: 1;
         display: block;
         position: absolute;
-        bottom: $nav_icon_width / -2;
-        left: $nav_icon_width / -2;
-        font-size: $nav_icon_width / 2;
+        bottom: $order_button_width / -2;
+        left: $order_button_width / -2;
+        font-size: $order_button_width / 2;
         box-shadow: 1px 2px 15px rgba(0,0,0,0.5);
+        i {
+          width: $order_button_width;
+          height: $order_button_width;
+        }
       }
+
+      .nav_button_container {
+        position: absolute;
+        top: $nav_button_top;
+        @include vright($nav_button_right);
+      }
+      .nav_button {
+        z-index: 1;
+        display: block;
+        bottom: $nav_button_width / -2;
+        left: $nav_button_width / -2;
+        font-size: $nav_button_width / 2;
+        box-shadow: 1px 2px 15px rgba(0,0,0,0.7);
+        i {
+          width: $nav_button_width;
+          height: $nav_button_width;
+        }
+      }
+      .directions_text {
+        font-weight: 500;
+      }
+
+
+
       .rotate {
         @include rotateReturn;
       }
@@ -2128,11 +2174,6 @@ body#cambiu {
         display: none;
       }
       .duration {
-        width: 100% !important;
-        bottom: 52vh + $nav_icon_width / 2  !important;
-        @include desktop {
-          bottom: 57vh + $nav_icon_width / 2  !important;
-        }
         left: initial !important;
         @include vfont-size(5vw);
       }
@@ -2149,7 +2190,7 @@ body#cambiu {
       }
     }
     &:not(.selected) {
-      .duration {
+      .minicard .duration {
         @include vleft(3vw);
         width: 31vw;
         @include desktop {
@@ -2240,7 +2281,7 @@ body#cambiu {
 
   .better {
     color: $brand-color-a;
-    @include vfont-size(7vw);
+    @include vfont-size(5vw);
     font-weight: 100;
     text-transform: uppercase;
     [data-field=gain_percent] {
@@ -2256,9 +2297,9 @@ body#cambiu {
     @include vfont-size(7.5vw);
     font-weight: 400;
     color: #000;
-    margin-bottom: 7vw;
+    margin-bottom: 3vw;
     @include desktop {
-      margin-bottom: 3vw;
+      margin-bottom: 1vw;
     }
   }
 
@@ -2268,8 +2309,8 @@ body#cambiu {
     @include desktop {
       letter-spacing: -0.3vw * $paneRatio;
     }
-    color: #000;
-    font-weight: 400;
+    color: #666;
+    font-weight: 900;
   }
 
   .norates {
@@ -2336,12 +2377,12 @@ body#cambiu {
     @include vwidth(5vw);
   }
 
-  .nav_icon {
+  .order_button {
     z-index: 1;
     display: none;
-    width: $nav_icon_width;
-    border-radius: $nav_icon_width / 2;
-    line-height: $nav_icon_width;
+    width: $order_button_width;
+    border-radius: $order_button_width / 2;
+    line-height: $order_button_width;
     font-size: 1em;
     font-weight: 300;
     text-align: center;
@@ -2352,6 +2393,20 @@ body#cambiu {
 //    transition: font-size, $card-transition-time + 0.3s;
   }
 
+  .nav_button {
+    z-index: 1;
+    display: none;
+    width: $nav_button_width;
+    border-radius: $nav_button_width / 2;
+    line-height: $nav_button_width;
+    font-size: 1em;
+    font-weight: 300;
+    text-align: center;
+    color: $formGreen;
+    background: #fff;
+    box-shadow: 1px 2px 5px rgba(0,0,0,0.7);
+    //    transition: font-size, $card-transition-time + 0.3s;
+  }
 
   .actions_line {
     font-size: 5vw !important;
@@ -2398,7 +2453,7 @@ body#cambiu {
         margin-left: 0.3em;
       }
     }
-    font-weight: 900;
+    font-weight: 300;
     transform: scale(0.9, 0.9);
     color: $brand-color-a;
     [data-field=gain_percent] {
@@ -2439,7 +2494,7 @@ body#cambiu {
   
   
 
-  .duration {
+  .minicard .duration {
     z-index: 1;
     @include flexbox();
     align-items: center;
@@ -2460,7 +2515,7 @@ body#cambiu {
 
   .mapMarker {
     font-size: 1.4em;
-    margin-right: 0.4em;
+    margin-right: 0.4em !important;
   }
 
   .lessmore {
@@ -2477,29 +2532,8 @@ body#cambiu {
     font-weight: 300;
     text-align: center;
     color: #000;
-    /*
-    width: $nav_icon_width;
-    border-radius: $nav_icon_width / 2;
-    line-height: $nav_icon_width;
-    background-color: #ddd;
-    */
   }
 
-  /*
-  .search_bar {
-    position: absolute;
-    top: $padding * 2;
-    width: 95%;
-    z-index: 2;
-    background-color: lighten(#eee, 5%);
-    color: #666;
-    box-shadow: 1px 1px 7px rgba(0,0,0,0.3);
-    border-radius: 4px;
-    font-size: 1.3em;
-    line-height: 2.5em;
-    font-weight: 300;
-  }
-  */
 
   .params {
     @include flexbox();
