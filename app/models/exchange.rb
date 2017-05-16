@@ -30,7 +30,7 @@ class Exchange < ActiveRecord::Base
   enum business_type: [ :exchange, :bank, :post_office, :other, :reference ]
   enum rates_source:  [ :no_rates, :test, :manual, :xml, :scraping ]
   enum rates_policy:  [:individual, :chain]
-  enum todo:          [:verify, :call, :meet]
+  enum todo:          [:verify, :call, :meet, :sell]
   enum system:        [:remove, :geocode, :error]
   enum status:        [:removed, :stale]
 

@@ -228,7 +228,7 @@ form do |f|
 
       f.semantic_errors *f.object.errors.keys
       f.input     :contract
-      f.input     :todo, as: :select, collection: {:"Verify"=>"verify", :"Call"=>"call", :"Meet"=>"meet"}
+      f.input     :todo, as: :select, collection: {:"Verify"=>"verify", :"Call"=>"call", :"Meet"=>"meet", :"Sell"=>"sell"}
       f.input     :chain_name, label: 'Chain'
       f.input     :name
       f.input     :nearest_station
