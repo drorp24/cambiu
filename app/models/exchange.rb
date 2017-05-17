@@ -283,10 +283,13 @@ class Exchange < ActiveRecord::Base
     end
 =end
 
+=begin    No need: the new logic is to only extract the exchanges in the params[:radius] from center
+    puts params[:distance], params[:radius]
     if params[:distance] > params[:radius]
       result[:errors]           <<   'Out of radius'
       return result
     end
+=end
 
     if currency.nil?
       result[:errors]           <<   'No local currency defined for that exchange'
