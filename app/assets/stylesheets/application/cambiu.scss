@@ -112,6 +112,19 @@ p {
   }
 }
 
+@mixin vmargin-right($size) {
+  margin-right: $size;
+  @include desktop {
+    margin-right: $size * $paneRatio;
+  }
+}
+@mixin vmin-width($size) {
+  min-width: $size;
+  @include desktop {
+    min-width: $size * $paneRatio;
+  }
+}
+
 @mixin vline-height($size) {
   line-height: $size;
   @include desktop {
@@ -775,7 +788,8 @@ body#cambiu {
         height: 45vh;
       }
       .order_button_container {
-        top: 45vh;
+        top: 35vh;
+        left: 0;
       }
       .nav_button_container {
         top: $nav_button_top - 5vh;
@@ -831,6 +845,10 @@ body#cambiu {
 
   .white {
     color: #fff;
+  }
+
+  .bold {
+    font-weight: 500;
   }
 
  .list-group-item.ecard {
@@ -1961,7 +1979,46 @@ body#cambiu {
   }
 
 
-
+  .offer {
+    width: 100%;
+    font-weight: 300;
+    color: #000;
+    text-transform: uppercase;
+    div {
+      display: inline;
+    }
+    .figure {
+      display: flex;
+      align-items: center;
+      > div {
+        line-height: 1;
+      }
+    }
+    .amount {
+      display: inline-block;
+      @include vmin-width(25vw);
+      text-align: right;
+      margin-right: 2vw !important;
+      @include desktop {
+        margin-right: 2vw * $paneRatio !important;
+      }
+      @include vmargin-right(2vw);
+    }
+    .right_icon {
+      @include vwidth(5vw);
+      @include vmargin-left(5vw);
+    }
+    .offer_line {
+      display: flex;
+      justify-content: space-between;
+      &.saving {
+        color: $brand-color-a;
+      }
+    }
+    i {
+      line-height: 1;
+    }
+  }
 
 
 
@@ -1981,6 +2038,12 @@ body#cambiu {
       content: " - "
     }
   }
+
+
+
+
+
+
 
 
   .fullcard {
@@ -2084,7 +2147,7 @@ body#cambiu {
       .more {
         &:before {
           visibility: visible;
-          content: 'directions'
+          content: 'order now'
         }
       }
       .lessmore {
@@ -2099,21 +2162,26 @@ body#cambiu {
       }
       .order_button_container {
         position: absolute;
-        top: 50vh;
+        left: 0;
+        width: 100%;
+        top: 40vh;
         @include vleft(50vw);
       }
       .order_button {
         z-index: 1;
         display: block;
-        position: absolute;
-        bottom: $order_button_width / -2;
-        left: $order_button_width / -2;
         font-size: $order_button_width / 2;
         box-shadow: 1px 2px 15px rgba(0,0,0,0.5);
         i {
           width: $order_button_width;
           height: $order_button_width;
         }
+      }
+      .order_text {
+        height: 5vh;
+        line-height: 5vh;
+        font-size: $order_button_width / 4;
+        text-transform: uppercase;
       }
 
       .nav_button_container {
@@ -2127,7 +2195,7 @@ body#cambiu {
         bottom: $nav_button_width / -2;
         left: $nav_button_width / -2;
         font-size: $nav_button_width / 2;
-        box-shadow: 1px 2px 15px rgba(0,0,0,0.7);
+        box-shadow: 1px 2px 15px rgba(0,0,0,1);
         i {
           width: $nav_button_width;
           height: $nav_button_width;
@@ -2158,14 +2226,16 @@ body#cambiu {
       }
       .address {
         height: 8%;
+        margin-top: -3%;
+        font-weight: 100;
       }
       .open_and_phone {
         height: 8%;
       }
       .data {
         max-width: 100%;
-        padding-right: $padding;
-        padding-left: $padding;
+        padding-right: $padding + 10px;
+        padding-left: $padding + 10px;
         [data-field=edited_quote] {
            font-weight: 400;
         }
@@ -2241,7 +2311,7 @@ body#cambiu {
       .phone_icon {
         margin-right: 0;
         i {
-          font-size: 1.5em;
+          font-size: 1.2em;
         }
       }
       [data-field=rating] {
@@ -2249,6 +2319,7 @@ body#cambiu {
       }
       .reviews {
         @include vfont-size(5vw);
+        color: #888;
       }
     }
     font-size: 0.9em;
@@ -2270,7 +2341,8 @@ body#cambiu {
   .quote_section {
     flex-direction: column;
     height: 40%;
-    @include vline-height(10vw);
+//    @include vline-height(10vw);
+    line-height: 5vh;
   }
 
 
@@ -2389,7 +2461,6 @@ body#cambiu {
     color: #fff;
     background: $brand-gradient;
     box-shadow: 1px 2px 5px rgba(0,0,0,0.5);
-    position: absolute;
 //    transition: font-size, $card-transition-time + 0.3s;
   }
 

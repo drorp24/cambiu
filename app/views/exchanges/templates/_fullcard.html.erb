@@ -30,33 +30,7 @@
     </div>
 
     <div class="quote_section flex_center">
-
-      <div class="better flex_center">
-        <div class="comparison">
-          <div class="comparison_item">
-            <div data-model="exchange" data-field="gain_type"></div>
-            <div data-model="exchange" data-field="gain_amount"></div>
-            <i class="material-icons flex_center"
-               data-href-page="exchanges"
-               data-href-pane="help"
-               data-help-topic="Compared with what?"
-               data-help-content="<p>That is how much more you get versus actual offer in the vicinity.</p><p>That's your gain from using Cambiu.</p>">
-              help_outline
-            </i>
-          </div>
-        </div>
-      </div>
-
-      <div class="quote flex_center">
-        <span data-model="exchange" data-field="pay_amount" class="threedotes"></span>
-        <i class="into material-icons">arrow_forward</i>
-        <span data-model="exchange" data-field="buy_amount" class="threedots"></span>
-      </div>
-
-      <div class="base_rate">
-        <div data-model="exchange" data-field="base_rate" class="text-center"></div>
-      </div>
-
+      <%= render 'exchanges/templates/offer' %>
     </div>
 
     <div class="no_quote_section flex_center">
@@ -70,7 +44,7 @@
 
     <div class="actions_line flex_between">
       <div class="lessmore icon"></div>
-      <div class="more action padlessBtn" data-action="directions"></div>
+      <div class="more action padlessBtn"></div>
       <div class="lessmore icon" data-action></div>
     </div>
 
@@ -78,22 +52,27 @@
   </div>
 
   <div class="nav_button_container">
-    <div class="flex_center white">
-      <span data-model="exchange" data-field="duration"></span>
-    </div>
     <div class="flex_center">
       <div class="nav_button" data-action="directions">
-        <i class="material-icons flex_center">navigation</i>
+        <i class="material-icons flex_center">directions</i>
       </div>
     </div>
+    <div class="flex_center white bold">
+      <span data-model="exchange" data-field="duration"></span>
+    </div>
     <div class="flex_center white">
-      <span class="directions_text">Directions</span>
+      <span class="directions_text"></span>
     </div>
   </div>
 
   <div class="order_button_container">
-    <div class="order_button" data-action="directions">
-      <i class="material-icons flex_center">shopping_cart</i>
+    <div class="order_text flex_center white bold">
+      <span>Order</span>
+    </div>
+    <div class="flex_center">
+      <div class="order_button">
+        <i class="material-icons flex_center">shopping_cart</i>
+      </div>
     </div>
   </div>
 
