@@ -257,3 +257,4 @@ node_modules/
 app/assets/javascripts/EXAMPLE_serviceworker.js.erb
 
 *.dump*.*
+oxr_cache.json

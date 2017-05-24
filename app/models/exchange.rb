@@ -433,7 +433,7 @@ class Exchange < ActiveRecord::Base
     if rec
       ['buy', 'sell'].each do |kind|
         value = rec.send(kind)
-        if value
+        if value && value != 0
           result[kind.to_sym] = value
           result[:updated] ||= rec.updated_at
         else
