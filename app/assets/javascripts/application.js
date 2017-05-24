@@ -33,3 +33,4 @@
 //= require swiper.jquery.min
 //= require nouislider.min
 //= require markerclusterer
+//= require jquery.arctext

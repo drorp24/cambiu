@@ -672,6 +672,4 @@ $(document).ready(function() {
 
     setTimeout(fixSafari, 1500);
 
-
-
 });

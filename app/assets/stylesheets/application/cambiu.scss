@@ -788,7 +788,7 @@ body#cambiu {
         height: 45vh;
       }
       .order_button_container {
-        top: 35vh;
+        top: 40vh;
         left: 0;
       }
       .nav_button_container {
@@ -2164,9 +2164,9 @@ body#cambiu {
         position: absolute;
         left: 0;
         width: 100%;
-        top: 40vh;
+        top: 45vh;
         @include vleft(50vw);
-      }
+       }
       .order_button {
         z-index: 1;
         display: block;
@@ -2182,6 +2182,17 @@ body#cambiu {
         line-height: 5vh;
         font-size: $order_button_width / 4;
         text-transform: uppercase;
+      }
+
+      .order_word {
+        position: absolute;
+        color: #fff;
+        font-weight: 500;
+        top: 47vh;
+        left: 44vw;
+        z-index: 1;
+        text-transform: uppercase;
+        font-size: 4vw;
       }
 
       .nav_button_container {
