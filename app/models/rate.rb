@@ -26,8 +26,8 @@ class Rate < ActiveRecord::Base
       updated_currency = params[:currency]
       base_currency    = self.ratable.currency
       reference_rate   = Money.default_bank.get_rate(updated_currency, base_currency)
-      sell_markup      = 1 + (params[:sell] / 100)
-      buy_markdown     = 1 - (params[:buy] / 100)
+      sell_markup      = 1 + (params[:sell].to_f / 100)
+      buy_markdown     = 1 - (params[:buy].to_f / 100)
       sell             = reference_rate * sell_markup
       buy              = reference_rate * buy_markdown
     else
@@ -35,8 +35,8 @@ class Rate < ActiveRecord::Base
       buy              = params[:buy]
     end
 
-    self.buy = buy
-    self.sell = sell
+    self.buy = buy if params[:buy]  # if it's empty leave the current value intact
+    self.sell = sell if params[:sell]
     self.source = 'ratefeed'
     self.save
 
