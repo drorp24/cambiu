@@ -94,7 +94,7 @@ class Exchange < ActiveRecord::Base
 
   def self.rates_list(params)
 
-    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present? 
+    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
 
     begin
 
