@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170225210342) do
+ActiveRecord::Schema.define(version: 20170529145530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,7 +185,12 @@ ActiveRecord::Schema.define(version: 20170225210342) do
     t.float    "sell"
     t.integer  "admin_user_id"
     t.datetime "last_update"
+    t.float    "sell_markup"
+    t.float    "buy_markup"
+    t.integer  "method"
+    t.string   "last_process"
     t.index ["admin_user_id"], name: "index_rates_on_admin_user_id", using: :btree
+    t.index ["method"], name: "index_rates_on_method", using: :btree
     t.index ["ratable_id", "ratable_type"], name: "index_rates_on_ratable_id_and_ratable_type", using: :btree
   end
 

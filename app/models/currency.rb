@@ -1,5 +1,32 @@
 class Currency 
 
+  def self.base
+    ['GBP', 'ILS']
+  end
+
+  def self.rates
+
+    reference = {}
+
+    Currency.base.each do |base_currency|
+
+      base_currency_s = base_currency.to_sym
+      reference[base_currency_s] = {}
+
+      Currency.major.each do |major_currency|
+
+        supported_currency = major_currency[:iso_code]
+        supported_currency_s = supported_currency.to_sym
+        reference[base_currency_s][supported_currency_s] = Money.default_bank.get_rate(supported_currency, base_currency)
+
+      end
+
+    end
+
+    reference
+
+  end
+
   def self.updatable
     unless @currency_array
       @currency_array = []
