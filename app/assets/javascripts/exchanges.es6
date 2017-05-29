@@ -248,10 +248,12 @@ $('body').on('mouseover', '.ecard:not(.selected)', function(e) {
 
 
 zoomIn2 = function() {
+    console.log('zoomIn2');
     var bounds = new google.maps.LatLngBounds();
     bounds.extend(new google.maps.LatLng(search.location.lat ,search.location.lng));
     for (offer of offers.slice(0, 1)) {bounds.extend(new google.maps.LatLng(offer.properties.latitude ,offer.properties.longitude))}
     map.fitBounds(bounds);
+    panMap(search.location); // important! fitBounds changes map's center and this re-centers map around serahc.location
 };
 
 
