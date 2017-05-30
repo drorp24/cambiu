@@ -13,7 +13,7 @@ class Exchange < ActiveRecord::Base
   has_many    :business_hours
   has_one     :open_today,  ->(date) {where(day: Date.today.wday)}  ,class_name: "BusinessHour"
 
-  has_many    :rates,                                                               as: :ratable
+  has_many    :rates,                                                               as: :ratable, dependent: :delete_all
   has_one     :gbp_rate,    -> {where(currency: 'GBP')}       ,class_name: "Rate",  as: :ratable
   has_one     :eur_rate,    -> {where(currency: 'EUR')}       ,class_name: "Rate",  as: :ratable
   has_one     :usd_rate,    -> {where(currency: 'USD')}       ,class_name: "Rate",  as: :ratable
@@ -30,7 +30,7 @@ class Exchange < ActiveRecord::Base
   enum business_type: [ :exchange, :bank, :post_office, :other, :reference ]
   enum rates_source:  [ :no_rates, :test, :manual, :xml, :scraping ]
   enum rates_policy:  [:individual, :chain]
-  enum todo:          [:verify, :call, :meet]
+  enum todo:          [:verify, :call, :meet, :sell]
   enum system:        [:remove, :geocode, :error]
   enum status:        [:removed, :stale]
 
