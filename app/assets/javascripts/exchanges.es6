@@ -254,6 +254,7 @@ zoomIn2 = function() {
     for (offer of offers.slice(0, 1)) {bounds.extend(new google.maps.LatLng(offer.properties.latitude ,offer.properties.longitude))}
     map.fitBounds(bounds);
     panMap(search.location); // important! fitBounds changes map's center and this re-centers map around serahc.location
+    map.setZoom(map.getZoom() - 1); // since the panMap may cause the best exchange to be out of bounds
 };
 
 

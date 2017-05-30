@@ -41,6 +41,7 @@ class Search < ActiveRecord::Base
     return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
     return if         location_lat.blank? or location_lng.blank?
 
+    self.distance      =  10
     self.distance_unit ||= "km"
 
     pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not

@@ -352,29 +352,42 @@ hideSearchLocation = function() {
 };
 
 
-function nearest_center(lat, lng) {
+function nearest_center(user_lat, user_lng) {
 
     // Currently, it checks London only
     // When we have more, loop over all centers leaving out the nearest: lat, lng, distance
 
-    var distance_from_nearest_center =
-        distance(
-            new google.maps.LatLng(lat, lng),
-            new google.maps.LatLng(Number(dfault.lat), Number(dfault.lng))
-        )/1000;
-
-    var nearest_center_lat = Number(dfault.lat),
-        nearest_center_lng = Number(dfault.lng);
-
-    nearest =
-    {
-        lat:        nearest_center_lat,
-        lng:        nearest_center_lng,
-        name:       'London',
-        distance:   distance_from_nearest_center
+    var centers = {
+        IL: {
+            lat: 32.0853,
+            lng: 34.7818,
+            name: 'Tel Aviv'
+        },
+        UK: {
+            lat: Number(dfault.lat),
+            lng: Number(dfault.lng),
+            name: 'Londoh'
+        }
     };
 
-    return nearest;
+    var shortest_distance = Infinity;
+    var nearest_center = null;
+    $.each(centers, function(key, center) {
+
+        var distance_from_that_center =
+            distance(
+                new google.maps.LatLng(user_lat, user_lng),
+                new google.maps.LatLng(center.lat, center.lng)
+            )/1000;
+        if (distance_from_that_center < shortest_distance) {
+            shortest_distance = distance_from_that_center;
+            nearest_center = center;
+            nearest_center.distance = distance_from_that_center;
+        }
+
+    });
+
+    return nearest_center;
 
 }
 
