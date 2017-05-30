@@ -33,7 +33,7 @@ ActiveAdmin.register Exchange do
 
     rescue => e
  #      e.save validate: false
-      puts "e: #{e}"
+      raise "#{hash[:name]} (#{hash[:address]}): #{e}"
 #      puts "e.error: #{e.error}" if e && e.error
       puts ""
     end
@@ -137,6 +137,10 @@ ActiveAdmin.register Exchange do
 =end
 
 
+  sidebar "Status Date", only: [:show, :edit] do
+    exchange.status_date.to_s
+  end
+
   sidebar "System", only: [:show, :edit] do
     status_tag(exchange.status, exchange.status_color) if exchange.status
     status_tag(exchange.system, exchange.system_color) if exchange.system
@@ -228,7 +232,7 @@ form do |f|
 
       f.semantic_errors *f.object.errors.keys
       f.input     :contract
-      f.input     :todo, as: :select, collection: {:"Verify"=>"verify", :"Call"=>"call", :"Meet"=>"meet"}
+      f.input     :todo, as: :select, collection: {:"Verify"=>"verify", :"Call"=>"call", :"Meet"=>"meet", :"Sell"=>"sell"}
       f.input     :chain_name, label: 'Chain'
       f.input     :name
       f.input     :nearest_station
