@@ -8,7 +8,7 @@ namespace :rates do
     Rails.logger.info ""
 
     current_rates = Currency.rates
-    Rate.reference.each do |rate|
+    Rate.reference.find_each do |rate|
 
       updated_currency  = rate.currency
       base_currency     = rate.ratable.currency

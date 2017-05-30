@@ -1,5 +1,33 @@
 class Currency 
 
+  def self.markup
+
+    {
+        IL:
+            {
+                sell_markup:  1,
+                buy_markup:   1,
+                sell_spread:  0.5,
+                buy_spread:   0.5
+            },
+        UK:
+            {
+                sell_markup:  1,
+                buy_markup:   1,
+                sell_spread:  0.5,
+                buy_spread:   0.5
+            },
+         default:
+            {
+                sell_markup:  1,
+                buy_markup:   1,
+                sell_spread:  0.5,
+                buy_spread:   0.5
+            }
+    }
+
+  end
+
   def self.base
     ['GBP', 'ILS']
   end
