@@ -13,8 +13,8 @@ namespace :rates do
       updated_currency  = rate.currency
       base_currency     = rate.ratable.currency
       current_rate      = current_rates[base_currency.to_sym][updated_currency.to_sym]
-      sell_factor       = 1 + (rate.sell_markup.to_f / 100)
-      buy_factor        = 1 - (rate.buy_markup.to_f / 100)
+      sell_factor       = 1 - (rate.sell_markup.to_f / 100)
+      buy_factor        = 1 + (rate.buy_markup.to_f / 100)
       sell              = current_rate * sell_factor
       buy               = current_rate * buy_factor
 

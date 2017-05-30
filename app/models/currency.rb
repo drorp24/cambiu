@@ -5,24 +5,24 @@ class Currency
     {
         IL:
             {
-                sell_markup:  1,
-                buy_markup:   1,
-                sell_spread:  0.5,
-                buy_spread:   0.5
+                sell_markup:  3.5,
+                buy_markup:   3.5,
+                sell_spread:  1.5,
+                buy_spread:   1.5
             },
         UK:
             {
-                sell_markup:  1,
-                buy_markup:   1,
-                sell_spread:  0.5,
-                buy_spread:   0.5
+                sell_markup:  4,
+                buy_markup:   4,
+                sell_spread:  1.5,
+                buy_spread:   1.5
             },
          default:
             {
-                sell_markup:  1,
-                buy_markup:   1,
-                sell_spread:  0.5,
-                buy_spread:   0.5
+                sell_markup:  3.5,
+                buy_markup:   3.5,
+                sell_spread:  1.5,
+                buy_spread:   1.5
             }
     }
 
@@ -45,7 +45,7 @@ class Currency
 
         supported_currency = major_currency[:iso_code]
         supported_currency_s = supported_currency.to_sym
-        reference[base_currency_s][supported_currency_s] = Money.default_bank.get_rate(supported_currency, base_currency)
+        reference[base_currency_s][supported_currency_s] = Money.default_bank.get_rate(base_currency, supported_currency)
 
       end
 

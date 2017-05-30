@@ -36,10 +36,10 @@ namespace :rates do
       rates.each do |currency, rate|
 
         sell_markup = markup[:sell_markup] + markup[:sell_spread] * rand(-1.0..1.0)
-        sell_factor = 1 + (sell_markup / 100)
+        sell_factor = 1 - (sell_markup / 100)
         sell = rate * sell_factor
         buy_markup = markup[:buy_markup] + markup[:buy_spread] * rand(-1.0..1.0)
-        buy_factor = 1 - (buy_markup / 100)
+        buy_factor = 1 + (buy_markup / 100)
         buy = rate * buy_factor
         exchange.rates.create(source: 'test', currency: currency, buy: buy, sell: sell, last_update: Time.now, last_process: 'rates:generate')
 

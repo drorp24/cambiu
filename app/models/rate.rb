@@ -33,11 +33,11 @@ class Rate < ActiveRecord::Base
 
       updated_currency = params[:currency]
       base_currency    = self.ratable.currency
-      reference_rate   = Money.default_bank.get_rate(updated_currency, base_currency)
-      sell_markup      = 1 + (sell_param / 100)
-      buy_markdown     = 1 - (buy_param / 100)
-      sell             = reference_rate * sell_markup
-      buy              = reference_rate * buy_markdown
+      reference_rate   = Money.default_bank.get_rate(base_currency, updated_currency)
+      sell_factor      = 1 - (sell_param / 100)
+      buy_factor       = 1 + (buy_param / 100)
+      sell             = reference_rate * sell_factor
+      buy              = reference_rate * buy_factor
 
     else
 
