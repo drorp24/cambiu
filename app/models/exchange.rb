@@ -317,11 +317,12 @@ class Exchange < ActiveRecord::Base
         return result
       end
       bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
+      puts "#{self.id} >>>>>>>>>> bad amount: " + bad_amount.to_s
       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       result[:gain]                                         = get_amount - bad_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
       result[:gain_amount]                                  = result[:gain].to_money(get_currency).format
-      result[:gain_type]                                    = result[:gain] < 0 ? 'save' : 'save'
+      result[:gain_type]                                    = result[:gain] < 0 ? 'gain' : 'gain'
       result[:gain_currency]                                = get_currency
 
       result[:pay_amount]                                   = pay_amount.to_money(pay_currency).format

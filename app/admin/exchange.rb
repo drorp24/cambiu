@@ -239,6 +239,7 @@ form do |f|
       f.input     :photo
       f.input     :contact
       f.input     :address
+      f.input     :country
       f.input     :phone, as: :phone
       f.input     :email, as: :email
       f.input     :website, as: :url
