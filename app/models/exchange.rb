@@ -231,21 +231,28 @@ class Exchange < ActiveRecord::Base
     test? or no_rates?
   end
 
-  def self.bad
-    @bank ||= self.bank.first
+  def self.bad(country)
+    self.bank.where(country: country).first
   end
 
   def self.interbank
     @inter ||= self.inter.first
   end
 
-  def self.bad_rate(pay_currency, get_currency)
-    if (@bad_rate and @pay_currency == pay_currency and @get_currency == get_currency)
+  def self.bad_rate(country, pay_currency, get_currency)
+    if (@bad_rate and @country == country and @pay_currency == pay_currency and @get_currency == get_currency)
       return @bad_rate
     else
+      @country      = country
       @pay_currency = pay_currency
       @get_currency = get_currency
-      @bad_rate = Exchange.bad.rate(pay_currency, get_currency)
+      bad_exchange  = Exchange.bad(country)
+      if bad_exchange
+        @bad_rate = bad_exchange.rate(pay_currency, get_currency)
+      else
+        @bad_rate = {error: "No bad exchange found for country #{country}"}
+      end
+      return @bad_rate
     end
   end
 
@@ -299,6 +306,12 @@ class Exchange < ActiveRecord::Base
       result[:errors]           <<   'Please select two different currencies'
       return result
     end
+    if !self.country
+      result[:errors]           <<   'Exchange has no country'
+      return result
+    else
+      country = self.country
+    end
 
     if field == 'pay_amount' or field == 'pay_currency'
       rates = result[:rates]          = rate(get_currency, pay_currency)
@@ -311,13 +324,13 @@ class Exchange < ActiveRecord::Base
       result[:edited_quote] = result[:edited_quote_rounded] = result[:get_amount]
       result[:quote_currency]                               = get_currency
 
-      bad_rates = result[:bad_rates]  = Exchange.bad_rate(get_currency, pay_currency)
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency)
       if bad_rates[:error]
         result[:errors]               <<   bad_rates[:error]
         return result
       end
       bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
-      puts "#{self.id} >>>>>>>>>> bad amount: " + bad_amount.to_s
+#      puts "#{self.id} >>>>>>>>>> bad amount: " + bad_amount.to_s
       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       result[:gain]                                         = get_amount - bad_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
@@ -349,7 +362,7 @@ class Exchange < ActiveRecord::Base
       result[:edited_quote] = result[:edited_quote_rounded] = result[:pay_amount]
       result[:quote_currency]                               = pay_currency
 
-      bad_rates = result[:bad_rates]  = Exchange.bad_rate(pay_currency, get_currency)
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency)
       if bad_rates[:error]
         result[:errors]               <<   bad_rates[:error]
         return result
