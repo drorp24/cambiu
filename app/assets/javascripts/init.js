@@ -1,9 +1,8 @@
 var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop';
+var development = location.hostname == 'localhost';
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
-var mode = mobile ? 'mobile' : 'desktop';
-var mode = 'both'; // Never do this. For testing only, do the following, later remove that too leaving the original (first) one
-var mode = mobile ? 'mobile' : 'both';
+var mode = development ? 'both' : (mobile ? 'mobile' : 'desktop');
 // if (mobile) - single-pane; true in mobile devices and iFrames narrower than 767px.  EXAMPLE: if (mobile) close pane when showing directions.   If (desktop) - side by side panes.
 // if (mode == mobile) - best fit for a single-pane, though it can exists in desktop too. EXAMPLE: if (mode == mobile) create vertical list rather than horizontal cards.
 var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
@@ -167,7 +166,7 @@ def_vals = function() {
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
     def['sort']             = 'price';
-    def['radius']           = '1';
+    def['radius']           = '2.5';
     def['version']          = '0.0.0';
 
     return def;
