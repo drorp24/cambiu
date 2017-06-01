@@ -44,6 +44,8 @@ class Currency
       Currency.major.each do |major_currency|
 
         supported_currency = major_currency[:iso_code]
+        next if supported_currency == base_currency
+
         supported_currency_s = supported_currency.to_sym
         reference[base_currency_s][supported_currency_s] = Money.default_bank.get_rate(base_currency, supported_currency)
 
