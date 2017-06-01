@@ -23,6 +23,10 @@ ActiveAdmin.register Exchange do
         next
       end
 
+      if hash[:currency].blank?
+        raise "Exchange has no currency"
+      end
+
       exchange = Exchange.identify_by_either(hash[:id], hash[:name], hash[:address], hash[:nearest_station])
       columns.each do |column|
         exchange.send(column + '=', hash[column.to_sym])
