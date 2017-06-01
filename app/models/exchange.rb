@@ -46,7 +46,6 @@ class Exchange < ActiveRecord::Base
   after_validation :remove, if: ->(exchange){ exchange.remove? }
 
   before_create do
-    self.currency = 'GBP'             if currency.blank?
     self.rates_source = 'no_rates'    if rates_source.blank?
     self.rates_policy = 'individual'  if rates_policy.blank?
     self.business_type = 'exchange'   if business_type.blank?
@@ -161,6 +160,7 @@ class Exchange < ActiveRecord::Base
     puts "Exchange #{self.id} - geocoded"
     geocode
     self.system = nil if geocode?
+    self.save
   end
 
   def remove
@@ -335,8 +335,7 @@ class Exchange < ActiveRecord::Base
         return result
       end
       bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
-#      puts "#{self.id} >>>>>>>>>> bad amount: " + bad_amount.to_s
-      result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
+       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       result[:gain]                                         = get_amount - bad_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
       result[:gain_amount]                                  = result[:gain].to_money(get_currency).format
@@ -408,7 +407,8 @@ class Exchange < ActiveRecord::Base
         buy: nil,
         sell: nil,
         error: nil,
-        updated: nil
+        updated: nil,
+        source: nil
     }
 
     rated_rates = find_rate(rated_currency)
@@ -426,9 +426,18 @@ class Exchange < ActiveRecord::Base
     result[:buy]  = rated_rates[:buy]   /   base_rates[:buy]
     result[:sell] = rated_rates[:sell]  /   base_rates[:sell]
     result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
+    result[:source] = rated_rates[:source]
     if (Date.today - result[:updated].to_date).to_i > 1
       result[:error] = "Stale rates"
+=begin
+      puts ""
+      puts ">>>>>>>>>>> stale found at exchange #{self.id}"
+      puts ">>>>>>>>>>> Date.today: " + Date.today.to_s
+      puts ">>>>>>>>>>> result[:updated].to_date).to_i: " + result[:updated].to_date.to_s
+      puts ">>>>>>>>>>> difference: " + (Date.today - result[:updated].to_date).to_i.to_s
+      puts ""
       return result
+=end
     end
 
     return result
@@ -441,7 +450,8 @@ class Exchange < ActiveRecord::Base
         buy: nil,
         sell: nil,
         error: nil,
-        updated: nil
+        updated: nil,
+        source: nil
     }
     if currency == self.currency
       result[:buy]  = 1
@@ -458,6 +468,7 @@ class Exchange < ActiveRecord::Base
         if value && value != 0
           result[kind.to_sym] = value
           result[:updated] ||= rec.updated_at
+          result[:source] ||= rec.source
         else
           result[:error] = currency + ' ' + kind + ' rate is missing'
           return result
