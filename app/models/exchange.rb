@@ -160,7 +160,6 @@ class Exchange < ActiveRecord::Base
     puts "Exchange #{self.id} - geocoded"
     geocode
     self.system = nil if geocode?
-    self.save
   end
 
   def remove
