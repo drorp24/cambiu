@@ -241,6 +241,9 @@ class Exchange < ActiveRecord::Base
   def self.bad_rate(country, pay_currency, get_currency)
 
 
+    country = 'UK'  # TODO: Remove!!!! TEMPORARY UNTIL ISRAELI BAD RATE IS FOUND
+
+
     if (@bad_rate and @country == country and @pay_currency == pay_currency and @get_currency == get_currency)
       return @bad_rate
     else
