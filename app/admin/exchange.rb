@@ -11,6 +11,22 @@ ActiveAdmin.register Exchange do
 
   includes :chain
 
+  # Deserted: not clear how to trigger error (no currency, any invalid value that is raised), skip empty lines,
+  # didn't find any documentation what method does importer support
+  # flash[:error] not recognized
+=begin
+  active_admin_import headers_rewrites:
+    { :'Chain' => :chain_id },
+      before_batch_import: ->(importer) {
+      chains_names = importer.values_at(:chain_id)
+      # replacing chain name with chain id
+      chains   = Chain.where(name: chains_names).pluck(:name, :id)
+      options = Hash[*chains.flatten] # #{"Debebhams" => 2, "Thomas Cook" => 1}
+      importer.batch_replace(:chain_id, options)
+    }
+=end
+
+
   # csv import
   # TODO: update opening hours in the search
   active_admin_importable do |model, hash|
@@ -38,7 +54,7 @@ ActiveAdmin.register Exchange do
     rescue => e
  #      e.save validate: false
       raise "#{hash[:name]} (#{hash[:address]}): #{e}"
-#      puts "e.error: #{e.error}" if e && e.error
+      #      puts "e.error: #{e.error}" if e && e.error
       puts ""
     end
 

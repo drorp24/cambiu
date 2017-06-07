@@ -691,6 +691,7 @@ class Exchange < ActiveRecord::Base
     list = overpass.query
   end
   
+=begin
   def self.import(amenity="bdc", area="London")
     return unless list = self.list(amenity, area)
     
@@ -717,6 +718,7 @@ class Exchange < ActiveRecord::Base
       end 
     end
   end
+=end
 
   def collection?
     true
