@@ -39,8 +39,10 @@ ActiveAdmin.register Search do
     index do
       selectable_column
       id_column
+      column 'Created' do |error|
+        error.created_at.in_time_zone("Jerusalem")
+      end
       column :message
-      column 'Created', :created_at
     end
 
     controller do

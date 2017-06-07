@@ -32,15 +32,13 @@ ActiveAdmin.register Exchange do
   active_admin_importable do |model, hash|
 
     columns = Exchange.column_names - Exchange.unexported_columns
+
     begin
 
-      if hash[:name].blank? or hash[:address].blank?
-        puts "no name and address or empty line"
-        next
-      end
+      next if hash[:name].blank? or hash[:address].blank?
 
       if hash[:currency].blank?
-        raise "Exchange has no currency"
+        raise "No currency"
       end
 
       exchange = Exchange.identify_by_either(hash[:id], hash[:name], hash[:address], hash[:nearest_station])
@@ -48,14 +46,25 @@ ActiveAdmin.register Exchange do
         exchange.send(column + '=', hash[column.to_sym])
       end
       exchange.chain_id        = Chain.where(name: hash[:chain]).first_or_create.id if hash[:chain].present?
+      if !exchange.latitude
+        latlng = exchange.geocode
+        if latlng
+          exchange.latitude = latlng[0]
+          exchange.longitude = latlng[1]
+        else
+          raise "Invalid address"
+        end
+      end
 
       exchange.save!
+      puts "I have just saved exchange " + exchange.id.to_s
 
     rescue => e
- #      e.save validate: false
-      raise "#{hash[:name]} (#{hash[:address]}): #{e}"
-      #      puts "e.error: #{e.error}" if e && e.error
-      puts ""
+
+      message = "#{hash[:name]} (#{hash[:address]}) - #{e}"
+      puts message
+      Error.create!(text: 'Exchanges upload error', message: message)
+
     end
 
   end
