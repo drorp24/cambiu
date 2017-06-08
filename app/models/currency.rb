@@ -14,10 +14,10 @@ class Currency
     {
         IL:
             {
-                sell_markup:  3.5,
-                buy_markup:   3.5,
-                sell_spread:  1.5,
-                buy_spread:   1.5
+                sell_markup:  2.5,
+                buy_markup:   2.5,
+                sell_spread:  1,
+                buy_spread:   1
             },
         UK:
             {

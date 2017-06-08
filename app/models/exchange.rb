@@ -316,7 +316,7 @@ class Exchange < ActiveRecord::Base
         result[:errors]               <<   bad_rates[:error]
         return result
       end
-      bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
+      bad_amount                                            = pay_amount * 0.99 * bad_rates[transaction.to_sym]
        result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       result[:gain]                                         = get_amount - bad_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
@@ -354,7 +354,7 @@ class Exchange < ActiveRecord::Base
         return result
       end
 
-      bad_amount                                            = get_amount * bad_rates[transaction.to_sym]
+      bad_amount                                            = get_amount * 1.01 * bad_rates[transaction.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
       result[:gain]                                         = bad_amount - pay_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
