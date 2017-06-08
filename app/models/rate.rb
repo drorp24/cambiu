@@ -41,6 +41,10 @@ class Rate < ActiveRecord::Base
 
     else
 
+      self.method      = 'absolute'
+      self.sell_markup = nil
+      self.buy_markup  = nil
+
       sell             = !Currency.inverse?(base_currency) ? sell_param : (1.0 / sell_param)
       buy              = !Currency.inverse?(base_currency) ? buy_param : (1.0 / buy_param)
 
