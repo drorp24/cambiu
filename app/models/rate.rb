@@ -22,6 +22,8 @@ class Rate < ActiveRecord::Base
 
     return false unless self.ratable && (params[:buy] || params[:sell])
 
+    updated_currency   = params[:currency]
+    base_currency      = self.ratable.currency
     sell_param         = params[:sell].to_f
     buy_param          = params[:buy].to_f
 
@@ -31,8 +33,6 @@ class Rate < ActiveRecord::Base
       self.sell_markup = sell_param
       self.buy_markup  = buy_param
 
-      updated_currency = params[:currency]
-      base_currency    = self.ratable.currency
       reference_rate   = Money.default_bank.get_rate(base_currency, updated_currency)
       sell_factor      = 1 - (sell_param / 100)
       buy_factor       = 1 + (buy_param / 100)
