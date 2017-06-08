@@ -1,5 +1,14 @@
 class Currency 
 
+  # inverse = rate tables based on this currency count how much of *that currency* is required for each foreign currency (example: 'ILS')
+  # non inverse = rate tables based on this currency count how much of the *foreign* currency is required for each foreign currency
+  # This indication is required for:
+  #    -   converting Ratefeed API injected rates from the Israeli way to how the system maintains it - the system has *one* method of recording rates only
+  #     -  Whenever such rates should be presented
+  def self.inverse?(iso)
+    ['ILS', 'AUD'].include? iso # TODO: remove AUD!!!!
+  end
+
   def self.markup
 
     {

@@ -41,8 +41,8 @@ class Rate < ActiveRecord::Base
 
     else
 
-      sell             = sell_param
-      buy              = buy_param
+      sell             = !Currency.inverse?(base_currency) ? sell_param : (1.0 / sell_param)
+      buy              = !Currency.inverse?(base_currency) ? buy_param : (1.0 / buy_param)
 
     end
 

@@ -369,6 +369,12 @@ form do |f|
       column :sell           do |rate|
         best_in_place rate, :sell_s, :as => :input
       end
+      column :invBuy do |rate|
+        Currency.inverse?(rate.ratable.currency) ? '%.4f' %(1.0 / rate.buy) : ""
+      end
+      column :invSell do |rate|
+        Currency.inverse?(rate.ratable.currency) ? '%.4f' %(1.0 / rate.sell) : ""
+      end
       column :last_update do |rate|
         update = rate.last_update || rate.updated_at
         update.in_time_zone('Jerusalem') if update
