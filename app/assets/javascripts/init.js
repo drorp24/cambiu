@@ -136,7 +136,6 @@ var searchId = null;
 var prev_distance_from_exchange = null;
 var features = [];
 var utm_source = null;
-var surveyRequested = false;
 var arrivedToExchange = false;
 var page = null;
 var id = null;
