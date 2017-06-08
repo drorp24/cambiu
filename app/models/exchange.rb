@@ -239,22 +239,8 @@ class Exchange < ActiveRecord::Base
   end
 
   def self.bad_rate(country, pay_currency, get_currency)
-
-
-    if (@bad_rate and @country == country and @pay_currency == pay_currency and @get_currency == get_currency)
-      return @bad_rate
-    else
-      @country      = country
-      @pay_currency = pay_currency
-      @get_currency = get_currency
       bad_exchange  = Exchange.bad(country)
-      if bad_exchange
-        @bad_rate = bad_exchange.rate(pay_currency, get_currency)
-      else
-        @bad_rate = {error: "No bad exchange found for country #{country}"}
-      end
-      return @bad_rate
-    end
+      bad_exchange ? bad_exchange.rate(pay_currency, get_currency) : {error: "No bad exchange found for country #{country}"}
   end
 
   def quote(params)

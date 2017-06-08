@@ -6,7 +6,7 @@ class Currency
   #    -   converting Ratefeed API injected rates from the Israeli way to how the system maintains it - the system has *one* method of recording rates only
   #     -  Whenever such rates should be presented
   def self.inverse?(iso)
-    ['ILS'].include? iso 
+    ['ILS'].include? iso
   end
 
   def self.markup
