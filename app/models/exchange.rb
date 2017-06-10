@@ -70,16 +70,19 @@ class Exchange < ActiveRecord::Base
 
   def self.entire_list(params)
 
-    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
+    return {errors: {parameters: 'missing'}} unless params[:country].present?
 
 # TODO: Right now these two are just excel fields, some times populated other not. Return when meaningful.
 
     begin
 
-      return Exchange.active
+      exchanges = Exchange.active
                       .select(:id, :chain_id, :name, :nearest_station, :rates_policy, :currency, :address, :phone, :latitude, :longitude,
                               :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close)
-                      .where(country: params[:country], city: params[:city])
+                      .where(country: params[:country])
+      exchanges = exchanges.where(city: params[:city]) if params[:city].present?
+
+      return exchanges
 
     rescue => e
 
