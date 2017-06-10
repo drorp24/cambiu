@@ -27,7 +27,7 @@ class Chain < ActiveRecord::Base
 
   def self.entire_list(params)
 
-    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
+    return {errors: {parameters: 'missing'}} unless params[:country].present?
 
     begin
 

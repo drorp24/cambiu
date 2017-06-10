@@ -96,13 +96,15 @@ class Exchange < ActiveRecord::Base
 
   def self.rates_list(params)
 
-    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present? and params[:type].present?
+    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:type].present?
 
     begin
 
       exchanges = Exchange.send(params[:type])
                       .select(:id, :name, :rates_policy, :chain_id, :currency)
-                      .where(country: params[:country], city: params[:city])
+                      .where(country: params[:country])
+
+      exchanges = exchanges.where(city: params[:city]) if params[:city].present?
 
       exchanges_list = []
 
