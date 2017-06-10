@@ -99,6 +99,8 @@ class Extract
       end
 
 
+    # Interbank rates are now fetched by the OXR api instead of Netdania (oxr = Money::Bank::OpenExchangeRatesBank)
+    # Netdania includes only major ones and only relative to GBP
     elsif url == "http://www.netdania.com/quotes/forex-sterling"
 
       doc.css('.nd-ql-tbl-results table tbody tr').each do |tr|
