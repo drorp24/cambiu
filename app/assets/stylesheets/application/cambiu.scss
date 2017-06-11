@@ -939,6 +939,7 @@ body#cambiu {
     padding: 16px;
   }
 
+  /*
   .segmanta-embed, .segmanta-widget, .segmanta-resume-overlay, .segmanta-iframe, .height-full {
     height: 90vh !important;
     max-height: initial !important;
@@ -948,6 +949,7 @@ body#cambiu {
   .survey-question-header {
     margin: 1vh 0;
   }
+  */
 
   #test {
     position: absolute;
@@ -2306,6 +2308,7 @@ body#cambiu {
         @include threedots(75%);
       }
       [data-field=name] {
+        text-transform: capitalize;
         color: $brand-color-c;
         font-weight: 400;
         @include vfont-size(4.5vw);

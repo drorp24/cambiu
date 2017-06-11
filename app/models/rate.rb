@@ -5,6 +5,7 @@ class Rate < ActiveRecord::Base
 
   enum service_type: [ :collection, :delivery ]
   enum source: [ :manual, :xml, :scraping, :test, :ratefeed ]
+  enum method: [ :absolute, :reference ]
 
   validates :sell, numericality: true, allow_nil: true
   validates :buy, numericality: true, allow_nil: true
@@ -17,6 +18,46 @@ class Rate < ActiveRecord::Base
   before_update :currency_is_not_local
 #  before_create :initialize_default_values
 
+  def update_by_params(params)
+
+    return false unless self.ratable && (params[:buy] || params[:sell])
+
+    updated_currency   = params[:currency]
+    base_currency      = self.ratable.currency
+    sell_param         = params[:sell].to_f
+    buy_param          = params[:buy].to_f
+
+    if params[:type].present? and params[:type] == 'reference'
+
+      self.method      = 'reference'
+      self.sell_markup = sell_param
+      self.buy_markup  = buy_param
+
+      reference_rate   = Money.default_bank.get_rate(base_currency, updated_currency)
+      sell_factor      = 1 - (sell_param / 100)
+      buy_factor       = 1 + (buy_param / 100)
+      sell             = reference_rate * sell_factor
+      buy              = reference_rate * buy_factor
+
+    else
+
+      self.method      = 'absolute'
+      self.sell_markup = nil
+      self.buy_markup  = nil
+
+      sell             = !Currency.inverse?(base_currency) ? sell_param : (1.0 / sell_param)
+      buy              = !Currency.inverse?(base_currency) ? buy_param : (1.0 / buy_param)
+
+    end
+
+    self.buy           = buy if params[:buy]  # if it's empty leave the current value intact
+    self.sell          = sell if params[:sell]
+    self.source        = 'ratefeed'
+    self.last_update   = Time.now
+    self.last_process  = 'ratefeed api'
+    self.save
+
+  end
 
   def update_by_params(params)
 

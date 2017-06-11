@@ -1,5 +1,89 @@
 class Currency 
 
+  # inverse = rate tables based on this currency count how much of *that currency* is required for each foreign currency (example: 'ILS')
+  # non inverse = rate tables based on this currency count how much of the *foreign* currency is required for each foreign currency
+  # This indication is required for:
+  #    -   converting Ratefeed API injected rates from the Israeli way to how the system maintains it - the system has *one* method of recording rates only
+  #     -  Whenever such rates should be presented
+
+
+  def self.list(priority=10)
+    unless @currency_list and @priority == priority
+      @currency_list = []
+      Money::Currency.table.each do |id, attributes|
+        if attributes[:priority] && attributes[:priority] <= priority
+          @currency_list << attributes[:iso_code]
+        end
+      end
+    end
+    @priority = priority
+    @currency_list
+  end
+
+
+  def self.inverse?(iso)
+    ['ILS'].include? iso
+  end
+
+  def self.markup
+
+    {
+        IL:
+            {
+                sell_markup:  2.5,
+                buy_markup:   2.5,
+                sell_spread:  1,
+                buy_spread:   1
+            },
+        UK:
+            {
+                sell_markup:  4,
+                buy_markup:   4,
+                sell_spread:  1.5,
+                buy_spread:   1.5
+            },
+         default:
+            {
+                sell_markup:  3.5,
+                buy_markup:   3.5,
+                sell_spread:  1.5,
+                buy_spread:   1.5
+            }
+    }
+
+  end
+
+  def self.rates(base=nil)
+
+    reference = {}
+
+    if base
+      base_currencies = Array(base)
+      rate_currencies = Currency.list(100)
+    else
+      base_currencies = rate_currencies = Currency.updatable
+    end
+
+    base_currencies.each do |base_currency|
+
+      base_currency_s = base_currency.to_sym
+      reference[base_currency_s] = {}
+
+      rate_currencies.each do |rate_currency|
+
+        next if rate_currency == base_currency
+
+        rate_currency_s = rate_currency.to_sym
+        reference[base_currency_s][rate_currency_s] = Money.default_bank.get_rate(base_currency, rate_currency)
+
+      end
+
+    end
+
+    reference
+
+  end
+
   def self.updatable
     unless @currency_array
       @currency_array = []

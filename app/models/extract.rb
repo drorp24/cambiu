@@ -55,7 +55,39 @@ class Extract
 
   def self.parse_rates(url, doc, chain, exchange, rates_source)
 
-    if chain and chain.name.include? 'TMS'
+    if url == "http://www.bankleumi.co.il/vgnprod/shearim.asp?sitePrefix="
+
+    doc.css('.lightTableline, .darkTableline2').each do |tr|
+
+      currency_name = tr.css('td')[5].text.strip
+      currency   =
+        case currency_name
+          when 'ין יפני'
+            'JPY'
+          when 'דולר קנדי'
+            'CAD'
+          when 'דולר אוסטרלי'
+            'AUD'
+          when "דולר ארה\"ב"
+            'USD'
+          when 'אירו'
+            'EUR'
+          when 'כתר נורווגי'
+            'NOK'
+          when 'לירה שטרלינג'
+            'GBP'
+          else
+            nil
+        end
+
+      next unless Currency.updatable.include? currency
+      sell = 1 / tr.css('td')[0].text.strip.to_f
+      buy = 1 / tr.css('td')[1].text.strip.to_f
+      rate_update(currency, buy, sell, chain, exchange, rates_source)
+    end
+
+
+    elsif chain and chain.name.include? 'TMS'
 
       doc.css('record').each do |rate|
         currency  = rate.css('Code').text
@@ -67,6 +99,8 @@ class Extract
       end
 
 
+    # Interbank rates are now fetched by the OXR api instead of Netdania (oxr = Money::Bank::OpenExchangeRatesBank)
+    # Netdania includes only major ones and only relative to GBP
     elsif url == "http://www.netdania.com/quotes/forex-sterling"
 
       doc.css('.nd-ql-tbl-results table tbody tr').each do |tr|

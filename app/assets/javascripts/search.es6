@@ -343,7 +343,6 @@ $(document).ready(function() {
 
     // pointer-events important!
     showDialog = function(options) {
-        if (pane == 'survey') return;
         var $modal = $('#myModal');
         $modal.find('.modal-title').html(options.title);
         $modal.find('.modal-body').html(options.body);

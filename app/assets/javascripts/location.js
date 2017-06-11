@@ -14,8 +14,8 @@ getLocation = function() {
 
         var options = {
             enableHighAccuracy: true,
-            timeout: 15000,
-            maximumAge: 15000
+            timeout: 30000,
+            maximumAge: 30000
         };
 
         navigator.geolocation.getCurrentPosition(
@@ -33,6 +33,7 @@ getLocation = function() {
 
             if (center.distance < 100) {
                 setLocation(user.lat, user.lng, 'user', 'positionFound', user.lat, user.lng, null);
+                populateParamsByLocation(center.currency);
             } else {
                 setLocation(center.lat, center.lng, 'nearest', 'nothingAroundUser', user.lat, user.lng, null);
             }
@@ -352,29 +353,47 @@ hideSearchLocation = function() {
 };
 
 
-function nearest_center(lat, lng) {
+function nearest_center(user_lat, user_lng) {
 
     // Currently, it checks London only
     // When we have more, loop over all centers leaving out the nearest: lat, lng, distance
 
-    var distance_from_nearest_center =
-        distance(
-            new google.maps.LatLng(lat, lng),
-            new google.maps.LatLng(Number(dfault.lat), Number(dfault.lng))
-        )/1000;
-
-    var nearest_center_lat = Number(dfault.lat),
-        nearest_center_lng = Number(dfault.lng);
-
-    nearest =
-    {
-        lat:        nearest_center_lat,
-        lng:        nearest_center_lng,
-        name:       'London',
-        distance:   distance_from_nearest_center
+    // TODO: Fetch this data from the server
+    var centers = {
+        ISR: {
+            lat: 32.0853,
+            lng: 34.7818,
+            country: 'ISR',
+            city: 'Tel Aviv',
+            currency: 'ILS'
+        },
+        GBR: {
+            lat: Number(dfault.lat),
+            lng: Number(dfault.lng),
+            country: 'GBR',
+            city: 'Londoh',
+            currency: 'GBP'
+        }
     };
 
-    return nearest;
+    var shortest_distance = Infinity;
+    var nearest_center = null;
+    $.each(centers, function(key, center) {
+
+        var distance_from_that_center =
+            distance(
+                new google.maps.LatLng(user_lat, user_lng),
+                new google.maps.LatLng(center.lat, center.lng)
+            )/1000;
+        if (distance_from_that_center < shortest_distance) {
+            shortest_distance = distance_from_that_center;
+            nearest_center = center;
+            nearest_center.distance = distance_from_that_center;
+        }
+
+    });
+
+    return nearest_center;
 
 }
 

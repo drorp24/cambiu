@@ -30,7 +30,7 @@ group :test, :staging, :production do
   gem "rails_12factor"
 end
 
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin'
 #gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'devise'
 gem 'activerecord-postgis-adapter'
@@ -85,6 +85,8 @@ gem 'browser'
 gem 'derailed_benchmarks', group: :development
 gem 'stackprof', group: :development
 gem 'money-open-exchange-rates'
+gem 'pry'
+#gem "active_admin_import" , '3.0.0'
 
 
 group :development, :test do

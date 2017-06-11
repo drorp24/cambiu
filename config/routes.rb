@@ -68,7 +68,11 @@ Rails.application.routes.draw do
       resources :exchanges
       resources :rates
       resources :chains
+      resources :countries
     end
+    namespace :v2 do
+      resources :rates
+     end
   end
 
 

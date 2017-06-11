@@ -11,16 +11,34 @@ ActiveAdmin.register Exchange do
 
   includes :chain
 
+  # Deserted: not clear how to trigger error (no currency, any invalid value that is raised), skip empty lines,
+  # didn't find any documentation what method does importer support
+  # flash[:error] not recognized
+=begin
+  active_admin_import headers_rewrites:
+    { :'Chain' => :chain_id },
+      before_batch_import: ->(importer) {
+      chains_names = importer.values_at(:chain_id)
+      # replacing chain name with chain id
+      chains   = Chain.where(name: chains_names).pluck(:name, :id)
+      options = Hash[*chains.flatten] # #{"Debebhams" => 2, "Thomas Cook" => 1}
+      importer.batch_replace(:chain_id, options)
+    }
+=end
+
+
   # csv import
   # TODO: update opening hours in the search
   active_admin_importable do |model, hash|
 
     columns = Exchange.column_names - Exchange.unexported_columns
+
     begin
 
-      if hash[:name].blank? or hash[:address].blank?
-        puts "no name and address or empty line"
-        next
+      next if hash[:name].blank? or hash[:address].blank?
+
+      if hash[:currency].blank?
+        raise "No currency"
       end
 
       exchange = Exchange.identify_by_either(hash[:id], hash[:name], hash[:address], hash[:nearest_station])
@@ -28,14 +46,25 @@ ActiveAdmin.register Exchange do
         exchange.send(column + '=', hash[column.to_sym])
       end
       exchange.chain_id        = Chain.where(name: hash[:chain]).first_or_create.id if hash[:chain].present?
+      if !exchange.latitude
+        latlng = exchange.geocode
+        if latlng
+          exchange.latitude = latlng[0]
+          exchange.longitude = latlng[1]
+        else
+          raise "Invalid address"
+        end
+      end
 
       exchange.save!
+      puts "I have just saved exchange " + exchange.id.to_s
 
     rescue => e
- #      e.save validate: false
-      puts "e: #{e}"
-#      puts "e.error: #{e.error}" if e && e.error
-      puts ""
+
+      message = "#{hash[:name]} (#{hash[:address]}) - #{e}"
+      puts message
+      Error.create!(text: 'Exchanges upload error', message: message)
+
     end
 
   end
@@ -137,6 +166,10 @@ ActiveAdmin.register Exchange do
 =end
 
 
+  sidebar "Status Date", only: [:show, :edit] do
+    exchange.status_date.to_s
+  end
+
   sidebar "System", only: [:show, :edit] do
     status_tag(exchange.status, exchange.status_color) if exchange.status
     status_tag(exchange.system, exchange.system_color) if exchange.system
@@ -235,6 +268,8 @@ form do |f|
       f.input     :photo
       f.input     :contact
       f.input     :address
+      f.input     :city
+      f.input     :country, as: :string
       f.input     :phone, as: :phone
       f.input     :email, as: :email
       f.input     :website, as: :url
@@ -333,6 +368,12 @@ form do |f|
       end
       column :sell           do |rate|
         best_in_place rate, :sell_s, :as => :input
+      end
+      column :invBuy do |rate|
+        Currency.inverse?(rate.ratable.currency) ? '%.4f' %(1.0 / rate.buy) : ""
+      end
+      column :invSell do |rate|
+        Currency.inverse?(rate.ratable.currency) ? '%.4f' %(1.0 / rate.sell) : ""
       end
       column :last_update do |rate|
         update = rate.last_update || rate.updated_at

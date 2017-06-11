@@ -231,6 +231,13 @@ populateParams = function() {
 
 };
 
+populateParamsByLocation = function(local_currency) {
+
+  set('buy_currency', local_currency);
+  set('pay_currency', (local_currency == 'USD') ? 'EUR' : 'USD');
+
+};
+
 
 value_of = function(key) {
     var a = sessionStorage.getItem(key);

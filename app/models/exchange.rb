@@ -13,7 +13,7 @@ class Exchange < ActiveRecord::Base
   has_many    :business_hours
   has_one     :open_today,  ->(date) {where(day: Date.today.wday)}  ,class_name: "BusinessHour"
 
-  has_many    :rates,                                                               as: :ratable
+  has_many    :rates,                                                               as: :ratable, dependent: :delete_all
   has_one     :gbp_rate,    -> {where(currency: 'GBP')}       ,class_name: "Rate",  as: :ratable
   has_one     :eur_rate,    -> {where(currency: 'EUR')}       ,class_name: "Rate",  as: :ratable
   has_one     :usd_rate,    -> {where(currency: 'USD')}       ,class_name: "Rate",  as: :ratable
@@ -46,7 +46,6 @@ class Exchange < ActiveRecord::Base
   after_validation :remove, if: ->(exchange){ exchange.remove? }
 
   before_create do
-    self.currency = 'GBP'             if currency.blank?
     self.rates_source = 'no_rates'    if rates_source.blank?
     self.rates_policy = 'individual'  if rates_policy.blank?
     self.business_type = 'exchange'   if business_type.blank?
@@ -71,16 +70,19 @@ class Exchange < ActiveRecord::Base
 
   def self.entire_list(params)
 
-    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present?
+    return {errors: {parameters: 'missing'}} unless params[:country].present?
 
 # TODO: Right now these two are just excel fields, some times populated other not. Return when meaningful.
 
     begin
 
-      return Exchange.active
+      exchanges = Exchange.active
                       .select(:id, :chain_id, :name, :nearest_station, :rates_policy, :currency, :address, :phone, :latitude, :longitude,
                               :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close)
-                      .where(country: params[:country], city: params[:city])
+                      .where(country: params[:country])
+      exchanges = exchanges.where(city: params[:city]) if params[:city].present?
+
+      return exchanges
 
     rescue => e
 
@@ -92,15 +94,27 @@ class Exchange < ActiveRecord::Base
   end
 
 
+
+  # The newer version of the api, using OXR rather than netdania for reference rates
+  def self.rates_list2(params)
+
+    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:type].present?
+
+    params[:type] == 'reference' ? Currency.rates(params[:base]) : rates_list(params)
+
+  end
+
   def self.rates_list(params)
 
-    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:city].present? and params[:type].present?
+    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:type].present?
 
     begin
 
       exchanges = Exchange.send(params[:type])
                       .select(:id, :name, :rates_policy, :chain_id, :currency)
-                      .where(country: params[:country], city: params[:city])
+                      .where(country: params[:country])
+
+      exchanges = exchanges.where(city: params[:city]) if params[:city].present?
 
       exchanges_list = []
 
@@ -231,22 +245,17 @@ class Exchange < ActiveRecord::Base
     test? or no_rates?
   end
 
-  def self.bad
-    @bank ||= self.bank.first
+  def self.bad(country)
+    self.bank.where(country: country).first
   end
 
   def self.interbank
     @inter ||= self.inter.first
   end
 
-  def self.bad_rate(pay_currency, get_currency)
-    if (@bad_rate and @pay_currency == pay_currency and @get_currency == get_currency)
-      return @bad_rate
-    else
-      @pay_currency = pay_currency
-      @get_currency = get_currency
-      @bad_rate = Exchange.bad.rate(pay_currency, get_currency)
-    end
+  def self.bad_rate(country, pay_currency, get_currency)
+      bad_exchange  = Exchange.bad(country)
+      bad_exchange ? bad_exchange.rate(pay_currency, get_currency) : {error: "No bad exchange found for country #{country}"}
   end
 
   def quote(params)
@@ -299,6 +308,12 @@ class Exchange < ActiveRecord::Base
       result[:errors]           <<   'Please select two different currencies'
       return result
     end
+    if !self.country
+      result[:errors]           <<   'Exchange has no country'
+      return result
+    else
+      country = self.country
+    end
 
     if field == 'pay_amount' or field == 'pay_currency'
       rates = result[:rates]          = rate(get_currency, pay_currency)
@@ -311,13 +326,13 @@ class Exchange < ActiveRecord::Base
       result[:edited_quote] = result[:edited_quote_rounded] = result[:get_amount]
       result[:quote_currency]                               = get_currency
 
-      bad_rates = result[:bad_rates]  = Exchange.bad_rate(get_currency, pay_currency)
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency)
       if bad_rates[:error]
         result[:errors]               <<   bad_rates[:error]
         return result
       end
-      bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
-      result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
+      bad_amount                                            = pay_amount * 0.99 * bad_rates[transaction.to_sym]
+       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       result[:gain]                                         = get_amount - bad_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
       result[:gain_amount]                                  = result[:gain].to_money(get_currency).format
@@ -348,13 +363,13 @@ class Exchange < ActiveRecord::Base
       result[:edited_quote] = result[:edited_quote_rounded] = result[:pay_amount]
       result[:quote_currency]                               = pay_currency
 
-      bad_rates = result[:bad_rates]  = Exchange.bad_rate(pay_currency, get_currency)
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency)
       if bad_rates[:error]
         result[:errors]               <<   bad_rates[:error]
         return result
       end
 
-      bad_amount                                            = get_amount * bad_rates[transaction.to_sym]
+      bad_amount                                            = get_amount * 1.01 * bad_rates[transaction.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
       result[:gain]                                         = bad_amount - pay_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
@@ -389,7 +404,8 @@ class Exchange < ActiveRecord::Base
         buy: nil,
         sell: nil,
         error: nil,
-        updated: nil
+        updated: nil,
+        source: nil
     }
 
     rated_rates = find_rate(rated_currency)
@@ -407,9 +423,18 @@ class Exchange < ActiveRecord::Base
     result[:buy]  = rated_rates[:buy]   /   base_rates[:buy]
     result[:sell] = rated_rates[:sell]  /   base_rates[:sell]
     result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
+    result[:source] = rated_rates[:source]
     if (Date.today - result[:updated].to_date).to_i > 1
       result[:error] = "Stale rates"
+=begin
+      puts ""
+      puts ">>>>>>>>>>> stale found at exchange #{self.id}"
+      puts ">>>>>>>>>>> Date.today: " + Date.today.to_s
+      puts ">>>>>>>>>>> result[:updated].to_date).to_i: " + result[:updated].to_date.to_s
+      puts ">>>>>>>>>>> difference: " + (Date.today - result[:updated].to_date).to_i.to_s
+      puts ""
       return result
+=end
     end
 
     return result
@@ -422,7 +447,8 @@ class Exchange < ActiveRecord::Base
         buy: nil,
         sell: nil,
         error: nil,
-        updated: nil
+        updated: nil,
+        source: nil
     }
     if currency == self.currency
       result[:buy]  = 1
@@ -439,6 +465,7 @@ class Exchange < ActiveRecord::Base
         if value && value != 0
           result[kind.to_sym] = value
           result[:updated] ||= rec.updated_at
+          result[:source] ||= rec.source
         else
           result[:error] = currency + ' ' + kind + ' rate is missing'
           return result
@@ -665,6 +692,7 @@ class Exchange < ActiveRecord::Base
     list = overpass.query
   end
   
+=begin
   def self.import(amenity="bdc", area="London")
     return unless list = self.list(amenity, area)
     
@@ -691,6 +719,7 @@ class Exchange < ActiveRecord::Base
       end 
     end
   end
+=end
 
   def collection?
     true

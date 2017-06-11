@@ -10,14 +10,13 @@ Money::Bank::GoogleCurrency.ttl_in_seconds = 86400
 
 require 'money/bank/open_exchange_rates_bank'
 oxr = Money::Bank::OpenExchangeRatesBank.new
-oxr.cache = 'oxr_cache.json'
 oxr.app_id = 'e01797cb4dff4450bd34f794abce9600'
 oxr.update_rates
 
 # (optional)
 # set the seconds after than the current rates are automatically expired
 # by default, they never expire, in this example 1 day.
-oxr.ttl_in_seconds = 86400
+oxr.ttl_in_seconds = 3600
 # (optional)
 # use https to fetch rates from Open Exchange Rates
 # disabled by default to support free-tier users
