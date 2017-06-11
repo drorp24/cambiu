@@ -33,6 +33,7 @@ getLocation = function() {
 
             if (center.distance < 100) {
                 setLocation(user.lat, user.lng, 'user', 'positionFound', user.lat, user.lng, null);
+                populateParamsByLocation(center.currency);
             } else {
                 setLocation(center.lat, center.lng, 'nearest', 'nothingAroundUser', user.lat, user.lng, null);
             }
@@ -357,16 +358,21 @@ function nearest_center(user_lat, user_lng) {
     // Currently, it checks London only
     // When we have more, loop over all centers leaving out the nearest: lat, lng, distance
 
+    // TODO: Fetch this data from the server
     var centers = {
-        IL: {
+        ISR: {
             lat: 32.0853,
             lng: 34.7818,
-            name: 'Tel Aviv'
+            country: 'ISR',
+            city: 'Tel Aviv',
+            currency: 'ILS'
         },
-        UK: {
+        GBR: {
             lat: Number(dfault.lat),
             lng: Number(dfault.lng),
-            name: 'Londoh'
+            country: 'GBR',
+            city: 'Londoh',
+            currency: 'GBP'
         }
     };
 
