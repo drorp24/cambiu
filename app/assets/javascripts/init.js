@@ -647,6 +647,7 @@ $(document).ready(function() {
     }
 
     var bodyWidth = $('body').width();
+    if (desktop) bodyWidth = bodyWidth * 0.27; // TODO: Change if css $paneRatio changes
     var cardWidth = bodyWidth / slidesPerView - 2.3;
     var offset = (bodyWidth - cardWidth) / -2;
     cardXoffset = String(offset) + 'px';
