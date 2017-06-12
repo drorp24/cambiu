@@ -336,7 +336,7 @@ class Exchange < ActiveRecord::Base
       result[:gain]                                         = get_amount - bad_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
       result[:gain_amount]                                  = result[:gain].to_money(get_currency).format
-      result[:gain_type]                                    = result[:gain] < 0 ? 'gain' : 'gain'
+      result[:gain_type]                                    = result[:gain] < 0 ? 'your gain' : 'your gain'
       result[:gain_currency]                                = get_currency
 
       result[:pay_amount]                                   = pay_amount.to_money(pay_currency).format
@@ -376,7 +376,7 @@ class Exchange < ActiveRecord::Base
       result[:gain_amount]                                  = result[:gain].to_money(pay_currency).format
 
       result[:gain_currency]                                = pay_currency
-      result[:gain_type]                                    = result[:gain] < 0 ? 'save' : 'save'
+      result[:gain_type]                                    = result[:gain] < 0 ? 'you save' : 'you save'
       result[:get_amount]                                   = get_amount.to_money(get_currency).format(:disambiguate => true)
 
       if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
