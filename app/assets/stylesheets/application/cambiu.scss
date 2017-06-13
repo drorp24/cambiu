@@ -2062,6 +2062,11 @@ body#cambiu {
 
 
 
+  .fab_container {
+    position: absolute;
+    top: 45vh;
+    right: 7vw;
+  }
 
 
 
@@ -2069,6 +2074,10 @@ body#cambiu {
   .fullcard {
     width: 100%;
     display: none;
+  }
+
+  [data-pane=try] .fullcard {
+    display: block;
   }
 
   .ecard{
@@ -2211,7 +2220,7 @@ body#cambiu {
         left: 0;
         z-index: 1;
         text-transform: uppercase;
-        font-size: 5vw;
+        @include vfont-size(5vw);
         width: 100%;
         text-align: center;
         text-shadow: 0px 1px 2px rgba(0, 0, 0, 1);
@@ -2619,6 +2628,8 @@ body#cambiu {
 
   .icon {
     cursor: pointer;
+    display: flex !important;
+    justify-content: center;
   }
 
   .mapMarker {
