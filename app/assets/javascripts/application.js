@@ -9,6 +9,7 @@
 //= require URLSearchParams_polyfill
 //= require autonumeric
 //= require fetch
+//= require arrive.min
 //= require snackbar.min
 //= require analysis
 //= require apigClient
