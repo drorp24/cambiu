@@ -2191,20 +2191,26 @@ body#cambiu {
       }
       .order_button_container {
         position: absolute;
-        left: 0;
-        width: 100%;
-        top: 45vh;
+        height: $order_button_width;
+        top: 50vh - $order_button_width / 2;
+        width: $order_button_width;
+        left: calc(50vw - #{$order_button_width} / 2);
        }
-      .order_button {
+      button.btn:not(.btn-raised).order_button {
         z-index: 1;
         display: block;
+        width: $order_button_width;
+        height: $order_button_width;
+        border-radius: $order_button_width / 2;
+        line-height: $order_button_width;
         font-size: $order_button_width / 2;
+        font-weight: 300;
+        text-align: center;
+        color: #fff;
+        background: $brand-gradient;
         box-shadow: 1px 2px 15px rgba(0,0,0,0.5);
-        i {
-          width: $order_button_width;
-          height: $order_button_width;
-        }
       }
+
       .order_text {
         height: 5vh;
         line-height: 5vh;
@@ -2494,20 +2500,6 @@ body#cambiu {
     @include vwidth(5vw);
   }
 
-  .order_button {
-    z-index: 1;
-    display: none;
-    width: $order_button_width;
-    border-radius: $order_button_width / 2;
-    line-height: $order_button_width;
-    font-size: 1em;
-    font-weight: 300;
-    text-align: center;
-    color: #fff;
-    background: $brand-gradient;
-    box-shadow: 1px 2px 5px rgba(0,0,0,0.5);
-//    transition: font-size, $card-transition-time + 0.3s;
-  }
 
   .nav_button {
     z-index: 1;
