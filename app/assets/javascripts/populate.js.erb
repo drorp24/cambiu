@@ -7,15 +7,23 @@
 
 populate = function(exchange, $scope, index, page) {
 
-  populateExchange(exchange, $scope, index, page);
+  return Promise.all([
 
-  fetchPlace(exchange)
-      .then(function(exchange) {populatePlace(exchange, $scope)})
-      .catch(function(error) {console.warn(error)});
+    populateExchange(exchange, $scope, index, page),
 
-  findDuration(exchange)
-      .then(function(exchange) {populateDuration(exchange, $scope)})
-      .catch(function(error) {console.warn(error)});
+    getPano(exchange)
+        .then(function(pano) {populateStaticStreeview(exchange, $scope)}),
+
+    fetchPlace(exchange)
+        .then(function() {populatePlace(exchange, $scope)}),
+
+    findDuration(exchange)
+        .then(function() {populateDuration(exchange, $scope)})
+
+  ])
+        .catch(warn);
+
+
 
 };
 
@@ -23,56 +31,59 @@ populateExchange = function(exchange, $scope, index, page) {
 
 //    console.log('exchange ' + exchange.id + ' - populateExchange');
 
-  if (index == 0) $scope.addClass('best');
+  return new Promise(function(resolve, reject) {
 
-  $scope.find('.ecard').addBack('.ecard').attr({'data-exchange-id': exchange.id, 'data-page': page});
+    if (index == 0) $scope.addClass('best');
 
-  $scope.find('#streetview').attr('id', 'streetview' + exchange.id);
+    $scope.find('.ecard').addBack('.ecard').attr({'data-exchange-id': exchange.id, 'data-page': page});
 
-  $scope.find('[data-model=exchange][data-field]').each(function() {
-    var $this = $(this);
-    var field = $this.data('field');
-    var value = exchange[field];
-    $this.html(value);
-  });
+    $scope.find('#streetview').attr('id', 'streetview' + exchange.id);
 
-  getPano(exchange).then(function(pano) {populateStaticStreeview(exchange, $scope)});
+    $scope.find('[data-model=exchange][data-field]').each(function() {
+      var $this = $(this);
+      var field = $this.data('field');
+      var value = exchange[field];
+      $this.html(value);
+    });
 
-  if (!exchange.gain || exchange.gain < 0) {
-    $scope.find('.comparison').css('visibility', 'hidden');
-    $scope.find('.comparison_text').css('visibility', 'hidden');
-  }
-
-  var $phone_link = $scope.find('.phone_icon a');
-  if (exchange.phone) {
-    $phone_link.attr('href', 'tel:' + exchange.phone)
-  } else {
-    $phone_link.css('visibility', 'hidden')
-  }
-
-  if (exchange.base_rate) {
-    if (index == 0) {
-      var src = '<%= asset_path 'circle_crown.png' %>';
-      var html = '<img src=' + src + '>';
-      $scope.find('.ranking').html(html);
-    } else {
-      $scope.find('.ranking').html(index + 1);
+    if (!exchange.gain || exchange.gain < 0) {
+      $scope.find('.comparison').css('visibility', 'hidden');
+      $scope.find('.comparison_text').css('visibility', 'hidden');
     }
-  } else {
-    $scope.find('[data-field=edited_quote_rounded]').css('margin-top', '0');
-    $scope.find('.comparison').css('display', 'none');
-    $scope.find('.ranking').css('display', 'none');
-    $scope.find('.norates').css('display', 'block');
-    $scope.find('.quote_section').css('display', 'none');
-    $scope.find('.no_quote_section').css('display', 'flex');
-    $scope.addClass('norate').addClass(exchange.contract ? 'contract' : 'no_contract');
-  }
 
-    $scope.find('[data-field=rating]').rating(ratingOptions).rating('update', 0);
+    var $phone_link = $scope.find('.phone_icon a');
+    if (exchange.phone) {
+      $phone_link.attr('href', 'tel:' + exchange.phone)
+    } else {
+      $phone_link.css('visibility', 'hidden')
+    }
 
-//  console.log('setting arctext to radius: ', windowHeight / 10);
-//  $scope.find('.order_word').arctext({radius: Math.floor(windowHeight / 10), dir: -1})
+    if (exchange.base_rate) {
+      if (index == 0) {
+        var src = '<%= asset_path 'circle_crown.png' %>';
+        var html = '<img src=' + src + '>';
+        $scope.find('.ranking').html(html);
+      } else {
+        $scope.find('.ranking').html(index + 1);
+      }
+    } else {
+      $scope.find('[data-field=edited_quote_rounded]').css('margin-top', '0');
+      $scope.find('.comparison').css('display', 'none');
+      $scope.find('.ranking').css('display', 'none');
+      $scope.find('.norates').css('display', 'block');
+      $scope.find('.quote_section').css('display', 'none');
+      $scope.find('.no_quote_section').css('display', 'flex');
+      $scope.addClass('norate').addClass(exchange.contract ? 'contract' : 'no_contract');
+    }
 
+      $scope.find('[data-field=rating]').rating(ratingOptions).rating('update', 0);
+
+  //  console.log('setting arctext to radius: ', windowHeight / 10);
+  //  $scope.find('.order_word').arctext({radius: Math.floor(windowHeight / 10), dir: -1})
+
+    resolve();
+
+  })
 
 };
 
@@ -143,7 +154,7 @@ populateDuration = function(exchange, $scope) {
 populatePlace = function(exchange, $scope) {
 
 
-//    console.log('exchange ' + exchange.id + ' - populatePlace');
+    console.log('exchange ' + exchange.id + ' - populatePlace');
 
     // User photo - currently wildcarded for 2 reasons:
     // - isn't displayed properly (isn't confined to the card, captures the entire height of the grey ribbon)
@@ -266,7 +277,12 @@ getPano = function(exchange) {
 
     return new Promise(function(resolve, reject) {
 
-        var url = streetviewUrl(exchange, {metadata: true});
+      if (exchange.pano) {
+        resolve(exchange.pano);
+        return
+      }
+
+      var url = streetviewUrl(exchange, {metadata: true});
         fetch(url)
             .then(function(stream) {return(stream.json())})
             .then(function(jsonString) {

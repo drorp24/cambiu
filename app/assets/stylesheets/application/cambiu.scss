@@ -2631,7 +2631,7 @@ body#cambiu {
 
 
   .comparison {
-    [data-field=gain_type] {
+    [data-field=gain_type], [data-field=gain_short] {
       text-transform: uppercase;
     }
 //    border: 1px solid red;
@@ -2643,7 +2643,7 @@ body#cambiu {
     margin-top: -1em;
     .comparison_item {
       @include flexbox();
-      [data-field=gain_type] {
+      [data-field=gain_type], [data-field=gain_short]  {
         margin-right: 0.5em;
       }
       i {
@@ -2674,7 +2674,7 @@ body#cambiu {
         @include vtop(2vw);
         height: 53%;
       }
-      [data-field=gain_type] {
+      [data-field=gain_type], [data-field=gain_short]  {
         @include vfont-size(3vw);
       }
       .off {

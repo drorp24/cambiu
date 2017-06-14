@@ -66,29 +66,36 @@
 
         console.log('populateOffers');
 
-        page = 1;
-        populatePage(page);
+        pageNum = 1;
+        populatePage(pageNum);
         $('.pagination').addClass('active');
 
     };
 
 
-    function addOffer(offer, index, page) {
+    function addOffer(offer, index, pageNum, trigger=null) {
+
+        console.log('addOffer for offer: ', offer, ' index: ', index, ' pageNum: ', pageNum, ' trigger: ', trigger);
 
         var $scope = $('.ecard.template').clone().removeClass('template');
-        populate(offer, $scope, index, page);
 
-        if (mode == 'mobile' || mode == 'both') {
-            var $card = $scope.clone().addClass('swiper-slide');
-            $card.appendTo($('#cards'));
-            slidesAdded.push(index);
-        }
-        if (mode == 'desktop' || mode == 'both') {
-            var $listItem = $scope.clone().addClass('list-group-item');
-            $listItem.appendTo($('.exchanges_list'));
-        }
+        populate(offer, $scope, index, pageNum).then(createElements);
 
-        $scope.remove();
+
+        function createElements() {
+
+            if (mode == 'mobile' || mode == 'both') {
+                var $card = $scope.clone().addClass('swiper-slide');
+                $card.appendTo($('#cards'));
+                slidesAdded.push(index);
+            }
+            if ((mode == 'desktop' || mode == 'both') && trigger != 'swipe') {
+                var $listItem = $scope.clone().addClass('list-group-item');
+                $listItem.appendTo($('.exchanges_list'));
+            }
+
+            $scope.remove();
+        }
 
     }
 
@@ -213,7 +220,7 @@
         if (isSafari2) $('.swiper-container-h').css('bottom', '60px');
         if ($('.active.pane').data('pane') == 'list') {
             $('.pagination').css('display', 'flex');
-            $('.list-group-item.ecard[data-page=' + page + ']').show();
+            $('.list-group-item.ecard[data-page=' + pageNum + ']').show();
         }
 
     };
@@ -266,8 +273,6 @@ zoomIn2 = function() {
 
 function populatePagination (fromResult, toResult, prev, next) {
 
-    if ($('.active.pane').data('pane') != 'list') return;
-
     $('[data-model=page][data-field=fromResult]').html(fromResult);
     $('[data-model=page][data-field=toResult]').html(toResult);
     if (prev) {
@@ -291,8 +296,8 @@ function unpopulatePagination() {
 
 }
 
-function showPage(page) {
-    $('.list-group .ecard[data-page=' + page + ']').css('display', 'flex');
+function showPage(pageNum) {
+    $('.list-group .ecard[data-page=' + pageNum + ']').css('display', 'flex');
 }
 
 function hidePages() {
@@ -301,41 +306,38 @@ function hidePages() {
 
 
 
-populatePage = function(page) {
+populatePage = function(pageNum) {
 
     var offersLength  = offers.length;
-    var fromResult    = (resultsPerPage * (page -1)) + 1;
-    var toResult      = Math.min(resultsPerPage * page, offersLength);
+    var fromResult    = (resultsPerPage * (pageNum -1)) + 1;
+    var toResult      = Math.min(resultsPerPage * pageNum, offersLength);
     var prev          = fromResult > resultsPerPage;
     var next          = toResult < offersLength;
 
-    if ($('.active.pane').data('pane') == 'list') {
-        hidePages();
-        if  (pagesAdded.includes(page)) {
-            showPage(page);
-            populatePagination(fromResult, toResult, prev, next);
-            return
-        }
+    hidePages();
+    if  (pagesAdded.includes(pageNum)) {
+        showPage(pageNum);
+        populatePagination(fromResult, toResult, prev, next);
+        return
     }
-
-
+    
     for (var result = fromResult; result <= toResult; result++) {
         var offer = offers[result -1].properties;                       // results talks user languages so starts with 1, but the offers array starts with 0
-        addOffer(offer, result -1, page);
+        addOffer(offer, result -1, pageNum, 'populatePage');
     }
 
     populatePagination(fromResult, toResult, prev, next);
-    showPage(page);
-    pagesAdded.push(page);
+    showPage(pageNum);
+    pagesAdded.push(pageNum);
 
 };
 
 
 nextPage = function() {
 
-    if (offers.length > resultsPerPage * page) {
-        page += 1;
-        populatePage(page);
+    if (offers.length > resultsPerPage * pageNum) {
+        pageNum += 1;
+        populatePage(pageNum);
     } else {
         console.log('No more results to page')
     }
@@ -344,9 +346,9 @@ nextPage = function() {
 
 prevPage = function() {
 
-    if (page > 1) {
-        page -= 1;
-        populatePage(page);
+    if (pageNum > 1) {
+        pageNum -= 1;
+        populatePage(pageNum);
     } else {
         console.log('No previous page')
     }
@@ -354,7 +356,7 @@ prevPage = function() {
 };
 
 resetPaging = function() {
-    page = 0;
+    pageNum = 0;
     pagesAdded = [];
     unpopulatePagination();
 };

@@ -146,7 +146,7 @@ var markersShaded = false;
 var locationMsgInformed = false;
 var nearest;
 var exchangeHash = {};
-var page;
+var pageNum;
 var resultsPerPage = 5;
 
 sessionStorage.videoStopped = null;
@@ -522,19 +522,30 @@ $(document).ready(function() {
 
     // Error Handling
 
-    logError = function(error) {
-        var stack = error.stack;
+    function errorText(error) {
+        var stack   = error.stack;
         var message = error.toString();
-        var text = stack ? stack : message;
-        console.error(text);
-        persistError(message, text);
+        var text    = stack ? stack : message;
+        return {
+            message: message,
+            text:    text
+        };
+    }
+
+    logError = function(error) {
+        var error_text = errorText(error);
+        console.error(error_text.text);
+        persistError(error_text.message, error_text.text);
     };
 
     showError = function(error) {
         console.log('showError');
         logError(error);
         snack(error);
+    };
 
+    warn = function(error) {
+        console.warn(error);
     };
 
     persistError = function(message, text) {

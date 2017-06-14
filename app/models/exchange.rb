@@ -337,6 +337,7 @@ class Exchange < ActiveRecord::Base
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
       result[:gain_amount]                                  = result[:gain].to_money(get_currency).format
       result[:gain_type]                                    = result[:gain] < 0 ? 'your gain' : 'your gain'
+      result[:gain_short]                                    = result[:gain] < 0 ? 'gain' : 'gain'
       result[:gain_currency]                                = get_currency
 
       result[:pay_amount]                                   = pay_amount.to_money(pay_currency).format
@@ -377,6 +378,7 @@ class Exchange < ActiveRecord::Base
 
       result[:gain_currency]                                = pay_currency
       result[:gain_type]                                    = result[:gain] < 0 ? 'you save' : 'you save'
+      result[:gain_short]                                    = result[:gain] < 0 ? 'save' : 'save'
       result[:get_amount]                                   = get_amount.to_money(get_currency).format(:disambiguate => true)
 
       if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
@@ -517,7 +519,8 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:gain_amount] = quotes[:gain_amount]
     exchange_hash[:gain_percent] = quotes[:gain_percent]
     exchange_hash[:gain_type] = quotes[:gain_type]
-    exchange_hash[:gain_currency] = quotes[:gain_currency]
+    exchange_hash[:gain_type] = quotes[:gain_type]
+    exchange_hash[:gain_short] = quotes[:gain_short]
     exchange_hash[:quote] = quotes[:quote]
     exchange_hash[:edited_quote] = quotes[:edited_quote] || 'No rates'
     exchange_hash[:real_rates] = quotes[:real_rates]

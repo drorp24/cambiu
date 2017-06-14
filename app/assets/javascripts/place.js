@@ -14,8 +14,8 @@ fetchPlace = function(exchange) {
                 }
 
                 if (!exchange.name || !exchange.latitude || !exchange.longitude) {
-                    reject('exchange ' + exchange.id + ' - exchange name, lat or lng missing');
-                    return
+                    warn('exchange ' + exchange.id + ' - exchange name, lat or lng missing');
+                    resolve(null);
                 }
 
                 var request = {
@@ -38,12 +38,12 @@ fetchPlace = function(exchange) {
                             if (results.length >= 1) {
                                 resolve(results[0].place_id);
                             } else {
-                                reject('exchange ' + exchange.id + ' - no place id found');
-                                return
+                                warn('exchange ' + exchange.id + ' - no place id found');
+                                resolve(null);
                             }
                         } else {
-                            reject('exchange ' + exchange.id + ' - nearbySearch error: ' + status);
-                            return
+                            warn('exchange ' + exchange.id + ' - nearbySearch error: ' + status);
+                            resolve(null)
                         }
 
                     }
@@ -61,6 +61,11 @@ fetchPlace = function(exchange) {
                // as a result, populateExchanges is not invoked
                // return new Promise(function (resolve, reject) {
 
+                 if (!place_id) { //Needed since the promises are all artificially resolved(). Had the former promise rejected, this one wouldn't be called.
+                     resolve(exchange);
+                     return;
+                 }
+
                  service = new google.maps.places.PlacesService(map);
 
                  service.getDetails(
@@ -71,8 +76,8 @@ fetchPlace = function(exchange) {
 
                          exchange.place.status.getDetails = status;
                          if (status != google.maps.places.PlacesServiceStatus.OK) {
-                             reject('exchange ' + exchange.id + ' - getDetails error: ' + status);
-                             return
+                             warn('exchange ' + exchange.id + ' - getDetails error: ' + status);
+                             resolve(exchange);
                          }
 
                          exchange.place.distance =       distance(new google.maps.LatLng(exchange.latitude, exchange.longitude),place.geometry.location);
@@ -87,8 +92,8 @@ fetchPlace = function(exchange) {
                              resolve(exchange);
                              console.log('exchange ' + exchange.id + ' - PlacesService.getDetails returned a place close enough to the exchange');
                          } else {
-                             reject('exchange ' + exchange.id + ' - place too far: ' + exchange.place.distance);
-                             return
+                             warn('exchange ' + exchange.id + ' - place too far: ' + exchange.place.distance);
+                             resolve(exchange)
                          }
 
                      });
