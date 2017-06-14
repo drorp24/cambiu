@@ -9,23 +9,42 @@
     <% end %>
   </div>
 
-  <div class="navbar_link navbar_center middle col-xs-8">
+  <div class="navbar_link navbar_center middle col-xs-8 flex_center">
     <% if center == 'search_params' %>
       <%= render 'search_params' %>
+      <i class="material-icons col-xs-1">search</i>
     <% else %>
       <%= center %>
     <% end %>
   </div>
 
   <div class="navbar_link navbar_right col-xs-2"
+     <% unless right_pane == 'none' %>
+          <% if right_pane == 'context_menu' %>
+              data-action="context_menu"
+            <% else %>
+              data-href-page="exchanges"
+              data-href-pane=<%= right_pane %>
+              data-href-id=<%= right_id %>
+            <% end %>
+     <% end %>
+   >
 
-    data-href-page="exchanges"
-    data-href-pane=<%= right_pane %>
-    data-href-id=<%= right_id %>>
-    <% unless right_pane == 'none' %>
-        <i class="material-icons"><%= right_icon %></i>
-    <% end %>
+     <% unless right_pane == 'none' %>
+          <i class="material-icons"><%= right_icon %></i>
+     <% end %>
 
+  </div>
+
+  <div class="context_menu" >
+    <% Array(local_assigns[:context_menu_options]).each do |option| %>
+        <button class="btn context_menu_option">
+          <div class="menu_option data-href-page=exchanges data-href-pane=<%= option[:pane] %>">
+            <div class="menu_option_icon"><i class="material-icons col-xs-1"><%= option[:icon] %></i></div>
+            <div class="menu_option_name"><%= option[:name] %></div>
+          </div>
+        </button>
+    <% end  %>
   </div>
 
 </nav>

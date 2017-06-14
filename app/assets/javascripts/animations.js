@@ -88,3 +88,8 @@ postAnimations = function() {
     measureMapExperience();
     removeMapCurtain();
 };
+
+$('body').on('click tap', '[data-action=context_menu]', function() {
+    $('.context_menu').toggleClass('active');
+});
+

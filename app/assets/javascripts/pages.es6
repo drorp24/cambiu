@@ -116,6 +116,7 @@ refresh = function(pane) {
  $('body').on('click tap', '[data-href-pane]', (function (e) {
 
        // EXTREMELY IMPORTANT! Without it, every pushState will add another push with '#' and popState will be invoked. Pulling hair.
+        console.log('[data-href-pane] clicked. pane: ', $(this).data('href-pane'));
      e.preventDefault();
      e.stopPropagation();
 
