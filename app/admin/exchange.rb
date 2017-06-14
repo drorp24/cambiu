@@ -370,10 +370,10 @@ form do |f|
         best_in_place rate, :sell_s, :as => :input
       end
       column :invBuy do |rate|
-        Currency.inverse?(rate.ratable.currency) ? '%.4f' %(1.0 / rate.buy) : ""
+        rate.buy.present? and Currency.inverse?(rate.ratable.currency) ? '%.4f' %(1.0 / rate.buy) : ""
       end
       column :invSell do |rate|
-        Currency.inverse?(rate.ratable.currency) ? '%.4f' %(1.0 / rate.sell) : ""
+        rate.sell.present? and Currency.inverse?(rate.ratable.currency) ? '%.4f' %(1.0 / rate.sell) : ""
       end
       column :last_update do |rate|
         update = rate.last_update || rate.updated_at
