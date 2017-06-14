@@ -85,7 +85,7 @@ refresh = function(pane) {
         map_refreshed = true; // do once only
     }
 */
-    if (!cards_refreshed && pane == 'cards' && swiperH) {
+    if (/*!cards_refreshed &&*/ pane == 'cards' && swiperH) {
         console.log('Entering pane: cards - refresh swiperH');
         swiperH.update(false);
         cards_refreshed = true; // do once only
@@ -116,7 +116,6 @@ refresh = function(pane) {
  $('body').on('click tap', '[data-href-pane]', (function (e) {
 
        // EXTREMELY IMPORTANT! Without it, every pushState will add another push with '#' and popState will be invoked. Pulling hair.
-        console.log('[data-href-pane] clicked. pane: ', $(this).data('href-pane'));
      e.preventDefault();
      e.stopPropagation();
 
@@ -129,9 +128,21 @@ refresh = function(pane) {
      var help_topic     = el.data('help-topic');
      var help_content   = el.data('help-content');
      var populate       = el.data('populate');
+     var should_wait    = el.data('href-wait');
 
-     setPage({page1: page, id1: id, pane1: pane, hash: hash, help_topic: help_topic, help_content: help_content, populate: populate});
-     hideDialog();
+     if (should_wait) {
+        wait(500).then(hideMenus).then(wait).then(goOn)
+     } else {
+        goOn()
+     }
+
+     function hideMenus() {
+         $('.context_menu').removeClass('active')
+     }
+     function goOn() {
+         setPage({page1: page, id1: id, pane1: pane, hash: hash, help_topic: help_topic, help_content: help_content, populate: populate});
+         hideDialog();
+     }
 
 }));
 

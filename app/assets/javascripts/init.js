@@ -2,7 +2,8 @@ var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'deskto
 var development = location.hostname == 'localhost';
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
-var mode = development ? 'both' : (mobile ? 'mobile' : 'desktop');
+//var mode = development ? 'both' : (mobile ? 'mobile' : 'desktop');
+var mode = 'both'; // let's see if it causes problems. The menus allow both modes currently
 // if (mobile) - single-pane; true in mobile devices and iFrames narrower than 767px.  EXAMPLE: if (mobile) close pane when showing directions.   If (desktop) - side by side panes.
 // if (mode == mobile) - best fit for a single-pane, though it can exists in desktop too. EXAMPLE: if (mode == mobile) create vertical list rather than horizontal cards.
 var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
@@ -358,7 +359,7 @@ display = function(term) {
     };
 
 wait = function(period) {
-    if (typeof period === 'undefined') period = 5000;
+    if (typeof period === 'undefined') period = 300;
     return new Promise(function(resolve, reject) {
         setTimeout(function() {
             resolve()

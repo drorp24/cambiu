@@ -3,9 +3,9 @@
   <% left_id = nil if local_assigns[:left_id].nil? %>
   <% right_id = nil if local_assigns[:right_id].nil? %>
 
-  <div class="navbar_link navbar_left col-xs-2" data-href-page="exchanges" data-href-pane=<%= left_pane  %> data-href-id=<%= left_id  %>>
-    <% unless left_pane == 'none' %>
-        <i class="material-icons"><%= left_icon %></i>
+  <div class="navbar_link navbar_left col-xs-2" data-href-page="exchanges" data-href-pane=<%= local_assigns[:left_pane].nil? ? 'back' : left_pane %> data-href-id=<%= left_id  %>>
+    <% unless local_assigns[:left_pane] && left_pane == 'none' %>
+        <i class="material-icons"><%= local_assigns[:left_icon].nil? ? 'arrow_back'  : left_icon  %></i>
     <% end %>
   </div>
 
@@ -39,7 +39,7 @@
   <div class="context_menu" >
     <% Array(local_assigns[:context_menu_options]).each do |option| %>
         <button class="btn context_menu_option">
-          <div class="menu_option data-href-page=exchanges data-href-pane=<%= option[:pane] %>">
+          <div class="menu_option" data-href-page="exchanges" data-href-pane="<%= option[:pane] %>" data-href-wait="true">
             <div class="menu_option_icon"><i class="material-icons col-xs-1"><%= option[:icon] %></i></div>
             <div class="menu_option_name"><%= option[:name] %></div>
           </div>

@@ -1,6 +1,10 @@
 <div class="pane" data-pane="cards">
 
-  <%= render partial: 'navbar', locals: {left_pane: 'none', left_icon: '', center: 'search_params', right_pane: "search", right_icon: 'search'} %>
+  <%= render partial: 'navbar',
+             locals: {center: 'search_params', right_pane: "context_menu", right_icon: 'more_vert',
+                      context_menu_options: [{icon: "view_list", name: "List view", pane: "list"}]}
+
+  %>
 
   <div class="swiper-container swiper-container-h swiper-container-horizontal">
     <div id="cards" class="swiper-wrapper">

@@ -1,9 +1,9 @@
 <div class="pane" data-pane="list" data-list="true">
 
   <%= render partial: 'navbar',
-             locals: {left_pane: 'none', left_icon: '', center: 'search_params', right_pane: "context_menu", right_icon: 'more_vert',
-                      context_menu_options: [{icon: "pageview", name: "View more offers", pane: "list"},
-                                             {icon: "B", name: "Something else", pane: "somepane"}]}
+             locals: {center: 'search_params', right_pane: "context_menu", right_icon: 'more_vert',
+                      context_menu_options: [{icon: "pageview", name: "More offers", pane: "list"},
+                                             {icon: "view_array", name: "Cards View", pane: "cards"}]}
   %>
 
   <div class="exchanges_list list-group"></div>
