@@ -75,22 +75,20 @@
 
     function addOffer(offer, index, page) {
 
-        var $scope = $('.ecard.template').clone().removeClass('template');
-        populate(offer, $scope, index, page);
-
         if (mode == 'mobile' || mode == 'both') {
-            var $card = $scope.clone().addClass('swiper-slide');
-            $card.appendTo($('#cards'));
+            var $scope = $('.swiper-slide.ecard.template').clone().removeClass('template');
+            $scope.appendTo($('#cards'));
+            populate(offer, $scope, index, page);
             slidesAdded.push(index);
         }
         if (mode == 'desktop' || mode == 'both') {
-            var $listItem = $scope.clone().addClass('list-group-item');
-            $listItem.appendTo($('.exchanges_list'));
+            var $scope = $('.list-group-item.ecard.template').clone().removeClass('template');
+            $scope.appendTo($('.exchanges_list'));
+            populate(offer, $scope, index, page);
         }
 
-        $scope.remove();
-
     }
+
 
      // TODO: looks like 'offers' should be checked, not 'exchanges'
     revealCards = function() {
