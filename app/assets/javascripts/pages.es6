@@ -4,9 +4,9 @@
 //
 //   -  replace active html, manipulate browser history (setPage),
 
-setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, populate = true, help_topic = null, help_content = null}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
+setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, populating = false, help_topic = null, help_content = null}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
 
-        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populate: ' + populate + ' help_topic: ' + help_topic);
+        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populating: ' + populating + ' help_topic: ' + help_topic);
 
     // POP pane into view
 //    if (page1 = 'homepage') var url = 'homepage';
@@ -36,7 +36,7 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
         populateHelp({topic: help_topic, content: help_content}, $pane);
     }
 
-    if (populate && pane == 'reviews') {
+    if (populating && pane == 'reviews') {
         var exchange = currentExchange();
         populateReviews(exchange, $pane);
     }
@@ -59,7 +59,7 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
 
     // POPULATE (unless triggered by popstate event)
     // TODO: probably needs some change when single-exchange panes are back and refreshed
-     if (populate && id) {
+     if (populating && id) {
         var exchange = (id == 'curr') ? currentExchange() : exchangeHash[id];
         populate(exchange, [$pane], null, null);
     }
@@ -143,7 +143,7 @@ refresh = function(pane) {
          $('.context_menu').removeClass('active')
      }
      function goOn() {
-         setPage({page1: page, id1: id, pane1: pane, hash: hash, help_topic: help_topic, help_content: help_content, populate: populate});
+         setPage({page1: page, id1: id, pane1: pane, hash: hash, help_topic: help_topic, help_content: help_content, populating: populate});
          hideDialog();
      }
 
@@ -152,7 +152,7 @@ refresh = function(pane) {
 window.addEventListener("popstate", function (e) {
 
     console.log('pop. e.state: ' + e.state);
-    if (e.state && e.state.length > 0) setPage({url: e.state, pushState: false, populate: false});
+    if (e.state && e.state.length > 0) setPage({url: e.state, pushState: false});
 
 });
 
