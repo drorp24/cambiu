@@ -192,21 +192,28 @@
         })
     };
 
-    select = function($this) {
+    selectExchange = function($exchange) {
+
+        var selected_exchange = currentExchange();
+        sessionStorage.selected = selected_exchange.id;
 
         $('.pagination').css('display', 'none');
         $('.swiper-container-h').css('bottom', '0px');
-        $this.addClass('selected');
+        $exchange.addClass('selected');
         $('.list-group-item.ecard:not(.selected)').hide();
-        if ($('.active.pane').data('pane') == 'cards') $this.css('transform', 'translate(' + cardXoffset + ', 0px)');
+        if ($('.active.pane').data('pane') == 'cards') $exchange.css('transform', 'translate(' + cardXoffset + ', 0px)');
 
-        populateStreetview(currentExchange());
+        setPage({pane1: 'offer', id1: 'curr'});
+
+        populateStreetview(selected_exchange);
         report('Tap', 'Card');
         clearDirections();
 
     };
 
-    unselect = function($this) {
+    unselectExchange = function($this) {
+
+        sessionStorage.removeItem('selected');
 
         $('.selected.ecard').removeClass('selected');
         if (isSafari2) $('.swiper-container-h').css('bottom', '60px');
@@ -215,6 +222,11 @@
             $('.list-group-item.ecard[data-page=' + pageNum + ']').show();
         }
 
+    };
+
+    // Left here but not needed - thought as long as any exchange is selected, no pane should supersede 'offers'/cards/list but that's not true
+    exchangeIsSelected = function() {
+        return !!value_of('selected');
     };
 
     listAddClass = function(klass, exchange_id) {
@@ -232,11 +244,11 @@
 //  EVENTS
 
 $('body').on('click tap', '.ecard:not(.selected)', function(e) {
-    select($(this));
+    selectExchange($(this));
 });
 
 $('body').on('click tap', '.ecard.selected .lessmore.icon', function(e) {
-    unselect($(this));
+    unselectExchange($(this));
 });
 
 $('body').on('mouseover', '.ecard:not(.selected)', function(e) {

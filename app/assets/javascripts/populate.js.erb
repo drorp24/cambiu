@@ -256,6 +256,7 @@ populateParamsByLocation = function(local_currency) {
 
 
 value_of = function(key) {
+    if (typeof(key) === "undefined") return null;
     var a = sessionStorage.getItem(key);
     return (a && a != "null") ? a : null;
 };
