@@ -96,6 +96,10 @@ refresh = function(pane) {
         cards_refreshed = true; // do once only
     }
 
+    if (pane == 'list') {
+        populatePage({page: pageNum, list: true, cards: false});
+    }
+
     if (!intro_refreshed && pane == 'intro' && swiperIntro) {
         console.log('Entering pane: intro - refresh swiperIntro');
         swiperIntro.update(false);
@@ -172,9 +176,17 @@ function actual(pane) {
     return (['offer', 'order','offers', 'list', 'cards'].includes(pane)) ? 'offers' : pane;
 }
 
+function group(pane) {
+    return ['offer', 'order'].includes(pane) ? 'children' : (['offers', 'list', 'cards'].includes(pane) ? 'parents' : 'neither')
+}
+
+function same_pane(paneA, paneB) {
+    return group(paneA) == 'children' && group(paneB) == 'parents' || group(paneA) == 'parents' && group(paneB) == 'children'
+}
+
 function different(pane) {
     var activePane = $('.active.pane').data('pane');
-    return actual(activePane) != actual(pane);
+    return !same_pane(activePane, pane);
 }
 
 function active(pane) {
