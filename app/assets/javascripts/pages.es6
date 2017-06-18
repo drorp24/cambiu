@@ -18,8 +18,11 @@ setPage = function ({url, page1, id1, pane1, hash, search, pushState = true, pop
     }
 
 //console.log('pane before: ', pane);
-    if (pane == 'display') pane = value_of('display') || (mode == 'mobile' ? 'cards' : 'list');
-    if (pane == 'list' || pane == 'cards') sessionStorage.display = pane;
+    if (pane == 'list' || pane == 'cards') sessionStorage.recent_set = pane;
+    if (pane == 'offers') {
+        pane = value_of('recent_set') || default_set;
+        sessionStorage.recent_set = pane;
+    }
 //console.log('pane after: ', pane);
 
     // tag the session as soon as page is visited, with ref parameter or without it
