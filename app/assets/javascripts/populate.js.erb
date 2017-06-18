@@ -5,31 +5,34 @@
 //  1-way binding model -> view
 
 
-populate = function(exchange, $scope, index, page) {
+populate = function(exchange, scopes, index, page) {
 
-  return Promise.all([
-
-    populateExchange(exchange, $scope, index, page),
+    scopes.filter(Boolean).forEach(function($scope) {
+      populateExchange(exchange, $scope, index, page)
+          .then(function() {console.log('exchange ' + exchange.id + ' - populateExchange succeeded for $scope: ', $scope)})
+          .catch(function(error) {console.error(error)})
+    });
 
     getPano(exchange)
-        .then(function(pano) {populateStaticStreeview(exchange, $scope)}),
+        .then(function(pano) {
+          scopes.filter(Boolean).forEach(function($scope) {populateStaticStreeview(exchange, pano, $scope)})
+        });
 
     fetchPlace(exchange)
-        .then(function() {populatePlace(exchange, $scope)}),
+        .then(function(place) {
+          scopes.filter(Boolean).forEach(function($scope) {populatePlace(exchange, place, $scope)})
+        });
 
     findDuration(exchange)
-        .then(function() {populateDuration(exchange, $scope)})
-
-  ])
-        .catch(warn);
-
-
+        .then(function(matrix) {
+          scopes.filter(Boolean).forEach(function($scope) {populateDuration(exchange, matrix, $scope)})
+        });
 
 };
 
 populateExchange = function(exchange, $scope, index, page) {
 
-//    console.log('exchange ' + exchange.id + ' - populateExchange');
+  console.log('exchange ' + exchange.id + ' - populateExchange. $scope: ', $scope);
 
   return new Promise(function(resolve, reject) {
 
@@ -145,14 +148,16 @@ function processSVData(exchange, panorama, data, status) {
   }
 }
 
-populateDuration = function(exchange, $scope) {
+populateDuration = function(exchange, matrix, $scope) {
 //    console.log('exchange ' + exchange.id + ' - populateDuration');
     $scope.find('[data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
 };
 
 
-populatePlace = function(exchange, $scope) {
+populatePlace = function(exchange, place, $scope) {
 
+
+    // place in fact is already in the exchange so nothing is done with that parameter and exchange.place is queried instead
 
     console.log('exchange ' + exchange.id + ' - populatePlace');
 
@@ -314,9 +319,12 @@ streetviewUrl = function(exchange, options) {
     return url;
 };
 
-populateStaticStreeview = function(exchange, $scope) {
+populateStaticStreeview = function(exchange, pano, $scope) {
 
-//console.log('populateStaticStreetview. Pano: ', exchange.pano);
+
+  // pano is in fact already in the exchange so nothing is done with that parameter, and exchange.pano is queried instead
+
+  //console.log('populateStaticStreetview. Pano: ', exchange.pano);
 
   var $mini_streetview = $scope.find('.minicard .streetview');
   var $full_streetview = $scope.find('.fullcard .streetview');

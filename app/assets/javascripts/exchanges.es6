@@ -67,35 +67,27 @@
         console.log('populateOffers');
 
         pageNum = 1;
-        populatePage(pageNum);
+        populatePage({page: pageNum, list: true, cards: true});
         $('.pagination').addClass('active');
 
     };
 
 
-    function addOffer(offer, index, pageNum, trigger=null) {
+    function addOffer({offer, index, page, list, cards}) {
 
-        console.log('addOffer for offer: ', offer, ' index: ', index, ' pageNum: ', pageNum, ' trigger: ', trigger);
+        var $card = null, $item = null;
 
-        var $scope = $('.ecard.template').clone().removeClass('template');
-
-        populate(offer, $scope, index, pageNum).then(createElements);
-
-
-        function createElements() {
-
-            if (mode == 'mobile' || mode == 'both') {
-                var $card = $scope.clone().addClass('swiper-slide');
-                $card.appendTo($('#cards'));
-                slidesAdded.push(index);
-            }
-            if ((mode == 'desktop' || mode == 'both') && trigger != 'swipe') {
-                var $listItem = $scope.clone().addClass('list-group-item');
-                $listItem.appendTo($('.exchanges_list'));
-            }
-
-            $scope.remove();
+        if (cards) {
+            $card = $('.ecard.template').clone().removeClass('template').addClass('swiper-slide');
+            $card.appendTo($('#cards'));
+            slidesAdded.push(index);
         }
+        if (list) {
+            $item = $('.ecard.template').clone().removeClass('template').addClass('list-group-item');
+            $item.appendTo($('.exchanges_list'));
+        }
+
+        populate(offer, [$card, $item], index, pageNum);
 
     }
 
@@ -301,12 +293,15 @@ function showPage(pageNum) {
 }
 
 function hidePages() {
-    $('.list-group .ecard[data-page]').css('display', 'none');
+    $('.list-group .ecard[  data-page]').css('display', 'none');
 }
 
 
 
-populatePage = function(pageNum) {
+// Always populate a list page, occasionally (upon start) populate the initial batch of cards as well.
+// Options.pageNum will always have a value. Options.list will always be true, & options.cards indicate whether to populate cards as well.
+
+populatePage = function(options) {
 
     var offersLength  = offers.length;
     var fromResult    = (resultsPerPage * (pageNum -1)) + 1;
@@ -315,20 +310,21 @@ populatePage = function(pageNum) {
     var next          = toResult < offersLength;
 
     hidePages();
-    if  (pagesAdded.includes(pageNum)) {
-        showPage(pageNum);
+    if  (pagesAdded.includes(options.page)) {
+        showPage(options.page);
         populatePagination(fromResult, toResult, prev, next);
         return
     }
-    
+
     for (var result = fromResult; result <= toResult; result++) {
-        var offer = offers[result -1].properties;                       // results talks user languages so starts with 1, but the offers array starts with 0
-        addOffer(offer, result -1, pageNum, 'populatePage');
+        var index = result - 1;                     // results talks user languages so starts with 1, but the offers array starts with 0
+        var offer = offers[index].properties;
+        addOffer({offer: offer, index: index, page: options.page, list: options.list, cards: options.cards});
     }
 
     populatePagination(fromResult, toResult, prev, next);
-    showPage(pageNum);
-    pagesAdded.push(pageNum);
+    showPage(options.page);
+    pagesAdded.push(options.page);
 
 };
 
@@ -337,7 +333,7 @@ nextPage = function() {
 
     if (offers.length > resultsPerPage * pageNum) {
         pageNum += 1;
-        populatePage(pageNum);
+        populatePage({page: pageNum, list: true, cards: false});
     } else {
         console.log('No more results to page')
     }
@@ -348,7 +344,7 @@ prevPage = function() {
 
     if (pageNum > 1) {
         pageNum -= 1;
-        populatePage(pageNum);
+        populatePage({page: pageNum, list: true, cards: false});
     } else {
         console.log('No previous page')
     }

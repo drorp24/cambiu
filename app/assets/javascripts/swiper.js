@@ -50,8 +50,8 @@ slidePrev = function() {
 
 addSlide = function(index) {
     if (!slidesAdded.includes(index)) {
-        console.log('addSlide ' + index);
-        addOffer(offers[index].properties, index, null, 'swipe')
+        var offer = offers[index].properties;
+        addOffer({offer: offer, index: index, page: null, list: false, cards: true});
     } else {
         console.log('addSlide not needed - slide ' + index + ' already exists');
     }

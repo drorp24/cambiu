@@ -339,6 +339,11 @@
 
         return new Promise(function(resolve, reject) {
 
+            if (exchange.matrix && exchange.matrix.duration && exchange.matrix.distance) { // In short, if the api had been invoked already and returned the data
+              resolve(exchange.matrix);
+              return;
+            }
+
             var origin =            new google.maps.LatLng(search.location.lat, search.location.lng);
             var destination =       new google.maps.LatLng(exchange.latitude, exchange.longitude);
             var request = {
@@ -356,7 +361,7 @@
                     if (response && response.rows[0] && response.rows[0].elements[0] && response.rows[0].elements[0].duration) {
                         exchange.matrix.duration = response.rows[0].elements[0].duration.text;
                         exchange.matrix.distance = response.rows[0].elements[0].distance.text;
-                        resolve(exchange);
+                        resolve(exchange.matrix);
                     } else {
                         console.log(response);
                         reject(new Error('google.maps.DistanceMatrixService response includes no duration/distance'))
