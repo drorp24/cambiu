@@ -28,7 +28,7 @@ class Currency
   def self.markup
 
     {
-        IL:
+        ISR:
             {
                 sell_markup:  2.5,
                 buy_markup:   2.5,
@@ -51,6 +51,11 @@ class Currency
             }
     }
 
+  end
+
+  def self.markup_policy(country = 'default')
+    markup = Currency.markup
+    markup.keys.include?(country.to_sym) ? markup[country.to_sym] : markup[:default]
   end
 
   def self.rates(base=nil)

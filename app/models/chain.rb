@@ -18,8 +18,9 @@ class Chain < ActiveRecord::Base
 
   before_create do
     self.rates_source = 'no_rates'
-    self.currency = 'GBP'
   end
+
+  scope :with_no_real_rates, -> { where("rates_source < 2") }
 
   def xmlable?
     name.include? 'TMS'
