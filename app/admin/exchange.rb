@@ -45,7 +45,7 @@ ActiveAdmin.register Exchange do
       columns.each do |column|
         exchange.send(column + '=', hash[column.to_sym])
       end
-      exchange.chain_id        = Chain.where(name: hash[:chain]).first_or_create.id if hash[:chain].present?
+      exchange.chain_id        = Chain.where(name: hash[:chain], currency: hash[:currency]).first_or_create.id if hash[:chain].present?
       if !exchange.latitude
         latlng = exchange.geocode
         if latlng
@@ -221,7 +221,7 @@ ActiveAdmin.register Exchange do
     end
 
     def new
-      @exchange = Exchange.new(admin_user_id: current_admin_user.id, currency: "GBP", rates_source: 0, contract: true)
+      @exchange = Exchange.new(admin_user_id: current_admin_user.id, rates_source: 0, contract: false)
     end
 
     def show
@@ -285,7 +285,7 @@ form do |f|
       f.input     :rates_url, as: :url
       f.input     :latitude
       f.input     :longitude
-      f.input     :currency, as: :select, collection: Currency.select, label: "Local currency", value: "GBP"
+      f.input     :currency, as: :select, collection: Currency.select, label: "Local currency"
       f.input     :comment, as: :text
       f.input     :error, input_html: { :disabled => true }
       f.input     :created_at, as: :string, input_html: { :disabled => true }

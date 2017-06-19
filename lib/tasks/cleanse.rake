@@ -10,10 +10,10 @@ namespace :exchanges do
     Exchange.where(address: nil, business_type: :exchange).destroy_all
 
     # Should match exchange.rb's before_create
-    Exchange.where(currency: nil).update_all(currency: 'GBP')
     Exchange.where(rates_source: nil).update_all(rates_source: 'no_rates')
     Exchange.where(rates_policy: nil).update_all(rates_policy: 'individual')
     Exchange.where(business_type: nil).update_all(business_type: 'exchange')
+    Exchange.where(rates_policy: 'chain', chain_id: nil).update_all(rates_policy: 'individual')
 
     Chain.where(rates_source: 'scraping').each{|chain| chain.exchanges.where.not(rates_source: 'scraping').each{|exchange| exchange.update(rates_source: 'scraping')}}
 

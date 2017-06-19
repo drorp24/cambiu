@@ -46,7 +46,9 @@ class Exchange < ActiveRecord::Base
   after_validation :remove, if: ->(exchange){ exchange.remove? }
 
   before_create do
+    puts self.rates_source.nil? ? "before: rates_source is nil" : "before: rates_source is: " + rates_source
     self.rates_source = 'no_rates'    if rates_source.blank?
+    puts self.rates_source.nil? ? "after: rates_source is nil" : "after: rates_source is: " + rates_source
     self.rates_policy = 'individual'  if rates_policy.blank?
     self.business_type = 'exchange'   if business_type.blank?
   end
@@ -159,7 +161,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def self.with_no_real_rates
-    self.no_real_rates.active
+    self.individual.no_real_rates.active
   end
 
   def rates_are_stale?
@@ -739,7 +741,7 @@ class Exchange < ActiveRecord::Base
       return
     end
     chain = Chain.where(name: name).first_or_create
-    currency = chain.currency || 'GBP'
+    currency = chain.currency
     rates_source = chain.rates_source || 'no_rates'
     chain.update(currency: currency, rates_source: rates_source)
     self.update(chain_id: chain.id, rates_source: chain? ? chain.rates_source : 'no_rates')
