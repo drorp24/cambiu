@@ -1,5 +1,16 @@
+require 'redis'
+
+REDIS1 = Redis.connect(url: ENV['REDISTOGO_URL'])
+
 Geocoder.configure(
   # geocoding options
+    cache: REDIS1,
+    always_raise: [
+        Geocoder::OverQueryLimitError,
+        Geocoder::RequestDenied,
+        Geocoder::InvalidRequest,
+        Geocoder::InvalidApiKey
+    ],
    :timeout      => 3,           # geocoding service timeout (secs)
    :lookup       => :google,     # name of geocoding service (symbol)
   # :language     => :en,         # ISO-639 language code
