@@ -57,7 +57,7 @@ class Search < ActiveRecord::Base
     pay_rate  = (pay.currency.iso_code.downcase + '_rate').to_sym
     buy_rate  = (buy.currency.iso_code.downcase + '_rate').to_sym
 
-    exchanges = Exchange.with_rates.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+    exchanges = Exchange.active.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
     exchanges_offers = []
     exchanges.each do |exchange|
