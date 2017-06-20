@@ -156,7 +156,7 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  def self.with_rates
+  def self.with_own_rates
     self.any_rates.active
   end
 
