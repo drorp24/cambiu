@@ -194,33 +194,23 @@
 
     selectExchange = function($exchange) {
 
-        var selected_exchange = currentExchange();
-        sessionStorage.selected = selected_exchange.id;
-
-        $('.pagination').css('display', 'none');
-        $('.swiper-container-h').css('bottom', '0px');
         $exchange.addClass('selected');
-        $('.list-group-item.ecard:not(.selected)').hide();
+
+        $('.swiper-container-h').css('bottom', '0px');
         if ($('.active.pane').data('pane') == 'cards') $exchange.css('transform', 'translate(' + cardXoffset + ', 0px)');
 
         setPage({pane1: 'offer', id1: 'curr'});
-
-        populateStreetview(selected_exchange);
-        report('Tap', 'Card');
+        populateStreetview(currentExchange());
+        report('Select', 'Exchange');
         clearDirections();
 
     };
 
     unselectExchange = function($this) {
 
-        sessionStorage.removeItem('selected');
-
         $('.selected.ecard').removeClass('selected');
+
         if (isSafari2) $('.swiper-container-h').css('bottom', '60px');
-        if ($('.active.pane').data('pane') == 'list') {
-            $('.pagination').css('display', 'flex');
-            $('.list-group-item.ecard[data-page=' + pageNum + ']').show();
-        }
 
     };
 

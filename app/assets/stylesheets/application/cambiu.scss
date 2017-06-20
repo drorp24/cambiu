@@ -2138,6 +2138,8 @@ body#cambiu {
   .fullcard {
     width: 100%;
     display: none;
+    background: #fff;
+    z-index: 1;
   }
 
   [data-pane=try] .fullcard {
