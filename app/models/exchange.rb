@@ -248,7 +248,12 @@ class Exchange < ActiveRecord::Base
   end
 
   def self.bad(country)
-    self.bank.where(country: country).first
+    if bad_exchange = self.bank.where(country: country).first
+      return bad_exchange
+    else
+      Error.report(message: 'No bad source defined for country: ' + country, text: 'UK bank used instead', search_id: nil)
+      return self.bank.where(country: 'UK').first
+    end
   end
 
   def self.interbank

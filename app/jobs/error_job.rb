@@ -1,7 +1,7 @@
 class ErrorJob < ActiveJob::Base
   queue_as :default
 
-  def perform(error)
+  def perform(message, text, search_id)
 
 
     to =
@@ -31,7 +31,9 @@ class ErrorJob < ActiveJob::Base
           track_opens: true,
           track_clicks: true,
           global_merge_vars: [
-              {name: 'ERROR',             content: error}
+              {name: 'MESSAGE',             content: message},
+              {name: 'TEXT',                content: text},
+              {name: 'SEARCH',              content: search_id.to_s}
           ]
       }
 
