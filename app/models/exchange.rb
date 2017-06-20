@@ -521,8 +521,8 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:gain_amount] = quotes[:gain_amount]
     exchange_hash[:gain_percent] = quotes[:gain_percent]
     exchange_hash[:gain_type] = quotes[:gain_type]
-    exchange_hash[:gain_type] = quotes[:gain_type]
     exchange_hash[:gain_short] = quotes[:gain_short]
+    exchange_hash[:gain_currency] = quotes[:gain_currency]
     exchange_hash[:quote] = quotes[:quote]
     exchange_hash[:edited_quote] = quotes[:edited_quote] || 'No rates'
     exchange_hash[:real_rates] = quotes[:real_rates]
