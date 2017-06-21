@@ -195,6 +195,7 @@
     selectExchange = function($exchange) {
 
         $exchange.addClass('selected');
+        if ($exchange.is('.ordered')) $exchange.addClass('order');
 
         $('.swiper-container-h').css('bottom', '0px');
         if ($('.active.pane').data('pane') == 'cards') $exchange.css('transform', 'translate(' + cardXoffset + ', 0px)');
@@ -357,6 +358,17 @@ resetPaging = function() {
     pageNum = 0;
     pagesAdded = [];
     unpopulatePagination();
+};
+
+order = function(exchange) {
+    sessionStorage.order_exchange_id = exchange.id
+};
+
+unorder = function() {
+    exchange_id = value_of('order_exchange_id');
+    if (!exchange_id) return;
+    $('.ecard [data-exchange-id=' + exchange_id + ']').removeClass('ordered');
+    sessionStorage.removeItem('order_exchange_id')
 };
 
 

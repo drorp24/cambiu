@@ -36,8 +36,9 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
         populateHelp({topic: help_topic, content: help_content}, $pane);
     }
 
+    var exchange = currentExchange();
+
     if (populating && pane == 'reviews') {
-        var exchange = currentExchange();
         populateReviews(exchange, $pane);
     }
 
@@ -51,7 +52,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     if (pane) {
         $pane.addClass('active');
         $('body').attr('data-pane', pane);
-        refresh(pane, $pane);
+        refresh(pane, $pane, exchange);
     }
 
     if (hash) document.getElementsByName(hash)[0].scrollIntoView(true);
@@ -80,7 +81,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
 };
 
 // Some parts, like map and swipers, need to be re-rendered once the pane is visible
-refresh = function(pane, $pane) {
+refresh = function(pane, $pane, exchange) {
     // perhaps no refresh of map is needed: since it's not part of a specific pane ('map') as it used to be, it now never disappears.
     /*
     if (!map_refreshed && pane == 'cards' && map) {
@@ -101,10 +102,10 @@ refresh = function(pane, $pane) {
     }
 
     if (pane == 'order') {
-        $pane.find('.selected.ecard').addClass('ordered');
-        report('Order', 'Exchange');
+        $pane.find('.selected.ecard').addClass('order ordered');
+        report('Order', 'Exchange', exchange);
     } else {
-        $pane.find('.selected.ecard').removeClass('ordered');
+        $pane.find('.selected.ecard').removeClass('order');
     }
 
     if (['list', 'cards', 'offers'].includes(pane)) unselectExchange();

@@ -841,6 +841,7 @@ body#cambiu {
     }
       cursor: pointer;  // else not clickable!
     &.ecard:not(.selected)  {
+      border-radius: 0 !important;
         height: 16vh !important;
        .photo img {
         height: 20vmax !important;
@@ -2148,10 +2149,34 @@ body#cambiu {
     display: block;
   }
 
+
+
+
+  .ecard.ordered {
+    .minicard {
+      border-right: 2vw solid $formGreen;
+      padding-right: 1vw;
+    }
+    .order_ind {
+      display: block;
+    }
+  }
+
+
   .ecard{
     .minicard {
       @include flexbox();
       @include vpadding(3vw);
+    }
+
+    .order_ind {
+      display: none;
+      text-transform: uppercase;
+      position: absolute;
+      top: 3vw;
+      right: 5vw;
+      font-size: 3,5vw;
+      color: $formGreen;
     }
 
     .ranking_container {
@@ -2429,7 +2454,7 @@ body#cambiu {
 //      transition: initial;
     }
 
-    .order {
+    .orderPane {
       display: none;
       background: #fff;
       z-index: 1;
@@ -2439,14 +2464,14 @@ body#cambiu {
     }
 
 
-    &.ordered {
+    &.order {
       .minicard {
         display: none;
       }
       .fullcard {
         display: none;
       }
-      .order {
+      .orderPane {
         display: flex;
       }
     }
@@ -2537,7 +2562,7 @@ body#cambiu {
 
   .minicard .quote {
     @include threedots(100%);
-    @include vfont-size(7.5vw);
+    @include vfont-size(6.5vw);
     font-weight: 400;
     color: #000;
     margin-bottom: 3vw;

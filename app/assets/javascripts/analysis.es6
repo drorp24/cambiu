@@ -25,9 +25,9 @@ tagSession = function(obj = {}) {
     __insp.push(['tagSession',tagObj]);
 };
 
-report = function(category, action) {
+report = function(category, action, exchange = null) {
 
-    var currExchange = currentExchange();
+    var currExchange = exchange || currentExchange();
     var name = currExchange && currExchange.name ? currExchange.name : "";
     var id = currExchange && currExchange.id ? currExchange.id : "";
     ga('send', 'event', category, action, name, {id: id});
