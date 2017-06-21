@@ -2175,7 +2175,7 @@ body#cambiu {
       position: absolute;
       top: 3vw;
       right: 5vw;
-      font-size: 3,5vw;
+      font-size: 3.5vw;
       color: $formGreen;
     }
 
@@ -2562,7 +2562,7 @@ body#cambiu {
 
   .minicard .quote {
     @include threedots(100%);
-    @include vfont-size(6.5vw);
+    @include vfont-size(5.5vw);
     font-weight: 400;
     color: #000;
     margin-bottom: 3vw;
