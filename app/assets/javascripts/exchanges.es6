@@ -206,7 +206,7 @@
 
     };
 
-    unselectExchange = function($this) {
+    unselectExchange = function() {
 
         $('.selected.ecard').removeClass('selected');
 

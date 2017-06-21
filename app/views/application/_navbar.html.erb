@@ -38,7 +38,7 @@
   <div class="context_menu" >
     <% Array(local_assigns[:context_menu_options]).each do |option| %>
         <button class="btn context_menu_option">
-          <div class="menu_option" data-href-page="exchanges" data-href-pane="<%= option[:pane] %>" data-href-wait="true">
+          <div class="menu_option" data-href-page="exchanges" data-href-pane="<%= option[:pane] %>" data-href-delay="true">
             <div class="menu_option_icon"><i class="material-icons col-xs-1"><%= option[:icon] %></i></div>
             <div class="menu_option_name"><%= option[:name] %></div>
           </div>

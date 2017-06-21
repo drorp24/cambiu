@@ -51,7 +51,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     if (pane) {
         $pane.addClass('active');
         $('body').attr('data-pane', pane);
-        refresh(pane);
+        refresh(pane, $pane);
     }
 
     if (hash) document.getElementsByName(hash)[0].scrollIntoView(true);
@@ -80,7 +80,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
 };
 
 // Some parts, like map and swipers, need to be re-rendered once the pane is visible
-refresh = function(pane) {
+refresh = function(pane, $pane) {
     // perhaps no refresh of map is needed: since it's not part of a specific pane ('map') as it used to be, it now never disappears.
     /*
     if (!map_refreshed && pane == 'cards' && map) {
@@ -99,6 +99,15 @@ refresh = function(pane) {
     if (pane == 'list') {
         populatePage({page: pageNum, list: true, cards: false});
     }
+
+    if (pane == 'order') {
+        $pane.find('.selected.ecard').addClass('ordered');
+        report('Order', 'Exchange');
+    } else {
+        $pane.find('.selected.ecard').removeClass('ordered');
+    }
+
+    if (['list', 'cards', 'offers'].includes(pane)) unselectExchange();
 
     if (!intro_refreshed && pane == 'intro' && swiperIntro) {
         console.log('Entering pane: intro - refresh swiperIntro');
@@ -130,16 +139,16 @@ refresh = function(pane) {
 
      var el = $(this);
      var external       = el.data('exchange-delivery_tracking');    if (external && external != 'null') {window.location = external; return}
-     var pane           = el.data('href-pane');                     if (pane == 'back')                 {window.history.back();return}
+     var pane           = el.data('href-pane');                     if (pane == 'back')                 {back();return}
      var page           = el.data('href-page');
      var id             = el.data('href-id');
      var hash           = el.data('href-hash');
      var help_topic     = el.data('help-topic');
      var help_content   = el.data('help-content');
      var populate       = el.data('populate');
-     var should_wait    = el.data('href-wait');
+     var delay          = el.data('href-delay');
 
-     if (should_wait) {
+     if (delay) {
         wait(500).then(hideMenus).then(wait).then(goOn)
      } else {
         goOn()
@@ -153,13 +162,21 @@ refresh = function(pane) {
          hideDialog();
      }
 
+     function back() {
+         var recentSet = value_of('recent_set');
+         if (recentSet && $('body').data('pane') == 'order') {
+             setPage({pane1: recentSet})
+         } else {
+             window.history.back();
+         }
+     }
+
 }));
 
 window.addEventListener("popstate", function (e) {
 
     console.log('pop. e.state: ' + e.state);
     if (e.state && e.state.length > 0) setPage({url: e.state, pushState: false});
-    if (['/exchanges/offers','/exchanges/list','/exchanges/cards'].includes(e.state)) unselectExchange();
 
 });
 

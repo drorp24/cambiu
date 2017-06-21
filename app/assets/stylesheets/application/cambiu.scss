@@ -850,13 +850,15 @@ body#cambiu {
         margin-left: -15%;
       }
     }
-    &.ecard.selected {
-      position: absolute;
-      top: 0;
-      border: none !important;
-      cursor: initial;
-      .duration {
-        bottom: $nav_button_top + 10vh !important;
+    &.ecard {
+      &.selected {
+        position: absolute;
+        top: 0;
+        border: none !important;
+        cursor: initial;
+        .duration {
+          bottom: $nav_button_top + 10vh !important;
+        }
       }
     }
     .list-group-item-text {
@@ -2426,6 +2428,33 @@ body#cambiu {
       }
 //      transition: initial;
     }
+
+    .order {
+      display: none;
+      background: #fff;
+      z-index: 1;
+      height: 100vh;
+      width: 100vw;
+      padding-top: $navbar_height;
+    }
+
+
+    &.ordered {
+      .minicard {
+        display: none;
+      }
+      .fullcard {
+        display: none;
+      }
+      .order {
+        display: flex;
+      }
+    }
+
+
+
+
+
     .data {
       max-width: 50%; // important in flex, only in the non selected, row mode
       height: 100%;
