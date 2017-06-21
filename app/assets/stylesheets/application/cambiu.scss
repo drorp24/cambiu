@@ -74,6 +74,12 @@ p {
     left: $size * $paneRatio;
   }
 }
+@mixin vbottom($size) {
+  bottom: $size;
+  @include desktop {
+    bottom: $size * $paneRatio;
+  }
+}
 @mixin vright($size) {
   right: $size;
   @include desktop {
@@ -2841,22 +2847,27 @@ body#cambiu {
   
   .expiry {
     position: fixed;
-    right: 15px;
-    @include vtop(45vw);
-    @include vwidth(25vw);
-    @include vheight(25vw);
-    border-radius: 12.5vw;
-    @include desktop {
-      border-radius: 12.5vw * $paneRatio;
-    }
-    font-size: 1.5em;
-    color: #000;
+    z-index: 1;
+    @include vleft(10vw);
+    @include vtop(30vh);
+    @include vwidth(20vw);
+    @include vheight(20vw);
+    @include vborder-radius(10vw);
     background-color: #fff;
     @include flexbox();
     align-items: center;
     justify-content: center;
     flex-direction: column;
-
+    .expiry_text {
+      font-size: 3vw;
+      position: absolute;
+      @include vbottom(13vw);
+      color: #555;
+    }
+    .expiry_time {
+      color: $brand-color-a;
+      @include vfont-size(6.5vw);
+    }
   }
 
   .call_to_action {

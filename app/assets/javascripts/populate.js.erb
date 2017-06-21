@@ -82,6 +82,10 @@ populateExchange = function(exchange, $scope, index, page) {
 
       $scope.find('[data-field=rating]').rating(ratingOptions).rating('update', 0);
 
+    var time = new Date();
+    time.setHours(time.getHours() + 4);
+    $scope.find('[data-field=expiry_time]').html(time.toLocaleString('en-GB', {"hour":"numeric","minute":"numeric"}));
+
   //  console.log('setting arctext to radius: ', windowHeight / 10);
   //  $scope.find('.order_word').arctext({radius: Math.floor(windowHeight / 10), dir: -1})
 
