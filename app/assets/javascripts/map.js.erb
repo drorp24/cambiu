@@ -375,10 +375,7 @@
 
 
      $('body').on('click tap', '[data-action=directions]', function(e) {
-       console.log('[data-action=directions] clicked');
        renderDirections(currentExchange());
-       if (mobile) unselectExchange($(this));
-       $(this).addClass('rotate');
        report('Tap', 'Directions');
      });
 
