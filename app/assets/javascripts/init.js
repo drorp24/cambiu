@@ -463,7 +463,8 @@ $(document).ready(function() {
         var message = arg.message,
             button = typeof arg.button === 'undefined' ? null : arg.button,
             klass = typeof arg.klass === 'undefined' ? null : arg.klass,
-            link = typeof arg.link === 'undefined' ? null:  arg.link;
+            link = typeof arg.link === 'undefined' ? null:  arg.link,
+            icon = typeof arg.icon === 'undefined' ? null:  arg.icon;
 
         var $e = $('.snack.template').clone().removeClass('template').addClass('active');
         var help_topic = link && link.help ? link.help.topic : null;
@@ -471,6 +472,7 @@ $(document).ready(function() {
 
         $e.find('.message').html(message);
         if (klass) $e.find('.snackIcon').addClass(klass);
+        if (icon) $e.find('.snackIcon i').html(icon);
         if (button) $e.find('.button').html(button);
 
         if (button && link) {
@@ -482,7 +484,7 @@ $(document).ready(function() {
 //    snack = function(message, button, timeout, $upEl, klass, link) {
     snack = function(message, options) {
 
-        console.log('snack called with message: ' + message);
+//        console.log('snack called with message: ' + message);
 
 //          Suppressed since it can now also happen when switched back to 'where I'm at' while still on the (white) search page
 //        if ($upEl && !inShow) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
@@ -498,7 +500,8 @@ $(document).ready(function() {
                 message: message,
                 button: options.button,
                 klass: options.klass,
-                link: options.link
+                link: options.link,
+                icon: options.icon
             })
         })
     };

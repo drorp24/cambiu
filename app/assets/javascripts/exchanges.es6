@@ -385,8 +385,9 @@ order = function($scope, exchange) {
         console.log('Order succesfully created:', order);
         populateOrder($scope, order)
     })
-    .catch((error) => {console.log('Error creating order:', error)})
+    .catch((error) => {console.log('Error creating order:', error)});
 
+    snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'}); // TODO: only if collection
 };
 
 unorder = function() {
