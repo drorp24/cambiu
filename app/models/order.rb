@@ -25,7 +25,8 @@ class Order < ActiveRecord::Base
   end
 
   def notification
-    NotifyJob.perform_later(self, self.photo) if self.requires_notification?
+    puts "about to notify"
+    NotifyJob.perform_later(self, self.photo) #if self.requires_notification?
   end
 
   # Overriding 'attributes' adds methods as additional attributes within the JSON response as if they were part of the DB model, enabling controller to respond_with @order

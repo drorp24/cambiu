@@ -14,13 +14,7 @@
       </div>
     </div>
 
-    <div class="name flex_center">
-      <div data-model="exchange" data-field="name"></div>
-    </div>
-
-    <div class="address flex_center">
-      <div data-model="exchange" data-field="address"></div>
-    </div>
+    <%= render 'exchanges/templates/details' %>
 
     <div class="open_and_phone flex_between">
       <div class="open"><a>Open</a></div>
@@ -29,9 +23,7 @@
       </div>
     </div>
 
-    <div class="quote_section flex_center">
-      <%= render 'exchanges/templates/quote' %>
-    </div>
+    <%= render 'exchanges/templates/quote' %>
 
     <div class="no_quote_section flex_center">
 

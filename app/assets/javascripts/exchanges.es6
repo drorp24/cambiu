@@ -360,8 +360,33 @@ resetPaging = function() {
     unpopulatePagination();
 };
 
-order = function(exchange) {
-    sessionStorage.order_exchange_id = exchange.id
+order = function($scope, exchange) {
+
+    if (exchange.id == value_of('order_exchange_id')) return;
+    sessionStorage.order_exchange_id = exchange.id;
+
+    fetch('/orders', {
+        method: 'POST',
+        headers: new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(
+            {
+                order: {
+                    exchange_id: exchange.id,
+                    search_id:   searchId
+                }
+            }
+        )
+    })
+    .then(response => response.json())
+    .then((order) => {
+        console.log('Order succesfully created:', order);
+        populateOrder($scope, order)
+    })
+    .catch((error) => {console.log('Error creating order:', error)})
+
 };
 
 unorder = function() {

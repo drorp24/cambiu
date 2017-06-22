@@ -1042,9 +1042,6 @@ body#cambiu {
     }
   }
 
-  .hidden {
-    display: none;
-  }
   .content {
     padding: 30px;
     padding-top: 0;
@@ -2357,9 +2354,8 @@ body#cambiu {
       }
 
       .nav_button_container {
-        position: absolute;
-        top: 45vh;
-        @include vright(7vw);
+        border: 1px solid brown;
+        height: 12%;
         [data-field=duration] {
           font-weight: 300;
           color: #000;
@@ -2418,7 +2414,6 @@ body#cambiu {
       }
       .address {
         height: 8%;
-        margin-top: -3%;
         font-weight: 100;
       }
       .open_and_phone {
@@ -2503,11 +2498,54 @@ body#cambiu {
         display: none;
       }
       .orderPane {
-        display: flex;
+        display: block;
       }
     }
 
+    .order_title {
+      height: 8%;
+      margin-top: 2%;
+      @include vfont-size(8vw);
+      text-transform: uppercase;
+      width: 100%;
+      font-weight: 500;
+      color: #555;
+      border: 1px solid yellow;
+    }
+    .order_number {
+      height: 4%;
+      font-size: 5vw;
+      color: #000;
+      font-weight: 100;
+      border: 1px solid #B2FF59;
+    }
 
+    .delivery, details {
+      height: 20%;
+      border: 1px solid blue;
+    }
+
+    .quote_section {
+      border: 1px solid purple;
+    }
+
+    .payment {
+      height: 14%;
+      border: 1px solid orange;
+    }
+
+    .cta.btn {
+      font-size: 5vw !important;
+      color: $brand-color-a;
+    }
+
+    .hidden {
+      visibility: hidden;
+    }
+
+    .inactive {
+      display: none;
+    }
 
 
 

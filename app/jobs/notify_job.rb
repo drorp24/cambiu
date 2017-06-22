@@ -31,29 +31,28 @@ class NotifyJob < ActiveJob::Base
             ] : []
 
     to_exchange =
+        exchange.email ?
         [
             {
                 email:  exchange.email,
                 name:   exchange.name,
                 type:   'to'
             }
-        ]
+        ] : []
 
-    bcc_me = [
+    bcc_us = [
         {
             email:  'drorp24@gmail.com',
             type:   'bcc'
-        }
-    ]
-    bcc_eyal = [
+        },
         {
-            email:  'eyal@cambiu.com',
+            email:  'support@cambiu.com',
             type:   'bcc'
         }
     ]
 
-    bcc = Rails.env.production? ? bcc_me + bcc_eyal : [{}]
-    to =  (order.ordered? and Rails.env.production?) ? to_user + to_exchange : bcc_me
+    bcc = bcc_us
+    to  = to_user + to_exchange
 
 
     subject = "Order #{order.voucher}"
@@ -63,26 +62,6 @@ class NotifyJob < ActiveJob::Base
     from_name = 'cambiu'
     from_email = 'support@cambiu.com'
     company_address = "5 long street, E2 8HJ, london"
-
-    logger.info ""
-    logger.info ""
-    logger.info ""
-    logger.info ""
-    logger.info ""
-    logger.info ""
-    logger.info "Code updated at 21.07.2016 15:54"
-    logger.info ""
-    logger.info "Following is the To:"
-    logger.info ""
-    logger.info (to + bcc).inspect
-    logger.info ""
-    logger.info "environment: " + Rails.env
-    logger.info ""
-    logger.info ""
-    logger.info ""
-    logger.info ""
-    logger.info ""
-
 
     begin
 
@@ -119,11 +98,8 @@ class NotifyJob < ActiveJob::Base
               {name: 'COMPANY_NAME',             content: from_name},
               {name: 'COMPANY_ADDRESS',          content: company_address},
               {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')},
-              {name: 'BASE_CURRENCY',            content: order.base_currency},
-              {name: 'RATED_CURRENCY',           content: order.rated_currency},
-              {name: 'BUY_RATE',                 content: '%.4f' % order.buy_rate},
-              {name: 'SELL_RATE',                content: '%.4f' % order.sell_rate},
-              {name: 'ORDER_STATUS',             content: order.status}
+              {name: 'DELIVERY_AMOUNT',          content: ""},
+              {name: 'CC_AMOUNT',                content: ""}
           ]
       }
 
@@ -154,10 +130,6 @@ class NotifyJob < ActiveJob::Base
       report(exchange, error)
 
         # TODO: Happens, since async = false. Consider moving to async.
-    rescue Rack::Timeout::RequestTimeoutError => e
-      error = "Timeout error: #{e.class} - #{e.message}"
-      logger.info(error)
-      report(exchange, error)
 
     rescue => e
       error = "Standard error: #{e}"

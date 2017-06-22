@@ -30,6 +30,17 @@ populate = function(exchange, scopes, index, page) {
 
 };
 
+populateOrder = function($scope, order) {
+
+  $scope.find('[data-model=order][data-field]').each(function() {
+    var $this = $(this);
+    var field = $this.data('field');
+    var value = order[field];
+    $this.html(value);
+  });
+
+};
+
 populateExchange = function(exchange, $scope, index, page) {
 
   console.log('exchange ' + exchange.id + ' - populateExchange. $scope: ', $scope);

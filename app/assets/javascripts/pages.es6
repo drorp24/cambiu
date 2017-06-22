@@ -102,6 +102,7 @@ refresh = function(pane, $pane, exchange) {
     }
 
     if (pane == 'order') {
+        order($pane, exchange);
         $pane.find('.selected.ecard').addClass('order ordered');
         report('Order', 'Exchange', exchange);
     } else {
@@ -165,7 +166,7 @@ refresh = function(pane, $pane, exchange) {
 
      function back() {
          var recentSet = value_of('recent_set');
-         if (recentSet && $('body').data('pane') == 'order') {
+         if (recentSet && $('body').attr('data-pane') == 'order') {
              setPage({pane1: recentSet})
          } else {
              window.history.back();
