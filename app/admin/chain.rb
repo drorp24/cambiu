@@ -1,6 +1,6 @@
 ActiveAdmin.register Chain do
 
-  permit_params :id, :name, :email, :url, :phone, :rates_source, :rates_update
+  permit_params :id, :name, :email, :url, :phone, :rates_source, :rates_update, :currency
   config.filters = false
 
   index do
@@ -52,7 +52,7 @@ ActiveAdmin.register Chain do
       f.input     :email
       f.input     :phone
       f.input     :url
-      f.input     :currency
+      f.input     :currency, as: :select, collection: Currency.select, label: "Local currency"
       f.input     :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Test', 'test'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']], include_blank: false
       f.input     :rates_update, as: :string, input_html: { :disabled => true }
       f.input     :rates_error, as: :string, input_html: { :disabled => true }
