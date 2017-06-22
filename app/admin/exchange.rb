@@ -147,6 +147,11 @@ ActiveAdmin.register Exchange do
       end
     end
     column(:status) {|exchange| status_tag(exchange.status, exchange.status_color) if exchange.status }
+    column 'Orders' do |exchange|
+      count = exchange.orders.count
+      link_to count.to_s + ' order'.pluralize(count), admin_exchange_orders_path(exchange) if count > 0
+    end
+
 #    actions
   end
   
@@ -479,4 +484,50 @@ form do |f|
     end
 
   end
+
+  ActiveAdmin.register Order do
+
+    includes :search
+
+
+    config.filters = false
+    config.clear_action_items!
+    config.batch_actions = true
+
+    index do
+      selectable_column
+      id_column
+      column 'Created' do |order|
+        order.created_at.in_time_zone("Jerusalem")
+      end
+      column 'Search' do |order|
+        link_to 'View search', admin_search_path(order.search_id)
+      end
+      column 'User Location' do |order|
+        order.search.user_location
+      end
+      column :exchange
+      column 'Service' do |order|
+        order.service_type
+      end
+      column 'Pay' do |order|
+        order.pay_cents && order.pay_currency ? order.pay.format : ""
+      end
+      column 'Get' do |order|
+        order.get_cents && order.get_currency ? order.get.format : ""
+      end
+      column :status
+    end
+
+    controller do
+
+      def index
+        orders = params[:exchange_id] ? Order.where(exchange_id: params[:exchange_id]) : Order.all
+        @collection = orders.order(id: :desc).page(params[:page]).per(10)
+      end
+
+    end
+
+  end
+
 end

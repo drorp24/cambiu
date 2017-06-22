@@ -45,10 +45,12 @@ Rails.application.routes.draw do
   resources :rates
   resources :visitors
   namespace :admin do
+    resources :orders
     resources :issues
  #   resources :rates
     resources :exchanges do
       resources :rates
+      resources :orders
     end
     resources :chains do
       member do
