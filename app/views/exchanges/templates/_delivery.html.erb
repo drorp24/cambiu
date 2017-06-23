@@ -1,11 +1,17 @@
-<div class="delivery flex_center">
-  <div class="delivery_title">Delivery</div>
-  <div class="delivery_line">
-    <div class="left">To:</div>
-    <div class="right" data-model="order" data-field="delivery_address"></div>
-  </div>
-  <div class="delivery_line">
-    <div class="left">On:</div>
-    <div class="right" data-model="order" data-field="delivery_datetime"></div>
+<div class="delivery section">
+  <div class="section_content flex_around column">
+    <div class="section_title flex_between">
+      <i class="material-icons">local_shipping</i>
+      <div class="section_title_text">Delivery</div>
+      <i class="material-icons">&nbsp;</i>
+    </div>
+    <div class="delivery_field">
+      <div class="delivery_field_name">To</div>
+      <div class="delivery_field_value" data-model="order" data-field="delivery_address"></div>
+    </div>
+    <div class="delivery_field">
+      <div class="delivery_field_name">On</div>
+      <div class="delivery_field_value" data-model="order" data-field="delivery_datetime"></div>
+    </div>
   </div>
 </div>

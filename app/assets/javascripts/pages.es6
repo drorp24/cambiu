@@ -107,6 +107,7 @@ refresh = function(pane, $pane, exchange) {
         report('Order', 'Exchange', exchange);
     } else {
         $pane.find('.selected.ecard').removeClass('order');
+        $pane.find('.ordered.ecard').removeClass('order');
     }
 
     if (['list', 'cards', 'offers'].includes(pane)) unselectExchange();

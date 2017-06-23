@@ -50,6 +50,10 @@ p {
 // I would then use that value in a function thatwould return the value in 'vw' to use - saving all these definitions ahead
 // Instead of having to use different @includes per each unit, it would look: width: dr(32);
 
+@mixin apple-like {
+  text-shadow: 0 1px 1px #fff;
+}
+
 @mixin vheight($size) {
   height: $size;
   @include desktop {
@@ -2078,25 +2082,27 @@ body#cambiu {
       min-height: 4vh;
       justify-content: flex-start;
       align-items: center;
+      @include vfont-size(5vw);
+      font-weight: 400;
       &.saving {
         color: $brand-color-a;
       }
       .text {
-        @include vwidth(35vw);
+        width: 45%;
       }
       .figure {
-        @include vwidth(50vw);
+        width: 50%;
         .amount {
-          @include vwidth(35vw);
+          width: 70%;
         }
         .currency {
-          @include vwidth(10vw);
-          @include vmargin-right(2.5vw);
-          @include vmargin-left(2.5vw);
+          width: 20%;
+          margin-right: 5%;
+          margin-left: 5%;
         }
       }
       .right_icon {
-        @include vwidth(5vw);
+        width: 5%;
         text-align: right;
       }
       &.charge {
@@ -2354,20 +2360,6 @@ body#cambiu {
       }
 
 
-      .navigation {
-      }
-
-      .nav_button_container {
-        border: 1px solid brown;
-        height: 12%;
-        [data-field=duration] {
-          font-weight: 300;
-          color: #000;
-          margin-top: 0.5em;
-        }
-
-      }
-
 
 
       .nav_button {
@@ -2479,20 +2471,6 @@ body#cambiu {
 //      transition: initial;
     }
 
-    .orderPane {
-      display: none;
-      background: #fff;
-      z-index: 1;
-      height: 100vh;
-      width: 100vw;
-      @include vpadding-right($fullcard-padding);
-      @include vpadding-left($fullcard-padding);
-      padding-top: $navbar_height;
-      .edit.icon.right_icon, .saving {
-        display: none !important;
-      }
-    }
-
 
     &.order {
       .minicard {
@@ -2506,41 +2484,117 @@ body#cambiu {
       }
     }
 
-    .order_title {
-      height: 8%;
-      margin-top: 2%;
-      @include vfont-size(8vw);
-      text-transform: uppercase;
-      width: 100%;
-      font-weight: 500;
-      color: #555;
-      border: 1px solid yellow;
-    }
-    .order_number {
-      height: 4%;
-      font-size: 5vw;
-      color: #000;
-      font-weight: 100;
-      border: 1px solid #B2FF59;
     }
 
-    .delivery, details {
-      height: 20%;
-      border: 1px solid blue;
+    .nav_button_container {
+      display: none;
     }
 
-    .quote_section {
-      border: 1px solid purple;
+    .section_title {
+      display: none;
     }
 
-    .payment {
-      height: 14%;
-      border: 1px solid orange;
-    }
-
-    .cta.btn {
-      font-size: 5vw !important;
-      color: $brand-color-a;
+  .orderPane {
+      display: none;
+      background: #fff;
+      z-index: 1;
+      height: 100vh;
+      @include vwidth(100vw);
+      @include vpadding-right($fullcard-padding);
+      @include vpadding-left($fullcard-padding);
+      padding-top: $navbar_height;
+      .section {
+        color: #000;
+        height: 35%;
+        @include apple-like;
+        .section_content {
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.15);
+          padding-left: 5%;
+          padding-right: 5%;
+        }
+      }
+      .section_title {
+        display: flex;
+        line-height: 1;
+        font-weight: 500;
+        text-transform: uppercase;
+        color: rgba(0, 0, 0, 0.3);
+        text-align: center;
+        @include vfont-size(8vw);
+        i {
+          width: 10%;
+          text-align: left;
+        }
+        > div {
+          display: inline-block;
+          width: 80%;
+        }
+      }
+      .order_title {
+        height: 10%;
+        @include vfont-size(8vw);
+        text-transform: uppercase;
+        width: 100%;
+        font-weight: 900;
+        color: #555;
+      }
+      .order_number {
+        height: 5%;
+        position: relative;
+        bottom: 3%;
+        @include vfont-size(5vw);
+        color: #000;
+        font-weight: 100;
+      }
+      .deal {
+        padding-bottom: 10%;
+        .icon.right_icon, .saving {
+          display: none !important;
+        }
+        .offer_line {
+          font-weight: 300;
+          .figure {
+            width: 55%;
+          }
+        }
+      }
+      .pickup {
+        text-transform: capitalize;
+        .name {
+          @include vfont-size(4.5vw);
+        }
+      }
+      .delivery {
+        text-align: center;
+        @include vfont-size(5vw);
+        .delivery_title {
+        }
+        .delivery_field_name {
+          text-align: center;
+          text-transform: uppercase;
+          @include vfont-size(4vw);
+        }
+        .delivery_field_value {
+          @include vfont-size(3.5vw);
+        }
+      }
+      .nav_button_container {
+        display: flex;
+        [data-field=duration] {
+          font-weight: 300;
+          color: #000;
+          margin-top: 0.5em;
+        }
+      }
+      .payment {
+        height: 15%;
+      }
+      .cta.btn {
+        font-size: 5vw !important;
+        color: $brand-color-a;
+      }
     }
 
     .hidden {
@@ -2599,19 +2653,21 @@ body#cambiu {
     .row.fullcard > div {
       line-height: 2em !important;
     }
-  }
 
 
-  .no_quote_section {
+  .no_deal_section {
     display: none;
     flex-direction: column;
     height: 40%;
   }
 
-  .quote_section {
+  .deal {
     flex-direction: column;
-    height: 40%;
 //    @include vline-height(10vw);
+  }
+
+  .fullcard .deal {
+    height: 40%;
   }
 
 
@@ -2918,7 +2974,7 @@ body#cambiu {
     }
     .expiry_time {
       color: $brand-color-a;
-      @include vfont-size(6.5vw);
+      @include vfont-size(5.5vw);
     }
   }
 
@@ -3607,7 +3663,7 @@ body#cambiu {
     @include vfont-size($form-font-size);
     height: $navbar_height;
     padding-top: 10px;
-    color: #fff;
+    @include apple-like;
 //    box-shadow: 1px 1px 10px rgba(0,0,0,0.7);
     border-bottom: 1px solid $brand-color-c;
     margin-bottom: initial;
@@ -4117,9 +4173,11 @@ body#cambiu {
     }
 
     #exchange_summary {
+      /*
       .deal {
         margin-top: 20px;
        }
+      */
 
       background-color: rgb(245, 245, 245);
       height: 100vh;
