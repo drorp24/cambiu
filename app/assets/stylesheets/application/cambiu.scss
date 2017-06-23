@@ -2902,19 +2902,19 @@ body#cambiu {
     z-index: 1;
     @include vleft(10vw);
     @include vtop(30vh);
-    @include vwidth(20vw);
-    @include vheight(20vw);
-    @include vborder-radius(10vw);
+    @include vwidth(16vw);
+    @include vheight(16vw);
+    @include vborder-radius(8vw);
     background-color: #fff;
     @include flexbox();
     align-items: center;
     justify-content: center;
     flex-direction: column;
     .expiry_text {
-      font-size: 3vw;
+      font-size: 4vw;
       position: absolute;
-      @include vbottom(13vw);
-      color: #555;
+      @include vbottom(-6vw);
+      color: #fff;
     }
     .expiry_time {
       color: $brand-color-a;
