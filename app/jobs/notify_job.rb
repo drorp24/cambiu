@@ -40,6 +40,13 @@ class NotifyJob < ActiveJob::Base
             }
         ] : []
 
+    bcc_me = [
+        {
+            email:  'drorp24@gmail.com',
+            type:   'bcc'
+        }
+    ]
+
     bcc_us = [
         {
             email:  'drorp24@gmail.com',
@@ -51,7 +58,7 @@ class NotifyJob < ActiveJob::Base
         }
     ]
 
-    bcc = bcc_us
+    bcc = Rails.env.development? ? bcc_me : bcc_us
     to  = to_user + to_exchange
 
 
