@@ -16,7 +16,7 @@ function listen_to_file_input() {
             }
         });
     } else {
-        alert("File upload is not supported!");
+        console.warn("File upload is not supported!");
     }
 }
 
@@ -96,6 +96,7 @@ function sendFile(imageData) {
         dataType:   'JSON',
         success:    function (data) {
             console.log('Order imageData successfully updated');
+            orderConfirm();
         },
         error:      function (data) {
             console.log('Order imageData failed to upload');

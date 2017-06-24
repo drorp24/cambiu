@@ -360,10 +360,21 @@ resetPaging = function() {
     unpopulatePagination();
 };
 
+
+//
+// Order lifecycle
+//
+
+
 order = function($scope, exchange) {
 
     if (exchange.id == value_of('order_exchange_id')) return;
+
+    $('.ecard[data=exchange-id=' + exchange.id + ']').addClass('ordered');
+
     sessionStorage.order_exchange_id = exchange.id;
+    sessionStorage.order_id = order.id;
+    sessionStorage.order_status = 'offer';
 
     fetch('/orders', {
         method: 'POST',
@@ -375,7 +386,7 @@ order = function($scope, exchange) {
             {
                 order: {
                     exchange_id: exchange.id,
-                    search_id:   searchId
+                    search_id:   searchId  // TODO: add the order form
                 }
             }
         )
@@ -383,11 +394,25 @@ order = function($scope, exchange) {
     .then(response => response.json())
     .then((order) => {
         console.log('Order succesfully created:', order);
-        populateOrder($scope, order)
+        populateOrder($scope, order);
+        snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'}); // TODO: only if collection
     })
     .catch((error) => {console.log('Error creating order:', error)});
 
-    snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'}); // TODO: only if collection
+};
+
+requestOrderConfirmation = function() {
+    snack('Click confirm when deal is done', {upEl: $('.swiper-container'), icon: 'assignment_turned_in', timeout: 5000});
+};
+
+orderConfirmationRequired = function() {
+    var order_status = value_of('order_status');
+    return order_status && order_status != 'confirmed';
+};
+
+orderConfirm = function() {
+    $('.ordered.ecard').removeClass('ordered').addClass('confirmed');
+    sessionStorage.order_status = 'confirmed';
 };
 
 unorder = function() {

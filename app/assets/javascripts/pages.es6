@@ -95,15 +95,17 @@ refresh = function(pane, $pane, exchange) {
         console.log('Entering pane: cards - refresh swiperH');
         swiperH.update(false);
         cards_refreshed = true; // do once only
+        if (orderConfirmationRequired()) requestOrderConfirmation();
     }
 
     if (pane == 'list') {
         populatePage({page: pageNum, list: true, cards: false});
+        if (orderConfirmationRequired()) requestOrderConfirmation();
     }
 
     if (pane == 'order') {
         order($pane, exchange);
-        $pane.find('.selected.ecard').addClass('order ordered');
+        $pane.find('.selected.ecard').addClass('order');
         report('Order', 'Exchange', exchange);
     } else {
         $pane.find('.selected.ecard').removeClass('order');

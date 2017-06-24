@@ -1,0 +1,33 @@
+<div class="pane" data-pane="confirmation">
+
+    <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'arrow_back', center: 'Confirmation', right_pane: 'none', right_icon: 'none'} %>
+
+
+    <div class="confirmation_text flex_center column text-center">
+      <p>Please <strong>CONFIRM</strong> when deal is done.</p>
+      <p>Or <strong>UPLOAD</strong> a photo of the invoice for even greater help.</p>
+      <p>Thanks for helping us improve our service!</p>
+    </div>
+
+    <div class="confirmation_button flex_center">
+
+      <div class="camera_access flex_center column">
+        <div class="camera flex_center column">
+          <div class="fab flex_center column">
+            <button class="btn">
+              <i class="material-icons flex_center">photo_camera</i>
+              <div class="fab_text">Upload</div>
+            </button>
+          </div>
+        </div>
+        <div class="camera_label">
+          <input id="photo" type="file" name="photo" accept="image/*" class="inputfile">
+        </div>
+      </div>
+
+      <button class="cta btn" data-href-pane="back" data-href-delay="true" onclick="orderConfirm()">confirm</button>
+    </div>
+
+
+
+</div>

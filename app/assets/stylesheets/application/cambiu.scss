@@ -159,11 +159,8 @@ p {
 
 $formGreen: #009688;
 $nav_button_top: 35vh;
-$fab_top: 15vh;
 $nav_button_right: 7vw;
-$fab_right: 7vw;
-$nav_button_width: 7vh;
-$fab_width: 7vh;
+$fab_height: 10vh;
 $form-label-floating-size: 3.5vw;
 $form-font-size: 5.5vw;
 $screen-md-min: 992px;
@@ -742,6 +739,51 @@ body#cambiu {
   }
   */
 
+  .cta.btn {
+    font-size: 5vw !important;
+    color: $brand-color-a;
+  }
+
+
+  .fab {
+    width: $fab_height;
+    margin: auto; //otherwise the entire row is clickable
+    margin-top: 0;
+    margin-bottom: 0;
+    button {
+      z-index: 1;
+      //    display: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: $fab_height;
+      height: $fab_height;
+      border-radius: $fab_height / 2;
+      line-height: $fab_height;
+      font-weight: 300;
+      text-align: center;
+      color: #fff;
+      background: $brand-color-a;
+      box-shadow: 0 1px 10px rgba(0,0,0,0.7) !important;
+      margin-top: 0;
+      margin-bottom: 0;
+      i {
+        font-size: $fab_height * 0.5;
+        color: #fff;
+      }
+      .fab_text {
+        position: absolute;
+        top: $fab_height * 0.3;
+        left: 0;
+        width: 100%;
+        font-size: $fab_height * 0.13;
+        font-weight: 300;
+        color: #fff;
+      }
+    }
+  }
+
+
 
 
   .context_menu {
@@ -1079,7 +1121,7 @@ body#cambiu {
 
   .column {
     flex-direction: column;
-    align-items: inherit;
+    align-items: center;
   }
 
   .text-center {
@@ -2165,9 +2207,26 @@ body#cambiu {
     }
     .order_ind {
       display: block;
+      color: $formGreen;
+      span:after {
+        content: "ordered";
+      }
     }
   }
 
+  .ecard.confirmed {
+    .minicard {
+      border-right: 2vw solid $brand-color-b;
+      padding-right: 1vw;
+    }
+    .order_ind {
+      display: block;
+      color: $brand-color-b;
+      span:after {
+        content: "confirmed";
+      }
+    }
+  }
 
   .ecard{
     .minicard {
@@ -2182,7 +2241,6 @@ body#cambiu {
       top: 3vw;
       right: 5vw;
       font-size: 3.5vw;
-      color: $formGreen;
     }
 
     .ranking_container {
@@ -2331,61 +2389,6 @@ body#cambiu {
         text-shadow: 0px 1px 2px rgba(0, 0, 0, 1);
       }
 
-      .fab_container {
-        position: absolute;
-        @include vright($fab_right);
-        top: $fab_top;
-      }
-
-      .fab_button {
-        z-index: 1;
-        width: $fab_width;
-        height: $fab_width;
-        border-radius: $fab_width / 2;
-        line-height: $fab_width;
-        margin: inherit;
-        padding: inherit;
-        font-size: $fab_width / 2;
-        font-weight: 300;
-        text-align: center;
-        background: #fff;
-        box-shadow: 1px 2px 5px rgba(0,0,0,0.7);
-        background-color: #fff !important;
-        //    transition: font-size, $card-transition-time + 0.3s;
-      }
-
-
-      .fab_text {
-        font-weight: 500;
-      }
-
-
-
-
-      .nav_button {
-        z-index: 1;
-        display: none;
-        width: $nav_button_width;
-        border-radius: $nav_button_width / 2;
-        line-height: $nav_button_width;
-        font-size: 1em;
-        font-weight: 300;
-        text-align: center;
-        color: #fff;
-        background: $formGreen;
-        box-shadow: 1px 4px 10px rgba(0,0,0,0.7);
-        //    transition: font-size, $card-transition-time + 0.3s;
-
-        display: block;
-        bottom: $nav_button_width / -2;
-        left: $nav_button_width / -2;
-        font-size: $nav_button_width / 2;
-        i {
-          width: $nav_button_width;
-          height: $nav_button_width;
-        }
-
-      }
       .directions_text {
         font-weight: 500;
       }
@@ -2486,10 +2489,6 @@ body#cambiu {
 
     }
 
-    .nav_button_container {
-      display: none;
-    }
-
     .section_title {
       display: none;
     }
@@ -2513,10 +2512,12 @@ body#cambiu {
           background: rgba(0, 0, 0, 0.15);
           padding-left: 5%;
           padding-right: 5%;
+          border: 1px solid #888;
         }
       }
       .section_title {
         display: flex;
+        width: 100%;
         line-height: 1;
         font-weight: 500;
         text-transform: uppercase;
@@ -2549,7 +2550,7 @@ body#cambiu {
         font-weight: 100;
       }
       .deal {
-        padding-bottom: 10%;
+        padding-bottom: 6%;
         .icon.right_icon, .saving {
           display: none !important;
         }
@@ -2580,20 +2581,12 @@ body#cambiu {
           @include vfont-size(3.5vw);
         }
       }
-      .nav_button_container {
-        display: flex;
-        [data-field=duration] {
-          font-weight: 300;
-          color: #000;
-          margin-top: 0.5em;
-        }
-      }
+     [data-field=duration] {
+      font-weight: 300;
+      color: #000;
+    }
       .payment {
         height: 15%;
-      }
-      .cta.btn {
-        font-size: 5vw !important;
-        color: $brand-color-a;
       }
     }
 
@@ -2604,6 +2597,44 @@ body#cambiu {
     .inactive {
       display: none;
     }
+
+
+    .confirmation {
+      display: none;
+      z-index: 4;
+      pointer-events: all;
+    }
+
+    .ordered.ecard .confirmation {
+      display: block;
+    }
+
+
+    .pane[data-pane=confirmation] {
+
+      .confirmation_text {
+        height: 0.8 * (100vh - $navbar_height);
+        background: #eee;
+        font-size: 5vw;
+        font-weight: 300;
+        color: #000;
+        padding-right: 5vw;
+        padding-left: 5vw;
+        line-height: 2;
+        strong {
+          font-size: 4.3vw;
+          font-weight: 700;
+        }
+      }
+      .confirmation_button {
+        height: 0.2 * (100vh - $navbar_height);
+        .camera_access {
+          position: absolute;
+          top: 0.2 * (100vh - $navbar_height) - ($fab_height / 2);
+        }
+      }
+    }
+
 
 
 
@@ -3006,10 +3037,6 @@ body#cambiu {
     margin-left: $pane-padding * -1;
   }
 
-
-  .camera_access {
-    margin-top: 20vh;
-  }
 
   .inputfile {
     width: 0.1px;
@@ -3664,6 +3691,7 @@ body#cambiu {
     height: $navbar_height;
     padding-top: 10px;
     @include apple-like;
+    color: #555;
 //    box-shadow: 1px 1px 10px rgba(0,0,0,0.7);
     border-bottom: 1px solid $brand-color-c;
     margin-bottom: initial;
@@ -3674,6 +3702,19 @@ body#cambiu {
       cursor: pointer;
     }
   }
+
+  &[data-pane=offer] {
+    .navbar {
+      text-shadow: initial;
+      color: #fff;
+    }
+    .directions.fab {
+      display: none;
+    }
+  }
+
+
+
 
   .navbar_link {
     @include flexbox();
