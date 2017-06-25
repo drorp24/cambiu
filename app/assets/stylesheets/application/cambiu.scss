@@ -9,6 +9,8 @@
 
 // Variables
 
+$minicard_height: 33vw;
+$minicard_img_height: 27vw;
 $fullcard-padding: 5vw;
 $tablet-width: 768px;
 $desktop-width: 1024px;
@@ -900,7 +902,6 @@ body#cambiu {
         @include desktop {
           height:16vh !important;
         }
-        margin-left: -15%;
       }
     }
     &.ecard {
@@ -973,9 +974,7 @@ body#cambiu {
       background: #eee;
     }
     .minicard {
-      .ranking_container {
-        left: 47%;
-      }
+      padding: 0 !important;
       .photo .streetview img {
         width: 100%;
       }
@@ -1733,7 +1732,7 @@ body#cambiu {
     transition: bottom 0.5s;
     left: 0;
 //    background-color: rgba(0, 0, 0, 0.2);
-    padding-top: 10px;
+    padding-top: $fab_height * 0.6;
 //    box-shadow: 1px 2px 13px rgba(0, 0, 0, .5);
 //    z-index: 3;
   }
@@ -2245,8 +2244,6 @@ body#cambiu {
 
     .ranking_container {
       position: absolute;
-      top: 50%;
-      left: 50%;
     }
     .ranking {
       @include vwidth($rankingSize);
@@ -2266,7 +2263,7 @@ body#cambiu {
         width: 100%;
       }
     }
-    @include vheight(33vw);
+    @include vheight($minicard_height);
     @include flexbox();
     flex-wrap: nowrap;
     flex-direction: row;
@@ -2285,9 +2282,9 @@ body#cambiu {
       height: 85%;
       img {
         transition: height $card-transition-time;
-        height: 27vw !important;
+        height: $minicard_img_height !important;
         @include desktop {
-          height: 27vw * $paneRatio !important;
+          height: $minicard_img_height * $paneRatio !important;
         }
         width: 97%;
       }
@@ -2489,6 +2486,10 @@ body#cambiu {
 
     }
 
+  .section_content {
+    width: 100%;
+  }
+
     .section_title {
       display: none;
     }
@@ -2499,8 +2500,6 @@ body#cambiu {
       z-index: 1;
       height: 100vh;
       @include vwidth(100vw);
-      @include vpadding-right($fullcard-padding);
-      @include vpadding-left($fullcard-padding);
       padding-top: $navbar_height;
       .section {
         color: #000;
@@ -2512,7 +2511,6 @@ body#cambiu {
           background: rgba(0, 0, 0, 0.15);
           padding-left: 5%;
           padding-right: 5%;
-          border: 1px solid #888;
         }
       }
       .section_title {
@@ -2583,31 +2581,35 @@ body#cambiu {
       }
      [data-field=duration] {
       font-weight: 300;
-      color: #000;
     }
       .payment {
         height: 15%;
       }
     }
 
-    .hidden {
-      visibility: hidden;
-    }
+  .hidden {
+    visibility: hidden;
+  }
 
-    .inactive {
-      display: none;
-    }
+  .inactive {
+    display: none;
+  }
 
 
-    .confirmation {
-      display: none;
-      z-index: 4;
-      pointer-events: all;
-    }
+  .confirmation {
+    display: none;
+    pointer-events: all;
+    position: absolute;
+  }
 
-    .ordered.ecard .confirmation {
-      display: block;
-    }
+  .ordered.ecard .confirmation {
+    display: block;
+  }
+
+
+  .swiper-container .confirmation {
+    bottom: calc(#{$minicard_height} - #{$fab_height} / 2)
+  }
 
 
     .pane[data-pane=confirmation] {
@@ -2630,7 +2632,7 @@ body#cambiu {
         height: 0.2 * (100vh - $navbar_height);
         .camera_access {
           position: absolute;
-          top: 0.2 * (100vh - $navbar_height) - ($fab_height / 2);
+          bottom: 0.2 * (100vh - $navbar_height) - ($fab_height / 2);
         }
       }
     }
@@ -3714,6 +3716,11 @@ body#cambiu {
   }
 
 
+  .directions.fab {
+    [data-field=duration] {
+      color: $brand-color-a;
+    }
+  }
 
 
   .navbar_link {

@@ -370,7 +370,7 @@ order = function($scope, exchange) {
 
     if (exchange.id == value_of('order_exchange_id')) return;
 
-    $('.ecard[data=exchange-id=' + exchange.id + ']').addClass('ordered');
+    $('.ecard[data-exchange-id=' + exchange.id + ']').addClass('ordered');
 
     sessionStorage.order_exchange_id = exchange.id;
     sessionStorage.order_id = order.id;
@@ -402,7 +402,7 @@ order = function($scope, exchange) {
 };
 
 requestOrderConfirmation = function() {
-    snack('Click confirm when deal is done', {upEl: $('.swiper-container'), icon: 'assignment_turned_in', timeout: 5000});
+    snack('Click <strong>CONFIRM</strong> when deal is done', {upEl: $('.swiper-container'), icon: 'assignment_turned_in', timeout: 7000});
 };
 
 orderConfirmationRequired = function() {
