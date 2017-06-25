@@ -483,6 +483,7 @@ form do |f|
   ActiveAdmin.register Order do
 
     includes :search
+    includes :exchange
 
 
     config.filters = false
@@ -501,7 +502,9 @@ form do |f|
       column 'User Location' do |order|
         order.search.user_location
       end
-      column :exchange
+      column :'Exchange' do |order|
+        link_to order.exchange.name.capitalize, admin_exchange_orders_path(order.exchange_id)
+      end
       column 'Pay' do |order|
         order.pay_cents && order.pay_currency ? order.pay.format : ""
       end
