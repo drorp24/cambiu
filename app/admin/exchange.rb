@@ -354,11 +354,6 @@ form do |f|
 
 
 
-=begin
-    scope :collection
-    scope :delivery
-=end
-
     index do
       selectable_column
       id_column
@@ -507,16 +502,16 @@ form do |f|
         order.search.user_location
       end
       column :exchange
-      column 'Service' do |order|
-        order.service_type
-      end
       column 'Pay' do |order|
         order.pay_cents && order.pay_currency ? order.pay.format : ""
       end
       column 'Get' do |order|
         order.get_cents && order.get_currency ? order.get.format : ""
       end
-      column :status
+      column 'Service' do |order|
+        order.service_type.capitalize if order.service_type
+      end
+      column (:status) {|order| status_tag(order.status, order.status_color) if order.status }
     end
 
     controller do

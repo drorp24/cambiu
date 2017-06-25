@@ -372,10 +372,6 @@ order = function($scope, exchange) {
 
     $('.ecard[data-exchange-id=' + exchange.id + ']').addClass('ordered');
 
-    sessionStorage.order_exchange_id = exchange.id;
-    sessionStorage.order_id = order.id;
-    sessionStorage.order_status = 'offer';
-
     fetch('/orders', {
         method: 'POST',
         headers: new Headers({
@@ -391,11 +387,15 @@ order = function($scope, exchange) {
             }
         )
     })
+    .then(checkStatus)
     .then(response => response.json())
     .then((order) => {
         console.log('Order succesfully created:', order);
         populateOrder($scope, order);
-        snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'}); // TODO: only if collection
+        sessionStorage.order_exchange_id = exchange.id;
+        sessionStorage.order_id = order.id;
+        sessionStorage.order_status = order.status;
+        if (order.service_type == 'pickup') snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'});
     })
     .catch((error) => {console.log('Error creating order:', error)});
 
@@ -413,6 +413,30 @@ orderConfirmationRequired = function() {
 orderConfirm = function() {
     $('.ordered.ecard').removeClass('ordered').addClass('confirmed');
     sessionStorage.order_status = 'confirmed';
+    orderUpdate({status: 'confirmed'});
+};
+
+orderUpdate = function(update) {
+
+    var order_id = value_of('order_id');
+    if (!order_id) return;
+
+    fetch('/orders/' + order_id, {
+        method: 'PUT',
+        headers: new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(
+            {
+                order: update
+            }
+        )
+    })
+    .then(checkStatus)
+    .then(() => console.log('Order updated successfully'))
+    .catch((error) => console.warn('Order update failed:', error))
+
 };
 
 unorder = function() {

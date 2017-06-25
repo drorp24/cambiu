@@ -96,7 +96,6 @@ function sendFile(imageData) {
         dataType:   'JSON',
         success:    function (data) {
             console.log('Order imageData successfully updated');
-            orderConfirm();
         },
         error:      function (data) {
             console.log('Order imageData failed to upload');

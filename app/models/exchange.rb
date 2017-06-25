@@ -538,7 +538,6 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:errors] = quotes[:errors]
     exchange_hash[:rounded] = quotes[:rounded]
     exchange_hash[:base_rate] = quotes[:base_rate]
-    exchange_hash[:service_type] = service_type
     exchange_hash[:best_at] = []
     exchange_hash[:rates] = quotes[:rates]
     exchange_hash[:rating] =  self.rating
@@ -730,15 +729,6 @@ class Exchange < ActiveRecord::Base
     end
   end
 =end
-
-  def collection?
-    true
-  end
-
-  def service_type
-    'collection'
-  end
-
 
   def chain_name
     self.chain.name if self.chain

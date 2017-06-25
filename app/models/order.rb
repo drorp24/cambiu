@@ -8,17 +8,21 @@ class Order < ActiveRecord::Base
   monetize :buy_cents, with_model_currency: :buy_currency, :allow_nil => true
   monetize :get_cents, with_model_currency: :get_currency, :allow_nil => true
 
-  enum status: [:offer, :ordered, :confirmed, :pictured]
-  enum service_type: [ :collection, :delivery ]
+  enum status: [:ordered, :confirmed, :pictured]
+  enum service_type: [ :pickup, :delivery ]
 
   before_create do
     self.expiry = 4.hours.from_now
-    self.service_type = 'collection'
+    self.service_type = 'pickup' unless self.service_type.present?
   end
 
   after_commit   :notification
 
   attr_accessor :photo
+
+  def status_color
+    [:orange, :green, :blue][Order.statuses[status]]
+  end
 
   def requires_notification?
     Rails.env.production? || pictured?

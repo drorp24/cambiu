@@ -368,6 +368,15 @@ wait = function(period) {
     })
 };
 
+// For all the 'fetch's that don't reject promises on 4xx/5xx return statuses
+checkStatus = function(res) {
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
+    return res;
+};
+
+
 
 $(document).ready(function() {
 

@@ -62,8 +62,8 @@ class NotifyJob < ActiveJob::Base
     to  = to_user + to_exchange
 
 
-    subject = "Order #{order.voucher}"
-    subject += " (#{Rails.env})" unless Rails.env.production?
+    subject = "#{order.service_type.capitalize} order #{order.voucher} - #{order.status.upcase}"
+#    subject += " (#{Rails.env})" unless Rails.env.production?
 
 
     from_name = 'cambiu'

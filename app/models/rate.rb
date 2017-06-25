@@ -3,7 +3,7 @@ class Rate < ActiveRecord::Base
   belongs_to :ratable, polymorphic: true
   belongs_to :admin_user
 
-  enum service_type: [ :collection, :delivery ]
+  enum service_type: [ :pickup, :delivery ]
   enum source: [ :manual, :xml, :scraping, :test, :ratefeed ]
   enum method: [ :absolute, :reference ]
 

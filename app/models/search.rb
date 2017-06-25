@@ -4,7 +4,7 @@ class Search < ActiveRecord::Base
   has_many :issues, foreign_key: "search_id", class_name: "Error"
 #  validates :email, presence: true#, on: :update #allow_nil: true #unless: Proc.new { |a| a.email.blank? }
 #  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
-  enum service_type: [ :collection, :delivery ]
+  enum service_type: [ :pickup, :delivery ]
 
   attr_accessor :fetch, :mode, :hash, :distance_slider
 
