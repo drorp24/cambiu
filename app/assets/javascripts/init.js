@@ -385,8 +385,6 @@ $(document).ready(function() {
     }
 
 
-    $('body').bootstrapMaterialDesign();
-
     if (mobile) {
         $('iframe#player').remove();
     }
