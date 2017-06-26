@@ -11,7 +11,7 @@
 
 $minicard_height: 33vw;
 $minicard_img_height: 27vw;
-$fullcard-padding: 5vw;
+$offer-padding: 5vw;
 $tablet-width: 768px;
 $desktop-width: 1024px;
 $paneRatio: 0.27;
@@ -742,6 +742,15 @@ body#cambiu {
   */
 
 
+  // twitter-bootstrap-4 & MDB adjustments - start
+
+  .section {
+    margin-bottom: 0;
+  }
+
+
+
+  // twitter-bootstrap-4 & MDB adjustments - end
 
   .search {
     height: 100vh - $navbar_height;
@@ -838,7 +847,7 @@ body#cambiu {
     margin-bottom: 0;
   }
 
-  .cta.btn {
+  button.cta {
     font-size: 5vw !important;
     color: $brand-color-a;
   }
@@ -866,6 +875,7 @@ body#cambiu {
       box-shadow: 0 1px 10px rgba(0,0,0,0.7) !important;
       margin-top: 0;
       margin-bottom: 0;
+      border-width: 0;
       i {
         font-size: $fab_height * 0.5;
         color: #fff;
@@ -879,6 +889,7 @@ body#cambiu {
         font-weight: 300;
         color: #fff;
       }
+      margin: 0;
     }
   }
 
@@ -895,7 +906,7 @@ body#cambiu {
     justify-content: space-around;
     height: 0;
     margin-top: 2px;
-    button.btn.context_menu_option {
+    button.context_menu_option {
       visibility: hidden;
       transition: visibility 0.2s;
       margin-bottom: 0 !important;
@@ -908,7 +919,7 @@ body#cambiu {
     &.active {
       visibility: visible;
       height: 30vh;
-      button.btn.context_menu_option {
+      button.context_menu_option {
         visibility: visible;
       }
     }
@@ -998,7 +1009,7 @@ body#cambiu {
       border-radius: 0 !important;
         height: 16vh !important;
        .photo img {
-        height: 20vmax !important;
+//        height: 20vmax !important;
         @include desktop {
           height:16vh !important;
         }
@@ -1794,6 +1805,7 @@ body#cambiu {
 
   .yellow {
     color: yellow;
+    background-color: inherit !important;
   }
 
   #cards .ecard {
@@ -2125,7 +2137,7 @@ body#cambiu {
   }
 
   .snackIcon {
-    color: #FFF59D;
+    color: yellow;
     i {
       font-size: 5vh;
     }
@@ -2197,7 +2209,7 @@ body#cambiu {
     color: #000;
     text-transform: uppercase;
     div {
-      display: inline-block;
+//      display: inline-block;
     }
     .figure {
       display: flex;
@@ -2277,15 +2289,11 @@ body#cambiu {
 
 
 
-  .fullcard {
+  .offerPane {
     width: 100%;
     display: none;
     background: #fff;
     z-index: 1;
-  }
-
-  [data-pane=try] .fullcard {
-    display: block;
   }
 
 
@@ -2392,7 +2400,7 @@ body#cambiu {
       height: 50vh;
     }
 
-    .fullcard .streetview {
+    .offerPane .streetview {
       height: 100%;
       img {
         height: 100%;
@@ -2407,7 +2415,7 @@ body#cambiu {
       align-items: flex-start;
       align-content: stretch;
       text-align: left;
-      .fullcard {
+      .offerPane {
         display: block;
         &.flex {
           @include flexbox();
@@ -2422,7 +2430,7 @@ body#cambiu {
       .more {
         &:before {
           visibility: visible;
-          content: 'order now'
+          content: 'place order'
         }
       }
       .lessmore {
@@ -2511,8 +2519,8 @@ body#cambiu {
       }
       .data {
         max-width: 100%;
-        @include vpadding-right($fullcard-padding);
-        @include vpadding-left($fullcard-padding);
+        @include vpadding-right($offer-padding);
+        @include vpadding-left($offer-padding);
         [data-field=edited_quote] {
            font-weight: 400;
         }
@@ -2568,7 +2576,7 @@ body#cambiu {
       .minicard {
         display: none;
       }
-      .fullcard {
+      .offerPane {
         display: none;
       }
       .orderPane {
@@ -2775,7 +2783,7 @@ body#cambiu {
     .text-right > div {
       margin-right: $padding;
     }
-    .row.fullcard > div {
+    .row.offerPane > div {
       line-height: 2em !important;
     }
 
@@ -2791,7 +2799,7 @@ body#cambiu {
 //    @include vline-height(10vw);
   }
 
-  .fullcard .deal {
+  .offerPane .deal {
     height: 40%;
   }
 
@@ -2825,7 +2833,7 @@ body#cambiu {
     }
   }
 
-  .fullcard .quote {
+  .offerPane .quote {
     @include vfont-size(7vw);
     letter-spacing: -0.3vw;
     @include desktop {
@@ -2920,7 +2928,7 @@ body#cambiu {
     width: 100%;
   }
 
-  .fullcard .actions_line {
+  .offerPane .actions_line {
     height: 20%;
   }
 
@@ -3370,35 +3378,6 @@ body#cambiu {
     text-align: center;
   }
 
-
-  /*
-  .popover {
-    background-color: $brand-color-c;
-  }
-
-  .popover.bs-tether-element-attached-right .popover-arrow:after, .popover.popover-right .popover-arrow:after {
-    border-top-color: $brand-color-c;
-  }
-
-  */
-
-
-  /*
-  .popover {
-    max-width: 8rem;
-    background-color: $brand-color;
-    font-size: 1.3rem;
-    font-family: typoRound;
-    border-radius: 5px;
-    color: #fff;
-    box-shadow: 1px 1px 10px rgba(0,0,0,0.7);
-    top: initial;
-    bottom: 150px;
-    text-align: center;
-  }
-  */
-
-
     /*progressbar*/
   #progressbar {
     position: fixed;
@@ -3715,7 +3694,6 @@ body#cambiu {
 //  padding-top: $navbar-height;
   font-family: $font-family;
   color: $color;
-  .btn {border-radius: $border-radius;}
  /* a:not(.carousel-control) {
     color: $grey73;
   }

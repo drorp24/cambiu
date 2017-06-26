@@ -306,6 +306,8 @@ function hidePages() {
 
 populatePage = function(options) {
 
+    if (no(offers)) return;
+
     var offersLength  = offers.length;
     var fromResult    = (resultsPerPage * (pageNum -1)) + 1;
     var toResult      = Math.min(resultsPerPage * pageNum, offersLength);

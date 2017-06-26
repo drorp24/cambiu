@@ -356,7 +356,8 @@ $(document).ready(function() {
     };
 
     hideDialog = function() {
-        $('#myModal').modal('hide');
+//        $('#myModal').modal('hide');
+        $('.modal').css('visibility', 'hidden');  // TODO: the above and this line are a patch. Handle eventually
         $('.modal').css('pointer-events', 'none');
     };
 

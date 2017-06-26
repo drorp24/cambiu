@@ -58,10 +58,6 @@ show_best = function() {
     $('.ranking').first().addClass('bounce');
 };
 
-hide_best = function() {
-    $('#best_offer').popover('hide');
-};
-
 measureMapExperience = function() {
     if (typeof getOfferClicked === 'undefined') return;
     var now = new Date().getTime();

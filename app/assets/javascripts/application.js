@@ -5,6 +5,9 @@
 //
 
 //= require jquery
+//= require tether.min
+//= require bootstrap.min
+//= require mdb.min
 //= require serviceworker-companion
 //= require URLSearchParams_polyfill
 //= require autonumeric

@@ -144,7 +144,7 @@ refresh = function(pane, $pane, exchange) {
 
      var el = $(this);
      var external       = el.data('exchange-delivery_tracking');    if (external && external != 'null') {window.location = external; return}
-     var pane           = el.data('href-pane');                     if (pane == 'back')                 {back();return}
+     var pane           = el.data('href-pane');                     if (pane == 'back')                 {back(el.data('href-delay'));return}
      var page           = el.data('href-page');
      var id             = el.data('href-id');
      var hash           = el.data('href-hash');
@@ -167,12 +167,17 @@ refresh = function(pane, $pane, exchange) {
          hideDialog();
      }
 
-     function back() {
-         var recentSet = value_of('recent_set');
-         if (recentSet && $('body').attr('data-pane') == 'order') {
-             setPage({pane1: recentSet})
-         } else {
-             window.history.back();
+     function back(delay) {
+
+         delay ? wait(500).then(backOn) : backOn();
+
+         function backOn() {
+             var recentSet = value_of('recent_set');
+             if (recentSet && $('body').attr('data-pane') == 'order') {
+                 setPage({pane1: recentSet})
+             } else {
+                 window.history.back();
+             }
          }
      }
 

@@ -1,4 +1,4 @@
-<nav class="navbar flex_parent">
+<nav class="navbar flex_parent row">
 
   <% left_id = nil if local_assigns[:left_id].nil? %>
   <% right_id = nil if local_assigns[:right_id].nil? %>
@@ -6,6 +6,8 @@
   <div class="navbar_link navbar_left col-xs-2" data-href-page="exchanges" data-href-pane=<%= local_assigns[:left_pane].nil? ? 'back' : left_pane %> data-href-id=<%= left_id  %>>
     <% unless local_assigns[:left_pane] && left_pane == 'none' %>
         <i class="material-icons"><%= local_assigns[:left_icon].nil? ? 'arrow_back'  : left_icon  %></i>
+    <% else %>
+        &nbsp;
     <% end %>
   </div>
 
@@ -31,15 +33,17 @@
 
      <% unless right_pane == 'none' %>
           <i class="material-icons"><%= right_icon %></i>
-     <% end %>
+    <% else %>
+        &nbsp;
+    <% end %>
 
   </div>
 
   <div class="context_menu" >
     <% Array(local_assigns[:context_menu_options]).each do |option| %>
-        <button class="btn context_menu_option">
+        <button class="btn-flat waves-effect context_menu_option">
           <div class="menu_option" data-href-page="exchanges" data-href-pane="<%= option[:pane] %>" data-href-delay="true">
-            <div class="menu_option_icon"><i class="material-icons col-xs-1"><%= option[:icon] %></i></div>
+            <div class="menu_option_icon flex_center"><i class="material-icons col-xs-1"><%= option[:icon] %></i></div>
             <div class="menu_option_name"><%= option[:name] %></div>
           </div>
         </button>

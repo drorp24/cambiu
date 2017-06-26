@@ -116,10 +116,6 @@
             });
 
 
-            google.maps.event.addListener(map, 'dragstart', function () {
-                hide_best();
-             });
-
             google.maps.event.addListener(map, 'dragend', function () {
 
               // irritating, but inevitable since i can't stick the user's blue dot to a place on the map (it's always on the screen's center)
