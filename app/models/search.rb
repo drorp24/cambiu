@@ -6,7 +6,7 @@ class Search < ActiveRecord::Base
 #  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   enum service_type: [ :pickup, :delivery ]
 
-  attr_accessor :fetch, :mode, :hash, :distance_slider
+  attr_accessor :fetch, :mode, :hash, :distance_slider, :payment_method
 
   validate :valid_input, on: :create
 

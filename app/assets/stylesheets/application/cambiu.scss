@@ -741,6 +741,69 @@ body#cambiu {
   }
   */
 
+
+
+  .search {
+    height: 100vh - $navbar_height;
+    padding: 0 5vw;
+    font-size: 5vw;
+    color: #000;
+    font-weight: 300;
+    line-height: 1;
+    .form-group {
+      margin: 0;
+      padding: 0;
+    }
+    .form-control {
+      font-size: inherit;
+      line-height: inherit;
+      height: inherit;
+      padding: 0;
+      margin: 0;
+    }
+    .search_line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 10%;
+      div:not(.label_parent) {
+        width: 100%;
+      }
+    }
+    .label, label {
+      color: rgb(0, 150, 136);
+      font-weight: 500;
+      text-transform: uppercase;
+      background: none;
+      border-radius: 0;
+      padding: 0;
+    }
+    label.control-label {
+      top: -6vh;
+      text-transform: capitalize;
+      font-size: 3vw;
+    }
+    .icon {
+      flex-basis: 10%;
+    }
+    .pay_label, .buy_label {
+      flex-basis: 15%;
+    }
+    .buy_currency, .pay_currency {
+      flex-basis: 30%;
+    }
+    .buy_amount, .pay_amount {
+      flex-basis: 35%;
+    }
+  }
+
+
+
+
+  label {
+    margin-bottom: 0;
+  }
+
   .cta.btn {
     font-size: 5vw !important;
     color: $brand-color-a;
@@ -786,6 +849,9 @@ body#cambiu {
   }
 
 
+  .stretch {
+    align-items: stretch !important;
+  }
 
 
   .context_menu {
@@ -1170,26 +1236,18 @@ body#cambiu {
   // Bootstrap Material Design customisations
 
   .form-group.label-floating.is-focused label.control-label, .form-group.label-floating:not(.is-empty) label.control-label, .form-group.label-static label.control-label {
-    left: $padding;
-    @include vtop(-8vw);
-    @include vfont-size($form-label-floating-size);
-    font-weight: 300;
-    color: #aaa;
+//    left: $padding;
   }
 
   .form-group.label-floating label.control-label, .form-group.label-placeholder label.control-label {
-    @include vfont-size($form-font-size);
+//    @include vfont-size($form-font-size);
   }
 
   .form-group label.control-label {
-    @include vfont-size($form-label-floating-size);
-    color: #aaa !important;
-    font-weight: 300 !important;
+//    @include vfont-size($form-label-floating-size);
+//    font-weight: 300 !important;
   }
 
-  .form-control, .clear {
-    @include vfont-size($form-font-size);
-  }
 
   .clear {
     position: relative;
@@ -1212,10 +1270,8 @@ body#cambiu {
 
   .search_section {
     &.pay, &.get, &.where, &.radius {
-      height: 34vh;
       padding: 10px;
       margin-top: 5%;
-      border-bottom: 4px double #eee;
     }
     &.invoke {
       height: 10vh;
@@ -1272,6 +1328,7 @@ body#cambiu {
     }
   }
 
+  /*
   .search_heading {
     @include vfont-size(12vw);
     color: #ddd;
@@ -1307,6 +1364,7 @@ body#cambiu {
       color: #555;
     }
   }
+  */
 
 
   #slider {

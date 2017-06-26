@@ -159,9 +159,9 @@ def_vals = function() {
 
     var def = {};
 
-    def['pay_amount']       = '$1,000';
+    def['pay_amount']       = null;
     def['pay_currency']     = 'USD';
-    def['buy_amount']       = null;
+    def['buy_amount']       = 1000;
     def['buy_currency']     = 'GBP';
     def['user_lat']         = dfault.lat;
     def['user_lng']         = dfault.lng;
