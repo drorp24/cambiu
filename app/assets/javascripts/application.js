@@ -12,13 +12,9 @@
 //= require arrive.min
 //= require snackbar.min
 //= require analysis
-//= require apigClient
-//= require_tree ./lib
-//= require aws_api_gateway
 
 //= require init
 //= require animations
-//= require push
 //= require location
 //= require search
 //= require map
@@ -33,5 +29,3 @@
 //= require star-rating
 //= require swiper.jquery.min
 //= require nouislider.min
-//= require markerclusterer
-//= require jquery.arctext
