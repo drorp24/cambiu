@@ -152,7 +152,7 @@ var resultsPerPage = 5;
 
 sessionStorage.videoStopped = null;
 var cardXoffset;
-var location;
+var findUserLocation;
 
 
 
@@ -491,6 +491,8 @@ $(document).ready(function() {
 
 //          Suppressed since it can now also happen when switched back to 'where I'm at' while still on the (white) search page
 //        if ($upEl && !inShow) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
+
+        radar('hide');
 
         if (typeof options === 'undefined') options = {};
 

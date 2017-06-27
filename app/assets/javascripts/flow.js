@@ -9,7 +9,7 @@ $(document).ready(function() {
     console.log('flow');
 
     populateParams();
-    findUserLocation = getLocation();  // getUserLocation() executes, findUserLocation doesn't execute
+    findUserLocation = getUserLocation().then(geocode);
     setProperPage();
 
 });
@@ -17,14 +17,12 @@ $(document).ready(function() {
 
 
 search_and_show = function(location) {
-    return Promise.all([showMap(location), search(location)])
+    return Promise.all([showMap(location), search()])
         .then(selectOffers)
         .then(populateOffers)
         .then(placeGoogleMarkers)
         .then(showSearchLocation)
         .then(revealCards)
-        .then(stop_show)
-//        .then(zoomIn)
         .then(zoomIn2)
         .then(postAnimations)
         .then(followUser)

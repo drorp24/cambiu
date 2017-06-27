@@ -40,7 +40,7 @@
 
     function no(offers) {
         if (offers.length == 0) {
-            snack("No offer for these parameters. <br> Click OK to change them", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
+            snack("No offer for these criteria. <br> Click OK to change them", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
             return true;
         }
     }
@@ -253,6 +253,10 @@ $('body').on('mouseover', '.ecard:not(.selected)', function(e) {
 
 zoomIn2 = function() {
     console.log('zoomIn2');
+    if (offers.length == 0) {
+        map.setZoom(15);
+        return
+    }
     var bounds = new google.maps.LatLngBounds();
     bounds.extend(new google.maps.LatLng(search.location.lat ,search.location.lng));
     for (offer of offers.slice(0, 1)) {bounds.extend(new google.maps.LatLng(offer.properties.latitude ,offer.properties.longitude))}

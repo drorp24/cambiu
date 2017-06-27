@@ -1,4 +1,4 @@
-<div class="search">
+<div class="search" id="search_form">
 
   <div class="search_line">
 
@@ -106,6 +106,19 @@
       <input type="text label" id="location" data-model="search" data-field="location" data-searchbox="true" name="search[location]" class="text-center location form-control">
       <span class="clear label"><i class=material-icons>cancel</i></span>
     </div>
+  </div>
+
+  <div class="hidden">
+
+    <input type="hidden" name="search[location]"        id="location"         data-model="search" data-field="location">
+    <input type="hidden" name="search[location_lat]"    id="location_lat"     data-model="search" data-field="location_lat">
+    <input type="hidden" name="search[location_lng]"    id="location_lng"     data-model="search" data-field="location_lng">
+    <input type="hidden" name="search[location_type]"   id="location_type"    data-model="search" data-field="location_type">
+    <input type="hidden" name="search[location_reason]" id="location_reason"  data-model="search" data-field="location_reason">
+    <input type="hidden" name="search[user_lat]"        id="user_lat"         data-model="search" data-field="user_lat">
+    <input type="hidden" name="search[user_lng]"        id="user_lng"         data-model="search" data-field="user_lng">
+    <input type="hidden" name="search[user_location]"   id="user_location"    data-model="search" data-field="user_location">
+
   </div>
 
   <div class="search_line">

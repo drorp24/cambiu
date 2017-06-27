@@ -5,7 +5,11 @@ animation = function($e, verb) {
     if (verb == 'start') {
         $e.removeClass('fadeOut');
         $e.addClass('pulsating');
-    } else {
+    }
+    else if (verb == 'hide') {
+        $e.removeClass('pulsating')
+    }
+    else {
         $e.addClass('fadeOut');
         setTimeout(function() {
             $e.removeClass('pulsating')

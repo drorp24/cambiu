@@ -185,14 +185,13 @@ $(document).ready(function() {
 
 
 
-    // programmatic search (e.g., once search location is determined)
-
-    search = function(location) {
-
-        var reason = location.reason ? location.reason : '';
-        console.log('search invoked, reason: ' + reason);
+    search = function() {
 
         return new Promise(function(resolve, reject) {
+
+            function startSearch() {
+                start_show();
+            }
 
             function checkStatus(response) {
                 if (response.status >= 200 && response.status < 300) {
@@ -215,7 +214,7 @@ $(document).ready(function() {
                 })
             }
 
-            function finish (data) {
+            function finishSearch (data) {
                 console.log('search completed succesfully');
                 searchResult = data.exchanges;
                 searchId = data.search;
@@ -224,22 +223,21 @@ $(document).ready(function() {
                 exchangeHash = {};
                 for (var exchange of exchanges) {exchangeHash[exchange.properties.id] = exchange.properties}
                 resolve(exchanges);
+                wait(750).then(stop_show);
             }
 
-            function squil(error) {
-                console.log('catch!');
+            function tell(error) {
+                console.log('catch during search!');
                 reject(error)
             }
 
 
-            start_show();
-
-            geocode(location)
-            .then(fetchData)
+            startSearch();
+            fetchData()
             .then(checkStatus)
             .then(parseJson)
-            .then(finish)
-            .catch(squil);
+            .then(finishSearch)
+            .catch(tell);
 
         })
 
@@ -302,7 +300,7 @@ $(document).ready(function() {
                     geocode(search.location);
                 }
             } else {
-                getLocation().then(geocode);
+                getUserLocation().then(geocode);
             }
             $locationInput.prop("disabled", true);
             $locationInput.removeClass('active');

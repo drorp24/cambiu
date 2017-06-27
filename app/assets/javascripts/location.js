@@ -1,11 +1,11 @@
 // L O C A T I O N
 // service
 
-getLocation = function() {
+getUserLocation = function() {
 
     return new Promise(function(resolve, reject) {
 
-        console.log('getLocation');
+        console.log('getUserLocation');
 
         if (!navigator.geolocation) {
             positionError('unsupported');
