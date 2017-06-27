@@ -775,9 +775,6 @@ body#cambiu {
       justify-content: space-between;
       align-items: center;
       height: 10%;
-      div:not(.label_parent) {
-        width: 100%;
-      }
     }
     .label, label {
       color: rgb(0, 150, 136);

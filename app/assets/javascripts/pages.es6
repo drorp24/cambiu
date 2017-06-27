@@ -121,11 +121,13 @@ refresh = function(pane, $pane, exchange) {
         $('.swiper-container-intro .swiper-pagination-bullet.swiper-pagination-bullet-active').removeClass('swiper-pagination-bullet-active');
         $('.swiper-container-intro .swiper-pagination-bullet:first-child').addClass('swiper-pagination-bullet-active');
     }
+/*
     if (!search_refreshed && pane == 'search' && swiperSearch) {
         console.log('Entering pane: search - refresh swiperSearch');
         swiperSearch.update(false);
         search_refreshed = true; // do once only
     }
+*/
     if (currentSnack) snackHide();
 /*
     if (pane == 'cards') {

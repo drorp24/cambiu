@@ -2,16 +2,18 @@
 
   <%= render partial: 'navbar', locals: {left_pane: 'none', left_icon: '', center: 'search_params', right_pane: 'none', right_icon: ''} %>
 
+<!--
   <div class="swiper-container swiper-container-search">
 
     <div id="search_form" class="swiper-wrapper swiper-wrapper-search">
 
         <div class="swiper-slide swiper-slide-search fullscreen_navbar">
+-->
           <%= render 'exchanges/search/main' %>
+<!--
         </div>
 
         <div class="swiper-slide swiper-slide-search fullscreen_navbar">
-          <%= render 'exchanges/search/other' %>
         </div>
 
     </div>
@@ -21,5 +23,6 @@
     </div>
 
   </div>
+-->
 
 </div>

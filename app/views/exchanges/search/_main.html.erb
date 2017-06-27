@@ -110,7 +110,12 @@
 
   <div class="search_line">
     <div class="label">On</div>
-    <div class="label">At</div>
+    <div class="label">
+      <div class="md-form">
+        <input placeholder="Selected time" type="text" id="input_starttime" class="form-control timepicker">
+        <label for="input_starttime">At</label>
+      </div>
+    </div>
   </div>
   <div class="search_line rate_comparison">
     <div class="rate_comparison_text">Our rate:</div>
@@ -138,13 +143,8 @@
     </div>
   </div>
 
-
-
-
-
   <div class="search_line invoke flex_center">
     <button type="submit" class="action btn cta" data-ajax="searches">pay/find offers</button>
   </div>
 
-  <%= render partial: 'slidebar', locals: {swiper: 'swiperSearch', left: '', right: 'other'} %>
 </div>

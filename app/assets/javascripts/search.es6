@@ -134,28 +134,33 @@ $(document).ready(function() {
         var amountValid = value_of('pay_amount') || value_of('buy_amount');
 
         if (!amountValid) {
+/*
             $('.form-group.pay_amount').addClass('has-error is-focused').find('.help-block').addClass('required');
             $('.form-group.buy_amount').addClass('has-error').find('.help-block').addClass('required');
+*/
+            console.log('Invalid amount');
         } else {
-            $('.form-group.pay_amount').removeClass('has-error is-focused').find('.help-block').removeClass('required');
+ /*           $('.form-group.pay_amount').removeClass('has-error is-focused').find('.help-block').removeClass('required');
             $('.form-group.buy_amount').removeClass('has-error').find('.help-block').removeClass('required');
-        }
+*/        }
 
         var locationValid = $('input#location').val() && !locationDirty;
 
         if (!locationValid) {
-            $('.form-group.location').addClass('has-error is-focused').find('.help-block').addClass('required');
-         } else {
-            $('.form-group.location').removeClass('has-error is-focused').find('.help-block').removeClass('required');
+//            $('.form-group.location').addClass('has-error is-focused').find('.help-block').addClass('required');
+            console.log('Invalid location. input#location: ', $('input#location').val(), 'locationDirty:', locationDirty );
+        } else {
+//            $('.form-group.location').removeClass('has-error is-focused').find('.help-block').removeClass('required');
         }
 
         var currencyValid = $('.form-group #pay_currency').val() != $('.form-group #buy_currency').val();
 
         if (!currencyValid) {
-            $('.form-group.pay_currency').addClass('has-error is-focused').find('.help-block').addClass('required');
+//            $('.form-group.pay_currency').addClass('has-error is-focused').find('.help-block').addClass('required');
+            console.log('Invalid currency')
         }
 
-        valid = amountValid && locationValid && currencyValid;
+        valid = !!(amountValid && locationValid && currencyValid);
         return valid;
     };
 
@@ -227,6 +232,8 @@ $(document).ready(function() {
             }
 
 
+            start_show();
+
             geocode(location)
             .then(fetchData)
             .then(checkStatus)
@@ -242,6 +249,7 @@ $(document).ready(function() {
 
     // Radius slider interaction
 
+/*
     function updateRadius ( values, handle, unencoded, tap, positions ) {
         // values: Current slider values;
         // handle: Handle that caused the event;
@@ -266,6 +274,7 @@ $(document).ready(function() {
             slider.noUiSlider.set(5);
         }
     });
+*/
 
 
     $('#search_form .location .clear').click(function() {

@@ -4,6 +4,7 @@
   window.version = version;
 
     <% if Rails.env.development? %>
+      console.log('development - not registering any serivceworker');
       return;
     <% end %>
 

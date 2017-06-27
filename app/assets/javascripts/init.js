@@ -152,6 +152,7 @@ var resultsPerPage = 5;
 
 sessionStorage.videoStopped = null;
 var cardXoffset;
+var location;
 
 
 
@@ -423,6 +424,7 @@ $(document).ready(function() {
     streetviewWidth       = mobile ? $('body').width().toFixed() : ($('body').width() / 3).toFixed();
     streetviewHeight      = mobile ? (window.innerHeight / 2).toFixed() : (streetviewWidth / 2).toFixed();
 
+/*
     var slider = document.getElementById('slider');
     var radius = document.getElementById('radius');
 
@@ -453,6 +455,7 @@ $(document).ready(function() {
         }
 
     });
+*/
 
     initSwipers();
 
@@ -678,5 +681,9 @@ $(document).ready(function() {
     }
 
     setTimeout(fixSafari, 1500);
+
+    $('#input_starttime').pickatime({
+        twelvehour: true
+    });
 
 });

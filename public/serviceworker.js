@@ -5,7 +5,7 @@
 // Basic recipe: https://github.com/rossta/serviceworker-rails
 // Advanced: https://jakearchibald.com/2014/offline-cookbook/#on-network-response
 
-console.log('[Serviceworker] Hello world!');
+console.log('[Serviceworker] here');
 
 //var version;
 var version = '0.9.4';
@@ -168,7 +168,7 @@ function onFetch(event) {
                      - Generate a Response programmaticaly, as shown below, and return that
                      */
 
-                    console.log('[Serviceworker]: fetch request failed in both cache and network.');
+                    console.log('[Serviceworker]: fetch failed in both cache and network - ', event.request.url);
 
                     /* Here we're creating a response programmatically. The first parameter is the
                      response body, and the second one defines the options for the response.
