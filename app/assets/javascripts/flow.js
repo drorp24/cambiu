@@ -10,6 +10,7 @@ $(document).ready(function() {
 
     populateParams();
     findUserLocation = getUserLocation().then(geocode);
+//    if (value_of('search_id')) findUserLocation.then(search_and_show); 
     setProperPage();
 
 });
