@@ -23,11 +23,23 @@ $(document).ready(function() {
             var symbol  = $this.find('option:selected').attr('data-symbol');
 
             set(field, value);
+            disable($('.md-form.select.' + other(field)), value);
 
             $('[data-autonumeric][data-field=' + target + ']').each(function() {
                 update_currency_symbol($(this), symbol);
             })
         });
+
+        function disable($e, value) {
+            $e.find('ul.dropdown-content li').each(function() {
+                var $this = $(this);
+                if ($this.find('span').html() == value) {
+                    $this.addClass('disabled')
+                } else {
+                    $this.removeClass('disabled')
+                }
+            })
+        }
 
         function update_currency_symbol(el, symbol) {
             if (symbol === undefined) {
@@ -44,12 +56,6 @@ $(document).ready(function() {
         $('#photo').click()
     }));
 
-
-
-    // supress homepage submit button
-    $('#homepage :submit').click(function(e) {
-        e.preventDefault();
-    });
 
 
     // Turn location fields into google searchBox's
@@ -78,7 +84,7 @@ $(document).ready(function() {
     };
 
     other = function(field) {
-        return field == 'pay_amount' ? 'buy_amount' : 'pay_amount'
+        return field.includes('pay') ? 'buy' + field.split('pay')[1] : 'pay' + field.split('buy')[1]
     };
 
     clear = function($e) {

@@ -810,6 +810,12 @@ body#cambiu {
   */
   .search {
     padding: 5vw;
+    padding-top: 5vh;
+    height: 100vh;
+  }
+
+  .search_line {
+    height: 10%;
   }
   .select-wrapper {
     margin-left: 3rem;
