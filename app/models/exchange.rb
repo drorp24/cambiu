@@ -164,6 +164,10 @@ class Exchange < ActiveRecord::Base
     self.individual.no_real_rates.active
   end
 
+  def self.with_real_rates
+    self.real_rates.active.geocoded
+  end
+
   def rates_are_stale?
     return false if (self.individual? and has_no_real_rates) or rates.empty?
     (Date.today - rates.first.updated_at.to_date).to_i > 1
@@ -435,15 +439,6 @@ class Exchange < ActiveRecord::Base
     result[:source] = rated_rates[:source]
     if (Date.today - result[:updated].to_date).to_i > 1
       result[:error] = "Stale rates"
-=begin
-      puts ""
-      puts ">>>>>>>>>>> stale found at exchange #{self.id}"
-      puts ">>>>>>>>>>> Date.today: " + Date.today.to_s
-      puts ">>>>>>>>>>> result[:updated].to_date).to_i: " + result[:updated].to_date.to_s
-      puts ">>>>>>>>>>> difference: " + (Date.today - result[:updated].to_date).to_i.to_s
-      puts ""
-      return result
-=end
     end
 
     return result

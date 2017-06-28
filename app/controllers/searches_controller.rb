@@ -1,6 +1,10 @@
 class SearchesController < ApplicationController 
   skip_before_action :verify_authenticity_token
 
+  def bestRates
+    render json: Search.new(search_params).bestRates
+  end
+
   def unique
     render json: !Search.where(email: search_params[:email]).exists?
   end

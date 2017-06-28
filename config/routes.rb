@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     collection do
       post 'record'
       get  'unique'
+      get  'bestRates'
     end
   end
 

@@ -377,6 +377,12 @@ checkStatus = function(res) {
     return res;
 };
 
+// For all the 'fetch's that use json
+parseJson = function(response) {
+    return response.json()
+};
+
+
 
 
 $(document).ready(function() {

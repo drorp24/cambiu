@@ -25,6 +25,58 @@ class Search < ActiveRecord::Base
 
 
 
+  def bestRates
+
+    return if           pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
+    return if           location_lat.blank? or location_lng.blank?
+
+    self.distance      ||= 2.5
+    self.distance_unit ||= "km"
+    center               = [location_lat, location_lng]
+    box                  = Geocoder::Calculations.bounding_box(center, distance)
+
+    pay_rate             = (pay_currency.downcase + '_rate').to_sym
+    buy_rate             = (buy_currency.downcase + '_rate').to_sym
+
+#   exchanges            = Exchange.with_real_rates.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+#                              .select(:id, :chain_id, :currency, :rates_policy)  # TODO: Discuss
+    exchanges            = Exchange.active.geocoded.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+                               .select(:id, :chain_id, :currency, :rates_policy)  # TODO: Discuss
+
+    if pay_amount.present?
+        rated_currency = buy_currency
+        base_currency  = pay_currency
+    else
+        rated_currency = pay_currency
+        base_currency  = buy_currency
+    end
+
+    best_buy = Float::INFINITY
+    best_sell = 0
+    best_buy_rate = {}
+    best_sell_rate = {}
+
+    exchanges.each do |exchange|
+
+      exchange_rates = exchange.rate(rated_currency, base_currency).merge(id: exchange.id, transaction: buy_currency != exchange.currency ? 'sell' : 'buy')
+      if exchange_rates[:buy] < best_buy
+        best_buy_rate = exchange_rates
+        best_buy = exchange_rates[:buy]
+      end
+      if exchange_rates[:sell] > best_sell
+        best_sell_rate = exchange_rates
+        best_sell = exchange_rates[:sell]
+      end
+
+    end
+
+    return {
+        best_buy_rate: best_buy_rate,
+        best_sell_rate: best_sell_rate
+    }
+
+  end
+
   def valid_input
      if
         pay_currency.blank? or

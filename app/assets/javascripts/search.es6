@@ -177,7 +177,7 @@ $(document).ready(function() {
             }
 
             function fetchData() {
-                return fetch('/searches', {
+                return fetch('/searches?', {
                     method: 'post',
                     body: new URLSearchParams($( "#search_form input, #search_form select" ).serialize())
                 })
@@ -208,6 +208,34 @@ $(document).ready(function() {
             .then(finishSearch)
             .catch(tell);
 
+        })
+
+    };
+
+    fetchBest = function() {
+
+        return new Promise(function(resolve, reject) {
+
+            function fetchRates() {
+                return fetch('/searches/bestRates?' + $( "#search_form input, #search_form select" ).serialize(), {
+                    method: 'get'
+                })
+            }
+
+            function tell(error) {
+                console.log('catch during fetchBest!');
+                reject(error)
+            }
+
+            function returnResults(data) {
+                resolve(data)
+            }
+
+            fetchRates()
+                .then(checkStatus)
+                .then(parseJson)
+                .then(returnResults)
+                .catch(tell);
         })
 
     };
