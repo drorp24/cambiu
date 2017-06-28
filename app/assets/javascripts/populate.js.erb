@@ -280,10 +280,10 @@ value_of = function(key) {
 // Populate search params in search form, search bar and ss for persistency (page reloads)
 set = function(field, value, trigger) {
 
-    value = (field.indexOf('amount') > -1) ? String(value).replace(/[^0-9\.]+/g,"") : value;
+    var clearValue = (field.indexOf('amount') > -1) ? String(value).replace(/[^0-9\.]+/g,"") : value;
 
-    $('input[data-model=search][data-field=' + field + ']').val(value);
-    $('select[data-model=search][data-field=' + field + ']').val(value);
+    $('input[data-model=search][data-field=' + field + ']').val(clearValue);
+    $('select[data-model=search][data-field=' + field + ']').val(clearValue);
     $('.params [data-model=search][data-field=' + field + ']').html(value);
 
     sessionStorage.setItem(field, value);

@@ -83,7 +83,7 @@ $(document).ready(function() {
 
     clear = function($e) {
         var field = $e.data('field');
-        console.log('clear ' + field + '. val():' + $e.val());
+        console.log('clear ' + field + '. val():' + $e.val(), $e[0]);
         if ($e.val()) set(field, '');
     };
 
@@ -96,7 +96,7 @@ $(document).ready(function() {
     };
 
     brother = function($e) {
-        return $('.form-group [data-model=search][data-field=' + other($e.data('field')) + ']');
+        return $('#search_form [data-model=search][data-field=' + other($e.data('field')) + ']');
     };
 
     $('#search_form [data-model=search][data-field]').on('click tap', function() {
@@ -116,13 +116,7 @@ $(document).ready(function() {
         var value = $this.val();
 
         set(field, value);
-        if (amount(field) && value) {
-            clear(brother($this));
-            if (hasError($this)) {
-                clearError($this);
-                clearError(brother($this));
-            }
-        }
+        if (amount(field) && value) clear(brother($this));
     });
 
 
@@ -399,7 +393,7 @@ $(document).ready(function() {
 
     $('.swiper-slide.c .slide_line .left').on('click tap', function() {
         report('Tap', 'Skip (3)')
-    })
+    });
 
 
 });
