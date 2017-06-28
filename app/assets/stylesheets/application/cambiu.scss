@@ -9,6 +9,7 @@
 
 // Variables
 
+$md-form-color: #4285F4;
 $minicard_height: 33vw;
 $minicard_img_height: 27vw;
 $offer-padding: 5vw;
@@ -755,6 +756,7 @@ body#cambiu {
 
   // twitter-bootstrap-4 & MDB adjustments - end
 
+  /*
   .search {
     height: 100vh - $navbar_height;
     padding: 0 5vw;
@@ -805,7 +807,27 @@ body#cambiu {
       flex-basis: 35%;
     }
   }
+  */
+  .search {
+    padding: 5vw;
+  }
+  .select-wrapper {
+    margin-left: 3rem;
+  }
 
+  input[type=tel] {
+    height: 1.7rem;
+  }
+
+  .buy_amount, .pay_amount {
+    input {
+      padding-left: 10%;
+      width: 90%;
+    }
+    label {
+      padding-left: 10%;
+    }
+  }
 
 
 
@@ -1288,6 +1310,7 @@ body#cambiu {
 
   // Bootstrap Material Design customisations
 
+/*
   .form-group.label-floating.is-focused label.control-label, .form-group.label-floating:not(.is-empty) label.control-label, .form-group.label-static label.control-label {
 //    left: $padding;
   }
@@ -1299,8 +1322,9 @@ body#cambiu {
   .form-group label.control-label {
 //    @include vfont-size($form-label-floating-size);
 //    font-weight: 300 !important;
-  }
 
+  }
+*/
 
   .clear {
     position: relative;
@@ -1310,33 +1334,8 @@ body#cambiu {
     }
   }
 
-  .form-group .clear {
-    &:first-of-type {
-      visibility: hidden;
-    }
-  }
-
-  .search_section.on .location label {
-    display: none;
-  }
 
 
-  .search_section {
-    &.pay, &.get, &.where, &.radius {
-      padding: 10px;
-      margin-top: 5%;
-    }
-    &.invoke {
-      height: 10vh;
-      .btn {
-        @include vfont-size($form-font-size);
-      }
-    }
-    .form-group.radius {
-      position: relative;
-      top: -5vh;
-    }
-  }
 
   .noUi-marker-horizontal.noUi-marker {
     width: 1px;
@@ -1381,43 +1380,6 @@ body#cambiu {
     }
   }
 
-  /*
-  .search_heading {
-    @include vfont-size(12vw);
-    color: #ddd;
-    font-weight: 900;
-  }
-
-
-
-  .search_option {
-    .search_option_text {
-      @include vfont-size($form-font-size);
-      font-weight: 300;
-      color: #aaa;
-    }
-    .toggle {
-      transform: scale(1.7, 1.7);
-    }
-  }
-
-  .search_section.where {
-    &.on .form-group label {
-      color: #888 !important;
-    }
-    &:not(.on) .form-group label {
-      color: #333 !important;
-    }
-  }
-
-  .search_section.where input#location {
-    @include threedots(100%);
-    color: #888;
-    &.active {
-      color: #555;
-    }
-  }
-  */
 
 
   #slider {
@@ -1588,6 +1550,8 @@ body#cambiu {
     }
     box-shadow: 0px 1px 15px rgba(0, 0, 0, .6);
   }
+
+
 
 
 
@@ -2181,32 +2145,6 @@ body#cambiu {
   }
 
 
-
-  form .hidden {
-    display: none;
-  }
-
-  .form-group.select {
-    @include flexbox();
-    justify-content: space-between;
-  }
-
-  .form-group {
-    select, input {
-      width: 100%;
-    }
-  }
-
-  .form-control {
-    color: #000;
-    font-weight: 300;
-  }
-
-  .help-block {
-    &.required:after {
-      content: 'specify either amount';
-    }
-  }
 
 
   .offer {
@@ -2807,13 +2745,6 @@ body#cambiu {
         color: #888;
       }
     }
-    font-size: 0.9em;
-    .text-right > div {
-      margin-right: $padding;
-    }
-    .row.offerPane > div {
-      line-height: 2em !important;
-    }
 
 
   .no_deal_section {
@@ -3020,7 +2951,9 @@ body#cambiu {
   }
   
   
-  
+  .offerPane [data-field=duration] {
+  display: none;
+}
 
   .minicard .duration {
     z-index: 1;
@@ -3257,10 +3190,10 @@ body#cambiu {
 
   .open_params_wrapper a {
     text-transform: uppercase;
-    color: darken($brand-color, 10%);
+//    color: darken($brand-color, 10%);
     text-decoration: none;
     &:hover {
-      color: darken($brand-color, 20%);
+//      color: darken($brand-color, 20%);
     }
   }
   .above_fold {
@@ -3762,30 +3695,6 @@ body#cambiu {
     z-index: 2;
     .well {
       margin-bottom: 0;
-    }
-  }
-
-  &.search {
-    .exchange_summary_bg img {
-        width: 100%;
-      position: relative;
-      top: 6px;
-        height: $exchange_summary_bg_img_height;
-    }
-    #exchanges_content {
-      /*
-      */
-    }
-
-    .parameters {
-      position: fixed;
-//      display: none;
-      &.in {
-      }
-    }
-
-    .parameters {
-      display: none;
     }
   }
 

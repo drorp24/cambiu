@@ -410,7 +410,7 @@ order = function($scope, exchange) {
 };
 
 requestOrderConfirmation = function() {
-    snack('Click <strong>CONFIRM</strong> when deal is done', {upEl: $('.swiper-container'), icon: 'assignment_turned_in', timeout: 7000});
+    snack('Click <strong>CONFIRM</strong> when deal is done', {upEl: $('.swiper-container'), icon: 'assignment_turned_in', timeout: 3000});
 };
 
 orderConfirmationRequired = function() {
