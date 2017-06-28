@@ -40,7 +40,7 @@
 
     function no(offers) {
         if (offers.length == 0) {
-            snack("No offer for these criteria. <br> Click OK to change them", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
+            snack("No offers for these criteria. <br> Click OK to change them.", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
             return true;
         }
     }
@@ -69,6 +69,8 @@
         pageNum = 1;
         populatePage({page: pageNum, list: true, cards: true});
         $('.pagination').addClass('active');
+
+        selectExchange($('.active.pane .best.ecard'), false);
 
     };
 
@@ -192,7 +194,7 @@
         })
     };
 
-    selectExchange = function($exchange) {
+    selectExchange = function($exchange, manual = true) {
 
         $exchange.addClass('selected');
         if ($exchange.is('.ordered')) $exchange.addClass('order');
@@ -202,9 +204,9 @@
 
         setPage({pane1: 'offer', id1: 'curr'});
         populateStreetview(currentExchange());
-        report('Select', 'Exchange');
         clearDirections();
 
+        if (manual) report('Select', 'Exchange');
     };
 
     unselectExchange = function() {

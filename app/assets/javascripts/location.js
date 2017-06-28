@@ -166,7 +166,7 @@ geocode = function(locationArg) {
                 set('user_location', search.user.location = location_name);
             }
 
-            resolve(location_name);
+            resolve(search.location);
 
         }
 

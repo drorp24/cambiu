@@ -34,15 +34,13 @@
 
     </div>
 
-    <div class="expiry">
-      <span class="expiry_text">Expires</span>
-      <span class="expiry_time" data-model="exchange" data-field="expiry_time">4 hrs</span>
-    </div>
-
-    <div class="actions_line flex_between">
-      <div class="lessmore icon"></div>
+    <div class="actions_line flex_center column">
+      <div class="newexpiry flex_center">
+        <i class="newexpiry_icon material-icons">timers</i>
+        <span class="newexpiry_text flex_center">Expires at </span>
+        <span class="newexpiry_time flex_center" data-model="exchange" data-field="expiry_time"></span>
+      </div>
       <button class="btn-flat waves-effect more action" data-href-pane="order" data-href-id="curr" data-href-delay="true"></button>
-      <div class="lessmore icon" data-action></div>
     </div>
 
   </div>
@@ -56,15 +54,16 @@
       </button>
     </div>
 
-<!--
-    <div class="order_word"></div>
-    <div class="flex_center">
-      <button class="btn order_button">
-        <i class="material-icons flex_center">shopping_cart</i>
-       </button>
-    </div>
--->
-
   </div>
+
+  <div class="list_button_container flex_center">
+    <div class="list small fab flex_center column" data-href-pane="offers" data-href-delay="true">
+      <button class="btn-floating waves-effect flex_center">
+        <i class="material-icons flex_center">chevron_right</i>
+        <div class="fab_text">List</div>
+      </button>
+    </div>
+  </div>
+
 
 </div>

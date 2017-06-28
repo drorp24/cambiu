@@ -99,7 +99,6 @@ refresh = function(pane, $pane, exchange) {
     }
 
     if (pane == 'list') {
-        populatePage({page: pageNum, list: true, cards: false});
         if (orderConfirmationRequired()) requestOrderConfirmation();
     }
 

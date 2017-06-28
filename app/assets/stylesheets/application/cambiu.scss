@@ -163,6 +163,10 @@ $formGreen: #009688;
 $nav_button_top: 35vh;
 $nav_button_right: 7vw;
 $fab_height: 10vh;
+$fab_text_font_size: 1.5vh;
+$fab_text_top: 3vh;
+$small_fab_height: 8vh;
+$small_fab_text_top: 1.5vh;
 $form-label-floating-size: 3.5vw;
 $form-font-size: 5.5vw;
 $screen-md-min: 992px;
@@ -749,7 +753,6 @@ body#cambiu {
   }
 
 
-
   // twitter-bootstrap-4 & MDB adjustments - end
 
   .search {
@@ -852,6 +855,7 @@ body#cambiu {
 
   .fab {
     width: $fab_height;
+    height: $fab_height;
     margin: auto; //otherwise the entire row is clickable
     margin-top: 0;
     margin-bottom: 0;
@@ -879,14 +883,20 @@ body#cambiu {
       }
       .fab_text {
         position: absolute;
-        top: $fab_height * 0.3;
+        top: $fab_text_top;
         left: 0;
         width: 100%;
-        font-size: $fab_height * 0.13;
+        font-size: $fab_text_font_size;
         font-weight: 300;
         color: #fff;
       }
       margin: 0;
+    }
+  }
+
+  .small.fab  {
+    .fab_text {
+      top: $small_fab_text_top;
     }
   }
 
@@ -985,6 +995,7 @@ body#cambiu {
 }
 
 .list-group {
+  box-shadow: none;
   padding: 0;
   .list-group-item {
     line-height: 1.5;
@@ -2230,7 +2241,7 @@ body#cambiu {
         color: $brand-color-a;
       }
       .text {
-        width: 45%;
+        width: 40%;
       }
       .figure {
         width: 50%;
@@ -2244,8 +2255,9 @@ body#cambiu {
         }
       }
       .right_icon {
-        width: 5%;
+        width: 10%;
         text-align: right;
+        justify-content: flex-end;
       }
       &.charge {
         display: none;
@@ -2447,6 +2459,24 @@ body#cambiu {
         width: $order_button_width;
         left: calc(50vw - #{$order_button_width} / 2);
        }
+
+
+      .list_button_container {
+        position: absolute;
+        top: 15vh;
+        right: 5vw;
+        .list.fab button {
+          height: $small_fab_height;
+          width: $small_fab_height;
+          background: #4B515D;
+          font-weight: 900;
+        }
+      }
+
+
+
+
+
       button.btn:not(.btn-raised).order_button {
         z-index: 1;
         display: block;
@@ -2599,6 +2629,8 @@ body#cambiu {
       @include vwidth(100vw);
       padding-top: $navbar_height;
       .section {
+        padding-right: 5%;
+        padding-left: 5%;
         color: #000;
         height: 35%;
         @include apple-like;
@@ -2645,7 +2677,6 @@ body#cambiu {
         font-weight: 100;
       }
       .deal {
-        padding-bottom: 6%;
         .icon.right_icon, .saving {
           display: none !important;
         }
@@ -3107,6 +3138,33 @@ body#cambiu {
       @include vfont-size(5.5vw);
     }
   }
+
+  .newexpiry {
+    font-weight: 300;
+    color: #000;
+    font-size: 5vw;
+    .newexpiry_icon {
+      font-size: 6vw;
+      font-weight: 100;
+      width: 6vw; //wtf
+      margin-right: 1vw;
+      position: relative;
+      bottom: 0.1vw;
+    }
+    .newexpiry_text {
+      font-size: 4.5vw;
+      font-weight: 100;
+      margin-right: 1vw;
+    }
+    .newexpiry_time {
+      font-size: 4.5vw;
+      font-weight:100;
+    }
+  }
+
+  .offerPane button {
+    margin-top: 0;
+   }
 
   .call_to_action {
     position: fixed;
@@ -3750,6 +3808,7 @@ body#cambiu {
 
 
   .navbar {
+    flex-direction: row;
     position: relative;
     z-index: 3;
     padding: 5px;
@@ -3770,6 +3829,13 @@ body#cambiu {
     &:hover {
       cursor: pointer;
     }
+  }
+
+  .navbar_left, .navbar_right {
+    width: 10%;
+  }
+  .navbar_center {
+    width: 80%;
   }
 
   &[data-pane=offer] {

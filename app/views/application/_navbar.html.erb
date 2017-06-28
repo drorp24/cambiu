@@ -1,9 +1,9 @@
-<nav class="navbar flex_parent row">
+<nav class="navbar">
 
   <% left_id = nil if local_assigns[:left_id].nil? %>
   <% right_id = nil if local_assigns[:right_id].nil? %>
 
-  <div class="navbar_link navbar_left col-xs-2" data-href-page="exchanges" data-href-pane=<%= local_assigns[:left_pane].nil? ? 'back' : left_pane %> data-href-id=<%= left_id  %>>
+  <div class="navbar_link navbar_left flex_center" data-href-page="exchanges" data-href-pane=<%= local_assigns[:left_pane].nil? ? 'back' : left_pane %> data-href-id=<%= left_id  %>>
     <% unless local_assigns[:left_pane] && left_pane == 'none' %>
         <i class="material-icons"><%= local_assigns[:left_icon].nil? ? 'arrow_back'  : left_icon  %></i>
     <% else %>
@@ -11,7 +11,7 @@
     <% end %>
   </div>
 
-  <div class="navbar_link navbar_center middle col-xs-8 flex_center">
+  <div class="navbar_link navbar_center flex_center">
     <% if center == 'search_params' %>
       <%= render 'search_params' %>
     <% else %>
@@ -19,7 +19,7 @@
     <% end %>
   </div>
 
-  <div class="navbar_link navbar_right col-xs-2"
+  <div class="navbar_link navbar_right flex_center"
      <% unless right_pane == 'none' %>
           <% if right_pane == 'context_menu' %>
               data-action="context_menu"
