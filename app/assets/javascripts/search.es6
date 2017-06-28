@@ -15,7 +15,7 @@ $(document).ready(function() {
         });
 
         $('.currency_select').change(function() {
-            console.log('currency_select change event triggered');
+//            console.log('currency_select change event triggered');
             var $this   = $(this);
             var field   = $this.data('field');
             var value   = $this.val();
@@ -83,7 +83,7 @@ $(document).ready(function() {
 
     clear = function($e) {
         var field = $e.data('field');
-        console.log('clear ' + field + '. val():' + $e.val(), $e[0]);
+//        console.log('clear ' + field + '. val():' + $e.val(), $e[0]);
         if ($e.val()) set(field, '');
     };
 
@@ -101,8 +101,8 @@ $(document).ready(function() {
 
     $('#search_form [data-model=search][data-field]').on('click tap', function() {
 
-        console.log('moving to a new field');
-        if ($('#search_form .location').hasClass('is-focused')) console.log('focus!');
+//        console.log('moving to a new field');
+//        if ($('#search_form .location').hasClass('is-focused')) console.log('focus!');
         var $this = $(this);
         var field = $this.data('field');
         if (amount(field)) clear($this);
@@ -110,7 +110,7 @@ $(document).ready(function() {
 
     $('#search_form [data-model=search][data-field]').keyup(function() {
 
-        console.log('keying a character');
+//        console.log('keying a character');
         var $this = $(this);
         var field = $this.data('field');
         var value = $this.val();
@@ -126,33 +126,13 @@ $(document).ready(function() {
     inputValid = function() {
 
         var amountValid = value_of('pay_amount') || value_of('buy_amount');
-
-        if (!amountValid) {
-/*
-            $('.form-group.pay_amount').addClass('has-error is-focused').find('.help-block').addClass('required');
-            $('.form-group.buy_amount').addClass('has-error').find('.help-block').addClass('required');
-*/
-            console.log('Invalid amount');
-        } else {
- /*           $('.form-group.pay_amount').removeClass('has-error is-focused').find('.help-block').removeClass('required');
-            $('.form-group.buy_amount').removeClass('has-error').find('.help-block').removeClass('required');
-*/        }
+        if (!amountValid) console.log('Invalid amount');
 
         var locationValid = $('input#location').val() && !locationDirty;
-
-        if (!locationValid) {
-//            $('.form-group.location').addClass('has-error is-focused').find('.help-block').addClass('required');
-            console.log('Invalid location. input#location: ', $('input#location').val(), 'locationDirty:', locationDirty );
-        } else {
-//            $('.form-group.location').removeClass('has-error is-focused').find('.help-block').removeClass('required');
-        }
+        if (!locationValid) console.log('Invalid location. input#location: ', $('input#location').val(), 'locationDirty:', locationDirty );
 
         var currencyValid = $('.form-group #pay_currency').val() != $('.form-group #buy_currency').val();
-
-        if (!currencyValid) {
-//            $('.form-group.pay_currency').addClass('has-error is-focused').find('.help-block').addClass('required');
-            console.log('Invalid currency')
-        }
+        if (!currencyValid) console.log('Invalid currency');
 
         valid = !!(amountValid && locationValid && currencyValid);
         return valid;
@@ -165,17 +145,6 @@ $(document).ready(function() {
             search_and_show(search.location);
         }
     });
-
-
-    // fix a (desktop only) irritating bug where by focusing out with a tab from an empty amount field it gets it previous value and clear its brother
-/*
-    $('form [data-model=search][data-field]').focusout(function() {
-
-        var $this = $(this);
-        var field = $this.data('field');
-        if (amount(field) && value_of(other(field))) clear(field);
-    });
-*/
 
 
 
@@ -367,11 +336,6 @@ $(document).ready(function() {
         if ($('body').hasClass('modal-open')) {
             hideDialog();
         }
-    });
-
-    $('body').on('click tap', '.list-group-item', function() {
-        console.log('click caught');
-        $(this).find('.list-group-item-text').toggleClass('expand');
     });
 
 
