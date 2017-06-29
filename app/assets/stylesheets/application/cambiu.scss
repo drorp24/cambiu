@@ -812,6 +812,27 @@ body#cambiu {
     padding: 5vw;
     padding-top: 5vh;
     height: 100vh;
+    .pay_amount, .buy_amount {
+      position: relative;
+      label:before {
+        content: "Amount"
+      }
+      .our_offer {
+        display: none;
+      }
+      &.our_offer {
+        label:before {
+          content: "Our offer"
+        }
+        .our_offer {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .our_offer {
+    position: absolute;
   }
 
   .search_line {
@@ -834,6 +855,12 @@ body#cambiu {
       padding-left: 10%;
     }
   }
+
+  .our_offer {
+    display: none;
+  }
+
+
 
 
 
