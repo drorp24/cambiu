@@ -295,14 +295,21 @@ populateLocalBestRate = function(local) {
 
       var empty_field = other(full_field);
       var empty_currency = value_of(twin(empty_field));
+
       var best_value = rated_currency == empty_currency ? full_value * best_rate : full_value / best_rate;
-      $('#search_form [data-model=search][data-field=' + empty_field + ']').autoNumeric('set', best_value);
+
+      var $empty = formElement(empty_field);
+      var $full = formElement(full_field);
+      $empty.autoNumeric('set', best_value);
+      $empty.addClass('our_offer');
+      $full.removeClass('our_offer');
+
       resolve(best_value);
 
     }
 
     function parseJson(response) {
-      console.log(response)
+      console.log(response);
       return response.json()
     }
 

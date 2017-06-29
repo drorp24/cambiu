@@ -10,14 +10,6 @@
     verifyUserLocation = getUserLocation();                // in case I need to verify location was found before doing something that requires it (e.g., search, particularly here below)
     //    if (value_of('search_id')) verifyUserLocation.then(search_and_show);
 
-function doStuffThatRequiresLocation(location) {
-
-    geocode(location);
-    local = nearest_locale(location.lat, location.lng);
-    populateLocalCurrency(local);
-    populateLocalBestRate(local);
-}
-
 
 $(document).ready(function() {  // TODO: only populate Params needs to wait to document. For the other (userLocation) it's just unneeded latency
 
@@ -26,6 +18,15 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
     setProperPage();
 
 });
+
+function doStuffThatRequiresLocation(location) {
+
+    geocode(location);
+    local = nearest_locale(location.lat, location.lng);
+    populateLocalCurrency(local);
+    populateLocalBestRate(local);
+}
+
 
 search_and_show = function(location) {
     return Promise.all([showMap(location), search()])

@@ -93,6 +93,10 @@ $(document).ready(function() {
         return split[1] == 'amount' ? split[0] + '_currency' : split[0] + '_amount';
     };
 
+    formElement = function(field) {
+      return $('#search_form [data-model=search][data-field=' + field + ']')
+    };
+
     clean = function(value) {
         return Number(String(value).replace(/[^0-9\.]+/g,""))
     };

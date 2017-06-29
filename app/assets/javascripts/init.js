@@ -162,9 +162,9 @@ def_vals = function() {
     var def = {};
 
     def['pay_amount']       = null;
-    def['pay_currency']     = 'USD';
+    def['pay_currency']     = 'ILS';
     def['buy_amount']       = 1000;
-    def['buy_currency']     = 'GBP';
+    def['buy_currency']     = 'USD';
     def['user_lat']         = dfault.lat;
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';

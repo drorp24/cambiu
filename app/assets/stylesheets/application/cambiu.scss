@@ -812,28 +812,23 @@ body#cambiu {
     padding: 5vw;
     padding-top: 5vh;
     height: 100vh;
-    .pay_amount, .buy_amount {
+    [data-field=pay_amount], [data-field=buy_amount] {
       position: relative;
-      label:before {
+      ~ label:before {
         content: "Amount"
       }
-      .our_offer {
-        display: none;
-      }
       &.our_offer {
-        label:before {
+        position: relative;
+        ~ label:before {
           content: "Our offer"
         }
-        .our_offer {
+        ~ .our_offer_icon {
           display: block;
         }
       }
     }
   }
 
-  .our_offer {
-    position: absolute;
-  }
 
   .search_line {
     height: 10%;
@@ -856,7 +851,11 @@ body#cambiu {
     }
   }
 
-  .our_offer {
+  .our_offer_icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 2rem;
     display: none;
   }
 
