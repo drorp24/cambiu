@@ -15,7 +15,8 @@ $(document).ready(function() {
         });
 
         $('.currency_select').change(function() {
-//            console.log('currency_select change event triggered');
+            console.log('currency_select change event triggered');
+
             var $this   = $(this);
             var field   = $this.data('field');
             var value   = $this.val();
@@ -85,6 +86,15 @@ $(document).ready(function() {
 
     other = function(field) {
         return field.includes('pay') ? 'buy' + field.split('pay')[1] : 'pay' + field.split('buy')[1]
+    };
+
+    twin = function(field) {
+        var split = field.split('_');
+        return split[1] == 'amount' ? split[0] + '_currency' : split[0] + '_amount';
+    };
+
+    clean = function(value) {
+        return Number(String(value).replace(/[^0-9\.]+/g,""))
     };
 
     clear = function($e) {

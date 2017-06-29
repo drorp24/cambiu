@@ -153,6 +153,7 @@ var resultsPerPage = 5;
 sessionStorage.videoStopped = null;
 var cardXoffset;
 var findUserLocation;
+var local = {};
 
 
 

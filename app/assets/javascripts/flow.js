@@ -7,14 +7,16 @@
 
     console.log('flow');
 
-    verifyUserLocation = getUserLocation(); // in case I need to verify location was found before doing something that requires it (e.g., search, particularly here below)
-    verifyUserLocation.then(doStuffThatRequiresLocation); // that's the way to run multiple then's in parallel, and to separate one promise from a chain of promises
+    verifyUserLocation = getUserLocation();                // in case I need to verify location was found before doing something that requires it (e.g., search, particularly here below)
+    verifyUserLocation.then(doStuffThatRequiresLocation);  // that's the way to run multiple then's in parallel, and to separate one promise from a chain of promises
     //    if (value_of('search_id')) verifyUserLocation.then(search_and_show);
 
 function doStuffThatRequiresLocation(location) {
 
     geocode(location);
-    populateParamsByLocation(location);
+    local = nearest_locale(location.lat, location.lng);
+    populateLocalCurrency(local);
+    populateLocalBestRate(local);
 }
 
 

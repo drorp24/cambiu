@@ -29,11 +29,10 @@ getUserLocation = function() {
             user.lat = position.coords.latitude;
             user.lng = position.coords.longitude;
 
-            var center = nearest_center(user.lat, user.lng);
+            var center = nearest_locale(user.lat, user.lng);
 
             if (center.distance < 100) {
                 setLocation(user.lat, user.lng, 'user', 'positionFound', user.lat, user.lng, null);
-                populateParamsByLocation(center.currency);
             } else {
                 setLocation(center.lat, center.lng, 'nearest', 'nothingAroundUser', user.lat, user.lng, null);
             }
@@ -353,10 +352,9 @@ hideSearchLocation = function() {
 };
 
 
-function nearest_center(user_lat, user_lng) {
+nearest_locale = function(lat, lng) {
 
-    // Currently, it checks London only
-    // When we have more, loop over all centers leaving out the nearest: lat, lng, distance
+    // TODO: Enchance to include all cities
 
     // TODO: Fetch this data from the server
     var centers = {
@@ -382,7 +380,7 @@ function nearest_center(user_lat, user_lng) {
 
         var distance_from_that_center =
             distance(
-                new google.maps.LatLng(user_lat, user_lng),
+                new google.maps.LatLng(lat, lng),
                 new google.maps.LatLng(center.lat, center.lng)
             )/1000;
         if (distance_from_that_center < shortest_distance) {
@@ -395,7 +393,7 @@ function nearest_center(user_lat, user_lng) {
 
     return nearest_center;
 
-}
+};
 
 showingOffersIn = function(city) {
     snack('No offers where you are. <br> Showing offers in ' + city + '.', {
