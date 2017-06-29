@@ -23,10 +23,8 @@
 
     <div class="md-form buy_amount">
       <input type="tel" pattern="\d*" id="buy_amount" data-model="search" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control">
-      <label for="buy_amount" class="control-label"></label>
-      <div class="our_offer"><i class="fa fa-hand-o-left" aria-hidden="true"></i></div>
+      <label for="buy_amount" class="control-label">Amount</label>
     </div>
-
 
   </div>
 
@@ -53,13 +51,31 @@
 
     <div class="md-form pay_amount">
       <input type="tel" pattern="\d*" id="pay_amount" data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control">
-      <label for="pay_amount" class="control-label"></label>
-      <div class="our_offer"><i class="fa fa-hand-o-left" aria-hidden="true"></i></div>
+      <label for="pay_amount" class="control-label">Amount</label>
     </div>
-
 
   </div>
 
+  <div class="search_line">
+    <div class="md-form pay_currency select">
+      <select id="pay_currency" data-model="search" data-field="pay_currency" data-symboltarget="pay_amount" name="search[pay_currency]"
+              class="currency_select select optional text-center mdb-select">
+        <option value="" disabled selected>Currency you want</option>
+        <option data-symbol="$ "  value="USD">USD</option>
+        <option data-symbol="€ "  value="EUR">EUR</option>
+        <option data-symbol="￡ " value="GBP">GBP</option>
+        <option data-symbol="$ "  value="AUD">AUD</option>
+        <option data-symbol="$ "  value="CAD">CAD</option>
+        <option data-symbol="￥ " value="JPY">JPY</option>
+        <option data-symbol="¥ " value="CNY">CNY</option>
+        <option data-symbol="$ " value="HKD">HKD</option>
+        <option data-symbol="₪ " value="ILS">ILS</option>
+        <option data-symbol="kr " value="NOK">NOK</option>
+      </select>
+      <label for="pay_currency">Pay</label>
+    </div>
+
+  </div>
 
   <div class="search_line">
 

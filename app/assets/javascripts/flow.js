@@ -5,17 +5,11 @@
 
 
 
-$(document).ready(function() {  // TODO: only populate Params needs to wait to document. For the other (userLocation) it's just unneeded latency
-
     console.log('flow');
 
-    populateParams();
-    verifyUserLocation = getUserLocation();                     // location getting doesn't require document to load but population does
-    verifyUserLocation.then(doStuffThatRequiresLocation);   // that's the way to run multiple then's in parallel, particularly geocode in parallel to the currency/rate populations
-
-//  if (value_of('search_id')) verifyUserLocation.then(search_and_show);
-
-});
+    verifyUserLocation = getUserLocation();                // in case I need to verify location was found before doing something that requires it (e.g., search, particularly here below)
+    verifyUserLocation.then(doStuffThatRequiresLocation);  // that's the way to run multiple then's in parallel, and to separate one promise from a chain of promises
+    //    if (value_of('search_id')) verifyUserLocation.then(search_and_show);
 
 function doStuffThatRequiresLocation(location) {
 
@@ -25,7 +19,13 @@ function doStuffThatRequiresLocation(location) {
     populateLocalBestRate(local);
 }
 
+
+$(document).ready(function() {  // TODO: only populate Params needs to wait to document. For the other (userLocation) it's just unneeded latency
+
+    populateParams();
     setProperPage();
+
+});
 
 search_and_show = function(location) {
     return Promise.all([showMap(location), search()])
