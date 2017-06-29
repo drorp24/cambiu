@@ -238,7 +238,7 @@ populateReviews = function(exchange, $scope) {
 // populate search params in search form and navbar
 // values are either defaults or taken from ss is this is refresh
 // part of what used to be restore()
-populateParams = function() {
+populateParams = function(local) {
 
     var value_of_pay_amount = value_of('pay_amount');
     var value_of_buy_amount = value_of('buy_amount');
@@ -251,22 +251,22 @@ populateParams = function() {
         } else
         if (key == 'pay_amount') {
             set('pay_amount',   value_of_pay_amount || (value_of_buy_amount ? null : def['pay_amount']))
+        } else
+        if (key == 'pay_currency') {
+          set('pay_currency', value_of('pay_currency') || local.currency);
+        } else
+        if (key == 'buy_currency') {
+          set('buy_currency', value_of('buy_currency') || local.currency == 'USD' ? 'EUR' : 'USD');
         } else {
-            set(key,            value_of(key)       || def[key])
+          set(key,            value_of(key)       || def[key])
         }
 
     });
 
     bind_currency_to_autonumeric();
+    $('#search_form select').material_select();
     $('.version').html(version);
     paramsPopulated = true;
-
-};
-
-populateLocalCurrency = function(local) {
-
-  set('pay_currency', local.currency);  // locals
-  set('buy_currency', (local.currency == 'USD') ? 'EUR' : 'USD');
 
 };
 
