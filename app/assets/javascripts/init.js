@@ -162,9 +162,7 @@ def_vals = function() {
     var def = {};
 
     def['pay_amount']       = null;
-    def['pay_currency']     = 'USD';
     def['buy_amount']       = 1000;
-    def['buy_currency']     = 'GBP';
     def['user_lat']         = dfault.lat;
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
@@ -184,9 +182,7 @@ def = function(key) {
 
 var searchParams = [
     'pay_amount',
-    'pay_currency',
     'buy_amount',
-    'buy_currency',
     'location',
     'location_short',
     'location_type',
@@ -387,6 +383,12 @@ parseJson = function(response) {
 
 
 $(document).ready(function() {
+
+    // Material Select Initialization
+    $(document).ready(function() {
+        $('.mdb-select').material_select();
+    });
+
 
     if(!navigator.onLine) { // true|false
         snack('You are currently offline')
@@ -695,11 +697,6 @@ $(document).ready(function() {
         twelvehour: true
     });
 
-
-    // Material Select Initialization
-    $(document).ready(function() {
-        $('.mdb-select').material_select();
-    });
 
 
 });
