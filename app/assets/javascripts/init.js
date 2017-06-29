@@ -388,6 +388,12 @@ parseJson = function(response) {
 
 $(document).ready(function() {
 
+    // Material Select Initialization
+    $(document).ready(function() {
+        $('.mdb-select').material_select();
+    });
+
+
     if(!navigator.onLine) { // true|false
         snack('You are currently offline')
     }
@@ -695,11 +701,6 @@ $(document).ready(function() {
         twelvehour: true
     });
 
-
-    // Material Select Initialization
-    $(document).ready(function() {
-        $('.mdb-select').material_select();
-    });
 
 
 });

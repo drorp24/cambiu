@@ -268,6 +268,9 @@ populateLocalCurrency = function(local) {
   set('pay_currency', local.currency);  // locals
   set('buy_currency', (local.currency == 'USD') ? 'EUR' : 'USD');
 
+  $('#search_form select').material_select();
+  bind_currency_to_autonumeric();
+
 };
 
 populateLocalBestRate = function(local) {
