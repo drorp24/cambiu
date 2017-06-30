@@ -154,6 +154,7 @@ sessionStorage.videoStopped = null;
 var cardXoffset;
 var findUserLocation;
 var local = {};
+var calculated = null;
 
 
 

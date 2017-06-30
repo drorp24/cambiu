@@ -149,6 +149,9 @@ $(document).ready(function() {
 
         set(field, value);
         if (amount(field) && value) clear(brother($this));
+
+        calculated = other(field);
+        console.log('calculated field: ', calculated);
     });
 
 

@@ -259,7 +259,12 @@ populateParams = function() {
 
     bind_currency_to_autonumeric();
     $('.version').html(version);
-    paramsPopulated = true;
+
+    calculated = !def['pay_amount'] ? 'pay_amount' : 'buy_amount';
+    console.log('calculated field: ', calculated);
+
+
+  paramsPopulated = true;
 
 };
 
