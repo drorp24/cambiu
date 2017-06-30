@@ -17,6 +17,7 @@ $(document).ready(function() {
         $('.currency_select').change(function() {
             console.log('currency_select change event triggered');
 
+            populateTransaction();
             populateLocalBestRate();
 
             var $this   = $(this).find('[data-model=search][data-field]').addBack('[data-model=search][data-field]');
@@ -120,6 +121,14 @@ $(document).ready(function() {
     brother = function($e) {
         return $('#search_form [data-model=search][data-field=' + other($e.data('field')) + ']');
     };
+
+    determineTransaction = function() {
+        return (value_of('buy_currency') == local.currency) ? 'buy' : 'sell'
+    };
+
+
+
+
 
     $('#search_form [data-model=search][data-field]').on('click tap', function() {
 

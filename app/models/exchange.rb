@@ -277,7 +277,7 @@ class Exchange < ActiveRecord::Base
         get_amount:       get_amount    = Monetize.parse(params[:get_amount]).amount,
         get_currency:     get_currency  = params[:get_currency],
         field:            field         = params[:field],
-        transaction:      transaction   = get_currency != currency ? 'sell' : 'buy',
+        transaction:      params[:transaction],
         rates:            {},
         bad_rates:        {},
         quote:            nil,
@@ -494,13 +494,13 @@ class Exchange < ActiveRecord::Base
     'system'
   end
 
-  def offer(center, pay, buy, radius)
+  def offer(center, pay, buy, radius, transaction)
 
     exchange_hash = {}
 
     exchange_hash[:distance] = self.alt_distance_from(center)
 
-    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount', radius: radius, distance: exchange_hash[:distance])
+    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount', radius: radius, distance: exchange_hash[:distance], transaction: transaction)
     return {} if quotes[:error].present? and !Rails.env.development?
 
     exchange_hash[:id] = self.id

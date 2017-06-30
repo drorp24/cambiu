@@ -6,7 +6,7 @@ class Search < ActiveRecord::Base
 #  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   enum service_type: [ :pickup, :delivery ]
 
-  attr_accessor :fetch, :mode, :hash, :distance_slider, :payment_method, :country, :city
+  attr_accessor :fetch, :mode, :hash, :distance_slider, :payment_method, :country, :city, :transaction
 
   validate :valid_input, on: :create
 
@@ -17,11 +17,6 @@ class Search < ActiveRecord::Base
   scope :other, -> {where.not("location like ? OR location like ?", "%Tel%Aviv%", "%London%") }
   scope :empty, -> {where(location: nil) }
 
-=begin
-  scope :notlondon, -> {negate(london)}
-  scope :nottelaviv, -> {negate(telaviv)}
-  scope :other, -> {notlondon.merge(Search.nottelaviv)}
-=end
 
 
 
@@ -103,11 +98,11 @@ class Search < ActiveRecord::Base
     center          = [location_lat, location_lng]
     box             = Geocoder::Calculations.bounding_box(center, distance)
 
-    exchange_offers(exchange_id, location, center, box, pay, buy, distance)
+    exchange_offers(exchange_id, location, center, box, pay, buy, distance, transaction)
 
   end
 
-  def exchange_offers(exchange_id, location, center, box, pay, buy, distance)
+  def exchange_offers(exchange_id, location, center, box, pay, buy, distance, transaction)
 
     pay_rate  = (pay.currency.iso_code.downcase + '_rate').to_sym
     buy_rate  = (buy.currency.iso_code.downcase + '_rate').to_sym
@@ -116,7 +111,7 @@ class Search < ActiveRecord::Base
 
     exchanges_offers = []
     exchanges.each do |exchange|
-      offer = exchange.offer(center, pay, buy, distance)
+      offer = exchange.offer(center, pay, buy, distance, transaction)
       exchanges_offers << offer #unless (offer[:errors].any? and offer[:errors][0] != 'Out of radius' and !Rails.env.development?)
     end
 

@@ -409,30 +409,3 @@ setLocale = function(location) {
     return nearest_center;
 
 };
-
-showingOffersIn = function(city) {
-    snack('No offers where you are. <br> Showing offers in ' + city + '.', {
-        button: '<i class="material-icons">help_outline</i>',
-        klass: 'oops',
-        timeout: 5000,
-        link: {
-            page: 'exchanges',
-            pane: 'help',
-            help: {
-                topic: 'Why are you showing offers in ' + city + '?',
-                content:
-                "<p>No offers in your vicinity, but you may find interest in our " + city + " offers.</p>" +
-                "<p>Soon, our network will grow, expanding to more cities.</p>" +
-                "<p>Stay tuned!</p>"
-            }
-        }
-    });
-};
-
-locationMsg = function(location) {
-    if (pane != 'map' || locationMsgInformed) return;
-    if (location.type == 'nearest' && nearest && nearest.name) {
-        showingOffersIn(nearest.name);
-        locationMsgInformed = true;
-    }
-};

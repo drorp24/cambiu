@@ -273,18 +273,18 @@ populateLocalCurrency = function() {
 
 };
 
+// NOTE: populateTransaction must precede populateBestRate when both are called
+populateTransaction = function() {
+  set('transaction', determineTransaction())
+};
+
 populateLocalBestRate = function() {
 
   return new Promise(function(resolve, reject) {
 
     function populateRate(data) {
 
-      if (local.currency) {
-        var transaction = (value_of('pay_currency') == local.currency) ? 'sell' : ((value_of('buy_currency') == local.currency) ? 'buy' : 'sell')
-      } else {
-        var transaction = 'sell'
-      }
-
+      var transaction = value_of('transaction');
       console.log('populateBestRate. Transaction: ' + transaction, data);
 
       var best_transaction_rate = data['best_' + transaction + '_rate'];
