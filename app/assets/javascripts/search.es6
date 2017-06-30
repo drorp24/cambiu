@@ -14,11 +14,8 @@ $(document).ready(function() {
             update_currency_symbol($(this));
         });
 
-        $('.currency_select').change(function() {
+        $('.currency_select.select-wrapper').change(function() {
             console.log('currency_select change event triggered');
-
-            populateTransaction();
-            populateLocalBestRate();
 
             var $this   = $(this).find('[data-model=search][data-field]').addBack('[data-model=search][data-field]');
             var field   = $this.data('field');
@@ -27,12 +24,16 @@ $(document).ready(function() {
             var symbol  = $this.find('option:selected').attr('data-symbol');
 
             set(field, value);
+            populateTransaction();
+            populateLocalBestRate();
+
             disable($('.md-form.select.' + other(field)), value);
 
             $('[data-autonumeric][data-field=' + target + ']').each(function() {
                 update_currency_symbol($(this), symbol);
             })
         });
+
 
         function disable($e, value) {
             $e.find('ul.dropdown-content li').each(function() {
