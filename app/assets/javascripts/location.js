@@ -29,7 +29,7 @@ getUserLocation = function() {
             user.lat = position.coords.latitude;
             user.lng = position.coords.longitude;
 
-            var center = nearest_locale(user.lat, user.lng);
+            var center = setLocale(user);
 
             if (center.distance < 100) {
                 setLocation(user.lat, user.lng, 'user', 'positionFound', user.lat, user.lng, null);
@@ -224,6 +224,10 @@ function searchbox_addListener(searchBox) {
         set('location_lng',         search.location.lng = place.geometry.location.lng());
         set('location_type',        search.location.type = 'selected');
         set('location_reason',      search.location.reason = 'changed by user');
+
+        setLocale(search.location);
+        populateLocalBestRate();
+
         console.log('Location changed by user to: ', search.location);
         console.log('Stopping userWatch & userPositionCheck');
         if (typeof userWatch !== 'undefined' && userWatch) navigator.geolocation.clearWatch(userWatch);
@@ -352,11 +356,13 @@ hideSearchLocation = function() {
 };
 
 
-nearest_locale = function(lat, lng) {
+setLocale = function(location) {
 
     // TODO: Enchance to include all cities
-
     // TODO: Fetch this data from the server
+
+    console.log('setLocale setting a new locale to match location: ', location);
+
     var centers = {
         ISR: {
             lat: 32.0853,
@@ -380,17 +386,26 @@ nearest_locale = function(lat, lng) {
 
         var distance_from_that_center =
             distance(
-                new google.maps.LatLng(lat, lng),
+                new google.maps.LatLng(location.lat, location.lng),
                 new google.maps.LatLng(center.lat, center.lng)
             )/1000;
         if (distance_from_that_center < shortest_distance) {
             shortest_distance = distance_from_that_center;
             nearest_center = center;
-            nearest_center.distance = distance_from_that_center;
+            nearest_center.user_distance = distance_from_that_center;
         }
 
     });
 
+    // prepare form for the upcoming ref rates search
+    set('country', nearest_center.country);
+    set('city', nearest_center.city);
+
+    // update local for potential amount changes
+    Object.assign(local, nearest_center);
+    local.rates = null;
+
+    // required for the initial call
     return nearest_center;
 
 };

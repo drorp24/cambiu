@@ -17,7 +17,9 @@ $(document).ready(function() {
         $('.currency_select').change(function() {
             console.log('currency_select change event triggered');
 
-            var $this   = $(this);
+            populateLocalBestRate();
+
+            var $this   = $(this).find('[data-model=search][data-field]').addBack('[data-model=search][data-field]');
             var field   = $this.data('field');
             var value   = $this.val();
             var target  = $this.data('symboltarget');
@@ -228,6 +230,8 @@ $(document).ready(function() {
 
     fetchBest = function() {
 
+        console.log('fetchBest...');
+
         return new Promise(function(resolve, reject) {
 
             function fetchRates() {
@@ -242,6 +246,7 @@ $(document).ready(function() {
             }
 
             function returnResults(data) {
+                Object.assign(local, {rates: data});
                 resolve(data)
             }
 

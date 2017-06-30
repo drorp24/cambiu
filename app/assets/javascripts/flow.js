@@ -22,9 +22,9 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
 function doStuffThatRequiresLocation(location) {
 
     geocode(location);
-    local = nearest_locale(location.lat, location.lng);
-    populateLocalCurrency(local);
-    populateLocalBestRate(local);
+    setLocale(location);
+    populateLocalCurrency();
+    populateLocalBestRate();
 }
 
 

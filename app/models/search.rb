@@ -6,7 +6,7 @@ class Search < ActiveRecord::Base
 #  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
   enum service_type: [ :pickup, :delivery ]
 
-  attr_accessor :fetch, :mode, :hash, :distance_slider, :payment_method
+  attr_accessor :fetch, :mode, :hash, :distance_slider, :payment_method, :country, :city
 
   validate :valid_input, on: :create
 
@@ -58,21 +58,23 @@ class Search < ActiveRecord::Base
 
     exchanges.each do |exchange|
 
-      exchange_rates = exchange.rate(rated_currency, base_currency).merge(id: exchange.id, transaction: buy_currency != exchange.currency ? 'sell' : 'buy')
-      if exchange_rates[:buy] < best_buy
+      exchange_rates = exchange.rate(rated_currency, base_currency).merge(exchange_id: exchange.id)
+      if exchange_rates[:buy] && exchange_rates[:buy] < best_buy
         best_buy_rate = exchange_rates
         best_buy = exchange_rates[:buy]
       end
-      if exchange_rates[:sell] > best_sell
+      if exchange_rates[:sell] && exchange_rates[:sell] > best_sell
         best_sell_rate = exchange_rates
         best_sell = exchange_rates[:sell]
       end
 
     end
 
+
     return {
         best_buy_rate: best_buy_rate,
-        best_sell_rate: best_sell_rate
+        best_sell_rate: best_sell_rate,
+        bad_rate: Exchange.bad_rate(country,rated_currency, base_currency)
     }
 
   end
@@ -143,45 +145,6 @@ class Search < ActiveRecord::Base
     }
   end
 
-  def indicate_best(exchanges_offers, pay, buy)
-
-    return [] if exchanges_offers.empty?
-
-    transaction = buy.currency.iso_code != "GBP" ? 'sell' : 'buy'
-    direction = pay.amount > 0 ? 'max' : 'min'
-
-=begin
-    exchanges_offers = exchanges_offers.select{|exchange_offer| exchange_offer[:rates][transaction.to_sym] != nil}
-
-    return [] if exchanges_offers.empty?
-=end
-
-    nearest_exchange_offer = exchanges_offers.min_by{|exchange_offer| exchange_offer[:distance]}
-    nearest_exchange_offer[:best_at] << 'nearest'
-
-    nearest_distance = nearest_exchange_offer[:distance]
-
-    if direction == 'min'
-
-      cheapest_exchange_offer = exchanges_offers.min_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || 1000000}
-      cheapest_exchange_offer[:best_at] << 'cheapest'
-
-      best_exchange_offer = exchanges_offers.select{|exchange_offer| exchange_offer[:distance] <= nearest_distance + 1}.min_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || 1000000}
-      best_exchange_offer[:best_at] << 'best'
-
-    elsif direction == 'max'
-
-      highest_exchange_offer = exchanges_offers.max_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || -1}
-      highest_exchange_offer[:best_at] << 'highest'
-
-      best_exchange_offer = exchanges_offers.select{|exchange_offer| exchange_offer[:distance] <= nearest_distance + 1}.max_by{|exchange_offer| exchange_offer[:rates][transaction.to_sym] || 1000000}
-      best_exchange_offer[:best_at] << 'best'
-
-    end
-
-    return exchanges_offers
-
-  end
 
   def pane=(pane)
     @rest=pane
