@@ -261,7 +261,8 @@ populateParams = function() {
     $('.version').html(version);
 
     calculated = !def['pay_amount'] ? 'pay_amount' : 'buy_amount';
-    console.log('calculated field: ', calculated);
+    formElement(calculated).addClass('calculated');
+//    console.log('calculated field: ', calculated);
 
 
   paramsPopulated = true;
@@ -283,54 +284,44 @@ populateTransaction = function() {
   set('transaction', determineTransaction())
 };
 
-populateLocalBestRate = function() {
+populateLocalRates = function() {
 
   return new Promise(function(resolve, reject) {
 
-    function populateRate(data) {
-
-      var transaction = value_of('transaction');
-      console.log('populateBestRate. Transaction: ' + transaction, data);
-
-      var best_transaction_rate = data['best_' + transaction + '_rate'];
-      var best_rate = best_transaction_rate[transaction];
-      var rated_currency = best_transaction_rate['rated_currency'];
-
-      var full_field = value_of('buy_amount') ? 'buy_amount' : 'pay_amount';
-      var full_value = clean(value_of(full_field));
-
-      var empty_field = other(full_field);
-      var empty_currency = value_of(twin(empty_field));
-
-      var best_value = rated_currency == empty_currency ? full_value * best_rate : full_value / best_rate;
-
-      var $empty = formElement(empty_field);
-      var $full = formElement(full_field);
-      $empty.autoNumeric('set', best_value);
-      $empty.addClass('our_offer');
-      $full.removeClass('our_offer');
-
-      resolve(best_value);
-
-    }
-
-    function parseJson(response) {
-      console.log(response);
-      return response.json()
-    }
-
     function tell(error) {
-      console.log('catch during populateBestRate!');
+      console.log('catch during populateLocalRates!');
       reject(error)
     }
 
-    fetchBest()
-        .then(populateRate)
+    fetchLocalRates()
+        .then(populateBestOffer)  // TODO: populate local bad rate too
+        .then(function(best_value) {resolve(best_value)})
         .catch(tell)
 
   })
 
 };
+
+populateBestOffer = function(data) {
+
+  var transaction = value_of('transaction');
+//console.log('populateBestOffer. Transaction: ' + transaction, data);
+
+  var best_rate = data['best'][transaction][transaction];
+  var rated_currency = data['best'][transaction]['rated_currency'];
+
+  var populated_value = clean(value_of(other(calculated)));
+  var calculated_currency = value_of(twin(calculated));
+
+  var best_value = rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
+
+  var $calculated = formElement(calculated);
+  $calculated.autoNumeric('set', best_value);
+
+  return(best_value);
+
+};
+
 
 
 value_of = function(key) {

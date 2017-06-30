@@ -817,12 +817,12 @@ body#cambiu {
       ~ label:before {
         content: "Amount"
       }
-      &.our_offer {
+      &.calculated {
         position: relative;
         ~ label:before {
           content: "Our offer"
         }
-        ~ .our_offer_icon {
+        ~ .calculated_icon {
           display: block;
         }
       }
@@ -851,7 +851,7 @@ body#cambiu {
     }
   }
 
-  .our_offer_icon {
+  .calculated_icon {
     position: absolute;
     top: 0;
     right: 0;

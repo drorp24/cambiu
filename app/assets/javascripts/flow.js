@@ -25,7 +25,7 @@ function doStuffThatRequiresLocation(location) {
     setLocale(location);
     populateLocalCurrency();
     populateTransaction();
-    populateLocalBestRate();
+    populateLocalRates();
 }
 
 

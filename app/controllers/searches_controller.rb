@@ -1,8 +1,8 @@
 class SearchesController < ApplicationController 
   skip_before_action :verify_authenticity_token
 
-  def bestRates
-    render json: Search.new(search_params).bestRates
+  def localRates
+    render json: Search.new(search_params).localRates
   end
 
   def unique

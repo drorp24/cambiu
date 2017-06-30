@@ -226,7 +226,7 @@ function searchbox_addListener(searchBox) {
         set('location_reason',      search.location.reason = 'changed by user');
 
         setLocale(search.location);
-        populateLocalBestRate();
+        populateLocalRates();
 
         console.log('Location changed by user to: ', search.location);
         console.log('Stopping userWatch & userPositionCheck');

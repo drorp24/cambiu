@@ -25,7 +25,7 @@ $(document).ready(function() {
 
             set(field, value);
             populateTransaction();
-            populateLocalBestRate();
+            populateLocalRates();
 
             disable($('.md-form.select.' + other(field)), value);
 
@@ -151,7 +151,11 @@ $(document).ready(function() {
         if (amount(field) && value) clear(brother($this));
 
         calculated = other(field);
-        console.log('calculated field: ', calculated);
+        formElement(field).removeClass('calculated');
+        formElement(calculated).addClass('calculated');
+        populateBestOffer(local.rates);
+
+//        console.log('calculated field: ', calculated);
     });
 
 
@@ -241,20 +245,20 @@ $(document).ready(function() {
 
     };
 
-    fetchBest = function() {
+    fetchLocalRates = function() {
 
-        console.log('fetchBest...');
+        console.log('fetchLocalRates...');
 
         return new Promise(function(resolve, reject) {
 
             function fetchRates() {
-                return fetch('/searches/bestRates?' + $( "#search_form input, #search_form select" ).serialize(), {
+                return fetch('/searches/localRates?' + $( "#search_form input, #search_form select" ).serialize(), {
                     method: 'get'
                 })
             }
 
             function tell(error) {
-                console.log('catch during fetchBest!');
+                console.log('catch during fetchLocalRates!');
                 reject(error)
             }
 

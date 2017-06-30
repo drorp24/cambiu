@@ -20,7 +20,7 @@ class Search < ActiveRecord::Base
 
 
 
-  def bestRates
+  def localRates
 
     return if           pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
     return if           location_lat.blank? or location_lng.blank?
@@ -67,10 +67,14 @@ class Search < ActiveRecord::Base
 
 
     return {
-        best_buy_rate: best_buy_rate,
-        best_sell_rate: best_sell_rate,
-        bad_rate: Exchange.bad_rate(country,rated_currency, base_currency)
+        best: {
+            buy: best_buy_rate,
+            sell: best_sell_rate
+        },
+        worst:
+            Exchange.bad_rate(country,rated_currency, base_currency)
     }
+
 
   end
 
