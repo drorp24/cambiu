@@ -22,9 +22,10 @@
     </div>
 
     <div class="md-form buy_amount">
-      <input type="tel" pattern="\d*" id="buy_amount" data-model="search" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control">
+      <input type="tel" pattern="\d*" id="buy_amount"
+             data-model="search" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control text-right">
       <label for="buy_amount" class="control-label"></label>
-      <div class="calculated_icon"><i class="fa fa-hand-o-left"></i></div>
+      <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
     </div>
 
   </div>
@@ -51,48 +52,52 @@
     </div>
 
     <div class="md-form pay_amount">
-      <input type="tel" pattern="\d*" id="pay_amount" data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control">
+      <input type="tel" pattern="\d*" id="pay_amount"
+             data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control text-right">
       <label for="pay_amount" class="control-label"></label>
-      <div class="calculated_icon"><i class="fa fa-hand-o-left"></i></div>
+      <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
     </div>
 
   </div>
 
-  <div class="search_line">
-    <div class="bfh-selectbox bfh-currencies" data-currency="EUR" data-flags="true" data-available="EUR,USD,ILS,CAD,JPN">
+
+  <div class="search_line worst">
+    <div class="md-form flex_between">
+      <label for="worst_amount" class="">Bank's offer</label>
+      <input disabled type="tel" id="worst_amount"
+             data-model="search" data-field="worst_amount" data-autonumeric="true" data-symbolsource="pay_currency" class="text-right">
+    </div>
+  </div>
+
+  <div class="search_line worst">
+    <div class="md-form flex_between">
+      <label for="worst_saving" class="">Your gain</label>
+      <input disabled type="tel" id="worst_saving"
+             data-model="search" data-field="worst_saving" data-autonumeric="true" data-symbolsource="pay_currency" class="text-right">
     </div>
   </div>
 
 
-  <div class="search_line">
-    <select class="form-control bfh-currencies" data-currency="EUR"></select>
+
+
+
+
+
+
+
+
+
+
+<div class="search_line">
+  <div class="md-form">
+    <i class="fa fa-envelope prefix"></i>
+    <input type="text" id="form2" class="form-control">
+    <label for="form2">Example label</label>
   </div>
-
-  <div class="search_line">
-    <button onclick="$('#currencies1').bfhcurrencies({currency: 'USD'})" class="btn">
-      Load Currencies
-    </button>
-    <br><br>
-    <select id="currencies1" class="form-control"></select>
-  </div>
-  <div class="search_line">
+</div>
 
 
 
-
-    <div class="md-form">
-      <i class="fa fa-envelope prefix"></i>
-      <input type="text" id="form2" class="form-control">
-      <label for="form2">Example label</label>
-    </div>
-
-  </div>
-
- 
-  
-  
-  
-  
 
   <div class="search_line">
     <div class="form-group flex_center">

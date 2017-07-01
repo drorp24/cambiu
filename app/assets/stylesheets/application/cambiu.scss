@@ -809,6 +809,8 @@ body#cambiu {
   }
   */
   .search {
+    color: #555;
+    font-weight: 300;
     padding: 5vw;
     padding-top: 5vh;
     height: 100vh;
@@ -829,20 +831,37 @@ body#cambiu {
     }
   }
 
+  .md-form {
+    margin-bottom: 0;
+  }
+
 
   .search_line {
     height: 10%;
+    &.worst {
+      height: 5%;
+      padding-left: 3rem;
+      label {
+        border: none;
+        position: static;
+        flex-basis: 50%;
+        margin-bottom: 0;
+      }
+      input {
+        border: none;
+        flex-basis: 50%;
+      }
+    }
   }
+
   .select-wrapper {
     margin-left: 3rem;
   }
 
-  input[type=tel] {
-    height: 1.7rem;
-  }
 
   .buy_amount, .pay_amount {
     input {
+      height: 1.7rem;
       padding-left: 10%;
       width: 90%;
     }
@@ -854,7 +873,7 @@ body#cambiu {
   .calculated_icon {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 10vw;
     font-size: 2rem;
     display: none;
   }
@@ -896,10 +915,6 @@ body#cambiu {
   }
 
 
-
-  label {
-    margin-bottom: 0;
-  }
 
   button.cta {
     font-size: 5vw !important;

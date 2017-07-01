@@ -308,15 +308,19 @@ populateBestOffer = function(data) {
 //console.log('populateBestOffer. Transaction: ' + transaction, data);
 
   var best_rate = data['best'][transaction][transaction];
+  var worst_rate = data['worst'][transaction];
   var rated_currency = data['best'][transaction]['rated_currency'];
 
   var populated_value = clean(value_of(other(calculated)));
   var calculated_currency = value_of(twin(calculated));
 
   var best_value = rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
+  var worst_value = rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
+  var gain_value = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
 
-  var $calculated = formElement(calculated);
-  $calculated.autoNumeric('set', best_value);
+  formElement(calculated).autoNumeric('set', best_value);
+  formElement('worst_amount').autoNumeric('set', worst_value);
+  formElement('worst_saving').autoNumeric('set', gain_value);
 
   return(best_value);
 

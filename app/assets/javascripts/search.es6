@@ -6,6 +6,16 @@
 
 $(document).ready(function() {
 
+    update_currency_symbol = function(el, symbol) {
+        if (symbol === undefined) {
+            currency_select_el = $('#' + el.attr('data-symbolsource'));
+            symbol = currency_select_el.find('option:selected').attr('data-symbol');
+        }
+        el.attr('data-a-sign', symbol);
+        el.autoNumeric('update', {aSign: symbol});
+    };
+
+
     bind_currency_to_autonumeric = function() {
 
         $('[data-autonumeric]').autoNumeric('init');
@@ -44,15 +54,6 @@ $(document).ready(function() {
                     $this.removeClass('disabled')
                 }
             })
-        }
-
-        function update_currency_symbol(el, symbol) {
-            if (symbol === undefined) {
-                currency_select_el = $('#' + el.attr('data-symbolsource'));
-                symbol = currency_select_el.find('option:selected').attr('data-symbol');
-            }
-            el.attr('data-a-sign', symbol);
-            el.autoNumeric('update', {aSign: symbol});
         }
 
     };
@@ -151,8 +152,14 @@ $(document).ready(function() {
         if (amount(field) && value) clear(brother($this));
 
         calculated = other(field);
-        formElement(field).removeClass('calculated');
-        formElement(calculated).addClass('calculated');
+
+        var $field = formElement(field);
+        if ($field.hasClass('calculated')) {
+            $field.removeClass('calculated');
+            formElement(calculated).addClass('calculated');
+            $('.worst input').attr('data-symbolsource', twin(calculated));
+            $('.worst input').each(function() {update_currency_symbol($(this))});
+        }
         populateBestOffer(local.rates);
 
 //        console.log('calculated field: ', calculated);
