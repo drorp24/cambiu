@@ -99,7 +99,7 @@ $(document).ready(function() {
     };
 
     formElement = function(field) {
-      return $('#search_form [data-model=search][data-field=' + field + ']')
+      return $('form [data-model=search][data-field=' + field + ']')
     };
 
     clean = function(value) {
@@ -121,7 +121,7 @@ $(document).ready(function() {
     };
 
     brother = function($e) {
-        return $('#search_form [data-model=search][data-field=' + other($e.data('field')) + ']');
+        return $('form [data-model=search][data-field=' + other($e.data('field')) + ']');
     };
 
     determineTransaction = function() {
@@ -132,7 +132,7 @@ $(document).ready(function() {
 
 
 
-    $('#search_form [data-model=search][data-field]').on('click tap', function() {
+    $('form [data-model=search][data-field]').on('click tap', function() {
 
 //        console.log('moving to a new field');
 //        if ($('#search_form .location').hasClass('is-focused')) console.log('focus!');
@@ -141,7 +141,7 @@ $(document).ready(function() {
         if (amount(field)) clear($this);
     });
 
-    $('#search_form [data-model=search][data-field]').keyup(function() {
+    $('form [data-model=search][data-field]').keyup(function() {
 
 //        console.log('keying a character');
         var $this = $(this);
@@ -160,7 +160,18 @@ $(document).ready(function() {
             $('.worst input').attr('data-symbolsource', twin(calculated));
             $('.worst input').each(function() {update_currency_symbol($(this))});
         }
-        populateLocalOffers(local.rates);
+
+        if ($this.closest('form').is('.search')) {
+            populateLocalOffers(local.rates);
+        } else if ($this.closest('form').is('.update')) {
+            var id = urlId();
+            if (!id) {console.error('search.es6 keyup event, url has no id') ; return}
+            var exchange = exchangeHash[id];
+            if (!exchange) {console.error('search.es6 keyup event, no exchange with id ', id) ; return}
+            updateExchangeOffer(exchange.rates);
+        } else {
+            console.error('search.es6 keyup event - form not recognized'); return;
+        }
 
 //        console.log('calculated field: ', calculated);
     });
@@ -331,7 +342,7 @@ $(document).ready(function() {
 */
 
 
-    $('#search_form .location .clear').click(function() {
+    $('form .location .clear').click(function() {
         if (!$(this).parent().find('input#location').prop('disabled')) {
             set('location', '')
         }

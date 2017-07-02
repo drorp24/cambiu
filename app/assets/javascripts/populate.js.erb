@@ -274,7 +274,7 @@ populateLocalCurrency = function() {
   set('pay_currency', local.currency);  // locals
   set('buy_currency', (local.currency == 'USD') ? 'EUR' : 'USD');
 
-  $('#search_form select').material_select();
+  $('form select').material_select();
   bind_currency_to_autonumeric();
 
 };
@@ -294,7 +294,7 @@ fetchAndPopulateLocaloffers = function() {
     }
 
     fetchLocalRates()
-        .then(populateLocalOffers)  // TODO: populate local bad rate too
+        .then(populateLocalOffers)
         .then(function(best_value) {resolve(best_value)})
         .catch(tell)
 
@@ -302,29 +302,52 @@ fetchAndPopulateLocaloffers = function() {
 
 };
 
-populateLocalOffers = function(data) {
+populateLocalOffers = function(rates) {
 
   var transaction = value_of('transaction');
-//console.log('populateLocalOffers. Transaction: ' + transaction, data);
+//console.log('populateLocalOffers. Transaction: ' + transaction, rates);
 
-  var best_rate = data['best'][transaction][transaction];
-  var worst_rate = data['worst'][transaction];
-  var rated_currency = data['best'][transaction]['rated_currency'];
-  var count = data['count'];
+  var best_rate = rates['best'][transaction][transaction];
+  var best_rated_currency = rates['best'][transaction]['rated_currency'];
+  var worst_rate = rates['worst'][transaction];
+  var worst_rated_currency = rates['worst']['rated_currency'];
+  var count = rates['count'];
 
   var populated_value = clean(value_of(other(calculated)));
   var calculated_currency = value_of(twin(calculated));
 
-  var best_value = rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
-  var worst_value = rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
+  var best_value = best_rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
+  var worst_value = worst_rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
   var gain_value = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
 
   formElement(calculated).autoNumeric('set', best_value);
+  $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
   $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
   $('[data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
   $('[data-model=local][data-field=count]').html(count);
 
   return(best_value);
+
+};
+
+updateExchangeOffer = function(rates) {
+
+  var transaction = value_of('transaction');
+  var exchange_rate = rates[transaction];
+  var exchange_rated_currency = rates['rated_currency'];
+  var worst_rate = local.rates['worst'][transaction];
+  var worst_rated_currency = local.rates['worst']['rated_currency'];
+
+  var populated_value = clean(value_of(other(calculated)));
+  var calculated_currency = value_of(twin(calculated));
+
+  var exchange_value = exchange_rated_currency == calculated_currency ? populated_value * exchange_rate : populated_value / exchange_rate;
+  var worst_value = worst_rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
+  var gain_value = (worst_value - exchange_value) * (calculated == 'buy_amount' ? -1 : 1);
+
+  $('form.update [data-model=search][data-field=' + calculated + ']').autoNumeric('set', exchange_value);
+  $('form.update [data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
+  $('form.update [data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
 
 };
 

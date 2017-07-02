@@ -774,7 +774,7 @@ body#cambiu {
 
   // twitter-bootstrap-4 & MDB adjustments - end
 
-  .search {
+  .selection {
     min-height: 100vh;
     color: #555;
     font-weight: 300;
@@ -880,11 +880,11 @@ body#cambiu {
     transition: max-height 0.3s;
   }
 
-  .search.delivery .location_label:after {
+  .selection.delivery .location_label:after {
     content: 'Deliver to'
   }
 
-  .search.pickup .location_label:after {
+  .selection.pickup .location_label:after {
     content: 'Pick-up'
   }
 
@@ -931,7 +931,7 @@ body#cambiu {
     margin-bottom: 0;
   }
 
-  .search ul:nth-of-type(3) {
+  .selection ul:nth-of-type(3) {
     margin-top: 3vh;
     margin-bottom: 0;
   }
@@ -941,12 +941,16 @@ body#cambiu {
     margin-bottom: 3vh;
   }
 
-  form#search_form.pickup button[type=submit]:after {
+  #search_form.pickup button[type=submit]:after {
     content: "Get the best offer"
   }
 
-  form#search_form.delivery button[type=submit]:after {
+  #search_form.delivery button[type=submit]:after {
     content: "Pay"
+  }
+
+  #update_form button[type=submit]:after {
+    content: "Update order";
   }
 
   .payment_method_selection {
@@ -967,7 +971,17 @@ body#cambiu {
   }
 
 
-
+  [data-pane=cart] {
+    .search_section {
+      opacity: 0.2;
+      &.amounts {
+        opacity: 1;
+      }
+    }
+    .buy_currency.select, .pay_currency.select {
+      pointer-events: none;
+    }
+  }
 
 
 
@@ -1111,8 +1125,10 @@ body#cambiu {
   }
 
 
-  &[data-pane=search] .navbar_search_icon {
-    display: none;
+  &[data-pane=search], &[data-pane=cart] {
+    .navbar_search_icon {
+      display: none;
+    }
   }
 
   &[data-pane=cards] .info-pane {

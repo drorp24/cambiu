@@ -1,4 +1,4 @@
-<form class="search pickup" id="search_form" novalidate>
+<form class="selection <%= purpose %> pickup" id="<%= purpose %>_form" novalidate>
 
     <ul class="stepper stepper-horizontal">
       <li class="completed">
@@ -10,7 +10,7 @@
     </ul>
 
 
-    <div class="search_section margined">
+    <div class="search_section amounts margined">
       <div class="wide search_line buy flex_center">
 
         <div class="md-form buy_currency select">
@@ -98,7 +98,7 @@
   </ul>
 
 
-  <div class="search_section">
+  <div class="search_section fulfillment">
     <div class="narrow search_line flex_center">
 
       <div class="md-form delivery full_width">
@@ -195,6 +195,7 @@
 -->
 
 
+  <div class="search_section payment">
     <div class="search_line form-inline payment_method_selection">
 
       <label class="form-group">Payment method</label>
@@ -208,8 +209,10 @@
         <label for="payment_method_credit">Credit</label>
       </fieldset>
 
-     </div>
+    </div>
 
+
+  </div>
 
   <!--
     <div class="search_section">
