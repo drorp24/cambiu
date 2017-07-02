@@ -437,4 +437,22 @@ $(document).ready(function() {
     });
 
 
+    $('#delivery_ind').change(
+        function(){
+            var $this = $(this);
+            if ($this.is(':checked')) {
+                $this.closest('.search').removeClass('pickup').addClass('delivery');
+                $('.inline_params_delivery').addClass('open');
+            } else {
+                $this.closest('.search').removeClass('delivery').addClass('pickup');
+                $('.inline_params_delivery').removeClass('open');
+            }
+    });
+
+    $('.close_inline_Params').on('click tap', function(e) {
+        e.preventDefault();
+        $(this).closest('.inline_params_delivery').removeClass('open')
+    })
+
+
 });

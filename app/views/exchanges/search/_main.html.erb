@@ -1,198 +1,223 @@
-<form class="search" id="search_form">
+<form class="search pickup" id="search_form" novalidate>
 
-  <div class="search_line flex_center">
-
-    <div class="md-form buy_currency select">
-      <i class="fa fa-envelope prefix"></i>
-      <select id="buy_currency" data-model="search" data-field="buy_currency" data-symboltarget="buy_amount" name="search[buy_currency]"
-              class="currency_select select optional text-center mdb-select">
-        <option value="" disabled selected>Currency you want</option>
-        <option data-symbol="$ "  value="USD"> USD</option>
-        <option data-symbol="€ "  value="EUR">EUR</option>
-        <option data-symbol="￡ " value="GBP">GBP</option>
-        <option data-symbol="$ "  value="AUD">AUD</option>
-        <option data-symbol="$ "  value="CAD">CAD</option>
-        <option data-symbol="￥ " value="JPY">JPY</option>
-        <option data-symbol="¥ " value="CNY">CNY</option>
-        <option data-symbol="$ " value="HKD">HKD</option>
-        <option data-symbol="₪ " value="ILS">ILS</option>
-        <option data-symbol="kr " value="NOK">NOK</option>
-      </select>
-      <label for="buy_currency">Get</label>
-    </div>
-
-    <div class="md-form buy_amount">
-      <input type="tel" pattern="\d*" id="buy_amount"
-             data-model="search" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control text-right">
-      <label for="buy_amount" class="control-label"></label>
-      <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
-    </div>
-
-  </div>
-
-  <div class="search_line flex_center">
-
-    <div class="md-form pay_currency select">
-      <i class="fa fa-envelope prefix"></i>
-      <select id="pay_currency" data-model="search" data-field="pay_currency" data-symboltarget="pay_amount" name="search[pay_currency]"
-              class="currency_select select optional text-center mdb-select">
-        <option value="" disabled selected>Currency you want</option>
-        <option data-symbol="$ "  value="USD">USD</option>
-        <option data-symbol="€ "  value="EUR">EUR</option>
-        <option data-symbol="￡ " value="GBP">GBP</option>
-        <option data-symbol="$ "  value="AUD">AUD</option>
-        <option data-symbol="$ "  value="CAD">CAD</option>
-        <option data-symbol="￥ " value="JPY">JPY</option>
-        <option data-symbol="¥ " value="CNY">CNY</option>
-        <option data-symbol="$ " value="HKD">HKD</option>
-        <option data-symbol="₪ " value="ILS">ILS</option>
-        <option data-symbol="kr " value="NOK">NOK</option>
-      </select>
-      <label for="pay_currency">Pay</label>
-    </div>
-
-    <div class="md-form pay_amount">
-      <input type="tel" pattern="\d*" id="pay_amount"
-             data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control text-right">
-      <label for="pay_amount" class="control-label"></label>
-      <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
-    </div>
-
-  </div>
+    <ul class="stepper stepper-horizontal">
+      <li class="completed">
+        <a href="#!">
+          <span class="circle">1</span>
+          <span class="label">What do you need</span>
+        </a>
+      </li>
+    </ul>
 
 
-  <div class="search_line worst">
-    <div class="md-form flex_between">
-      <label for="worst_amount" class="">Bank's offer</label>
-      <input disabled type="tel" id="worst_amount"
-             data-model="search" data-field="worst_amount" data-autonumeric="true" data-symbolsource="pay_currency" class="text-right">
-    </div>
-  </div>
+    <div class="search_section margined">
+      <div class="search_line flex_center">
 
-  <div class="search_line worst">
-    <div class="md-form flex_between">
-      <label for="worst_saving" class="">Your gain</label>
-      <input disabled type="tel" id="worst_saving"
-             data-model="search" data-field="worst_saving" data-autonumeric="true" data-symbolsource="pay_currency" class="text-right">
-    </div>
-  </div>
+        <div class="md-form buy_currency select">
+          <select id="buy_currency" data-model="search" data-field="buy_currency" data-symboltarget="buy_amount" name="search[buy_currency]"
+                  class="currency_select select optional text-center mdb-select">
+            <option value="" disabled selected>Currency you want</option>
+            <option data-symbol="$ "  value="USD">USD</option>
+            <option data-symbol="€ "  value="EUR">EUR</option>
+            <option data-symbol="￡ " value="GBP">GBP</option>
+            <option data-symbol="$ "  value="AUD">AUD</option>
+            <option data-symbol="$ "  value="CAD">CAD</option>
+            <option data-symbol="￥ " value="JPY">JPY</option>
+            <option data-symbol="¥ " value="CNY">CNY</option>
+            <option data-symbol="$ " value="HKD">HKD</option>
+            <option data-symbol="₪ " value="ILS">ILS</option>
+            <option data-symbol="kr " value="NOK">NOK</option>
+          </select>
+          <label for="buy_currency">Get</label>
+        </div>
 
+        <div class="md-form buy_amount">
+          <input type="tel" pattern="\d*" id="buy_amount"
+                 data-model="search" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control text-right">
+          <label for="buy_amount" class="control-label"></label>
+          <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
+        </div>
 
-
-
-
-
-
-
-
-
-
-
-<div class="search_line">
-  <div class="md-form">
-    <i class="fa fa-envelope prefix"></i>
-    <input type="text" id="form2" class="form-control">
-    <label for="form2">Example label</label>
-  </div>
-</div>
-
-
-
-
-  <div class="search_line">
-    <div class="form-group flex_center">
-      <div class="label">Pay with</div>
-      <div class="radio">
-        <label class="label">
-          <input type="radio" name="search[service_type]" value="delivery" checked="">
-          Delivery
-        </label>
       </div>
-      <div class="radio">
-        <label class="label">
-          <input type="radio" name="search[service_type]" value="pickup" checked="">
-          Pick-up
-        </label>
+
+      <div class="search_line flex_center">
+
+        <div class="md-form pay_currency select">
+          <select id="pay_currency" data-model="search" data-field="pay_currency" data-symboltarget="pay_amount" name="search[pay_currency]"
+                  class="currency_select select optional text-center mdb-select">
+            <option value="" disabled selected>Currency you want</option>
+            <option data-symbol="$ "  value="USD">USD</option>
+            <option data-symbol="€ "  value="EUR">EUR</option>
+            <option data-symbol="￡ " value="GBP">GBP</option>
+            <option data-symbol="$ "  value="AUD">AUD</option>
+            <option data-symbol="$ "  value="CAD">CAD</option>
+            <option data-symbol="￥ " value="JPY">JPY</option>
+            <option data-symbol="¥ " value="CNY">CNY</option>
+            <option data-symbol="$ " value="HKD">HKD</option>
+            <option data-symbol="₪ " value="ILS">ILS</option>
+            <option data-symbol="kr " value="NOK">NOK</option>
+          </select>
+          <label for="pay_currency">Pay</label>
+        </div>
+
+        <div class="md-form pay_amount">
+          <input type="tel" pattern="\d*" id="pay_amount"
+                 data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control text-right">
+          <label for="pay_amount" class="control-label"></label>
+          <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
+        </div>
+
       </div>
+
+
+      <div class="search_line worst">
+        <div class="md-form flex_between">
+          <label for="worst_amount" class="">Bank's price</label>
+          <input disabled type="tel" id="worst_amount"
+                 data-model="search" data-field="worst_amount" data-autonumeric="true" data-symbolsource="pay_currency" class="text-right">
+        </div>
+      </div>
+
+      <div class="search_line worst">
+        <div class="md-form flex_between">
+          <label for="worst_saving" class="">Your gain</label>
+          <input disabled type="tel" id="worst_saving"
+                 data-model="search" data-field="worst_saving" data-autonumeric="true" data-symbolsource="pay_currency" class="text-right">
+        </div>
+      </div>
+
     </div>
-  </div>
+
+  <ul class="stepper stepper-horizontal no_margin">
+    <li class="completed">
+      <a href="#!">
+        <span class="circle">2</span>
+        <span class="label">How do you wish to get it</span>
+      </a>
+    </li>
+  </ul>
 
 
-  <div class="search_line">
-    <div class="togglebutton">
-      <label class="flex_between">
-        <div class="label">Deliver to/Find the best offer where I'm at right now</div>
-        <input type="checkbox" checked="">
-        <span class="toggle"></span>
-      </label>
+  <div class="search_section">
+    <div class="narrow search_line flex_center">
+
+      <div class="md-form delivery full_width">
+        <div class="switch full_width flex_between">
+          <label for="delivery_ind">Delivery</label>
+          <label class="switch_form">
+            <input id="delivery_ind" name="search[delivery_ind]" type="checkbox">
+            <span class="lever"></span>
+          </label>
+        </div>
+      </div>
+
     </div>
-  </div>
 
-  <div class="search_line">
-    <div class="flex_center form-group location label-floating">
-      <!--
-              <label for="location" class="control-label">Where to look for</label>
-      -->
-      <label for="location" class="control-label">Deliver to/Find the best offer in</label>
-      <span class="clear label"><i class=material-icons>cancel</i></span>
-      <input type="text label" id="location" data-model="search" data-field="location" data-searchbox="true" name="search[location]" class="text-center location form-control">
-      <span class="clear label"><i class=material-icons>cancel</i></span>
-    </div>
-  </div>
+    <div class="inline_params inline_params_delivery">
+      <div class="full_width">
+        <div class="md-form">
+          <input placeholder="Selected date" type="text" id="date-picker-example" class="form-control datepicker">
+          <label for="date-picker-example">Delivery date</label>
+        </div>
+      </div>
 
-  <div class="hidden">
+      <div class="full_width">
+        <div class="md-form">
+          <input placeholder="Selected time" type="text" id="input_starttime" class="form-control timepicker">
+          <label for="input_starttime">Delivery time</label>
+        </div>
+      </div>
 
-    <input type="hidden" name="search[location]"        id="location"         data-model="search" data-field="location">
-    <input type="hidden" name="search[location_lat]"    id="location_lat"     data-model="search" data-field="location_lat">
-    <input type="hidden" name="search[location_lng]"    id="location_lng"     data-model="search" data-field="location_lng">
-    <input type="hidden" name="search[location_type]"   id="location_type"    data-model="search" data-field="location_type">
-    <input type="hidden" name="search[location_reason]" id="location_reason"  data-model="search" data-field="location_reason">
-    <input type="hidden" name="search[user_lat]"        id="user_lat"         data-model="search" data-field="user_lat">
-    <input type="hidden" name="search[user_lng]"        id="user_lng"         data-model="search" data-field="user_lng">
-    <input type="hidden" name="search[user_location]"   id="user_location"    data-model="search" data-field="user_location">
-    <input type="hidden" name="search[country]"         id="country"          data-model="search" data-field="country">
-    <input type="hidden" name="search[city]"            id="city"             data-model="search" data-field="city">
-    <input type="hidden" name="search[transaction]"     id="transaction"      data-model="search" data-field="transaction">
-
-  </div>
-
-  <div class="search_line">
-    <div class="label">On</div>
-    <div class="label">
-      <div class="md-form">
-        <input placeholder="Selected time" type="text" id="input_starttime" class="form-control timepicker">
-        <label for="input_starttime">At</label>
+      <div class="full_width">
+        <button class="btn btn-flat blue waves-effect close_inline_Params">Schedule</button>
+        <button class="btn-flat waves-effect pull-right close_inline_params">Close</button>
       </div>
     </div>
-  </div>
-  <div class="search_line rate_comparison">
-    <div class="rate_comparison_text">Our rate:</div>
-    <div class="rate_comparison_figure">1.2205</div>
-    <div class="rate_comparison_text">High-street rate:</div>
-    <div class="rate_comparison_figure">1.3800</div>
-  </div>
 
 
-  <div class="search_line">
-    <div class="form-group flex_center">
-      <div class="label">Pay with</div>
-      <div class="radio">
-        <label class="label">
-          <input type="radio" name="search[payment_method]" value="cash" checked="">
-          Cash (will cancel delivery)
-        </label>
-      </div>
-      <div class="radio">
-        <label class="label">
-          <input type="radio" name="search[payment_method]" value="credit" checked="">
-          Credit Card
-        </label>
+
+
+    <div class="narrow search_line">
+      <div class="flex_center form-group location">
+        <label for="location" class="form-control control-label location_label"></label>
+        <input type="text" id="location" data-model="search" data-field="location" data-searchbox="true" name="search[location]" class="text-center location form-control">
+        <span class="clear label form-control"><i class=material-icons>cancel</i></span>
       </div>
     </div>
+
+
+
+    <div class="hidden">
+
+      <input type="hidden" name="search[location]"        id="location"         data-model="search" data-field="location">
+      <input type="hidden" name="search[location_lat]"    id="location_lat"     data-model="search" data-field="location_lat">
+      <input type="hidden" name="search[location_lng]"    id="location_lng"     data-model="search" data-field="location_lng">
+      <input type="hidden" name="search[location_type]"   id="location_type"    data-model="search" data-field="location_type">
+      <input type="hidden" name="search[location_reason]" id="location_reason"  data-model="search" data-field="location_reason">
+      <input type="hidden" name="search[user_lat]"        id="user_lat"         data-model="search" data-field="user_lat">
+      <input type="hidden" name="search[user_lng]"        id="user_lng"         data-model="search" data-field="user_lng">
+      <input type="hidden" name="search[user_location]"   id="user_location"    data-model="search" data-field="user_location">
+      <input type="hidden" name="search[country]"         id="country"          data-model="search" data-field="country">
+      <input type="hidden" name="search[city]"            id="city"             data-model="search" data-field="city">
+      <input type="hidden" name="search[transaction]"     id="transaction"      data-model="search" data-field="transaction">
+
+    </div>
+
   </div>
 
-  <div class="search_line invoke flex_center">
-    <button type="submit" class="action btn cta" data-ajax="searches">pay/find offers</button>
+
+  <ul class="stepper stepper-horizontal">
+    <li class="completed">
+      <a href="#!">
+        <span class="circle">3</span>
+        <span class="label">How do you wish to pay</span>
+      </a>
+    </li>
+  </ul>
+
+
+
+  <div class="search_line form-inline payment_method_selection">
+
+    <label class="form-group">Payment method</label>
+    <fieldset class="form-group">
+      <input name="search[payment_method]" type="radio" id="payment_method_cash" checked="checked">
+      <label for="payment_method_cash">Cash</label>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <input name="search[payment_method]" type="radio" id="payment_method_credit">
+      <label for="payment_method_credit">Credit</label>
+    </fieldset>
+
+   </div>
+
+
+  <!--
+    <div class="search_section">
+      <div class="search_line">
+        <div class="form-group flex_center">
+          <div class="label">Payment method</div>
+          <div class="radio">
+            <label class="label">
+              <input type="radio" name="search[payment_method]" value="cash" checked="">
+              Cash (will cancel delivery)
+            </label>
+          </div>
+          <div class="radio">
+            <label class="label">
+              <input type="radio" name="search[payment_method]" value="credit" checked="">
+              Credit Card
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  -->
+
+
+  <div class="narrow search_line invoke flex_center">
+    <button type="submit" class="blue primary btn waves-effect" data-ajax="searches"></button>
   </div>
 
 </form>

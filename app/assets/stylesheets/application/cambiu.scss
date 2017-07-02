@@ -753,67 +753,19 @@ body#cambiu {
     margin-bottom: 0;
   }
 
+  .form-control, /*.md-form label,*/ .select-wrapper input.select-dropdown, input[type=tel], input[type=text] {
+    font-size: inherit;
+  }
+
+
 
   // twitter-bootstrap-4 & MDB adjustments - end
 
-  /*
   .search {
-    height: 100vh - $navbar_height;
-    padding: 0 5vw;
-    font-size: 5vw;
-    color: #000;
-    font-weight: 300;
-    line-height: 1;
-    .form-group {
-      margin: 0;
-      padding: 0;
-    }
-    .form-control {
-      font-size: inherit;
-      line-height: inherit;
-      height: inherit;
-      padding: 0;
-      margin: 0;
-    }
-    .search_line {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 10%;
-    }
-    .label, label {
-      color: rgb(0, 150, 136);
-      font-weight: 500;
-      text-transform: uppercase;
-      background: none;
-      border-radius: 0;
-      padding: 0;
-    }
-    label.control-label {
-      top: -6vh;
-      text-transform: capitalize;
-      font-size: 3vw;
-    }
-    .icon {
-      flex-basis: 10%;
-    }
-    .pay_label, .buy_label {
-      flex-basis: 15%;
-    }
-    .buy_currency, .pay_currency {
-      flex-basis: 30%;
-    }
-    .buy_amount, .pay_amount {
-      flex-basis: 35%;
-    }
-  }
-  */
-  .search {
+    min-height: 100vh;
     color: #555;
     font-weight: 300;
     padding: 5vw;
-    padding-top: 5vh;
-    height: 100vh;
     [data-field=pay_amount], [data-field=buy_amount] {
       position: relative;
       ~ label:before {
@@ -837,25 +789,26 @@ body#cambiu {
 
 
   .search_line {
-    height: 10%;
+    height: 10vh;
+    &.narrow {
+      height: 7vh;
+    }
+    width: 100%;
     &.worst {
       height: 5%;
-      padding-left: 3rem;
+      margin-top: -3%;
       label {
         border: none;
         position: static;
         flex-basis: 50%;
         margin-bottom: 0;
+        font-size: 3.5vw;
       }
       input {
         border: none;
         flex-basis: 50%;
       }
     }
-  }
-
-  .select-wrapper {
-    margin-left: 3rem;
   }
 
 
@@ -873,10 +826,122 @@ body#cambiu {
   .calculated_icon {
     position: absolute;
     top: 0;
-    left: 10vw;
+    left: 5vw;
     font-size: 2rem;
     display: none;
   }
+
+  .switch label input[type=checkbox]:checked+.lever {
+    background: #ccc;
+    &:after {
+      background: #888;
+    }
+  }
+
+  .switch_form {
+    transform: scale(1.1);
+  }
+
+  label.switch_form, label[for=delivery_ind] {
+    position: static;
+    margin-bottom: 0;
+  }
+
+  .inline_params {
+    background: #eee;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    max-height: 0;
+    overflow: hidden;
+    &.open {
+      max-height: 33vh;
+      padding-top: 3vh;
+    }
+    transition: max-height 0.3s;
+  }
+
+  .search.delivery .location_label:after {
+    content: 'Deliver to'
+  }
+
+  .search.pickup .location_label:after {
+    content: 'Pick-up'
+  }
+
+  label[for=location], .clear {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    height: 2.1rem;
+    box-sizing: content-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-basis: 24%;
+  }
+  label[for=location] {
+    justify-content: flex-start;
+    font-size: 3.5vw;
+  }
+  label[for=delivery_ind] {
+    font-size: 3.5vw;
+  }
+  .clear {
+    justify-content: flex-end;
+  }
+
+  .stepper li a {
+    padding: 12px;
+  }
+  .stepper-horizontal li {
+    background: #ddd;
+    height: 5vh;
+  }
+
+  .stepper-horizontal li a .label {
+    margin-top: 0;
+  }
+
+  .no_margin {
+    margin-bottom: 0;
+  }
+
+  .ul:nth-of-type(3) {
+    margin-top: 3vh;
+  }
+
+  .search_section.margined {
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+  }
+
+  form#search_form.pickup button[type=submit]:after {
+    content: "Get the best offer"
+  }
+
+  form#search_form.delivery button[type=submit]:after {
+    content: "Pay"
+  }
+
+  .payment_method_selection {
+    label {
+      margin-bottom: 0;
+      font-size: 3.5vw;
+      width: 30%;
+      margin-right: 0;
+    }
+    fieldset {
+      width: 30%;
+      text-align: right;
+      margin-right: 0;
+    }
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+
 
 
 
@@ -1373,15 +1438,6 @@ body#cambiu {
   }
 */
 
-  .clear {
-    position: relative;
-   right: 5.5vw;
-    @include desktop {
-      right: 5.5vw * $paneRatio;
-    }
-  }
-
-
 
 
   .noUi-marker-horizontal.noUi-marker {
@@ -1584,7 +1640,9 @@ body#cambiu {
     &.active {
       display: block;
     }
-    height: 100vh;
+    &:not([data-pane=search]) {
+      height: 100vh;
+    }
     background: #fff;
     &[data-pane="reviews"] {
       background: #eee;

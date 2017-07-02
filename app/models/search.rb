@@ -153,4 +153,6 @@ class Search < ActiveRecord::Base
     self.distance = radius
   end
 
+
+
 end

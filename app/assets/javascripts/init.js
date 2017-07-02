@@ -702,6 +702,9 @@ $(document).ready(function() {
         twelvehour: true
     });
 
+    $('.datepicker').pickadate();
+
+
 
 
 });
