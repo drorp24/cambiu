@@ -2297,10 +2297,9 @@ body#cambiu {
     }
     .offer_line {
       display: flex;
-      min-height: 4vh;
       justify-content: flex-start;
       align-items: center;
-      @include vfont-size(5vw);
+      @include vfont-size(4vw);
       font-weight: 400;
       &.saving {
         color: $brand-color-a;
@@ -2332,6 +2331,14 @@ body#cambiu {
         &.active {
           display: flex;
         }
+      }
+      &.offer_header {
+        display: block;
+        text-align: center;
+        text-transform: capitalize;
+        font-size: 5vw;
+        color: #777;
+        font-weight: 300
       }
     }
     i {
@@ -2607,7 +2614,7 @@ body#cambiu {
       .open_and_phone {
         height: 8%;
         position: relative;
-        top: -1vh;
+//        top: -1vh;
       }
       .data {
         max-width: 100%;
@@ -2887,6 +2894,34 @@ body#cambiu {
 
   .offerPane .deal {
     height: 40%;
+  }
+
+  .cambiu_ranking {
+    position: absolute;
+    left: 5vw;
+    top: 15vh;
+    width: 20vh;
+    height: 20vh;
+    background: #fff;
+    color: #888;
+    font-weight: 300;
+    font-size: 3.5vw;
+    padding: 0;
+    padding-top: 3vh;
+    line-height: 2vh;
+    border-radius: 50%;
+    z-index: 1;
+    .cambiu_ranking_value {
+      color: $brand-color-a;
+      font-weight: 500;
+      font-size: 11vw;
+      [data-field=rank] {
+        margin-left: -0.25em;
+      }
+    }
+    .cambiu_ranking_title {
+      color: #000;
+    }
   }
 
 

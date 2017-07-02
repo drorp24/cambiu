@@ -16,6 +16,24 @@
 
     <%= render 'exchanges/templates/pickup' %>
 
+    <div class="cambiu_ranking text-center flex_center column">
+      <p class="cambiu_ranking_value">
+        <span>#</span>
+        <span data-model="exchange" data-field="rank">1</span>
+      </p>
+      <p class="cambiu_ranking_title">
+        <span>Cambiu ranking</span>
+        <span></span>
+      </p>
+      <p class="cambiu_ranking_view_others">
+        <span>View all</span>
+        <a href="#" data-href-pane="offers" data-href-delay="true">
+          <span data-model="local" data-field="count"></span>
+          <span>offers around you</span>
+        </a>
+      </p>
+    </div>
+
     <div class="open_and_phone flex_between">
       <div class="open"><a>Open</a></div>
       <div class="phone_icon">
@@ -56,6 +74,7 @@
 
   </div>
 
+<!--
   <div class="list_button_container flex_center">
     <div class="list small fab flex_center column" data-href-pane="offers" data-href-delay="true">
       <button class="btn-floating waves-effect flex_center">
@@ -64,6 +83,7 @@
       </button>
     </div>
   </div>
+-->
 
 
 </div>

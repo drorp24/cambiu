@@ -50,6 +50,7 @@ class Search < ActiveRecord::Base
     best_sell = 0
     best_buy_rate = {}
     best_sell_rate = {}
+    count = 0
 
     exchanges.each do |exchange|
 
@@ -62,6 +63,7 @@ class Search < ActiveRecord::Base
         best_sell_rate = exchange_rates
         best_sell = exchange_rates[:sell]
       end
+      count += 1
 
     end
 
@@ -72,7 +74,8 @@ class Search < ActiveRecord::Base
             sell: best_sell_rate
         },
         worst:
-            Exchange.bad_rate(country,rated_currency, base_currency)
+            Exchange.bad_rate(country,rated_currency, base_currency),
+        count: count
     }
 
 
