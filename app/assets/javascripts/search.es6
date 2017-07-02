@@ -459,6 +459,7 @@ $(document).ready(function() {
             if ($this.is(':checked')) {
                 $this.closest('.search').removeClass('pickup').addClass('delivery');
                 $('.inline_params_delivery').addClass('open');
+                $('#payment_method_credit').prop("checked", true);
             } else {
                 $this.closest('.search').removeClass('delivery').addClass('pickup');
                 $('.inline_params_delivery').removeClass('open');
@@ -468,7 +469,15 @@ $(document).ready(function() {
     $('.close_inline_params').on('click tap', function(e) {
         e.preventDefault();
         $(this).closest('.inline_params_delivery').removeClass('open')
-    })
+    });
+
+    $('#payment_method_cash').change(
+        function(){
+            if ($(this).is(':checked')) {
+            $('#delivery_ind').prop("checked", false);
+        }
+        });
+
 
 
 });

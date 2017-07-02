@@ -177,21 +177,38 @@
   </ul>
 
 
-
+<!--
   <div class="search_line form-inline payment_method_selection">
 
     <label class="form-group">Payment method</label>
     <fieldset class="form-group">
-      <input name="search[payment_method]" type="radio" id="payment_method_cash" checked="checked">
+      <input "search[payment_method_cash]" type="checkbox" id="payment_method_cash" checked="checked">
       <label for="payment_method_cash">Cash</label>
     </fieldset>
 
     <fieldset class="form-group">
-      <input name="search[payment_method]" type="radio" id="payment_method_credit">
+      <input type="checkbox" name="search[payment_method_credit]" class="filled-in" id="payment_method_credit">
       <label for="payment_method_credit">Credit</label>
     </fieldset>
 
-   </div>
+  </div>
+-->
+
+
+    <div class="search_line form-inline payment_method_selection">
+
+      <label class="form-group">Payment method</label>
+      <fieldset class="form-group">
+        <input name="search[payment_method]" type="radio" id="payment_method_cash" checked="checked" value="cash">
+        <label for="payment_method_cash">Cash</label>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <input name="search[payment_method]" type="radio" id="payment_method_credit" value="credit">
+        <label for="payment_method_credit">Credit</label>
+      </fieldset>
+
+     </div>
 
 
   <!--

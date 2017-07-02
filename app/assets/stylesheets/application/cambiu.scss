@@ -764,6 +764,11 @@ body#cambiu {
     }
   }
 
+  [type=radio]:not(:checked)+label:before, [type=radio]:checked+label:after {
+    transform: scale(1.5);
+  }
+
+
 
 
 
