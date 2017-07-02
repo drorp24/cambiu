@@ -144,7 +144,6 @@ var id = null;
 var pane = null;
 var offers = [];
 var markersShaded = false;
-var locationMsgInformed = false;
 var nearest;
 var exchangeHash = {};
 var pageNum;

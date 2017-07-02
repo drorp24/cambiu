@@ -2,7 +2,10 @@
 
   <%= render partial: 'navbar',
              locals: {center: 'search_params', right_pane: "context_menu", right_icon: 'more_vert',
-                      context_menu_options: [{icon: "view_list", name: "List view", pane: "list"}]}
+                      context_menu_options: [
+                          {icon: "search", name: "Search", pane: "search"},
+                          {icon: "view_list", name: "List view", pane: "list"},
+                      ]}
 
   %>
 

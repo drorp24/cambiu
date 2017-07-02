@@ -35,7 +35,7 @@ $(document).ready(function() {
 
             set(field, value);
             populateTransaction();
-            populateLocalRates();
+            fetchAndPopulateLocaloffers();
 
             disable($('.md-form.select.' + other(field)), value);
 
@@ -151,7 +151,7 @@ $(document).ready(function() {
         set(field, value);
         if (amount(field) && value) clear(brother($this));
 
-        calculated = other(field);
+        set('calculated', calculated = other(field));
 
         var $field = formElement(field);
         if ($field.hasClass('calculated')) {
@@ -160,7 +160,7 @@ $(document).ready(function() {
             $('.worst input').attr('data-symbolsource', twin(calculated));
             $('.worst input').each(function() {update_currency_symbol($(this))});
         }
-        populateBestOffer(local.rates);
+        populateLocalOffers(local.rates);
 
 //        console.log('calculated field: ', calculated);
     });
@@ -171,17 +171,33 @@ $(document).ready(function() {
 
     inputValid = function() {
 
-        var amountValid = value_of('pay_amount') || value_of('buy_amount');
-        if (!amountValid) console.log('Invalid amount');
+        $('.search .amount_fields').removeClass('invalid');
 
-        var locationValid = $('input#location').val() && !locationDirty;
-        if (!locationValid) console.log('Invalid location. input#location: ', $('input#location').val(), 'locationDirty:', locationDirty );
+        var $buy_amount = $('#buy_amount');
+        var buyAmountValid = clean($buy_amount.val());
+        if (!buyAmountValid) error($buy_amount, 'Cannot be blank');
 
-        var currencyValid = $('.form-group #pay_currency').val() != $('.form-group #buy_currency').val();
-        if (!currencyValid) console.log('Invalid currency');
+        var $pay_amount = $('#pay_amount');
+        var payAmountValid = clean($pay_amount.val());
+        if (!payAmountValid) error($pay_amount, 'Cannot be blank');
 
-        valid = !!(amountValid && locationValid && currencyValid);
+
+        var $location = $('#location');
+        var locationValid = $location.val() && !locationDirty;
+        if (!locationValid) error($location, 'Cannot be blank');
+
+        var $pay_currency = $('#pay_currency');
+        var $buy_currency = $('#buy_currency');
+        var currencyValid = $pay_currency.val() != $buy_currency.val();
+        if (!currencyValid) error($pay_currency, 'Choose different currencies');
+
+        valid = !!(payAmountValid && buyAmountValid && locationValid && currencyValid);
         return valid;
+
+        function error($e, msg) {
+            $e.siblings('label').attr('data-error', msg);
+            $e.addClass('invalid');
+        }
     };
 
     $('[data-ajax=searches]').click(function(e) {
@@ -449,7 +465,7 @@ $(document).ready(function() {
             }
     });
 
-    $('.close_inline_Params').on('click tap', function(e) {
+    $('.close_inline_params').on('click tap', function(e) {
         e.preventDefault();
         $(this).closest('.inline_params_delivery').removeClass('open')
     })

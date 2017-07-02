@@ -276,8 +276,8 @@ class Exchange < ActiveRecord::Base
         pay_currency:     pay_currency  = params[:pay_currency],
         get_amount:       get_amount    = Monetize.parse(params[:get_amount]).amount,
         get_currency:     get_currency  = params[:get_currency],
-        field:            field         = params[:field],
-        transaction:      params[:transaction],
+        transaction:      transaction   = params[:transaction],
+        calculated:       calculated    = params[:calculated],
         rates:            {},
         bad_rates:        {},
         quote:            nil,
@@ -326,7 +326,7 @@ class Exchange < ActiveRecord::Base
       country = self.country
     end
 
-    if field == 'pay_amount' or field == 'pay_currency'
+    if calculated == 'buy_amount'
       rates = result[:rates]          = rate(get_currency, pay_currency)
       if rates[:error]
         result[:errors]           <<   rates[:error]
@@ -494,13 +494,13 @@ class Exchange < ActiveRecord::Base
     'system'
   end
 
-  def offer(center, pay, buy, radius, transaction)
+  def offer(center, pay, buy, radius, transaction, calculated)
 
     exchange_hash = {}
 
     exchange_hash[:distance] = self.alt_distance_from(center)
 
-    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, field: pay.amount > 0 ? 'pay_amount' : 'get_amount', radius: radius, distance: exchange_hash[:distance], transaction: transaction)
+    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, calculated: calculated, radius: radius, distance: exchange_hash[:distance], transaction: transaction)
     return {} if quotes[:error].present? and !Rails.env.development?
 
     exchange_hash[:id] = self.id
@@ -544,6 +544,8 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:contract] = self.contract
     exchange_hash[:photo] = photo_url
     exchange_hash[:gain] = quotes[:gain]
+    exchange_hash[:transaction] = quotes[:transaction]
+    exchange_hash[:calculated] = quotes[:calculated]
 
 
     exchange_hash

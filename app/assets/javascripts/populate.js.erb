@@ -260,7 +260,7 @@ populateParams = function() {
     bind_currency_to_autonumeric();
     $('.version').html(version);
 
-    calculated = !def['pay_amount'] ? 'pay_amount' : 'buy_amount';
+    set('calculated', calculated = !def['pay_amount'] ? 'pay_amount' : 'buy_amount');
     formElement(calculated).addClass('calculated');
 //    console.log('calculated field: ', calculated);
 
@@ -284,17 +284,17 @@ populateTransaction = function() {
   set('transaction', determineTransaction())
 };
 
-populateLocalRates = function() {
+fetchAndPopulateLocaloffers = function() {
 
   return new Promise(function(resolve, reject) {
 
     function tell(error) {
-      console.log('catch during populateLocalRates!');
+      console.log('catch during fetchAndPopulateLocaloffers!');
       reject(error)
     }
 
     fetchLocalRates()
-        .then(populateBestOffer)  // TODO: populate local bad rate too
+        .then(populateLocalOffers)  // TODO: populate local bad rate too
         .then(function(best_value) {resolve(best_value)})
         .catch(tell)
 
@@ -302,10 +302,10 @@ populateLocalRates = function() {
 
 };
 
-populateBestOffer = function(data) {
+populateLocalOffers = function(data) {
 
   var transaction = value_of('transaction');
-//console.log('populateBestOffer. Transaction: ' + transaction, data);
+//console.log('populateLocalOffers. Transaction: ' + transaction, data);
 
   var best_rate = data['best'][transaction][transaction];
   var worst_rate = data['worst'][transaction];
