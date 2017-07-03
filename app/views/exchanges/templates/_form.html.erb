@@ -238,7 +238,13 @@
 
 
   <div class="narrow search_line invoke flex_center">
-    <button type="submit" class="blue primary btn waves-effect" data-ajax="searches"></button>
+
+    <% if purpose == 'search' %>
+      <button type="submit" class="blue primary btn waves-effect" data-ajax="searches"></button>
+    <% elsif purpose == 'update' %>
+        <button type="submit" class="blue primary btn waves-effect" data-action="updateOrder" data-href-pane="offer" data-href-id="curr"></button>
+    <% end %>
+
   </div>
 
 </form>

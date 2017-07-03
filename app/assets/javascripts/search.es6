@@ -490,5 +490,21 @@ $(document).ready(function() {
         });
 
 
+    $('[data-action=updateOrder]').click(function(e) {
+
+        e.preventDefault();
+
+        let exchange_id = urlId();
+        if (!exchange_id) {console.error('updateOrder: no id in url'); return}
+
+        for (let field of ['buy_currency', 'buy_amount', 'pay_currency', 'pay_amount']) {updateOrderWith(field)}
+        $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=gain_amount]`).html($('form.update [data-field=worst_saving]').val());
+
+        function updateOrderWith(field) {
+            $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=${field}]`).html($(`form.update [data-field=${field}]`).val());
+        }
+
+    });
+
 
 });
