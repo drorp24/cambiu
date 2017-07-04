@@ -38,14 +38,6 @@ class Search < ActiveRecord::Base
     exchanges            = Exchange.active.geocoded.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
                                .select(:id, :chain_id, :currency, :rates_policy)  # TODO: Discuss
 
-    if calculated == 'buy_amount'
-      rated_currency = buy_currency
-      base_currency = pay_currency
-    else
-      rated_currency = pay_currency
-      base_currency = buy_currency
-    end
-
     best_buy = Float::INFINITY
     best_sell = 0
     best_buy_rate = {}
@@ -54,7 +46,7 @@ class Search < ActiveRecord::Base
 
     exchanges.each do |exchange|
 
-      exchange_rates = exchange.rate(rated_currency, base_currency).merge(exchange_id: exchange.id)
+      exchange_rates = exchange.rate(buy_currency, pay_currency).merge(exchange_id: exchange.id)
       if exchange_rates[:buy] && exchange_rates[:buy] < best_buy
         best_buy_rate = exchange_rates
         best_buy = exchange_rates[:buy]
@@ -74,7 +66,7 @@ class Search < ActiveRecord::Base
             sell: best_sell_rate
         },
         worst:
-            Exchange.bad_rate(country,rated_currency, base_currency),
+            Exchange.bad_rate(country,buy_currency, pay_currency),
         count: count
     }
 
