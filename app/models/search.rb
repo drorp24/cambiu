@@ -38,12 +38,12 @@ class Search < ActiveRecord::Base
     exchanges            = Exchange.active.geocoded.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
                                .select(:id, :chain_id, :currency, :rates_policy)  # TODO: Discuss
 
-    if calculated == 'buy_amount'
-      rated_currency = buy_currency
-      base_currency = pay_currency
+    if pay_amount.present?
+        rated_currency = buy_currency
+        base_currency  = pay_currency
     else
-      rated_currency = pay_currency
-      base_currency = buy_currency
+        rated_currency = pay_currency
+        base_currency  = buy_currency
     end
 
     best_buy = Float::INFINITY

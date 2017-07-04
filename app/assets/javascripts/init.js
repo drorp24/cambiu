@@ -165,8 +165,6 @@ def_vals = function() {
     def['pay_currency']     = 'ILS';
     def['buy_amount']       = 1000;
     def['buy_currency']     = 'USD';
-    def['service_type']     = 'pickup';
-    def['payment_method']   = 'cash';
     def['user_lat']         = dfault.lat;
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
@@ -189,8 +187,6 @@ var searchParams = [
     'pay_currency',
     'buy_amount',
     'buy_currency',
-    'service_type',
-    'payment_method',
     'location',
     'location_short',
     'location_type',

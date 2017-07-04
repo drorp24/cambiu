@@ -464,8 +464,17 @@ $(document).ready(function() {
     });
 
 
-    $('form.selection .service_type').change(function() {
-        setServiceTypeTo($(this).is(':checked') ? 'delivery' : 'pickup');
+    $('#delivery_ind').change(
+        function(){
+            var $this = $(this);
+            if ($this.is(':checked')) {
+                $this.closest('.search').removeClass('pickup').addClass('delivery');
+                $('.inline_params_delivery').addClass('open');
+                $('#payment_method_credit').prop("checked", true);
+            } else {
+                $this.closest('.search').removeClass('delivery').addClass('pickup');
+                $('.inline_params_delivery').removeClass('open');
+            }
     });
 
     $('.close_inline_params').on('click tap', function(e) {
@@ -473,44 +482,12 @@ $(document).ready(function() {
         $(this).closest('.inline_params_delivery').removeClass('open')
     });
 
-
-    setServiceTypeTo = function(service_type) {
-        if (service_type == 'delivery') {
-
-            $('form.selection').removeClass('pickup').addClass('delivery');
-            $('form.selection .inline_params_delivery').addClass('open');
-            sessionStorage.service_type = 'delivery';
-
-            $('form.selection #delivery_ind').prop('checked',true);
-            $('#payment_method_credit').prop("checked", true);
-
-        } else if (service_type == 'pickup') {
-
-            $('form.selection').removeClass('delivery').addClass('pickup');
-            $('.inline_params_delivery').removeClass('open');
-            sessionStorage.service_type = 'pickup';
-
-            $('form.selection #delivery_ind').prop('checked',false);
+    $('#payment_method_cash').change(
+        function(){
+            if ($(this).is(':checked')) {
+            $('#delivery_ind').prop("checked", false);
         }
-
-    };
-
-
-    $('form.selection .payment_method').change(function() {
-        setPaymentMethodTo($('form.selection .payment_method:checked').val())
-    });
-
-    setPaymentMethodTo = function(payment_method) {
-
-        $(`form.selection .payment_method[value=${payment_method}]`).prop('checked', true);
-        sessionStorage.payment_method = payment_method;
-        if (payment_method == 'cash') setServiceTypeTo('pickup');
-        $('form.selection').removeClass(other(payment_method)).addClass(payment_method);
-
-        function other(method) {
-            return method == 'cash' ? 'credit' : 'cash'
-        }
-    };
+        });
 
 
     $('[data-action=updateOrder]').click(function(e) {
