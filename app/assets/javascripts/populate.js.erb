@@ -326,6 +326,8 @@ populateLocalOffers = function(rates) {
   $('[data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
   $('[data-model=local][data-field=count]').html(count);
 
+  if (gain_value > 0) $('.search_line.worst').css('visibility', 'visible');
+
   return(best_value);
 
 };
@@ -348,6 +350,8 @@ updateExchangeOffer = function(rates) {
   $('form.update [data-model=search][data-field=' + calculated + ']').autoNumeric('set', exchange_value);
   $('form.update [data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
   $('form.update [data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
+
+  if (gain_value > 0) $('.search_line .worst').css('visibility', 'visible');
 
 };
 
