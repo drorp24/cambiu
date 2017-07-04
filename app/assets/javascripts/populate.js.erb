@@ -365,6 +365,9 @@ set = function(field, value, trigger) {
 //  console.log('set. field: ', field, ' value: ', value);
   var cleanValue = (amount(field)) ? clean(value) : value;
 
+    if (field =='service_type') setServiceTypeTo(value);
+    if (field =='payment_method') setPaymentMethodTo(value);
+
     $('input[data-model=search][data-field=' + field + ']').val(cleanValue);
     $('select[data-model=search][data-field=' + field + ']').val(cleanValue);
     $('.params [data-model=search][data-field=' + field + ']').html(value);
