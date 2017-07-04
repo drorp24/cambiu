@@ -78,7 +78,7 @@
         populatePage({page: pageNum, list: true, cards: true});
         $('.pagination').addClass('active');
 
-        selectExchange($('.active.pane .best.ecard'), false);
+        selectExchange($(`.pane[data-pane=${value_of('recent_set') || default_set}] .best.ecard`), false);
 
     };
 
@@ -205,10 +205,11 @@
     selectExchange = function($exchange, manual = true) {
 
         $exchange.addClass('selected');
+        console.log('$exchange: ', $exchange[0])
         if ($exchange.is('.ordered')) $exchange.addClass('order');
 
         $('.swiper-container-h').css('bottom', '0px');
-        if ($('.active.pane').data('pane') == 'cards') $exchange.css('transform', 'translate(' + cardXoffset + ', 0px)');
+        if ($exchange.closest('.pane').data('pane') == 'cards') $exchange.css('transform', 'translate(' + cardXoffset + ', 0px)');
 
         setPage({pane1: 'offer', id1: 'curr'});
         populateStreetview(currentExchange());
@@ -384,7 +385,7 @@ resetPaging = function() {
 
 order = function($scope, exchange) {
 
-    if (exchange.id == value_of('order_exchange_id')) return;
+    if (exchange.id == value_of('order_exchange_id')) {populateOrder($scope, null); return;}
 
     $('.ecard[data-exchange-id=' + exchange.id + ']').addClass('ordered');
 
@@ -410,6 +411,7 @@ order = function($scope, exchange) {
         populateOrder($scope, order);
         sessionStorage.order_exchange_id = exchange.id;
         sessionStorage.order_id = order.id;
+        sessionStorage.order_voucher = order.voucher;
         sessionStorage.order_status = order.status;
         if (order.service_type == 'pickup') snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'});
     })

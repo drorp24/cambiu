@@ -145,7 +145,7 @@ refresh = function(pane, $pane, exchange) {
 
      var el = $(this);
      var external       = el.data('exchange-delivery_tracking');    if (external && external != 'null') {window.location = external; return}
-     var pane           = el.data('href-pane');                     if (pane == 'back')                 {back(el.data('href-delay'));return}
+     var pane           = el.data('href-pane');                     if (pane == 'back')                 {window.history.back();return}
      var page           = el.data('href-page');
      var id             = el.data('href-id');
      var hash           = el.data('href-hash');

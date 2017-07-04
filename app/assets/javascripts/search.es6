@@ -214,7 +214,7 @@ $(document).ready(function() {
     $('[data-ajax=searches]').click(function(e) {
         e.preventDefault();
         if (inputValid()) {
-            setPage({page1: 'exchanges', pane1: 'offers'});
+//            setPage({page1: 'exchanges', pane1: 'offers'});
             search_and_show(search.location);
         }
     });

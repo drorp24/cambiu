@@ -32,6 +32,12 @@ populate = function(exchange, scopes, index, page) {
 
 populateOrder = function($scope, order) {
 
+  if (order == null) {
+    $scope.find('[data-model=order][data-field=exchange_id]').html(value_of('order_exchange_id'));
+    $scope.find('[data-model=order][data-field=voucher]').html(value_of('order_voucher'));
+    return
+  }
+
   $scope.find('[data-model=order][data-field]').each(function() {
     var $this = $(this);
     var field = $this.data('field');
@@ -43,7 +49,7 @@ populateOrder = function($scope, order) {
 
 populateExchange = function(exchange, $scope, index, page) {
 
-  console.log('exchange ' + exchange.id + ' - populateExchange. $scope: ', $scope);
+//  console.log('exchange ' + exchange.id + ' - populateExchange. $scope: ', $scope);
 
   return new Promise(function(resolve, reject) {
 

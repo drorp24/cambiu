@@ -13,7 +13,7 @@
 
 $(document).ready(function() {  // TODO: only populate Params needs to wait to document. For the other (userLocation) it's just unneeded latency
 
-    populateParams();
+    populateParams();                                       //TODO! 1st 2 lines should bew run for search page only, and once only. move to pages.es6 and call them 'search population'
     verifyUserLocation.then(doStuffThatRequiresLocation);  // that's the way to run multiple then's in parallel, and to separate one promise from a chain of promises
     setProperPage();
 
