@@ -105,7 +105,7 @@
         <div class="switch full_width flex_between">
           <label for="delivery_ind">Delivery</label>
           <label class="switch_form">
-            <input id="delivery_ind" name="search[delivery_ind]" type="checkbox">
+            <input id="delivery_ind" class="service_type" name="search[service_type]" type="checkbox"  value="delivery" checked="checked">
             <span class="lever"></span>
           </label>
         </div>
@@ -177,35 +177,18 @@
   </ul>
 
 
-<!--
-  <div class="search_line form-inline payment_method_selection">
-
-    <label class="form-group">Payment method</label>
-    <fieldset class="form-group">
-      <input "search[payment_method_cash]" type="checkbox" id="payment_method_cash" checked="checked">
-      <label for="payment_method_cash">Cash</label>
-    </fieldset>
-
-    <fieldset class="form-group">
-      <input type="checkbox" name="search[payment_method_credit]" class="filled-in" id="payment_method_credit">
-      <label for="payment_method_credit">Credit</label>
-    </fieldset>
-
-  </div>
--->
-
-
   <div class="search_section payment">
+
     <div class="search_line form-inline payment_method_selection">
 
       <label class="form-group">Payment method</label>
       <fieldset class="form-group">
-        <input name="search[payment_method]" type="radio" id="payment_method_cash" checked="checked" value="cash">
+        <input class="payment_method" name="search[payment_method]" type="radio" id="payment_method_cash" checked="checked" value="cash">
         <label for="payment_method_cash">Cash</label>
       </fieldset>
 
       <fieldset class="form-group">
-        <input name="search[payment_method]" type="radio" id="payment_method_credit" value="credit">
+        <input class="payment_method" name="search[payment_method]" type="radio" id="payment_method_credit" value="credit">
         <label for="payment_method_credit">Credit</label>
       </fieldset>
 
@@ -213,28 +196,6 @@
 
 
   </div>
-
-  <!--
-    <div class="search_section">
-      <div class="search_line">
-        <div class="form-group flex_center">
-          <div class="label">Payment method</div>
-          <div class="radio">
-            <label class="label">
-              <input type="radio" name="search[payment_method]" value="cash" checked="">
-              Cash (will cancel delivery)
-            </label>
-          </div>
-          <div class="radio">
-            <label class="label">
-              <input type="radio" name="search[payment_method]" value="credit" checked="">
-              Credit Card
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  -->
 
 
   <div class="narrow search_line invoke flex_center">
