@@ -2886,6 +2886,7 @@ body#cambiu {
       .open {
         font-weight: 400;
         @include vfont-size(4vw);
+        color: #009688;
       }
       .phone_icon {
         margin-right: 0;
@@ -3136,13 +3137,9 @@ body#cambiu {
   
   
   .offerPane [data-field=duration] {
-    display: none;
-  }
+  display: none;
+}
 
- /* &.pickup .offerPane [data-field=duration]{
-    display: block;
-  }
-*/
   .minicard .duration {
     z-index: 1;
     @include flexbox();

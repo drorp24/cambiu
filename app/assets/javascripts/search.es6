@@ -478,7 +478,6 @@ $(document).ready(function() {
         if (service_type == 'delivery') {
 
             $('form.selection').removeClass('pickup').addClass('delivery');
-            $('body').removeClass('pickup').addClass('delivery');
             $('form.selection .inline_params_delivery').addClass('open');
             sessionStorage.service_type = 'delivery';
 
@@ -488,7 +487,6 @@ $(document).ready(function() {
         } else if (service_type == 'pickup') {
 
             $('form.selection').removeClass('delivery').addClass('pickup');
-            $('body').removeClass('delivery').addClass('pickup');
             $('.inline_params_delivery').removeClass('open');
             sessionStorage.service_type = 'pickup';
 
@@ -508,7 +506,6 @@ $(document).ready(function() {
         sessionStorage.payment_method = payment_method;
         if (payment_method == 'cash') setServiceTypeTo('pickup');
         $('form.selection').removeClass(other(payment_method)).addClass(payment_method);
-        $('body').removeClass(other(payment_method)).addClass(payment_method);
 
         function other(method) {
             return method == 'cash' ? 'credit' : 'cash'

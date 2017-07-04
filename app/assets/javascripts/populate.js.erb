@@ -9,7 +9,7 @@ populate = function(exchange, scopes, index, page) {
 
     scopes.filter(Boolean).forEach(function($scope) {
       populateExchange(exchange, $scope, index, page)
-          .then(function() {/*console.log('exchange ' + exchange.id + ' - populateExchange succeeded for $scope: ', $scope)*/})
+          .then(function() {console.log('exchange ' + exchange.id + ' - populateExchange succeeded for $scope: ', $scope)})
           .catch(function(error) {console.error(error)})
     });
 
