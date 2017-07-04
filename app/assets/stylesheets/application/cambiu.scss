@@ -2320,7 +2320,7 @@ body#cambiu {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      @include vfont-size(4vw);
+      @include vfont-size(5vw);
       font-weight: 400;
       &.saving {
         color: $brand-color-a;
@@ -2722,8 +2722,10 @@ body#cambiu {
       @include vwidth(100vw);
       padding-top: $navbar_height;
       .section {
+        /*
         padding-right: 5%;
         padding-left: 5%;
+        */
         color: #000;
         height: 35%;
         @include apple-like;
