@@ -242,7 +242,12 @@ function different(pane) {
     return !same_pane(activePane, pane);
 }
 
+/*
 function active(pane) {
     var recentSet = value_of('recent_set');
     return (['offer', 'order'].includes(pane) && actual(recentSet) == 'offers') ? recentSet : pane;
+}
+*/
+function active(pane) {
+    return ['offer', 'order'].includes(pane) ? value_of('recent_set') || default_set : pane;
 }

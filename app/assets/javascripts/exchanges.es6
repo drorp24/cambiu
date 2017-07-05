@@ -81,7 +81,7 @@
     };
 
     showBestOffer = function() {
-        setPage({pane1: 'offer', id: offers[0].id})
+        setPage({pane1: 'offer', id1: offers[0].id})
     };
 
 
