@@ -549,7 +549,7 @@ $(document).ready(function() {
     // Error Handling
 
     function errorText(error) {
-        var stack   = error.stack;
+        if (error) var stack   = error.stack;
         var message = error.toString();
         var text    = stack ? stack : message;
         return {
