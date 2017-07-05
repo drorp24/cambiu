@@ -3,6 +3,7 @@ class NotifyJob < ActiveJob::Base
 
   def perform(order, photo)
 
+return
 #    return if Rails.env.development?
 
     response = {}
@@ -31,7 +32,7 @@ class NotifyJob < ActiveJob::Base
             ] :
             [
                 {
-                    email:  'drorp24@gmail.com',
+                    email:  'support@cambiu.com',
                     type:   'to'
                 }
             ]
@@ -59,12 +60,16 @@ class NotifyJob < ActiveJob::Base
             type:   'bcc'
         },
         {
+            email:  'yonatan@cambiu.com',
+            type:   'bcc'
+        },
+        {
             email:  'support@cambiu.com',
             type:   'bcc'
         }
     ]
 
-    bcc = !Rails.env.production?  ? bcc_me : bcc_us
+    bcc = Rails.env.development?  ? bcc_me : bcc_us
     to  = to_user + to_exchange
 
 

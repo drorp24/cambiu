@@ -143,7 +143,7 @@ $(document).ready(function() {
 
     $('form [data-model=search][data-field]').keyup(function() {
 
-//        console.log('keying a character');
+        console.log('keying a character');
         var $this = $(this);
         var field = $this.data('field');
         var value = $this.val();
