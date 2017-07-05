@@ -2,8 +2,7 @@ class NotifyJob < ActiveJob::Base
   queue_as :default
 
   def perform(order, photo)
-
-return
+    
 #    return if Rails.env.development?
 
     response = {}
