@@ -983,6 +983,26 @@ body#cambiu {
     }
   }
 
+  .coming_soon_icon {
+    position: absolute;
+    top: 40vh;
+    left: 42vw;
+    font-size: 20vw;
+  }
+
+  .coming_soon_text {
+    position: absolute;
+    top: 60vh;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 10vw;
+  }
+
+
+
+
+
 
 
   .snackbar {
@@ -2809,6 +2829,19 @@ body#cambiu {
         height: 15%;
       }
     }
+
+  &.cash {
+    .orderPane button.cta::after {
+      content: 'Walk'
+    }
+  }
+  &.credit {
+    .orderPane button.cta::after {
+      content: 'Pay'
+    }
+  }
+
+
 
   .hidden {
     visibility: hidden;
