@@ -226,7 +226,7 @@ $(document).ready(function() {
         return new Promise(function(resolve, reject) {
 
             function startSearch() {
-                start_show();
+//                start_show();
             }
 
             function checkStatus(response) {
@@ -259,7 +259,7 @@ $(document).ready(function() {
                 exchangeHash = {};
                 for (var exchange of exchanges) {exchangeHash[exchange.properties.id] = exchange.properties}
                 resolve(exchanges);
-                wait(750).then(stop_show);
+//                wait(750).then(stop_show);
             }
 
             function tell(error) {
