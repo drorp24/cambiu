@@ -2481,6 +2481,8 @@ body#cambiu {
 
     .ranking_container {
       position: absolute;
+      @include vleft(38vw);
+      top: 9vh;
     }
     .ranking {
       @include vwidth($rankingSize);
@@ -2882,7 +2884,8 @@ body#cambiu {
 
 
   .swiper-container .confirmation {
-    bottom: calc(#{$minicard_height} - #{$fab_height} / 2)
+    bottom: calc(#{$minicard_height} - #{$fab_height} / 2);
+    @include vleft(30vw);
   }
 
 
