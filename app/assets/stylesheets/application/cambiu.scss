@@ -888,7 +888,7 @@ body#cambiu {
     max-height: 0;
     overflow: hidden;
     &.open {
-      max-height: 33vh;
+      max-height: 40vh;
       padding-top: 3vh;
     }
     transition: max-height 0.3s;

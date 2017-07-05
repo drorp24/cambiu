@@ -429,7 +429,7 @@ orderConfirmationRequired = function() {
 };
 
 orderConfirm = function() {
-    $('.ordered.ecard').removeClass('ordered').addClass('confirmed');
+    $('.ordered.ecard').removeClass('ordered').addClass('confirmed').removeClass('requiresConfirmation');
     sessionStorage.order_status = 'confirmed';
     orderUpdate({status: 'confirmed'});
 };
