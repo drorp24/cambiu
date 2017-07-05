@@ -112,6 +112,12 @@ p {
   }
 }
 
+@mixin vborder-right-width($size) {
+  border-right-width: $size;
+  @include desktop {
+    border-right-width: $size * $paneRatio;
+  }
+}
 @mixin vpadding($size) {
   padding: $size;
   @include desktop {
@@ -769,7 +775,15 @@ body#cambiu {
   }
 
 
+  @include desktop {
+    #snackbar-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
 
+    }
+  }
 
 
   // twitter-bootstrap-4 & MDB adjustments - end
@@ -2423,7 +2437,8 @@ body#cambiu {
 
   .ecard.ordered {
     .minicard {
-      border-right: 2vw solid $formGreen;
+      @include vborder-right-width(2vw);
+      border-right: solid $formGreen;
       padding-right: 1vw;
     }
     .order_ind {
@@ -2571,6 +2586,9 @@ body#cambiu {
         top: 50vh - $order_button_width / 2;
         width: $order_button_width;
         left: calc(50vw - #{$order_button_width} / 2);
+        @include desktop {
+          left: calc(50vw * #{$paneRatio} - #{$order_button_width} / 2);
+        }
        }
 
 
@@ -2873,14 +2891,14 @@ body#cambiu {
       .confirmation_text {
         height: 0.8 * (100vh - $navbar_height);
         background: #eee;
-        font-size: 5vw;
+        @include vfont-size(5vw);
         font-weight: 300;
         color: #000;
-        padding-right: 5vw;
-        padding-left: 5vw;
+        @include vpadding-right(5vw);
+        @include vpadding-left(5vw);
         line-height: 2;
         strong {
-          font-size: 4.3vw;
+          @include vfont-size(4.3vw);
           font-weight: 700;
         }
       }

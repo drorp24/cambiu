@@ -4,7 +4,6 @@
 // This should be the only code doing something that's not event-driven
 
 
-
     console.log('flow');
 
     verifyUserLocation = getUserLocation();                // in case I need to verify location was found before doing something that requires it (e.g., search, particularly here below)
