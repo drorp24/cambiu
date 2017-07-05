@@ -246,7 +246,7 @@
 //  EVENTS
 
 $('body').on('click tap', '.ecard:not(.selected)', function(e) {
-    setPage({pane1: 'offer', id1: 'curr'})
+    setPage({pane1: 'offer', id1: $(this).data('exchange-id')})
 });
 
 $('body').on('mouseover', '.ecard:not(.selected)', function(e) {

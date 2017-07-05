@@ -1228,9 +1228,8 @@ body#cambiu {
       border-radius: 0 !important;
         height: 16vh !important;
        .photo img {
-//        height: 20vmax !important;
         @include desktop {
-          height:16vh !important;
+          height:15vh !important;
         }
       }
     }
@@ -2452,7 +2451,8 @@ body#cambiu {
 
   .ecard.confirmed {
     .minicard {
-      border-right: 2vw solid $brand-color-b;
+      border-right: solid $brand-color-b;
+      @include vborder-right-width(2vw);
       padding-right: 1vw;
     }
     .order_ind {
