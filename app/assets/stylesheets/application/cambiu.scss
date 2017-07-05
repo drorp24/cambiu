@@ -2912,6 +2912,7 @@ body#cambiu {
         .camera_access {
           position: absolute;
           bottom: 0.2 * (100vh - $navbar_height) - ($fab_height / 2);
+          left: 42vw;
         }
       }
     }
