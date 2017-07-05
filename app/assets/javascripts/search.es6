@@ -525,6 +525,7 @@ $(document).ready(function() {
 
         for (let field of ['buy_currency', 'buy_amount', 'pay_currency', 'pay_amount']) {updateOrderWith(field)}
         $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=gain_amount]`).html($('form.update [data-field=worst_saving]').val());
+        $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=edited_quote]`).html($(`form.update [data-field=${value_of('calculated')}]`).val());
 
         function updateOrderWith(field) {
             $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=${field}]`).html($(`form.update [data-field=${field}]`).val());
