@@ -73,5 +73,14 @@ class Order < ActiveRecord::Base
     (self.id + 80000).to_s
   end
 
+  def pay_amount=(amt_with_currency)
+    money             = Monetize.parse(amt_with_currency)
+    self.pay_cents    = money.fractional
+  end
+
+  def buy_amount=(amt_with_currency)
+    money             = Monetize.parse(amt_with_currency)
+    self.buy_cents    = money.fractional
+  end
 
 end

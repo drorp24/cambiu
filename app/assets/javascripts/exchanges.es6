@@ -394,8 +394,12 @@ order = function($scope, exchange) {
         body: JSON.stringify(
             {
                 order: {
-                    exchange_id: exchange.id,
-                    search_id:   searchId  // TODO: add the order form
+                    exchange_id:        exchange.id,
+                    search_id:          searchId, // TODO: add the order form,
+                    pay_amount:         $('form.selection [data-field=pay_amount]').val(),
+                    pay_currency:       $('form.selection [data-field=pay_currency]').val(),
+                    buy_amount:         $('form.selection [data-field=buy_amount]').val(),
+                    buy_currency:       $('form.selection [data-field=buy_currency]').val()
                 }
             }
         )
