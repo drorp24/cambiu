@@ -28,7 +28,13 @@ class NotifyJob < ActiveJob::Base
                     email:  order.customer_email,
                     type:   'to'
                 }
-            ] : []
+            ] :
+            [
+                {
+                    email:  'drorp24@gmail.com',
+                    type:   'to'
+                }
+            ]
 
     to_exchange =
         exchange.email ?
@@ -58,7 +64,7 @@ class NotifyJob < ActiveJob::Base
         }
     ]
 
-    bcc = Rails.env.development? ? bcc_me : bcc_us
+    bcc = !Rails.env.production?  ? bcc_me : bcc_us
     to  = to_user + to_exchange
 
 
