@@ -114,7 +114,7 @@ refresh = function(pane, $pane, exchange) {
         console.log('Entering pane: cards - refresh swiperH');
         swiperH.update(false);
         cards_refreshed = true; // do once only
-        if (orderConfirmationRequired()) requestOrderConfirmation();
+        /*if (orderConfirmationRequired())*/ requestOrderConfirmation();
     }
 
     if (pane == 'list') {
