@@ -9,6 +9,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
         console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populating: ' + populating + ' help_topic: ' + help_topic);
 
     // POP pane into view
+//    if (page1 = 'homepage') var url = 'homepage';
     if (url) {
         var ppart = break_url(url);
          [page, id, pane] = [ppart.page || 'homepage', ppart.id, ppart.pane]
@@ -16,10 +17,13 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
          [page, id, pane] = [page1, id1, pane1];
     }
 
-
-    id = determineId(id);
-    var exchange = exchangeHash && exchangeHash[id] ? exchangeHash[id] : currentExchange();
-    pane = determinePane(pane, exchange);
+//console.log('pane before: ', pane);
+    if (pane == 'list' || pane == 'cards') sessionStorage.recent_set = pane;
+    if (pane == 'offers') {
+        pane = value_of('recent_set') || default_set;
+        sessionStorage.recent_set = pane;
+    }
+//console.log('pane after: ', pane);
 
     // tag the session as soon as page is visited, with ref parameter or without it
     if (search) utm_source = new URLSearchParams(search).get('utm_source');
@@ -32,6 +36,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
         populateHelp({topic: help_topic, content: help_content}, $pane);
     }
 
+    var exchange = currentExchange();
 
     if (populating && pane == 'reviews') {
         populateReviews(exchange, $pane);
@@ -65,6 +70,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
 
     // PUSH state (unless triggered by popstate or page reloads)
     if (pushState) {
+        var id = (id == 'curr') ? currentExchange().id : id;
         var newState = url ? url : make_url(page, id, pane);
         history.pushState(newState, 'cambiu', newState);
     }
@@ -121,13 +127,7 @@ refresh = function(pane, $pane, exchange) {
         if (orderConfirmationRequired()) requestOrderConfirmation();
     }
 
-
-    if (pane == 'offer') {
-        selectExchange($(`.pane[data-pane=${value_of('recent_set') || default_set}] .ecard[data-exchange-id=${exchange.id}]`), false);
-    }
-
     if (pane == 'order') {
-        selectExchange($(`.pane[data-pane=${value_of('recent_set') || default_set}] .ecard[data-exchange-id=${exchange.id}]`), false);
         order($pane, exchange);
         $pane.find('.selected.ecard').addClass('order');
         report('Order', 'Exchange', exchange);

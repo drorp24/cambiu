@@ -78,10 +78,8 @@
         populatePage({page: pageNum, list: true, cards: true});
         $('.pagination').addClass('active');
 
-    };
+        selectExchange($(`.pane[data-pane=${value_of('recent_set') || default_set}] .best.ecard`), false);
 
-    showBestOffer = function() {
-        setPage({pane1: 'offer', id: offers[0].id})
     };
 
 
@@ -207,12 +205,14 @@
     selectExchange = function($exchange, manual = true) {
 
         $exchange.addClass('selected');
+        console.log('$exchange: ', $exchange[0])
         if ($exchange.is('.ordered')) $exchange.addClass('order');
 
         $('.swiper-container-h').css('bottom', '0px');
         if ($exchange.closest('.pane').data('pane') == 'cards') $exchange.css('transform', 'translate(' + cardXoffset + ', 0px)');
 
-//        populateStreetview(currentExchange());
+        setPage({pane1: 'offer', id1: 'curr'});
+        populateStreetview(currentExchange());
         clearDirections();
 
         if (manual) report('Select', 'Exchange');
@@ -246,7 +246,11 @@
 //  EVENTS
 
 $('body').on('click tap', '.ecard:not(.selected)', function(e) {
-    setPage({pane1: 'offer', id1: 'curr'})
+    selectExchange($(this));
+});
+
+$('body').on('click tap', '.ecard.selected .lessmore.icon', function(e) {
+    unselectExchange($(this));
 });
 
 $('body').on('mouseover', '.ecard:not(.selected)', function(e) {
