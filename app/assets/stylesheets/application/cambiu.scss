@@ -778,7 +778,7 @@ body#cambiu {
     min-height: 100vh;
     color: #555;
     font-weight: 300;
-    @include vpadding(5vw);
+    padding: 5vw;
     [data-field=pay_amount], [data-field=buy_amount] {
       position: relative;
       ~ label:before {
@@ -821,7 +821,7 @@ body#cambiu {
         position: static;
         flex-basis: 50%;
         margin-bottom: 0;
-        @include vfont-size(3.5vw);
+        font-size: 3.5vw;
       }
       input {
         border: none;
@@ -850,7 +850,7 @@ body#cambiu {
   .calculated_icon {
     position: absolute;
     top: 1vh;
-    @include vleft(10vw);
+    left: 10vw;
     font-size: 1.5rem;
     display: none;
   }
@@ -900,10 +900,10 @@ body#cambiu {
   }
   label[for=location] {
     justify-content: flex-start;
-    @include vfont-size(3.5vw);
+    font-size: 3.5vw;
   }
   label[for=delivery_ind] {
-    @include vfont-size(3.5vw);
+    font-size: 3.5vw;
   }
   label[for=buy_amount], label[for=pay_amount] {
     right: 0;
@@ -956,7 +956,7 @@ body#cambiu {
   .payment_method_selection {
     label {
       margin-bottom: 0;
-      @include vfont-size(3.5vw);
+      font-size: 3.5vw;
       width: 30%;
       margin-right: 0;
     }
@@ -1040,7 +1040,7 @@ body#cambiu {
 
 
   button.cta {
-    @include vfont-size(5vw);
+    font-size: 5vw !important;
     color: $brand-color-a;
   }
 
@@ -2459,9 +2459,9 @@ body#cambiu {
       display: none;
       text-transform: uppercase;
       position: absolute;
-      @include vtop(3vw);
-      @include vright(5vw);
-      @include vfont-size(3.5vw);
+      top: 3vw;
+      right: 5vw;
+      font-size: 3.5vw;
     }
 
     .ranking_container {
@@ -2953,14 +2953,14 @@ body#cambiu {
 
   .cambiu_ranking {
     position: absolute;
-    @include vleft(5vw);
+    left: 5vw;
     top: 15vh;
     width: 20vh;
     height: 20vh;
     background: #fff;
     color: #888;
     font-weight: 300;
-    @include vfont-size(3.5vw);
+    font-size: 3.5vw;
     padding: 0;
     padding-top: 3vh;
     line-height: 2vh;
@@ -2969,7 +2969,7 @@ body#cambiu {
     .cambiu_ranking_value {
       color: $brand-color-a;
       font-weight: 500;
-      @include vfont-size(11vw);
+      font-size: 11vw;
       [data-field=rank] {
         margin-left: -0.25em;
       }
@@ -3296,22 +3296,22 @@ body#cambiu {
   .newexpiry {
     font-weight: 300;
     color: #000;
-    @include vfont-size(5vw);
+    font-size: 5vw;
     .newexpiry_icon {
-      @include vfont-size(6vw);
+      font-size: 6vw;
       font-weight: 100;
-      @include vwidth(6vw); //wtf
-      @include vmargin-right(1vw);
+      width: 6vw; //wtf
+      margin-right: 1vw;
       position: relative;
-      @include vbottom(0.5vw);
+      bottom: 0.5vw;
     }
     .newexpiry_text {
-      @include vfont-size(4vw);
+      font-size: 4vw;
       font-weight: 100;
-      @include vmargin-right(1vw);
+      margin-right: 1vw;
     }
     .newexpiry_time {
-      @include vfont-size(4vw);
+      font-size: 4vw;
       font-weight:100;
     }
   }
