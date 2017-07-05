@@ -2878,8 +2878,10 @@ body#cambiu {
     position: absolute;
   }
 
-  .ordered.ecard .confirmation {
-    display: block;
+  .ordered.ecard, .requiresConfirmation.ecard {
+    .confirmation {
+      display: block;
+    }
   }
 
 
