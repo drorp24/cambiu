@@ -261,9 +261,9 @@ class Exchange < ActiveRecord::Base
   end
 
   def self.bad_rate(country, rated_currency, base_currency)
-#    puts "self.bad_rate called with: " + country + ', ' + rated_currency + ', ' + base_currency
+    puts "self.bad_rate called with: " + country + ', ' + rated_currency + ', ' + base_currency
     return @bad_rate if @bad_rate && @bad_rate_country == country && @bad_rate[:rated_currency] == rated_currency && @bad_rate[:base_currency] == base_currency
-#    puts "self.bad_rate did not return but went to calculate it"
+    puts "self.bad_rate did not return but went to calculate it"
     @bad_rate_country = country
     @bad_rate = Exchange.bad(country).rate(rated_currency, base_currency)
   end
@@ -324,6 +324,8 @@ class Exchange < ActiveRecord::Base
     else
       country = self.country
     end
+
+    puts "exchange id: " + self.id.to_s + " country: " + self.country
 
     if field == 'pay_amount' or field == 'pay_currency'
       rates = result[:rates]          = rate(get_currency, pay_currency)
