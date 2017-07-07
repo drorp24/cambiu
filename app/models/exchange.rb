@@ -457,6 +457,12 @@ class Exchange < ActiveRecord::Base
         updated: nil,
         source: nil
     }
+
+    if chain? and chain_id.blank?
+      result[:error] = 'rates_policy is chain but no chain defined'
+      return result
+    end
+
     if currency == self.currency
       result[:buy]  = 1
       result[:sell] = 1
