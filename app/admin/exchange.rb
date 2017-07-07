@@ -123,8 +123,8 @@ ActiveAdmin.register Exchange do
   index do
     selectable_column
     id_column
-#    column(:todo)   {|exchange| status_tag(exchange.todo, exchange.todo_color) if exchange.todo }
-#    column(:system) {|exchange| status_tag(exchange.system, exchange.system_color) if exchange.system }
+#    column(:todo)   {|exchange| status_tag(exchange.todo, class: exchange.todo_color) if exchange.todo }
+#    column(:system) {|exchange| status_tag(exchange.system, class: exchange.system_color) if exchange.system }
     column :chain
     column :name
     column :nearest_station
@@ -146,7 +146,7 @@ ActiveAdmin.register Exchange do
         end
       end
     end
-    column(:status) {|exchange| status_tag(exchange.status, exchange.status_color) if exchange.status }
+    column(:status) {|exchange| status_tag(exchange.status, class: exchange.status_color) if exchange.status }
     column 'Orders' do |exchange|
       count = exchange.orders.count
       link_to count.to_s + ' order'.pluralize(count), admin_exchange_orders_path(exchange) if count > 0
@@ -176,8 +176,8 @@ ActiveAdmin.register Exchange do
   end
 
   sidebar "System", only: [:show, :edit] do
-    status_tag(exchange.status, exchange.status_color) if exchange.status
-    status_tag(exchange.system, exchange.system_color) if exchange.system
+    status_tag(exchange.status, class: exchange.status_color) if exchange.status
+    status_tag(exchange.system, class: exchange.system_color) if exchange.system
   end
 
   sidebar "Comments", only: [:show, :edit] do
@@ -217,7 +217,7 @@ ActiveAdmin.register Exchange do
   controller do
 
     before_filter :only => :index do
-      @per_page = 10
+      @per_page = 30
     end
 
     # working...
@@ -514,7 +514,7 @@ form do |f|
       column 'Service' do |order|
         order.service_type.capitalize if order.service_type
       end
-      column (:status) {|order| status_tag(order.status, order.status_color) if order.status }
+      column (:status) {|order| status_tag(order.status, class: order.status_color) if order.status }
     end
 
     controller do
@@ -529,3 +529,4 @@ form do |f|
   end
 
 end
+

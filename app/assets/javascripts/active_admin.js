@@ -1,7 +1,6 @@
 //= require active_admin/base
 //= require jquery
 //= require best_in_place
-//= require jquery-ui
 //= require best_in_place.jquery-ui
 //= require jquery.purr.js
 //= require best_in_place.purr
