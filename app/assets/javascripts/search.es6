@@ -212,7 +212,7 @@ $(document).ready(function() {
 
             function finish (data) {
                 console.log('search completed succesfully');
-                searchResult = data.exchanges;
+                searchData = data;
                 searchId = data.search;
                 tagSession({search: searchId});
                 exchanges = data.exchanges.features;
