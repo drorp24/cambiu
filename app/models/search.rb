@@ -46,7 +46,7 @@ class Search < ActiveRecord::Base
 
     exchanges.each do |exchange|
 
-      exchange_rates = exchange.rate(buy_currency, pay_currency).merge(exchange_id: exchange.id)
+      exchange_rates = exchange.rate(buy_currency, pay_currency)
       if exchange_rates[:buy] && exchange_rates[:buy] < best_buy
         best_buy_rate = exchange_rates
         best_buy = exchange_rates[:buy]

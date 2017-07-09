@@ -421,7 +421,8 @@ class Exchange < ActiveRecord::Base
         sell: nil,
         error: nil,
         updated: nil,
-        source: nil
+        source: nil,
+        exchange_id: self.id
     }
 
     rated_rates = find_rate(rated_currency)
