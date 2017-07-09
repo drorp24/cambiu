@@ -1,5 +1,5 @@
 ActiveAdmin.register Search do
-
+  
   config.filters = false
   config.clear_action_items!
 
@@ -48,7 +48,7 @@ ActiveAdmin.register Search do
     controller do
 
       def index
-        errors = params[:search_id] ? Error.where(search_id: params[:search_id]) : Error.all
+        errors = params[:id] ? Error.where(search_id: params[:id]) : Error.all
         @collection = errors.order(id: :desc).page(params[:page]).per(10)
       end
 
