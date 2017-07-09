@@ -407,8 +407,14 @@ form do |f|
       def index
 
         if params[:exchange_id]
-          ratable_type = 'Exchange'
-          ratable_id = params[:exchange_id]
+          exchange = Exchange.find(params[:exchange_id])
+          if exchange.chain? and exchange.chain_id.present?
+            ratable_type = 'Chain'
+            ratable_id = exchange.chain_id
+          else
+            ratable_type = 'Exchange'
+            ratable_id = params[:exchange_id]
+          end
         elsif params[:chain_id]
           ratable_type = 'Chain'
           ratable_id = params[:chain_id]
