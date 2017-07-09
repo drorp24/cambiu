@@ -1,5 +1,5 @@
 ActiveAdmin.register Search do
-  
+
   config.filters = false
   config.clear_action_items!
 
