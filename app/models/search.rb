@@ -86,18 +86,28 @@ class Search < ActiveRecord::Base
 
   def exchanges
 
-    return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
-    return if         location_lat.blank? or location_lng.blank?
+    begin
 
-    self.distance      ||= 2.5
-    self.distance_unit ||= "km"
+      return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
+      return if         location_lat.blank? or location_lng.blank?
 
-    pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
-    buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)   
-    center          = [location_lat, location_lng]
-    box             = Geocoder::Calculations.bounding_box(center, distance)
+      self.distance      ||= 2.5
+      self.distance_unit ||= "km"
 
-    exchange_offers(exchange_id, location, center, box, pay, buy, distance, transaction, calculated)
+      pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
+      buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)
+      center          = [location_lat, location_lng]
+      box             = Geocoder::Calculations.bounding_box(center, distance)
+
+      exchange_offers(exchange_id, location, center, box, pay, buy, distance, transaction, calculated)
+
+    rescue => e
+
+      error_text = e.to_s
+      Error.report({message: 'Error at search', text: error_text, search_id: self.id})
+      geoJsonize([], error_text)
+
+    end
 
   end
 
@@ -118,13 +128,13 @@ class Search < ActiveRecord::Base
 
   end
 
-  def geoJsonize(exchanges_offers)
+  def geoJsonize(exchanges_offers, error=nil)
 
     features = []
     exchanges_offers.each do |exchange_offer|
       features << to_geo(exchange_offer)
     end
-    return {search: id, exchanges: {type: 'FeatureCollection', features: features}}.to_json
+    return {search: id, error: error, exchanges: {type: 'FeatureCollection', features: features}}.to_json
 
   end
 

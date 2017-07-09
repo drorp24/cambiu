@@ -264,9 +264,12 @@ class Exchange < ActiveRecord::Base
     @inter ||= self.inter.first
   end
 
-  def self.bad_rate(country, pay_currency, get_currency)
-      bad_exchange  = Exchange.bad(country)
-      bad_exchange ? bad_exchange.rate(pay_currency, get_currency) : {error: "No bad exchange found for country #{country}"}
+  def self.bad_rate(country, rated_currency, base_currency)
+#    puts "self.bad_rate called with: " + country + ', ' + rated_currency + ', ' + base_currency
+    return @bad_rate if @bad_rate && @bad_rate_country == country && @bad_rate[:rated_currency] == rated_currency && @bad_rate[:base_currency] == base_currency
+#    puts "self.bad_rate did not return but went to calculate it"
+    @bad_rate_country = country
+    @bad_rate = Exchange.bad(country).rate(rated_currency, base_currency)
   end
 
   def quote(params)
@@ -454,6 +457,12 @@ class Exchange < ActiveRecord::Base
         updated: nil,
         source: nil
     }
+
+    if chain? and chain_id.blank?
+      result[:error] = 'rates_policy is chain but no chain defined'
+      return result
+    end
+
     if currency == self.currency
       result[:buy]  = 1
       result[:sell] = 1

@@ -3,6 +3,7 @@ skip_before_action :verify_authenticity_token
 
   def create
     Error.report(error_params)
+    render nothing: true
   end
 
   protected
