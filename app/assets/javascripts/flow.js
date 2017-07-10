@@ -4,17 +4,22 @@
 // This should be the only code doing something that's not event-driven
 
 
-    console.log('flow');
 
-    verifyUserLocation = getUserLocation();                // in case I need to verify location was found before doing something that requires it (e.g., search, particularly here below)
-    //    if (value_of('search_id')) verifyUserLocation.then(search_and_show);
 
+// Chrome manages very well with getUserLocaion() done *before* document ready. But not Safari:
+// With Safari, global variables set inside document ready aren't recognized by the getUserLocation (when done before ready),
+// and vice-versa: variables set in the pre-ready getUserLocation aren't recognized anywhere after document ready
 
 $(document).ready(function() {  // TODO: only populate Params needs to wait to document. For the other (userLocation) it's just unneeded latency
 
-    populateParams();                                       //TODO! 1st 2 lines should bew run for search page only, and once only. move to pages.es6 and call them 'search population'
-    verifyUserLocation.then(doStuffThatRequiresLocation);  // that's the way to run multiple then's in parallel, and to separate one promise from a chain of promises
+    console.log('flow');
+
+    verifyUserLocation = getUserLocation();
+    populateParams();
+    verifyUserLocation.then(doStuffThatRequiresLocation);
     setProperPage();
+
+    //    if (value_of('search_id')) verifyUserLocation.then(search_and_show);
 
 });
 

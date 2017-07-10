@@ -753,7 +753,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def rates
-    if self.chain?
+    if self.chain? && self.chain_id
       self.chain.rates
     else
       super
