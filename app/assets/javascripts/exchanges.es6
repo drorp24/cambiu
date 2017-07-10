@@ -415,6 +415,7 @@ order = function($scope, exchange) {
         sessionStorage.order_voucher = order.voucher;
         sessionStorage.order_status = order.status;
         if (order.service_type == 'pickup') snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'});
+        report('Order', 'Made');
     })
     .catch((error) => {console.log('Error creating order:', error)});
 
