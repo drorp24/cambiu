@@ -186,11 +186,11 @@ $(document).ready(function() {
 
         var $buy_amount = $('#buy_amount');
         var buyAmountValid = clean($buy_amount.val());
-        if (!buyAmountValid) error($buy_amount, 'Cannot be blank');
+        if (!buyAmountValid) error($buy_amount, calculated == 'buy_amount' ? 'No offer, sorry' : 'Cannot be blank');
 
         var $pay_amount = $('#pay_amount');
         var payAmountValid = clean($pay_amount.val());
-        if (!payAmountValid) error($pay_amount, 'Cannot be blank');
+        if (!payAmountValid) error($pay_amount, calculated == 'pay_amount' ? 'No offer, sorry' : 'Cannot be blank');
 
 
         var $location = $('#location');

@@ -82,6 +82,7 @@
     };
 
     showBestOffer = function() {
+        if (no(offers)) return;
         setPage({pane1: 'offer', id1: offers[0].id})
     };
 
