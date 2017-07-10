@@ -564,7 +564,7 @@ class Exchange < ActiveRecord::Base
 
   def photo_url
 
-    return nil unless self.photo
+    return nil unless self.photo.present? && ENV["CLOUDFRONT_DIST"]
 
     if Rails.application.assets_manifest.assets.any? and url = Rails.application.assets_manifest.assets['exchanges/' + self.photo]
       return ENV["CLOUDFRONT_DIST"] + '/assets/' + url

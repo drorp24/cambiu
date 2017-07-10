@@ -104,9 +104,15 @@ class Search < ActiveRecord::Base
 
     rescue => e
 
-      error_text = e.to_s
-      Error.report({message: 'Error at search', text: error_text, search_id: self.id})
-      geoJsonize([], error_text)
+      error_message = 'Search error: '+ e.to_s
+      error_text = e.backtrace[0..6].join("\n\t")
+      puts ""
+      puts "Search error: #{$!}"
+      puts ""
+      puts "Backtrace:\n\t#{e.backtrace[0..6].join("\n\t")}"
+      puts ""
+      Error.report({message: error_message, text: error_text, search_id: self.id})
+      geoJsonize([], error_message)
 
     end
 

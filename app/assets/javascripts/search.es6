@@ -251,7 +251,11 @@ $(document).ready(function() {
             }
 
             function finishSearch (data) {
-                console.log('search completed succesfully');
+                if (data.error) {
+                    console.error('search failed:', data.error)
+                } else {
+                    console.log('search completed succesfully');
+                }
                 searchData = data;
                 set('search_id', searchId = data.search);
                 tagSession({search: searchId});
