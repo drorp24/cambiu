@@ -115,7 +115,7 @@ refresh = function(pane, $pane, exchange) {
         swiperH.update(false);
         cards_refreshed = true; // do once only
         /*if (orderConfirmationRequired())*/ requestOrderConfirmation();
-        $(`.ecard[data-exchange-id=${exchange.id}]`).addClass('requiresConfirmation');
+        if (exchange) $(`.ecard[data-exchange-id=${exchange.id}]`).addClass('requiresConfirmation');
     }
 
     if (pane == 'list') {
