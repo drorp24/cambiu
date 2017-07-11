@@ -29,43 +29,39 @@ getUserLocation = function() {
             user.lat = position.coords.latitude;
             user.lng = position.coords.longitude;
 
-            var center = setLocale(user);
+            console.log('user initial location:', user);
 
-            if (center.distance < 100) {
-                setLocation(user.lat, user.lng, 'user', 'positionFound', user.lat, user.lng, null);
-            } else {
-                setLocation(center.lat, center.lng, 'nearest', 'nothingAroundUser', user.lat, user.lng, null);
-            }
+            setSearchLocation(user.lat, user.lng, 'user', 'positionFound');
+            setUserLocation(user);
         }
 
         function positionError(error) {
 
             var message = error.message ? error.message : error;
-            setLocation(Number(dfault.lat), Number(dfault.lng), 'default', 'PositionError: ' + message, null, null, 'Unknown');
+            console.log('user position error:', message);
+
+            setSearchLocation(Number(dfault.lat), Number(dfault.lng), 'default', 'PositionError: ' + message);
             snack('We couldn\'t locate you. Have you given us the permission to?', {upEl: $('.swiper-container'), klass: 'oops', timeout: 3000});
-//            persistError('positionError', message);
 
         }
 
-        function setLocation(location_lat, location_lng, type, reason, user_lat, user_lng, user_location) {
+        function setSearchLocation(location_lat, location_lng, type, reason) {
 
-            // search.user.lat is the *initial* user position, as opposed to user.lat/lng which changes as the user walks
-            // it is passed to 'search' entity where it is persisted
-
-            search.location     = {};
-            search.user         = {};
+            search.location = {};
 
             set('location_lat',     search.location.lat         = location_lat);
             set('location_lng',     search.location.lng         = location_lng);
             set('location_type',    search.location.type        = type);
             set('location_reason',  search.location.reason      = reason);
-            set('user_lat',         search.user.lat             = user_lat);
-            set('user_lng',         search.user.lng             = user_lng);
-            set('user_location',    search.user.location        = user_location);
-
-            console.log('location set!', search.location);
+            
+            console.log('search location:', search.location);
             resolve(search.location);
 
+        }
+
+        function setUserLocation(user) {  //to include user's initial position in the persisted search
+            set('user_lat', user.lat);
+            set('user_lng', user.lng);
         }
     })
 };
@@ -162,7 +158,7 @@ geocode = function(locationArg) {
             set('location_short',   search.location.short = location_short);
 
             if (sessionStorage.location_type == 'user') {
-                set('user_location', search.user.location = location_name);
+                set('user_location', location_name);
             }
 
             resolve(search.location);

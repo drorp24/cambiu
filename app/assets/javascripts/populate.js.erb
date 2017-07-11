@@ -312,7 +312,7 @@ fetchAndPopulateLocaloffers = function() {
 populateLocalOffers = function(rates) {
 
   if (rates.worst.error || $.isEmptyObject(rates.best.buy) || $.isEmptyObject(rates.best.sell) || rates.best.buy.error || rates.best.sell.error) {
-    snack('No offer for these criteria. <br> Try changing currencies or location', {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
+    snack('No offer found. Try changing currencies or location', {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
     return(null);
   }
 

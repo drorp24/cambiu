@@ -107,7 +107,6 @@ var dfault = {};
 dfault.lat = '51.51574678520366';
 dfault.lng = '-0.16346305847173426';
 var search = {};
-search.location = {};
 search.user = {};
 var ratingOptions = {
     theme: 'krajee-fa',
@@ -391,6 +390,12 @@ parseJson = function(response) {
 
 
 $(document).ready(function() {
+
+    $(function() {
+        if (window.self != window.top) {
+            $(document.body).addClass("in-iframe");
+        }
+    });
 
     // Material Select Initialization
     $(document).ready(function() {

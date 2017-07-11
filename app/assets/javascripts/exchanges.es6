@@ -46,12 +46,6 @@
         }
     }
 
-    function notifyIfClosestCenterOffers() {
-        if (search.location.readon == 'nothingAroundUser') {
-            snack("Nearest offers we've found.<br> Click OK to change your search.", {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
-            return true;
-        }
-    }
     clearPrevSearch = function() {
         if (mode == 'mobile' || mode == 'both') {
             $('#cards').empty();
@@ -70,8 +64,6 @@
         clearPrevSearch();
 
         if (no(offers)) return;
-
-        notifyIfClosestCenterOffers();
 
         console.log('populateOffers');
 

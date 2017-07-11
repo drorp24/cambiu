@@ -89,6 +89,10 @@ $(document).ready(function() {
         return field.indexOf('amount') > -1
     };
 
+    currency = function(field) {
+        return field.indexOf('currency') > -1
+    };
+
     other = function(field) {
         return field.includes('pay') ? 'buy' + field.split('pay')[1] : 'pay' + field.split('buy')[1]
     };
@@ -143,15 +147,19 @@ $(document).ready(function() {
 
     $('form [data-model=search][data-field]').keyup(function() {
 
-        console.log('keying a character');
         var $this = $(this);
         var field = $this.data('field');
+
+        if (!(amount(field) && !currency(field))) return;
+        console.log('keying a character');
+
         var value = $this.val();
 
         set(field, value);
-        if (amount(field) && value) clear(brother($this));
-
-        set('calculated', calculated = other(field));
+        if (amount(field) && value) {
+            clear(brother($this));
+            set('calculated', calculated = other(field));
+        }
 
         var $field = formElement(field);
         if ($field.hasClass('calculated')) {

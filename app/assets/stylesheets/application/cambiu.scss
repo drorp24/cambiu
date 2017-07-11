@@ -16,6 +16,7 @@ $offer-padding: 5vw;
 $tablet-width: 768px;
 $desktop-width: 1024px;
 $paneRatio: 0.27;
+$paneRatioInIframe: 0.40;
 $infoPaneWidth: $paneRatio * 100%;
 $mapPaneWidth: (1 - $paneRatio) * 100%;
 
