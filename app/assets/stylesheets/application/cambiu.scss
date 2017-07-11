@@ -2457,7 +2457,34 @@ body#cambiu {
     display: none;
     background: #fff;
     z-index: 1;
+    .streetview {
+      height: 100%;
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .rating_and_reviews {
+      @include flexbox();
+      height: 12%;
+    }
+    .pickup {
+      height: 20%;
+    }
+    .open_and_phone {
+      height: 8%;
+      position: relative;
+      //        top: -1vh;
+    }
+    .deal {
+      height: 40%;
+    }
+    .actions_line {
+      height: 20%;
+    }
   }
+
+
 
 
 
@@ -2567,13 +2594,6 @@ body#cambiu {
       height: 50vh;
     }
 
-    .offerPane .streetview {
-      height: 100%;
-      img {
-        height: 100%;
-        width: 100%;
-      }
-    }
 
     &.selected {
       flex-wrap: wrap;
@@ -2689,21 +2709,8 @@ body#cambiu {
           height: 50vh !important;
         }
       }
-      .rating_and_reviews {
-        @include flexbox();
-        height: 12%;
-      }
-      .name {
-        height: 12%;
-      }
       .address {
-        height: 8%;
         font-weight: 100;
-      }
-      .open_and_phone {
-        height: 8%;
-        position: relative;
-//        top: -1vh;
       }
       .data {
         max-width: 100%;
@@ -2999,10 +3006,6 @@ body#cambiu {
 //    @include vline-height(10vw);
   }
 
-  .offerPane .deal {
-    height: 40%;
-  }
-
   .cambiu_ranking {
     position: absolute;
     @include vleft(5vw);
@@ -3154,10 +3157,6 @@ body#cambiu {
     left: 0;
     bottom: 3vh;
     width: 100%;
-  }
-
-  .offerPane .actions_line {
-    height: 20%;
   }
 
 
