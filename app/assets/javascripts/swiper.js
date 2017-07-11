@@ -64,3 +64,11 @@ addSlide = function(index) {
 currIndex = function() {return swiperH.activeIndex};
 
 currentCard = function() {return $('.swiper-slide-active')};
+
+disableSwiping = function() {
+    $('.swiper-container-h').addClass('swiper-no-swiping');
+};
+
+enableSwiping = function() {
+    $('.swiper-container-h').removeClass('swiper-no-swiping');
+};

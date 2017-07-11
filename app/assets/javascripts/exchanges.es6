@@ -203,21 +203,16 @@
         $exchange.addClass('selected');
         if ($exchange.is('.ordered')) $exchange.addClass('order');
 
-        $('.swiper-container-h').css('bottom', '0px');
         if ($exchange.closest('.pane').data('pane') == 'cards') $exchange.css('transform', 'translate(' + cardXoffset + ', 0px)');
 
-//        populateStreetview(currentExchange());
+        populateStreetview(currentExchange());
         clearDirections();
 
         if (manual) report('Select', 'Exchange');
     };
 
     unselectExchange = function() {
-
         $('.selected.ecard').removeClass('selected');
-
-        if (isSafari2) $('.swiper-container-h').css('bottom', '60px');
-
     };
 
     // Left here but not needed - thought as long as any exchange is selected, no pane should supersede 'offers'/cards/list but that's not true
@@ -408,6 +403,8 @@ order = function($scope, exchange) {
         sessionStorage.order_voucher = order.voucher;
         sessionStorage.order_status = order.status;
         if (order.service_type == 'pickup') snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'});
+        hideCards(exchange.id);
+        disableSwiping();
         report('Order', 'Made');
     })
     .catch((error) => {console.log('Error creating order:', error)});
@@ -458,6 +455,20 @@ unorder = function() {
     $('.ecard [data-exchange-id=' + exchange_id + ']').removeClass('ordered');
     sessionStorage.removeItem('order_exchange_id')
 };
+
+hideCards = function(exchange_id = null) {
+    let $hide = exchange_id ? $(`.ecard:not([data-exchange-id=${exchange_id}])`) : $('.ecard:not(.best)');
+    $hide.css('visibility', 'hidden');
+};
+
+showCards = function() {
+    $('.ecard').css('visibility', 'visible');
+};
+
+$('body').on('click tap', '[data-action=showCards]', (e) => {
+    showCards();
+    enableSwiping();
+});
 
 
 
