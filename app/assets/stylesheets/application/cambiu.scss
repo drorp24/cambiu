@@ -2482,6 +2482,18 @@ body#cambiu {
     .actions_line {
       height: 20%;
     }
+    .distance {
+      position: absolute;
+      top: -3.5vh;
+      color: #fff;
+      width: 150%;
+      text-align: center;
+      font-size: 2.2vh;
+      font-weight: 400;
+      .away {
+        visibility: hidden;
+      }
+    }
   }
 
 
@@ -3031,6 +3043,7 @@ body#cambiu {
     }
     .cambiu_ranking_title {
       color: #000;
+      font-weight: 500;
     }
   }
 
