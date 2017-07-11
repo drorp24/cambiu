@@ -6,12 +6,8 @@ var desktop = media == 'desktop';
 var mode = 'both'; // let's see if it causes problems. The menus allow both modes currently
 // if (mobile) - single-pane; true in mobile devices and iFrames narrower than 767px.  EXAMPLE: if (mobile) close pane when showing directions.   If (desktop) - side by side panes.
 // if (mode == mobile) - best fit for a single-pane, though it can exists in desktop too. EXAMPLE: if (mode == mobile) create vertical list rather than horizontal cards.
-var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || safari.pushNotification);
 var default_set = mobile ? 'cards' : 'list';
-function isSafari1(ua) {
-    return /^((?!chrome).)*safari/i.test(ua) && ua.toLowerCase().indexOf(' version/')>-1 && ua.toLowerCase().indexOf('mqqbrowser')==-1;
-}
-var isSafari2 = isSafari1(navigator.userAgent);
+//var isSafari2 = isSafari1(navigator.userAgent);
 var windowWidth = $(window).width();
 var windowHeight = $(window).height();
 var isAndroid = /(android)/i.test(navigator.userAgent);
@@ -685,26 +681,6 @@ $(document).ready(function() {
     var cardWidth = bodyWidth / slidesPerView - 2.3;
     var offset = (bodyWidth - cardWidth) / -2;
     cardXoffset = String(offset) + 'px';
-
-    function fixSafari() {
-
-        var heightDiff = $(window).height() - window.innerHeight;
-        var heightDiffPx = String(Math.floor(heightDiff)) + 'px';
-        console.log('$(window).height() - window.innerHeight: ', heightDiff);
-
-        if (isSafari || isSafari2) {
-
-            console.log(isSafari ? 'isSafari' : 'isSafari2');
-            $('.swiper-container-h').css('bottom', heightDiff ? heightDiffPx : '60px');
-
-        } else {
-
-            console.log('is not Safari')
-
-        }
-    }
-
-    setTimeout(fixSafari, 1500);
 
     $('#input_starttime').pickatime({
         twelvehour: true
