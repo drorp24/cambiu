@@ -2491,6 +2491,7 @@ body#cambiu {
       text-align: center;
       font-size: 2.2vh;
       font-weight: 400;
+      z-index: 1;
       .away {
         visibility: hidden;
       }
@@ -3045,6 +3046,9 @@ body#cambiu {
     .cambiu_ranking_title {
       color: #000;
       font-weight: 500;
+    }
+    .cambiu_ranking_view_others {
+      width: 80%;
     }
   }
 
