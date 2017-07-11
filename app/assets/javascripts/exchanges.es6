@@ -235,7 +235,9 @@
 //  EVENTS
 
 $('body').on('click tap', '.ecard:not(.selected)', function(e) {
-    setPage({pane1: 'offer', id1: $(this).data('exchange-id')})
+    let $this = $(this);
+    let pane = $this.is('.ordered') ? 'order' : 'offer';
+    setPage({pane1: pane, id1: $this.data('exchange-id')})
 });
 
 $('body').on('mouseover', '.ecard:not(.selected)', function(e) {
@@ -370,9 +372,15 @@ resetPaging = function() {
 
 order = function($scope, exchange) {
 
-    if (exchange.id == value_of('order_exchange_id')) {populateOrder($scope, null); return;}
-
     $('.ecard[data-exchange-id=' + exchange.id + ']').addClass('ordered');
+
+    // reload of search page after an order has been sent already
+    if (exchange.id == value_of('order_exchange_id')) {
+        populateOrder($scope, null);
+        hideCards(exchange.id);
+        disableSwiping();
+        return;
+    }
 
     fetch('/orders', {
         method: 'POST',
