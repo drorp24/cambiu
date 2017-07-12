@@ -73,7 +73,7 @@ class NotifyJob < ActiveJob::Base
 
 
     subject = "#{order.service_type.capitalize} order #{order.voucher} - #{order.status.upcase}"
-#    subject += " (#{Rails.env})" unless Rails.env.production?
+    subject += " (#{Rails.env})" unless Rails.env.production?
 
 
     from_name = 'cambiu'
