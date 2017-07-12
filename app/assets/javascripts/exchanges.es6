@@ -69,13 +69,21 @@
 
         pageNum = 1;
         populatePage({page: pageNum, list: true, cards: true});
+//        restoreOrder();
         $('.pagination').addClass('active');
 
     };
 
-    showBestOffer = function() {
+    renderProperPage = function() {
         if (no(offers)) return;
-        setPage({pane1: 'offer', id1: offers[0].id})
+/*
+        if (value_of('order_id')) {
+            restoreOrder();
+            setPage({pane1: 'order', id1: value_of('order_exchange_id')})
+        } else {
+*/
+            setPage({pane1: 'offer', id1: offers[0].id});
+ //       }
     };
 
 
@@ -372,54 +380,53 @@ resetPaging = function() {
 
 order = function($scope, exchange) {
 
-    $('.ecard[data-exchange-id=' + exchange.id + ']').addClass('ordered');
+        if (exchange.id == value_of('order_exchange_id')) { //= reload of search page after an order has been sent already: retain values & styles, but don't create a new order
+            restoreOrder(); // TODO: do upon page load, move to setParams
+            return;
+        }
 
-    // reload of search page after an order has been sent already
-    if (exchange.id == value_of('order_exchange_id')) {
-        populateOrder($scope, null);
-        hideCards(exchange.id);
-        disableSwiping();
-        return;
-    }
-
-    fetch('/orders', {
-        method: 'POST',
-        headers: new Headers({
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }),
-        body: JSON.stringify(
-            {
-                order: {
-                    exchange_id:        exchange.id,
-                    search_id:          searchId, // TODO: add the order form,
-                    pay_amount:         $('form.selection [data-field=pay_amount]').val(),
-                    pay_currency:       $('form.selection [data-field=pay_currency]').val(),
-                    buy_amount:         $('form.selection [data-field=buy_amount]').val(),
-                    buy_currency:       $('form.selection [data-field=buy_currency]').val()
+         fetch('/orders', {
+            method: 'POST',
+            headers: new Headers({
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }),
+            body: JSON.stringify(
+                {
+                    order: {
+                        exchange_id:        exchange.id,
+                        search_id:          searchId, // TODO: add the order form,
+                        pay_amount:         $('form.selection [data-field=pay_amount]').val(),
+                        pay_currency:       $('form.selection [data-field=pay_currency]').val(),
+                        buy_amount:         $('form.selection [data-field=buy_amount]').val(),
+                        buy_currency:       $('form.selection [data-field=buy_currency]').val()
+                    }
                 }
-            }
-        )
-    })
-    .then(checkStatus)
-    .then(response => response.json())
-    .then((order) => {
-        console.log('Order succesfully created:', order);
-        populateOrder($scope, order);
-        sessionStorage.order_exchange_id = exchange.id;
-        sessionStorage.order_id = order.id;
-        sessionStorage.order_voucher = order.voucher;
-        sessionStorage.order_status = order.status;
-        if (order.service_type == 'pickup') snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'});
-        hideCards(exchange.id);
-        disableSwiping();
-        report('Order', 'Made');
-    })
-    .catch((error) => {console.log('Error creating order:', error)});
+            )
+        })
+        .then(checkStatus)
+        .then(response => response.json())
+        .then((order) => {
+            console.log('Order succesfully created:', order);
+            $('.ecard[data-exchange-id=' + exchange.id + ']').addClass('ordered');
+            populateOrder($scope, order);
+            sessionStorage.order_exchange_id = exchange.id;
+            sessionStorage.order_id = order.id;
+            sessionStorage.order_voucher = order.voucher;
+            sessionStorage.order_status = order.status;
+            if (order.service_type == 'pickup') snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'});
+            hideCards(exchange.id);
+            disableSwiping();
+            if (orderConfirmationRequired() && !orderConfirmationRequested()) requestOrderConfirmation();
+            report('Order', 'Made');
+        })
+       .catch((error) => {console.log('Error creating order:', error)});
 
 };
 
 requestOrderConfirmation = function() {
+    sessionStorage.order_status = 'confirmationRequested';
+    $('.ordered.ecard').addClass('confirmationRequested');
     snack('Click <strong>CONFIRM</strong> when deal is done', {upEl: $('.swiper-container'), icon: 'assignment_turned_in', timeout: 3000});
 };
 
@@ -428,8 +435,12 @@ orderConfirmationRequired = function() {
     return order_status && order_status != 'confirmed';
 };
 
+orderConfirmationRequested = function() {
+    value_of('order_status') == 'confirmationRequested'
+};
+
 orderConfirm = function() {
-    $('.ordered.ecard').removeClass('ordered').addClass('confirmed').removeClass('requiresConfirmation');
+    $('.ordered.ecard').removeClass('confirmationRequested').addClass('confirmed');
     sessionStorage.order_status = 'confirmed';
     orderUpdate({status: 'confirmed'});
 };
@@ -463,6 +474,29 @@ unorder = function() {
     $('.ecard [data-exchange-id=' + exchange_id + ']').removeClass('ordered');
     sessionStorage.removeItem('order_exchange_id')
 };
+
+
+noOtherOrderExists = function() {
+    let orderred_already = !!value_of('order_id');
+    if (orderred_already) {
+        let order_exchange_id = value_of('order_exchange_id');
+        let ordered_exchange = exchangeHash[order_exchange_id];
+        let current_exchange = currentExchange();
+        let text = 'You have already ordered';
+        if (order_exchange_id == current_exchange.id) {
+            text += ' from that exchange'
+        } else {
+            text += ` from ${ordered_exchange.name}`
+        }
+        snack(text, {klass: 'oops', timeout: 3000});
+    }
+    return !orderred_already;
+};
+
+
+
+
+
 
 hideCards = function(exchange_id = null) {
     let $hide = exchange_id ? $(`.ecard:not([data-exchange-id=${exchange_id}])`) : $('.ecard:not(.best)');

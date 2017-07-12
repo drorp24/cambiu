@@ -7,6 +7,7 @@ var mode = 'both'; // let's see if it causes problems. The menus allow both mode
 // if (mobile) - single-pane; true in mobile devices and iFrames narrower than 767px.  EXAMPLE: if (mobile) close pane when showing directions.   If (desktop) - side by side panes.
 // if (mode == mobile) - best fit for a single-pane, though it can exists in desktop too. EXAMPLE: if (mode == mobile) create vertical list rather than horizontal cards.
 var default_set = mobile ? 'cards' : 'list';
+var default_set = 'cards';
 //var isSafari2 = isSafari1(navigator.userAgent);
 var windowWidth = $(window).width();
 var windowHeight = $(window).height();

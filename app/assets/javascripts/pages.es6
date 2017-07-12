@@ -114,12 +114,9 @@ refresh = function(pane, $pane, exchange) {
         console.log('Entering pane: cards - refresh swiperH');
         swiperH.update(false);
         cards_refreshed = true; // do once only
-        /*if (orderConfirmationRequired())*/ requestOrderConfirmation();
-        if (exchange) $(`.ecard[data-exchange-id=${exchange.id}]`).addClass('requiresConfirmation');
     }
 
     if (pane == 'list') {
-        if (orderConfirmationRequired()) requestOrderConfirmation();
     }
 
 
@@ -179,6 +176,7 @@ refresh = function(pane, $pane, exchange) {
      var help_content   = el.data('help-content');
      var populate       = el.data('populate');
      var delay          = el.data('href-delay');
+     var validate       = el.data('validate');
 
      if (delay) {
         wait(500).then(hideMenus).then(wait).then(goOn)
@@ -190,6 +188,7 @@ refresh = function(pane, $pane, exchange) {
          $('.context_menu').removeClass('active')
      }
      function goOn() {
+         if (validate && !window[validate]())  return;
          setPage({page1: page, id1: id, pane1: pane, hash: hash, help_topic: help_topic, help_content: help_content, populating: populate});
          hideDialog();
      }

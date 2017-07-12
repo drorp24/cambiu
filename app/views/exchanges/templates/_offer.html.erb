@@ -58,7 +58,7 @@
         <span class="newexpiry_text flex_center">Expires at </span>
         <span class="newexpiry_time flex_center" data-model="exchange" data-field="expiry_time"></span>
       </div>
-      <button class="btn-flat waves-effect more action" data-href-pane="order" data-href-id="curr" data-href-delay="true"></button>
+      <button class="btn-flat waves-effect more action" data-href-pane="order" data-href-id="curr" data-href-delay="true" data-validate="noOtherOrderExists"></button>
     </div>
 
   </div>
@@ -69,7 +69,7 @@
       <span data-model="exchange" data-field="gDistance"></span>
       <span class="away">away</span>
     </div>
-    <div class="ordering fab flex_center column" data-href-pane="order" data-href-id="curr" data-href-delay="true">
+    <div class="ordering fab flex_center column" data-href-pane="order" data-href-id="curr" data-href-delay="true" data-validate="noOtherOrderExists">
       <button class="btn-floating waves-effect">
         <i class="material-icons flex_center">shopping_cart</i>
         <div class="fab_text">Order</div>

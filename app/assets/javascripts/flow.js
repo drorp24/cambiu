@@ -37,7 +37,7 @@ search_and_show = function(location) {
     return Promise.all([showMap(location), search()])
         .then(selectOffers)
         .then(populateOffers)
-        .then(showBestOffer)
+        .then(renderProperPage)
         .then(placeGoogleMarkers)
         .then(showSearchLocation)
         .then(revealCards)

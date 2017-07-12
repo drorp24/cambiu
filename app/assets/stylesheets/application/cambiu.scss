@@ -2927,7 +2927,7 @@ body#cambiu {
     position: absolute;
   }
 
-  .ordered.ecard, .requiresConfirmation.ecard {
+  .confirmationRequested.ecard {
     .confirmation {
       display: block;
     }
