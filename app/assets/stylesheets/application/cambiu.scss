@@ -942,10 +942,11 @@ body#cambiu {
         flex-basis: 50%;
       }
     }
-    &.buy, &.pay {
-      > div {
-        flex-basis: 50%;
-      }
+    .md-form.currency_fields {
+      flex-basis: 30%;
+    }
+    .md-form.amount_fields {
+      flex-basis: 70%;
     }
   }
 
