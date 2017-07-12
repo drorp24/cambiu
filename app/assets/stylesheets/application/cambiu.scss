@@ -1286,13 +1286,13 @@ body#cambiu {
 .info-pane {
   flex: 0 0 100%;
   max-width: 100%;
-  @include iframe {
-    flex: 0 0 $iframeInfoPaneWidth;
-    max-width: $iframeInfoPaneWidth;
-  }
   @include desktop {
     flex: 0 0 $infoPaneWidth;
     max-width: $infoPaneWidth;
+  }
+  @include iframe {
+    flex: 0 0 $iframeInfoPaneWidth;
+    max-width: $iframeInfoPaneWidth;
   }
 }
 
@@ -2662,9 +2662,6 @@ body#cambiu {
       img {
         transition: height $card-transition-time;
         height: $minicard_img_height !important;
-        @include iframe {
-          height: $minicard_img_height * $iframePaneRatio !important;
-        }
         @include desktop {
           height: $minicard_img_height * $paneRatio !important;
         }
@@ -2725,11 +2722,11 @@ body#cambiu {
         top: 50vh - $order_button_width / 2;
         width: $order_button_width;
         left: calc(50vw - #{$order_button_width} / 2);
-        @include iframe {
-          left: calc(50vw * #{$iframePaneRatio} - #{$order_button_width} / 2);
-        }
         @include desktop {
           left: calc(50vw * #{$paneRatio} - #{$order_button_width} / 2);
+        }
+        @include iframe {
+          left: calc(50vw * #{$iframePaneRatio} - #{$order_button_width} / 2);
         }
        }
 
@@ -3040,11 +3037,11 @@ body#cambiu {
           position: absolute;
           bottom: 0.2 * (100vh - $navbar_height) - ($fab_height / 2);
           left: calc(50vw - #{$order_button_width} / 2);
-          @include iframe {
-            left: calc(50vw * #{$iframePaneRatio} - #{$order_button_width} / 2);
-          }
           @include desktop {
             left: calc(50vw * #{$paneRatio} - #{$order_button_width} / 2);
+          }
+          @include iframe {
+            left: calc(50vw * #{$iframePaneRatio} - #{$order_button_width} / 2);
           }
         }
       }
@@ -3161,9 +3158,6 @@ body#cambiu {
     font-weight: 400;
     color: #000;
     margin-bottom: 3vw;
-    @include iframe {
-      margin-bottom: 1.4vw;
-    }
     @include desktop {
       margin-bottom: 1vw;
     }
@@ -3172,9 +3166,6 @@ body#cambiu {
   .offerPane .quote {
     @include vfont-size(7vw);
     letter-spacing: -0.3vw;
-    @include iframe {
-      letter-spacing: -0.3vw * $iframePaneRatio;
-    }
     @include desktop {
       letter-spacing: -0.3vw * $paneRatio;
     }
@@ -3210,9 +3201,6 @@ body#cambiu {
 
   .no_rates_action i {
     margin-left: 3vw;
-    @include iframe {
-      margin-left: 3vw * $iframePaneRatio;
-    }
     @include desktop {
       margin-left: 3vw * $paneRatio;
     }
@@ -3221,10 +3209,6 @@ body#cambiu {
   .into {
     margin-right: 2vw;
     margin-left: 2vw;
-    @include iframe {
-      margin-right: 2vw * $iframePaneRatio;
-      margin-left: 2vw * $iframePaneRatio;
-    }
     @include desktop {
       margin-right: 2vw * $paneRatio;
       margin-left: 2vw * $paneRatio;
@@ -3256,20 +3240,17 @@ body#cambiu {
 
   .actions_line {
     font-size: 5vw !important;
-    @include iframe {
-      font-size: 5vw * $iframePaneRatio !important;
-    }
     @include desktop {
       font-size: 5vw * $paneRatio !important;
     }
     button {
       font-size: 5vw !important;
-      @include iframe {
-        font-size: 5vw * $iframePaneRatio !important;
-      }
       @include desktop {
         font-size: 5vw * $paneRatio !important;
       }
+        @include iframe {
+          font-size: 5vw * $iframePaneRatio !important;
+        }
       }
     }
 
@@ -3618,16 +3599,10 @@ body#cambiu {
     .marketing {
       @include white_centered;
       margin-top: 25vw;
-      @include iframe {
-        margin-top: 25vw * $iframePaneRatio;
-      }
       @include desktop {
         margin-top: 25vw * $paneRatio;
       }
       margin-bottom: 5vw;
-      @include iframe {
-        margin-bottom: 5vw * $iframePaneRatio;
-      }
       @include desktop {
         margin-bottom: 5vw * $paneRatio;
       }
@@ -4424,9 +4399,6 @@ body#cambiu {
         }
         #user_location_icon {
           margin-right: 1vw;
-          @include iframe {
-            margin-right: 1vw * $iframePaneRatio;
-          }
           @include desktop {
             margin-right: 1vw * $paneRatio;
           }
