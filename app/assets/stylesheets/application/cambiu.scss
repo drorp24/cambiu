@@ -808,6 +808,8 @@ html, body {
 }
 
 
+
+
 .red {
   color: red;
 }
@@ -846,6 +848,10 @@ body#cambiu {
   }
   */
 
+
+  &.in-iframe .ecard .photo img {
+    height: 12vw !important;
+  }
 
   // twitter-bootstrap-4 & MDB adjustments - start
 
@@ -2674,6 +2680,7 @@ body#cambiu {
     }
 
 
+
     &.selected {
       flex-wrap: wrap;
       width: 100% !important;
@@ -2876,6 +2883,7 @@ body#cambiu {
       background: #fff;
       z-index: 1;
       height: 100vh;
+    width: 100%;
       padding-top: $navbar_height;
       .section {
         /*
@@ -3239,12 +3247,12 @@ body#cambiu {
       font-size: 5vw !important;
       @include desktop {
         font-size: 5vw * $paneRatio !important;
+      }
         @include iframe {
           font-size: 5vw * $iframePaneRatio !important;
         }
       }
     }
-  }
 
   .minicard .actions_line {
     position: absolute;
