@@ -13,25 +13,38 @@ $formBlue: #4285F4;
 $minicard_height: 33vw;
 $minicard_img_height: 27vw;
 $offer-padding: 5vw;
+$iframe-width: 650px;
 $tablet-width: 768px;
-$desktop-width: 550px;
+$desktop-width: 1024px;
 $paneRatio: 0.27;
-$paneRatioInIframe: 0.40;
+$iframePaneRatio: 0.45;
 $infoPaneWidth: $paneRatio * 100%;
 $mapPaneWidth: (1 - $paneRatio) * 100%;
 
+/*
 @mixin tablet {
   @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
     @content;
   }
 }
+*/
 
+
+@mixin iframe {
+  @media (min-width: #{$iframe-width}) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) {
+    @content;
+  }
+}
 @mixin desktop {
   @media (min-width: #{$desktop-width}) {
     @content;
   }
 }
-
 /* Example:
 p {
   font-size: 16px;
@@ -60,54 +73,81 @@ p {
 
 @mixin vheight($size) {
   height: $size;
-  @include desktop {
+  @include iframe {
+    height: $size * $iframePaneRatio;
+  }
+}@include desktop {
     height: $size * $paneRatio;
   }
 }
 @mixin vwidth($size) {
   width: $size;
+  @include iframe {
+    width: $size * $iframePaneRatio;
+  }
   @include desktop {
     width: $size * $paneRatio;
   }
 }
 @mixin vtop($size) {
   top: $size;
+  @include iframe {
+    top: $size * $iframePaneRatio;
+  }
   @include desktop {
     top: $size * $paneRatio;
   }
 }
 @mixin vleft($size) {
   left: $size;
+  @include iframe {
+    left: $size * $iframePaneRatio;
+  }
   @include desktop {
     left: $size * $paneRatio;
   }
 }
 @mixin vbottom($size) {
   bottom: $size;
+  @include iframe {
+    bottom: $size * $iframePaneRatio;
+  }
   @include desktop {
     bottom: $size * $paneRatio;
   }
 }
 @mixin vright($size) {
   right: $size;
+  @include iframe {
+    right: $size * $iframePaneRatio;
+  }
   @include desktop {
     right: $size * $paneRatio;
   }
 }
 @mixin vfont-size($size) {
   font-size: $size;
+  @include iframe {
+    font-size: $size * $iframePaneRatio;
+  }
   @include desktop {
     font-size: $size * $paneRatio;
   }
 }
 @mixin vborder($size) {
   border: $size;
+  @include iframe {
+    border: $size * $iframePaneRatio;
+  }
   @include desktop {
     border: $size * $paneRatio;
   }
 }
 @mixin vborder-radius($size) {
   border-radius: $size;
+  @include iframe {
+    border-radius: $size * $iframePaneRatio;
+  }
   @include desktop {
     border-radius: $size * $paneRatio;
   }
@@ -115,12 +155,18 @@ p {
 
 @mixin vborder-right-width($size) {
   border-right-width: $size;
+  @include iframe {
+    border-right-width: $size * $iframePaneRatio;
+  }
   @include desktop {
     border-right-width: $size * $paneRatio;
   }
 }
 @mixin vpadding($size) {
   padding: $size;
+  @include iframe {
+    padding: $size * $iframePaneRatio;
+  }
   @include desktop {
     padding: $size * $paneRatio;
   }
@@ -128,6 +174,9 @@ p {
 
 @mixin vpadding-right($size) {
   padding-right: $size;
+  @include iframe {
+    padding-right: $size * $iframePaneRatio;
+  }
   @include desktop {
     padding-right: $size * $paneRatio;
   }
@@ -135,6 +184,9 @@ p {
 
 @mixin vpadding-left($size) {
   padding-left: $size;
+  @include iframe {
+    padding-left: $size * $iframePaneRatio;
+  }
   @include desktop {
     padding-left: $size * $paneRatio;
   }
@@ -142,6 +194,9 @@ p {
 
 @mixin vmargin-left($size) {
   margin-left: $size;
+  @include iframe {
+    margin-left: $size * $iframePaneRatio;
+  }
   @include desktop {
     margin-left: $size * $paneRatio;
   }
@@ -149,12 +204,18 @@ p {
 
 @mixin vmargin-right($size) {
   margin-right: $size;
+  @include iframe {
+    margin-right: $size * $iframePaneRatio;
+  }
   @include desktop {
     margin-right: $size * $paneRatio;
   }
 }
 @mixin vmin-width($size) {
   min-width: $size;
+  @include iframe {
+    min-width: $size * $iframePaneRatio;
+  }
   @include desktop {
     min-width: $size * $paneRatio;
   }
@@ -162,6 +223,9 @@ p {
 
 @mixin vline-height($size) {
   line-height: $size;
+  @include iframe {
+    line-height: $size * $iframePaneRatio;
+  }
   @include desktop {
     line-height: $size * $paneRatio;
   }
