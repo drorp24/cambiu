@@ -477,12 +477,12 @@ unorder = function() {
 
 
 noOtherOrderExists = function() {
-    let orderred_already = !!value_of('order_id');
+    var orderred_already = !!value_of('order_id');
     if (orderred_already) {
-        let order_exchange_id = value_of('order_exchange_id');
-        let ordered_exchange = exchangeHash[order_exchange_id];
-        let current_exchange = currentExchange();
-        let text = 'You have already ordered';
+        var order_exchange_id = value_of('order_exchange_id');
+        var ordered_exchange = exchangeHash[order_exchange_id];
+        var current_exchange = currentExchange();
+        var text = 'You have already ordered';
         if (order_exchange_id == current_exchange.id) {
             text += ' from that exchange'
         } else {
@@ -491,7 +491,7 @@ noOtherOrderExists = function() {
         console.warn(text);
         snack(text, {klass: 'oops', timeout: 3000});
     }
-    return !orderred_already;
+    return !orderred_already || order_exchange_id == current_exchange.id;  //in the latter case: allow passthrough to order page, just warn user that he ordered already
 };
 
 

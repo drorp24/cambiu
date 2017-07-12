@@ -278,10 +278,12 @@ populateParams = function() {
 
 function restoreOrder() {
 
+  console.log('restoreOrder');
   var order_exchange_id = value_of('order_exchange_id');
   if (!order_exchange_id) return;
 
   var $scope = $('.ecard[data-exchange-id=' + order_exchange_id + ']');
+  console.log('at this point (before calling hideCards), the ecard visibility is: ' + $scope.css('visibility'));
   $scope.addClass('ordered').addClass(value_of('order_status'));
   populateOrder($scope, null);
   hideCards(order_exchange_id);
