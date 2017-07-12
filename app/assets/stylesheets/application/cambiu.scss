@@ -2546,8 +2546,8 @@ body#cambiu {
 
     .ranking_container {
       position: absolute;
-      @include vleft(38vw);
-      top: 9vh;
+      left: 50%;
+      top: 50%;
     }
     .ranking {
       @include vwidth($rankingSize);

@@ -222,8 +222,9 @@ $(document).ready(function() {
     $('[data-ajax=searches]').click(function(e) {
         e.preventDefault();
         if (inputValid()) {
-//            setPage({page1: 'exchanges', pane1: 'offers'});
-            search_and_show(search.location);
+            search_and_show()
+            .then(renderProperPage);  // TODO! No need to wait until search_and_show promise resolves to show the proper page. Takes a lot of time
+
         }
     });
 

@@ -150,6 +150,7 @@ var cardXoffset;
 var findUserLocation;
 var local = {};
 var calculated = null;
+var verifyMapIsShown;
 
 
 

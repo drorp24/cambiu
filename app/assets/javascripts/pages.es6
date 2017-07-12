@@ -6,7 +6,7 @@
 
 setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushState = true, populating = false, help_topic = null, help_content = null}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
 
-        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populating: ' + populating + ' help_topic: ' + help_topic);
+        console.log('setPage. url: id' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populating: ' + populating + ' help_topic: ' + help_topic);
 
     // POP pane into view
     if (url) {
@@ -61,6 +61,11 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
         populate(exchange, [$pane], null, null);
     }
 */
+    if ((pane == 'cards' || pane == 'list') && id) {
+        $(`.ecard[data-exchange-id=${id}]`).css('visibility', 'visible');
+//        enableSwiping();
+        swiperH.slideTo(exchangeHash[id].rank - 1);
+    }
 
 
     // PUSH state (unless triggered by popstate or page reloads)
@@ -77,8 +82,8 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
         if (pane == 'variable') {
             var current_pane = $('body').data('pane');
             if (current_pane == 'order') {
-                pane = value_of('payment_method') == 'cash' ? 'offers' : 'payment';
-                if (pane == 'offers') renderDirections(exchange);
+                pane = value_of('payment_method') == 'cash' ? 'cards' : 'payment';
+                if (pane == 'cards') renderDirections(exchange);
             }
         }
 

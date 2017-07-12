@@ -14,9 +14,8 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
 
     console.log('flow');
 
-    verifyUserLocation = getUserLocation();
+    getUserLocation().then(doStuffThatRequiresLocation);
     populateParams();
-    verifyUserLocation.then(doStuffThatRequiresLocation);
     setProperPage();
 
     //    if (value_of('search_id')) verifyUserLocation.then(search_and_show);
@@ -25,19 +24,21 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
 
 function doStuffThatRequiresLocation(location) {
 
+    verifyMapIsShown = showMap(location);
     geocode(location);
     setLocale(location);
     populateLocalCurrency();
     populateTransaction();
     fetchAndPopulateLocaloffers();
+    search_and_show();
 }
 
 
-search_and_show = function(location) {
-    return Promise.all([showMap(location), search()])
+search_and_show = function() {
+    return search()
         .then(selectOffers)
         .then(populateOffers)
-        .then(renderProperPage)
+        .then(verifyMapIsShown)
         .then(placeGoogleMarkers)
         .then(showSearchLocation)
         .then(revealCards)
