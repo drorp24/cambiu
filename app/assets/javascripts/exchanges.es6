@@ -75,7 +75,8 @@
     };
 
     renderProperPage = function() {
-        if (no(offers)) return;
+        console.log('renderProperPage');
+        if (no(offers)) {console.warn('no offers'); return;}
 /*
         if (value_of('order_id')) {
             restoreOrder();

@@ -62,6 +62,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     }
 */
     if ((pane == 'cards' || pane == 'list') && id) {
+        console.log('pane is list or cards and id exists: showing card');
         $(`.ecard[data-exchange-id=${id}]`).css('visibility', 'visible');
 //        enableSwiping();
         swiperH.slideTo(exchangeHash[id].rank - 1);
