@@ -3239,6 +3239,8 @@ body#cambiu {
       font-size: 5vw !important;
       @include desktop {
         font-size: 5vw * $paneRatio !important;
+        @include iframe {
+          font-size: 5vw * $iframePaneRatio !important;
       }
     }
   }

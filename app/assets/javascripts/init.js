@@ -151,6 +151,7 @@ var findUserLocation;
 var local = {};
 var calculated = null;
 var verifyMapIsShown;
+var inIframe = false;
 
 
 
@@ -392,6 +393,7 @@ $(document).ready(function() {
     $(function() {
         if (window.self != window.top) {
             $(document.body).addClass("in-iframe");
+            inIframe = true;
         }
     });
 
@@ -682,6 +684,7 @@ $(document).ready(function() {
     if (desktop) bodyWidth = bodyWidth * 0.27; // TODO: Change if css $paneRatio changes
     var cardWidth = bodyWidth / slidesPerView - 2.3;
     var offset = (bodyWidth - cardWidth) / -2;
+    if (inIframe) offset += 45;
     cardXoffset = String(offset) + 'px';
     console.log('cardXoffset: ', cardXoffset);
 
