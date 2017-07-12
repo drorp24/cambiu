@@ -19,6 +19,7 @@ $desktop-width: 1024px;
 $paneRatio: 0.27;
 $iframePaneRatio: 0.45;
 $infoPaneWidth: $paneRatio * 100%;
+$iframeInfoPaneWidth: $iframePaneRatio * 100%;
 $mapPaneWidth: (1 - $paneRatio) * 100%;
 
 /*
@@ -1282,6 +1283,10 @@ body#cambiu {
   @include desktop {
     flex: 0 0 $infoPaneWidth;
     max-width: $infoPaneWidth;
+  }
+  @include iframe {
+    flex: 0 0 $iframeInfoPaneWidth;
+    max-width: $iframeInfoPaneWidth;
   }
 }
 
