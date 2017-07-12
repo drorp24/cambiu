@@ -213,12 +213,24 @@
         $exchange.addClass('selected');
         if ($exchange.is('.ordered')) $exchange.addClass('order');
 
-        if ($exchange.closest('.pane').data('pane') == 'cards') $exchange.css('transform', 'translate(' + cardXoffset + ', 0px)');
+        if ($exchange.closest('.pane').data('pane') == 'cards') $exchange.css('transform', 'translate(' + offset() + ', 0px)');
 
         populateStreetview(currentExchange());
         clearDirections();
 
         if (manual) report('Select', 'Exchange');
+
+        function offset() {
+            var bodyWidth = $('body').width();
+            if (desktop) bodyWidth = bodyWidth * 0.27; // TODO: Change if css $paneRatio changes
+            if (window.self != window.top) bodyWidth = bodyWidth * 0.45; // TODO: Change if css $paneRatio changes
+            var cardWidth = bodyWidth / slidesPerView - 2.3;
+            var offset = (bodyWidth - cardWidth) / -2;
+//    if (inIframe) offset += 45;
+            var cardXoffset = String(offset) + 'px';
+            console.log('in offset. cardXoffset: ', cardXoffset);
+            return cardXoffset;
+        }
     };
 
     unselectExchange = function() {
