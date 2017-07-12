@@ -892,7 +892,6 @@ body#cambiu {
     min-height: 100vh;
     color: #555;
     font-weight: 300;
-    @include vfont-size(5.5vw);
     @include vpadding(5vw);
     [data-field=pay_amount], [data-field=buy_amount] {
       position: relative;
@@ -902,7 +901,7 @@ body#cambiu {
       &.calculated {
         position: relative;
         ~ label:before {
-          content: "Best offer"
+          content: "Our offer"
         }
         ~ .calculated_icon {
           display: block;
@@ -916,9 +915,6 @@ body#cambiu {
 
   .md-form {
     margin-bottom: 0;
-    label, input[type=tel]:disabled {
-      color: #000;
-    }
   }
 
 
@@ -939,17 +935,11 @@ body#cambiu {
         position: static;
         flex-basis: 50%;
         margin-bottom: 0;
-        @include vfont-size(5.5vw);
-        &[for=worst_saving] {
-          color: $brand-color-a;
-        }
+        @include vfont-size(3.5vw);
       }
       input {
         border: none;
         flex-basis: 50%;
-        &#worst_saving {
-          color: $brand-color-a;
-        }
       }
     }
     .md-form.currency_fields {
@@ -1022,14 +1012,13 @@ body#cambiu {
     flex-direction: row;
     align-items: center;
     flex-basis: 24%;
-    @include vfont-size(6.6vw);
   }
   label[for=location] {
     justify-content: flex-start;
-    @include vfont-size(4.4vw);
+    @include vfont-size(3.5vw);
   }
   label[for=delivery_ind] {
-    @include vfont-size(4.4vw);
+    @include vfont-size(3.5vw);
   }
   label[for=buy_amount], label[for=pay_amount] {
     right: 0;
