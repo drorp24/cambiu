@@ -49,6 +49,22 @@ search_and_show = function() {
         .catch(showError);
 };
 
+search_and_show_and_render = function() {
+    return search()
+        .then(selectOffers)
+        .then(populateOffers)
+        .then(renderProperPage)
+        .then(verifyMapIsShown)
+        .then(placeGoogleMarkers)
+        .then(showSearchLocation)
+        .then(revealCards)
+        .then(zoomIn2)
+        .then(postAnimations)
+        .then(followUser)
+        .then(checkUserPosition)
+        .catch(showError);
+};
+
 function setProperPage() {
      if (mobile && window.location.pathname == '/') {
         setPage({page1: 'exchanges', pane1: 'intro', search: location.search});

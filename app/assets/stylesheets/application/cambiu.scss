@@ -2718,6 +2718,9 @@ body#cambiu {
         @include desktop {
           left: calc(50vw * #{$paneRatio} - #{$order_button_width} / 2);
         }
+        @include iframe {
+          left: calc(50vw * #{$iframePaneRatio} - #{$order_button_width} / 2);
+        }
        }
 
 
@@ -2873,7 +2876,6 @@ body#cambiu {
       background: #fff;
       z-index: 1;
       height: 100vh;
-      @include vwidth(100vw);
       padding-top: $navbar_height;
       .section {
         /*
@@ -3026,7 +3028,13 @@ body#cambiu {
         .camera_access {
           position: absolute;
           bottom: 0.2 * (100vh - $navbar_height) - ($fab_height / 2);
-          @include vleft(42vw);
+          left: calc(50vw - #{$order_button_width} / 2);
+          @include desktop {
+            left: calc(50vw * #{$paneRatio} - #{$order_button_width} / 2);
+          }
+          @include iframe {
+            left: calc(50vw * #{$iframePaneRatio} - #{$order_button_width} / 2);
+          }
         }
       }
     }

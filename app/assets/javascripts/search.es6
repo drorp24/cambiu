@@ -222,9 +222,7 @@ $(document).ready(function() {
     $('[data-ajax=searches]').click(function(e) {
         e.preventDefault();
         if (inputValid()) {
-            search_and_show()
-            .then(renderProperPage);  // TODO! No need to wait until search_and_show promise resolves to show the proper page. Takes a lot of time
-
+            search_and_show_and_render()
         }
     });
 

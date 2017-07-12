@@ -85,6 +85,7 @@
 */
             setPage({pane1: 'offer', id1: offers[0].id});
  //       }
+        return true;
     };
 
 
