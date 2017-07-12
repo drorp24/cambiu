@@ -683,6 +683,7 @@ $(document).ready(function() {
     var cardWidth = bodyWidth / slidesPerView - 2.3;
     var offset = (bodyWidth - cardWidth) / -2;
     cardXoffset = String(offset) + 'px';
+    console.log('cardXoffset: ', cardXoffset);
 
     $('#input_starttime').pickatime({
         twelvehour: true
