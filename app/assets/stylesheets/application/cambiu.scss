@@ -76,7 +76,7 @@ p {
   @include iframe {
     height: $size * $iframePaneRatio;
   }
-}@include desktop {
+@include desktop {
     height: $size * $paneRatio;
   }
 }
