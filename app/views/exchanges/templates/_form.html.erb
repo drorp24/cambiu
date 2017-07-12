@@ -13,7 +13,7 @@
     <div class="search_section amounts margined">
       <div class="wide search_line buy flex_center">
 
-        <div class="md-form buy_currency select currency_fields">
+        <div class="md-form buy_currency select">
           <select id="buy_currency" data-model="search" data-field="buy_currency" data-symboltarget="buy_amount" name="search[buy_currency]"
                   class="currency_select select optional text-center mdb-select">
             <option value="" disabled selected>Currency you need</option>
@@ -31,7 +31,7 @@
           <label for="buy_currency">Get</label>
         </div>
 
-        <div class="md-form buy_amount amount_fields">
+        <div class="md-form buy_amount">
           <input type="tel" pattern="\d*" id="buy_amount"
                  data-model="search" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control text-right amount_fields">
           <label for="buy_amount" class="control-label"></label>
@@ -42,7 +42,7 @@
 
       <div class="wide search_line pay flex_center">
 
-        <div class="md-form pay_currency select currency_fields">
+        <div class="md-form pay_currency select">
           <select id="pay_currency" data-model="search" data-field="pay_currency" data-symboltarget="pay_amount" name="search[pay_currency]"
                   class="currency_select select optional text-center mdb-select">
             <option value="" disabled selected>Currency you pay with</option>
@@ -60,7 +60,7 @@
           <label for="pay_currency" data-error="stupid!">Pay</label>
         </div>
 
-        <div class="md-form pay_amount amount_fields">
+        <div class="md-form pay_amount">
           <input type="tel" pattern="\d*" id="pay_amount"
                  data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control text-right amount_fields">
           <label for="pay_amount" class="control-label"></label>
