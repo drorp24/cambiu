@@ -436,7 +436,7 @@ orderConfirmationRequired = function() {
 };
 
 orderConfirmationRequested = function() {
-    value_of('order_status') == 'confirmationRequested'
+    return value_of('order_status') == 'confirmationRequested'
 };
 
 orderConfirm = function() {
@@ -488,6 +488,7 @@ noOtherOrderExists = function() {
         } else {
             text += ` from ${ordered_exchange.name}`
         }
+        console.warn(text);
         snack(text, {klass: 'oops', timeout: 3000});
     }
     return !orderred_already;
