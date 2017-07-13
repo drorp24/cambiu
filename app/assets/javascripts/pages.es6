@@ -6,7 +6,7 @@
 
 setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushState = true, populating = false, help_topic = null, help_content = null}) {   // for some absurd reason, it won't accept keys 'page', 'id' and 'pane'
 
-        console.log('setPage. url: id' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populating: ' + populating + ' help_topic: ' + help_topic);
+        console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populating: ' + populating + ' help_topic: ' + help_topic);
 
     // POP pane into view
     if (url) {

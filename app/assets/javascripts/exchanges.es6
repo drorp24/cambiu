@@ -419,6 +419,9 @@ order = function($scope, exchange) {
             disableSwiping();
             if (orderConfirmationRequired() && !orderConfirmationRequested()) requestOrderConfirmation();
             report('Order', 'Made');
+            console.log('>>>>>>> about to change button');
+            $('.selection button[data-ajax=searches]').removeAttr('data-ajax').addClass('to_order').attr({'data-href-pane': 'order', 'data-href-id': value_of('order_exchange_id')});
+            console.log('>>>>>>> just changed button:', $('#search_form button')[0]);
 
         })
        .catch((error) => {console.log('Error creating order:', error)});
