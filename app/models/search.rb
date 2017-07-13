@@ -22,8 +22,10 @@ class Search < ActiveRecord::Base
 
   def localRates
 
-    return if           pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
-    return if           location_lat.blank? or location_lng.blank?
+    return {error: 'missing params'} if
+        pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?) or
+        location_lat.blank? or location_lng.blank? or
+        calculated.blank? or transaction.blank?
 
     self.distance      ||= 2.5
     self.distance_unit ||= "km"
@@ -89,8 +91,11 @@ class Search < ActiveRecord::Base
 
     begin
 
-      return if         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?)
-      return if         location_lat.blank? or location_lng.blank?
+      return geoJsonize([], 'missing params') if
+          pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?) or
+          location_lat.blank? or location_lng.blank? or
+          calculated.blank? or transaction.blank?
+
 
       self.distance      ||= 2.5
       self.distance_unit ||= "km"

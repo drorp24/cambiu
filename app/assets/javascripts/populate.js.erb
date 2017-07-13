@@ -269,6 +269,7 @@ populateParams = function() {
 
     set('calculated', calculated = !def['pay_amount'] ? 'pay_amount' : 'buy_amount');
     formElement(calculated).addClass('calculated');
+    populateTransaction();
 //    console.log('calculated field: ', calculated);
 
 

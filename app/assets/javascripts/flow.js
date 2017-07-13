@@ -14,10 +14,10 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
 
     console.log('flow');
 
+    populateParams();
     getUserLocation()
         .then(doStuffThatRequiresLocation)
         .catch(showError);
-    populateParams();
     setProperPage();
 
     //    if (value_of('search_id')) verifyUserLocation.then(search_and_show);
