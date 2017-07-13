@@ -279,7 +279,7 @@
     };
  */
 
-    renderDirections = function (exchange) {
+    renderDirections = function (exchange, travelMode) {
 
 //        console.log('renderDirections');
 
@@ -289,7 +289,7 @@
       var origin = new google.maps.LatLng(search.location.lat, search.location.lng);
       var destination = new google.maps.LatLng(exchange.latitude, exchange.longitude);
 
-      calcRoute(origin, destination);
+      calcRoute(origin, destination, travelMode);
       map.setZoom(16);
 
 
@@ -303,14 +303,14 @@
     };
 
 
-    function calcRoute(origin, destination) {
+    function calcRoute(origin, destination, travelMode) {
 
         $('#directionsPanel').empty();
 
         var request = {
             origin:         origin,
             destination:    destination,
-            travelMode:     google.maps.TravelMode.WALKING,
+            travelMode:     travelMode == 'walking' ? google.maps.TravelMode.WALKING : google.maps.TravelMode.DRIVING,
             unitSystem:     google.maps.UnitSystem.METRIC
         };
 
@@ -370,7 +370,8 @@
 
 
      $('body').on('click tap', '[data-action=directions]', function(e) {
-       renderDirections(currentExchange());
+       var travelMode = $(this).data(travelMode) == 'driving' ? 'driving' : 'walking';
+       renderDirections(currentExchange(), travelMode);
        report('Tap', 'Directions');
      });
 

@@ -84,7 +84,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
             var current_pane = $('body').data('pane');
             if (current_pane == 'order') {
                 pane = value_of('payment_method') == 'cash' ? 'cards' : 'payment';
-                if (pane == 'cards') renderDirections(exchange);
+                if (pane == 'cards') renderDirections(exchange, 'walking');
             }
         }
 

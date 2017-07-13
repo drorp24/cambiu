@@ -1,7 +1,14 @@
-<div class="directions fab flex_center column" data-action="directions" data-href-pane="cards" data-href-id="curr" data-href-delay="true">
-  <button class="btn-floating waves-effect">
-    <i class="material-icons flex_center">directions_walk</i>
-    <div class="fab_text">Walk</div>
-  </button>
+<div class="flex_center full_width directions_buttons">
+  <div class="directions fab flex_center column" data-action="directions" data-travelMode="walking" data-href-pane="cards" data-href-id="curr" data-href-delay="true">
+    <button class="btn-floating waves-effect">
+      <i class="material-icons flex_center">directions_walk</i>
+      <div class="fab_text">Walk</div>
+    </button>
+  </div>
+  <div class="directions fab flex_center column" data-action="directions"  data-travelMode="driving" data-href-pane="cards" data-href-id="curr" data-href-delay="true">
+    <button class="btn-floating waves-effect">
+      <i class="material-icons flex_center">drive_eta</i>
+      <div class="fab_text">Drive</div>
+    </button>
+  </div>
 </div>
-<div data-model="exchange" data-field="duration"></div>

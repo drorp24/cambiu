@@ -2850,6 +2850,9 @@ body#cambiu {
       .minicard .duration {
         @include vleft(3vw);
         width: 31vw;
+        @include iframe {
+          width: 15vw;
+        }
         @include desktop {
           width: 10vw;
         }
@@ -3454,6 +3457,12 @@ body#cambiu {
     position: relative;
     bottom: 0.2em;
   }
+
+  .directions_buttons {
+    position: absolute;
+    bottom: 2vh;
+  }
+
   
   .expiry {
     position: fixed;
