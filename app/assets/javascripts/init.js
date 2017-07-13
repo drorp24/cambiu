@@ -92,7 +92,7 @@ var defaults;
 var expiry;
 var watchId;
 var gcm_apikey = 'AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us';
-var slidesPerView = 1.3;
+var slidesPerView = 1;
 var photoAspectRatio = 1;
 var photoPadding = 15;
 var photoWidth;

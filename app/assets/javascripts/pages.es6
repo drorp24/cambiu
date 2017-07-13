@@ -41,7 +41,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     $('body').addClass(page);
 
     $('.page').removeClass('active');
-     $page.addClass('active');
+    $page.addClass('active');
 
     if (different(pane)) $('.pane').removeClass('active');
     if (pane) {

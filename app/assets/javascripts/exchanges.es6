@@ -210,10 +210,9 @@
 
     selectExchange = function($exchange, manual = true) {
 
+        console.log('selectExchange');
         $exchange.addClass('selected');
         if ($exchange.is('.ordered')) $exchange.addClass('order');
-
-        if ($exchange.closest('.pane').data('pane') == 'cards') $exchange.css('transform', 'translate(' + cardXoffset + ', 0px)');
 
         populateStreetview(currentExchange());
         clearDirections();

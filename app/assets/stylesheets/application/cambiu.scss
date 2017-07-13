@@ -242,6 +242,15 @@ p {
   }
 }
 
+@mixin confirmation_left {
+  left: calc(50vw - #{$fab_height} / 2);
+  @include iframe {
+    left: calc(50vw * #{$iframePaneRatio} - #{$fab_height} / 2);
+  }
+  @include desktop {
+    left: calc(50vw * #{$paneRatio} - #{$fab_height} / 2);
+  }
+}
 
 $formGreen: #009688;
 $nav_button_top: 35vh;
@@ -1112,7 +1121,7 @@ body#cambiu {
 
 
 
-  
+
   [data-pane=cart] {
     .search_section {
       opacity: 0.2;
@@ -2607,8 +2616,8 @@ body#cambiu {
 
   .ecard.ordered {
     .minicard {
-      @include vborder-right-width(2vw);
       border-right: solid $formGreen;
+      @include vborder-right-width(2vw);
       padding-right: 1vw;
     }
     .order_ind {
@@ -3048,7 +3057,7 @@ body#cambiu {
 
   .swiper-container .confirmation {
     @include confirmation_bottom;
-    @include vleft(30vw);
+    @include confirmation_left;
   }
 
 
