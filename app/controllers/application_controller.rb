@@ -16,6 +16,13 @@ class ApplicationController < ActionController::Base
 
   before_action :detect_browser
 
+  before_action :set_locale
+
+  def set_locale
+    @lang = I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+
   private
   def detect_browser
     @browser = Browser.new(request.user_agent, accept_language: "en-us")

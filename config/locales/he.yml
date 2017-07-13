@@ -1,0 +1,29 @@
+he:
+  search:
+    heading1: 'מה תרצו להזמין'
+    get: 'לתת'
+    amount: 'סכום'
+    pay: 'לשלם'
+    best: 'ההצעה הטובה ביותר'
+    bad: 'מחיר הבנק'
+    gain: 'הרווח שלכם'
+    heading2: 'איך תרצו לקבל את ההזמנה'
+    deliveryTitle: 'משלוח'
+    pickup: 'איסוף עצמי'
+    location:
+      pickup: ' איסוף'
+      delivery: 'יעד'
+    heading3: 'איך תרצו לשלם'
+    method: 'אופן התשלום'
+    cash: 'מזומן'
+    credit: 'אשראי'
+    delivery:
+      date: 'תאריך משלוח'
+      time: 'שעת משלוח'
+      schedule: 'הזמן משלוח'
+      close: 'סגור'
+    button:
+      pickup: 'להצעה הטובה ביותר'
+      delivery: 'הזמינו'
+      toOrder: 'ההזמנה שלכם'
+      update: 'עדכנו הזמנה'

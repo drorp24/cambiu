@@ -856,7 +856,6 @@ html, body {
 }
 
 
-
 body#cambiu {
 
 
@@ -869,6 +868,56 @@ body#cambiu {
   */
 
 
+  // Multi-language - start
+
+
+  &[lang=he] {
+    direction: rtl;
+    .text-right {
+      text-align: left !important;
+    }
+    .select-wrapper span.caret {
+      right: inherit;
+      left: 0;
+    }
+    input:not(.select-dropdown) {
+      text-align: left;
+    }
+    .currency_select, .md-form {
+      label {
+        left: inherit;
+        right: 0;
+      }
+    }
+    .fa-hand-o-right:before {
+      content: "\f0a5";
+    }
+  }
+
+
+
+
+
+
+
+
+  // Multi-language - end
+
+
+  label {
+    margin-bottom: initial;
+  }
+
+  [type="radio"]:checked+label {
+    height: initial;
+    line-height: initial;
+  }
+
+  [type="radio"]+label:before, [type="radio"]+label:after {
+    margin: initial;
+    margin-left: -10vw;
+  }
+
   &.in-iframe .ecard .photo img {
     height: 12vw !important;
   }
@@ -877,6 +926,10 @@ body#cambiu {
 
   .section {
     margin-bottom: 0;
+  }
+
+  .form-group {
+    margin-bottom: initial;
   }
 
   .form-control, /*.md-form label,*/ .select-wrapper input.select-dropdown, input[type=tel], input[type=text] {
@@ -905,6 +958,13 @@ body#cambiu {
     }
   }
 
+  .form-inline {
+    .form-group, fieldset {
+      margin-right: initial;
+    }
+  }
+
+
 
   // twitter-bootstrap-4 & MDB adjustments - end
 
@@ -917,12 +977,12 @@ body#cambiu {
     [data-field=pay_amount], [data-field=buy_amount] {
       position: relative;
       ~ label:before {
-        content: "Amount"
+        content: attr(data-t-amount);
       }
       &.calculated {
         position: relative;
         ~ label:before {
-          content: "Best offer"
+          content: attr(data-t-best);
         }
         ~ .calculated_icon {
           display: block;
@@ -984,11 +1044,6 @@ body#cambiu {
   .buy_amount, .pay_amount {
     input {
       height: 1.7rem;
-      padding-left: 10%;
-      width: 90%;
-    }
-    label {
-      padding-left: 10%;
     }
   }
 
@@ -998,6 +1053,10 @@ body#cambiu {
     @include vleft(10vw);
     font-size: 1.5rem;
     display: none;
+  }
+
+  &[lang=he] .calculated_icon {
+    @include vright(10vw);
   }
 
   .switch_form {
@@ -1026,11 +1085,11 @@ body#cambiu {
   }
 
   .selection.delivery .location_label:after {
-    content: 'Deliver to'
+    content: attr(data-location-delivery)
   }
 
   .selection.pickup .location_label:after {
-    content: 'Pick-up'
+    content: attr(data-location-pickup)
   }
 
   label[for=location], .clear {
@@ -1055,7 +1114,6 @@ body#cambiu {
     right: 0;
     left: initial;
     width: 100%;
-    text-align: right;
   }
   .clear {
     justify-content: flex-end;
@@ -1088,23 +1146,22 @@ body#cambiu {
   }
 
   #search_form.pickup button[type=submit]:after {
-    content: "Get the best offer"
+    content: attr(data-t-pickup);
   }
 
   #search_form button[type=submit].to_order:after {
-    content: "View order"
+    content: attr(data-t-toOrder);
   }
   #search_form.delivery button[type=submit]:after {
-    content: "Order"
+    content: attr(data-t-delivery);
   }
 
   #update_form button[type=submit]:after {
-    content: "Update order";
+    content: attr(data-t-update);
   }
 
   .payment_method_selection {
     label {
-      margin-bottom: 0;
       @include vfont-size(3.5vw);
       width: 30%;
       margin-right: 0;
@@ -1112,10 +1169,8 @@ body#cambiu {
     fieldset {
       width: 30%;
       text-align: right;
-      margin-right: 0;
     }
     .form-group {
-      margin-bottom: 0;
     }
   }
 
