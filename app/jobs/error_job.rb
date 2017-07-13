@@ -22,7 +22,7 @@ class ErrorJob < ActiveJob::Base
       message = {
           to:             to,
           preserve_recipients: true,
-          subject:        'Error',
+          subject:        "Error (#{Rails.env})"
           from_name:      from_name,
           from_email:     from_email,
           headers: {
