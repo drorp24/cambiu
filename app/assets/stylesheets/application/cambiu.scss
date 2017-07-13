@@ -232,6 +232,17 @@ p {
   }
 }
 
+@mixin confirmation_bottom {
+  bottom: calc(#{$minicard_height} - #{$fab_height} / 2);
+  @include iframe {
+    bottom: calc(#{$minicard_height * $iframePaneRatio} - #{$fab_height} / 2);
+  }
+  @include desktop {
+    bottom: calc(#{$minicard_height * $paneRatio} - #{$fab_height} / 2);
+  }
+}
+
+
 $formGreen: #009688;
 $nav_button_top: 35vh;
 $nav_button_right: 7vw;
@@ -3031,7 +3042,7 @@ body#cambiu {
 
 
   .swiper-container .confirmation {
-    bottom: calc(#{$minicard_height} - #{$fab_height} / 2);
+    @include confirmation_bottom;
     @include vleft(30vw);
   }
 
