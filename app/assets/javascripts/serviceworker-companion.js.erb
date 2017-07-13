@@ -21,7 +21,7 @@
                 console.log('[Page] Service worker registered with scope: ', reg.scope);
             })
             .catch(function(err){
-                snack("SW registration failed with error " + err , {$upEl: $('.swiper-container'), klass: 'oops'});
+                console.error("SW registration failed", err);
             });
     }
 

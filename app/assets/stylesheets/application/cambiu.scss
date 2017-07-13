@@ -1082,6 +1082,9 @@ body#cambiu {
     content: "Get the best offer"
   }
 
+  #search_form button[type=submit].to_order:after {
+    content: "View order"
+  }
   #search_form.delivery button[type=submit]:after {
     content: "Order"
   }
@@ -1108,6 +1111,8 @@ body#cambiu {
   }
 
 
+
+  
   [data-pane=cart] {
     .search_section {
       opacity: 0.2;

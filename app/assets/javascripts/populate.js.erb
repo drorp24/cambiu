@@ -270,7 +270,7 @@ populateParams = function() {
     set('calculated', calculated = !def['pay_amount'] ? 'pay_amount' : 'buy_amount');
     formElement(calculated).addClass('calculated');
     populateTransaction();
-//    console.log('calculated field: ', calculated);
+    if (value_of('order_id')) $('.selection button[data-ajax=searches]').removeAttr('data-ajax').addClass('to_order').attr({'data-href-pane': 'order', 'data-href-id': value_of('order_exchange_id')});
 
 
   paramsPopulated = true;

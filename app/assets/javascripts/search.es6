@@ -221,6 +221,7 @@ $(document).ready(function() {
 
     $('[data-ajax=searches]').click(function(e) {
         e.preventDefault();
+        if (!$(this).is('[data-ajax=searches]')) return;   // absurd but required: button changed attributes but unneeded event still bound
         if (inputValid()) {
             search_and_show_and_render()
         }
