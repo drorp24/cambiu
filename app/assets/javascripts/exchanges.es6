@@ -69,7 +69,7 @@
 
         pageNum = 1;
         populatePage({page: pageNum, list: true, cards: true});
-//        restoreOrder();
+        restoreOrder();
         $('.pagination').addClass('active');
 
     };
@@ -383,10 +383,7 @@ resetPaging = function() {
 
 order = function($scope, exchange) {
 
-        if (exchange.id == value_of('order_exchange_id')) { //= reload of search page after an order has been sent already: retain values & styles, but don't create a new order
-            restoreOrder(); // TODO: do upon page load, move to setParams
-            return;
-        }
+        if (exchange.id == value_of('order_exchange_id')) return;
 
          fetch('/orders', {
             method: 'POST',
@@ -422,7 +419,6 @@ order = function($scope, exchange) {
             disableSwiping();
             if (orderConfirmationRequired() && !orderConfirmationRequested()) requestOrderConfirmation();
             report('Order', 'Made');
-            $('.selection button[data-ajax=searches]').removeAttr('data-ajax').addClass('to_order').attr({'data-href-pane': 'order', 'data-href-id': value_of('order_exchange_id')});
 
         })
        .catch((error) => {console.log('Error creating order:', error)});

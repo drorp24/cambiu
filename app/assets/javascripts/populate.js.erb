@@ -277,17 +277,20 @@ populateParams = function() {
 
 function restoreOrder() {
 
-  console.log('restoreOrder');
   var order_exchange_id = value_of('order_exchange_id');
   if (!order_exchange_id) return;
+  console.log('restoreOrder');
 
   var $scope = $('.ecard[data-exchange-id=' + order_exchange_id + ']');
+  console.log('>>>>>>>>>>>>>>>$scope:', $scope[0]);
   console.log('at this point (before calling hideCards), the ecard visibility is: ' + $scope.css('visibility'));
   $scope.addClass('ordered').addClass(value_of('order_status'));
   populateOrder($scope, null);
   hideCards(order_exchange_id);
   disableSwiping();
   if (orderConfirmationRequired() && !orderConfirmationRequested()) requestOrderConfirmation();
+  $('.selection button[data-ajax=searches]').removeAttr('data-ajax').addClass('to_order').attr({'data-href-pane': 'order', 'data-href-id': order_exchange_id});
+
 
 }
 
