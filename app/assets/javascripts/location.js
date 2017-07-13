@@ -334,10 +334,12 @@ showSearchLocation = function(lat, lng) {
 
     console.log('showSearchLocation');
 
-    if (!map || !map.getProjection()) {
+/*
+    if (!map) {
         console.warn('showSearchLocation: map isnt ready yet');
         return
     }
+*/
 
     if (typeof lat === 'undefined' && typeof lng === 'undefined') var lat = search.location.lat, lng = search.location.lng;
     var search_latlng = new google.maps.LatLng(lat, lng);

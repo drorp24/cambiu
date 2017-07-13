@@ -14,7 +14,9 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
 
     console.log('flow');
 
-    getUserLocation().then(doStuffThatRequiresLocation);
+    getUserLocation()
+        .then(doStuffThatRequiresLocation)
+        .catch(showError);
     populateParams();
     setProperPage();
 
