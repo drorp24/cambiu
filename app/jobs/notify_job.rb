@@ -70,6 +70,7 @@ class NotifyJob < ActiveJob::Base
 
     bcc = Rails.env.development?  ? bcc_me : bcc_us
     to  = to_user + to_exchange
+    warning = "NO EMAIL SENT TO EXCHANGE (EMAIL MISSING)" unless exchange.email.present?
 
 
     subject = "#{order.service_type.capitalize} order #{order.voucher} - #{order.status.upcase}"
@@ -116,7 +117,8 @@ class NotifyJob < ActiveJob::Base
               {name: 'COMPANY_ADDRESS',          content: company_address},
               {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')},
               {name: 'DELIVERY_AMOUNT',          content: ""},
-              {name: 'CC_AMOUNT',                content: ""}
+              {name: 'CC_AMOUNT',                content: ""},
+              {name: 'WARNING',                  content: warning}
           ]
       }
 
