@@ -9,33 +9,33 @@
     <div class="rating_and_reviews flex_between">
       <input data-model="exchange" data-field="rating" class="form-control pull-left">
       <div class="reviews" data-href-page="exchanges" data-href-id="curr" data-href-pane="reviews" data-populate=true>
-        <span data-model="exchange" data-field="reviews"></span>
-        <span class="review_word">reviews</span>
+        <span data-model="exchange" data-field="reviews" data-t-no="<%= t 'offer.no'  %>"></span>
+        <span class="review_word"><%= t 'offer.reviews'  %></span>
       </div>
     </div>
 
     <%= render 'exchanges/templates/pickup' %>
 
     <div class="cambiu_ranking text-center flex_center column">
-      <p class="cambiu_ranking_value">
+      <p class="cambiu_ranking_value" dir="ltr">
         <span>#</span>
         <span data-model="exchange" data-field="rank">1</span>
       </p>
       <p class="cambiu_ranking_title">
-        <span>Cambiu ranking</span>
+        <span><%= t 'offer.cambiuRanking' %></span>
         <span></span>
       </p>
       <p class="cambiu_ranking_view_others">
-        <span>View</span>
+        <span><%= t 'offer.view' %></span>
         <a href="#" data-href-pane="list" data-href-delay="true" data-action="showCards">
           <span data-model="local" data-field="count"></span>
-          <span>offers around you</span>
+          <span><%= t 'offer.offersAround' %></span>
         </a>
       </p>
     </div>
 
     <div class="open_and_phone flex_between">
-      <div class="open"><a>Open</a></div>
+      <div class="open"><a><%= t 'offer.open'  %></a></div>
       <div class="phone_icon">
         <a><i class="material-icons">phone</i></a>
       </div>
@@ -55,10 +55,17 @@
     <div class="actions_line flex_center column">
       <div class="newexpiry flex_center">
         <i class="newexpiry_icon material-icons">timers</i>
-        <span class="newexpiry_text flex_center">Expires at </span>
+        <span class="newexpiry_text flex_center"><%= t 'offer.expiresAt' %></span>
         <span class="newexpiry_time flex_center" data-model="exchange" data-field="expiry_time"></span>
       </div>
-      <button class="btn-flat waves-effect more action" data-href-pane="order" data-href-id="curr" data-href-delay="true" data-validate="noOtherOrderExists"></button>
+      <button class="btn-flat waves-effect more action"
+              data-href-pane="order"
+              data-href-id="curr"
+              data-href-delay="true"
+              data-validate="noOtherOrderExists"
+              data-t-placeOrder="<%= t 'offer.placeOrder' %>">
+
+      </button>
     </div>
 
   </div>
@@ -67,12 +74,12 @@
 
     <div class="distance">
       <span data-model="exchange" data-field="gDistance"></span>
-      <span class="away">away</span>
+      <span class="away"><%= t 'offer.away' %></span>
     </div>
     <div class="ordering fab flex_center column" data-href-pane="order" data-href-id="curr" data-href-delay="true" data-validate="noOtherOrderExists">
       <button class="btn-floating waves-effect">
         <i class="material-icons flex_center">shopping_cart</i>
-        <div class="fab_text">Order</div>
+        <div class="fab_text"><%= t 'offer.fabOrder'  %></div>
       </button>
     </div>
 

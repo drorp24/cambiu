@@ -20,6 +20,19 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  intro:
+    slide1:
+      text: 'Worlds first <br> currency marketplace.'
+    slide2:
+      title: 'You have something to offer'
+      text: 'The currency you pay may be worth a lot to some merchants'
+    slide3:
+      title: 'So we inform merchants'
+      text: 'And get you offers that are tailor-made to your needs'
+    slide4:
+      title: 'Find you best offer'
+      text: 'Have more to spend <br> Thank us later'
+    getOffer: 'Get an offer'
   search:
     heading1: 'What would you like to order'
     get: 'Get'
@@ -48,3 +61,37 @@ en:
       delivery: 'Order'
       toOrder: 'Your order'
       update: 'Update order'
+  minicard:
+    confirm: 'Confirm'
+  offer:
+    away: 'away'
+    cambiuRanking: 'Cambiu ranking'
+    view: 'View'
+    offerAround: 'offers around'
+    no: 'No'
+    reviews: 'reviews'
+    fabOrder: 'Order'
+    open: 'Open'
+    expiresAt: 'Expires at'
+    placeOrder: 'Place order'
+  deal:
+    title: 'Deal'
+    get: 'Get'
+    pay: 'Pay'
+    yourGain: 'Save'
+  pickup:
+    title: 'Pick-up'
+  directions:
+    walk: 'Walk'
+    drive: 'Drive'
+  order:
+    title: 'Order'
+  list:
+    showing: 'Showing offers'
+  confirmation:
+    title: 'Dear customer'
+    line1: 'Please confirm once deal is done'
+    line2: 'Or upload the invoice photo'
+    line3: 'Thanks for your help!'
+    upload: 'Upload'
+    confirm: 'Confirm'

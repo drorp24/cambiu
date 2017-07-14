@@ -2,14 +2,14 @@
   <div class="section_content flex_around column">
     <div class="section_title flex_between">
       <i class="material-icons">monetization_on</i>
-      <div class="section_title_text">Deal</div>
+      <div class="section_title_text"><%= t 'deal.title'  %></div>
       <i class="material-icons">&nbsp;</i>
     </div>
     <div class="offer">
 
       <div class="offer_line">
         <div class="text">
-          get
+          <%= t 'deal.get'  %>
         </div>
         <div class="figure">
           <div data-model="exchange" data-field="buy_amount" class="amount threedots"></div>
@@ -22,7 +22,7 @@
 
       <div class="offer_line">
         <div class="text">
-          pay
+          <%= t 'deal.pay'  %>
         </div>
         <div class="figure">
           <div data-model="exchange" data-field="pay_amount" class="amount threedots"></div>
@@ -73,7 +73,7 @@
 
       <div class="offer_line saving">
         <div class="text">
-          <div data-model="exchange" data-field="gain_type"></div>
+          <div class="yourGain"><%= t 'deal.yourGain' %></div>
         </div>
         <div class="figure">
           <div data-model="exchange" data-field="gain_amount" class="amount threedots"></div>

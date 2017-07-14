@@ -1,9 +1,22 @@
 he:
+  intro:
+    slide1:
+      text: 'זירת מט״ח ראשונה מסוגה בעולם'
+    slide2:
+      title: 'גם לך יש מה להציע'
+      text: 'המטבע שאתה מחזיק עשויה להיות שווה הרבה לסוחרים'
+    slide3:
+      title: 'אז אנחנו מודיעים להם...'
+      text: 'ומשיגים לך הצעות שלא תמצא במקום אחר'
+    slide4:
+      title: 'קבל את ההצעה הטובה ביותר'
+      text: 'קבל יותר כסף, בלה יותר בנסיעה!'
+    getOffer: 'קבלו הצעה'
   search:
     heading1: 'מה תרצו להזמין'
-    get: 'לתת'
+    get: 'לקבל'
     amount: 'סכום'
-    pay: 'לשלם'
+    pay: 'לתת'
     best: 'ההצעה הטובה ביותר'
     bad: 'מחיר הבנק'
     gain: 'הרווח שלכם'
@@ -27,3 +40,37 @@ he:
       delivery: 'הזמינו'
       toOrder: 'ההזמנה שלכם'
       update: 'עדכנו הזמנה'
+  minicard:
+    confirm: 'אשרו'
+  offer:
+    away: 'מכאן'
+    cambiuRanking: 'דירוג קמביו'
+    view: 'צפו ב-'
+    offersAround: 'הצעות בסביבה'
+    no: 'אין'
+    reviews: 'חוות דעת'
+    fabOrder: 'הזמנה'
+    expiresAt: ' בתוקף עד'
+    open: 'פתוח'
+    placeOrder: 'הזמינו'
+  deal:
+    title: 'עיסקה'
+    get: 'קבלו'
+    pay: 'שלמו'
+    yourGain: 'הרוויחו'
+  pickup:
+    title: 'איסוף'
+  order:
+    title: 'הזמנה'
+  directions:
+    walk: 'הליכה'
+    drive: 'נסיעה'
+  list:
+    showing: 'הצעות'
+  confirmation:
+    title: 'לקוחות יקרים'
+    line1: 'אנא הקליקו אישור עם השלמת העיסקה'
+    line2: 'או לחצו על הכפתור וצלמו קבלה'
+    line3: 'תודה על שיתוף הפעולה!'
+    upload: 'צילום'
+    confirm: 'אישור'

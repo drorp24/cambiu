@@ -1396,6 +1396,17 @@ body#cambiu {
   left: 0;
 }
 
+
+&[lang=he] .list-group .list-group-item .minicard .duration {
+  @include vright(3vw);
+}
+
+&[lang=he] .ecard:not(.selected) .minicard .duration {
+  @include vright(3vw);
+}
+
+
+
 .list-group {
   box-shadow: none;
   padding: 0;
@@ -2801,7 +2812,7 @@ body#cambiu {
       .more {
         &:before {
           visibility: visible;
-          content: 'place order'
+          content: attr(data-t-placeOrder);
         }
       }
       .lessmore {
@@ -2971,6 +2982,10 @@ body#cambiu {
 
     }
 
+  &[lang=he] .ecard.selected {
+    text-align: right;
+  }
+
   .section_content {
     width: 100%;
   }
@@ -3109,6 +3124,12 @@ body#cambiu {
     }
   }
 
+  .confirmation_title {
+    margin-bottom: 15%;
+    font-size: 10vw;
+    font-weight: 300;
+  }
+
 
   .swiper-container .confirmation {
     @include confirmation_bottom;
@@ -3189,6 +3210,10 @@ body#cambiu {
         color: #888;
       }
     }
+
+  &[lang=he] .data .reviews {
+    display: flex;
+  }
 
 
   .no_deal_section {
@@ -3471,6 +3496,7 @@ body#cambiu {
   .mapMarker {
     font-size: 1.4em;
     margin-right: 0.4em !important;
+    margin-left: 0.4em;
   }
 
   .lessmore {
@@ -3585,6 +3611,7 @@ body#cambiu {
       @include vfont-size(4vw);
       font-weight: 100;
       @include vmargin-right(1vw);
+      @include vmargin-left(1vw);
     }
     .newexpiry_time {
       @include vfont-size(4vw);
@@ -4241,6 +4268,7 @@ body#cambiu {
     &:hover {
       cursor: pointer;
     }
+    direction: ltr;
   }
 
   .navbar_left, .navbar_right {
@@ -4258,6 +4286,12 @@ body#cambiu {
     .directions.fab {
       display: none;
     }
+  }
+
+
+  .directions.fab {
+    margin: initial;
+    @include vmargin-right(10vw);
   }
 
 
