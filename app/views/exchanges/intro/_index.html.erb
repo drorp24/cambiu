@@ -9,8 +9,8 @@
         <%= render partial: 'exchanges/intro/template',
                    locals: {
                       illustration: 'cambiu_vertical_white.png',
-                      title: nil,
-                      text: I18n.t('intro.slide1.text').html_safe,
+                      title: I18n.t('intro.slide1.title').html_safe,
+                      text: nil,
                       getOffer: true,
                       left: nil,
                       right: "<i class=material-icons>help_outline</i>".html_safe,
@@ -21,10 +21,10 @@
         <%= render partial: 'exchanges/intro/template',
                    locals: {
                        illustration: 'illustration_flower_small.png'  ,
-                       title: 'You have something to offer',
-                       text: 'The currency you pay may be worth a lot to some merchants.',
+                       title: I18n.t('intro.slide2.title').html_safe,
+                       text: I18n.t('intro.slide2.text').html_safe,
                        getOffer: false,
-                       left: "<span data-href-page=exchanges data-href-pane=search>skip</span>".html_safe,
+                       left: "<span data-href-page=exchanges data-href-pane=search>#{I18n.t('intro.skip')}</span>".html_safe,
                        right: "<i class=material-icons>keyboard_arrow_right</i>".html_safe,
                        seq: 'b'
                    }
@@ -33,10 +33,10 @@
         <%= render partial: 'exchanges/intro/template',
                    locals: {
                        illustration: 'illustration_megaphone_small.png',
-                       title: 'So we inform merchants',
-                       text: "And get you offers that are <br> tailor-made to your needs.".html_safe,
+                       title: I18n.t('intro.slide3.title').html_safe,
+                       text: I18n.t('intro.slide3.text').html_safe,
                        getOffer: false,
-                       left: "<span data-href-page=exchanges data-href-pane=search>skip</span>".html_safe,
+                       left: "<span data-href-page=exchanges data-href-pane=search>#{I18n.t('intro.skip')}</span>".html_safe,
                        right: "<i class=material-icons>keyboard_arrow_right</i>".html_safe,
                        seq: 'c'
                    }
@@ -45,8 +45,8 @@
         <%= render partial: 'exchanges/intro/template',
                    locals: {
                        illustration: 'illustration_cards_small.png',
-                       title: 'Find your best offer',
-                       text: "Have more to spend. <br> Thank us later.".html_safe,
+                       title: I18n.t('intro.slide4.title').html_safe,
+                       text: I18n.t('intro.slide4.text').html_safe,
                        getOffer: true,
                        left: nil,
                        right: nil,

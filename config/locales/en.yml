@@ -22,7 +22,7 @@
 en:
   intro:
     slide1:
-      text: 'Worlds first <br> currency marketplace.'
+      title: 'Worlds first <br> currency marketplace.'
     slide2:
       title: 'You have something to offer'
       text: 'The currency you pay may be worth a lot to some merchants'
@@ -33,6 +33,7 @@ en:
       title: 'Find you best offer'
       text: 'Have more to spend <br> Thank us later'
     getOffer: 'Get an offer'
+    skip: 'Skip'
   search:
     heading1: 'What would you like to order'
     get: 'Get'
@@ -63,6 +64,10 @@ en:
       update: 'Update order'
   minicard:
     confirm: 'Confirm'
+    gain: 'Save'
+    orderInd:
+      ordered: 'ordered'
+      confirmed: 'confirmed'
   offer:
     away: 'away'
     cambiuRanking: 'Cambiu ranking'

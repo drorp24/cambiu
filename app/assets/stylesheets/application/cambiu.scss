@@ -873,6 +873,13 @@ body#cambiu {
 
   &[lang=he] {
     direction: rtl;
+    font-family: 'Rubik', sans-serif;
+    button, input, optgroup, select, textarea {
+      font-family: inherit;
+    }
+    .actions_line button {
+      font-size: 8vw !important;
+    }
     .text-right {
       text-align: left !important;
     }
@@ -891,6 +898,19 @@ body#cambiu {
     }
     .fa-hand-o-right:before {
       content: "\f0a5";
+    }
+    .intro-slide .message {
+      .title {
+        font-size: 5vh !important;
+        font-weight: 300;
+      }
+      .getOffer {
+        font-size: 5vh !important;
+      }
+    }
+    .ecard .order_ind {
+      right: initial;
+      left: 5vw;
     }
   }
 
@@ -923,6 +943,13 @@ body#cambiu {
   }
 
   // twitter-bootstrap-4 & MDB adjustments - start
+
+
+  [type="radio"]:not(:checked)+label, [type="radio"]:checked+label {
+    height: initial;
+    line-height: initial;
+  }
+
 
   .section {
     margin-bottom: 0;
@@ -1106,6 +1133,7 @@ body#cambiu {
   label[for=location] {
     justify-content: flex-start;
     @include vfont-size(4.4vw);
+    margin-bottom: calc(1em - 1.5px);
   }
   label[for=delivery_ind] {
     @include vfont-size(4.4vw);
@@ -1815,10 +1843,10 @@ body#cambiu {
     }
     padding: $pane-padding * 2;
     .illustration {
-      height: 55%;
+      height: 40%;
     }
     .message {
-      height:25%;
+      height:40%;
       .title {
         font-weight: 500;
         font-size: 3vh !important;
@@ -2645,6 +2673,12 @@ body#cambiu {
     .rating_and_reviews {
       @include flexbox();
       height: 12%;
+      > div.rating-container.rating-animate {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     }
     .pickup {
       height: 20%;
@@ -2690,7 +2724,7 @@ body#cambiu {
       display: block;
       color: $formGreen;
       span:after {
-        content: "ordered";
+        content: attr(data-t-orderInd-ordered);
       }
     }
   }
@@ -2705,7 +2739,7 @@ body#cambiu {
       display: block;
       color: $brand-color-b;
       span:after {
-        content: "confirmed";
+        content: attr(data-t-orderInd-confirmed);
       }
     }
   }
@@ -3422,6 +3456,11 @@ body#cambiu {
       }
       i {
         margin-left: 0.3em;
+      }
+      .comparison_item_word {
+        margin-right: 2vw;
+        margin-left: 2vw;
+
       }
     }
     font-weight: 300;

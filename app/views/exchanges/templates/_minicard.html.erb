@@ -22,7 +22,7 @@
 
     <div class="comparison">
       <div class="comparison_item">
-        <div data-model="exchange" data-field="gain_short"></div>
+        <div class="comparison_item_word"><%= t 'minicard.gain'  %></div>
         <div data-model="exchange" data-field="gain_amount"></div>
       </div>
     </div>
@@ -34,13 +34,13 @@
   </div>
 
   <div class="order_ind">
-    <span></span>
+    <span data-t-orderInd-ordered="<%= t 'minicard.orderInd.ordered'  %>"  data-t-orderInd-confirmed="<%= t 'minicard.orderInd.confirmed'  %>"></span>
   </div>
 
   <div class="confirmation fab flex_center column" data-href-pane="confirmation"  data-href-id="curr" data-href-delay="true">
     <button class="btn-floating waves-effect">
       <i class="material-icons flex_center">assignment_turned_in</i>
-      <div class="fab_text"><%= 'minicard.confirm'  %></div>
+      <div class="fab_text"><%= t 'minicard.confirm'  %></div>
     </button>
   </div>
 
