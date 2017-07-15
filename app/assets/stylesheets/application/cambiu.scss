@@ -958,6 +958,10 @@ body#cambiu {
 
   // twitter-bootstrap-4 & MDB adjustments - start
 
+  .btn-flat {
+    margin: 0;
+  }
+
 
   [type="radio"]:not(:checked)+label, [type="radio"]:checked+label {
     height: initial;
@@ -1872,7 +1876,7 @@ body#cambiu {
         text-transform: uppercase;
       }
       .getOffer {
-        height: 50%;
+        height: 75%;
         font-size: 3.5vh !important;
         text-transform: uppercase;
       }
@@ -2702,7 +2706,7 @@ body#cambiu {
       //        top: -1vh;
     }
     .deal {
-      height: 40%;
+      height: 32%; // for damn iPhone
     }
     .actions_line {
       height: 20%;
@@ -2712,6 +2716,8 @@ body#cambiu {
       top: -3.5vh;
       color: #fff;
       width: 250%;
+      width: 99vw;  // iPhone
+      left: -41vw; // iPhone
       text-align: center;
       font-size: 2.2vh;
       font-weight: 400;
@@ -3618,6 +3624,7 @@ body#cambiu {
 
   .directions_buttons {
     position: absolute;
+    left: 0;
     bottom: 2vh;
   }
 
