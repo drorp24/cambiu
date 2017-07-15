@@ -27,17 +27,21 @@ class Exchange < ActiveRecord::Base
 
   has_many    :reviews,  :dependent => :destroy
 
-  enum business_type: [ :exchange, :bank, :post_office, :other, :reference ]
-  enum rates_source:  [ :no_rates, :test, :manual, :xml, :scraping ]
-  enum rates_policy:  [:individual, :chain]
-  enum todo:          [:verify, :call, :meet, :sell]
-  enum system:        [:remove, :geocode, :error]
-  enum status:        [:removed, :stale]
+  enum business_type:  [ :exchange, :bank, :post_office, :other, :reference ]
+  enum rates_source:   [ :no_rates, :test, :manual, :xml, :scraping ]
+  enum rates_policy:   [:individual, :chain]
+  enum service_type:   [ :pickup, :delivery, :all_serivce_types]
+  enum payment_method: [ :cash, :credit, :all_payment_methods]
+
+  enum todo:           [:verify, :call, :meet, :sell]
+  enum system:         [:remove, :geocode, :error]
+  enum status:         [ :removed, :stale]
+
 
   accepts_nested_attributes_for :business_hours
   accepts_nested_attributes_for :rates
 
-  geocoded_by :address
+  geocoded_by :either_address
 
 #  validates :delivery_tracking, allow_blank: true, :format => {:with => URI.regexp}
   validates :rates_url, allow_blank: true, :format => {:with => URI.regexp}
@@ -279,7 +283,7 @@ class Exchange < ActiveRecord::Base
         pay_currency:     pay_currency  = params[:pay_currency],
         get_amount:       get_amount    = Monetize.parse(params[:get_amount]).amount,
         get_currency:     get_currency  = params[:get_currency],
-        transaction:      transaction   = params[:transaction],
+        trans:      trans   = params[:trans],
         calculated:       calculated    = params[:calculated],
         rates:            {},
         bad_rates:        {},
@@ -335,7 +339,7 @@ class Exchange < ActiveRecord::Base
         result[:errors]           <<   rates[:error]
         return result
       end
-      get_amount =   result[:quote]                         = pay_amount * rates[transaction.to_sym]
+      get_amount =   result[:quote]                         = pay_amount * rates[trans.to_sym]
       result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format
       result[:edited_quote] = result[:edited_quote_rounded] = result[:get_amount]
       result[:quote_currency]                               = get_currency
@@ -345,7 +349,7 @@ class Exchange < ActiveRecord::Base
         result[:errors]               <<   bad_rates[:error]
         return result
       end
-      bad_amount                                            = pay_amount * bad_rates[transaction.to_sym]
+      bad_amount                                            = pay_amount * bad_rates[trans.to_sym]
        result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       result[:gain]                                         = get_amount - bad_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
@@ -358,13 +362,13 @@ class Exchange < ActiveRecord::Base
 
       if get_currency != currency and (get_subtract = get_amount.modulo(1)) > 0
         result[:rounded]                                    = true
-        pay_subtract                                        = get_subtract / rates[transaction.to_sym]
+        pay_subtract                                        = get_subtract / rates[trans.to_sym]
         result[:pay_rounded]                                = (pay_amount - pay_subtract).to_money(pay_currency).format
         result[:get_rounded]                                = (get_amount - get_subtract).to_money(get_currency).format
         result[:edited_quote_rounded]                       = result[:get_rounded]
       end
 
-      result[:base_rate]                                    = Exchange.edit_base_rate(rates, transaction)
+      result[:base_rate]                                    = Exchange.edit_base_rate(rates, trans)
 
     else
 
@@ -373,7 +377,7 @@ class Exchange < ActiveRecord::Base
         result[:errors]               <<   rates[:error]
         return result
       end
-      pay_amount                      =   result[:quote]            = get_amount * rates[transaction.to_sym]
+      pay_amount                      =   result[:quote]            = get_amount * rates[trans.to_sym]
       result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format(:disambiguate => true)
       result[:edited_quote] = result[:edited_quote_rounded] = result[:pay_amount]
       result[:quote_currency]                               = pay_currency
@@ -384,7 +388,7 @@ class Exchange < ActiveRecord::Base
         return result
       end
 
-      bad_amount                                            = get_amount * bad_rates[transaction.to_sym]
+      bad_amount                                            = get_amount * bad_rates[trans.to_sym]
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
       result[:gain]                                         = bad_amount - pay_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
@@ -397,13 +401,13 @@ class Exchange < ActiveRecord::Base
 
       if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
         result[:rounded]                                    = true
-        get_subtract                                        = pay_subtract / rates[transaction.to_sym]
+        get_subtract                                        = pay_subtract / rates[trans.to_sym]
         result[:get_rounded]                                = (get_amount - get_subtract).to_money(get_currency).format
         result[:pay_rounded]                                = (pay_amount - pay_subtract).to_money(pay_currency).format
         result[:edited_quote_rounded]                       = result[:pay_rounded]
       end
 
-      result[:base_rate]                                    = Exchange.edit_base_rate(rates, transaction)
+      result[:base_rate]                                    = Exchange.edit_base_rate(rates, trans)
 
     end
 
@@ -494,9 +498,9 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  def self.edit_base_rate(rates, transaction)
-#working    1.to_money(rates[:base_currency]).format(:disambiguate => true) + ' = ' + rates[transaction.to_sym].to_money(rates[:rated_currency]).format(:disambiguate => true)
-    1.to_money(rates[:base_currency]).format(:disambiguate => true) + ' = ' + (100*rates[transaction.to_sym]).to_money(rates[:rated_currency]).format(:disambiguate => true).delete('.').insert(-5, '.')
+  def self.edit_base_rate(rates, trans)
+#working    1.to_money(rates[:base_currency]).format(:disambiguate => true) + ' = ' + rates[trans.to_sym].to_money(rates[:rated_currency]).format(:disambiguate => true)
+    1.to_money(rates[:base_currency]).format(:disambiguate => true) + ' = ' + (100*rates[trans.to_sym]).to_money(rates[:rated_currency]).format(:disambiguate => true).delete('.').insert(-5, '.')
   end
 
 
@@ -504,13 +508,13 @@ class Exchange < ActiveRecord::Base
     'system'
   end
 
-  def offer(center, pay, buy, radius, transaction, calculated)
+  def offer(center, pay, buy, radius, trans, calculated)
 
     exchange_hash = {}
 
     exchange_hash[:distance] = self.alt_distance_from(center)
 
-    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, calculated: calculated, radius: radius, distance: exchange_hash[:distance], transaction: transaction)
+    quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, calculated: calculated, radius: radius, distance: exchange_hash[:distance], trans: trans)
     return {} if quotes[:error].present? and !Rails.env.development?
 
     exchange_hash[:id] = self.id
@@ -554,7 +558,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:contract] = self.contract
     exchange_hash[:photo] = photo_url
     exchange_hash[:gain] = quotes[:gain]
-    exchange_hash[:transaction] = quotes[:transaction]
+    exchange_hash[:transaction] = quotes[:trans]
     exchange_hash[:calculated] = quotes[:calculated]
 
 
@@ -767,6 +771,14 @@ class Exchange < ActiveRecord::Base
   def name_s
     chain = self.chain
     chain ? chain.name + ' - ' + name : name
+  end
+
+  def either_address
+    address_he.present? ? address_he : address
+  end
+
+  def either_name
+    name_he.present? ? name_he : name
   end
 
   protected

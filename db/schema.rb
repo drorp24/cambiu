@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170530095503) do
+ActiveRecord::Schema.define(version: 20170715130535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,10 @@ ActiveRecord::Schema.define(version: 20170530095503) do
     t.datetime "rates_update"
     t.string   "photo"
     t.date     "status_date"
+    t.string   "name_he"
+    t.string   "address_he"
+    t.integer  "service_type"
+    t.integer  "payment_method"
     t.index ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
     t.index ["latitude", "longitude"], name: "index_exchanges_on_latitude_and_longitude", using: :btree
     t.index ["latitude"], name: "index_exchanges_on_latitude", using: :btree
@@ -239,6 +243,11 @@ ActiveRecord::Schema.define(version: 20170530095503) do
     t.string   "location_type",   limit: 255
     t.integer  "service_type",                default: 0
     t.string   "location_reason"
+    t.string   "city"
+    t.string   "country"
+    t.string   "calculated"
+    t.integer  "payment_method"
+    t.string   "trans"
     t.index ["exchange_id"], name: "index_searches_on_exchange_id", using: :btree
   end
 

@@ -4,9 +4,10 @@ class Search < ActiveRecord::Base
   has_many :issues, foreign_key: "search_id", class_name: "Error"
 #  validates :email, presence: true#, on: :update #allow_nil: true #unless: Proc.new { |a| a.email.blank? }
 #  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
-  enum service_type: [ :pickup, :delivery ]
+  enum service_type: [ :pickup, :delivery, :all_serivce_types]
+  enum payment_method: [ :cash, :credit, :all_payment_methods]
 
-  attr_accessor :fetch, :mode, :hash, :distance_slider, :payment_method, :country, :city, :transaction, :calculated
+  attr_accessor :fetch, :mode, :hash, :distance_slider
 
   validate :valid_input, on: :create
 
@@ -20,12 +21,13 @@ class Search < ActiveRecord::Base
 
 
 
+
   def localRates
 
     return {error: 'missing params'} if
         pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?) or
         location_lat.blank? or location_lng.blank? or
-        calculated.blank? or transaction.blank?
+        calculated.blank? or trans.blank?
 
     self.distance      ||= 2.5
     self.distance_unit ||= "km"
@@ -94,7 +96,7 @@ class Search < ActiveRecord::Base
       return geoJsonize([], 'missing params') if
           pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?) or
           location_lat.blank? or location_lng.blank? or
-          calculated.blank? or transaction.blank?
+          calculated.blank? or trans.blank?
 
 
       self.distance      ||= 2.5
@@ -105,7 +107,7 @@ class Search < ActiveRecord::Base
       center          = [location_lat, location_lng]
       box             = Geocoder::Calculations.bounding_box(center, distance)
 
-      exchange_offers(exchange_id, location, center, box, pay, buy, distance, transaction, calculated)
+      exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated)
 
     rescue => e
 
@@ -123,7 +125,7 @@ class Search < ActiveRecord::Base
 
   end
 
-  def exchange_offers(exchange_id, location, center, box, pay, buy, distance, transaction, calculated)
+  def exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated)
 
     pay_rate  = (pay.currency.iso_code.downcase + '_rate').to_sym
     buy_rate  = (buy.currency.iso_code.downcase + '_rate').to_sym
@@ -132,7 +134,7 @@ class Search < ActiveRecord::Base
 
     exchanges_offers = []
     exchanges.each do |exchange|
-      offer = exchange.offer(center, pay, buy, distance, transaction, calculated)
+      offer = exchange.offer(center, pay, buy, distance, trans, calculated)
       exchanges_offers << offer #unless (offer[:errors].any? and offer[:errors][0] != 'Out of radius' and !Rails.env.development?)
     end
 

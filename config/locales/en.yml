@@ -69,7 +69,9 @@ en:
       ordered: 'ordered'
       confirmed: 'confirmed'
   offer:
-    away: 'away'
+    distance:
+      user: 'away'
+      selected: 'from city center'
     cambiuRanking: 'Cambiu ranking'
     view: 'View'
     offerAround: 'offers around'

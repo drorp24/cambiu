@@ -1,6 +1,6 @@
 ActiveAdmin.register Exchange do
 
-  permit_params :id, :name, :address, :email, :latitude, :longitude, :country, :opens, :closes,:website, :email, :note, :phone, :atm, :source, :business_type, :chain, :city, :region, :rating, :nearest_station,
+  permit_params :id, :name, :name_he, :address, :address_he, :email, :latitude, :longitude, :country, :opens, :closes,:website, :email, :note, :phone, :atm, :source, :business_type, :chain, :city, :region, :rating, :nearest_station,
                 :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id, :rates_source, :contract, :rates_policy,
                 :todo, :chain_name, :contact, :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close, :rates_url, :comment, :photo
 
@@ -35,13 +35,15 @@ ActiveAdmin.register Exchange do
 
     begin
 
-      next if hash[:name].blank? or hash[:address].blank?
+      name = hash[:name_he] ? hash[:name_he] : hash[:name]
+      address = hash[:address_he] ? hash[:address_he] : hash[:address]
+      next if name.blank? or address.blank?
 
       if hash[:currency].blank?
         raise "No currency"
       end
 
-      exchange = Exchange.identify_by_either(hash[:id], hash[:name], hash[:address], hash[:nearest_station])
+      exchange = Exchange.identify_by_either(hash[:id], name, address, hash[:nearest_station])
       columns.each do |column|
         exchange.send(column + '=', hash[column.to_sym])
       end
@@ -55,7 +57,7 @@ ActiveAdmin.register Exchange do
           exchange.latitude = latlng[0]
           exchange.longitude = latlng[1]
         else
-          raise "Invalid address"
+          raise "Invalid address" unless hash[:address_he].present?
         end
       end
 
@@ -64,7 +66,7 @@ ActiveAdmin.register Exchange do
 
     rescue => e
 
-      message = "#{hash[:name]} (#{hash[:address]}) - #{e}"
+      message = "#{name} (#{address}) - #{e}"
       puts message
       Error.create!(text: 'Exchanges upload error', message: message)
 
@@ -129,9 +131,9 @@ ActiveAdmin.register Exchange do
 #    column(:todo)   {|exchange| status_tag(exchange.todo, class: exchange.todo_color) if exchange.todo }
 #    column(:system) {|exchange| status_tag(exchange.system, class: exchange.system_color) if exchange.system }
     column :chain
-    column :name
+    column "Name", :either_name
     column :nearest_station
-    column :address
+    column "Address", :either_address
     column :contract
 #    column :address
     column :phone
@@ -196,7 +198,11 @@ ActiveAdmin.register Exchange do
     if exchange.individual?
       link_to "Manually update rates",    admin_exchange_rates_path(exchange)
     elsif exchange.chain?
-      link_to "Manually update rates",    admin_chain_rates_path(exchange.chain_id)
+      if exchange.chain_id
+        link_to "Manually update rates",    admin_chain_rates_path(exchange.chain_id)
+      else
+        link_to "Manually update rates",    admin_exchange_rates_path(exchange)
+      end
     end
   end
 
@@ -272,10 +278,12 @@ form do |f|
       f.input     :todo, as: :select, collection: {:"Verify"=>"verify", :"Call"=>"call", :"Meet"=>"meet", :"Sell"=>"sell"}
       f.input     :chain_name, label: 'Chain'
       f.input     :name
+      f.input     :name_he, label: 'Name in Hebrew'
       f.input     :nearest_station
       f.input     :photo
       f.input     :contact
       f.input     :address
+      f.input     :address_he, label: 'Address in Hebrew'
       f.input     :city
       f.input     :country, as: :string
       f.input     :phone, as: :phone

@@ -173,7 +173,10 @@ function processSVData(exchange, panorama, data, status) {
 populateDuration = function(exchange, matrix, $scope) {
 //    console.log('exchange ' + exchange.id + ' - populateDuration');
     $scope.find('[data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
-    $scope.find('[data-model=exchange][data-field=gDistance]').html(exchange.matrix.distance).siblings('.away').css('visibility', 'visible');
+    $scope.find('[data-model=exchange][data-field=gDistance]').html(exchange.matrix.distance).siblings('.from').css('visibility', 'visible');
+    var $distance_from = $scope.find('.from');
+    $distance_from.html(search.location.type == 'user' ? $distance_from.data('t-user') : $distance_from.data('t-selected'));
+
 };
 
 

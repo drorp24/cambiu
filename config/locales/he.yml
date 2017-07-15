@@ -48,7 +48,9 @@ he:
       ordered: 'הוזמן'
       confirmed: 'אושר'
   offer:
-    away: 'מכאן'
+    distance:
+      user: 'מכאן'
+      selected: 'ממרכז העיר'
     cambiuRanking: 'דירוג קמביו'
     view: 'צפו ב-'
     offersAround: 'הצעות בסביבה'
