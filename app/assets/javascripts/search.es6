@@ -545,5 +545,10 @@ $(document).ready(function() {
 
     });
 
+    $('.language_select').on('click tap', function() {
+        console.log('language select');
+        window.location.href = "/exchanges/search?" + $.param({'locale': $('body').attr('lang') == 'en' ? 'he' : 'en'})
+    })
+
 
 });

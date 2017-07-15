@@ -914,7 +914,23 @@ body#cambiu {
     }
   }
 
+  .flag {
+    display: none;
+  }
+  &[lang=en] {
+    .flag.he {
+      display: block;;
+    }
+  }
+  &[lang=he] {
+    .flag.en {
+      display: block;;
+    }
+  }
 
+  .language_select img {
+    width: 8vw;
+  }
 
 
 
@@ -1039,6 +1055,7 @@ body#cambiu {
     }
     width: 100%;
     &.worst {
+      visibility: hidden;
       height: 5%;
       margin-top: -3%;
       label {
