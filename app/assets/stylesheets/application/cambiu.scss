@@ -135,6 +135,15 @@ p {
     font-size: $size * $paneRatio;
   }
 }
+@mixin vfont-size-important($size) {
+  font-size: $size !important;
+  @include iframe {
+    font-size: $size * $iframePaneRatio !important;
+  }
+  @include desktop {
+    font-size: $size * $paneRatio !important;
+  }
+}
 @mixin vborder($size) {
   border: $size;
   @include iframe {
@@ -878,7 +887,7 @@ body#cambiu {
       font-family: inherit;
     }
     .actions_line button {
-      font-size: 8vw !important;
+      @include vfont-size-important(8vw);
     }
     .text-right {
       text-align: left !important;
@@ -3439,7 +3448,7 @@ body#cambiu {
       font-size: 5vw * $paneRatio !important;
     }
     button {
-      font-size: 5vw !important;
+      @include vfont-size-important(5vw);
       @include iframe {
         font-size: 5vw * $iframePaneRatio !important;
       }
