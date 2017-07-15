@@ -929,7 +929,7 @@ body#cambiu {
   }
 
   .language_select img {
-    width: 8vw;
+    @include vwidth(8vw);
   }
 
 
@@ -951,9 +951,7 @@ body#cambiu {
 
   [type="radio"]+label:before, [type="radio"]+label:after {
     margin: initial;
-    margin-left: -10vw;
   }
-
   &.in-iframe .ecard .photo img {
     height: 12vw !important;
   }
@@ -1208,11 +1206,9 @@ body#cambiu {
   .payment_method_selection {
     label {
       @include vfont-size(3.5vw);
-      width: 30%;
       margin-right: 0;
     }
     fieldset {
-      width: 30%;
       text-align: right;
     }
     .form-group {
