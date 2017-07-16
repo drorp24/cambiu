@@ -2725,8 +2725,8 @@ body#cambiu {
       top: -3.5vh;
       color: #fff;
       width: 250%;
-      width: 99vw;  // iPhone
-      left: -41vw; // iPhone
+      @include vwidth(99vw);  // iPhone
+      @include vleft(-41vw); // iPhone
       text-align: center;
       font-size: 2.2vh;
       font-weight: 400;

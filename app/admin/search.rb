@@ -27,7 +27,9 @@ ActiveAdmin.register Search do
 #      status_tag(count, :red) if count > 0
       link_to status_tag(count.to_s + ' issue'.pluralize(count), :red), admin_search_issues_path(search) if count > 0
     end
-    column 'Created', :created_at
+    column 'Created' do |search|
+      search.created_at.in_time_zone("Jerusalem")
+    end
   end
 
   ActiveAdmin.register Error, as: 'Issue' do
