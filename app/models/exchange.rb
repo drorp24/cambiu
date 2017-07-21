@@ -74,6 +74,11 @@ class Exchange < ActiveRecord::Base
   scope :system, -> {where.not(system: nil) }
 
 
+  def self.countries
+    countries_count = Exchange.group(:country).count.reject{|key| key.nil?}
+    countries_count.each{|key, value| countries_count[key] = key}
+  end
+
   def self.entire_list(params)
 
     return {errors: {parameters: 'missing'}} unless params[:country].present?
@@ -83,10 +88,10 @@ class Exchange < ActiveRecord::Base
     begin
 
       exchanges = Exchange.active
-                      .select(:id, :chain_id, :name, :nearest_station, :rates_policy, :currency, :address, :phone, :latitude, :longitude,
+                      .select(:country, :id, :chain_id, :name, :nearest_station, :rates_policy, :currency, :address, :phone, :latitude, :longitude,
                               :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close)
-                      .where(country: params[:country])
-      exchanges = exchanges.where(city: params[:city]) if params[:city].present?
+      exchanges = exchanges.where(country: params[:country])  unless params[:country] == 'ZZZ'
+      exchanges = exchanges.where(city: params[:city])        if params[:city].present?
 
       return exchanges
 
