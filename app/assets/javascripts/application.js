@@ -28,6 +28,7 @@
 //= require upload
 //= require pages
 //= require flow
+//= require payment
 
 //= require star-rating
 //= require swiper.jquery.min

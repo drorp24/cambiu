@@ -3630,13 +3630,7 @@ body#cambiu {
     position: relative;
     bottom: 0.2em;
   }
-
-  .directions_buttons {
-    position: absolute;
-    left: 0;
-    bottom: 2vh;
-  }
-
+  
   
   .expiry {
     position: fixed;
@@ -4360,6 +4354,7 @@ body#cambiu {
   .directions.fab {
     margin: initial;
     @include vmargin-right(10vw);
+    @include vmargin-left(10vw);
   }
 
 
