@@ -80,14 +80,6 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
 
     function determinePane(pane, exchange) {
 
-        if (pane == 'variable') {
-            var current_pane = $('body').data('pane');
-            if (current_pane == 'order') {
-                pane = value_of('payment_method') == 'cash' ? 'cards' : 'payment';
-                if (pane == 'cards') renderDirections(exchange, 'walking');
-            }
-        }
-
         if (pane == 'list' || pane == 'cards') sessionStorage.recent_set = pane;
         if (pane == 'offers') {
             pane = value_of('recent_set') || default_set;

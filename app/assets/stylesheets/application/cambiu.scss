@@ -3147,18 +3147,24 @@ body#cambiu {
      [data-field=duration] {
       font-weight: 300;
     }
-      .payment {
+      .orderButtont {
         height: 15%;
       }
     }
 
-  &.cash {
-    .orderPane button.cta::after {
+  &.cash .orderPane {
+     .to_payment {
+      display: none;
+    }
+    button.cta::after {
       content: 'Walk'
     }
   }
-  &.credit {
-    .orderPane button.cta::after {
+  &.credit .orderPane{
+    .to_directions {
+      display: none;
+    }
+    button.cta::after {
       content: 'Pay'
     }
   }
@@ -3630,7 +3636,7 @@ body#cambiu {
     position: relative;
     bottom: 0.2em;
   }
-  
+
   
   .expiry {
     position: fixed;
