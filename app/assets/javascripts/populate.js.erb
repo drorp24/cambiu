@@ -359,7 +359,7 @@ populateLocalOffers = function(rates) {
 
   if (gain_value < 0) return(best_value);
 
-  $('.search_line.worst').css('visibiltiy', 'visible');
+  $('.search_line.worst').css('visibility', 'visible');
   $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
   $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
   $('[data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
