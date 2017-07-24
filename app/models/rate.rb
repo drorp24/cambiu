@@ -95,9 +95,36 @@ class Rate < ActiveRecord::Base
     return with 'parameters', 'missing' unless
           params[:currency].present?                            and
          (params[:buy].present? or params[:sell].present?)      and
-         (params[:chain].present? or params[:name].present?)
+         (params[:chain].present? or params[:name].present? or params[:id].present?)
 
-    if params[:chain]
+    if params[:id]
+
+      if chain = Chain.find_by(id: params[:id])
+        rate = Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
+        if rate
+          return rate
+        elsif Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id)
+          return Rate.new(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
+        else
+          return with 'chain', 'no rates defined for that chain'
+        end
+
+      elsif exchange = Exchange.find_by(id: params[:id])
+        rate = Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
+        if rate
+          return rate
+        elsif Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id)
+          return Rate.new(ratable_type: 'Excahnge', ratable_id: exchange.id, currency: params[:currency])
+        else
+          return with 'exchange', 'no rates defined for that exchange'
+        end
+
+      else
+          return with 'id', 'no chain nor exchange exist with that id'
+      end
+
+    elsif params[:chain]
+
       if chain = Chain.find_by(name: params[:chain])
         rate = Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
         if rate
@@ -110,10 +137,11 @@ class Rate < ActiveRecord::Base
       else
         return with 'chain', 'no sucn chain'
       end
-    end
 
-    if params[:name]
+    elsif params[:name]
+
       exchange = params[:nearest_station] ? Exchange.find_by(name: params[:name], nearest_station: params[:nearest_stration]) : Exchange.find_by(name: params[:name])
+
       if exchange
         rate = Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
         if rate
@@ -126,6 +154,7 @@ class Rate < ActiveRecord::Base
       else
         return with 'exchange', 'no such exchange'
       end
+
     end
 
   end
