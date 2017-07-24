@@ -8,6 +8,11 @@
       return;
     <% end %>
 
+    if (location.pathname.includes('/admin/')) {
+      console.log('admin - not registering any serivceworker');
+      return;
+    }
+
 //post_to_sw({version: version});
 
     if (location.pathname.indexOf('admin') > -1) {
