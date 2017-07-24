@@ -4,7 +4,7 @@ class Rate < ActiveRecord::Base
   belongs_to :admin_user
 
   enum service_type: [ :pickup, :delivery ]
-  enum source: [ :manual, :xml, :scraping, :test, :ratefeed ]
+  enum source: [ :manual, :xml, :scraping, :test, :ratefeed, :api ]
   enum method: [ :absolute, :reference ]
 
   validates :sell, numericality: true, allow_nil: true
@@ -52,9 +52,9 @@ class Rate < ActiveRecord::Base
 
     self.buy           = buy if params[:buy]  # if it's empty leave the current value intact
     self.sell          = sell if params[:sell]
-    self.source        = 'ratefeed'
+    self.source        = 'api'
     self.last_update   = Time.now
-    self.last_process  = 'ratefeed api'
+    self.last_process  = 'api'
     self.save
 
   end
@@ -114,7 +114,7 @@ class Rate < ActiveRecord::Base
         if rate
           return rate
         elsif Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id)
-          return Rate.new(ratable_type: 'Excahnge', ratable_id: exchange.id, currency: params[:currency])
+          return Rate.new(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
         else
           return with 'exchange', 'no rates defined for that exchange'
         end
