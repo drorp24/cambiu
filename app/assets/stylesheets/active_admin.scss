@@ -15,6 +15,25 @@
 //
 //   .status_tag { background: #6090DB; }
 
+form.formtastic fieldset ol li.fl {
+  float: left;
+  width: 42%;
+  margin-right: 2em;
+}
+
+label.label {
+  width: 100%;
+}
+
+form fieldset>ol>li.boolean label {
+  padding-left: 0;
+}
+
+#exchange_cc_fee, #exchange_delivery_charge {
+  width: 10%;
+}
+
+
 body.active_admin {
   .status_tag {
     &.blue { background: #63B8FF; }

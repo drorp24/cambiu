@@ -2,7 +2,9 @@ ActiveAdmin.register Exchange do
 
   permit_params :id, :name, :name_he, :address, :address_he, :email, :latitude, :longitude, :country, :opens, :closes,:website, :email, :note, :phone, :atm, :source, :business_type, :chain, :city, :region, :rating, :nearest_station,
                 :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id, :rates_source, :contract, :rates_policy,
-                :todo, :chain_name, :contact, :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close, :rates_url, :comment, :photo
+                :todo, :chain_name, :contact, :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close, :rates_url, :comment, :photo,
+                :cc_fee, :delivery_charge, :delivery, :card, :delivery_polygon_a_lat, :delivery_polygon_a_lng, :delivery_polygon_b_lat, :delivery_polygon_b_lng,
+                :delivery_polygon_c_lat, :delivery_polygon_c_lng, :delivery_polygon_d_lat, :delivery_polygon_d_lng
 
 =begin
     rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
@@ -115,6 +117,7 @@ ActiveAdmin.register Exchange do
   filter :nearest_station
   filter :chain
   filter :id
+
 =begin
   filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Test', 'test'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']]
   filter :chain
@@ -231,7 +234,7 @@ ActiveAdmin.register Exchange do
 
     # working...
     def scoped_collection
-      params[:chain_id] ? super.where(chain_id: params[:chain_id]) : super
+      params[:chain_id] ? super.where(chain_id: params[:chain_id]).ransack(params[:q]).result : super
     end
 
     def new
@@ -302,6 +305,18 @@ form do |f|
       f.input     :latitude
       f.input     :longitude
       f.input     :currency, as: :select, collection: Currency.select, label: "Local currency"
+      f.input     :delivery, label: 'Supports delivery'
+      f.input     :card, label: 'Supports Credit cards'
+      f.input     :cc_fee, label: 'Credit card fee (%)'
+      f.input     :delivery_charge
+      f.input     :delivery_polygon_a_lat, :wrapper_html => { :class => 'fl' }
+      f.input     :delivery_polygon_a_lng, :wrapper_html => { :class => 'fl' }
+      f.input     :delivery_polygon_b_lat, :wrapper_html => { :class => 'fl' }
+      f.input     :delivery_polygon_b_lng, :wrapper_html => { :class => 'fl' }
+      f.input     :delivery_polygon_c_lat, :wrapper_html => { :class => 'fl' }
+      f.input     :delivery_polygon_c_lng, :wrapper_html => { :class => 'fl' }
+      f.input     :delivery_polygon_d_lat, :wrapper_html => { :class => 'fl' }
+      f.input     :delivery_polygon_d_lng, :wrapper_html => { :class => 'fl' }
       f.input     :comment, as: :text
       f.input     :error, input_html: { :disabled => true }
       f.input     :created_at, as: :string, input_html: { :disabled => true }
@@ -319,6 +334,7 @@ form do |f|
 
   # rates page (nested reousrce)
   ActiveAdmin.register Rate do
+
 
     menu false
 
