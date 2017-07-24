@@ -59,7 +59,7 @@ class Rate < ActiveRecord::Base
 
   end
 
-  def update_by_params(params)
+  def old_update_by_params(params)
 
     return false unless self.ratable && (params[:buy] || params[:sell])
 
