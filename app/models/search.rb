@@ -4,8 +4,6 @@ class Search < ActiveRecord::Base
   has_many :issues, foreign_key: "search_id", class_name: "Error"
 #  validates :email, presence: true#, on: :update #allow_nil: true #unless: Proc.new { |a| a.email.blank? }
 #  validates :email, uniqueness: { case_sensitive: false }, allow_nil: true
-  enum service_type: [ :pickup, :delivery, :all_serivce_types]
-  enum payment_method: [ :cash, :credit, :all_payment_methods]
 
   attr_accessor :fetch, :mode, :hash, :distance_slider
 
@@ -29,8 +27,10 @@ class Search < ActiveRecord::Base
         location_lat.blank? or location_lng.blank? or
         calculated.blank? or trans.blank?
 
-    self.distance      ||= 2.5
     self.distance_unit ||= "km"
+    self.service_type  ||= 'pickup'
+    self.distance = self.service_type == 'pickup' ? self.distance || 2.5 : 100
+
     center               = [location_lat, location_lng]
     box                  = Geocoder::Calculations.bounding_box(center, distance)
 
@@ -41,6 +41,9 @@ class Search < ActiveRecord::Base
 #                              .select(:id, :chain_id, :currency, :rates_policy)  # TODO: Discuss
     exchanges            = Exchange.active.geocoded.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
                                .select(:id, :chain_id, :currency, :rates_policy)  # TODO: Discuss
+
+    exchanges            = exchanges.delivery if self.service_type == 'delivery'
+    exchanges            = exchanges.card if self.payment_method == 'card'
 
     best_buy = Float::INFINITY
     best_sell = 0

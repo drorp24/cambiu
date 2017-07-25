@@ -30,8 +30,6 @@ class Exchange < ActiveRecord::Base
   enum business_type:  [ :exchange, :bank, :post_office, :other, :reference ]
   enum rates_source:   [ :no_rates, :test, :manual, :xml, :scraping ]
   enum rates_policy:   [:individual, :chain]
-  enum service_type:   [ :pickup, :delivery, :all_serivce_types]
-  enum payment_method: [ :cash, :credit, :all_payment_methods]
 
   enum todo:           [:verify, :call, :meet, :sell]
   enum system:         [:remove, :geocode, :error]
@@ -72,6 +70,9 @@ class Exchange < ActiveRecord::Base
   scope :unverified, -> {where(todo: 'verify')}
   scope :todo, -> {where.not(todo: nil) }
   scope :system, -> {where.not(system: nil) }
+
+  scope :delivery, -> {where(delivery: true)}
+  scope :card, -> {where(card: true)}
 
 
   def self.countries
@@ -565,6 +566,8 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:gain] = quotes[:gain]
     exchange_hash[:transaction] = quotes[:trans]
     exchange_hash[:calculated] = quotes[:calculated]
+    exchange_hash[:delivery] = self.delivery
+    exchange_hash[:card] = self.card
 
 
     exchange_hash
