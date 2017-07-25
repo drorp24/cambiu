@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
     puts "session[:lang]: "
     puts session[:lang]
     puts session[:lang].class
-    @order = Order.create_and_notify(order_params, session[:lang])
+    @order = Order.create_and_notify(order_params, session[:lang].to_s)
     respond_with @order
   end
 
