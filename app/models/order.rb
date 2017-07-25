@@ -26,7 +26,7 @@ class Order < ActiveRecord::Base
     puts order.inspect
     puts order.photo
     puts lang
-    NotifyJob.perform_later(order, order.photo, lang) #if self.requires_notification?
+    NotifyJob.perform_later(order, order.photo, 'en') #if self.requires_notification?
     order
   end
 
