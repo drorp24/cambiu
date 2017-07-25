@@ -23,7 +23,7 @@ class Order < ActiveRecord::Base
   def self.create_and_notify(params, lang)
     order = self.create!(params)
     puts "about to notify - after create"
-    NotifyJob.perform_later(order, nil, lang) #if self.requires_notification?
+    NotifyJob.perform_later(order, order.photo, lang) #if self.requires_notification?
     order
   end
 
