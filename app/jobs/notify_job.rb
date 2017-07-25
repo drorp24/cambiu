@@ -1,7 +1,7 @@
 class NotifyJob < ActiveJob::Base
   queue_as :default
 
-  def perform(order, photo, lang)
+  def perform(order, photo)
 
 #    return if Rails.env.development?
 
@@ -83,7 +83,7 @@ class NotifyJob < ActiveJob::Base
 
     begin
 
-      template_name =  lang == 'he' ? 'order_he' : 'neworder'
+      template_name =  exchange.lang == 'he' ? 'order_he' : 'neworder'
       template_content = []
       message = {
           to:             to + bcc,
