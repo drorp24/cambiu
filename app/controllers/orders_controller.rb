@@ -3,6 +3,9 @@ class OrdersController < ApplicationController
   respond_to :json
 
   def create
+    puts ">>>>>>>>>>>>>>>>>>>>>"
+    puts">>>>>>>>>>>>>>>"
+    puts "session[:lang]: " + session[:lang]
     @order = Order.create_and_notify(order_params, session[:lang])
     respond_with @order
   end
