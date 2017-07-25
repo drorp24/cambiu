@@ -5,7 +5,7 @@ module Api
       skip_before_action :verify_authenticity_token # TODO: Replace with verify_API_key
 
       def index
-        render json: Exchange.rates_list2(rate_params)
+        render json: Exchange.rates_list(rate_params)
       end
 
       def rate_params
