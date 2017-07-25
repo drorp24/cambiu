@@ -107,15 +107,11 @@ class Exchange < ActiveRecord::Base
 
 
   # The newer version of the api, using OXR rather than netdania for reference rates
-  def self.rates_list2(params)
-
-    return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:type].present?
-
-    params[:type] == 'reference' ? Currency.rates(params[:base]) : rates_list(params)
-
+  def self.rates_list(params)
+     params[:type] == 'reference' ? Currency.rates(params[:base]) : rates_list(params)
   end
 
-  def self.rates_list(params)
+  def self.old_rates_list(params)
 
     return {errors: {parameters: 'missing'}} unless params[:country].present? and params[:type].present?
 
