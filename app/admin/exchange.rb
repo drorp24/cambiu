@@ -43,7 +43,7 @@ ActiveAdmin.register Exchange do
         raise "No currency"
       end
 
-      exchange = Exchange.identify_by_either(hash[:id], name, address, hash[:nearest_station])
+      exchange = Exchange.identify_by_either(hash[:id], hash[:name], hash[:name_he], hash[:address], hash[:address_he], hash[:nearest_station])
       columns.each do |column|
         exchange.send(column + '=', hash[column.to_sym])
       end
