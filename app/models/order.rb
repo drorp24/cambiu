@@ -16,25 +16,9 @@ class Order < ActiveRecord::Base
     self.service_type = 'pickup' unless self.service_type.present?
   end
 
-  after_update   :after_updating
+  after_commit   :notification
 
   attr_accessor :photo
-
-  def self.create_and_notify(params, language)
-    order = self.create!(params)
-    puts "about to notify - after create with:"
-    puts order.inspect
-    puts order.photo
-    puts language
-    NotifyJob.perform_later(order, order.photo, language) #if self.requires_notification?
-    order
-  end
-
-  def after_updating
-    puts "about to notify - after update"
-    NotifyJob.perform_later(self, self.photo, nil) #if self.requires_notification?
-  end
-
 
   def status_color
     [:orange, :green, :blue][Order.statuses[status]]
