@@ -25,7 +25,7 @@ class Order < ActiveRecord::Base
     puts "about to notify - after create with:"
     puts order.inspect
     puts order.photo
-    puts lang
+    puts language
     NotifyJob.perform_later(order, order.photo, language) #if self.requires_notification?
     order
   end
