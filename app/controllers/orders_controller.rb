@@ -5,7 +5,9 @@ class OrdersController < ApplicationController
   def create
     puts ">>>>>>>>>>>>>>>>>>>>>"
     puts">>>>>>>>>>>>>>>"
-    puts "session[:lang]: " + session[:lang]
+    puts "session[:lang]: "
+    puts session[:lang]
+    puts session[:lang].class
     @order = Order.create_and_notify(order_params, session[:lang])
     respond_with @order
   end
