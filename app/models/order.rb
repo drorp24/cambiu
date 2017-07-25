@@ -16,9 +16,14 @@ class Order < ActiveRecord::Base
     self.service_type = 'pickup' unless self.service_type.present?
   end
 
-  after_commit   :notification
-
   attr_accessor :photo
+
+  def create_and_notify(params, lang)
+    @order = self.create!(params)
+    puts "about to notify"
+    NotifyJob.perform_later(self, self.photo, lang) #if self.requires_notification?
+    @order
+  end
 
   def status_color
     [:orange, :green, :blue][Order.statuses[status]]
@@ -26,11 +31,6 @@ class Order < ActiveRecord::Base
 
   def requires_notification?
     Rails.env.production? || pictured?
-  end
-
-  def notification
-    puts "about to notify"
-    NotifyJob.perform_later(self, self.photo, session[:lang]) #if self.requires_notification?
   end
 
   # Overriding 'attributes' adds methods as additional attributes within the JSON response as if they were part of the DB model, enabling controller to respond_with @order

@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   respond_to :json
 
   def create
-    @order = Order.create!(order_params)
+    @order = Order.create_and_notify(order_params, session[:lang])
     respond_with @order
   end
 
