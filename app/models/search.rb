@@ -45,6 +45,8 @@ class Search < ActiveRecord::Base
     exchanges            = exchanges.delivery if self.service_type == 'delivery'
     exchanges            = exchanges.card if self.payment_method == 'card'
 
+    puts "there are " + exchange.count.to_s + "exchanges selected"
+
     best_buy = Float::INFINITY
     best_sell = 0
     best_buy_rate = {}
