@@ -18,7 +18,7 @@ class Order < ActiveRecord::Base
 
   attr_accessor :photo
 
-  def create_and_notify(params, lang)
+  def self.create_and_notify(params, lang)
     @order = self.create!(params)
     puts "about to notify"
     NotifyJob.perform_later(self, self.photo, lang) #if self.requires_notification?
