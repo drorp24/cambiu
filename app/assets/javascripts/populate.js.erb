@@ -354,7 +354,6 @@ populateLocalOffers = function(rates) {
   var worst_value = worst_rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
   var gain_value = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
 
-
   formElement(calculated).autoNumeric('set', best_value);
   $('[data-model=local][data-field=count]').html(count);
 
