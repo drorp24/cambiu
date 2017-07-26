@@ -899,7 +899,7 @@ body#cambiu {
       right: inherit;
       left: 0;
     }
-    input:not(.select-dropdown) {
+    .selection input:not(.select-dropdown) {
       text-align: left;
     }
     .currency_select, .md-form {
@@ -1027,15 +1027,14 @@ body#cambiu {
 
 
   .registration {
-    .submit {
-      position: absolute;
-      bottom: 5vh;
-      width: 100%;
-      @include vmargin-left(-5vw);
-    }
     label[data-error]::after {
       @include vwidth(90vw);
       top: 5vh;
+    }
+    .last_line {
+      label[data-error]::after {
+        @include vwidth(22.5vw);
+      }
     }
   }
 
