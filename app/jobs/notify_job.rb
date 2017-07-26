@@ -83,7 +83,7 @@ class NotifyJob < ActiveJob::Base
 
     begin
 
-      template_name = 'order'
+      template_name =  exchange.lang == 'he' ? 'order_he' : 'neworder'
       template_content = []
       message = {
           to:             to + bcc,
