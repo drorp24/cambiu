@@ -333,6 +333,7 @@ fetchAndPopulateLocaloffers = function() {
 populateLocalOffers = function(rates) {
 
   if (rates.worst.error || $.isEmptyObject(rates.best.buy) || $.isEmptyObject(rates.best.sell) || rates.best.buy.error || rates.best.sell.error) {
+    clearLocalOffers();
     snack('No offer found. Try changing currencies or location', {button: 'ok', klass: 'oops', timeout: 3000, link: {page: 'exchanges', pane: 'search'}});
     return(null);
   }
@@ -353,7 +354,6 @@ populateLocalOffers = function(rates) {
   var worst_value = worst_rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
   var gain_value = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
 
-
   formElement(calculated).autoNumeric('set', best_value);
   $('[data-model=local][data-field=count]').html(count);
 
@@ -361,12 +361,18 @@ populateLocalOffers = function(rates) {
 
   $('.search_line.worst').css('visibility', 'visible');
   $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
-  $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
   $('[data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
 
 
   return(best_value);
 
+};
+
+clearLocalOffers = function() {
+  formElement(calculated).autoNumeric('set', 0);
+  $('[data-model=local][data-field=count]').html("");
+  $('[data-model=local][data-field=worst_amount]').autoNumeric('set', 0);
+  $('[data-model=local][data-field=worst_saving]').autoNumeric('set', 0);
 };
 
 updateExchangeOffer = function(rates) {
