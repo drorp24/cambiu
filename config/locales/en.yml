@@ -102,3 +102,10 @@ en:
     line3: 'Thanks for your help!'
     upload: 'Upload'
     confirm: 'Confirm'
+  user:
+    empty: 'Please fill-up'
+    email: 'Email'
+    email_error: 'Check email'
+    password: 'Password'
+    password_repeat: 'Please repeat password'
+    next: 'Next'

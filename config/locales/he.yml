@@ -81,3 +81,10 @@ he:
     line3: 'תודה על שיתוף הפעולה!'
     upload: 'צילום'
     confirm: 'אישור'
+  user:
+    empty: 'אנא מלאו'
+    email: 'דוא״ל'
+    email_error: 'אנא בדקו'
+    password: 'בחרו סיסמה'
+    password_repeat: 'חזרו על הסיסמה'
+    next: 'המשך'

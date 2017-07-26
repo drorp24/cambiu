@@ -28,6 +28,7 @@
 //= require upload
 //= require pages
 //= require flow
+//= require user
 //= require payment
 
 //= require star-rating

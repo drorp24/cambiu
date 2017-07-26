@@ -1,3 +1,29 @@
 <div class="pane" data-pane="register">
   <%= render partial: 'navbar', locals: {left_pane: 'back', left_icon: 'arrow_back', center: 'Register', right_pane: 'none', right_icon: 'none'} %>
+
+  <form class="registration" id="registration_form" data-t-empty="<%= t 'user.empty' %>">
+
+    <div class="md-form">
+      <input type="email" name="user[email]" id="user_email" class="form-control" required/>
+      <label for="user_email" class="control-label text-right" data-error="<%= t 'user.email_error' %>"><%= t 'user.email' %></label>
+    </div>
+
+    <div class="md-form">
+      <input type="password" name="user[password]" id="user_password" class="form-control" required/>
+      <label for="user_password" class="control-label text-right"><%= t 'user.password' %></label>
+    </div>
+
+    <div class="md-form">
+      <input type="password" name="user[password_repeat]" id="user_password_repeat" class="form-control" required/>
+      <label for="user_password_repeat" class="control-label text-right"><%= t 'user.password_repeat' %></label>
+    </div>
+
+
+    <div class="md-form submit flex_center">
+      <button type="submit" class="blue primary btn waves-effect" data-action="createUser" data-href-pane="payment" data-href-id="curr"><%= t 'user.next' %></button>
+    </div>
+
+  </form>
+
+
 </div>

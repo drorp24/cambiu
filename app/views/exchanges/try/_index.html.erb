@@ -1,19 +1,42 @@
 <div class="pane" data-pane="try">
 
 
+  <form action="#">
+    <h6>First Name</h6>
+    <input type='text' name='fname' required />
 
-  <form class="form-inline">
+    <h6>Last Name</h6>
+    <input type='text' name='lname' required />
 
-    <fieldset class="form-group">
-      <input name="group1" type="radio" id="radio11" checked="checked">
-      <label for="radio11">Pick-up</label>
-    </fieldset>
+    <h6>Email</h6>
+    <input type='email' name='email' required />
 
-    <fieldset class="form-group">
-      <input name="group1" type="radio" id="radio21">
-      <label for="radio21">Delivery</label>
-    </fieldset>
+    <h6>Password</h6>
+    <input type='text' name='password' required />
 
+    <input type="submit">
   </form>
+  Run code snippetHide results
+
+  <div class="md-form">
+    <input type="email" name="user[email]" id="user_email" class="form-control" required/>
+    <label for="user_email" class="control-label text-right"><%= t 'user.email' %></label>
+  </div>
+
+  <div class="md-form">
+    <input type="password" name="user[password]" id="user_password" class="form-control" required/>
+    <label for="user_password" class="control-label text-right"><%= t 'user.password' %></label>
+  </div>
+
+  <div class="md-form">
+    <input type="password" name="user[password_repeat]" id="user_password_repeat" class="form-control" required/>
+    <label for="user_password_repeat" class="control-label text-right"><%= t 'user.password_repeat' %></label>
+  </div>
+
+
+  <div class="md-form submit flex_center">
+    <button type="submit" class="blue primary btn waves-effect" data-action="createUser" data-href-pane="payment" data-href-id="curr"><%= t 'user.next' %></button>
+  </div>
+
 
 </div>

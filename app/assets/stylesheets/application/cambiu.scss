@@ -1025,7 +1025,21 @@ body#cambiu {
 
   // twitter-bootstrap-4 & MDB adjustments - end
 
-  .selection {
+
+  .registration {
+    .submit {
+      position: absolute;
+      bottom: 5vh;
+      width: 100%;
+      @include vmargin-left(-5vw);
+    }
+    label[data-error]::after {
+      @include vwidth(90vw);
+      top: 5vh;
+    }
+  }
+
+  .selection, .registration {
     min-height: 100vh;
     color: #555;
     font-weight: 300;
@@ -1249,8 +1263,8 @@ body#cambiu {
   .coming_soon_icon {
     position: absolute;
     top: 40vh;
-    left: 42vw;
-    font-size: 20vw;
+    @include vleft(42vw);
+    @include vfont-size(20vw);
   }
 
   .coming_soon_text {
@@ -1259,7 +1273,7 @@ body#cambiu {
     left: 0;
     width: 100%;
     text-align: center;
-    font-size: 10vw;
+    @include vfont-size(10vw);
   }
 
 
