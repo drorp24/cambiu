@@ -85,6 +85,9 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
             pane = value_of('recent_set') || default_set;
             sessionStorage.recent_set = pane;
         }
+        if (pane == 'order' && !orderExists() && ($('body').hasClass('credit') || $('body').hasClass('delivery'))) {
+            pane = 'register'
+        }
 
 
         return pane;

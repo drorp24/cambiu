@@ -471,6 +471,10 @@ orderUpdate = function(update) {
 
 };
 
+orderExists = function() {
+    return sessionStorage.getItem("order_id") !== null
+};
+
 unorder = function() {
     exchange_id = value_of('order_exchange_id');
     if (!exchange_id) return;
