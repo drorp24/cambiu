@@ -15,6 +15,15 @@ $(document).ready(function() {
         el.autoNumeric('update', {aSign: symbol});
     };
 
+    matchWorstFieldsSymbolToCalculated = function() {
+        console.log('calculated: ' + calculated);
+        var sign = formElement(calculated).attr('data-a-sign');
+        $('input[data-model=local]').each(function() {
+            update_currency_symbol($(this), sign);
+            console.log('updating the following to sign: ' + sign)
+            console.log($(this)[0])
+        })
+    };
 
     bind_currency_to_autonumeric = function() {
 
@@ -41,7 +50,10 @@ $(document).ready(function() {
 
             $('[data-autonumeric][data-field=' + target + ']').each(function() {
                 update_currency_symbol($(this), symbol);
-            })
+            });
+
+            matchWorstFieldsSymbolToCalculated();
+
         });
 
 
