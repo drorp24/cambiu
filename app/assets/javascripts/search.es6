@@ -477,7 +477,9 @@ $(document).ready(function() {
 
 
     $('form.selection .service_type').change(function() {
+        snackHide();
         setServiceTypeTo($(this).is(':checked') ? 'delivery' : 'pickup');
+        fetchAndPopulateLocaloffers();
     });
 
     $('.close_inline_params').on('click tap', function(e) {
@@ -511,7 +513,9 @@ $(document).ready(function() {
 
 
     $('form.selection .payment_method').change(function() {
+        snackHide();
         setPaymentMethodTo($('form.selection .payment_method:checked').val())
+        fetchAndPopulateLocaloffers();
     });
 
     setPaymentMethodTo = function(payment_method) {
