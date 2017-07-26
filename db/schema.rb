@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725203722) do
+ActiveRecord::Schema.define(version: 20170726100914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,7 +142,6 @@ ActiveRecord::Schema.define(version: 20170725203722) do
     t.float    "cc_fee"
     t.float    "delivery_charge"
     t.boolean  "delivery",                           default: false
-    t.boolean  "card",                               default: false
     t.float    "delivery_polygon_a_lat"
     t.float    "delivery_polygon_a_lng"
     t.float    "delivery_polygon_b_lat"
@@ -152,6 +151,7 @@ ActiveRecord::Schema.define(version: 20170725203722) do
     t.float    "delivery_polygon_d_lat"
     t.float    "delivery_polygon_d_lng"
     t.string   "lang"
+    t.boolean  "credit",                             default: false
     t.index ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
     t.index ["latitude", "longitude"], name: "index_exchanges_on_latitude_and_longitude", using: :btree
     t.index ["latitude"], name: "index_exchanges_on_latitude", using: :btree

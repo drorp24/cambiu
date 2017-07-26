@@ -8,6 +8,8 @@ class Search < ActiveRecord::Base
   attr_accessor :fetch, :mode, :hash, :distance_slider
 
   validate :valid_input, on: :create
+  enum service_type: [ :pickup, :delivery, :all_serivce_types]
+  enum payment_method: [ :cash, :credit, :all_payment_methods]
 
 #  scope :negate, ->(scope) { where(scope.where_values.reduce(:and).not) }
 
@@ -40,12 +42,10 @@ class Search < ActiveRecord::Base
 #   exchanges            = Exchange.with_real_rates.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 #                              .select(:id, :chain_id, :currency, :rates_policy)  # TODO: Discuss
     exchanges            = Exchange.active.geocoded.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
-                               .select(:id, :chain_id, :currency, :rates_policy)  # TODO: Discuss
+                               .select(:id, :chain_id, :currency, :rates_policy, :delivery, :credit)  # TODO: Discuss
 
     exchanges            = exchanges.delivery if self.service_type == 'delivery'
-    exchanges            = exchanges.card if self.payment_method == 'card'
-
-    puts "there are " + exchange.count.to_s + "exchanges selected"
+    exchanges            = exchanges.credit if self.payment_method == 'credit'
 
     best_buy = Float::INFINITY
     best_sell = 0
@@ -104,7 +104,7 @@ class Search < ActiveRecord::Base
           calculated.blank? or trans.blank?
 
 
-      self.distance      ||= 2.5
+      self.distance = self.service_type == 'pickup' ? self.distance || 2.5 : 100
       self.distance_unit ||= "km"
 
       pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
@@ -136,6 +136,9 @@ class Search < ActiveRecord::Base
     buy_rate  = (buy.currency.iso_code.downcase + '_rate').to_sym
 
     exchanges = Exchange.active.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+
+    exchanges            = exchanges.delivery if self.service_type == 'delivery'
+    exchanges            = exchanges.credit if self.payment_method == 'credit'
 
     exchanges_offers = []
     exchanges.each do |exchange|

@@ -72,7 +72,7 @@ class Exchange < ActiveRecord::Base
   scope :system, -> {where.not(system: nil) }
 
   scope :delivery, -> {where(delivery: true)}
-  scope :card, -> {where(card: true)}
+  scope :credit, -> {where(credit: true)}
 
 
   def self.countries
@@ -566,7 +566,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:transaction] = quotes[:trans]
     exchange_hash[:calculated] = quotes[:calculated]
     exchange_hash[:delivery] = self.delivery
-    exchange_hash[:card] = self.card
+    exchange_hash[:credit] = self.credit
 
 
     exchange_hash
