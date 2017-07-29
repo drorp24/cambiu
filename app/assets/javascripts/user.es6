@@ -1,15 +1,9 @@
-$('[data-action=createUser]').click(function(e) {
-
-//    e.preventDefault();
-
-});
-
-userInputValid = function() {
+userCheckValidity = function() {
 
     var emptyMsg = $('form.registration').attr('data-t-empty');
 
     function valid($e) {
-        $e.removeClass('invalid').addClass('valid');
+        $e.removeClass('invalid');
     }
 
     function invalid($e, msg=null) {
@@ -20,7 +14,7 @@ userInputValid = function() {
 
     function checkIfFull($e) {
         let inputValid = !!$e.val().length;
-        if (!inputValid) invalid($e, emptyMsg);
+        inputValid ? valid($e) : invalid($e, emptyMsg);
         return inputValid;
     }
 
@@ -30,10 +24,14 @@ userInputValid = function() {
 
     $('form.registration input').each(function()  {
         let full = checkIfFull($(this));
-        console.log('full:', "d");
         formValid = formValid && full;
     });
 
+
+    // the html5 validity status: $('form.registration')[0].checkValidity() (boolean)
+    // if I want to use html5 validations I can return the data-href only after the above returns true
+    // but it doesnt check phone nor email so not sure i want it, plus: IT WARNS ONE FIELD AT A TIME... mine warns about all
+    // NO SUPPORT OF HEBREW UNLIKE ME
 /*
      var $email = $('#user_email');
      var emailValid = !!$email.val().length;  // & it's format is valid
