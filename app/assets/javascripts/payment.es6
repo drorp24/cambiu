@@ -1,10 +1,25 @@
+$('[data-action=paymentFlow]').click(function(e) {
+
+    e.preventDefault();
+
+    // Create user
+
+    // Generate xml and send it to Changeme (how? ask Saar for the JS code)
+
+    // Obtain payment page url
+
+});
+
+
+
+
 paymentUrl = () => {
 
     const gateway   = 'https://cguat2.creditguard.co.il/xpo/Relay';
     const username  = 'israeli';
     const password  = 'I!fr43s!34';
     const int_in    = create_int_in();
-    const url       = `${gateway}?user=${username}&password=${password}&int_in=${int_in}`;
+    const url       = `${gateway}?user=${username}&password=${password}&int_in=abc`;
 
     fetch(url, {method: 'post'}).then((response) => {console.log(response)});
 
@@ -56,7 +71,7 @@ paymentUrl = () => {
             </ashrait>";
 
         let xml = $.parseXML(xmlString);
-        console.log(xml);
+        console.log('xml', xml);
 
         return xml;
     }

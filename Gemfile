@@ -87,6 +87,7 @@ gem 'stackprof', group: :development
 gem 'money-open-exchange-rates'
 gem 'pry'
 #gem "active_admin_import" , '3.0.0'
+gem 'httparty'
 
 
 group :development, :test do
