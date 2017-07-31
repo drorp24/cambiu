@@ -24,11 +24,8 @@
 
             if (offers.length > 0) {
 
-                offers.sort(function (a, b) {
-                    return grade(a) - grade(b);
-                });
+                offers.sort((a, b) => a.properties.grade - b.properties.grade);
 
-//              offers.map((offer, index) => {offer.properties.rank = index; return offer});
                 for (let [index, offer] of offers.entries()) {exchangeHash[offer.id].rank = index + 1}
                 offers[0].properties.best_at.push('best');
             }

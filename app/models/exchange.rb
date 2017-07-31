@@ -613,6 +613,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:gain] = quotes[:gain]
     exchange_hash[:transaction] = quotes[:trans]
     exchange_hash[:calculated] = quotes[:calculated]
+    exchange_hash[:grade] = (exchange_hash[:gain] * -1) + (exchange_hash[:distance] * Rails.application.config.distance_factor)
 
 
     exchange_hash

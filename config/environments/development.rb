@@ -58,6 +58,8 @@ Rails.application.configure do
   config.ga_tracking_code = 'UA-91021177-3'
   config.inspectlet_wid = ''
 
+  config.distance_factor = 1
+
 
 end
 Rails.application.routes.default_url_options[:host] = 'localhost:3000'
