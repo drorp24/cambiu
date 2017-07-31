@@ -18,31 +18,32 @@ userCheckValidity = function() {
         return inputValid;
     }
 
+    function checkPasswords($e) {
+        let inputValid = ($e.val() == $e.siblings('#user_password').val());
+        inputValid ? valid($e) : invalid($e, "Should match password");
+        return inputValid;
+    }
+
 
     $('form.registration input').removeClass('invalid');
     var formValid = true;
 
     $('form.registration input').each(function()  {
-        let full = checkIfFull($(this));
-        formValid = formValid && full;
+
+        let fieldIsFull = checkIfFull($(this));
+        formValid = formValid && fieldIsFull;
+        if (!fiedlIsFull) return true;
+
+        if ($e.is('#user_password_repeat')) {
+            let fieldValid = checkPasswords($e);
+            formValid = formValid && fieldValid;
+            if (!fieldValid) return true;
+        }
+
+        // and so on
+
     });
 
-
-    // the html5 validity status: $('form.registration')[0].checkValidity() (boolean)
-    // if I want to use html5 validations I can return the data-href only after the above returns true
-    // but it doesnt check phone nor email so not sure i want it, plus: IT WARNS ONE FIELD AT A TIME... mine warns about all
-    // NO SUPPORT OF HEBREW UNLIKE ME
-/*
-     var $email = $('#user_email');
-     var emailValid = !!$email.val().length;  // & it's format is valid
-     emailValid ? valid($email) : invalid($email);
-     formValid = formValid && emailValid;
-
-     var $password = $('#user_password');
-     var passwordValid = !!$password.val().length;  // & it's format is valid
-     passwordValid ? valid($password) : invalid($password);
-     formValid = formValid && passwordValid;
-     */
 
     return formValid;
 };
