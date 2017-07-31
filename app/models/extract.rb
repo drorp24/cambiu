@@ -83,6 +83,7 @@ class Extract
       next unless Currency.updatable.include? currency
       sell = 1 / tr.css('td')[0].text.strip.to_f
       buy = 1 / tr.css('td')[1].text.strip.to_f
+
       rate_update(currency, buy, sell, chain, exchange, rates_source)
     end
 

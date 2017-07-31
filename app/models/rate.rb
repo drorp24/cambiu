@@ -16,7 +16,7 @@ class Rate < ActiveRecord::Base
 =end
 
   before_update :currency_is_not_local
-  before_update :change_to_reference_if_needed
+  before_update :change_to_reference_if_needed, if: ->(rate){ (rate.buy_markup_changed? && buy_markup.present?) or (rate.sell_markup_changed? && sell_markup.present?)  }
 #  before_create :initialize_default_values
 
   def change_to_reference_if_needed
