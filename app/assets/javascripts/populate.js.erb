@@ -347,6 +347,12 @@ populateLocalOffers = function(rates) {
   var worst_rated_currency = rates['worst']['rated_currency'];
   var count = rates['count'];
 
+  if (best_rate == 0 || worst_rate == 0) {
+    snack('No high-street price at the moment', {button: 'ok', klass: 'oops', timeout: 3000, link: {page: 'exchanges', pane: 'search'}});
+    return(null);
+  }
+
+
   var populated_value = clean(value_of(other(calculated)));
   var calculated_currency = value_of(twin(calculated));
 
