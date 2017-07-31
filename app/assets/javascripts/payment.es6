@@ -1,9 +1,10 @@
 $('[data-action=paymentFlow]').click(function(e) {
 
     e.preventDefault();
-    e.stopPropagation();
 
     // Create user
+    let validity = userCheckValidity();
+    if (!validity) return;
 
     // Generate xml and send it to Changeme (how? ask Saar for the JS code)
 
