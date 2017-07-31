@@ -380,6 +380,12 @@ form do |f|
       column :sell           do |rate|
         best_in_place rate, :sell_s, :as => :input
       end
+      column :buy_markup           do |rate|
+        best_in_place rate, :buy_markup, :as => :input
+      end
+      column :sell_markup           do |rate|
+        best_in_place rate, :sell_markup, :as => :input
+      end
       column :invBuy do |rate|
         rate.buy.present? and Currency.inverse?(rate.ratable.currency) ? '%.4f' %(1.0 / rate.buy) : ""
       end
@@ -391,6 +397,7 @@ form do |f|
         update.in_time_zone('Jerusalem') if update
       end
       column "By", :admin_user_s
+      column (:method) {|rate| status_tag(rate.method, class: rate.method_color) if rate.reference? }
       actions defaults: false
     end
 

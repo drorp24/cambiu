@@ -16,7 +16,18 @@ class Rate < ActiveRecord::Base
 =end
 
   before_update :currency_is_not_local
+  before_update :change_to_reference_if_needed
 #  before_create :initialize_default_values
+
+  def change_to_reference_if_needed
+    if self.buy_markup > 0 or self.sell_markup > 0
+      self.method = 'reference'
+    end
+  end
+
+  def method_color
+    :orange if self.reference?
+  end
 
   def update_by_params(params)
 

@@ -464,13 +464,9 @@ class Exchange < ActiveRecord::Base
         sell: nil,
         error: nil,
         updated: nil,
-        source: nil
+        source: nil,
+        method: 'absolute'
     }
-
-    if chain? and chain_id.blank?
-      result[:error] = 'rates_policy is chain but no chain defined'
-      return result
-    end
 
     if currency == self.currency
       result[:buy]  = 1
@@ -479,9 +475,46 @@ class Exchange < ActiveRecord::Base
       return result
     end
 
-    rec = chain? ? self.chain.send(currency.downcase + '_rate') : self.send(currency.downcase + '_rate')
+#    rec = chain? ? self.chain.send(currency.downcase + '_rate') : self.send(currency.downcase + '_rate')
+
+    currency_method = currency.downcase + '_rate'
+
+    if chain?
+      if chain_id.blank?
+        result[:error] = 'rates_policy is chain but no chain defined'
+        return result
+      end
+      chain = self.chain
+      if chain.respond_to? currency_method
+        rec = self.chain.send(currency_method)
+      else
+        rec = chain.rates.where(currency: currency).first
+      end
+    else
+      if self.respond_to? currency_method
+        rec = self.send(currency_method)
+      else
+        rec = self.rates.where(currency: currency).first
+      end
+    end
 
     if rec
+
+      if rec.reference?
+        reference_rate    = Money.default_bank.get_rate(self.currency, currency)
+        sell_markup       = rec.sell_markup || 0
+        buy_markup        = rec.buy_markup || 0
+        sell_factor       = 1 - (sell_markup / 100)
+        buy_factor        = 1 + (buy_markup / 100)
+        result[:sell]     = reference_rate * sell_factor
+        result[:buy]      = reference_rate * buy_factor
+        result[:method]   = 'reference'
+        result[:updated] ||= rec.updated_at
+        result[:source] ||= rec.source
+        return result
+      end
+
+
       ['buy', 'sell'].each do |kind|
         value = rec.send(kind)
         if value && value != 0
