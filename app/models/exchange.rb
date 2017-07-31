@@ -343,6 +343,10 @@ class Exchange < ActiveRecord::Base
         result[:errors]           <<   rates[:error]
         return result
       end
+      if rates[trans.to_sym] == 0
+        result[:errors]               <<   trans + " rate needed but empty - cannot quote"
+        return result
+      end
       get_amount =   result[:quote]                         = pay_amount * rates[trans.to_sym]
       result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format
       result[:edited_quote] = result[:edited_quote_rounded] = result[:get_amount]
@@ -379,6 +383,10 @@ class Exchange < ActiveRecord::Base
       rates = result[:rates]          = rate(pay_currency, get_currency)
       if rates[:error]
         result[:errors]               <<   rates[:error]
+        return result
+      end
+      if rates[trans.to_sym] == 0
+        result[:errors]               <<   trans + " rate needed but empty - cannot quote"
         return result
       end
       pay_amount                      =   result[:quote]            = get_amount * rates[trans.to_sym]
@@ -445,8 +453,8 @@ class Exchange < ActiveRecord::Base
       return result
     end
 
-    result[:buy]  = rated_rates[:buy]   /   base_rates[:buy]
-    result[:sell] = rated_rates[:sell]  /   base_rates[:sell]
+    result[:buy]  = base_rates[:buy]  == 0 ? 0 :  (rated_rates[:buy]  / base_rates[:buy])
+    result[:sell] = base_rates[:sell] == 0 ? 0 :  (rated_rates[:sell] / base_rates[:sell)
     result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
     result[:source] = rated_rates[:source]
     if (Date.today - result[:updated].to_date).to_i > 1
@@ -514,18 +522,18 @@ class Exchange < ActiveRecord::Base
         return result
       end
 
+      if rec.buy == 0 and rec.sell == 0
+        result[:error] = currency + ' both buy and sell rates are missing'
+        return result
+      end
 
       ['buy', 'sell'].each do |kind|
-        value = rec.send(kind)
-        if value && value != 0
+          value = rec.send(kind) || 0     # missing buy or sell rate is no longer an error, unless both of them are 0
           result[kind.to_sym] = value
           result[:updated] ||= rec.updated_at
           result[:source] ||= rec.source
-        else
-          result[:error] = currency + ' ' + kind + ' rate is missing'
-          return result
-        end
       end
+
     else
       result[:error] = 'Sorry, no offers for ' + currency + ' currently'
       return result
