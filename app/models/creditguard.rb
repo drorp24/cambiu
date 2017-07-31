@@ -1,5 +1,5 @@
 class Creditguard
-  
+
   include HTTParty
   format :xml
   base_uri 'https://cguat2.creditguard.co.il/xpo/Relay'
@@ -25,7 +25,7 @@ class Creditguard
     puts 'Message: '        + inner_response['message']
     puts 'AdditionalInfo: ' + inner_response['additionalInfo']
     puts ""
-    # return url
+    return {url: 'http://www.ynet.co.il'}
   end
 
   def self.xml

@@ -58,8 +58,8 @@ en:
       schedule: 'Schedule'
       close: 'Close'
     button:
-      pickup: 'Find the best offer'
-      delivery: 'Order'
+      pickup: 'Get the best offer'
+      delivery: 'Get the best offer'
       toOrder: 'Your order'
       update: 'Update order'
   minicard:

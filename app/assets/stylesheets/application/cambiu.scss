@@ -1991,7 +1991,7 @@ body#cambiu {
     &.active {
       display: block;
     }
-    &:not([data-pane=search]) {
+    &:not([data-pane=search]):not([data-pane=register]) {
       height: 100vh;
     }
     background: #fff;
