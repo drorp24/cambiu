@@ -454,7 +454,7 @@ class Exchange < ActiveRecord::Base
     end
 
     result[:buy]  = base_rates[:buy]  == 0 ? 0 :  (rated_rates[:buy]  / base_rates[:buy])
-    result[:sell] = base_rates[:sell] == 0 ? 0 :  (rated_rates[:sell] / base_rates[:sell)
+    result[:sell] = base_rates[:sell] == 0 ? 0 :  (rated_rates[:sell] / base_rates[:sell])
     result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
     result[:source] = rated_rates[:source]
     if (Date.today - result[:updated].to_date).to_i > 1
