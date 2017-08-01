@@ -84,6 +84,8 @@ Rails.application.configure do
 
   config.inspectlet_wid = '913033689'
 
+  config.distance_factor = 1
+
 end
 Rails.application.routes.default_url_options[:host] = 'staging.cambiu.com'
 

@@ -344,6 +344,10 @@ class Exchange < ActiveRecord::Base
         result[:errors]           <<   rates[:error]
         return result
       end
+      if rates[trans.to_sym] == 0
+        result[:errors]               <<   trans + " rate needed but empty - cannot quote"
+        return result
+      end
       get_amount =   result[:quote]                         = pay_amount * rates[trans.to_sym]
       result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format
       result[:edited_quote] = result[:edited_quote_rounded] = result[:get_amount]
@@ -355,7 +359,11 @@ class Exchange < ActiveRecord::Base
         return result
       end
       bad_amount                                            = pay_amount * bad_rates[trans.to_sym]
-       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
+      if bad_amount == 0
+        result[:errors]               <<   "no bad rate - indicates a problem"
+        return result
+      end
+      result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       result[:gain]                                         = get_amount - bad_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
       result[:gain_amount]                                  = result[:gain].to_money(get_currency).format
@@ -382,6 +390,10 @@ class Exchange < ActiveRecord::Base
         result[:errors]               <<   rates[:error]
         return result
       end
+      if rates[trans.to_sym] == 0
+        result[:errors]               <<   trans + " rate needed but empty - cannot quote"
+        return result
+      end
       pay_amount                      =   result[:quote]            = get_amount * rates[trans.to_sym]
       result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format(:disambiguate => true)
       result[:edited_quote] = result[:edited_quote_rounded] = result[:pay_amount]
@@ -394,6 +406,10 @@ class Exchange < ActiveRecord::Base
       end
 
       bad_amount                                            = get_amount * bad_rates[trans.to_sym]
+      if bad_amount == 0
+        result[:errors]               <<   "no bad rate - indicates a problem"
+        return result
+      end
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
       result[:gain]                                         = bad_amount - pay_amount
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
@@ -446,8 +462,8 @@ class Exchange < ActiveRecord::Base
       return result
     end
 
-    result[:buy]  = rated_rates[:buy]   /   base_rates[:buy]
-    result[:sell] = rated_rates[:sell]  /   base_rates[:sell]
+    result[:buy]  = base_rates[:buy]  == 0 ? 0 :  (rated_rates[:buy]  / base_rates[:buy])
+    result[:sell] = base_rates[:sell] == 0 ? 0 :  (rated_rates[:sell] / base_rates[:sell])
     result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
     result[:source] = rated_rates[:source]
     if (Date.today - result[:updated].to_date).to_i > 1
@@ -465,13 +481,9 @@ class Exchange < ActiveRecord::Base
         sell: nil,
         error: nil,
         updated: nil,
-        source: nil
+        source: nil,
+        method: 'absolute'
     }
-
-    if chain? and chain_id.blank?
-      result[:error] = 'rates_policy is chain but no chain defined'
-      return result
-    end
 
     if currency == self.currency
       result[:buy]  = 1
@@ -480,20 +492,57 @@ class Exchange < ActiveRecord::Base
       return result
     end
 
-    rec = chain? ? self.chain.send(currency.downcase + '_rate') : self.send(currency.downcase + '_rate')
+#    rec = chain? ? self.chain.send(currency.downcase + '_rate') : self.send(currency.downcase + '_rate')
+
+    currency_method = currency.downcase + '_rate'
+
+    if chain?
+      if chain_id.blank?
+        result[:error] = 'rates_policy is chain but no chain defined'
+        return result
+      end
+      chain = self.chain
+      if chain.respond_to? currency_method
+        rec = self.chain.send(currency_method)
+      else
+        rec = chain.rates.where(currency: currency).first
+      end
+    else
+      if self.respond_to? currency_method
+        rec = self.send(currency_method)
+      else
+        rec = self.rates.where(currency: currency).first
+      end
+    end
 
     if rec
+
+      if rec.reference?
+        reference_rate    = Money.default_bank.get_rate(self.currency, currency)
+        sell_markup       = rec.sell_markup || 0
+        buy_markup        = rec.buy_markup || 0
+        sell_factor       = 1 - (sell_markup / 100)
+        buy_factor        = 1 + (buy_markup / 100)
+        result[:sell]     = reference_rate * sell_factor
+        result[:buy]      = reference_rate * buy_factor
+        result[:method]   = 'reference'
+        result[:updated] ||= rec.updated_at
+        result[:source] ||= rec.source
+        return result
+      end
+
+      if rec.buy == 0 and rec.sell == 0
+        result[:error] = currency + ' both buy and sell rates are missing'
+        return result
+      end
+
       ['buy', 'sell'].each do |kind|
-        value = rec.send(kind)
-        if value && value != 0
+          value = rec.send(kind) || 0     # missing buy or sell rate is no longer an error, unless both of them are 0
           result[kind.to_sym] = value
           result[:updated] ||= rec.updated_at
           result[:source] ||= rec.source
-        else
-          result[:error] = currency + ' ' + kind + ' rate is missing'
-          return result
-        end
       end
+
     else
       result[:error] = 'Sorry, no offers for ' + currency + ' currently'
       return result
@@ -567,6 +616,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:calculated] = quotes[:calculated]
     exchange_hash[:delivery] = self.delivery
     exchange_hash[:credit] = self.credit
+    exchange_hash[:grade] = (exchange_hash[:gain] * -1) + (exchange_hash[:distance] * Rails.application.config.distance_factor)
 
 
     exchange_hash

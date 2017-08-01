@@ -3270,7 +3270,7 @@ body#cambiu {
         color: $brand-color-c;
         font-weight: 400;
         @include vfont-size(4.5vw);
-        @include threedots(100%);
+//        @include threedots(100%);
       }
       [data-field=address] {
         @include vfont-size(4vw);
