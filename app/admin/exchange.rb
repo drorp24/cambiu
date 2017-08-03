@@ -51,7 +51,13 @@ ActiveAdmin.register Exchange do
       end
       exchange.chain_id        = Chain.where(name: hash[:chain], currency: hash[:currency]).first_or_create.id if hash[:chain].present?
       if hash[:rates_policy] == 'chain' and !exchange.chain_id
+=begin
+        puts ">>>>>>>>>"
+        puts exchange.inspect
+        puts hash.inspect
+        puts ">>>>>>>>>>>"
         raise "Rates policy is chain but no chain specified"
+=end
       end
       if !exchange.latitude
         latlng = exchange.geocode

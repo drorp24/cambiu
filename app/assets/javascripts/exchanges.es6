@@ -201,7 +201,12 @@
     rankCheck = function() {
 
         offers.forEach((exchange) => {
-            console.log('quote: ', exchange.properties.quote, 'distance: ', exchange.properties.distance, 'grade: ', exchange.grade)
+            console.log(
+                'grade: ', Number(exchange.properties.grade).toFixed(2),
+                'gain: ', Number(exchange.properties.gain).toFixed(2),
+                'distance: ', Number(exchange.properties.distance).toFixed(2),
+                'name: ', exchange.properties.name
+            )
         })
     };
 
