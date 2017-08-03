@@ -221,20 +221,30 @@ class Exchange < ActiveRecord::Base
 
     return Exchange.new(error: "Both name and address are missing", system: 'error') unless name.present? and address.present?
 
+    puts ""
+    puts ""
+    puts id, name, name_he, address, address_he, nearest_station
+    puts ""
+
     exchange = Exchange.find_by(id: id) if id.present? && id != '0'
+#    puts "0"
     return exchange if exchange
+#    puts "1"
 
     # Best way is to identify by name + address combination, since nearest_station is not unique
     # Also, if there exists already an exchange with no nearest_station and now nearest_station is present, the record must be identified without nearest_station or else there would be duplicate
 
     exchange = Exchange.find_by(name: name, address: address)
     return exchange if exchange
+#    puts "2"
 
-    exchange = Exchange.find_by(name_he: name_he, address_he: address_he)
+    exchange = Exchange.find_by(name_he: name_he, address_he: address_he) if name_he.present? and address_he.present?
     return exchange if exchange
+#    puts "3"
 
     exchange = Exchange.find_by(name: name, nearest_station: nearest_station) if nearest_station.present?
     return exchange if exchange
+#    puts "4"
 
     return Exchange.new
 
