@@ -18,6 +18,11 @@ class Creditguard
 
   def self.url
     request   = self.new
+    puts ""
+    puts "BBB"
+    puts "request:"
+    puts ""
+    puts ""
     response  = request.response
     parsed_response = response.parsed_response
     inner_response = parsed_response['ashrait']['response']
@@ -25,6 +30,8 @@ class Creditguard
     puts 'Message: '        + inner_response['message']
     puts 'AdditionalInfo: ' + inner_response['additionalInfo']
     puts ""
+    puts parsed_response
+    puts inner_response
     return {url: 'http://www.ynet.co.il'}
   end
 
@@ -39,7 +46,7 @@ class Creditguard
                 <command>doDeal</command>
                 <requestid/>
                 <doDeal>
-                    <terminalNumber>#{ENV['CG_TERMINAL']}</terminalNumber>
+                    <terminalNumber>0962831</terminalNumber>
                     <cardNo>CGMPI</cardNo>
                     <successUrl>www.cambiu.com/exchanges/payment/success</successUrl>
                     <errorUrl>www.cambiu.com/exchanges/payment/error</errorUrl>
@@ -54,7 +61,7 @@ class Creditguard
                     <periodicalPayment></periodicalPayment>
                     <numberOfPayments></numberOfPayments>
                     <user>request identifier</user>
-                    <mid>#{ENV['CG_MID']}</mid>
+                    <mid>938</mid>
                     <uniqueid></uniqueid>
                     <mpiValidation>AutoComm</mpiValidation>
                     <description>added description to payment page</description>
@@ -74,6 +81,13 @@ class Creditguard
                 </doDeal>
             </request>
         </ashrait>"
+
+    puts ""
+     puts "xmlString:"
+    puts xmlString
+    puts ""
+
+    xmlString
 
   end
 

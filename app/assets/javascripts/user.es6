@@ -19,7 +19,7 @@ userCheckValidity = function() {
     }
 
     function checkPasswords($e) {
-        let inputValid = ($e.val() == $e.siblings('#user_password').val());
+        let inputValid = ($e.val() == $e.closest('#registration_form').find('#user_password').val());
         inputValid ? valid($e) : invalid($e, "Should match password");
         return inputValid;
     }
@@ -30,12 +30,14 @@ userCheckValidity = function() {
 
     $('form.registration input').each(function()  {
 
-        let fieldIsFull = checkIfFull($(this));
-        formValid = formValid && fieldIsFull;
-        if (!fiedlIsFull) return true;
+        let $this = $(this);
 
-        if ($e.is('#user_password_repeat')) {
-            let fieldValid = checkPasswords($e);
+        let fieldIsFull = checkIfFull($this);
+        formValid = formValid && fieldIsFull;
+        if (!fieldIsFull) return true;
+
+        if ($this.is('#user_password_repeat')) {
+            let fieldValid = checkPasswords($this);
             formValid = formValid && fieldValid;
             if (!fieldValid) return true;
         }
