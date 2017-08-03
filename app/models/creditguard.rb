@@ -5,7 +5,7 @@ class Creditguard
   base_uri 'https://cguat2.creditguard.co.il/xpo/Relay'
 
   def initialize()
-    @options = { query: { username: ENV['CG_USERNAME'], password: ENV['CG_PASSWORD'], int_in: self.class.xml } }
+    @options = { query: { user: ENV['CG_USERNAME'], password: ENV['CG_PASSWORD'], int_in: self.class.xml } }
   end
 
   def response
@@ -26,9 +26,9 @@ class Creditguard
     response  = request.response
     parsed_response = response.parsed_response
     inner_response = parsed_response['ashrait']['response']
-    puts 'Result: '         + inner_response['result']
-    puts 'Message: '        + inner_response['message']
-    puts 'AdditionalInfo: ' + inner_response['additionalInfo']
+    puts 'Result: '         + inner_response['result'] if inner_response['result']
+    puts 'Message: '        + inner_response['message'] if inner_response['message']
+    puts 'AdditionalInfo: ' + inner_response['additionalInfo'] if inner_response['additionalInfo']
     puts ""
     puts parsed_response
     puts inner_response
@@ -48,9 +48,9 @@ class Creditguard
                 <doDeal>
                     <terminalNumber>0962831</terminalNumber>
                     <cardNo>CGMPI</cardNo>
-                    <successUrl>www.cambiu.com/exchanges/payment/success</successUrl>
-                    <errorUrl>www.cambiu.com/exchanges/payment/error</errorUrl>
-                    <cancelUrl>www.cambiu.com/exchanges/payment/cancel</cancelUrl>
+                    <successUrl>https://www.cambiu.com/exchanges/payment/success</successUrl>
+                    <errorUrl>https://www.cambiu.com/exchanges/payment/error</errorUrl>
+                    <cancelUrl>https://www.cambiu.com/exchanges/payment/cancel</cancelUrl>
                     <total>10000</total>
                     <transactionType>Debit</transactionType>
                     <creditType>RegularCredit</creditType>
@@ -60,11 +60,11 @@ class Creditguard
                     <firstPayment></firstPayment>
                     <periodicalPayment></periodicalPayment>
                     <numberOfPayments></numberOfPayments>
-                    <user>request identifier</user>
+                    <user></user>
                     <mid>938</mid>
-                    <uniqueid></uniqueid>
-                    <mpiValidation>AutoComm</mpiValidation>
-                    <description>added description to payment page</description>
+                    <uniqueid>124</uniqueid>
+                    <mpiValidation>Token</mpiValidation>
+                    <description></description>
                     <email>test@creditguard.co.il</email>
                     <customerData>
                         <userData1/>
