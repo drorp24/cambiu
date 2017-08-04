@@ -628,6 +628,7 @@ $(document).ready(function() {
 
     // Prevent (or warn against) screen rotation
 
+/*
     if (screen.orientation && screen.orientation.type)   {      // i.e., if screen.orientation is supported
         screen.orientation.lock('portrait')
             .then(function() {console.log('screen.orientation.lock succeeded')})
@@ -639,6 +640,7 @@ $(document).ready(function() {
         console.log('screen.orientation API isnt supported. Calling warnWhenRotated instead');
         warnWhenRotated()
     }
+*/
 
 
 
