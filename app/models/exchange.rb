@@ -298,7 +298,7 @@ class Exchange < ActiveRecord::Base
         pay_currency:     pay_currency  = params[:pay_currency],
         get_amount:       get_amount    = Monetize.parse(params[:get_amount]).amount,
         get_currency:     get_currency  = params[:get_currency],
-        trans:      trans   = params[:trans],
+        trans:            trans         = params[:trans],
         calculated:       calculated    = params[:calculated],
         rates:            {},
         bad_rates:        {},
@@ -349,19 +349,26 @@ class Exchange < ActiveRecord::Base
     end
 
     if calculated == 'buy_amount'
+
       rates = result[:rates]          = rate(get_currency, pay_currency)
+
       if rates[:error]
         result[:errors]           <<   rates[:error]
         return result
       end
+
       if rates[trans.to_sym] == 0
         result[:errors]               <<   trans + " rate needed but empty - cannot quote"
         return result
       end
-      get_amount =   result[:quote]                         = pay_amount * rates[trans.to_sym]
-      result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format
-      result[:edited_quote] = result[:edited_quote_rounded] = result[:get_amount]
+
+      # quote: net of charges. get_amount: including charges.
+      result[:quote]                                        = pay_amount * rates[trans.to_sym]
+      result[:edited_quote] = result[:edited_quote_rounded] = result[:quote].to_money(get_currency).format
       result[:quote_currency]                               = get_currency
+
+      get_amount                                            = result[:quote] - (self.cc_fee || 0)   - (self.delivery_charge || 0)
+      result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format(:disambiguate => true)
 
       bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency)
       if bad_rates[:error]
@@ -404,10 +411,14 @@ class Exchange < ActiveRecord::Base
         result[:errors]               <<   trans + " rate needed but empty - cannot quote"
         return result
       end
-      pay_amount                      =   result[:quote]            = get_amount * rates[trans.to_sym]
-      result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format(:disambiguate => true)
-      result[:edited_quote] = result[:edited_quote_rounded] = result[:pay_amount]
+
+      # quote: net of charges. pay_amount: including charges.
+      result[:quote]                                        = get_amount * rates[trans.to_sym]
+      result[:edited_quote] = result[:edited_quote_rounded] = result[:quote].to_money(get_currency).format
       result[:quote_currency]                               = pay_currency
+
+      pay_amount                                            = result[:quote] + (self.cc_fee || 0)   + (self.delivery_charge || 0)
+      result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format(:disambiguate => true)
 
       bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency)
       if bad_rates[:error]
@@ -624,8 +635,8 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:gain] = quotes[:gain]
     exchange_hash[:transaction] = quotes[:trans]
     exchange_hash[:calculated] = quotes[:calculated]
-    exchange_hash[:delivery] = self.delivery
-    exchange_hash[:credit] = self.credit
+    exchange_hash[:cc_fee] = self.cc_fee
+    exchange_hash[:delivery_charge] = self.delivery_charge
     exchange_hash[:grade] = (exchange_hash[:gain] * -1) + (exchange_hash[:distance] * Rails.application.config.distance_factor)
 
 
