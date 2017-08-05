@@ -1247,7 +1247,7 @@ body#cambiu {
 
 
 
-  &:not(.credit):not(.delivery) [data-pane=cart] {
+  &:not(.credit):not(.delivery):not([data-pane=update]) [data-pane=update] {
     .search_section {
       opacity: 0.2;
       pointer-events: none;
@@ -1423,7 +1423,7 @@ body#cambiu {
   }
 
 
-  &[data-pane=search], &[data-pane=cart] {
+  &[data-pane=search], &[data-pane=update] {
     .navbar_search_icon {
       display: none;
     }
@@ -2654,11 +2654,13 @@ body#cambiu {
         width: 10%;
         text-align: right;
         justify-content: flex-end;
+        @include vfont-size(5vw);
       }
       &.charge {
         display: none;
         font-weight:100;
-        @include vfont-size(3.4vw);
+        @include vfont-size(4vw);
+        text-transform: initial;
         &.active {
           display: flex;
         }

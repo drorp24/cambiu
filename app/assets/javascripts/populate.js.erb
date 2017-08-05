@@ -404,8 +404,8 @@ updateExchangeOffer = function(rates) {
   var credit_charge   = value_of('payment_method') == 'credit' ? ((rates['cc_fee'] || 0) * exchange_value / 100).toFixed(2) : 0;
   var delivery_charge = value_of('service_type') == 'delivery' ? rates['delivery_charge'] : 0;
 
-  $('form.update [data-model=search][data-field=credit_charge]').autoNumeric('set', credit_charge);
-  $('form.update [data-model=search][data-field=delivery_charge]').autoNumeric('set', delivery_charge);
+  $('form [data-model=search][data-field=credit_charge]').autoNumeric('set', credit_charge);
+  $('form [data-model=search][data-field=delivery_charge]').autoNumeric('set', delivery_charge);
 
   if (gain_value < 0) $('.search_line .worst').css('visibility', 'hidden');
 

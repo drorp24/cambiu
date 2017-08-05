@@ -181,9 +181,9 @@ $(document).ready(function() {
             $('.worst input').each(function() {update_currency_symbol($(this))});
         }
 
-        if ($this.closest('form').is('.search')) {
+        if ($('body').attr('data-pane') == 'search') {
             populateLocalOffers(local.rates);
-        } else if ($this.closest('form').is('.update')) {
+        } else if ($('body').attr('data-pane') == 'update') {
             var id = urlId();
             if (!id) {console.error('search.es6 keyup event, url has no id') ; return}
             var exchange = exchangeHash[id];
@@ -488,10 +488,14 @@ $(document).ready(function() {
     });
 
 
-    $('form.selection .service_type').change(function() {
+    $('form .service_type').change(function() {
+        var $this = $(this);
         snackHide();
-        setServiceTypeTo($(this).is(':checked') ? 'delivery' : 'pickup');
-        fetchAndPopulateLocaloffers();
+        setServiceTypeTo($this.is(':checked') ? 'delivery' : 'pickup');
+        if ($('body').attr('data-pane') == 'search') fetchAndPopulateLocaloffers();
+        if ($('body').attr('data-pane') == 'update') {
+            $(`.ecard[data-exchange-id=${urlId()}] .offer_line.delivery.charge`).css('visibility', value_of('service_type') == 'delivery' ? 'visible' : 'hidden');
+        }
     });
 
     $('.close_inline_params').on('click tap', function(e) {
@@ -525,10 +529,13 @@ $(document).ready(function() {
     };
 
 
-    $('form.selection .payment_method').change(function() {
+    $('form .payment_method').change(function() {
         snackHide();
-        setPaymentMethodTo($('form.selection .payment_method:checked').val())
-        fetchAndPopulateLocaloffers();
+        setPaymentMethodTo($('form.selection .payment_method:checked').val());
+        if ($('body').attr('data-pane') == 'search') fetchAndPopulateLocaloffers();
+        if ($('body').attr('data-pane') == 'update') {
+            $(`.ecard[data-exchange-id=${urlId()}] .offer_line.cc.charge`).css('visibility', value_of('payment_method') == 'credit' ? 'visible' : 'hidden');
+        }
     });
 
     setPaymentMethodTo = function(payment_method) {
@@ -552,7 +559,7 @@ $(document).ready(function() {
         let exchange_id = urlId();
         if (!exchange_id) {console.error('updateOrder: no id in url'); return}
 
-        for (let field of ['buy_currency', 'buy_amount', 'pay_currency', 'pay_amount', 'credit_charge', 'delivery_charge']) {updateOrderWith(field)}
+        for (let field of ['buy_currency', 'buy_amount', 'pay_currency', 'pay_amount']) {updateOrderWith(field)}
         $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=gain_amount]`).html($('form.update [data-field=worst_saving]').val());
         $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=edited_quote]`).html($(`form.update [data-field=${value_of('calculated')}]`).val());
 
@@ -564,6 +571,7 @@ $(document).ready(function() {
             $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=${field}]`).html($(`form.update [data-field=${field}]`).val());
         }
         $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=get_amount]`).html($('form.update [data-field=buy_amount]').val());   // yachh
+
 
     });
 
