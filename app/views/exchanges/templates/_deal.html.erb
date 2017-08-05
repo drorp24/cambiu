@@ -12,8 +12,8 @@
           <%= t 'deal.get'  %>
         </div>
         <div class="figure">
-          <div data-model="exchange" data-field="buy_amount" class="amount threedots"></div>
-          <div data-model="exchange" data-field="buy_currency" class="currency"></div>
+          <div data-model="exchange" data-field="get_amount" class="amount threedots"></div>
+          <div data-model="exchange" data-field="get_currency" class="currency"></div>
         </div>
         <div class="edit icon right_icon" data-href-pane="cart" data-href-id="curr">
           <i class="material-icons">mode_edit</i>
@@ -33,42 +33,52 @@
         </div>
       </div>
 
-      <div class="offer_line charge">
+      <div class="offer_line deliver charge">
         <div class="text">
-          Delivery (included)
+          <%= t 'deal.delivery'  %>
         </div>
         <div class="figure">
-          <div data-model="order" data-field="delivery_amount" class="amount threedots">$1,000</div>
-          <div data-model="order" data-field="delivery_currency" class="currency">USD</div>
+          <div data-model="exchange" data-field="delivery_charge" class="amount threedots"></div>
+          <div data-model="exchange" data-field="pay_currency" class="currency"></div>
         </div>
+        <div class="edit icon right_icon" data-href-pane="cart" data-href-id="curr">
+          <i class="material-icons">mode_edit</i>
+        </div>
+<!--
         <div class="help icon right_icon">
           <i class="material-icons"
              data-href-page="exchanges"
              data-href-pane="help"
              data-help-topic="What's that?"
-             data-help-content="<p>That is the charge for delivering the money to your hands (often smaller that what you save with Cambiu!).</p><p>This charge is included in the PAY amount above.</p>">
+             data-help-content="<p>That is the charge for delivering the money to your hands (often smaller that what you save with Cambiu!).</p><p>This charge is added to the PAY amount above.</p>">
             help_outline
           </i>
         </div>
+-->
       </div>
 
       <div class="offer_line cc charge">
         <div class="text">
-          Credit Card (included)
+          <%= t 'deal.credit'  %>
         </div>
         <div class="figure">
-          <div data-model="order" data-field="cc_amount" class="amount threedots">$1,000</div>
-          <div data-model="order" data-field="cc_currency" class="currency">USD</div>
+          <div data-model="exchange" data-field="credit_charge" class="amount threedots"></div>
+          <div data-model="exchange" data-field="pay_currency" class="currency">USD</div>
         </div>
+        <div class="edit icon right_icon" data-href-pane="cart" data-href-id="curr">
+          <i class="material-icons">mode_edit</i>
+        </div>
+<!--
         <div class="help icon right_icon">
           <i class="material-icons"
              data-href-page="exchanges"
              data-href-pane="help"
              data-help-topic="What's that?"
-             data-help-content="<p>That is the charge for paying with a credit card.</p><p>This charge is included in the PAY amount above.</p>">
+             data-help-content="<p>That is the charge for paying with a credit card.</p><p>This charge is added to the PAY amount above.</p>">
             help_outline
           </i>
         </div>
+-->
       </div>
 
       <div class="offer_line saving">

@@ -510,6 +510,7 @@ $(document).ready(function() {
 
             $('form.selection #delivery_ind').prop('checked',true);
             $('#payment_method_credit').prop("checked", true);
+            setPaymentMethodTo('credit');
 
         } else if (service_type == 'pickup') {
 
@@ -551,13 +552,18 @@ $(document).ready(function() {
         let exchange_id = urlId();
         if (!exchange_id) {console.error('updateOrder: no id in url'); return}
 
-        for (let field of ['buy_currency', 'buy_amount', 'pay_currency', 'pay_amount']) {updateOrderWith(field)}
+        for (let field of ['buy_currency', 'buy_amount', 'pay_currency', 'pay_amount', 'credit_charge', 'delivery_charge']) {updateOrderWith(field)}
         $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=gain_amount]`).html($('form.update [data-field=worst_saving]').val());
         $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=edited_quote]`).html($(`form.update [data-field=${value_of('calculated')}]`).val());
+
+        $(`.ecard[data-exchange-id=${exchange_id}] .offer_line.cc.charge`).css('visibility', value_of('payment_method') == 'credit' ? 'visible' : 'hidden');
+        $(`.ecard[data-exchange-id=${exchange_id}] .offer_line.deliver.charge`).css('visibility', value_of('service_type') == 'delivery' ? 'visible' : 'hidden');
+
 
         function updateOrderWith(field) {
             $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=${field}]`).html($(`form.update [data-field=${field}]`).val());
         }
+        $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=get_amount]`).html($('form.update [data-field=buy_amount]').val());   // yachh
 
     });
 

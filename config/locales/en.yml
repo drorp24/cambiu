@@ -75,7 +75,7 @@ en:
     cambiuRanking: 'Cambiu ranking'
     view: 'View'
     offerAround: 'offers around'
-    no: 'No'
+    no1: 'No'
     reviews: 'reviews'
     fabOrder: 'Order'
     open: 'Open'
@@ -86,6 +86,8 @@ en:
     get: 'Get'
     pay: 'Pay'
     yourGain: 'Save'
+    delivery: 'For delivery, add'
+    credit: 'For credit card, add'
   pickup:
     title: 'Pick-up'
   directions:

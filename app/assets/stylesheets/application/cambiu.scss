@@ -1247,7 +1247,7 @@ body#cambiu {
 
 
 
-  [data-pane=cart] {
+  &:not(.credit):not(.delivery) [data-pane=cart] {
     .search_section {
       opacity: 0.2;
       &.amounts {
@@ -2656,8 +2656,7 @@ body#cambiu {
       &.charge {
         display: none;
         font-weight:100;
-        @include vfont-size(3.6vw);
-        text-transform: capitalize;
+        @include vfont-size(3.4vw);
         &.active {
           display: flex;
         }

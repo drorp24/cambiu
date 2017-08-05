@@ -54,7 +54,7 @@ he:
     cambiuRanking: 'דירוג קמביו'
     view: 'צפו ב-'
     offersAround: 'הצעות בסביבה'
-    no: 'אין'
+    no1: 'אין'
     reviews: 'חוות דעת'
     fabOrder: 'הזמנה'
     expiresAt: ' בתוקף עד'
@@ -65,6 +65,8 @@ he:
     get: 'קבלו'
     pay: 'שלמו'
     yourGain: 'הרוויחו'
+    delivery: 'עבור משלוח, הוסיפו'
+    credit: 'עבור אשראי, הוסיפו'
   pickup:
     title: 'איסוף'
   order:

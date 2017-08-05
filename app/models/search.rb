@@ -42,7 +42,7 @@ class Search < ActiveRecord::Base
 #   exchanges            = Exchange.with_real_rates.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 #                              .select(:id, :chain_id, :currency, :rates_policy)  # TODO: Discuss
     exchanges            = Exchange.active.geocoded.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
-                               .select(:id, :chain_id, :currency, :rates_policy, :delivery, :credit)  # TODO: Discuss
+                               .select(:id, :chain_id, :currency, :rates_policy, :delivery, :credit, :cc_fee, :delivery_charge)  # TODO: Discuss
 
     exchanges            = exchanges.delivery if self.service_type == 'delivery'
     exchanges            = exchanges.credit if self.payment_method == 'credit'
@@ -106,13 +106,15 @@ class Search < ActiveRecord::Base
 
       self.distance = self.service_type == 'pickup' ? self.distance || 2.5 : 100
       self.distance_unit ||= "km"
+      delivery = self.service_type == 'delivery'
+      cc = self.payment_method == 'credit'
 
       pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
       buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)
       center          = [location_lat, location_lng]
       box             = Geocoder::Calculations.bounding_box(center, distance)
 
-      exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated)
+      exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated, delivery, cc)
 
     rescue => e
 
@@ -130,7 +132,7 @@ class Search < ActiveRecord::Base
 
   end
 
-  def exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated)
+  def exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated, delivery, cc)
 
     pay_rate  = (pay.currency.iso_code.downcase + '_rate').to_sym
     buy_rate  = (buy.currency.iso_code.downcase + '_rate').to_sym
@@ -142,7 +144,7 @@ class Search < ActiveRecord::Base
 
     exchanges_offers = []
     exchanges.each do |exchange|
-      offer = exchange.offer(center, pay, buy, distance, trans, calculated)
+      offer = exchange.offer(center, pay, buy, distance, trans, calculated, delivery, cc)
       exchanges_offers << offer #unless (offer[:errors].any? and offer[:errors][0] != 'Out of radius' and !Rails.env.development?)
     end
 
