@@ -1250,8 +1250,10 @@ body#cambiu {
   &:not(.credit):not(.delivery) [data-pane=cart] {
     .search_section {
       opacity: 0.2;
+      pointer-events: none;
       &.amounts {
         opacity: 1;
+        pointer-events: all;
       }
     }
     .buy_currency.select, .pay_currency.select {
