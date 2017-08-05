@@ -19,9 +19,8 @@ class Search < ActiveRecord::Base
   scope :empty, -> {where(location: nil) }
 
 
-
-
-
+# TODO: Remove
+=begin
   def localRates
 
     return {error: 'missing params'} if
@@ -82,6 +81,7 @@ class Search < ActiveRecord::Base
 
 
   end
+=end
 
   def valid_input
      if
@@ -114,7 +114,7 @@ class Search < ActiveRecord::Base
       center          = [location_lat, location_lng]
       box             = Geocoder::Calculations.bounding_box(center, distance)
 
-      exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated, delivery, cc)
+      exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated, delivery, cc, mode, country)
 
     rescue => e
 
@@ -132,23 +132,50 @@ class Search < ActiveRecord::Base
 
   end
 
-  def exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated, delivery, cc)
+  def exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated, delivery, cc, mode, country)
 
     pay_rate  = (pay.currency.iso_code.downcase + '_rate').to_sym
     buy_rate  = (buy.currency.iso_code.downcase + '_rate').to_sym
+
+    buy_currency = buy.currency.iso_code
+    pay_currency = pay.currency.iso_code
 
     exchanges = Exchange.active.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
     exchanges            = exchanges.delivery if self.service_type == 'delivery'
     exchanges            = exchanges.credit if self.payment_method == 'credit'
 
+    best_grade = 1000
+    best_offer = nil
     exchanges_offers = []
+
     exchanges.each do |exchange|
+
       offer = exchange.offer(center, pay, buy, distance, trans, calculated, delivery, cc)
-      exchanges_offers << offer #unless (offer[:errors].any? and offer[:errors][0] != 'Out of radius' and !Rails.env.development?)
+      if mode == 'best'
+        if offer[:grade] < best_grade
+          best_offer = offer
+          best_grade = offer[:grade]
+        end
+      else
+        exchanges_offers << offer #unless (offer[:errors].any?
+      end
+
     end
 
-    geoJsonize(exchanges_offers)
+    if mode == 'best'
+      return {
+          best: {
+              buy:  best_offer[:rates],    # this structure was left for backward-compatibility with fe only
+              sell: best_offer[:rates]
+          },
+          worst:
+              Exchange.bad_rate(country, buy_currency, pay_currency),
+          count: exchanges.count
+      }
+    else
+      return geoJsonize(exchanges_offers)
+    end
 
   end
 

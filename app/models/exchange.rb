@@ -628,7 +628,8 @@ class Exchange < ActiveRecord::Base
     quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, calculated: calculated,
                    radius: radius, distance: exchange_hash[:distance], trans: trans, delivery: delivery, cc: cc)
     exchange_hash = quotes.merge(exchange_hash)
-    exchange_hash[:grade] = (exchange_hash[:gain] * -1) + (exchange_hash[:distance] * Rails.application.config.distance_factor)
+    exchange_hash[:inclusive_gain] = exchange_hash[:gain] + exchange_hash[:credit_charge] + exchange_hash[:delivery_charge]     # for grading purposes, it's ok even if charges are in a different currency
+    exchange_hash[:grade] = (exchange_hash[:inclusive_gain] * -1) + (exchange_hash[:distance] * Rails.application.config.distance_factor)
 
     exchange_hash
 
