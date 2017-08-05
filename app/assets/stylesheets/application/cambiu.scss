@@ -1245,7 +1245,12 @@ body#cambiu {
   }
 
 
-
+  &[data-pane=update] {
+    .md-form.currency_fields, .narrow.search_line > .location {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
 
   &:not(.credit):not(.delivery):not([data-pane=update]) [data-pane=update] {
     .search_section {
