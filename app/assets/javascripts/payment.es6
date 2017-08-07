@@ -3,13 +3,15 @@ $('[data-action=paymentFlow]').click(function(e) {
     e.preventDefault();
 
     // Create user
-    let validity = userCheckValidity();
-    if (!validity) return;
+    if (!userCheckValidity()) return;
 
     // Generate xml and send it to Changeme (how? ask Saar for the JS code)
 
     // Obtain payment page url
-    fetchPaymentUrl().then((url) => window.location = url)
+    fetchPaymentUrl()
+        .then((data) => window.location = data.url)
+        .catch((error) => console.log('Not redirecting due to this error'))
+
 
 });
 
@@ -32,7 +34,14 @@ fetchPaymentUrl = function() {
         }
 
         function returnResults(data) {
-            resolve(data.url)
+            if (data.success) {
+                resolve(data)
+            } else {
+                let cg_error = `${data.message} - ${data.additionInfo}`;
+                console.error(cg_error);
+                snack(`Payment server says ${data.message} - call for assistance`, {klass: 'oops', timeout: 7000});
+                reject(cg_error)
+            }
         }
 
         fetchData()
