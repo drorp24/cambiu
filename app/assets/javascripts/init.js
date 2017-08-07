@@ -506,10 +506,9 @@ $(document).ready(function() {
         return $e.html();
     };
 
-//    snack = function(message, button, timeout, $upEl, klass, link) {
     snack = function(message, options) {
 
-//        console.log('snack called with message: ' + message);
+        console.log('snack called with message: ' + message);
 
 //          Suppressed since it can now also happen when switched back to 'where I'm at' while still on the (white) search page
 //        if ($upEl && !inShow) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
@@ -518,19 +517,29 @@ $(document).ready(function() {
 
         if (typeof options === 'undefined') options = {};
 
-        if (currentSnack) currentSnack.snackbar("hide");
+        if (currentSnack) {
+            wait(2000).then(goOn);
+        } else {
+            goOn();
+        }
 
-        currentSnack = $.snackbar({
-            timeout: options.timeout || 500000,
-            htmlAllowed: true,
-            content: snackHtml({
-                message: message,
-                button: options.button,
-                klass: options.klass,
-                link: options.link,
-                icon: options.icon
+        function goOn() {
+
+            if (currentSnack) currentSnack.snackbar("hide");
+
+            currentSnack = $.snackbar({
+                timeout: options.timeout || 500000,
+                htmlAllowed: true,
+                content: snackHtml({
+                    message: message,
+                    button: options.button,
+                    klass: options.klass,
+                    link: options.link,
+                    icon: options.icon
+                })
             })
-        })
+        }
+
     };
 
     snackHide = function($downEl) {
