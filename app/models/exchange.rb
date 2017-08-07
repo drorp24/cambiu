@@ -28,7 +28,7 @@ class Exchange < ActiveRecord::Base
   has_many    :reviews,  :dependent => :destroy
 
   enum business_type:  [ :exchange, :bank, :post_office, :other, :reference ]
-  enum rates_source:   [ :no_rates, :test, :manual, :xml, :scraping ]
+  enum rates_source:   [ :no_rates, :test, :manual, :xml, :scraping, :ratefeed ]
   enum rates_policy:   [:individual, :chain]
 
   enum todo:           [:verify, :call, :meet, :sell]
