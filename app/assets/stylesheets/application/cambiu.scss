@@ -1246,13 +1246,22 @@ body#cambiu {
 
 
   &[data-pane=update] {
-    .md-form.currency_fields, .narrow.search_line > .location {
+    .md-form.currency_fields, .narrow.search_line > .location, .md-form.delivery, .search_section.payment {
       opacity: 0.5;
       pointer-events: none;
     }
+    &.credit .search_section.payment {
+      opacity: 1;
+      pointer-events: all;
+    }
+    &.delivery .md-form.delivery {
+      opacity: 1;
+      pointer-events: all;
+    }
   }
 
-  &:not(.credit):not(.delivery):not([data-pane=update]) [data-pane=update] {
+  /*
+  &:not(.credit):not(.delivery):not([data-pane=update]) [data-pane=update] {   /// WTF
     .search_section {
       opacity: 0.2;
       pointer-events: none;
@@ -1265,6 +1274,7 @@ body#cambiu {
       pointer-events: none;
     }
   }
+  */
 
   .coming_soon_icon {
     position: absolute;
