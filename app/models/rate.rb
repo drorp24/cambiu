@@ -91,6 +91,7 @@ class Rate < ActiveRecord::Base
     self.sell = sell
     self.source = 'ratefeed'
     self.save
+    self.ratable.update(rates_source: 'ratefeed')
 
   end
 
