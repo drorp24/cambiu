@@ -397,9 +397,9 @@ updateExchangeOffer = function(rates) {
   var worst_value = worst_rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
   var gain_value = (worst_value - exchange_value) * (calculated == 'buy_amount' ? -1 : 1);
 
-  $('form.update [data-model=search][data-field=' + calculated + ']').autoNumeric('set', exchange_value);
-  $('form.update [data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
-  $('form.update [data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
+  $('form.order [data-model=search][data-field=' + calculated + ']').autoNumeric('set', exchange_value);
+  $('form.order [data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
+  $('form.order [data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
 
   var credit_charge   = value_of('payment_method') == 'credit' ? ((rates['cc_fee'] || 0) * exchange_value / 100).toFixed(2) : 0;
   var delivery_charge = value_of('service_type') == 'delivery' ? rates['delivery_charge'] : 0;
