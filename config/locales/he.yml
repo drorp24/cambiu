@@ -40,7 +40,7 @@ he:
       pickup: 'להצעה הטובה ביותר'
       delivery: 'להצעה הטובה ביותר'
       toOrder: 'ההזמנה שלכם'
-      order: 'עדכנו הזמנה'
+      update: 'עדכנו הזמנה'
   minicard:
     confirm: 'אשרו'
     gain: 'רווח'

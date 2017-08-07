@@ -1228,7 +1228,7 @@ body#cambiu {
     content: attr(data-t-delivery);
   }
 
-  #order_form button[type=submit]:after {
+  #update_form button[type=submit]:after {
     content: attr(data-t-update);
   }
 

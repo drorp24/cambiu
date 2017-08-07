@@ -61,7 +61,7 @@ en:
       pickup: 'Get the best offer'
       delivery: 'Get the best offer'
       toOrder: 'Your order'
-      order: 'Update order'
+      update: 'Update order'
   minicard:
     confirm: 'Confirm'
     gain: 'Save'
