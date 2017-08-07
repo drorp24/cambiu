@@ -127,7 +127,6 @@ refresh = function(pane, $pane, exchange) {
 
     if (pane == 'order') {
         selectExchange($(`.pane[data-pane=${value_of('recent_set') || default_set}] .ecard[data-exchange-id=${exchange.id}]`), false);
-        order($pane, exchange);
         $pane.find('.selected.ecard').addClass('order');
     } else {
         $pane.find('.selected.ecard').removeClass('order');
@@ -188,7 +187,7 @@ refresh = function(pane, $pane, exchange) {
          $('.context_menu').removeClass('active')
      }
      function goOn() {
-         if (validate && !window[validate]())  return;
+ //        if (validate && !window[validate]())  {console.log('validate returns false - not turning page'); return;}
          setPage({page1: page, id1: id, pane1: pane, hash: hash, help_topic: help_topic, help_content: help_content, populating: populate});
          hideDialog();
      }

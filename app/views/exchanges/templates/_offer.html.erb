@@ -59,12 +59,8 @@
         <span class="newexpiry_time flex_center" data-model="exchange" data-field="expiry_time"></span>
       </div>
       <button class="btn-flat waves-effect more action"
-              data-href-pane="order"
-              data-href-id="curr"
-              data-href-delay="true"
-              data-validate="noOtherOrderExists"
-              data-t-placeOrder="<%= t 'offer.placeOrder' %>">
-
+              data-t-placeOrder="<%= t 'offer.placeOrder' %>"
+              data-action="order">
       </button>
     </div>
 
@@ -76,7 +72,7 @@
       <span data-model="exchange" data-field="gDistance"></span>
       <span class="from" data-t-user="<%= t 'offer.distance.user'  %>" data-t-selected="<%= t 'offer.distance.selected'  %>"></span>
     </div>
-    <div class="ordering fab flex_center column" data-href-pane="order" data-href-id="curr" data-href-delay="true" data-validate="noOtherOrderExists">
+    <div class="ordering fab flex_center column" data-action="order">
       <button class="btn-floating waves-effect">
         <i class="material-icons flex_center">shopping_cart</i>
         <div class="fab_text"><%= t 'offer.fabOrder'  %></div>

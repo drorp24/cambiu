@@ -3,7 +3,7 @@
 //
 
 
-$('body').on('click tap', '[data-href-pane]', ((e) => {
+$('body').on('click tap','[data-action=order]', (function (e)  {  // Warning: not to use arrow function: it changes $this
     let $this = $(this);
     order($this.closest('[data-pane]'), currentExchange());
 }));
@@ -37,6 +37,7 @@ order = function($scope, exchange) {
         .then((order) => {
 
             populateOrder($scope, order);
+            setPage({pane1:"order", id1:"curr"});
             report('Order', 'Exchange', exchange);
 
             if (order.service_type == 'pickup') snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'});
@@ -117,6 +118,8 @@ orderedAlready = () => !!value_of('order_id');
 
 
 noOtherOrderExists = function() {
+
+    console.log('noOtherOrderExists called');
     var orderred_already = !!value_of('order_id');
     if (orderred_already) {
         var order_exchange_id = value_of('order_exchange_id');
