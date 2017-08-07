@@ -129,7 +129,6 @@ refresh = function(pane, $pane, exchange) {
         selectExchange($(`.pane[data-pane=${value_of('recent_set') || default_set}] .ecard[data-exchange-id=${exchange.id}]`), false);
         order($pane, exchange);
         $pane.find('.selected.ecard').addClass('order');
-        report('Order', 'Exchange', exchange);
     } else {
         $pane.find('.selected.ecard').removeClass('order');
         $pane.find('.ordered.ecard').removeClass('order');

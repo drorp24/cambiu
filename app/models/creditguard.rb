@@ -39,8 +39,7 @@ class Creditguard
 
   def self.xml(params)
 
-    xmlString =
-      "<ashrait>
+       "<ashrait>
             <request>
                 <version>1001</version>
                 <language>EN</language>
@@ -83,13 +82,6 @@ class Creditguard
                 </doDeal>
             </request>
         </ashrait>"
-
-    puts ""
-     puts "xmlString:"
-    puts xmlString
-    puts ""
-
-    xmlString
 
   end
 

@@ -25,6 +25,7 @@
 //= require populate
 //= require swiper
 //= require exchanges
+//= require order
 //= require upload
 //= require pages
 //= require flow
