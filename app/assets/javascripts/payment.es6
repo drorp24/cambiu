@@ -5,19 +5,16 @@ $('[data-action=paymentFlow]').click(function(e) {
     // Create user
     if (!userCheckValidity()) return;
 
-    // Generate xml and send it to Changeme (how? ask Saar for the JS code)
-
-    // Obtain payment page url
-    fetchPaymentUrl()
-        .then((data) => window.location = data.url)
-        .catch((error) => console.log('Not redirecting due to this error'))
-
+    orderUpdateUserDelivery()
+        .then(fetchPaymentUrl)
+//        .then((data) => window.location = data.url)
+        .catch((error) => {console.log('Not redirecting to payment page due to above error')})
 
 });
 
-fetchPaymentUrl = function() {
+fetchPaymentUrl = function(order) {
 
-    console.log('fetchPaymentUrl...');
+    console.log('fetchPaymentUrl. The order object received:', order);
 
     return new Promise(function(resolve, reject) {
 

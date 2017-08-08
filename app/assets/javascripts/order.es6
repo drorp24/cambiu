@@ -105,7 +105,7 @@ orderUpdate = function(update) {
 
 };
 
-orderUser = function() {
+orderUpdateUserDelivery = function() {
 
     return new Promise(function(resolve, reject) {
 
