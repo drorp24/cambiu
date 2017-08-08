@@ -13,6 +13,11 @@ class User < ActiveRecord::Base
   validates                 :email, uniqueness: true
   validates_confirmation_of :password
 
+  def detailsChanged?(user_params)
+    self.first_name != user_params[:first_name] ||
+    self.last_name != user_params[:last_name]
+  end
+
 
   def self.from_omniauth(auth)
     # TODO: Handle users who already signed with user/pwd properly

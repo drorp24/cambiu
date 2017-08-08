@@ -22,9 +22,9 @@ class OrdersController < ApplicationController
 
   def user
 
-    user = User.find_or_create_by(email: user_params[:email]) do |user|
-      user.update(user_params)
-    end
+    user = User.find_or_create_by(email: user_params[:email])
+    detailsChanged = user.detailsChanged?(user_params)
+    user.update(user_params)
 
     if user and user.errors.empty?
 
@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
       order = Order.find(params[:id])
       if order
         order.update(user_id: user.id)
-        render json: order.with_user
+        render json: order.with_user(detailsChanged)
       else
         render json: {errors: 'No order id'}, status: :unprocessable_entity
       end

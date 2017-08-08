@@ -23,15 +23,19 @@ class Order < ActiveRecord::Base
   attr_accessor :photo
 
 
-  def with_user
+  def with_user(detailsChanged)
 
     return {error: 'No user for order'} unless user = User.find(self.user_id)
 
-    self.slice('id', 'exchange_id', 'voucher', 'pay_cents', 'pay_currency', 'payment_method', 'service_type', 'search_id', 'user_id', ).
+    result = self.slice('id', 'exchange_id', 'voucher', 'pay_cents', 'pay_currency', 'payment_method', 'service_type', 'search_id', 'user_id', ).
          merge(user.attributes.except(
             'id', 'created_at', 'updated_at', 'current_sign_in_at', 'current_sign_in_ip', 'encrypted_password', 'last_sign_in_at', 'last_sign_in_ip',
             'remember_created_at', 'reset_password_sent_at', 'reset_password_token', 'sign_in_count')
         )
+
+    result.merge!({message: 'We have noted your change of details!'}) if detailsChanged
+
+    result
   end
 
   def status_color
