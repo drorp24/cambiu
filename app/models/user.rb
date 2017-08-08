@@ -46,4 +46,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  def name
+    self.first_name + ' ' + self.last_name if self.first_name and self.last_name
+  end
+
 end

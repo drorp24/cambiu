@@ -51,6 +51,10 @@ Rails.application.routes.draw do
   resources :rates
   resources :visitors
   namespace :admin do
+    resources :users do
+      resources :orders
+      resource :searches
+    end
     resources :orders
     resources :issues
  #   resources :rates

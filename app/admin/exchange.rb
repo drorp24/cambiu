@@ -543,13 +543,16 @@ form do |f|
         order.created_at.in_time_zone("Jerusalem")
       end
       column 'Search' do |order|
-        link_to 'View search', admin_search_path(order.search_id)
+        link_to order.search.location, admin_search_path(order.search_id) if order.search_id
+      end
+      column 'User' do |order|
+        link_to order.user.name, admin_user_orders_path(order.user_id) if order.user_id
       end
       column 'User Location' do |order|
-        order.search.user_location
+        order.search.user_location if order.search
       end
       column :'Exchange' do |order|
-        link_to order.exchange.name.capitalize, admin_exchange_orders_path(order.exchange_id)
+        link_to order.exchange.name.capitalize, admin_exchange_orders_path(order.exchange_id) if order.exchange
       end
       column 'Pay' do |order|
         order.pay_cents && order.pay_currency ? order.pay.format : ""
@@ -566,7 +569,13 @@ form do |f|
     controller do
 
       def index
-        orders = params[:exchange_id] ? Order.where(exchange_id: params[:exchange_id]) : Order.all
+        if params[:exchange_id]
+          orders = Order.where(exchange_id: params[:exchange_id])
+        elsif params[:user_id]
+          orders = Order.where(user_id: params[:user_id])
+        else
+          orders = Order.all
+        end
         @collection = orders.order(id: :desc).page(params[:page]).per(10)
       end
 

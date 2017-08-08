@@ -14,7 +14,12 @@ ActiveAdmin.register Search do
   index do
     selectable_column
     id_column
+=begin
+    column 'User' do |search|
+      link_to search.user.name, admin_user_searches_path(search.user_id) if search.user_id and search.user
+    end
     column :user_location
+=end
     column :pay_amount
     column :pay_currency
     column :buy_amount
@@ -31,6 +36,22 @@ ActiveAdmin.register Search do
       search.created_at.in_time_zone("Jerusalem")
     end
   end
+
+=begin
+  controller do
+
+    def index
+      if params[:user_id]
+        searches = Search.where(user_id: params[:user_id])
+      else
+        searches = Search.all
+      end
+      @collection = searches.order(id: :desc).page(params[:page]).per(10)
+    end
+
+  end
+=end
+
 
   ActiveAdmin.register Error, as: 'Issue' do
 
