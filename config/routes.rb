@@ -38,6 +38,9 @@ Rails.application.routes.draw do
     collection do
       post 'upload'
     end
+    member do
+      post 'user'
+    end
   end
 
   resources :currencies do

@@ -10,6 +10,8 @@ class Order < ActiveRecord::Base
 
   enum status: [:ordered, :confirmed, :pictured]
   enum service_type: [ :pickup, :delivery ]
+  enum payment_method: [ :cash, :credit, :all_payment_methods]
+
 
   before_create do
     self.expiry = 4.hours.from_now

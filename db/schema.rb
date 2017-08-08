@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726100914) do
+ActiveRecord::Schema.define(version: 20170808003416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 20170726100914) do
     t.string   "rated_currency"
     t.float    "buy_rate"
     t.float    "sell_rate"
+    t.integer  "payment_method"
     t.index ["exchange_id"], name: "index_orders_on_exchange_id", using: :btree
     t.index ["search_id"], name: "index_orders_on_search_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
@@ -259,7 +260,9 @@ ActiveRecord::Schema.define(version: 20170726100914) do
     t.string   "calculated"
     t.integer  "payment_method"
     t.string   "trans"
+    t.integer  "user_id"
     t.index ["exchange_id"], name: "index_searches_on_exchange_id", using: :btree
+    t.index ["user_id"], name: "index_searches_on_user_id", using: :btree
   end
 
   create_table "sources", force: :cascade do |t|
@@ -296,27 +299,17 @@ ActiveRecord::Schema.define(version: 20170726100914) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "buy_currency",           limit: 255
-    t.string   "pay_currency",           limit: 255
-    t.string   "provider",               limit: 255
-    t.string   "uid",                    limit: 255
-    t.string   "name",                   limit: 255
-    t.string   "image",                  limit: 255
-    t.string   "location",               limit: 255
     t.string   "first_name",             limit: 255
     t.string   "last_name",              limit: 255
-    t.string   "gender",                 limit: 255
-    t.string   "timezone",               limit: 255
     t.string   "locale",                 limit: 255
-    t.boolean  "guest"
-    t.string   "landing",                limit: 255
-    t.string   "buy_amount",             limit: 255
-    t.string   "pay_amount",             limit: 255
-    t.float    "latitude"
-    t.float    "longitude"
-    t.float    "bbox"
-    t.string   "location_search",        limit: 255
-    t.string   "geocoded_location",      limit: 255
+    t.string   "phone"
+    t.string   "company"
+    t.string   "city"
+    t.string   "street"
+    t.string   "house"
+    t.string   "entry"
+    t.string   "floor"
+    t.string   "apartment"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
@@ -334,4 +327,5 @@ ActiveRecord::Schema.define(version: 20170726100914) do
   add_foreign_key "errors", "searches"
   add_foreign_key "orders", "searches"
   add_foreign_key "reviews", "exchanges"
+  add_foreign_key "searches", "users"
 end

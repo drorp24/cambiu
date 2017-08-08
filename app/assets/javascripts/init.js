@@ -373,11 +373,14 @@ wait = function(period) {
 };
 
 // For all the 'fetch's that don't reject promises on 4xx/5xx return statuses
-checkStatus = function(res) {
-    if (!res.ok) {
-        throw new Error(res.statusText);
+checkStatus = function(response) {
+    if (response.status >= 200 && response.status < 300) {
+        return response
+    } else {
+        var error = new Error(response.statusText);
+        error.response = response;
+        throw error
     }
-    return res;
 };
 
 // For all the 'fetch's that use json

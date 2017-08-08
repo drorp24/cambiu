@@ -1,20 +1,18 @@
 class User < ActiveRecord::Base
+
   has_many :orders
+  has_many :searches
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:facebook]
 
-   validates_presence_of :email
+  validates_presence_of     :email, :password, :first_name, :last_name
+  validates                 :email, uniqueness: true
+  validates_confirmation_of :password
 
-  def self.new_guest(params)
-    new({guest: true, email: params[:email] || Devise.friendly_token.first(8)}.merge(params))
-  end
-  
-  def password_required?
-     new_record? ? false : super
-     false
-  end
 
   def self.from_omniauth(auth)
     # TODO: Handle users who already signed with user/pwd properly

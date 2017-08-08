@@ -278,6 +278,7 @@ $(document).ready(function() {
                 }
                 searchData = data;
                 set('search_id', searchId = data.search);
+                $('[data-model=search][data-field=id]').val(searchId);
                 tagSession({search: searchId});
                 exchanges = data.exchanges.features;
                 exchangeHash = {};

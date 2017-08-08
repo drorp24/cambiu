@@ -14,8 +14,8 @@
     </div>
 
     <div class="md-form">
-      <input type="password" name="user[password_repeat]" id="user_password_repeat" class="form-control" required/>
-      <label for="user_password_repeat" class="control-label text-right"><%= t 'user.password_repeat' %></label>
+      <input type="password" name="user[password_confirmation]" id="user_password_confirmation" class="form-control" required/>
+      <label for="user_password_confirmation" class="control-label text-right"><%= t 'user.password_confirmation' %></label>
     </div>
 
     <div class="md-form">
@@ -50,8 +50,8 @@
 
     <div class="flex_center last_line">
       <div class="md-form">
-        <input type="number" name="user[house_no]" id="user_house_no" class="form-control" required/>
-        <label for="user_house_no" class="control-label"><%= t 'user.house_no' %></label>
+        <input type="text" name="user[house]" id="user_house" class="form-control" required/>
+        <label for="user_house" class="control-label"><%= t 'user.house' %></label>
       </div>
 
       <div class="md-form">
@@ -60,17 +60,21 @@
       </div>
 
       <div class="md-form">
-        <input type="number" name="user[floor]" id="user_floor" class="form-control" required/>
+        <input type="text" name="user[floor]" id="user_floor" class="form-control" required/>
         <label for="user_floor" class="control-label"><%= t 'user.floor' %></label>
       </div>
 
       <div class="md-form">
-        <input type="number" name="user[appartment]" id="user_appartment" class="form-control" required/>
-        <label for="user_appartment" class="control-label"><%= t 'user.appartment' %></label>
+        <input type="text" name="user[apartment]" id="user_apartment" class="form-control" required/>
+        <label for="user_apartment" class="control-label"><%= t 'user.apartment' %></label>
       </div>
     </div>
 
-    <div class="md-form submit flex_center">
+    <div class="hidden">
+      <input type="hidden" name="search[id]" data-model="search" data-field="id">
+    </div>
+
+      <div class="md-form submit flex_center">
       <button type="submit" class="blue primary btn waves-effect" data-action="paymentFlow"><%= t 'user.next' %></button>
     </div>
 

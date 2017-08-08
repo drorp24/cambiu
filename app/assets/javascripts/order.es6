@@ -27,7 +27,9 @@ order = function($scope, exchange) {
                     pay_amount:         $('form.selection [data-field=pay_amount]').val(),
                     pay_currency:       $('form.selection [data-field=pay_currency]').val(),
                     buy_amount:         $('form.selection [data-field=buy_amount]').val(),
-                    buy_currency:       $('form.selection [data-field=buy_currency]').val()
+                    buy_currency:       $('form.selection [data-field=buy_currency]').val(),
+                    service_type:       value_of('service_type'),
+                    payment_method:     value_of('payment_method')
                 }
             }
         )
@@ -100,6 +102,43 @@ orderUpdate = function(update) {
         .then(checkStatus)
         .then(() => console.log('Order updated successfully'))
         .catch((error) => console.warn('Order update failed:', error))
+
+};
+
+orderUser = function() {
+
+    return new Promise(function(resolve, reject) {
+
+        function postData() {
+            let order_id = value_of('order_id');
+            if (!order_id) {
+                reject('orderUser: No order id');
+                return;
+            }
+            return fetch('/orders/' + order_id + '/user', {
+                method: 'post',
+                body: new URLSearchParams($('form.registration').serialize())
+            })
+        }
+
+        function checkData(data) {
+            if (data.errors) {
+                let length = data.errors.length;
+                snack(`There are ${length} things to fix in this form`, {klass: 'oops', timeout: 7000});
+            }
+        }
+
+        function report(error) {
+            snack(`Server says: ${error}`, {klass: 'oops', timeout: 7000});
+        }
+
+        postData()
+            .then(checkStatus)
+            .then(parseJson)
+            .then(checkData)
+            .catch((error) => {report(error)})
+
+    })
 
 };
 
