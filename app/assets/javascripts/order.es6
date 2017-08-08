@@ -125,6 +125,8 @@ orderUser = function() {
             if (data.errors) {
                 let length = data.errors.length;
                 snack(`There are ${length} things to fix in this form`, {klass: 'oops', timeout: 7000});
+            } else {
+                resolve(data)
             }
         }
 

@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
       order = Order.find(params[:id])
       if order
         order.update(user_id: user.id)
-        respond_with order
+        render json: order
       else
         render json: {errors: 'No order id'}, status: :unprocessable_entity
       end
