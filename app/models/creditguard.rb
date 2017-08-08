@@ -6,6 +6,13 @@ class Creditguard
 
   def initialize(params)
     @options = { query: { user: ENV['CG_USERNAME'], password: ENV['CG_PASSWORD'], int_in: self.class.xml(params) } }
+    puts ""
+    puts ""
+    puts "xml:"
+    puts self.class.xml(params)
+    puts ""
+    puts ""
+
   end
 
   def response
@@ -52,21 +59,21 @@ class Creditguard
                     <successUrl>https://www.cambiu.com/exchanges/payment/success</successUrl>
                     <errorUrl>https://www.cambiu.com/exchanges/payment/error</errorUrl>
                     <cancelUrl>https://www.cambiu.com/exchanges/payment/cancel</cancelUrl>
-                    <total>#{params[:amount]}</total>
+                    <total>#{params[:pay_cents]}</total>
                     <transactionType>Debit</transactionType>
                     <creditType>RegularCredit</creditType>
-                    <currency>ILS</currency>
+                    <currency>#{params[:pay_currency]}</currency>
                     <transactionCode>Phone</transactionCode>
                     <validation>TxnSetup</validation>
                     <firstPayment></firstPayment>
                     <periodicalPayment></periodicalPayment>
                     <numberOfPayments></numberOfPayments>
-                    <user></user>
+                    <user>#{params[:first_name]} #{params[:last_name]}</user>
                     <mid>#{ENV['CG_MID']}</mid>
-                    <uniqueid>#{rand(100..150000)}</uniqueid>
+                    <uniqueid>#{params[:voucher]}</uniqueid>
                     <mpiValidation>Token</mpiValidation>
                     <description></description>
-                    <email>test@creditguard.co.il</email>
+                    <email>#{params[:email]}</email>
                     <customerData>
                         <userData1/>
                         <userData2/>

@@ -20,8 +20,12 @@ fetchPaymentUrl = function(order) {
 
         function fetchData() {
             return fetch('/payment/url?', {
-                method: 'post'/*,
-                body: new URLSearchParams($( "#search_form input, #search_form select" ).serialize())*/   // pass user information (name etc) to not key again??
+                method: 'post',
+                headers: new Headers({
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }),
+                body: JSON.stringify(order)
             })
         }
 

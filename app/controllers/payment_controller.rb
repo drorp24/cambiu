@@ -2,11 +2,12 @@ class PaymentController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def url
-    render json: Creditguard.redirect({amount: 10000})
+    render json: Creditguard.redirect(payment_params)
   end
 
   def payment_params
-#    params.require(:search).permit!
+    params.permit!
   end
-      
+
+
 end
