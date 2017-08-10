@@ -311,7 +311,7 @@ form do |f|
       f.input     :sunday_close
       f.input     :business_type, as: :select, collection: {:"Exchange"=>"exchange", :"Bank"=>"bank", :"Post office"=>"post_office", :"Other"=>"other", :"Interbank"=>"inter"}, include_blank: false
       f.input     :rates_policy, as: :select, collection: {:"Individual"=>"individual", :"Chain"=>"chain"}, include_blank: false
-      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Test"=>"test", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping"}, include_blank: false
+      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Test"=>"test", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping", :"API"=>"api"}, include_blank: false
       f.input     :rates_url, as: :url
       f.input     :latitude
       f.input     :longitude
