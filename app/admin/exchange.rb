@@ -75,6 +75,7 @@ ActiveAdmin.register Exchange do
         end
       end
 
+      exchange.rates_source = 'no_rates' unless exchange.rates_source.present?
       exchange.save!
       puts "I have just saved exchange " + exchange.id.to_s
 
