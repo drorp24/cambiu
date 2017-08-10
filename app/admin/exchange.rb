@@ -43,6 +43,14 @@ ActiveAdmin.register Exchange do
         raise "No currency"
       end
 
+      if hash[:country].blank?
+        raise "No country"
+      end
+
+      if hash[:country].length > 3
+        raise "Country should be in ISO code"
+      end
+
       exchange = Exchange.identify_by_either(hash[:id], hash[:name], hash[:name_he], hash[:address], hash[:address_he], hash[:nearest_station])
       columns.each do |column|
         exchange.send(column + '=', hash[column.to_sym])

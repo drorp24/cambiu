@@ -13,7 +13,7 @@ class Exchange < ActiveRecord::Base
   has_many    :business_hours
   has_one     :open_today,  ->(date) {where(day: Date.today.wday)}  ,class_name: "BusinessHour"
 
-  has_many    :rates,                                                               as: :ratable, dependent: :delete_all
+  has_many    :rates,                                                               as: :ratable, dependent: :destroy
   has_one     :gbp_rate,    -> {where(currency: 'GBP')}       ,class_name: "Rate",  as: :ratable
   has_one     :eur_rate,    -> {where(currency: 'EUR')}       ,class_name: "Rate",  as: :ratable
   has_one     :usd_rate,    -> {where(currency: 'USD')}       ,class_name: "Rate",  as: :ratable
@@ -61,7 +61,7 @@ class Exchange < ActiveRecord::Base
   scope :online_rates, -> { where("rates_source > 2") }
   scope :real_rates, -> {where("rates_source > 1") }
   scope :any_rates, -> {where("rates_source > 0") }
-  scope :no_rates, -> {where("rates_source = 0") }
+  scope :no_rates, -> {where("rates_policy = 0 AND rates_source = 0") }
   scope :no_real_rates, -> { where("rates_source < 2") }
 
   scope :active, -> {where(status: nil)}
@@ -166,7 +166,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def self.with_no_real_rates
-    self.individual.no_real_rates.active
+    self.individual.no_real_rates
   end
 
   def self.with_real_rates
@@ -174,7 +174,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def rates_are_stale?
-    return false if (self.individual? and has_no_real_rates) or rates.empty?
+    return false if (self.individual? and has_no_real_rates) or rates.empty? or rates.where(method: 'reference').exists?
     (Date.today - rates.first.updated_at.to_date).to_i > 1
   end
 
@@ -416,6 +416,11 @@ class Exchange < ActiveRecord::Base
       end
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
       result[:gain]                                         = bad_amount - pay_amount
+      puts "<<<<<<<<<<<<<<<<<<<<<"
+      puts "bad_amount: " + bad_amount.to_s
+      puts "pay_amount: " + pay_amount.to_s
+      puts "gain: " + result[:gain].to_s
+      puts ">>>>>>>>>>>>>>"
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
       result[:gain_amount]                                  = result[:gain].to_money(pay_currency).format
 
@@ -469,7 +474,7 @@ class Exchange < ActiveRecord::Base
     result[:buy]  = base_rates[:buy]  == 0 ? 0 :  (rated_rates[:buy]  / base_rates[:buy])
     result[:sell] = base_rates[:sell] == 0 ? 0 :  (rated_rates[:sell] / base_rates[:sell])
     result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
-    result[:source] = rated_rates[:source]
+    result[:source] = rated_rates[:source] || base_rates[:source]
     if (Date.today - result[:updated].to_date).to_i > 1
       result[:error] = "Stale rates"
     end
