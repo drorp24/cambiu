@@ -416,11 +416,6 @@ class Exchange < ActiveRecord::Base
       end
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
       result[:gain]                                         = bad_amount - pay_amount
-      puts "<<<<<<<<<<<<<<<<<<<<<"
-      puts "bad_amount: " + bad_amount.to_s
-      puts "pay_amount: " + pay_amount.to_s
-      puts "gain: " + result[:gain].to_s
-      puts ">>>>>>>>>>>>>>"
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
       result[:gain_amount]                                  = result[:gain].to_money(pay_currency).format
 
