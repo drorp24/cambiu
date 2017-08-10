@@ -3250,6 +3250,9 @@ body#cambiu {
         @include vfont-size(4.5vw);
 //        @include threedots(100%);
       }
+      .minicard_name [data-field=name] {
+        @include vfont-size(3.5vw);
+      }
       [data-field=address] {
         @include vfont-size(4vw);
         text-transform: capitalize;
