@@ -98,24 +98,24 @@ ActiveRecord::Schema.define(version: 20170725203722) do
   end
 
   create_table "exchanges", force: :cascade do |t|
-    t.string   "name",                   limit: 255
-    t.string   "address",                limit: 255
+    t.string   "name",            limit: 255
+    t.string   "address",         limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "country",                limit: 255
-    t.string   "website",                limit: 255
-    t.string   "email",                  limit: 255
-    t.string   "phone",                  limit: 255
+    t.string   "country",         limit: 255
+    t.string   "website",         limit: 255
+    t.string   "email",           limit: 255
+    t.string   "phone",           limit: 255
     t.integer  "business_type"
     t.integer  "chain_id"
-    t.string   "city",                   limit: 255
-    t.string   "region",                 limit: 255
+    t.string   "city",            limit: 255
+    t.string   "region",          limit: 255
     t.float    "rating"
-    t.string   "nearest_station",        limit: 255
+    t.string   "nearest_station", limit: 255
     t.integer  "admin_user_id"
-    t.string   "currency",               limit: 255
+    t.string   "currency",        limit: 255
     t.integer  "rates_source"
     t.boolean  "contract"
     t.integer  "rates_policy"
@@ -139,18 +139,8 @@ ActiveRecord::Schema.define(version: 20170725203722) do
     t.date     "status_date"
     t.string   "name_he"
     t.string   "address_he"
-    t.float    "cc_fee"
-    t.float    "delivery_charge"
-    t.boolean  "delivery",                           default: false
-    t.boolean  "card",                               default: false
-    t.float    "delivery_polygon_a_lat"
-    t.float    "delivery_polygon_a_lng"
-    t.float    "delivery_polygon_b_lat"
-    t.float    "delivery_polygon_b_lng"
-    t.float    "delivery_polygon_c_lat"
-    t.float    "delivery_polygon_c_lng"
-    t.float    "delivery_polygon_d_lat"
-    t.float    "delivery_polygon_d_lng"
+    t.integer  "service_type"
+    t.integer  "payment_method"
     t.string   "lang"
     t.index ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
     t.index ["latitude", "longitude"], name: "index_exchanges_on_latitude_and_longitude", using: :btree
@@ -296,27 +286,17 @@ ActiveRecord::Schema.define(version: 20170725203722) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "buy_currency",           limit: 255
-    t.string   "pay_currency",           limit: 255
-    t.string   "provider",               limit: 255
-    t.string   "uid",                    limit: 255
-    t.string   "name",                   limit: 255
-    t.string   "image",                  limit: 255
-    t.string   "location",               limit: 255
     t.string   "first_name",             limit: 255
     t.string   "last_name",              limit: 255
-    t.string   "gender",                 limit: 255
-    t.string   "timezone",               limit: 255
     t.string   "locale",                 limit: 255
-    t.boolean  "guest"
-    t.string   "landing",                limit: 255
-    t.string   "buy_amount",             limit: 255
-    t.string   "pay_amount",             limit: 255
-    t.float    "latitude"
-    t.float    "longitude"
-    t.float    "bbox"
-    t.string   "location_search",        limit: 255
-    t.string   "geocoded_location",      limit: 255
+    t.string   "phone"
+    t.string   "company"
+    t.string   "city"
+    t.string   "street"
+    t.string   "house"
+    t.string   "entry"
+    t.string   "floor"
+    t.string   "apartment"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
