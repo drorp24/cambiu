@@ -67,7 +67,13 @@ class Rate < ActiveRecord::Base
     self.last_update   = Time.now
     self.last_process  = 'api'
     self.save
+    puts ""
+    puts ">>>>>"
+    puts "update_by_params. About to update rates source to self.ratable"
     self.ratable.update(rates_source: 'api')
+    puts "after update: self.ratable.rates_source is: " + self.ratable.rates_source.to_s
+    puts "<<<<"
+    puts ""
 
   end
 
@@ -92,7 +98,13 @@ class Rate < ActiveRecord::Base
     self.sell = sell
     self.source = 'ratefeed1'
     self.save
+    puts ""
+    puts ">>>>>"
+    puts "OLDDD update_by_params. About to update rates source to self.ratable"
     self.ratable.update(rates_source: 'ratefeed1')
+    puts "after update: self.ratable.rates_source is: " + self.ratable.rates_source.to_s
+    puts "<<<<"
+    puts ""
 
   end
 
