@@ -90,9 +90,9 @@ class Rate < ActiveRecord::Base
 
     self.buy = buy
     self.sell = sell
-    self.source = 'ratefeed'
+    self.source = 'ratefeed1'
     self.save
-    self.ratable.update(rates_source: 'ratefeed')
+    self.ratable.update(rates_source: 'ratefeed1')
 
   end
 
