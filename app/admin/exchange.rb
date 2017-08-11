@@ -28,7 +28,6 @@ ActiveAdmin.register Exchange do
     }
 =end
 
-
   # csv import
   # TODO: update opening hours in the search
   active_admin_importable do |model, hash|
@@ -117,20 +116,11 @@ ActiveAdmin.register Exchange do
   scope :unverified
   scope :no_contract
   scope :removed
+  scope :fix_address
   scope :error
 
-  filter :name
-  filter :nearest_station
-  filter :chain
-  filter :id
+  config.filters = false
 
-=begin
-  filter :rates_source, as: :select, collection: [['No rates', 'no_rates'],['Test', 'test'], ['Manual', 'manual'], ['XML', 'xml'], ['Scraping', 'scraping']]
-  filter :chain
-  filter :name
-  filter :address
-  filter :region
-=end
 
   config.batch_actions = false
 
@@ -312,7 +302,7 @@ form do |f|
       f.input     :longitude
       f.input     :currency, as: :select, collection: Currency.select, label: "Local currency"
       f.input     :delivery, label: 'Supports delivery'
-      f.input     :card, label: 'Supports Credit cards'
+      f.input     :credit, label: 'Supports Credit cards'
       f.input     :cc_fee, label: 'Credit card fee (%)'
       f.input     :delivery_charge
       f.input     :delivery_polygon_a_lat, :wrapper_html => { :class => 'fl' }

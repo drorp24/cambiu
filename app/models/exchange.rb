@@ -73,6 +73,7 @@ class Exchange < ActiveRecord::Base
 
   scope :delivery, -> {where(delivery: true)}
   scope :credit, -> {where(credit: true)}
+  scope :fix_address, -> {where(business_type: 'exchange', latitude: nil, status: nil)}
 
 
   def self.countries
