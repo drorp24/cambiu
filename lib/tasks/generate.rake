@@ -51,18 +51,16 @@ namespace :rates do
         next
       end
 
-=begin
-      unless chain.country.present?
-        Rails.logger.info "Chain #{chain.id.to_s} has no country - no rates generated"
+      unless chain.exchanges.exists?
+        Rails.logger.info "Chain #{chain.id.to_s} has no exchanges - no rates generated"
         next
       end
-=end
 
       chain.update(rates_source: 'test')
       chain.rates.delete_all
 
       rates = currency_updatable.include?(chain.currency) ? current_rates[chain.currency.to_sym] : Currency.rates(chain.currency)[chain.currency.to_sym]
-      markup = Currency.markup_policy()
+      markup = Currency.markup_policy(chain.exchanges.first.country)
 
       rates.each do |currency, rate|
 
