@@ -68,7 +68,6 @@ class Rate < ActiveRecord::Base
     self.last_process  = 'api'
     self.save
     self.ratable.update(rates_source: 'api')
-    
     true
 
   end
