@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725203722) do
+ActiveRecord::Schema.define(version: 20170808003416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,24 +98,24 @@ ActiveRecord::Schema.define(version: 20170725203722) do
   end
 
   create_table "exchanges", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.string   "address",         limit: 255
+    t.string   "name",                   limit: 255
+    t.string   "address",                limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "country",         limit: 255
-    t.string   "website",         limit: 255
-    t.string   "email",           limit: 255
-    t.string   "phone",           limit: 255
+    t.string   "country",                limit: 255
+    t.string   "website",                limit: 255
+    t.string   "email",                  limit: 255
+    t.string   "phone",                  limit: 255
     t.integer  "business_type"
     t.integer  "chain_id"
-    t.string   "city",            limit: 255
-    t.string   "region",          limit: 255
+    t.string   "city",                   limit: 255
+    t.string   "region",                 limit: 255
     t.float    "rating"
-    t.string   "nearest_station", limit: 255
+    t.string   "nearest_station",        limit: 255
     t.integer  "admin_user_id"
-    t.string   "currency",        limit: 255
+    t.string   "currency",               limit: 255
     t.integer  "rates_source"
     t.boolean  "contract"
     t.integer  "rates_policy"
@@ -139,9 +139,19 @@ ActiveRecord::Schema.define(version: 20170725203722) do
     t.date     "status_date"
     t.string   "name_he"
     t.string   "address_he"
-    t.integer  "service_type"
-    t.integer  "payment_method"
     t.string   "lang"
+    t.float    "cc_fee"
+    t.float    "delivery_charge"
+    t.boolean  "delivery",                           default: false
+    t.float    "delivery_polygon_a_lat"
+    t.float    "delivery_polygon_a_lng"
+    t.float    "delivery_polygon_b_lat"
+    t.float    "delivery_polygon_b_lng"
+    t.float    "delivery_polygon_c_lat"
+    t.float    "delivery_polygon_c_lng"
+    t.float    "delivery_polygon_d_lat"
+    t.float    "delivery_polygon_d_lng"
+    t.boolean  "credit",                             default: false
     t.index ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
     t.index ["latitude", "longitude"], name: "index_exchanges_on_latitude_and_longitude", using: :btree
     t.index ["latitude"], name: "index_exchanges_on_latitude", using: :btree
@@ -174,6 +184,7 @@ ActiveRecord::Schema.define(version: 20170725203722) do
     t.string   "rated_currency"
     t.float    "buy_rate"
     t.float    "sell_rate"
+    t.integer  "payment_method"
     t.index ["exchange_id"], name: "index_orders_on_exchange_id", using: :btree
     t.index ["search_id"], name: "index_orders_on_search_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
@@ -244,7 +255,14 @@ ActiveRecord::Schema.define(version: 20170725203722) do
     t.string   "location_type",   limit: 255
     t.integer  "service_type",                default: 0
     t.string   "location_reason"
+    t.string   "city"
+    t.string   "country"
+    t.string   "calculated"
+    t.integer  "payment_method"
+    t.string   "trans"
+    t.integer  "user_id"
     t.index ["exchange_id"], name: "index_searches_on_exchange_id", using: :btree
+    t.index ["user_id"], name: "index_searches_on_user_id", using: :btree
   end
 
   create_table "sources", force: :cascade do |t|
@@ -309,4 +327,5 @@ ActiveRecord::Schema.define(version: 20170725203722) do
   add_foreign_key "errors", "searches"
   add_foreign_key "orders", "searches"
   add_foreign_key "reviews", "exchanges"
+  add_foreign_key "searches", "users"
 end
