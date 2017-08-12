@@ -205,20 +205,23 @@
         offers.forEach((offer) => {
 
             offerObj = {
-                source:     offer.properties.rates.source,
-                rate:       offer.properties.base_rate,
-                bad:        offer.properties.bad_amount,
-                quote:      offer.properties.edited_quote,
-                gain:       Number(offer.properties.gain).toFixed(2),
-                distance:   Number(offer.properties.distance).toFixed(2),
-                grade:      Number(offer.properties.grade).toFixed(2),
-                name:       offer.properties.name
+                source:             offer.properties.rates.source,
+                rate:               offer.properties.base_rate,
+                bad:                offer.properties.bad_amount,
+                quote:              offer.properties.edited_quote,
+                gain:               offer.properties.gain_amount,
+                credit_charge:      offer.properties.credit_charge,
+                delivery_charge:    offer.properties.delivery_charge,
+                distance:           Number(offer.properties.distance).toFixed(2),
+                grade:              Number(offer.properties.grade).toFixed(2),
+                name:               offer.properties.name
             };
             offersArr.push(offerObj);
 
         });
 
         console.table(offersArr);
+        console.log(offersArr);
     };
 
     selectExchange = function($exchange, manual = true) {
