@@ -373,7 +373,7 @@ setLocale = function(location) {
             lat: Number(dfault.lat),
             lng: Number(dfault.lng),
             country: 'GBR',
-            city: 'Londoh',
+            city: 'London',
             currency: 'GBP'
         }
     };

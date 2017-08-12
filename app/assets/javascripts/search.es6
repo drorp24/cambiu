@@ -16,12 +16,9 @@ $(document).ready(function() {
     };
 
     matchWorstFieldsSymbolToCalculated = function() {
-        console.log('calculated: ' + calculated);
         var sign = formElement(calculated).attr('data-a-sign');
         $('input[data-model=local]').each(function() {
             update_currency_symbol($(this), sign);
-            console.log('updating the following to sign: ' + sign)
-            console.log($(this)[0])
         })
     };
 
@@ -41,6 +38,11 @@ $(document).ready(function() {
             var value   = $this.val();
             var target  = $this.data('symboltarget');
             var symbol  = $this.find('option:selected').attr('data-symbol');
+
+            if (value_of('payment_method') == 'credit' && field == 'pay_currency' && value != local.currency) {
+                snack(`To pay with credit, payment currency must remain ${local.currency}`, {klass: 'oops', timeout: 3000});
+                return;
+            }
 
             set(field, value);
             populateTransaction();
@@ -532,7 +534,13 @@ $(document).ready(function() {
 
     $('form .payment_method').change(function() {
         snackHide();
-        setPaymentMethodTo($('form.selection .payment_method:checked').val());
+        let new_payment_method = $('form.selection .payment_method:checked').val();
+        if (new_payment_method == 'credit' && value_of('pay_currency') != local.currency) {
+            snack(`To pay with credit, please change payment currency to ${local.currency}`, {klass: 'oops', timeout: 3000});
+            setPaymentMethodTo('cash');
+            return;
+        }
+        setPaymentMethodTo(new_payment_method);
         if ($('body').attr('data-pane') == 'search') fetchAndPopulateLocaloffers();
         if ($('body').attr('data-pane') == 'update') {
             $(`.ecard[data-exchange-id=${urlId()}] .offer_line.cc.charge`).css('visibility', value_of('payment_method') == 'credit' ? 'visible' : 'hidden');
