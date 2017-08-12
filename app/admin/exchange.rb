@@ -537,7 +537,7 @@ form do |f|
         link_to order.search.location, admin_search_path(order.search_id) if order.search_id
       end
       column 'User' do |order|
-        link_to order.user.name, admin_user_orders_path(order.user_id) if order.user_id
+        link_to order.user.name, admin_user_path(order.user_id) if order.user_id
       end
       column 'User Location' do |order|
         order.search.user_location if order.search

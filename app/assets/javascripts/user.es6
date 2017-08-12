@@ -37,7 +37,7 @@ userCheckValidity = function() {
 
         let $this = $(this);
 
-        // Own checks 
+        // Own checks
 
         let fieldIsFull = checkIfFull($this);
         formValid = formValid && fieldIsFull;
