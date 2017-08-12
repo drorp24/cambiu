@@ -76,6 +76,14 @@ class Exchange < ActiveRecord::Base
   scope :fix_address, -> {where(business_type: 'exchange', latitude: nil, status: nil)}
 
 
+  def self.covering(location)
+    where("delivery_nw_lng < ? AND delivery_se_lng > ? AND delivery_nw_lat > ? AND delivery_se_lat < ?", location[:lng], location[:lng], location[:lat], location[:lat])
+  end
+
+  def covers?(location)
+    self.delivery_nw_lng < location[:lng] && self.delivery_se_lng > location[:lng] && self.delivery_nw_lat > location[:lat] && delivery_se_lat < location[:lat]
+  end
+
   def self.countries
     countries_count = Exchange.group(:country).count.reject{|key| key.nil?}
     countries_count.each{|key, value| countries_count[key] = key}
@@ -371,7 +379,7 @@ class Exchange < ActiveRecord::Base
       result[:edited_quote] = result[:edited_quote_rounded] = result[:quote].to_money(get_currency).format
       result[:quote_currency]                               = get_currency
 
-      cc_fee                                                = params[:cc] ? self.cc_fee || 0 : 0
+      cc_fee                                                = params[:credit] ? self.cc_fee || 0 : 0
       result[:cc_fee]                                       = cc_fee
       result[:credit_charge]                                = (cc_fee * result[:quote] / 100).round(2)
       result[:delivery_charge]                              = params[:delivery] ? self.delivery_charge || 0 : 0
@@ -428,7 +436,7 @@ class Exchange < ActiveRecord::Base
       result[:edited_quote] = result[:edited_quote_rounded] = result[:quote].to_money(pay_currency).format
       result[:quote_currency]                               = pay_currency
 
-      cc_fee                                                = params[:cc] ? self.cc_fee || 0 : 0
+      cc_fee                                                = params[:credit] ? self.cc_fee || 0 : 0
       result[:cc_fee]                                       = cc_fee
       result[:credit_charge]                                = (cc_fee * result[:quote] / 100).round(2)
       result[:delivery_charge]                              = params[:delivery] ? self.delivery_charge || 0 : 0
@@ -602,7 +610,7 @@ class Exchange < ActiveRecord::Base
     'system'
   end
 
-  def offer(center, pay, buy, radius, trans, calculated, delivery, cc)
+  def offer(center, pay, buy, radius, trans, calculated, delivery, credit)
 
     exchange_hash = {}
 
@@ -627,7 +635,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:photo] = photo_url
 
     quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, calculated: calculated,
-                   radius: radius, distance: exchange_hash[:distance], trans: trans, delivery: delivery, cc: cc)
+                   radius: radius, distance: exchange_hash[:distance], trans: trans, delivery: delivery, credit: credit)
     exchange_hash = quotes.merge(exchange_hash)
     exchange_hash[:inclusive_gain] = exchange_hash[:gain] + exchange_hash[:credit_charge] + exchange_hash[:delivery_charge]     # for grading purposes, it's ok even if charges are in a different currency
     exchange_hash[:grade] = (exchange_hash[:inclusive_gain] * -1) + (exchange_hash[:distance] * Rails.application.config.distance_factor)

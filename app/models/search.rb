@@ -18,70 +18,6 @@ class Search < ActiveRecord::Base
   scope :empty, -> {where(location: nil) }
 
 
-# TODO: Remove
-=begin
-  def localRates
-
-    return {error: 'missing params'} if
-        pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?) or
-        location_lat.blank? or location_lng.blank? or
-        calculated.blank? or trans.blank?
-
-    self.distance_unit ||= "km"
-    self.service_type  ||= 'pickup'
-    self.distance = self.service_type == 'pickup' ? self.distance || 2.5 : 100
-
-    center               = [location_lat, location_lng]
-    box                  = Geocoder::Calculations.bounding_box(center, distance)
-
-    pay_rate             = (pay_currency.downcase + '_rate').to_sym
-    buy_rate             = (buy_currency.downcase + '_rate').to_sym
-
-#   exchanges            = Exchange.with_real_rates.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
-#                              .select(:id, :chain_id, :currency, :rates_policy)  # TODO: Discuss
-    exchanges            = Exchange.active.geocoded.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
-                               .select(:id, :chain_id, :currency, :rates_policy, :delivery, :credit, :cc_fee, :delivery_charge)  # TODO: Discuss
-
-    exchanges            = exchanges.delivery if self.service_type == 'delivery'
-    exchanges            = exchanges.credit if self.payment_method == 'credit'
-
-    best_buy = Float::INFINITY
-    best_sell = 0
-    best_buy_rate = {}
-    best_sell_rate = {}
-    count = 0
-
-    exchanges.each do |exchange|
-
-      exchange_rates = exchange.rate(buy_currency, pay_currency)
-      next if exchange_rates[:error]
-      if exchange_rates[:buy] && exchange_rates[:buy] < best_buy
-        best_buy_rate = exchange_rates
-        best_buy = exchange_rates[:buy]
-      end
-      if exchange_rates[:sell] && exchange_rates[:sell] > best_sell
-        best_sell_rate = exchange_rates
-        best_sell = exchange_rates[:sell]
-      end
-      count += 1
-
-    end
-
-
-    return {
-        best: {
-            buy: best_buy_rate,
-            sell: best_sell_rate
-        },
-        worst:
-            Exchange.bad_rate(country,buy_currency, pay_currency),
-        count: count
-    }
-
-
-  end
-=end
-
   def valid_input
      if
         pay_currency.blank? or
@@ -106,14 +42,15 @@ class Search < ActiveRecord::Base
       self.distance = self.service_type == 'pickup' ? self.distance || 2.5 : 100
       self.distance_unit ||= "km"
       delivery = self.service_type == 'delivery'
-      cc = self.payment_method == 'credit'
+      delivery_location = delivery ? {lat: location_lat, lng: location_lng} : nil
+      credit = self.payment_method == 'credit'
 
       pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
       buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)
       center          = [location_lat, location_lng]
       box             = Geocoder::Calculations.bounding_box(center, distance)
 
-      exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated, delivery, cc, mode, country)
+      exchange_offers(exchange_id, location, delivery_location, center, box, pay, buy, distance, trans, calculated, delivery, credit, mode, country)
 
     rescue => e
 
@@ -131,7 +68,7 @@ class Search < ActiveRecord::Base
 
   end
 
-  def exchange_offers(exchange_id, location, center, box, pay, buy, distance, trans, calculated, delivery, cc, mode, country)
+  def exchange_offers(exchange_id, location, delivery_location, center, box, pay, buy, distance, trans, calculated, delivery, credit, mode, country)
 
     pay_rate  = (pay.currency.iso_code.downcase + '_rate').to_sym
     buy_rate  = (buy.currency.iso_code.downcase + '_rate').to_sym
@@ -139,10 +76,10 @@ class Search < ActiveRecord::Base
     buy_currency = buy.currency.iso_code
     pay_currency = pay.currency.iso_code
 
-    exchanges = Exchange.active.geocoded.within_bounding_box(box).where.not(name: nil, address: nil).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+    exchanges = Exchange.active.geocoded.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
-    exchanges            = exchanges.delivery if self.service_type == 'delivery'
-    exchanges            = exchanges.credit if self.payment_method == 'credit'
+    exchanges            = exchanges.delivery.covering(delivery_location) if delivery
+    exchanges            = exchanges.credit if credit
 
     best_grade = 1000
     best_offer = nil
@@ -150,7 +87,7 @@ class Search < ActiveRecord::Base
 
     exchanges.each do |exchange|
 
-      offer = exchange.offer(center, pay, buy, distance, trans, calculated, delivery, cc)
+      offer = exchange.offer(center, pay, buy, distance, trans, calculated, delivery, credit)
       if mode == 'best'
         if offer[:grade] < best_grade
           best_offer = offer

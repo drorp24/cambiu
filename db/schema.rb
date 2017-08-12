@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170808003416) do
+ActiveRecord::Schema.define(version: 20170812065458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,24 +98,24 @@ ActiveRecord::Schema.define(version: 20170808003416) do
   end
 
   create_table "exchanges", force: :cascade do |t|
-    t.string   "name",                   limit: 255
-    t.string   "address",                limit: 255
+    t.string   "name",            limit: 255
+    t.string   "address",         limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "country",                limit: 255
-    t.string   "website",                limit: 255
-    t.string   "email",                  limit: 255
-    t.string   "phone",                  limit: 255
+    t.string   "country",         limit: 255
+    t.string   "website",         limit: 255
+    t.string   "email",           limit: 255
+    t.string   "phone",           limit: 255
     t.integer  "business_type"
     t.integer  "chain_id"
-    t.string   "city",                   limit: 255
-    t.string   "region",                 limit: 255
+    t.string   "city",            limit: 255
+    t.string   "region",          limit: 255
     t.float    "rating"
-    t.string   "nearest_station",        limit: 255
+    t.string   "nearest_station", limit: 255
     t.integer  "admin_user_id"
-    t.string   "currency",               limit: 255
+    t.string   "currency",        limit: 255
     t.integer  "rates_source"
     t.boolean  "contract"
     t.integer  "rates_policy"
@@ -142,17 +142,17 @@ ActiveRecord::Schema.define(version: 20170808003416) do
     t.string   "lang"
     t.float    "cc_fee"
     t.float    "delivery_charge"
-    t.boolean  "delivery",                           default: false
-    t.float    "delivery_polygon_a_lat"
-    t.float    "delivery_polygon_a_lng"
-    t.float    "delivery_polygon_b_lat"
-    t.float    "delivery_polygon_b_lng"
-    t.float    "delivery_polygon_c_lat"
-    t.float    "delivery_polygon_c_lng"
-    t.float    "delivery_polygon_d_lat"
-    t.float    "delivery_polygon_d_lng"
-    t.boolean  "credit",                             default: false
+    t.boolean  "delivery",                    default: false
+    t.boolean  "credit",                      default: false
+    t.float    "delivery_nw_lat"
+    t.float    "delivery_nw_lng"
+    t.float    "delivery_se_lat"
+    t.float    "delivery_se_lng"
     t.index ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
+    t.index ["delivery_nw_lat"], name: "index_exchanges_on_delivery_nw_lat", using: :btree
+    t.index ["delivery_nw_lng"], name: "index_exchanges_on_delivery_nw_lng", using: :btree
+    t.index ["delivery_se_lat"], name: "index_exchanges_on_delivery_se_lat", using: :btree
+    t.index ["delivery_se_lng"], name: "index_exchanges_on_delivery_se_lng", using: :btree
     t.index ["latitude", "longitude"], name: "index_exchanges_on_latitude_and_longitude", using: :btree
     t.index ["latitude"], name: "index_exchanges_on_latitude", using: :btree
     t.index ["longitude"], name: "index_exchanges_on_longitude", using: :btree

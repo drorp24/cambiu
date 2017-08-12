@@ -15,71 +15,78 @@
 //
 //   .status_tag { background: #6090DB; }
 
-form.formtastic fieldset ol li.fl {
-  float: left;
-  width: 42%;
-  margin-right: 2em;
-}
 
-label.label {
-  width: 100%;
-}
-
-form fieldset>ol>li.boolean label {
-  padding-left: 0;
-}
-
-#exchange_cc_fee, #exchange_delivery_charge {
-  width: 10%;
-}
-
-
-body.active_admin {
-  .status_tag {
-    &.blue { background: #63B8FF; }
-    &.black { background: #000; }
-    &.brown { background: #5f2814; }
+li.boolean {
+  font-size: 130%;
+  label input {
+    transform: scale(1.5, 1.5);
   }
 }
+  form.formtastic fieldset ol li.fl {
+    float: left;
+    width: 42%;
+    margin-right: 2em;
+  }
 
-body.admin_searches .status_tag {
-  display: none;
-}
+  label.label {
+    width: 100%;
+  }
 
-body.admin_searches a .status_tag {
-  display: inline;
-}
+  form fieldset>ol>li.boolean label {
+    padding-left: 0;
+  }
 
-.purr {
-  width: 100%;
-  padding: 10px;
-  background-color: #FCC;
-  &:first-letter { text-transform: uppercase };
-  font-size: 1.4em;
-  text-indent: 1.2em;
-  color: #555;
-  font-weight: 500;
-  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
-}
- 
-input.editable_text_column {
-  background-color: #FBFF8C;
-  border: 1px none #FBFF8C;
-  box-shadow: 0 2px 19px #AAAAAA;
-  color: black;
-  display: none;
-  font-family: serif;
-  font-size: 1em;
-  font-style: italic;
-  height: 30px;
-  position: absolute;
-  text-align: center;
-  vertical-align: middle;
-  width: 180px;
-  z-index: 9090;
-}
- 
-div.editable_text_column{
-  padding:4px;
-  background-color: #f9fbc2;
-}
+  #exchange_cc_fee, #exchange_delivery_charge {
+    width: 10%;
+  }
+
+
+  body.active_admin {
+    .status_tag {
+      &.blue { background: #63B8FF; }
+      &.black { background: #000; }
+      &.brown { background: #5f2814; }
+    }
+  }
+
+  body.admin_searches .status_tag {
+    display: none;
+  }
+
+  body.admin_searches a .status_tag {
+    display: inline;
+  }
+
+  .purr {
+    width: 100%;
+    padding: 10px;
+    background-color: #FCC;
+    &:first-letter { text-transform: uppercase };
+    font-size: 1.4em;
+    text-indent: 1.2em;
+    color: #555;
+    font-weight: 500;
+    text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  }
+
+  input.editable_text_column {
+    background-color: #FBFF8C;
+    border: 1px none #FBFF8C;
+    box-shadow: 0 2px 19px #AAAAAA;
+    color: black;
+    display: none;
+    font-family: serif;
+    font-size: 1em;
+    font-style: italic;
+    height: 30px;
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    width: 180px;
+    z-index: 9090;
+  }
+
+  div.editable_text_column{
+    padding:4px;
+    background-color: #f9fbc2;
+  }

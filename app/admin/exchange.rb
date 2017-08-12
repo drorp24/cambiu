@@ -266,58 +266,50 @@ ActiveAdmin.register Exchange do
   end
 
 
-
-
 form do |f|
 
     f.inputs 'Details' do
 
       f.semantic_errors *f.object.errors.keys
-      f.input     :contract
-      f.input     :todo, as: :select, collection: {:"Verify"=>"verify", :"Call"=>"call", :"Meet"=>"meet", :"Sell"=>"sell"}
-      f.input     :chain_name, label: 'Chain'
-      f.input     :name
+      f.input     :business_type, as: :select, collection: {:"Exchange"=>"exchange", :"Bank"=>"bank", :"Post office"=>"post_office", :"Other"=>"other", :"Interbank"=>"inter"}, include_blank: false
+      f.input     :chain_name, label: 'Chain name'
+      f.input     :name, label: 'Exchange name'
+      f.input     :nearest_station, label: 'Nearest station (if name is not unique)'
       f.input     :name_he, label: 'Name in Hebrew'
-      f.input     :nearest_station
-      f.input     :photo
-      f.input     :contact
+      f.input     :country, as: :string, label: 'Country (ISO Alpha-3 code)'
+      f.input     :city
       f.input     :address
       f.input     :address_he, label: 'Address in Hebrew'
-      f.input     :city
-      f.input     :country, as: :string
-      f.input     :phone, as: :phone
+      f.input     :rates_policy, as: :select, collection: {:"Individual"=>"individual", :"Chain"=>"chain"}, include_blank: false
+      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Test"=>"test", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping", :"API"=>"api"}, include_blank: false
+      f.input     :rates_url, as: :url
+      f.input     :currency, as: :select, collection: Currency.select, label: "Local currency"
+      f.input     :credit, label: 'Accepts credit cards'
+      f.input     :cc_fee, label: 'Credit card fee (%)'
+      f.input     :delivery, label: 'Has a delivery service'
+      f.input     :delivery_charge
+      f.input     :delivery_nw_lat, label: 'Delivery NW Latitude', :wrapper_html => { :class => 'fl' }
+      f.input     :delivery_nw_lng, label: 'Delivery NW Longitude', :wrapper_html => { :class => 'fl' }
+      f.input     :delivery_se_lat, label: 'Delivery SE Latitude', :wrapper_html => { :class => 'fl' }
+      f.input     :delivery_se_lng, label: 'Delivery SE Longitude', :wrapper_html => { :class => 'fl' }
       f.input     :email, as: :email
+      f.input     :phone, as: :phone
       f.input     :website, as: :url
+      f.input     :photo
+      f.input     :contract
+      f.input     :todo, as: :select, collection: {:"Verify"=>"verify", :"Call"=>"call", :"Meet"=>"meet", :"Sell"=>"sell"}
+      f.input     :contact
       f.input     :weekday_open
       f.input     :weekday_close
       f.input     :saturday_open
       f.input     :saturday_close
       f.input     :sunday_open
       f.input     :sunday_close
-      f.input     :business_type, as: :select, collection: {:"Exchange"=>"exchange", :"Bank"=>"bank", :"Post office"=>"post_office", :"Other"=>"other", :"Interbank"=>"inter"}, include_blank: false
-      f.input     :rates_policy, as: :select, collection: {:"Individual"=>"individual", :"Chain"=>"chain"}, include_blank: false
-      f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Test"=>"test", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping"}, include_blank: false
-      f.input     :rates_url, as: :url
       f.input     :latitude
       f.input     :longitude
-      f.input     :currency, as: :select, collection: Currency.select, label: "Local currency"
-      f.input     :delivery, label: 'Supports delivery'
-      f.input     :credit, label: 'Supports Credit cards'
-      f.input     :cc_fee, label: 'Credit card fee (%)'
-      f.input     :delivery_charge
-      f.input     :delivery_polygon_a_lat, :wrapper_html => { :class => 'fl' }
-      f.input     :delivery_polygon_a_lng, :wrapper_html => { :class => 'fl' }
-      f.input     :delivery_polygon_b_lat, :wrapper_html => { :class => 'fl' }
-      f.input     :delivery_polygon_b_lng, :wrapper_html => { :class => 'fl' }
-      f.input     :delivery_polygon_c_lat, :wrapper_html => { :class => 'fl' }
-      f.input     :delivery_polygon_c_lng, :wrapper_html => { :class => 'fl' }
-      f.input     :delivery_polygon_d_lat, :wrapper_html => { :class => 'fl' }
-      f.input     :delivery_polygon_d_lng, :wrapper_html => { :class => 'fl' }
       f.input     :comment, as: :text
       f.input     :error, input_html: { :disabled => true }
       f.input     :created_at, as: :string, input_html: { :disabled => true }
-      f.input     :rates_update, as: :string, input_html: { :disabled => true }
-      f.input     :rates_error, as: :string, input_html: { :disabled => true }
       f.input     :updated_at, as: :string, input_html: { :disabled => true }
       f.input     :admin_user_s, as: :string, label: "By", input_html: { :disabled => true }
       f.input     :admin_user_id, input_html: { :disabled => true }, as: :hidden
