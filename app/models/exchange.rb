@@ -300,6 +300,7 @@ class Exchange < ActiveRecord::Base
     @bad_rate = Exchange.bad(country).rate(rated_currency, base_currency)
   end
 
+  # quote and calculate gain, focusing on exchange rates and ignoring added charges
   def quote(params)
 
     result = {
@@ -315,9 +316,6 @@ class Exchange < ActiveRecord::Base
         quote_currency:   nil,
         edited_quote:     nil,
         edited_quote_rounded: nil,
-        cc_fee:           nil,
-        credit_charge:    nil,
-        delivery_charge:  nil,
         bad_amount:       nil,
         gain:             0,
         gain_amount:      gain_amount   = 0,
@@ -329,21 +327,6 @@ class Exchange < ActiveRecord::Base
         base_rate:        nil,
         errors:           []
     }
-
-=begin
-    unless rates.any?
-      result[:errors]           <<   'No rates defined for that exchange'
-      return result
-    end
-=end
-
-=begin    No need: the new logic is to only extract the exchanges in the params[:radius] from center
-    puts params[:distance], params[:radius]
-    if params[:distance] > params[:radius]
-      result[:errors]           <<   'Out of radius'
-      return result
-    end
-=end
 
     if currency.nil?
       result[:errors]           <<   'No local currency defined for that exchange'
@@ -379,12 +362,6 @@ class Exchange < ActiveRecord::Base
       result[:edited_quote] = result[:edited_quote_rounded] = result[:quote].to_money(get_currency).format
       result[:quote_currency]                               = get_currency
 
-      cc_fee                                                = params[:credit] ? self.cc_fee || 0 : 0
-      result[:cc_fee]                                       = cc_fee
-      result[:credit_charge]                                = (cc_fee * result[:quote] / 100).round(2)
-      result[:delivery_charge]                              = params[:delivery] ? self.delivery_charge || 0 : 0
-      result[:edited_credit_charge]                         = result[:credit_charge].to_money(pay_currency).format(:disambiguate => true)
-      result[:edited_delivery_charge]                       = result[:delivery_charge].to_money(pay_currency).format(:disambiguate => true)
       get_amount                                            = result[:quote]
       result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format(:disambiguate => true)
       pay_amount                                            += result[:credit_charge] + result[:delivery_charge]      # not symetrical: charges always add to the pay_amount
@@ -436,13 +413,7 @@ class Exchange < ActiveRecord::Base
       result[:edited_quote] = result[:edited_quote_rounded] = result[:quote].to_money(pay_currency).format
       result[:quote_currency]                               = pay_currency
 
-      cc_fee                                                = params[:credit] ? self.cc_fee || 0 : 0
-      result[:cc_fee]                                       = cc_fee
-      result[:credit_charge]                                = (cc_fee * result[:quote] / 100).round(2)
-      result[:delivery_charge]                              = params[:delivery] ? self.delivery_charge || 0 : 0
-      result[:edited_credit_charge]                         = result[:credit_charge].to_money(pay_currency).format(:disambiguate => true)
-      result[:edited_delivery_charge]                       = result[:delivery_charge].to_money(pay_currency).format(:disambiguate => true)
-      pay_amount                                            = result[:quote] + result[:credit_charge] + result[:delivery_charge]
+      pay_amount                                            = result[:quote]
       result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format(:disambiguate => true)
 
       bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency)
@@ -619,7 +590,6 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:name] = self.fullname
     exchange_hash[:name_s] = self.name_s
     exchange_hash[:address] = self.address
-    exchange_hash[:open_today] = self.todays_hours
     exchange_hash[:phone] = self.phone
     exchange_hash[:website] = self.website
     exchange_hash[:latitude] = self.latitude
@@ -637,8 +607,20 @@ class Exchange < ActiveRecord::Base
     quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, calculated: calculated,
                    radius: radius, distance: exchange_hash[:distance], trans: trans, delivery: delivery, credit: credit)
     exchange_hash = quotes.merge(exchange_hash)
-    exchange_hash[:inclusive_gain] = exchange_hash[:gain] + exchange_hash[:credit_charge] + exchange_hash[:delivery_charge]     # for grading purposes, it's ok even if charges are in a different currency
-    exchange_hash[:grade] = (exchange_hash[:inclusive_gain] * -1) + (exchange_hash[:distance] * Rails.application.config.distance_factor)
+
+    delivery_charge = delivery ? self.delivery_charge || 0 : 0
+    exchange_hash[:delivery_charge] = delivery_charge.to_money(pay.currency.iso_code).format(:disambiguate => true)
+
+    cc_fee = credit ? self.cc_fee || 0 : 0
+    credit_charge = (pay.amount + delivery_charge) * cc_fee / 100
+    exchange_hash[:credit_charge] = credit_charge.to_money(pay.currency.iso_code).format(:disambiguate => true)
+
+    # grade adds together amounts and distance, and the amounts may not be the same currency. For grading, this is perfectly fine
+    # gain must be used and not pay or buy amounts, since one of the latter is always fixed, so each time you want to maximize something else; gain does exactly that
+    exchange_hash[:grade] = exchange_hash[:gain] * -1   +
+                            credit_charge               +
+                            delivery_charge             +
+                            exchange_hash[:distance] * Rails.application.config.distance_factor
 
     exchange_hash
 
