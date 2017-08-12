@@ -72,6 +72,7 @@ en:
     distance:
       user: 'away'
       selected: 'from city center'
+      delivery: 'from delivery address'
     cambiuRanking: 'Cambiu ranking'
     view: 'View'
     offerAround: 'offers around'

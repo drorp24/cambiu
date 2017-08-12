@@ -179,7 +179,7 @@ populateDuration = function(exchange, matrix, $scope) {
     $scope.find('[data-model=exchange][data-field=duration]').html(exchange.matrix.duration);
     $scope.find('[data-model=exchange][data-field=gDistance]').html(exchange.matrix.distance).siblings('.from').css('visibility', 'visible');
     var $distance_from = $scope.find('.from');
-    $distance_from.html(search.location.type == 'user' ? $distance_from.data('t-user') : $distance_from.data('t-selected'));
+    $distance_from.html(value_of('service_type') == 'delivery' ? $distance_from.data('t-delivery') : search.location.type == 'user' ? $distance_from.data('t-user') : $distance_from.data('t-selected'));
 
 };
 

@@ -51,6 +51,7 @@ he:
     distance:
       user: 'מכאן'
       selected: 'ממרכז העיר'
+      delivery: 'מכתובת המשלוח'
     cambiuRanking: 'דירוג קמביו'
     view: 'צפו ב-'
     offersAround: 'הצעות בסביבה'
