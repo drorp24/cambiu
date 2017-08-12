@@ -200,14 +200,25 @@
 
     rankCheck = function() {
 
-        offers.forEach((exchange) => {
-            console.log(
-                'grade: ', Number(exchange.properties.grade).toFixed(2),
-                'gain: ', Number(exchange.properties.gain).toFixed(2),
-                'distance: ', Number(exchange.properties.distance).toFixed(2),
-                'name: ', exchange.properties.name
-            )
-        })
+        let offersArr = [];
+
+        offers.forEach((offer) => {
+
+            offerObj = {
+                source:     offer.properties.rates.source,
+                rate:       offer.properties.base_rate,
+                bad:        offer.properties.bad_amount,
+                quote:      offer.properties.edited_quote,
+                gain:       Number(offer.properties.gain).toFixed(2),
+                distance:   Number(offer.properties.distance).toFixed(2),
+                grade:      Number(offer.properties.grade).toFixed(2),
+                name:       offer.properties.name
+            };
+            offersArr.push(offerObj);
+
+        });
+
+        console.table(offersArr);
     };
 
     selectExchange = function($exchange, manual = true) {

@@ -1,6 +1,6 @@
 class Chain < ActiveRecord::Base
-  has_many :exchanges, :dependent => :restrict_with_exception
-  has_many :rates, as: :ratable, dependent: :delete_all
+  has_many :exchanges, :dependent => :destroy
+  has_many :rates, as: :ratable, dependent: :destroy
 
   has_one     :gbp_rate,    -> {where(currency: 'GBP')}       ,class_name: "Rate", as: :ratable
   has_one     :eur_rate,    -> {where(currency: 'EUR')}       ,class_name: "Rate", as: :ratable
@@ -13,7 +13,7 @@ class Chain < ActiveRecord::Base
   has_one     :ils_rate,    -> {where(currency: 'ILS')}       ,class_name: "Rate", as: :ratable
   has_one     :nok_rate,    -> {where(currency: 'NOK')}       ,class_name: "Rate", as: :ratable
 #
-  enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping, :ratefeed ]
+  enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping, :api ]
   validates :name, uniqueness: true, on: :create
   validates :currency, presence: true, on: :create
 

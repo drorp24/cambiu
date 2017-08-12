@@ -67,6 +67,8 @@ class Rate < ActiveRecord::Base
     self.last_update   = Time.now
     self.last_process  = 'api'
     self.save
+    self.ratable.update(rates_source: 'api')
+    true
 
   end
 
@@ -89,7 +91,7 @@ class Rate < ActiveRecord::Base
 
     self.buy = buy
     self.sell = sell
-    self.source = 'ratefeed'
+    self.source = 'ratefeed1'
     self.save
     self.ratable.update(rates_source: 'ratefeed')
 
