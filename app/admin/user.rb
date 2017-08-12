@@ -25,4 +25,27 @@ ActiveAdmin.register User do
 
   end
 
+  form do |f|
+
+    f.inputs 'Details' do
+
+      f.semantic_errors *f.object.errors.keys
+    f.input :first_name
+    f.input :last_name
+    f.input :email
+    f.input :phone
+    f.input :company
+    f.input :locale
+#    f.input :country
+    f.input :city
+    f.input :street
+    f.input :house
+    f.input :entry
+    f.input :floor
+    f.input :apartment
+
+  end
+
+end
+
   end
