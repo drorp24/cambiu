@@ -1,3 +1,7 @@
+// THIS IS A TEMPLATE FOR HOW TO CHECK FORMS...
+// Both html5 and own validations are applied,
+// leaving the headache (e.g., email format checking) to html5
+// and applying the easy ones (e.g., blank lines) myself, to display such errors all at once (html5 doesn't do that)
 userCheckValidity = function() {
 
     var emptyMsg = $('form.registration').attr('data-t-empty');
@@ -10,6 +14,7 @@ userCheckValidity = function() {
         let error = msg || $e.attr('data-t-error');
         $e.removeClass('valid').addClass('invalid');
         $e.siblings('label').attr('data-error', error);
+        console.warn(`invalid field (${String(msg)})`, $e[0]);
     }
 
     function checkIfFull($e) {
@@ -32,18 +37,26 @@ userCheckValidity = function() {
 
         let $this = $(this);
 
+        // Own checks 
+
         let fieldIsFull = checkIfFull($this);
         formValid = formValid && fieldIsFull;
-        if (!fieldIsFull) return true;
+        if (!fieldIsFull) return true;   // return true is jQuery's break. A field with a problem requires no further checks.
 
-        if ($this.is('#user_password_repeat')) {
+        if ($this.is('#user_password_confirmation')) {
             let fieldValid = checkPasswords($this);
             formValid = formValid && fieldValid;
             if (!fieldValid) return true;
         }
 
-        // and so on
+        // html5 checks
 
+        let $this0 = $this[0];
+        if ($this0.willValidate && !$this0.validity.valid) {
+            invalid($this, 'Invalid format');
+            formValid = false;
+            return true;
+        }
     });
 
 

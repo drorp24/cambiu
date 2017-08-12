@@ -124,7 +124,7 @@ orderUpdateUserDelivery = function() {
         function checkData(data) {
             if (data.errors) {
                 let length = data.errors.length;
-                snack(`There are ${length} things to fix in this form`, {klass: 'oops', timeout: 7000});
+                snack(`${data.errors[0]} (1/${length})`, {klass: 'oops', timeout: 7000});
             } else {
                 if (data.message) snack(data.message, {timeout: 3000});
                 resolve(data)

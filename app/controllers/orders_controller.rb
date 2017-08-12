@@ -22,11 +22,19 @@ class OrdersController < ApplicationController
 
   def user
 
-    user = User.find_or_create_by(email: user_params[:email])
-    detailsChanged = user.detailsChanged?(user_params)
-    user.update(user_params)
+    unless user = User.find_by(email: user_params[:email])
+      user = User.create(
+          email:                  user_params[:email],
+          first_name:             user_params[:first_name],
+          last_name:              user_params[:last_name],
+          password:               user_params[:password],
+          password_confirmation:  user_params[:password_confirmation])
+    end
 
     if user and user.errors.empty?
+
+      detailsChanged = user.detailsChanged?(user_params)
+      user.update(user_params)
 
       search = Search.find(search_params[:id])
       search.update(user_id: user.id) if search

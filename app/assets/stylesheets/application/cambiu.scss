@@ -1022,6 +1022,11 @@ body#cambiu {
   }
 
 
+  .md-form.submit input[type=submit] {
+    text-transform: uppercase;
+    padding: 0.3rem 1rem;
+  }
+
 
   // twitter-bootstrap-4 & MDB adjustments - end
 
