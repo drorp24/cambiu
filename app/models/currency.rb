@@ -32,8 +32,8 @@ class Currency
             {
                 sell_markup:  2.5,
                 buy_markup:   2.5,
-                sell_spread:  1,
-                buy_spread:   1
+                sell_spread:  1.5,
+                buy_spread:   1.5
             },
         UK:
             {

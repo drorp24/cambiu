@@ -58,7 +58,7 @@ Rails.application.configure do
   config.ga_tracking_code = 'UA-91021177-3'
   config.inspectlet_wid = ''
 
-  config.distance_factor = 1
+  config.distance_factor = 10
 
 
 end

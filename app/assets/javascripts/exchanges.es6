@@ -198,11 +198,13 @@
 
     };
 
-    rankCheck = function() {
+    rankCheck = function(whatIf = {}) {
 
         let offersArr = [];
 
         offers.forEach((offer) => {
+
+            let grade = whatIf.distance_factor ? Number(offer.properties.gain * -1 + offer.properties.distance * whatIf.distance_factor).toFixed(2) : Number(offer.properties.grade).toFixed(2);
 
             offerObj = {
                 source:     offer.properties.rates.source,
@@ -211,13 +213,14 @@
                 quote:      offer.properties.edited_quote,
                 gain:       Number(offer.properties.gain).toFixed(2),
                 distance:   Number(offer.properties.distance).toFixed(2),
-                grade:      Number(offer.properties.grade).toFixed(2),
+                grade:      grade,
                 name:       offer.properties.name
             };
             offersArr.push(offerObj);
 
         });
 
+        if (Object.keys(whatIf).length) offersArr.sort((a, b) => a.grade - b.grade)
         console.table(offersArr);
     };
 
