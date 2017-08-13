@@ -67,8 +67,8 @@ populateExchange = function(exchange, $scope, index, page) {
     });
 
     $scope.find('[data-model=exchange][data-field=' + exchange.calculated + ']').html(exchange.edited_quote);
-    if (exchange.credit_charge > 0) $scope.find('.offer_line.cc.charge').css('display', 'flex');
-    if (exchange.delivery_charge > 0) $scope.find('.offer_line.deliver.charge').css('display', 'flex');
+    if (exchange.credit_charge_raw > 0) $scope.find('.offer_line.cc.charge').css('display', 'flex');
+    if (exchange.delivery_charge_raw > 0) $scope.find('.offer_line.deliver.charge').css('display', 'flex');
 
     if (!exchange.gain || exchange.gain < 0) {
       $scope.find('.comparison').css('visibility', 'hidden');

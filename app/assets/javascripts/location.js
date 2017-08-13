@@ -221,6 +221,10 @@ function searchbox_addListener(searchBox) {
         set('location_type',        search.location.type = 'selected');
         set('location_reason',      search.location.reason = 'changed by user');
 
+        $('[data-model=user][data-field=house]').val(place.address_components[0].short_name).siblings('label').addClass('active');
+        $('[data-model=user][data-field=street]').val(place.address_components[1].short_name).siblings('label').addClass('active');
+        $('[data-model=user][data-field=city]').val(place.address_components[2].short_name).siblings('label').addClass('active');
+
         setLocale(search.location);
         fetchAndPopulateLocaloffers();
 
