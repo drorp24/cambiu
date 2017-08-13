@@ -609,10 +609,12 @@ class Exchange < ActiveRecord::Base
     exchange_hash = quotes.merge(exchange_hash)
 
     delivery_charge = delivery ? self.delivery_charge || 0 : 0
+    exchange_hash[:delivery_charge_raw] = delivery_charge
     exchange_hash[:delivery_charge] = delivery_charge.to_money(pay.currency.iso_code).format(:disambiguate => true)
 
     cc_fee = credit ? self.cc_fee || 0 : 0
     credit_charge = (pay.amount + delivery_charge) * cc_fee / 100
+    exchange_hash[:credit_charge_raw] = credit_charge
     exchange_hash[:credit_charge] = credit_charge.to_money(pay.currency.iso_code).format(:disambiguate => true)
 
     # grade adds together amounts and distance, and the amounts may not be the same currency. For grading, this is perfectly fine

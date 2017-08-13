@@ -88,7 +88,7 @@ Rails.application.configure do
 
   config.inspectlet_wid = '325658476'
 
-  config.distance_factor = 1
+  config.distance_factor = 10
 
 end
 Rails.application.routes.default_url_options[:host] = 'www.cambiu.com'
