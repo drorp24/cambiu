@@ -12,8 +12,8 @@
           <%= t 'deal.get'  %>
         </div>
         <div class="figure">
-          <div data-model="exchange" data-field="get_amount" class="amount threedots"></div>
-          <div data-model="exchange" data-field="get_currency" class="currency" data-model="order" data-field="buy_cents"></div>
+          <div data-model="order" data-field="get_amount" class="amount threedots"></div>
+          <div data-model="order" data-field="get_currency" class="currency" data-model="order" data-field="buy_cents"></div>
         </div>
         <div class="edit icon right_icon" data-href-pane="update" data-href-id="curr">
           <i class="material-icons">mode_edit</i>
@@ -25,8 +25,8 @@
           <%= t 'deal.pay'  %>
         </div>
         <div class="figure">
-          <div data-model="exchange" data-field="pay_amount" class="amount threedots"></div>
-          <div data-model="exchange" data-field="pay_currency" class="currency"></div>
+          <div data-model="order" data-field="pay_amount" class="amount threedots"></div>
+          <div data-model="order" data-field="pay_currency" class="currency"></div>
         </div>
         <div class="edit icon right_icon" data-href-pane="update" data-href-id="curr">
           <i class="material-icons">mode_edit</i>
@@ -38,8 +38,8 @@
           <%= t 'deal.delivery'  %>
         </div>
         <div class="figure">
-          <div data-model="exchange" data-field="delivery_charge" class="amount threedots"></div>
-          <div data-model="exchange" data-field="pay_currency" class="currency"></div>
+          <div data-model="order" data-field="delivery_charge_amount" class="amount threedots"></div>
+          <div data-model="order" data-field="pay_currency" class="currency"></div>
         </div>
         <div class="edit icon right_icon" data-href-pane="update" data-href-id="curr">
           <i class="material-icons">mode_edit</i>
@@ -62,8 +62,8 @@
           <%= t 'deal.credit'  %>
         </div>
         <div class="figure">
-          <div data-model="exchange" data-field="credit_charge" class="amount threedots"></div>
-          <div data-model="exchange" data-field="pay_currency" class="currency">USD</div>
+          <div data-model="order" data-field="credit_charge_amount" class="amount threedots"></div>
+          <div data-model="order" data-field="pay_currency" class="currency">USD</div>
         </div>
         <div class="edit icon right_icon" data-href-pane="update" data-href-id="curr">
           <i class="material-icons">mode_edit</i>
@@ -86,8 +86,8 @@
           <div class="yourGain"><%= t 'deal.yourGain' %></div>
         </div>
         <div class="figure">
-          <div data-model="exchange" data-field="gain_amount" class="amount threedots"></div>
-          <div data-model="exchange" data-field="gain_currency" class="currency"></div>
+          <div data-model="order" data-field="gain_amount" class="amount threedots"></div>
+          <div data-model="order" data-field="gain_currency" class="currency"></div>
         </div>
         <div class="help icon right_icon">
           <i class="material-icons"

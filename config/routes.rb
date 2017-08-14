@@ -23,7 +23,16 @@ Rails.application.routes.draw do
     end
   end
 
-  post 'payment/url', to: 'payment#url'
+  resources :payments do
+    collection do
+      post 'url'
+    end
+    member do
+      get 'success'
+      get 'error'
+      get 'cancel'
+    end
+  end
 
   # non-devise route: post users, routed here to users#create to create guest users
   post 'users', to: 'users#create', as: :users

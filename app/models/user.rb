@@ -50,4 +50,9 @@ class User < ActiveRecord::Base
     self.first_name + ' ' + self.last_name if self.first_name and self.last_name
   end
 
+  def delivery_address
+    return nil unless self.house && self.street && self.city
+    "#{self.house} #{self.street}, #{self.city}"
+  end
+
 end

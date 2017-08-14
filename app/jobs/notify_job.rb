@@ -8,6 +8,7 @@ class NotifyJob < ActiveJob::Base
     response = {}
     error = nil
     exchange = order.exchange
+    user = order.user_id ? order.user : nil
     if !exchange
       error = "Exchange id on order is: " + order.exchange_id.to_s + ". Exchange does not exist"
     end
@@ -108,17 +109,15 @@ class NotifyJob < ActiveJob::Base
               {name: 'PAY_AMOUNT',               content: Money.new(order.pay_cents, order.pay_currency).format},
               {name: 'GET_AMOUNT',               content: Money.new(order.buy_cents, order.buy_currency).format},
               {name: 'LOCATION',                 content: order.search.user_location},
-              {name: 'CUSTOMER_EMAIL',           content: order.customer_email || ""},
-              {name: 'CUSTOMER_ADDRESS1',        content: order.customer_address1 || ""},
-              {name: 'CUSTOMER_ADDRESS2',        content: order.customer_address1 || ""},
-              {name: 'CUSTOMER_ADDRESS3',        content: order.customer_address1 || ""},
-              {name: 'CUSTOMER_PHONE',           content: order.customer_phone || ""},
               {name: 'COMPANY_NAME',             content: from_name},
               {name: 'COMPANY_ADDRESS',          content: company_address},
               {name: 'CURRENT_YEAR',             content: Date.today.strftime('%Y')},
               {name: 'DELIVERY_AMOUNT',          content: ""},
               {name: 'CC_AMOUNT',                content: ""},
-              {name: 'WARNING',                  content: warning}
+              {name: 'WARNING',                  content: warning},
+              {name: 'USER_EMAIL',               content: user ? user.email : ""},
+              {name: 'USER_PHONE',               content: user ? user.phone : ""},
+              {name: 'USER_ADDRESS',             content: user ? user.delivery_address : ""}
           ]
       }
 

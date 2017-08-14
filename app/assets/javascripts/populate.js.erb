@@ -45,6 +45,14 @@ populateOrder = function($scope, order) {
     $this.html(value);
   });
 
+  if (order.credit_charge_amount) $scope.find('.offer_line.cc.charge').css('display', 'flex');
+  if (order.delivery_charge_amount) $scope.find('.offer_line.deliver.charge').css('display', 'flex');
+  if (order.service_type == 'delivery') {
+    $scope.find('.delivery.section').removeClass('inactive');
+  } else if (order.service_type == 'pickup') {
+    $scope.find('.pickup.section').removeClass('inactive');
+  }
+
 };
 
 populateExchange = function(exchange, $scope, index, page) {

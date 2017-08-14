@@ -26,10 +26,17 @@ order = function($scope, exchange) {
                     search_id:          searchId, // TODO: add the order form,
                     pay_amount:         $('form.selection [data-field=pay_amount]').val(),
                     pay_currency:       $('form.selection [data-field=pay_currency]').val(),
-                    buy_amount:         $('form.selection [data-field=buy_amount]').val(),
-                    buy_currency:       $('form.selection [data-field=buy_currency]').val(),
+                    get_amount:         $('form.selection [data-field=buy_amount]').val(),
+                    get_currency:       $('form.selection [data-field=buy_currency]').val(),
                     service_type:       value_of('service_type'),
-                    payment_method:     value_of('payment_method')
+                    payment_method:     value_of('payment_method'),
+                    base_currency:      exchange.rates.base_currency,
+                    rated_currency:     exchange.rates.rated_currency,
+                    buy_rate:           exchange.rates.buy_rate,
+                    sell_rate:          exchange.rates.sell_rate,
+                    cc_fee:             exchange.rates.cc_fee,
+                    credit_charge:      exchange.credit_charge,
+                    delivery_charge:    exchange.delivery_charge
                 }
             }
         )
@@ -60,6 +67,22 @@ order = function($scope, exchange) {
         .catch((error) => {console.log('Error creating order:', error)});
 
 };
+
+
+orderGet = function(order_id) {
+    return fetch(`/orders/${order_id}`, {
+            headers: new Headers({
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            })
+        })
+        .then(checkStatus)
+        .then(response => response.json())
+        .catch((error) => {
+            console.log('Error creating order:', error)
+        });
+};
+
 
 requestOrderConfirmation = function() {
     sessionStorage.order_status = 'confirmationRequested';
@@ -127,6 +150,7 @@ orderUpdateUserDelivery = function() {
                 snack(`${data.errors[0]} (1/${length})`, {klass: 'oops', timeout: 7000});
             } else {
                 if (data.message) snack(data.message, {timeout: 3000});
+                console.log('Successfully updated order with user data: ', data);
                 resolve(data)
             }
         }

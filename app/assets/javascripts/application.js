@@ -30,7 +30,7 @@
 //= require pages
 //= require flow
 //= require user
-//= require payment
+//= require pay
 
 //= require star-rating
 //= require swiper.jquery.min

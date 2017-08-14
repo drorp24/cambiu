@@ -2,6 +2,15 @@ class OrdersController < ApplicationController
   skip_before_action :verify_authenticity_token
   respond_to :json
 
+  def show
+    order = Order.find_by(id: params[:id])
+    if order
+      render json: order.with_user
+    else
+      render json: {errors: 'Could not find order ' + id.to_s}, status: :unprocessable_entity
+    end
+  end
+
   def create
     order = Order.create(order_params)
     if order

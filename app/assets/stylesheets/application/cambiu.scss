@@ -2630,8 +2630,6 @@ body#cambiu {
     display: flex;
     flex-direction: column;
     width: 100%;
-    font-weight: 300;
-    color: #000;
     text-transform: uppercase;
     div {
 //      display: inline-block;
@@ -2648,11 +2646,11 @@ body#cambiu {
       text-align: right;
     }
     .offer_line {
+      color: #000;
       display: flex;
       justify-content: flex-start;
       align-items: center;
       @include vfont-size(5vw);
-      font-weight: 400;
       &.saving {
         color: $brand-color-a;
       }
@@ -2678,7 +2676,6 @@ body#cambiu {
       }
       &.charge {
         display: none;
-        font-weight:100;
         @include vfont-size(4vw);
         text-transform: initial;
         &.active {
@@ -3095,9 +3092,15 @@ body#cambiu {
       display: none;
     }
 
+  &.payments .orderPane {
+    padding-top: 0;
+  }
+
   .orderPane {
+    color: #555;
+    font-weight: 400;
+      background: rgba(0, 0, 0, 0.18);
       display: none;
-      background: #fff;
       z-index: 1;
       height: 100vh;
     width: 100%;
@@ -3107,13 +3110,17 @@ body#cambiu {
         padding-right: 5%;
         padding-left: 5%;
         */
-        color: #000;
         height: 35%;
+        &.user {
+          height: 12%;
+          @include vfont-size(4.5vw);
+          color: #000;
+          font-weight: 300;
+        }
         @include apple-like;
         .section_content {
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.15);
           padding-left: 5%;
           padding-right: 5%;
         }
@@ -3137,6 +3144,7 @@ body#cambiu {
         }
       }
       .order_title {
+        text-shadow: 0 1px 1px #fff;;
         height: 10%;
         @include vfont-size(8vw);
         text-transform: uppercase;
@@ -3157,7 +3165,6 @@ body#cambiu {
           display: none !important;
         }
         .offer_line {
-          font-weight: 300;
           .figure {
             width: 55%;
           }
@@ -3170,6 +3177,7 @@ body#cambiu {
         }
       }
       .delivery {
+        height: 20%;
         text-align: center;
         @include vfont-size(5vw);
         .delivery_title {
@@ -3180,7 +3188,7 @@ body#cambiu {
           @include vfont-size(4vw);
         }
         .delivery_field_value {
-          @include vfont-size(3.5vw);
+          @include vfont-size(4.5vw);
         }
       }
      [data-field=duration] {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170812065458) do
+ActiveRecord::Schema.define(version: 20170814102308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,28 +163,28 @@ ActiveRecord::Schema.define(version: 20170812065458) do
     t.integer  "exchange_id"
     t.integer  "user_id"
     t.datetime "expiry"
-    t.integer  "status",                        default: 0
+    t.integer  "status",                               default: 0
     t.integer  "pay_cents"
-    t.string   "pay_currency",      limit: 255
+    t.string   "pay_currency",             limit: 255
     t.integer  "buy_cents"
-    t.string   "buy_currency",      limit: 255
+    t.string   "buy_currency",             limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "service_type"
     t.integer  "get_cents"
     t.string   "get_currency"
-    t.string   "user_location"
-    t.string   "customer_email"
-    t.string   "customer_phone"
-    t.string   "customer_address1"
-    t.string   "customer_address2"
-    t.string   "customer_address3"
     t.integer  "search_id"
     t.string   "base_currency"
     t.string   "rated_currency"
     t.float    "buy_rate"
     t.float    "sell_rate"
     t.integer  "payment_method"
+    t.integer  "credit_charge_cents"
+    t.string   "credit_charge_currency"
+    t.integer  "delivery_charge_cents"
+    t.string   "delivery_charge_currency"
+    t.float    "cc_fee"
+    t.string   "rates_source"
     t.index ["exchange_id"], name: "index_orders_on_exchange_id", using: :btree
     t.index ["search_id"], name: "index_orders_on_search_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree

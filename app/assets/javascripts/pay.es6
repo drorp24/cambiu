@@ -19,7 +19,7 @@ fetchPaymentUrl = function(order) {
     return new Promise(function(resolve, reject) {
 
         function fetchData() {
-            return fetch('/payment/url?', {
+            return fetch('/payments/url?', {
                 method: 'post',
                 headers: new Headers({
                     'Accept': 'application/json',
