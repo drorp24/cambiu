@@ -554,6 +554,9 @@ form do |f|
       column 'Service' do |order|
         order.service_type.capitalize if order.service_type
       end
+      column 'Payment' do |order|
+        link_to 'Credit card', admin_order_payments_path(order.id) if order.payments.any?
+      end
       column (:status) {|order| status_tag(order.status, class: order.status_color) if order.status }
     end
 

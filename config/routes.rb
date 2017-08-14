@@ -62,9 +62,12 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users do
       resources :orders
-      resource :searches
+      resources :searches
+      resources :payments
     end
-    resources :orders
+    resources :orders do
+      resources :payments
+    end
     resources :issues
  #   resources :rates
     resources :exchanges do

@@ -14,6 +14,10 @@ ActiveAdmin.register User do
       count = user.orders.count
       link_to count.to_s + ' order'.pluralize(count), admin_user_orders_path(user) if count > 0
     end
+    column :payments do |user|
+      count = user.payments.count
+      link_to count.to_s + ' payment'.pluralize(count), admin_user_payments_path(user) if count > 0
+    end
     column :first_name
     column :last_name
     column :phone

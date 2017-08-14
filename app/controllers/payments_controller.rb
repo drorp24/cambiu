@@ -6,6 +6,7 @@ class PaymentsController < ApplicationController
   end
 
   def success
+    Payment.record_token(payment_params)
   end
 
   def error

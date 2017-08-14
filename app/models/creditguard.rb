@@ -68,7 +68,7 @@ class Creditguard
                     <firstPayment></firstPayment>
                     <periodicalPayment></periodicalPayment>
                     <numberOfPayments></numberOfPayments>
-                    <user>#{params[:first_name]} #{params[:last_name]}</user>
+                    <user>#{params[:name]}</user>
                     <mid>#{ENV['CG_MID']}</mid>
                     <uniqueid>#{params[:voucher]}</uniqueid>
                     <mpiValidation>Token</mpiValidation>

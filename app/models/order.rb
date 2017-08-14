@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :search
   has_many   :emails, as: :emailable
+  has_many   :payments
 
   monetize :pay_cents, with_model_currency: :pay_currency, :allow_nil => true
   monetize :buy_cents, with_model_currency: :buy_currency, :allow_nil => true
@@ -32,7 +33,7 @@ class Order < ActiveRecord::Base
 
     super.merge(pay_amount: self.pay_amount, get_amount: self.get_amount, credit_charge_amount: self.credit_charge_amount, delivery_charge_amount: self.delivery_charge_amount,
                 expiry_t: self.expiry_t, expiry_s: self.expiry_s, voucher: self.voucher, mandrill_status: self.mandrill_status, mandrill_reject_reason: self.mandrill_reject_reason).
-        except('created_at', 'updated_at', 'expiry', 'pay_cents', 'buy_cents', 'get_cents', 'credit_charge_cents', 'delivery_charge_cents')
+        except('created_at', 'updated_at', 'expiry', 'buy_cents', 'get_cents', 'credit_charge_cents', 'delivery_charge_cents')
   end
 
   def with_user(detailsChanged = false)
