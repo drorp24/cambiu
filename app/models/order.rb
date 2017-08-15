@@ -31,7 +31,7 @@ class Order < ActiveRecord::Base
   # except doesn't remove unwanted keys though
   def attributes
 
-    super.merge(total_amount: self.total_amount, pay_amount: self.pay_amount, get_amount: self.get_amount, credit_charge_amount: self.credit_charge_amount, delivery_charge_amount: self.delivery_charge_amount,
+    super.merge(total_cents: self.total_cents, total_amount: self.total_amount, pay_amount: self.pay_amount, get_amount: self.get_amount, credit_charge_amount: self.credit_charge_amount, delivery_charge_amount: self.delivery_charge_amount,
                 expiry_t: self.expiry_t, expiry_s: self.expiry_s, voucher: self.voucher, mandrill_status: self.mandrill_status, mandrill_reject_reason: self.mandrill_reject_reason).
         except('created_at', 'updated_at', 'expiry', 'buy_cents', 'get_cents', 'credit_charge_cents', 'delivery_charge_cents')
   end
@@ -151,8 +151,12 @@ class Order < ActiveRecord::Base
     "#{user.house} #{user.street}, #{user.city}"
   end
 
+  def total_cents
+    @total_cents = pay_cents + (credit_charge_cents || 0) + (delivery_charge_cents || 0)
+  end
+
   def total_amount
-     ((pay_cents + (credit_charge_cents || 0) + (delivery_charge_cents || 0)) / 100).to_money(self.pay_currency).format
+     (self.total_cents / 100).to_money(self.pay_currency).format
   end
 
 end

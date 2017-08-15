@@ -59,7 +59,7 @@ class Creditguard
                     <successUrl>#{params[:base_url]}/payments/#{params[:id]}/success</successUrl>
                     <errorUrl>#{params[:base_url]}/payments/#{params[:id]}/error</errorUrl>
                     <cancelUrl>#{params[:base_url]}/payments/#{params[:id]}/cancel</cancelUrl>
-                    <total>#{params[:pay_cents]}</total>
+                    <total>#{params[:total_cents]}</total>
                     <transactionType>Debit</transactionType>
                     <creditType>RegularCredit</creditType>
                     <currency>#{params[:pay_currency]}</currency>
