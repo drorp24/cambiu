@@ -102,3 +102,8 @@ he:
     entry: 'כניסה'
     floor: 'קומה'
     apartment: 'דירה'
+  app:
+    missing: '(חסר תרגום)'
+    mayTake24Hours: 'משלוח לוקח עד 24 שעות. להזמין?'
+    yes1: 'כן'
+    no1: 'לא'

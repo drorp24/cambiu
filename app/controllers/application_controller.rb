@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   respond_to :html
 
+  before_action :set_locale
+
   before_action :show_request_headers
 #  before_action :require_authentication,:if => Proc.new { |c| c.request.path.include? "/api/"}
 
@@ -16,10 +18,13 @@ class ApplicationController < ActionController::Base
 
   before_action :detect_browser
 
-  before_action :set_locale
 
   def set_locale
     @lang = I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  def default_url_options(options={})
+    { :locale => I18n.locale }
   end
 
 
@@ -37,6 +42,10 @@ class ApplicationController < ActionController::Base
   private
 
   def show_request_headers
+
+    puts ""
+    puts ""
+    puts "I18n.local: " + I18n.locale.to_s
     puts ""
     puts "request headers:"
     puts ""

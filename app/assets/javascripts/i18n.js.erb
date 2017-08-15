@@ -1,0 +1,11 @@
+t = function(expression) {
+
+  var translation = {
+    mayTake24Hours: '<%= I18n.t 'app.mayTake24Hours' %>',
+    yes: '<%= I18n.t 'app.yes1' %>',
+    no: '<%= I18n.t 'app.no1' %>'
+  };
+
+  return translation[expression] || '<%= I18n.t 'app.missing' %>'
+};
+var a = 1;

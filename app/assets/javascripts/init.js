@@ -490,6 +490,9 @@ $(document).ready(function() {
     snackHtml = function(arg) {
         var message = arg.message,
             button = typeof arg.button === 'undefined' ? null : arg.button,
+            button_action = typeof arg.button_action === 'undefined' ? null : arg.button_action,
+            cancel_button = typeof arg.cancel_button === 'undefined' ? null : arg.cancel_button,
+            cancel_button_action = typeof arg.cancel_button_action === 'undefined' ? null : arg.cancel_button_action,
             klass = typeof arg.klass === 'undefined' ? null : arg.klass,
             link = typeof arg.link === 'undefined' ? null:  arg.link,
             icon = typeof arg.icon === 'undefined' ? null:  arg.icon;
@@ -501,10 +504,17 @@ $(document).ready(function() {
         $e.find('.message').html(message);
         if (klass) $e.find('.snackIcon').addClass(klass);
         if (icon) $e.find('.snackIcon i').html(icon);
-        if (button) $e.find('.button').html(button);
+        if (button) $e.find('.button.ok_button').html(button);
+        if (cancel_button) $e.find('.cancel_button').html(cancel_button);
 
         if (button && link) {
-            $e.find('.button').attr({'data-href-page': link.page, 'data-href-pane': link.pane, 'data-help-topic': help_topic, 'data-help-content': help_content});
+            $e.find('.button.ok_button').attr({'data-href-page': link.page, 'data-href-pane': link.pane, 'data-help-topic': help_topic, 'data-help-content': help_content});
+        }
+        if (button && button_action) {
+            $e.find('.button').attr('onclick', button_action)
+        }
+        if (cancel_button && cancel_button_action) {
+            $e.find('.cancel_button').attr('onclick', cancel_button_action)
         }
         return $e.html();
     };
@@ -536,6 +546,9 @@ $(document).ready(function() {
                 content: snackHtml({
                     message: message,
                     button: options.button,
+                    button_action: options.button_action,
+                    cancel_button: options.cancel_button,
+                    cancel_button_action: options.cancel_button_action,
                     klass: options.klass,
                     link: options.link,
                     icon: options.icon

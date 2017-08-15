@@ -123,3 +123,8 @@ en:
     entry: 'Entry'
     floor: 'Floor'
     apartment: 'Appt.'
+  app:
+    missing: '(Translation missing)'
+    mayTake24Hours: 'Delivery takes up to 24 hrs. Order it?'
+    yes1: 'Yes'
+    no1: 'No'

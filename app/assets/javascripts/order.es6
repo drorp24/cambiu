@@ -5,7 +5,11 @@
 
 $('body').on('click tap','[data-action=order]', (function (e)  {  // Warning: not to use arrow function: it changes $this
     let $this = $(this);
-    order($this.closest('[data-pane]'), currentExchange());
+    if (value_of('service_type') == 'delivery') {
+        verifyUserWantsDelivery()
+    } else {
+        orderThis();
+    }
 }));
 
 
@@ -201,4 +205,26 @@ noOtherOrderExists = function() {
         snack(text, {klass: 'oops', timeout: 7000});
     }
     return !orderred_already || order_exchange_id == current_exchange.id;  //in the latter case: allow passthrough to order page, just warn user that he ordered already
+};
+
+verifyUserWantsDelivery = () => {
+
+    snack(t('mayTake24Hours'), {
+        timeout: 100000,
+        button: t('yes'),
+        button_action: "orderThis()",
+        cancel_button: t('no'),
+        cancel_button_action: 'revertDelivery()'
+    })
+
+};
+
+orderThis = () => {
+    order($(this).closest('[data-pane]'), currentExchange())
+};
+
+revertDelivery = () => {
+    setServiceTypeTo('pickup');
+    setPaymentMethodTo('cash');
+    setPage({pane1: 'search'});
 };

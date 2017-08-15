@@ -31,6 +31,7 @@
 //= require flow
 //= require user
 //= require pay
+//= require i18n
 
 //= require star-rating
 //= require swiper.jquery.min
