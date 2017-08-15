@@ -227,7 +227,37 @@
         console.log(offersArr);
     };
 
-    selectExchange = function($exchange, manual = true) {
+exchangeErrors = function(exclude = {}) {
+
+    let exchangesArr = [];
+    let exclude_error = !!Object.keys(exclude).length && exclude.no;
+
+    exchanges.forEach((exchange) => {
+
+        let errors = exchange.properties.errors;
+        let count = errors.length;
+        let rec = exchange.properties;
+        if (count == 0 || exclude_error && errors[0] == exclude_error) return;
+
+        exchangeObj = {
+            id:         rec.id,
+            name:       rec.name,
+            errors:     count,
+            error:      errors[0],
+            rates_update: rec.rates.updated.substring(0, 10),
+            rates_source: rec.rates.source,
+            gain:       Number(rec.gain).toFixed(2),
+            distance:   Number(rec.distance).toFixed(2)
+        };
+        exchangesArr.push(exchangeObj);
+
+    });
+
+    console.table(exchangesArr);
+};
+
+
+selectExchange = function($exchange, manual = true) {
 
         console.log('selectExchange');
         $exchange.addClass('selected');
