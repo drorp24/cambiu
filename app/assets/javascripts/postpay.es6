@@ -19,5 +19,8 @@ $(document).ready(() => {
     let order_id = location.pathname.split('/')[2];
     let $scope = $('.orderPane').css('display', 'block');
 
-    orderGet(order_id).then((order) => {populateOrder($scope, order)});
+    orderGet(order_id).then((order) => {
+        $('body').addClass(`${order.payment_method} ${order.service_type}`);
+        populateOrder($scope, order)
+    });
 });

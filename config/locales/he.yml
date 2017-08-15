@@ -68,6 +68,7 @@ he:
     yourGain: 'הרוויחו'
     delivery: 'עבור משלוח, הוסיפו'
     credit: 'עבור אשראי, הוסיפו'
+    total: 'סך הכל'
   pickup:
     title: 'איסוף'
   order:

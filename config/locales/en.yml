@@ -89,6 +89,7 @@ en:
     yourGain: 'Save'
     delivery: 'For delivery, add'
     credit: 'For credit card, add'
+    total: 'Total'
   pickup:
     title: 'Pick-up'
   directions:

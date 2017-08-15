@@ -878,6 +878,55 @@ body#cambiu {
   */
 
 
+  // Charges parts in 'offer' and 'order' (both types) pages
+
+  .offer {
+    .offer_line {
+      &.charge, &.total {
+        display: none;
+      }
+    }
+  }
+
+  &.credit {
+    .offer_line.cc.charge {
+      display: flex;
+    }
+    .offer_line.total {
+      display: flex;
+    }
+  }
+
+  &.delivery {
+    .delivery.section {
+      display: flex;
+    }
+    .offer_line.deliver.charge {
+      display: flex;
+    }
+    .offer_line.total {
+      display: flex;
+    }
+    .newexpiry {
+      display: none;
+    }
+  }
+
+  &.pickup {
+    .delivery.section {
+      display: none;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
   // Multi-language - start
 
 
@@ -2650,9 +2699,13 @@ body#cambiu {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      @include vfont-size(5vw);
+      @include vfont-size(4.5vw);
       &.saving {
         color: $brand-color-a;
+        font-weight: 400;
+      }
+      &.total {
+        font-weight: 400;
       }
       .text {
         width: 40%;
@@ -2676,7 +2729,7 @@ body#cambiu {
       }
       &.charge {
         display: none;
-        @include vfont-size(4vw);
+        @include vfont-size(3.5vw);
         text-transform: initial;
         &.active {
           display: flex;
@@ -2695,7 +2748,6 @@ body#cambiu {
       line-height: 1;
     }
   }
-
 
 
 
@@ -2748,10 +2800,12 @@ body#cambiu {
     .open_and_phone {
       height: 8%;
       position: relative;
+      margin-top: -5%;
+      margin-bottom: 5%;
       //        top: -1vh;
     }
     .deal {
-      height: 32%; // for damn iPhone
+      height: 35%; // for damn iPhone
     }
     .actions_line {
       height: 20%;
@@ -3225,7 +3279,6 @@ body#cambiu {
   .inactive {
     display: none;
   }
-
 
   .confirmation {
     display: none;

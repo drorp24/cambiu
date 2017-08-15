@@ -81,6 +81,16 @@
 -->
       </div>
 
+      <div class="offer_line total">
+        <div class="text">
+          <%= t 'deal.total'  %>
+        </div>
+        <div class="figure">
+          <div data-model="order" data-field="total_amount" class="amount threedots"></div>
+          <div data-model="order" data-field="pay_currency" class="currency">USD</div>
+        </div>
+      </div>
+
       <div class="offer_line saving">
         <div class="text">
           <div class="yourGain"><%= t 'deal.yourGain' %></div>
