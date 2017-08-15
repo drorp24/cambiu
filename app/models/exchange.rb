@@ -470,7 +470,7 @@ class Exchange < ActiveRecord::Base
     result[:sell] = base_rates[:sell] == 0 ? 0 :  (rated_rates[:sell] / base_rates[:sell])
     result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
     result[:source] = rated_rates[:source] || base_rates[:source]
-    if (Date.today - result[:updated].to_date).to_i > 1
+    if (Date.today - result[:updated].to_date).to_i > 1 and base_rates[:method] != 'reference' and rated_rates[:method] != 'reference'
       result[:error] = "Stale rates"
     end
 
