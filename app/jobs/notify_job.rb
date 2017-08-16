@@ -84,7 +84,7 @@ class NotifyJob < ActiveJob::Base
 
     begin
 
-      template_name =  exchange.lang == 'he' ? 'order_he' : 'neworder'
+      template_name =  exchange.locale == 'he' ? 'order_he' : 'neworder'
       template_content = []
       message = {
           to:             to + bcc,
@@ -98,16 +98,19 @@ class NotifyJob < ActiveJob::Base
           track_opens: true,
           track_clicks: true,
           global_merge_vars: [
+              {name: 'EXCHANGE_NAME',            content: exchange.either_name},
+              {name: 'EXCHANGE_ADDRESS',         content: exchange.either_address},
+              {name: 'EXCHANGE_PHONE',           content: exchange.phone},
               {name: 'SERVICE_TYPE',             content: order.service_type.upcase},
               {name: 'VOUCHER_NUMBER',           content: order.voucher},
               {name: 'EXPIRY_DATE',              content: order.expiry.strftime('%e %b, %Y')},
               {name: 'EXPIRY_TIME',              content: order.expiry.strftime('%H:%M')},
               {name: 'EXCHANGE_ID',              content: order.exchange_id},
-              {name: 'EXCHANGE_NAME',            content: exchange.name},
-              {name: 'EXCHANGE_ADDRESS',         content: exchange.address},
-              {name: 'EXCHANGE_PHONE',           content: exchange.phone},
-              {name: 'PAY_AMOUNT',               content: Money.new(order.pay_cents, order.pay_currency).format},
-              {name: 'GET_AMOUNT',               content: Money.new(order.buy_cents, order.buy_currency).format},
+              {name: 'PAY_AMOUNT',               content: order.pay_amount},
+              {name: 'GET_AMOUNT',               content: order.get_amount},
+              {name: 'CREDIT_CHARGE_AMOUNT',     content: order.credit_charge_amount},
+              {name: 'DELIVERY_CHARGE_AMOUNT',   content: order.delivery_charge_amount},
+              {name: 'TOTAL_AMOUNT',             content: order.total_amount},
               {name: 'LOCATION',                 content: order.search.user_location},
               {name: 'COMPANY_NAME',             content: from_name},
               {name: 'COMPANY_ADDRESS',          content: company_address},

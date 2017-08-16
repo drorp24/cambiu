@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
 
   def delivery_address
     return nil unless self.house && self.street && self.city
-    "#{self.house} #{self.street}, #{self.city}"
+    "#{self.street} #{self.house}, #{self.city}"
   end
 
 end

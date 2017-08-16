@@ -19,7 +19,7 @@ fetchPaymentUrl = function(order) {
     return new Promise(function(resolve, reject) {
 
         function fetchData() {
-            return fetch('/payments/url?', {
+            return fetch(`/payments/url?locale=${locale}`, {
                 method: 'post',
                 headers: new Headers({
                     'Accept': 'application/json',

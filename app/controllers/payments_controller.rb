@@ -10,9 +10,21 @@ class PaymentsController < ApplicationController
   end
 
   def error
+    puts ""
+    puts "Error after calling CreditGuard:"
+    puts ""
+    puts payment_params.inspect
+    puts ""
+    @text = payment_params[:'ErrorText']
   end
 
   def cancel
+    puts ""
+    puts "Cancel after calling CreditGuard:"
+    puts ""
+    puts payment_params.inspect
+    puts ""
+    @text = payment_params[:'ErrorText']
   end
 
 

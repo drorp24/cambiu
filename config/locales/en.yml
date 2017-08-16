@@ -129,3 +129,5 @@ en:
     yes1: 'Yes'
     no1: 'No'
     noOffer: 'No offer for these criteria.<br/> Try changing them.'
+    error: 'Something went wrong'
+    cancel: 'Cancelled'

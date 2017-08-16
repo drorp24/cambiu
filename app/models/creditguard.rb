@@ -56,9 +56,9 @@ class Creditguard
                 <doDeal>
                     <terminalNumber>#{ENV['CG_TERMINAL']}</terminalNumber>
                     <cardNo>CGMPI</cardNo>
-                    <successUrl>#{params[:base_url]}/payments/#{params[:id]}/success</successUrl>
-                    <errorUrl>#{params[:base_url]}/payments/#{params[:id]}/error</errorUrl>
-                    <cancelUrl>#{params[:base_url]}/payments/#{params[:id]}/cancel</cancelUrl>
+                    <successUrl>#{params[:base_url]}/payments/#{params[:id]}/success?locale=#{params[:locale]}</successUrl>
+                    <errorUrl>#{params[:base_url]}/payments/#{params[:id]}/error?locale=#{params[:locale]}</errorUrl>
+                    <cancelUrl>#{params[:base_url]}/payments/#{params[:id]}/cancel?locale=#{params[:locale]}</cancelUrl>
                     <total>#{params[:total_cents]}</total>
                     <transactionType>Debit</transactionType>
                     <creditType>RegularCredit</creditType>

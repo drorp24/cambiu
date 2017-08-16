@@ -17,5 +17,5 @@ t = function(expression) {
     }
   };
 
-  return translation[lang][expression] || '<%= I18n.t 'app.missing' %>'
+  return translation[locale][expression] || '<%= I18n.t 'app.missing' %>'
 };

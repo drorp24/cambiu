@@ -915,7 +915,7 @@ body#cambiu {
     .newexpiry {
       display: none;
     }
-    .pickup.section {
+    .orderPane .pickup.section {
       display: none;
     }
   }
@@ -940,7 +940,7 @@ body#cambiu {
 
 
 
-  &[lang=he] {
+  &[locale=he] {
     direction: rtl;
     font-family: 'Rubik', sans-serif;
     button, input, optgroup, select, textarea {
@@ -986,12 +986,12 @@ body#cambiu {
   .flag {
     display: none;
   }
-  &[lang=en] {
+  &[locale=en] {
     .flag.he {
       display: block;;
     }
   }
-  &[lang=he] {
+  &[locale=he] {
     .flag.en {
       display: block;;
     }
@@ -1188,7 +1188,7 @@ body#cambiu {
     display: none;
   }
 
-  &[lang=he] .calculated_icon {
+  &[locale=he] .calculated_icon {
     @include vright(10vw);
   }
 
@@ -1546,11 +1546,11 @@ body#cambiu {
 }
 
 
-&[lang=he] .list-group .list-group-item .minicard .duration {
+&[locale=he] .list-group .list-group-item .minicard .duration {
   @include vright(3vw);
 }
 
-&[lang=he] .ecard:not(.selected) .minicard .duration {
+&[locale=he] .ecard:not(.selected) .minicard .duration {
   @include vright(3vw);
 }
 
@@ -3146,7 +3146,7 @@ body#cambiu {
 
     }
 
-  &[lang=he] .ecard.selected {
+  &[locale=he] .ecard.selected {
     text-align: right;
   }
 
@@ -3394,7 +3394,7 @@ body#cambiu {
       }
     }
 
-  &[lang=he] .data .reviews {
+  &[locale=he] .data .reviews {
     display: flex;
   }
 

@@ -281,6 +281,7 @@ form do |f|
 
       f.semantic_errors *f.object.errors.keys
       f.input     :business_type, as: :select, collection: {:"Exchange"=>"exchange", :"Bank"=>"bank", :"Post office"=>"post_office", :"Other"=>"other", :"Interbank"=>"inter"}, include_blank: false
+      f.input     :locale, as: :select, collection: {:"Hebrew"=>"he", :"English"=>"en"}, include_blank: false
       f.input     :chain_name, label: 'Chain name'
       f.input     :name, label: 'Exchange name'
       f.input     :nearest_station, label: 'Nearest station (if name is not unique)'

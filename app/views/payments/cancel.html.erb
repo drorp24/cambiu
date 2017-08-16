@@ -1,1 +1,7 @@
 <%= render partial: 'navbar', locals: {left_pane: 'none', left_icon: 'none', center: 'Cancel', right_pane: 'none', right_icon: 'none'} %>
+
+<div class="content">
+  <div class="help_topic flex_center text-center"><%= t 'app.cancel' %></div>
+  <div class="help_icon text-center"><i class="material-icons">info</i></div>
+  <div dir=ltr class="help_content flex_center column text-center"><%= @text %></div>
+</div>

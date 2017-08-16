@@ -152,7 +152,7 @@ var local = {};
 var calculated = null;
 var verifyMapIsShown;
 var inIframe = false;
-var lang;
+var locale;
 
 
 
@@ -394,7 +394,7 @@ parseJson = function(response) {
 
 $(document).ready(function() {
 
-    lang = $('body').attr('lang');
+    locale = $('body').attr('locale');
 
     $(function() {
         if (window.self != window.top) {
