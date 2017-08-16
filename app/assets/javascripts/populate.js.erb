@@ -38,6 +38,8 @@ populateOrder = function($scope, order) {
     return
   }
 
+  if ($scope == null) $scope = $('body');
+
   $scope.find('[data-model=order][data-field]').each(function() {
     var $this = $(this);
     var field = $this.data('field');
@@ -294,7 +296,9 @@ function restoreOrder() {
   hideCards(order_exchange_id);
   disableSwiping();
   if (orderConfirmationRequired() && !orderConfirmationRequested()) requestOrderConfirmation();
-  $('.selection button[data-ajax=searches]').removeAttr('data-ajax').addClass('to_order').attr({'data-href-pane': 'order', 'data-href-id': order_exchange_id});
+  if (value_of('service_type') != 'delivery') {
+    $('.selection button[data-ajax=searches]').removeAttr('data-ajax').addClass('to_order').attr({'data-href-pane': 'order', 'data-href-id': order_exchange_id});
+  }
 
 
 }

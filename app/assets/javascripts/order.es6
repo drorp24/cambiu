@@ -49,7 +49,7 @@ order = function($scope, exchange) {
         .then(response => response.json())
         .then((order) => {
 
-            populateOrder($scope, order);
+            populateOrder(null, order);
             setPage({pane1:"order", id1:"curr"});
             report('Order', 'Exchange', exchange);
 
@@ -62,7 +62,9 @@ order = function($scope, exchange) {
             sessionStorage.order_status = order.status;
 
             $('.ecard[data-exchange-id=' + exchange.id + ']').addClass('ordered');
-            $('.selection button[data-ajax=searches]').removeAttr('data-ajax').addClass('to_order').attr({'data-href-pane': 'order', 'data-href-id': value_of('order_exchange_id')});
+            if (value_of('service_type') != 'delivery') {
+                $('.selection button[data-ajax=searches]').removeAttr('data-ajax').addClass('to_order').attr({'data-href-pane': 'order', 'data-href-id': value_of('order_exchange_id')});
+            }
 
             hideCards(exchange.id);
             disableSwiping();
@@ -95,6 +97,7 @@ requestOrderConfirmation = function() {
 };
 
 orderConfirmationRequired = function() {
+    if (value_of('payment_method') == 'credit' || value_of('service_type') == 'delivery') return false;
     var order_status = value_of('order_status');
     return order_status && order_status != 'confirmed';
 };

@@ -427,6 +427,7 @@ resetPaging = function() {
 
 
 hideCards = function(exchange_id = null) {
+    if (value_of('service_type') == 'delivery') return;
     let $hide = exchange_id ? $(`.ecard:not([data-exchange-id=${exchange_id}])`) : $('.ecard:not(.best)');
     $hide.css('visibility', 'hidden');
 };
