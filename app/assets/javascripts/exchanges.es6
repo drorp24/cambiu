@@ -207,6 +207,7 @@
             let grade = whatIf.distance_factor ? Number((offer.properties.gain + Number(offer.properties.credit_charge_raw) + Number(offer.properties.delivery_charge_raw)) * -1 + offer.properties.distance * whatIf.distance_factor).toFixed(2) : Number(offer.properties.grade).toFixed(2);
 
             offerObj = {
+                id:                 offer.properties.id,
                 source:             offer.properties.rates.source,
                 rate:               offer.properties.base_rate,
                 bad:                offer.properties.bad_amount,
