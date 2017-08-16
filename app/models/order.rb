@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
   monetize :credit_charge_cents, with_model_currency: :credit_charge_currency, :allow_nil => true
   monetize :delivery_charge_cents, with_model_currency: :delivery_charge_currency, :allow_nil => true
 
-  enum status: [:ordered, :confirmed, :pictured]
+  enum status: [:ordered, :confirmed, :pictured, :registered]
   enum service_type: [ :pickup, :delivery ]
   enum payment_method: [ :cash, :credit, :all_payment_methods]
 
@@ -56,7 +56,7 @@ class Order < ActiveRecord::Base
 
 
   def status_color
-    [:orange, :green, :blue][Order.statuses[status]]
+    [:orange, :green, :blue, :green][Order.statuses[status]]
   end
 
   def requires_notification?

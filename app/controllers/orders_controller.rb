@@ -50,7 +50,8 @@ class OrdersController < ApplicationController
 
       order = Order.find(params[:id])
       if order
-        order.update(user_id: user.id)
+        order.update(user_id: user.id, status: 'registered')
+        order.notification
         render json: order.with_user(detailsChanged)
       else
         render json: {errors: 'No order id'}, status: :unprocessable_entity

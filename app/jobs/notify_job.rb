@@ -23,10 +23,10 @@ class NotifyJob < ActiveJob::Base
 
 
     to_user =
-        order.customer_email ?
+        user ?
             [
                 {
-                    email:  order.customer_email,
+                    email:  user.email,
                     type:   'to'
                 }
             ] :
