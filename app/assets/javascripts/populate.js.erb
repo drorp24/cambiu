@@ -336,9 +336,11 @@ populateLocalOffers = function(rates) {
 
   if (rates.worst.error || $.isEmptyObject(rates.best.buy) || $.isEmptyObject(rates.best.sell) || rates.best.buy.error || rates.best.sell.error) {
     clearLocalOffers();
-    snack('No offer for these criteria.<br/> Try changing them.', {button: 'ok', klass: 'oops', timeout: 3000, link: {page: 'exchanges', pane: 'search'}});
+    snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'search'}});
     return(null);
   }
+
+  $('form.selection input').removeClass('invalid');
 
   var transaction = value_of('transaction');
 //console.log('populateLocalOffers. Transaction: ' + transaction, rates);

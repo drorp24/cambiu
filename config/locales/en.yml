@@ -43,7 +43,7 @@ en:
     bad: 'High-street price'
     gain: 'Your gain'
     heading2: 'How do you wish to get it'
-    deliveryTitle: 'Delivery'
+    deliveryTitle: 'Delivery (24 hrs)'
     pickup: 'Pick-up'
     location:
       pickup: 'Pick-up'
@@ -128,3 +128,4 @@ en:
     mayTake24Hours: 'Delivery takes up to 24 hrs. Order it?'
     yes1: 'Yes'
     no1: 'No'
+    noOffer: 'No offer for these criteria.<br/> Try changing them.'

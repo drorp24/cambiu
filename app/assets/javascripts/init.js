@@ -152,6 +152,7 @@ var local = {};
 var calculated = null;
 var verifyMapIsShown;
 var inIframe = false;
+var lang;
 
 
 
@@ -392,6 +393,8 @@ parseJson = function(response) {
 
 
 $(document).ready(function() {
+
+    lang = $('body').attr('lang');
 
     $(function() {
         if (window.self != window.top) {

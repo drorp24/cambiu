@@ -1,11 +1,21 @@
 t = function(expression) {
 
   var translation = {
-    mayTake24Hours: '<%= I18n.t 'app.mayTake24Hours' %>',
-    yes: '<%= I18n.t 'app.yes1' %>',
-    no: '<%= I18n.t 'app.no1' %>'
+
+    en: {
+      mayTake24Hours: '<%= I18n.t 'app.mayTake24Hours', locale: :en %>',
+      yes: '<%= I18n.t 'app.yes1',locale: :en %>',
+      no: '<%= I18n.t 'app.no1',locale: :en %>',
+      noOffer: '<%= I18n.t 'app.noOffer',locale: :en %>'
+
+    },
+    he: {
+      mayTake24Hours: '<%= I18n.t 'app.mayTake24Hours', locale: :he %>',
+      yes: '<%= I18n.t 'app.yes1',locale: :he %>',
+      no: '<%= I18n.t 'app.no1',locale: :he %>',
+      noOffer: '<%= I18n.t 'app.noOffer',locale: :he %>'
+    }
   };
 
-  return translation[expression] || '<%= I18n.t 'app.missing' %>'
+  return translation[lang][expression] || '<%= I18n.t 'app.missing' %>'
 };
-var a = 1;

@@ -38,7 +38,7 @@
     function no(offers) {
         if (offers.length == 0) {
             var secret_error_ind = searchData.error ? "data" : "offer";
-            snack(`No ${secret_error_ind} for these parameters. <br> Click OK to change them`, {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
+//            snack(`No ${secret_error_ind} for these parameters. <br> Click OK to change them`, {button: 'ok', klass: 'oops', link: {page: 'exchanges', pane: 'search'}});
             return true;
         }
     }
