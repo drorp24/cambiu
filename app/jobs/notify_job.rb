@@ -71,7 +71,7 @@ class NotifyJob < ActiveJob::Base
 
     bcc = Rails.env.development?  ? bcc_me : bcc_us
     to  = to_user + to_exchange
-    warning = "NO EMAIL SENT TO EXCHANGE (EMAIL MISSING)" unless exchange.email.present?
+    warning = exchange.email.present? ? "" : 'NO EMAIL SENT TO EXCHANGE (EMAIL MISSING)'
 
 
     subject = "#{order.service_type.capitalize} order #{order.voucher} - #{order.status.upcase}"
