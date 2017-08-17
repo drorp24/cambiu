@@ -23,7 +23,7 @@ class NotifyJob < ActiveJob::Base
 
 
     to_user =
-        user ?
+        user && user.email.present? ?
             [
                 {
                     email:  user.email,
@@ -38,7 +38,7 @@ class NotifyJob < ActiveJob::Base
             ]
 
     to_exchange =
-        exchange.email ?
+        exchange.email.present? ?
         [
             {
                 email:  exchange.email,
