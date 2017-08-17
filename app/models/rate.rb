@@ -20,7 +20,7 @@ class Rate < ActiveRecord::Base
 #  before_create :initialize_default_values
 
   def change_to_reference_if_needed
-    if self.buy_markup > 0 or self.sell_markup > 0
+    if (self.buy_markup.present? and self.buy_markup > 0) or (self.sell_markup.present? and self.sell_markup > 0)
       self.method = 'reference'
     end
   end
