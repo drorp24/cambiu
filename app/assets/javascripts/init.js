@@ -35,7 +35,6 @@ var clearExchanges;
 var set;
 var bind;
 var set_defaults;
-var set_default_location;
 var order = {};
 var model_set;
 var model_populate;

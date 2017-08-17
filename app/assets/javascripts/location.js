@@ -209,7 +209,7 @@ function searchbox_addListener(searchBox) {
     google.maps.event.addListener(searchBox, 'places_changed', function () {
         var places = searchBox.getPlaces();
         if (places.length == 0) {
-            set_default_location('Location changed by user, but getPlaces found no place');
+            console.warn('Not changing location - getPlaces found no place');
             return
         }
         locationDirty = false;
