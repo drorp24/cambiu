@@ -84,7 +84,7 @@ class NotifyJob < ActiveJob::Base
 
     begin
 
-      template_name =  exchange.locale == 'he' ? 'order_he' : 'neworder'
+      template_name =  exchange.locale == 'he' ? 'Order_he' : 'Order_en'
       template_content = []
       message = {
           to:             to + bcc,
@@ -100,7 +100,7 @@ class NotifyJob < ActiveJob::Base
           global_merge_vars: [
               {name: 'EXCHANGE_NAME',            content: exchange.either_name},
               {name: 'EXCHANGE_ADDRESS',         content: exchange.either_address},
-              {name: 'EXCHANGE_PHONE',           content: exchange.phone},
+              {name: 'EXCHANGE_PHONE',           content: exchange.phone || ""},
               {name: 'SERVICE_TYPE',             content: order.service_type.upcase},
               {name: 'VOUCHER_NUMBER',           content: order.voucher},
               {name: 'EXPIRY_DATE',              content: order.expiry.strftime('%e %b, %Y')},
