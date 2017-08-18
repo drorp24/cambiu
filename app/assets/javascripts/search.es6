@@ -456,27 +456,6 @@ $(document).ready(function() {
     });
 
 
-    $('body').on('click tap', '.phone_icon', function() {
-        report('Tap', 'Phone');
-    });
-
-    $('body').on('click tap', '.cambiu_ranking', function() {
-        alert('chu')
-        report('Tap', 'Other offers');
-    });
-
-    $('.swiper-slide.a .getOffer.btn').on('click tap', function() {
-        report('Tap', 'Get an offer (1)')
-    });
-
-    $('.swiper-slide.d .getOffer.btn').on('click tap', function() {
-        report('Tap', 'Get an offer (4)')
-    });
-
-    $('.swiper-slide.b .slide_line .left').on('click tap', function() {
-        report('Tap', 'Skip (2)')
-    });
-
     $('.swiper-slide.c .slide_line .left').on('click tap', function() {
         report('Tap', 'Skip (3)')
     });
@@ -491,7 +470,7 @@ $(document).ready(function() {
         if ($('body').attr('data-pane') == 'update') {
             $(`.ecard[data-exchange-id=${urlId()}] .offer_line.delivery.charge`).css('visibility', value_of('service_type') == 'delivery' ? 'visible' : 'hidden');
         }
-        report('Set', 'Service type', service_type);
+        report('Set', 'Service type', null, service_type);
     });
 
     $('.close_inline_params').on('click tap', function(e) {
@@ -538,7 +517,7 @@ $(document).ready(function() {
         if ($('body').attr('data-pane') == 'update') {
             $(`.ecard[data-exchange-id=${urlId()}] .offer_line.cc.charge`).css('visibility', value_of('payment_method') == 'credit' ? 'visible' : 'hidden');
         }
-        report('Set', 'Payment method', new_payment_method);
+        report('Set', 'Payment method', null, new_payment_method);
     });
 
     setPaymentMethodTo = function(payment_method) {

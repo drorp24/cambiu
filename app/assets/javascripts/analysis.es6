@@ -18,7 +18,7 @@ gaTiming = function(category, variable, value) {
 
 tagSession = function(obj = {}) {
 
-    var tagObj = Object.assign(obj, {utm_source: utm_source});
+    var tagObj = Object.assign(obj, {utm_source: utm_source, locale: locale});
     console.log('tagSession', tagObj);
 
     ga('set', tagObj);
@@ -44,5 +44,56 @@ report = function(category, action, exchange = null, value = null) {
 
 };
 
+$('body').on('click tap', '.phone_icon', function() {
+    report('Tap', 'Phone');
+});
 
+$('body').on('click tap', '.cambiu_ranking', function() {
+    report('Tap', 'Other offers');
+});
 
+$('body').on('click tap', 'a[data-action=showCards]', function() {
+    report('Tap', 'Other offers');
+});
+
+$('.swiper-slide.a .getOffer.btn').on('click tap', function() {
+    report('Tap', 'Get an offer (1)')
+});
+
+$('.swiper-slide.d .getOffer.btn').on('click tap', function() {
+    report('Tap', 'Get an offer (4)')
+});
+
+$('.swiper-slide.b .slide_line .left').on('click tap', function() {
+    report('Tap', 'Skip (2)')
+});
+
+$('body').on('click tap', '.help.icon', function() {
+    report('Tap', 'Help');
+});
+
+$('body').on('click tap', '.reviews', function() {
+    report('Tap', 'Reviews');
+});
+
+$('body').on('click tap', '.rating-container', function() {
+    report('Tap', 'Reviews');
+});
+
+$('body').on('click tap', '.navbar_center', function() {
+    report('Tap', 'Navbar Center');
+});
+$('body').on('click tap', '.navbar_left', function() {
+    report('Tap', 'Navbar Left');
+});
+$('body').on('click tap', '.navbar_right', function() {
+    report('Tap', 'Navbar Right');
+});
+$('body').on('click tap', "[onclick='orderThis()']", function() {
+    report('Click', 'Confirm delivery');
+});
+/* Doesn't work. Reported from revertDelivery
+$('body').on('click tap', "[onclick='revertDelivery()']", function() {
+    report('Click', 'Cancel delivery');
+});
+*/

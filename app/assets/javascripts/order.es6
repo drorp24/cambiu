@@ -51,7 +51,7 @@ order = function($scope, exchange) {
 
             populateOrder(null, order);
             setPage({pane1:"order", id1:"curr"});
-            report('Order', 'Exchange', exchange);
+            report('Click', 'Order', exchange);
 
             if (order.service_type == 'pickup') snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'});
             if (orderConfirmationRequired() && !orderConfirmationRequested()) requestOrderConfirmation();
@@ -158,11 +158,18 @@ orderUpdateUserDelivery = function() {
             } else {
                 if (data.message) snack(data.message, {timeout: 3000});
                 console.log('Successfully updated order with user data: ', data);
-                resolve(data)
+                return(data)
             }
         }
 
-        function report(error) {
+        function updateGa(data) {
+            ga('set', 'userId', data.user_id); // Set the user ID using signed-in user_id.
+            report('Click', 'Register');
+            console.log(`ga - userId set to ${data.user_id}`);
+            resolve(data);
+        }
+
+        function tell(error) {
             snack(`Server says: ${error}`, {klass: 'oops', timeout: 7000});
         }
 
@@ -170,7 +177,8 @@ orderUpdateUserDelivery = function() {
             .then(checkStatus)
             .then(parseJson)
             .then(checkData)
-            .catch((error) => {report(error)})
+            .then (updateGa)
+            .catch((error) => {tell(error)})
 
     })
 
@@ -223,11 +231,12 @@ verifyUserWantsDelivery = () => {
 };
 
 orderThis = () => {
-    order($(this).closest('[data-pane]'), currentExchange())
+    order($(this).closest('[data-pane]'), currentExchange());
 };
 
 revertDelivery = () => {
     setServiceTypeTo('pickup');
     setPaymentMethodTo('cash');
     setPage({pane1: 'search'});
+    report('Click', 'Cancel delivery');
 };

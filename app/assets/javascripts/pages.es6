@@ -162,7 +162,7 @@ refresh = function(pane, $pane, exchange) {
 
        // EXTREMELY IMPORTANT! Without it, every pushState will add another push with '#' and popState will be invoked. Pulling hair.
      e.preventDefault();
-     e.stopPropagation();
+//     e.stopPropagation();
 
      var el = $(this);
      var external       = el.data('exchange-delivery_tracking');    if (external && external != 'null') {window.location = external; return}

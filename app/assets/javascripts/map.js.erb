@@ -370,7 +370,7 @@
      $('body').on('click tap', '[data-action=directions]', function(e) {
        var travelMode = $(this).data(travelMode) == 'driving' ? 'driving' : 'walking';
        renderDirections(currentExchange(), travelMode);
-       report('Tap', 'Directions');
+       report('Click', 'Directions');
      });
 
 

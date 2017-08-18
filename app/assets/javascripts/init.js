@@ -394,6 +394,8 @@ parseJson = function(response) {
 $(document).ready(function() {
 
     locale = $('body').attr('locale');
+    if (search) utm_source = new URLSearchParams(search).get('utm_source');
+
 
     $(function() {
         if (window.self != window.top) {
