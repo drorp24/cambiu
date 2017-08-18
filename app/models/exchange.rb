@@ -53,6 +53,7 @@ class Exchange < ActiveRecord::Base
     puts self.rates_source.nil? ? "after: rates_source is nil" : "after: rates_source is: " + rates_source
     self.rates_policy = 'individual'  if rates_policy.blank?
     self.business_type = 'exchange'   if business_type.blank?
+    self.locale = 'en'                if locale.blank?
   end
 
 
