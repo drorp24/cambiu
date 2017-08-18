@@ -25,12 +25,22 @@ tagSession = function(obj = {}) {
 //    __insp.push(['tagSession',tagObj]);
 };
 
-report = function(category, action, exchange = null) {
+// exchange is an obj that needs only include keys 'id' and 'name'
+report = function(category, action, exchange = null, value = null) {
 
-    var currExchange = exchange || currentExchange();
-    var name = currExchange && currExchange.name ? currExchange.name : "";
-    var id = currExchange && currExchange.id ? currExchange.id : "";
-    ga('send', 'event', category, action, name, {id: id});
+    console.log(`report ${category} ${action} ${exchange} ${value}`);
+    let exchangeWorthy = (category) => category != 'Set';
+
+    if (exchangeWorthy(category)) {
+        var currExchange = exchange || currentExchange();
+        var label = currExchange && currExchange.name ? currExchange.name : "";
+        var id = currExchange && currExchange.id ? currExchange.id : "";
+    } else  {
+        var label = value;
+        var id = null;
+    }
+    ga('send', 'event', category, action, label, {id: id});
+
 
 };
 

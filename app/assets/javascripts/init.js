@@ -533,7 +533,7 @@ $(document).ready(function() {
         if (typeof options === 'undefined') options = {};
 
         if (currentSnack) {
-            wait(2000).then(goOn);
+            wait(500).then(goOn);
         } else {
             goOn();
         }

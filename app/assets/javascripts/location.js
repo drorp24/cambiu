@@ -232,6 +232,7 @@ function searchbox_addListener(searchBox) {
         console.log('Stopping userWatch & userPositionCheck');
         if (typeof userWatch !== 'undefined' && userWatch) navigator.geolocation.clearWatch(userWatch);
         if (typeof userPositionCheck !== 'undefined' && userPositionCheck) clearInterval(userPositionCheck);
+        report('Set', 'Location', null, search.location.name);
 
         hideSearchLocation();
     });
@@ -410,4 +411,8 @@ setLocale = function(location) {
     // required for the initial call
     return nearest_center;
 
+};
+
+positionFound = function() {
+    return search.location && search.location.reason == 'positionFound';
 };

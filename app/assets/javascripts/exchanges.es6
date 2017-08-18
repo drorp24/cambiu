@@ -442,4 +442,24 @@ $('body').on('click tap', '[data-action=showCards]', (e) => {
 });
 
 
+// Use *before* the search, when only info is the best obj
+bestOffer = () => {
+
+    let result = {
+        id: null,
+        name: null
+    };
+    let transaction = value_of('transaction');
+    if (!transaction) return result;
+    if (!local || objEmpty(local) || !local.rates || !local.rates.best || !local.rates.best[transaction]) return result;
+    let best = local.rates.best[transaction];
+    return {
+        id: best.exchange_id,
+        name: best.name
+    }
+
+};
+
+
+const objEmpty = obj => Object.keys(obj).every(key => obj[key] === undefined);
 

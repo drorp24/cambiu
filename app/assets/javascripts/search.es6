@@ -39,12 +39,14 @@ $(document).ready(function() {
             var target  = $this.data('symboltarget');
             var symbol  = $this.find('option:selected').attr('data-symbol');
 
-            if (value_of('payment_method') == 'credit' && field == 'pay_currency' && value != local.currency) {
+            if (value_of('payment_method') == 'credit' && field == 'pay_currency' && value != local.currency && positionFound()) {
                 snack(`To pay with credit, payment currency must remain ${local.currency}`, {klass: 'oops', timeout: 3000});
+                set('pay_currency', local.currency);
+                $('form select').material_select();
                 return;
             }
 
-            set(field, value);
+            set(field, value, 'manual');
             populateTransaction();
             fetchAndPopulateLocaloffers();
 
@@ -237,6 +239,7 @@ $(document).ready(function() {
         e.preventDefault();
         if (!$(this).is('[data-ajax=searches]')) return;   // absurd but required: button changed attributes but unneeded event still bound
         if (inputValid()) {
+            report('Click', 'Get offer', bestOffer());
             search_and_show_and_render()
         }
     });
@@ -425,23 +428,6 @@ $(document).ready(function() {
         report('Feature', feature);
     }
 
-    $(".search_section.pay input[type=checkbox]").change(function() {
-        if(this.checked) {
-            unsupported('Pay by credit');
-        } else {
-            snackHide()
-        }
-    });
-
-    $(".search_section.get input[type=checkbox]").change(function() {
-        if(this.checked) {
-            unsupported('Delivery');
-        } else{
-            snackHide()
-        }
-     });
-
-
     // pointer-events important!
     showDialog = function(options) {
         var $modal = $('#myModal');
@@ -470,8 +456,13 @@ $(document).ready(function() {
     });
 
 
-    $('.phone_icon').on('click tap', function() {
+    $('body').on('click tap', '.phone_icon', function() {
         report('Tap', 'Phone');
+    });
+
+    $('body').on('click tap', '.cambiu_ranking', function() {
+        alert('chu')
+        report('Tap', 'Other offers');
     });
 
     $('.swiper-slide.a .getOffer.btn').on('click tap', function() {
@@ -494,11 +485,13 @@ $(document).ready(function() {
     $('form .service_type').change(function() {
         var $this = $(this);
         snackHide();
-        setServiceTypeTo($this.is(':checked') ? 'delivery' : 'pickup');
+        let service_type = $this.is(':checked') ? 'delivery' : 'pickup';
+        setServiceTypeTo(service_type);
         if ($('body').attr('data-pane') == 'search') fetchAndPopulateLocaloffers();
         if ($('body').attr('data-pane') == 'update') {
             $(`.ecard[data-exchange-id=${urlId()}] .offer_line.delivery.charge`).css('visibility', value_of('service_type') == 'delivery' ? 'visible' : 'hidden');
         }
+        report('Set', 'Service type', service_type);
     });
 
     $('.close_inline_params').on('click tap', function(e) {
@@ -545,6 +538,7 @@ $(document).ready(function() {
         if ($('body').attr('data-pane') == 'update') {
             $(`.ecard[data-exchange-id=${urlId()}] .offer_line.cc.charge`).css('visibility', value_of('payment_method') == 'credit' ? 'visible' : 'hidden');
         }
+        report('Set', 'Payment method', new_payment_method);
     });
 
     setPaymentMethodTo = function(payment_method) {
@@ -586,7 +580,16 @@ $(document).ready(function() {
 
     $('.language_select').on('click tap', function() {
         console.log('language select');
-        window.location.href = "/exchanges/search?" + $.param({'locale': $('body').attr('locale') == 'en' ? 'he' : 'en'})
+        let new_locale = $('body').attr('locale') == 'en' ? 'he' : 'en';
+        window.location.href = "/exchanges/search?" + $.param({'locale': new_locale});
+        report('Set', 'Language', null, new_locale);
+    });
+
+    $('#search_form .amount_fields [data-model]').change(function() {
+        let $this = $(this);
+        let field = $this.attr('data-field');
+        let value = $this.val();
+        report('Set', field, null, value);
     })
 
 

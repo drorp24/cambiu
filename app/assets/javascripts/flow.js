@@ -72,5 +72,8 @@ function setProperPage() {
     } else {
         setPage({url: window.location.pathname});
     }
+    // tag the entire session, with ref parameter or without it
+    if (search) utm_source = new URLSearchParams(search).get('utm_source');
+    tagSession();
 }
 

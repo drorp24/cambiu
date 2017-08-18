@@ -426,6 +426,8 @@ value_of = function(key) {
 // Populate search params in search form, search bar and ss for persistency (page reloads)
 set = function(field, value, trigger) {
 
+  if (typeof trigger === 'undefined') trigger = null;
+
 //  console.log('set. field: ', field, ' value: ', value);
   var cleanValue = (amount(field)) ? clean(value) : value;
 
@@ -437,6 +439,8 @@ set = function(field, value, trigger) {
     $('.params [data-model=search][data-field=' + field + ']').html(value);
 
     sessionStorage.setItem(field, value);
+
+    if (trigger == 'manual') report('Set', field, null, value);
 
    function amount(field) {
     return field.indexOf('amount') > -1

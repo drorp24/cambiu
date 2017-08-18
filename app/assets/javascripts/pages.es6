@@ -8,7 +8,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
 
         console.log('setPage. url: ' + url + ' page: ' + page1 + ' id: ' + String(id1) + ' pane: ' + String(pane1) + ' hash: ' + hash + ' search: ' + search + ' pushState: ' + pushState + ' populating: ' + populating + ' help_topic: ' + help_topic);
 
-    // POP pane into view
+    // Parse parameters
     if (url) {
         var ppart = break_url(url);
          [page, id, pane] = [ppart.page || 'homepage', ppart.id, ppart.pane]
@@ -16,14 +16,13 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
          [page, id, pane] = [page1, id1, pane1];
     }
 
-
     id = determineId(id);
     var exchange = exchangeHash && exchangeHash[id] ? exchangeHash[id] : currentExchange();
     pane = determinePane(pane, exchange);
 
-    // tag the session as soon as page is visited, with ref parameter or without it
-    if (search) utm_source = new URLSearchParams(search).get('utm_source');
-    tagSession();
+    // Declare a new page to GA and report a pageview
+    ga('set', 'page', url || make_url(page, id, pane));
+    ga('send', 'pageview');
 
     var $page = $('.page[data-page=' + page + ']');
     var $pane = $('.pane[data-pane=' + active(pane) + ']');

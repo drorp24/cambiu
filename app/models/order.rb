@@ -156,7 +156,7 @@ class Order < ActiveRecord::Base
   end
 
   def total_amount
-     (self.total_cents / 100).to_money(self.pay_currency).format
+     (self.total_cents / 100.0).to_money(self.pay_currency).format
   end
 
 end

@@ -102,8 +102,8 @@ class Search < ActiveRecord::Base
     if mode == 'best'
       return {
           best: {
-              buy:  best_offer ? best_offer[:rates] : nil,    # this structure was left for backward-compatibility with fe only
-              sell: best_offer ? best_offer[:rates] : nil
+              buy:  best_offer ? best_offer[:rates].merge(name: best_offer[:name]) : nil,    # this structure was left for backward-compatibility with fe only
+              sell: best_offer ? best_offer[:rates].merge(name: best_offer[:name]) : nil
           },
           worst:
               Exchange.bad_rate(country, buy_currency, pay_currency),

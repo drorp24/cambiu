@@ -39,9 +39,11 @@ userCheckValidity = function() {
 
         // Own checks
 
-        let fieldIsFull = checkIfFull($this);
-        formValid = formValid && fieldIsFull;
-        if (!fieldIsFull) return true;   // return true is jQuery's break. A field with a problem requires no further checks.
+        if ($this[0].hasAttribute('required')) {
+            let fieldIsFull = checkIfFull($this);
+            formValid = formValid && fieldIsFull;
+            if (!fieldIsFull) return true;   // return true is jQuery's break. A field with a problem requires no further checks.
+        }
 
         if ($this.is('#user_password_confirmation')) {
             let fieldValid = checkPasswords($this);
