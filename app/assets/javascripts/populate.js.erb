@@ -308,7 +308,7 @@ populateLocalCurrency = function() {
   set('pay_currency', local.currency);  // locals
   set('buy_currency', (local.currency == 'USD') ? 'EUR' : 'USD');
 
-  $('form select').material_select();
+  $('form select').material_select(); // TODO: Remove. Inserted to set
   bind_currency_to_autonumeric();
 
 };
@@ -338,7 +338,7 @@ fetchAndPopulateLocaloffers = function() {
 
 populateLocalOffers = function(rates) {
 
-  if (rates.worst.error || $.isEmptyObject(rates.best.buy) || $.isEmptyObject(rates.best.sell) || rates.best.buy.error || rates.best.sell.error) {
+  if (rates.error || rates.worst.error || $.isEmptyObject(rates.best.buy) || $.isEmptyObject(rates.best.sell) || rates.best.buy.error || rates.best.sell.error) {
     clearLocalOffers();
     snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'search'}});
     return(null);
@@ -423,31 +423,6 @@ value_of = function(key) {
     return (a && a != "null") ? a : null;
 };
 
-// Populate search params in search form, search bar and ss for persistency (page reloads)
-set = function(field, value, trigger) {
-
-  if (typeof trigger === 'undefined') trigger = null;
-
-//  console.log('set. field: ', field, ' value: ', value);
-  var cleanValue = (amount(field)) ? clean(value) : value;
-
-    if (field =='service_type') setServiceTypeTo(value);
-    if (field =='payment_method') setPaymentMethodTo(value);
-
-    $('input[data-model=search][data-field=' + field + ']').val(cleanValue);
-    $('select[data-model=search][data-field=' + field + ']').val(cleanValue);
-    $('.params [data-model=search][data-field=' + field + ']').html(value);
-
-    sessionStorage.setItem(field, value);
-
-    if (trigger == 'manual') report('Set', field, null, value);
-
-   function amount(field) {
-    return field.indexOf('amount') > -1
-   }
-
-
-};
 
 getPano = function(exchange) {
 
@@ -526,4 +501,40 @@ populateStaticStreeview = function(exchange, pano, $scope) {
 
       }
  };
+
+
+// Populate search params in search form, search bar and ss for persistency (page reloads)
+set = function(field, value, trigger) {
+
+  if (typeof trigger === 'undefined') trigger = null;
+
+//  console.log('set. field: ', field, ' value: ', value);
+  var cleanValue = (amount(field)) ? clean(value) : value;
+
+  if (field =='service_type') setServiceTypeTo(value);
+  if (field =='payment_method') setPaymentMethodTo(value);
+
+  $('input[data-model=search][data-field=' + field + ']').val(cleanValue);
+  $('select[data-model=search][data-field=' + field + ']').val(cleanValue);
+  $('.params [data-model=search][data-field=' + field + ']').html(value);
+
+  sessionStorage.setItem(field, value);
+
+  if (trigger == 'manual') report('Set', field, null, value);
+
+  if (currency(field)) {
+    console.log('set ' + field + ' to ' + value);
+    console.log('about to disable ' + other(field) + ' to ' + value);
+    console.log($('.' + other(field)).length, $('.' + other(field))[0]);
+    disable($('.' + other(field)), value);
+  }
+
+
+  function amount(field) {
+    return field.indexOf('amount') > -1
+  }
+
+
+};
+
 
