@@ -22,20 +22,6 @@ $(document).ready(function() {
         })
     };
 
-
-    disable = function($e, value) {
-        $e.find('ul.dropdown-content li').each(function() {
-            var $this = $(this);
-            if ($this.find('span').html() == value) {
-                $this.addClass('disabled')
-            } else {
-                $this.removeClass('disabled')
-            }
-        });
-        return false; // Important! To not trigger the change event endlessly
-    };
-
-
     bind_currency_to_autonumeric = function() {
 
         $('[data-autonumeric]').autoNumeric('init');
@@ -44,8 +30,8 @@ $(document).ready(function() {
             update_currency_symbol($(this));
         });
 
-        $('.currency_select.select-wrapper').change(function(e) {
-            console.log('currency_select change event triggered. Following is the event:', e);
+        $('.currency_select.select-wrapper').change(function() {
+            console.log('currency_select change event triggered');
 
             var $this   = $(this).find('[data-model=search][data-field]').addBack('[data-model=search][data-field]');
             var field   = $this.data('field');
@@ -56,7 +42,7 @@ $(document).ready(function() {
             if (value_of('payment_method') == 'credit' && field == 'pay_currency' && value != local.currency && positionFound()) {
                 snack(`To pay with credit, payment currency must remain ${local.currency}`, {klass: 'oops', timeout: 3000});
                 set('pay_currency', local.currency);
-                $('form select').material_select(); // TODO: Remove. Inserted to set
+                $('form select').material_select();
                 return;
             }
 
@@ -74,6 +60,17 @@ $(document).ready(function() {
 
         });
 
+
+        function disable($e, value) {
+            $e.find('ul.dropdown-content li').each(function() {
+                var $this = $(this);
+                if ($this.find('span').html() == value) {
+                    $this.addClass('disabled')
+                } else {
+                    $this.removeClass('disabled')
+                }
+            })
+        }
 
     };
 
