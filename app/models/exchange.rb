@@ -365,7 +365,6 @@ class Exchange < ActiveRecord::Base
 
       get_amount                                            = result[:quote]
       result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format(:disambiguate => true)
-      pay_amount                                            += result[:credit_charge] + result[:delivery_charge]      # not symetrical: charges always add to the pay_amount
 
       bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency)
       if bad_rates[:error]
