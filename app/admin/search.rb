@@ -30,7 +30,7 @@ ActiveAdmin.register Search do
     column 'Issues' do |search|
       count = search.issues.count
 #      status_tag(count, :red) if count > 0
-      link_to status_tag(count.to_s + ' issue'.pluralize(count), :red), admin_search_issues_path(search) if count > 0
+      link_to status_tag(count.to_s + ' issue'.pluralize(count), class: :red), admin_search_issues_path(search) if count > 0
     end
     column 'Created' do |search|
       search.created_at.in_time_zone("Jerusalem")
