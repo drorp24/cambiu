@@ -209,8 +209,10 @@ noOtherOrderExists = function() {
         var text = 'You have';
         if (order_exchange_id == current_exchange.id) {
             text += ' ordered already from that exchange'
-        } else {
+        } else if (ordered_exchange && ordered_exchange.name) {
             text += ` another order from ${ordered_exchange.name}`
+        } else {
+            text += ' another order pending'
         }
         console.warn(text);
         snack(text, {klass: 'oops', timeout: 7000});

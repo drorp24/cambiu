@@ -338,7 +338,7 @@ fetchAndPopulateLocaloffers = function() {
 
 populateLocalOffers = function(rates) {
 
-  if (rates.error || rates.worst.error || $.isEmptyObject(rates.best.buy) || $.isEmptyObject(rates.best.sell) || rates.best.buy.error || rates.best.sell.error) {
+  if (!rates || rates.error || rates.worst.error || $.isEmptyObject(rates.best.buy) || $.isEmptyObject(rates.best.sell) || rates.best.buy.error || rates.best.sell.error) {
     clearLocalOffers();
     snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'search'}});
     return(null);
