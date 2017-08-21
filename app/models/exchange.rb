@@ -622,7 +622,7 @@ class Exchange < ActiveRecord::Base
 
     # grade adds together amounts and distance, and the amounts may not be the same currency. For grading, this is perfectly fine
     # gain must be used and not pay or buy amounts, since one of the latter is always fixed, so each time you want to maximize something else; gain does exactly that
-    distance_element = delivery ? exchange_hash[:distance] * Rails.application.config.distance_factor : 0
+    distance_element = delivery ?  0 : exchange_hash[:distance] * Rails.application.config.distance_factor
     exchange_hash[:grade] = exchange_hash[:gain] * -1   +
                             credit_charge               +
                             delivery_charge             +
