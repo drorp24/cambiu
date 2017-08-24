@@ -145,7 +145,11 @@ $(document).ready(function() {
     };
 
     determineTransaction = function() {
-        return (value_of('buy_currency') == local.currency) ? 'buy' : 'sell'
+        if (!local.currency) return;
+        let local_currency  = local.currency;
+        let buy_currency    = value_of('buy_currency');
+        let pay_currency    = value_of('pay_currency');
+        return (pay_currency !== local_currency) && (buy_currency !== local_currency) ? 'mixed' : buy_currency === local.currency ? 'buy' : 'sell'
     };
 
 

@@ -293,12 +293,12 @@ class Exchange < ActiveRecord::Base
     @inter ||= self.inter.first
   end
 
-  def self.bad_rate(country, rated_currency, base_currency)
+  def self.bad_rate(country, rated_currency, base_currency, trans, pay_currency)
 #    puts "self.bad_rate called with: " + country + ', ' + rated_currency + ', ' + base_currency
     return @bad_rate if @bad_rate && @bad_rate_country == country && @bad_rate[:rated_currency] == rated_currency && @bad_rate[:base_currency] == base_currency
 #    puts "self.bad_rate did not return but went to calculate it"
     @bad_rate_country = country
-    @bad_rate = Exchange.bad(country).rate(rated_currency, base_currency)
+    @bad_rate = Exchange.bad(country).rate(rated_currency, base_currency, trans, pay_currency)
   end
 
   # quote and calculate gain, focusing on exchange rates and ignoring added charges
@@ -346,7 +346,7 @@ class Exchange < ActiveRecord::Base
 
     if calculated == 'buy_amount'
 
-      rates = result[:rates]          = rate(get_currency, pay_currency)
+      rates = result[:rates]          = rate(get_currency, pay_currency, trans, pay_currency)
 
       if rates[:error]
         result[:errors]           <<   rates[:error]
@@ -366,7 +366,7 @@ class Exchange < ActiveRecord::Base
       get_amount                                            = result[:quote]
       result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format(:disambiguate => true)
 
-      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency)
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency, trans, pay_currency)
       if bad_rates[:error]
         result[:errors]               <<   bad_rates[:error]
         return result
@@ -398,7 +398,7 @@ class Exchange < ActiveRecord::Base
 
     else
 
-      rates = result[:rates]          = rate(pay_currency, get_currency)
+      rates = result[:rates]          = rate(pay_currency, get_currency, trans, pay_currency)
       if rates[:error]
         result[:errors]               <<   rates[:error]
         return result
@@ -416,7 +416,7 @@ class Exchange < ActiveRecord::Base
       pay_amount                                            = result[:quote]
       result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format(:disambiguate => true)
 
-      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency)
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency, trans, pay_currency)
       if bad_rates[:error]
         result[:errors]               <<   bad_rates[:error]
         return result
@@ -454,7 +454,7 @@ class Exchange < ActiveRecord::Base
   end
 
   # TODO: Important: This is where the cross-rates will take effect. 'quote' method would not be affected
-  def rate(rated_currency, base_currency)
+  def rate(rated_currency, base_currency, trans, pay_currency)
 
     result = {
         rated_currency: rated_currency,
@@ -463,6 +463,8 @@ class Exchange < ActiveRecord::Base
         sell: nil,
         cc_fee: self.cc_fee,
         delivery_charge: self.delivery_charge,
+        transaction: trans,
+        pay_currency: pay_currency,
         error: nil,
         updated: nil,
         source: nil,
@@ -481,8 +483,18 @@ class Exchange < ActiveRecord::Base
       return result
     end
 
+    if pay_currency == rated_currency
+      pay_rates = rated_rates
+      get_rates = base_rates
+    else
+      pay_rates = base_rates
+      get_rates = rated_rates
+    end
+
+
     result[:buy]  = base_rates[:buy]  == 0 ? 0 :  (rated_rates[:buy]  / base_rates[:buy])
     result[:sell] = base_rates[:sell] == 0 ? 0 :  (rated_rates[:sell] / base_rates[:sell])
+    result[:mixed] = trans == 'mixed' ? pay_rates[:buy] / get_rates[:sell] : nil
     result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
     result[:source] = rated_rates[:source] || base_rates[:source]
     if (Date.today - result[:updated].to_date).to_i > 1 and base_rates[:method] != 'reference' and rated_rates[:method] != 'reference'
