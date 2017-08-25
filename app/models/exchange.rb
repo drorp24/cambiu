@@ -483,18 +483,18 @@ class Exchange < ActiveRecord::Base
       return result
     end
 
-    if pay_currency == rated_currency
-      pay_rates = rated_rates
-      get_rates = base_rates
-    else
-      pay_rates = base_rates
-      get_rates = rated_rates
-    end
-
 
     result[:buy]  = base_rates[:buy]  == 0 ? 0 :  (rated_rates[:buy]  / base_rates[:buy])
     result[:sell] = base_rates[:sell] == 0 ? 0 :  (rated_rates[:sell] / base_rates[:sell])
-    result[:mixed] = trans == 'mixed' ? pay_rates[:buy] / get_rates[:sell] : nil
+    if trans == 'mixed'
+      if rated_currency == pay_currency
+        result[:mixed] = rated_rates[:buy] / base_rates[:sell]
+      else
+        result[:mixed] = rated_rates[:sell] / base_rates[:buy]
+      end
+    else
+      result[:mixed] = nil
+    end
     result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
     result[:source] = rated_rates[:source] || base_rates[:source]
     if (Date.today - result[:updated].to_date).to_i > 1 and base_rates[:method] != 'reference' and rated_rates[:method] != 'reference'
