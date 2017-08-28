@@ -80,16 +80,7 @@
             setPage({pane1: 'order', id1: value_of('order_exchange_id')})
         } else {
 */
-        // Show the offer already shown in the search page even if different than the 1st one in the offers array
-        // They can be different if their grades turned out equal and best, but their amounts may still be different
-            let best_offer = bestOffer();
-            if (best_offer.id) {
-                var best_offer_id = best_offer.id;
-                if (best_offer_id !== offers[0].id) console.warn(`Using best_offer_id: ${best_offer_id} instead of offers[0].id: ${offers[0].id}`);
-            } else {
-                var best_offer_id = offers[0].id;
-            }
-            setPage({pane1: 'offer', id1: best_offer_id});
+            setPage({pane1: 'offer', id1: offers[0].id});
  //       }
         return true;
     };
