@@ -239,8 +239,19 @@ ActiveAdmin.register Exchange do
 
     # working...
     def scoped_collection
-      params[:chain_id] ? super.where(chain_id: params[:chain_id]).ransack(params[:q]).result : super
-      params[:name] ? super.where(name: params[:name]).ransack(params[:q]).result : super
+      if params[:chain_id]
+        super.where(chain_id: params[:chain_id]).ransack(params[:q]).result
+      elsif params[:name]
+        super.where(name: params[:name]).ransack(params[:q]).result
+      elsif params[:name_he]
+        super.where(name_he: params[:name_he]).ransack(params[:q]).result
+      elsif params[:address]
+        super.where(address: params[:address]).ransack(params[:q]).result
+      elsif params[:address_he]
+        super.where(address_he: params[:address_he]).ransack(params[:q]).result
+      else
+        super
+      end
     end
 
     def new
