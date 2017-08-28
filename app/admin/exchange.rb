@@ -240,6 +240,7 @@ ActiveAdmin.register Exchange do
     # working...
     def scoped_collection
       params[:chain_id] ? super.where(chain_id: params[:chain_id]).ransack(params[:q]).result : super
+      params[:name] ? super.where(name: params[:name]).ransack(params[:q]).result : super
     end
 
     def new
