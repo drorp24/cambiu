@@ -421,7 +421,7 @@ $(document).ready(function() {
     }
 
     function unsupported(feature = null) {
-        let featureName = feature == 'service_type' ? 'Delivery' : 'Credit card payment';
+        let featureName = feature == 'service_type' ? 'Delivery' : 'Card payment';
         snack(featureName + ' is coming soon!', {
             button: '<i class="material-icons">help_outline</i>',
             link: {
@@ -434,7 +434,8 @@ $(document).ready(function() {
                         "<p >In order to make it the best we can, we already measure its responsiveness.</p>" +
                         "<p>You've just helped a great deal!"
                 }
-            }
+            },
+            timeout: 3000
         });
     }
 
