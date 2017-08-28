@@ -322,6 +322,8 @@ function checkUserDistances() {
 
 checkUserPosition = function() {
 
+    return; // Currently supressed
+
     if (search.location.type != 'user') {
         console.log('search location is not the user\'s location: not checking user position');
         return;
