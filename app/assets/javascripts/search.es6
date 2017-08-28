@@ -414,22 +414,28 @@ $(document).ready(function() {
         }
     });
 
-    function unsupported(feature) {
-        snack('Sorry, this feature is not supported yet', {
+
+
+    function supported(feature) {
+        return ['service_type', 'payment_method'].indexOf(feature) == -1;
+    }
+
+    function unsupported(feature = null) {
+        let featureName = feature == 'service_type' ? 'Delivery' : 'Credit card payment';
+        snack(featureName + ' is coming soon!', {
             button: '<i class="material-icons">help_outline</i>',
             link: {
                 page: 'exchanges',
                 pane: 'help',
                 help: {
-                    topic: 'Why do we enable unsuported features?',
+                    topic: 'Why do we include unsuported features?',
                     content:
-                        "<p>It's important for us to know how needed some features are - so we know when to provide them.</p>" +
-                        "<p >This is done for a limited time only.</p>" +
-                        "<p>Apologize for any inconvenience!</p>"
+                        "<p>We are in the process of implemeting this feature.</p>" +
+                        "<p >In order to make it the best we can, we already measure its responsiveness.</p>" +
+                        "<p>You've just helped a great deal!"
                 }
             }
         });
-        report('Feature', feature);
     }
 
     // pointer-events important!
@@ -468,12 +474,19 @@ $(document).ready(function() {
     $('form .service_type').change(function() {
         var $this = $(this);
         snackHide();
-        let service_type = $this.is(':checked') ? 'delivery' : 'pickup';
-        setServiceTypeTo(service_type);
-        if ($('body').attr('data-pane') == 'search') fetchAndPopulateLocaloffers();
-        if ($('body').attr('data-pane') == 'update') {
-            $(`.ecard[data-exchange-id=${urlId()}] .offer_line.delivery.charge`).css('visibility', value_of('service_type') == 'delivery' ? 'visible' : 'hidden');
+        var service_type = $this.is(':checked') ? 'delivery' : 'pickup';
+
+        if (supported('service_type')) {
+            setServiceTypeTo(service_type);
+            if ($('body').attr('data-pane') == 'search') fetchAndPopulateLocaloffers();
+            if ($('body').attr('data-pane') == 'update') {
+                $(`.ecard[data-exchange-id=${urlId()}] .offer_line.delivery.charge`).css('visibility', value_of('service_type') == 'delivery' ? 'visible' : 'hidden');
+            }
+        } else {
+            $('form.selection #delivery_ind').prop('checked', service_type == 'pickup');
+            unsupported('service_type');
         }
+
         report('Set', 'Service type', null, service_type);
     });
 
@@ -508,19 +521,30 @@ $(document).ready(function() {
     };
 
 
+    function otherPaymentMethod(method) {
+        return method == 'cash' ? 'credit' : 'cash'
+    }
+
     $('form .payment_method').change(function() {
         snackHide();
-        let new_payment_method = $('form.selection .payment_method:checked').val();
-        if (new_payment_method == 'credit' && value_of('pay_currency') != local.currency) {
-            snack(`To pay with credit, please change payment currency to ${local.currency}`, {klass: 'oops', timeout: 3000});
-            setPaymentMethodTo('cash');
-            return;
+        var new_payment_method = $('form.selection .payment_method:checked').val();
+
+        if (supported('payment_method')) {
+            if (new_payment_method == 'credit' && value_of('pay_currency') != local.currency) {
+                snack(`To pay with credit, please change payment currency to ${local.currency}`, {klass: 'oops', timeout: 3000});
+                setPaymentMethodTo('cash');
+                return;
+            }
+            setPaymentMethodTo(new_payment_method);
+            if ($('body').attr('data-pane') == 'search') fetchAndPopulateLocaloffers();
+            if ($('body').attr('data-pane') == 'update') {
+                $(`.ecard[data-exchange-id=${urlId()}] .offer_line.cc.charge`).css('visibility', value_of('payment_method') == 'credit' ? 'visible' : 'hidden');
+            }
+        } else {
+            $(`form.selection .payment_method[value=${otherPaymentMethod(new_payment_method)}]`).prop('checked', true);
+            unsupported('payment_method')
         }
-        setPaymentMethodTo(new_payment_method);
-        if ($('body').attr('data-pane') == 'search') fetchAndPopulateLocaloffers();
-        if ($('body').attr('data-pane') == 'update') {
-            $(`.ecard[data-exchange-id=${urlId()}] .offer_line.cc.charge`).css('visibility', value_of('payment_method') == 'credit' ? 'visible' : 'hidden');
-        }
+
         report('Set', 'Payment method', null, new_payment_method);
     });
 
@@ -529,12 +553,9 @@ $(document).ready(function() {
         $(`form.selection .payment_method[value=${payment_method}]`).prop('checked', true);
         sessionStorage.payment_method = payment_method;
         if (payment_method == 'cash') setServiceTypeTo('pickup');
-        $('form.selection').removeClass(other(payment_method)).addClass(payment_method);
-        $('body').removeClass(other(payment_method)).addClass(payment_method);
+        $('form.selection').removeClass(otherPaymentMethod(payment_method)).addClass(payment_method);
+        $('body').removeClass(otherPaymentMethod(payment_method)).addClass(payment_method);
 
-        function other(method) {
-            return method == 'cash' ? 'credit' : 'cash'
-        }
     };
 
 
