@@ -351,6 +351,7 @@ populateLocalOffers = function(rates) {
 
   var best_rate = rates['best'][transaction][transaction];
   var best_rated_currency = rates['best'][transaction]['rated_currency'];
+  var best_exchange_id = rates['best'][transaction]['exchange_id'];
   var worst_rate = rates['worst'][transaction];
   var worst_rated_currency = rates['worst']['rated_currency'];
   var count = rates['count'];
@@ -373,6 +374,7 @@ populateLocalOffers = function(rates) {
   $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
   $('[data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
 
+  $('form.selection [data-model=search][data-field=exchange_id]').val(best_exchange_id);
 
   return(best_value);
 

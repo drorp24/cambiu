@@ -102,12 +102,33 @@ class Search < ActiveRecord::Base
     end
 
     if mode == 'full'
+
       exchanges_offers = exchanges_offers.sort_by{|e| e[:grade]}
+
+      if exchange_id and (exchanges_offers[0][:id] != exchange_id)
+        puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+        puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
+        puts ""
+        exchange_id_index = exchanges_offers.each_index.find{|i| exchanges_offers[i][:id] == exchange_id}
+        e_0 = exchanges_offers[0]
+        e_best = exchanges_offers[exchange_id_index]
+        if e_best[:grade] <= e_0[:grade]
+          puts "Swapped exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
+          e_0, e_best = e_best, e_0
+        else
+          puts "Didnt swap exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
+        end
+        puts ""
+        puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
+        puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      end
+
       best_offer = exchanges_offers[0]
+
     end
 
-    self.exchange_id = best_offer[:id]
-    self.best_grade = best_offer[:grade]
+    self.exchange_id  = best_offer[:id]
+    self.best_grade   = best_offer[:grade]
     self.save
 
     if mode == 'best'
