@@ -126,7 +126,6 @@ var cardHeight = null;
 var exchanges;
 var inShow = true;
 var currExchangeId = null;
-var currentSnack = null;
 var locationDirty = false;
 var searchResult;
 var searchId = null;
@@ -152,6 +151,7 @@ var calculated = null;
 var verifyMapIsShown;
 var inIframe = false;
 var locale;
+var activeSnackbars = 0;
 
 
 
@@ -523,29 +523,38 @@ $(document).ready(function() {
         return $e.html();
     };
 
+    currentSnack = function() {
+        return !!$('.snackbar-opened').length
+    };
+
+    hideAllSnacks = function() {
+        $('.snackbar-opened').removeClass('snackbar-opened')
+    };
+
     snack = function(message, options) {
 
         console.log('snack called with message: ' + message);
 
-//          Suppressed since it can now also happen when switched back to 'where I'm at' while still on the (white) search page
-//        if ($upEl && !inShow) $upEl.css({'position': 'absolute', 'bottom': '60px', 'transition': 'bottom 0.5s'});
-
-        radar('hide');
-
+        activeSnackbars += 1;
+        console.log('activeSnackbars now equals: ' + activeSnackbars);
         if (typeof options === 'undefined') options = {};
 
-        if (currentSnack) {
-            wait(500).then(goOn);
+        if (activeSnackbars > 1 || currentSnack()) {
+            console.log('There are ' + activeSnackbars + ' active snacks including this one. Gonna wait ' + String(2000 * activeSnackbars / 1000));
+            wait(2000 * activeSnackbars).then(goOn);
         } else {
+            console.log('There is no current snack. Displaying snack' );
             goOn();
         }
 
         function goOn() {
 
-            if (currentSnack) currentSnack.snackbar("hide");
+//            console.log('arrived to goOn');
 
-            currentSnack = $.snackbar({
-                timeout: options.timeout || 500000,
+            var timeout =  options.timeout || 500000;
+
+            var $snackbar = $.snackbar({
+                timeout: timeout,
                 htmlAllowed: true,
                 content: snackHtml({
                     message: message,
@@ -557,7 +566,11 @@ $(document).ready(function() {
                     link: options.link,
                     icon: options.icon
                 })
-            })
+            });
+
+            wait(2000).then(function() {
+                activeSnackbars -= 1;
+            });
         }
 
     };
@@ -571,7 +584,6 @@ $(document).ready(function() {
 //        if ($downEl) $downEl.css({'position': 'fixed', 'bottom': '0'});
 
         $('.snackbar.snackbar-opened').snackbar("hide");
-        currentSnack = null;
     };
 
     $('body#cambiu').on('click tap', '.snackbar', function() {

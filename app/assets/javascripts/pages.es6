@@ -148,7 +148,7 @@ refresh = function(pane, $pane, exchange) {
         search_refreshed = true; // do once only
     }
 */
-    if (currentSnack) snackHide();
+    if (currentSnack()) snackHide();
 /*
     if (pane == 'cards') {
         $('.exchanges #exchanges').css('z-index', '2')

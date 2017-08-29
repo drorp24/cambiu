@@ -2671,6 +2671,8 @@ body#cambiu {
       font-size: 2.5vh;
       @include vmargin-right(2vw);
       @include vmargin-left(2vw);
+      width: 100%;
+      text-align: center;
     }
     .button {
       font-weight: 500;
