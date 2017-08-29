@@ -3,9 +3,9 @@
   <% left_id = nil if local_assigns[:left_id].nil? %>
   <% right_id = nil if local_assigns[:right_id].nil? %>
 
-  <div class="navbar_link navbar_left flex_center" data-href-page="exchanges" data-href-pane=<%= local_assigns[:left_pane].nil? ? 'back' : left_pane %> data-href-id=<%= left_id  %>>
+  <div class="navbar_link navbar_left flex_center" data-href-page="exchanges" data-href-pane=<%= local_assigns[:left_pane].nil? ? 'search' : left_pane %> data-href-id=<%= left_id  %>>
     <% unless local_assigns[:left_pane] && left_pane == 'none' %>
-        <i class="material-icons"><%= local_assigns[:left_icon].nil? ? 'arrow_back'  : left_icon  %></i>
+        <i class="material-icons"><%= local_assigns[:left_icon].nil? ? 'home'  : left_icon  %></i>
     <% else %>
         &nbsp;
     <% end %>
