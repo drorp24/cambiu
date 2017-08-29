@@ -127,9 +127,11 @@ class Search < ActiveRecord::Base
 
     end
 
-    self.exchange_id  = best_offer[:id]
-    self.best_grade   = best_offer[:grade]
-    self.save
+    if best_offer
+      self.exchange_id  = best_offer[:id]
+      self.best_grade   = best_offer[:grade]
+      self.save
+    end
 
     if mode == 'best'
 
