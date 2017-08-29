@@ -103,7 +103,7 @@ followUser = function() {
 
         function currPositionError(error) {
 
-            hideSearchLocation();
+//            hideSearchLocation();  // In desktop a timeout error always occurs after 30 seconds, making the blue dot disappear
             var message = error.message ? error.message : error;
             console.warn('currPosition error: ' + message);
 //            reject('currPositionError: ' + message);
