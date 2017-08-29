@@ -35,4 +35,3 @@
 
 //= require star-rating
 //= require swiper.jquery.min
-//= require jquery.easy-autocomplete.min
