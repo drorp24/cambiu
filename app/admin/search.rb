@@ -14,6 +14,9 @@ ActiveAdmin.register Search do
   index do
     selectable_column
     id_column
+    column 'Mode' do |search|
+      search.mode.capitalize if search.mode
+    end
 =begin
     column 'User' do |search|
       link_to search.user.name, admin_user_searches_path(search.user_id) if search.user_id and search.user
@@ -31,6 +34,9 @@ ActiveAdmin.register Search do
       count = search.issues.count
 #      status_tag(count, :red) if count > 0
       link_to status_tag(count.to_s + ' issue'.pluralize(count), class: :red), admin_search_issues_path(search) if count > 0
+    end
+    column 'Best' do |search|
+      link_to search.exchange.name, edit_admin_exchange_path(search.exchange_id) if search.exchange_id
     end
     column 'Created' do |search|
       search.created_at.in_time_zone("Jerusalem")

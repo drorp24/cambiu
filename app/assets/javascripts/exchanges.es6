@@ -24,7 +24,7 @@
 
             if (offers.length > 0) {
 
-                offers.sort((a, b) => a.properties.grade - b.properties.grade);
+// already sorted                offers.sort((a, b) => a.properties.grade - b.properties.grade);
 
                 for (let [index, offer] of offers.entries()) {exchangeHash[offer.id].rank = index + 1}
                 offers[0].properties.best_at.push('best');

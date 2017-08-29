@@ -1,14 +1,16 @@
 class Search < ActiveRecord::Base
 
   belongs_to :user
+  belongs_to :exchange
   has_many  :orders
   has_many :issues, foreign_key: "search_id", class_name: "Error"
 
-  attr_accessor :fetch, :mode, :hash, :distance_slider
+  attr_accessor :fetch, :hash, :distance_slider
 
   validate :valid_input, on: :create
   enum service_type: [ :pickup, :delivery, :all_serivce_types]
   enum payment_method: [ :cash, :credit, :all_payment_methods]
+  enum mode: [ :best, :full ]
 
 #  scope :negate, ->(scope) { where(scope.where_values.reduce(:and).not) }
 
@@ -99,12 +101,22 @@ class Search < ActiveRecord::Base
 
     end
 
+    if mode == 'full'
+      exchanges_offers = exchanges_offers.sort_by{|e| e[:grade]}
+      best_offer = exchanges_offers[0]
+    end
+
+    self.exchange_id = best_offer[:id]
+    self.best_grade = best_offer[:grade]
+    self.save
+
     if mode == 'best'
+
       return {
           best: {
-              buy:   best_offer ? best_offer[:rates].merge(name: best_offer[:name]) : nil,    # this structure was left for backward-compatibility with fe only
-              sell:  best_offer ? best_offer[:rates].merge(name: best_offer[:name]) : nil,
-              mixed: best_offer ? best_offer[:rates].merge(name: best_offer[:name]) : nil
+              buy:   best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,    # this structure was left for backward-compatibility with fe only
+              sell:  best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,
+              mixed: best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil
           },
           worst:
               Exchange.bad_rate(country, buy_currency, pay_currency, trans, pay_currency),
