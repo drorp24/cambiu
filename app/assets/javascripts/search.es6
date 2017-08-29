@@ -417,7 +417,8 @@ $(document).ready(function() {
 
 
     function supported(feature) {
-        return ['service_type', 'payment_method'].indexOf(feature) == -1;
+//        return ['service_type', 'payment_method'].indexOf(feature) == -1;
+        return true;
     }
 
     function unsupported(feature = null) {

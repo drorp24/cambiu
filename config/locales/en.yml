@@ -125,7 +125,7 @@ en:
     apartment: 'Appt.'
   app:
     missing: '(Translation missing)'
-    mayTake24Hours: 'Delivery takes up to 24 hrs. Order it?'
+    mayTake24Hours: 'We will soon contact you to schedule the delivery. OK?'
     yes1: 'Yes'
     no1: 'No'
     noOffer: 'No offer for these criteria.<br/> Try changing them.'
