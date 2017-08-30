@@ -625,12 +625,12 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:delivery_charge] = delivery_charge.to_money(pay.currency.iso_code).format
 
     cc_fee = credit ? self.cc_fee || 0 : 0
-    credit_charge = (pay.amount + delivery_charge) * cc_fee / 100
+    pay_amount = Monetize.parse(quotes[:pay_amount]).amount
+    credit_charge = (pay_amount + delivery_charge) * cc_fee / 100
     exchange_hash[:credit_charge_raw] = credit_charge
     exchange_hash[:credit_charge] = credit_charge.to_money(pay.currency.iso_code).format
 
-    pay_amount_raw = pay.amount.to_f
-    exchange_hash[:total_amount] = (pay_amount_raw + delivery_charge + credit_charge).to_money(pay.currency.iso_code).format
+    exchange_hash[:total_amount] = (pay_amount + delivery_charge + credit_charge).to_money(pay.currency.iso_code).format
 
     # grade adds together amounts and distance, and the amounts may not be the same currency. For grading, this is perfectly fine
     # gain must be used and not pay or buy amounts, since one of the latter is always fixed, so each time you want to maximize something else; gain does exactly that

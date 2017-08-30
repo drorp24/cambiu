@@ -336,6 +336,7 @@ fetchAndPopulateLocaloffers = function() {
 
 };
 
+// Called after the initial fetchLocalRates and then after every changing key stroke
 populateLocalOffers = function(rates) {
 
   if (!rates || rates.error || rates.worst.error || $.isEmptyObject(rates.best.buy) || $.isEmptyObject(rates.best.sell) || rates.best.buy.error || rates.best.sell.error) {
@@ -363,7 +364,26 @@ populateLocalOffers = function(rates) {
   var worst_value = worst_rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
   var gain_value = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
 
+
+
   formElement(calculated).autoNumeric('set', best_value);
+
+/*
+ // If I ever want to show the extra charges somewhere then this is the calculation
+ // For comparison with bad rate, however, charges must be shown net of charges, as banks have no delivery charges
+  var pay_amount = clean($('form.selection [data-model=search][data-field=pay_amount]').val());
+  console.log('pay_amount: ' + pay_amount);
+  var delivery_charge = rates['best'][transaction]['delivery_charge'] || 0;
+  console.log('delivery charge: ' + delivery_charge);
+  var cc_fee = rates['best'][transaction]['cc_fee'] || 0;
+  var credit_charge = (pay_amount + delivery_charge)* cc_fee / 100.0;
+  console.log('credit charge: ' + credit_charge);
+  var total_amount = pay_amount + delivery_charge + credit_charge;  // Assumption: the pay_currency is the local.currency (open issue)
+  console.log('about to update pay_amount with ' + total_amount);
+ */
+
+
+
   $('[data-model=local][data-field=count]').html(count);
   if (gain_value < 0) {
     $('.search_line.worst').css('visibility', 'hidden');
@@ -374,6 +394,7 @@ populateLocalOffers = function(rates) {
   $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
   $('[data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
 
+  // Bias the next search to come to prefer this exchange_id over another with the same grade
   $('form.selection [data-model=search][data-field=exchange_id]').val(best_exchange_id);
 
   return(best_value);
