@@ -4,7 +4,7 @@ ActiveAdmin.register Exchange do
                 :airport, :directory, :accessible, :status, :logo, :currency, :admin_user_id, :rates_source, :contract, :rates_policy,
                 :todo, :chain_name, :contact, :weekday_open, :weekday_close, :saturday_open, :saturday_close, :sunday_open, :sunday_close, :rates_url, :comment, :photo,
                 :cc_fee, :delivery_charge, :delivery, :card, :delivery_polygon_a_lat, :delivery_polygon_a_lng, :delivery_polygon_b_lat, :delivery_polygon_b_lng,
-                :delivery_polygon_c_lat, :delivery_polygon_c_lng, :delivery_polygon_d_lat, :delivery_polygon_d_lng
+                :delivery_polygon_c_lat, :delivery_polygon_c_lng, :delivery_polygon_d_lat, :delivery_polygon_d_lng, :bank_fee
 
 =begin
     rates_attributes: [:id, :buy_cents, :buy_currency, :pay_cents, :pay_currency, :_destory],
@@ -293,6 +293,9 @@ form do |f|
 
       f.semantic_errors *f.object.errors.keys
       f.input     :business_type, as: :select, collection: {:"Exchange"=>"exchange", :"Bank"=>"bank", :"Post office"=>"post_office", :"Other"=>"other", :"Interbank"=>"inter"}, include_blank: false
+      if f.object.bank?
+        f.input     :bank_fee, label: 'Bank fee (%)'
+      end
       f.input     :locale, as: :select, collection: {:"Hebrew"=>"he", :"English"=>"en"}, include_blank: false
       f.input     :chain_name, label: 'Chain name'
       f.input     :name, label: 'Exchange name'

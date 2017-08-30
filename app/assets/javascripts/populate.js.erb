@@ -355,13 +355,16 @@ populateLocalOffers = function(rates) {
   var best_exchange_id = rates['best'][transaction]['exchange_id'];
   var worst_rate = rates['worst'][transaction];
   var worst_rated_currency = rates['worst']['rated_currency'];
+  var bank_fee = rates['worst']['bank_fee'];
   var count = rates['count'];
 
   var populated_value = clean(value_of(other(calculated)));
   var calculated_currency = value_of(twin(calculated));
 
   var best_value = best_rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
-  var worst_value = worst_rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
+  var worst_value_before_fee = worst_rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
+  var bank_factor = calculated == 'buy_amount' ? (100 - bank_fee)/100 : (100 + bank_fee)/100;
+  var worst_value = worst_value_before_fee * bank_factor;
   var gain_value = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
 
 

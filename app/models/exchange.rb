@@ -371,11 +371,15 @@ class Exchange < ActiveRecord::Base
         result[:errors]               <<   bad_rates[:error]
         return result
       end
-      bad_amount                                            = pay_amount * bad_rates[trans.to_sym]
+      bank_fee                                              = bad_rates[:bank_fee]
+      bad_amount_before_fees                                = (pay_amount * bad_rates[trans.to_sym])
+      bad_amount                                            = bad_amount_before_fees * (100 - bank_fee) / 100.0
+
       if bad_amount == 0
         result[:errors]               <<   "no bad rate - indicates a problem"
         return result
       end
+
       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       result[:gain]                                         = result[:quote] - bad_amount                 # gain always calculated against the quote, ignoring the extra charges
       result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
@@ -422,7 +426,9 @@ class Exchange < ActiveRecord::Base
         return result
       end
 
-      bad_amount                                            = get_amount * bad_rates[trans.to_sym]
+      bank_fee                                              = bad_rates[:bank_fee]
+      bad_amount_before_fees                                = (get_amount * bad_rates[trans.to_sym])
+      bad_amount                                            = bad_amount_before_fees * (100 + bank_fee) / 100.0
       if bad_amount == 0
         result[:errors]               <<   "no bad rate - indicates a problem"
         return result
@@ -468,7 +474,8 @@ class Exchange < ActiveRecord::Base
         error: nil,
         updated: nil,
         source: nil,
-        exchange_id: self.id
+        exchange_id: self.id,
+        bank_fee: nil
     }
 
     rated_rates = find_rate(rated_currency)
@@ -500,6 +507,7 @@ class Exchange < ActiveRecord::Base
     if (Date.today - result[:updated].to_date).to_i > 1 and base_rates[:method] != 'reference' and rated_rates[:method] != 'reference'
       result[:error] = "Stale rates"
     end
+    result[:bank_fee] = self.bank? ? (self.bank_fee || 0) : nil
 
     return result
 
