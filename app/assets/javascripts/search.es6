@@ -176,9 +176,15 @@ $(document).ready(function() {
         var value = $this.val();
 
         set(field, value);
+        var prev_calculated = calculated;
         if (amount(field) && value) {
             clear(brother($this));
             set('calculated', calculated = other(field));
+        }
+
+        if (prev_calculated !== calculated) {
+            console.log('calculated has just changed. Fetching local offers')
+            fetchAndPopulateLocaloffers();
         }
 
         var $field = formElement(field);
