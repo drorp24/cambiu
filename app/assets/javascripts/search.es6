@@ -566,6 +566,11 @@ $(document).ready(function() {
 
     };
 
+    revertToPickupCash = function() {
+        setServiceTypeTo('pickup');
+        setPaymentMethodTo('cash');
+    };
+
 
     $('[data-action=updateOrder]').click(function(e) {
 

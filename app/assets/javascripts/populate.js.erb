@@ -341,8 +341,31 @@ populateLocalOffers = function(rates) {
 
   if (!rates || rates.error || rates.worst.error || $.isEmptyObject(rates.best.buy) || $.isEmptyObject(rates.best.sell) || rates.best.buy.error || rates.best.sell.error) {
     clearLocalOffers();
+    if (rates.error) console.error(rates.error);
     snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'search'}});
     return(null);
+  }
+
+  if (rates.message) {
+
+    if (rates.message == 'nearestPickup') {
+      snack(t(rates.message), {timeout: 2000})
+    }
+
+    else if (rates.message == 'nearestDelivery') {
+
+      setServiceTypeTo('delivery');
+      setPaymentMethodTo('credit');
+
+      snack(t(rates.message), {
+        timeout: 100000,
+        button: t('yes'),
+        button_action: "snackHide()",
+        cancel_button: t('no'),
+        cancel_button_action: 'revertToPickupCash()'
+      })
+    }
+
   }
 
   $('form.selection input').removeClass('invalid');

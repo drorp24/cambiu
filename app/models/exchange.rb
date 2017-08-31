@@ -25,6 +25,17 @@ class Exchange < ActiveRecord::Base
   has_one     :ils_rate,    -> {where(currency: 'ILS')}       ,class_name: "Rate",  as: :ratable
   has_one     :nok_rate,    -> {where(currency: 'NOK')}       ,class_name: "Rate",  as: :ratable
 
+  has_one     :czk_rate,    -> {where(currency: 'CZK')}       ,class_name: "Rate",  as: :ratable
+  has_one     :ron_rate,    -> {where(currency: 'RON')}       ,class_name: "Rate",  as: :ratable
+  has_one     :pln_rate,    -> {where(currency: 'PLN')}       ,class_name: "Rate",  as: :ratable
+  has_one     :chf_rate,    -> {where(currency: 'CHF')}       ,class_name: "Rate",  as: :ratable
+  has_one     :thb_rate,    -> {where(currency: 'THB')}       ,class_name: "Rate",  as: :ratable
+  has_one     :php_rate,    -> {where(currency: 'PHP')}       ,class_name: "Rate",  as: :ratable
+
+
+
+
+
   has_many    :reviews,  :dependent => :destroy
 
   enum business_type:  [ :exchange, :bank, :post_office, :other, :reference ]
@@ -78,11 +89,15 @@ class Exchange < ActiveRecord::Base
 
 
   def self.covering(location)
-    where("delivery_nw_lng < ? AND delivery_se_lng > ? AND delivery_nw_lat > ? AND delivery_se_lat < ?", location[:lng], location[:lng], location[:lat], location[:lat])
+    lat = location[0]
+    lng = location[1]
+    where("delivery_nw_lng < ? AND delivery_se_lng > ? AND delivery_nw_lat > ? AND delivery_se_lat < ?", lng, lng, lat, lat)
   end
 
   def covers?(location)
-    self.delivery_nw_lng < location[:lng] && self.delivery_se_lng > location[:lng] && self.delivery_nw_lat > location[:lat] && delivery_se_lat < location[:lat]
+    lat = location[0]
+    lng = location[1]
+    self.delivery_nw_lng < lng && self.delivery_se_lng > lng && self.delivery_nw_lat > lat && delivery_se_lat < lat
   end
 
   def self.countries
@@ -601,11 +616,11 @@ class Exchange < ActiveRecord::Base
     'system'
   end
 
-  def offer(center, pay, buy, radius, trans, calculated, delivery, credit)
+  def offer(center, pay, buy, trans, calculated, delivery, credit)
 
     exchange_hash = {}
 
-    exchange_hash[:distance] = self.alt_distance_from(center)
+    exchange_hash[:distance] = self.distance_from(center)
     exchange_hash[:id] = self.id
     exchange_hash[:name] = self.fullname
     exchange_hash[:name_s] = self.name_s
@@ -625,7 +640,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:photo] = photo_url
 
     quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, calculated: calculated,
-                   radius: radius, distance: exchange_hash[:distance], trans: trans, delivery: delivery, credit: credit)
+                   trans: trans, delivery: delivery, credit: credit)
     exchange_hash = quotes.merge(exchange_hash)
 
     delivery_charge = delivery ? self.delivery_charge || 0 : 0

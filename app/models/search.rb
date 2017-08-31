@@ -41,18 +41,7 @@ class Search < ActiveRecord::Base
           calculated.blank? or trans.blank?
 
 
-      self.distance = self.service_type == 'pickup' ? self.distance || 2.5 : 100
-      self.distance_unit ||= "km"
-      delivery = self.service_type == 'delivery'
-      delivery_location = delivery ? {lat: location_lat, lng: location_lng} : nil
-      credit = self.payment_method == 'credit'
-
-      pay             = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
-      buy             = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)
-      center          = [location_lat, location_lng]
-      box             = Geocoder::Calculations.bounding_box(center, distance)
-
-      exchange_offers(exchange_id, location, delivery_location, center, box, pay, buy, distance, trans, calculated, delivery, credit, mode, country)
+      exchange_offers
 
     rescue => e
 
@@ -70,18 +59,67 @@ class Search < ActiveRecord::Base
 
   end
 
-  def exchange_offers(exchange_id, location, delivery_location, center, box, pay, buy, distance, trans, calculated, delivery, credit, mode, country)
+  def exchange_offers
 
-    pay_rate  = (pay.currency.iso_code.downcase + '_rate').to_sym
-    buy_rate  = (buy.currency.iso_code.downcase + '_rate').to_sym
+    error             = nil
+    message           = nil
 
-    buy_currency = buy.currency.iso_code
-    pay_currency = pay.currency.iso_code
+    delivery          = service_type == 'delivery'
+    credit            = payment_method == 'credit'
+    center            = [location_lat, location_lng]
+    pickup_radius     = 2.5
+    delivery_radius   = 100
+    pickup_box        = Geocoder::Calculations.bounding_box(center, pickup_radius)
+    delivery_box      = Geocoder::Calculations.bounding_box(center, delivery_radius)
+    box               = delivery ? delivery_box : pickup_box
 
-    exchanges = Exchange.active.geocoded.within_bounding_box(box).includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+    pay               = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
+    buy               = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)
 
-    exchanges            = exchanges.delivery.covering(delivery_location) if delivery
+    pay_rate          = (pay.currency.iso_code.downcase + '_rate').to_sym
+    buy_rate          = (buy.currency.iso_code.downcase + '_rate').to_sym
+
+
+
+    exchanges = Exchange.active.geocoded.
+        within_bounding_box(box).
+        includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+
+    exchanges            = exchanges.delivery.covering(center) if delivery
     exchanges            = exchanges.credit if credit
+
+    if exchanges.count == 0
+
+       # 1st attempt - Try looking for delivery offers first (can be skipped if delivery)
+
+      exchange = Exchange.active.delivery.geocoded.
+          within_bounding_box(delivery_box).
+          covering(center).
+          includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate]).
+          first
+
+      if exchange
+        exchanges = Array(exchange)
+        message = 'nearestDelivery'
+      else
+
+        # 2 - If no delivery offer exists either, return the closest pick-up offer in a sane radius
+        # The 'near' instead of 'within_bounding_box' makes the list be ordered by distance, closest first
+
+        exchange = Exchange.active.geocoded.
+            near(center, 50, :units => :km).
+            includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate]).
+            first
+
+
+        if exchange
+          exchanges = Array(exchange)
+          message = 'nearestPickup'
+        end
+      end
+
+    end
+
 
     best_grade = 1000
     best_offer = nil
@@ -89,7 +127,7 @@ class Search < ActiveRecord::Base
 
     exchanges.each do |exchange|
 
-      offer = exchange.offer(center, pay, buy, distance, trans, calculated, delivery, credit)
+      offer = exchange.offer(center, pay, buy, trans, calculated, delivery, credit)
       if mode == 'best'
         if offer[:grade] < best_grade
           best_offer = offer
@@ -105,6 +143,7 @@ class Search < ActiveRecord::Base
 
       exchanges_offers = exchanges_offers.sort_by{|e| e[:grade]}
 
+      # Swap will be done when the best offer is different than the one already shown in previous localRates call (can happen if both have the same grade)
       if exchange_id and (exchanges_offers[0][:id] != exchange_id)
         puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
         puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
@@ -143,21 +182,23 @@ class Search < ActiveRecord::Base
           },
           worst:
               Exchange.bad_rate(country, buy_currency, pay_currency, trans, pay_currency),
-          count: exchanges.count
+          count: exchanges.count,
+          error: error,
+          message: message
       }
     else
-      return geoJsonize(exchanges_offers)
+      return geoJsonize(exchanges_offers, error, message)
     end
 
   end
 
-  def geoJsonize(exchanges_offers, error=nil)
+  def geoJsonize(exchanges_offers, error, message = nil)
 
     features = []
     exchanges_offers.each do |exchange_offer|
       features << to_geo(exchange_offer)
     end
-    return {search: id, error: error, exchanges: {type: 'FeatureCollection', features: features}}.to_json
+    return {search: id, error: error, message: message, exchanges: {type: 'FeatureCollection', features: features}}.to_json
 
   end
 
