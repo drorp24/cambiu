@@ -983,21 +983,27 @@ body#cambiu {
     }
   }
 
-  .flag {
+  .language_select > div {
     display: none;
+    border: 1px solid #999;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-radius: 3px;
+    text-align: center;
+
   }
   &[locale=en] {
-    .flag.he {
-      display: block;;
+    .language_select .he {
+      display: block;
     }
   }
   &[locale=he] {
-    .flag.en {
-      display: block;;
+    .language_select .en {
+      display: block;
     }
   }
 
-  .language_select img {
+  .language_select div {
     @include vwidth(8vw);
   }
 
