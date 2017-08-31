@@ -84,3 +84,70 @@ Money::Currency.register({
    :thousands_separator => ".",
    :decimal_mark        => ","
 })
+Money::Currency.register({
+    :priority            => 1,
+    :iso_code            => "CZK",
+    :name                => "Czech Koruna",
+    :symbol              => "Kč",
+    :symbol_first        => false,
+    :subunit             => "Haléř",
+    :subunit_to_unit     => 100,
+    :thousands_separator => ".",
+    :decimal_mark        => ","
+})
+Money::Currency.register({
+    :priority            => 1,
+    :iso_code            => "RON",
+    :name                => "Romanian Leu",
+    :symbol              => "Lei",
+    :symbol_first        => true,
+    :subunit             => "Bani",
+    :subunit_to_unit     => 100,
+    :thousands_separator => ".",
+    :decimal_mark        => ","
+})
+Money::Currency.register({
+    :priority            => 1,
+    :iso_code            => "PLN",
+    :name                => "Polish Złoty",
+    :symbol              => "zł",
+    :symbol_first        => false,
+    :subunit             => "Grosz",
+    :subunit_to_unit     => 100,
+    :thousands_separator => " ",
+    :decimal_mark        => ","
+})
+Money::Currency.register({
+    :priority            => 1,
+    :iso_code            => "CHF",
+    :name                => "Swiss Franc",
+    :symbol              => "CHF",
+    :symbol_first        => true,
+    :subunit             => "Rappen",
+    :subunit_to_unit     => 100,
+    :thousands_separator => ",",
+    :decimal_mark        => ".",
+})
+Money::Currency.register({
+    :priority            => 1,
+    :iso_code            => "THB",
+    :name                => "Thai Baht",
+    :symbol              => "฿",
+    :symbol_first        => true,
+    :subunit             => "Satang",
+    :subunit_to_unit     => 100,
+    :thousands_separator => ",",
+    :decimal_mark        => ".",
+})
+Money::Currency.register({
+    :priority            => 1,
+    :iso_code            => "PHP",
+    :name                => "Philippine Peso",
+    :symbol              => "₱",
+    :symbol_first        => true,
+    :subunit             => "Centavo",
+    :subunit_to_unit     => 100,
+    :thousands_separator => ",",
+    :decimal_mark        => ".",
+})
+
