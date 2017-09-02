@@ -28,7 +28,7 @@ tagSession = function(obj = {}) {
 // exchange is an obj that needs only include keys 'id' and 'name'
 report = function(category, action, exchange = null, value = null) {
 
-    console.log(`report ${category} ${action} ${exchange} ${value}`);
+    console.log(`report category: ${category} action: ${action} exchange: ${exchange && exchange.id ? exchange.id : 'null'} value: ${value}`);
     let exchangeWorthy = (category) => category != 'Set';
 
     if (exchangeWorthy(category)) {

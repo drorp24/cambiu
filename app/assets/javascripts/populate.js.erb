@@ -349,7 +349,14 @@ populateLocalOffers = function(rates) {
   if (rates.message) {
 
     if (rates.message == 'nearestPickup') {
-      snack(t(rates.message), {timeout: 2000})
+      if (value_of('service_type') == 'delivery') {
+        tMessage = t('noDelivery') + '<br>' + t(rates.message);
+        setServiceTypeTo('pickup');
+        setPaymentMethodTo('cash');
+      } else {
+        tMessage = t(rates.message);
+      }
+      snack(tMessage, {timeout: 2000})
     }
 
     else if (rates.message == 'nearestDelivery') {

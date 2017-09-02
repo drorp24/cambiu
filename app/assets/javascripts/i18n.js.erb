@@ -3,6 +3,7 @@ t = function(expression) {
   var translation = {
 
     en: {
+      noDelivery: '<%= I18n.t 'app.noDelivery', locale: :en %>',
       nearestDelivery: '<%= I18n.t 'app.nearestDelivery', locale: :en %>',
       nearestPickup: '<%= I18n.t 'app.nearestPickup', locale: :en %>',
       mayTake24Hours: '<%= I18n.t 'app.mayTake24Hours', locale: :en %>',
@@ -12,6 +13,7 @@ t = function(expression) {
 
     },
     he: {
+      noDelivery: '<%= I18n.t 'app.noDelivery', locale: :he %>',
       nearestDelivery: '<%= I18n.t 'app.nearestDelivery', locale: :he %>',
       nearestPickup: '<%= I18n.t 'app.nearestPickup', locale: :he %>',
       mayTake24Hours: '<%= I18n.t 'app.mayTake24Hours', locale: :he %>',
@@ -23,4 +25,4 @@ t = function(expression) {
 
   return translation[locale][expression] || '<%= I18n.t 'app.missing' %>'
 };
-version = 8;
+version = 9;
