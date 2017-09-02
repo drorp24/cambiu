@@ -148,20 +148,26 @@ class Search < ActiveRecord::Base
         puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
         puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
         puts ""
-        puts "exchanges_offers:"
+        puts "exchange_id: " + exchange_id.to_s
         puts ""
-        puts exchanges_offers.count
+        puts "exchanges_offers[0][:id]: " + exchanges_offers[0][:id].to_s
+        puts ""
+        puts "exchanges_offers,count: " + exchanges_offers.count.to_s
+        puts ""
+        puts "exchanges_offers[0].inspect:"
         puts exchanges_offers[0].inspect
         puts ""
         puts ""
         exchange_id_index = exchanges_offers.each_index.find{|i| exchanges_offers[i][:id] == exchange_id}
         puts "exchange_id_index: " + exchange_id_index.to_s
         puts ""
+        if exchange_id_index
+          e_best = exchanges_offers[exchange_id_index]
+        else
+          puts "exchange_id is not in exchanges_offers. No swap."
+        end
         e_0 = exchanges_offers[0]
-        puts "e_o: "
-        puts e_0
-        e_best = exchanges_offers[exchange_id_index]
-        if e_best[:grade] <= e_0[:grade]
+        if e_best && (e_best[:grade] <= e_0[:grade])
           puts "Swapped exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
           e_0, e_best = e_best, e_0
         else
