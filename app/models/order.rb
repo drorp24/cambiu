@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
   monetize :credit_charge_cents, with_model_currency: :credit_charge_currency, :allow_nil => true
   monetize :delivery_charge_cents, with_model_currency: :delivery_charge_currency, :allow_nil => true
 
-  enum status: [:ordered, :confirmed, :pictured, :registered]
+  enum status: [:ordered, :confirmed, :pictured, :registered, :paid]
   enum service_type: [ :pickup, :delivery ]
   enum payment_method: [ :cash, :credit, :all_payment_methods]
 
@@ -56,16 +56,17 @@ class Order < ActiveRecord::Base
 
 
   def status_color
-    [:orange, :green, :blue, :green][Order.statuses[status]]
+    [:orange, :brown, :blue, :green, :red][Order.statuses[status]]
   end
 
   def requires_notification?
-    Rails.env.production? || pictured?
+    !self.registered?
   end
 
   def notification
-    puts "about to notify"
-    NotifyJob.perform_later(self, self.photo) #if self.requires_notification?
+    requires_notification = self.requires_notification?
+    puts requires_notification ? "about to notify" : "will not notify"
+    NotifyJob.perform_later(self, self.photo) if requires_notification
   end
 
   def mandrill_status

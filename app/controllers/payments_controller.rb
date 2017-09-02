@@ -6,6 +6,8 @@ class PaymentsController < ApplicationController
   end
 
   def success
+    order = Order.find_by_id(payment_params[:id])
+    order.paid!
     Payment.record_token(payment_params)
   end
 
