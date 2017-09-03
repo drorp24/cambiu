@@ -296,6 +296,7 @@ form do |f|
       if f.object.bank?
         f.input     :bank_fee, label: 'Bank fee (%)'
       end
+      f.input     :status, as: :select, collection: {:"Active"=> nil, :"Removed"=>"removed", :"Stale"=>"stale"}, include_blank: false
       f.input     :locale, as: :select, collection: {:"Hebrew"=>"he", :"English"=>"en"}, include_blank: false
       f.input     :chain_name, label: 'Chain name'
       f.input     :name, label: 'Exchange name'
