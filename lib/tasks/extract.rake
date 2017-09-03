@@ -21,7 +21,7 @@ namespace :rates do
 
     Extract.update(nil, 'Natwest', "http://www.natwest.com/tools/personal/currency_rates", 'html')
     Extract.update(nil, 'netdania', "http://www.netdania.com/quotes/forex-sterling", 'html')
-#    Extract.update(nil, 'Leumi', "http://www.bankleumi.co.il/vgnprod/shearim.asp?sitePrefix=", 'html')
+    Extract.update(nil, 'Leumi', "http://www.bankleumi.co.il/vgnprod/shearim.asp?sitePrefix=", 'html')
 
     Extract.update('Best Exchange', nil, "http://bestexchange.co.uk", 'html')
 
