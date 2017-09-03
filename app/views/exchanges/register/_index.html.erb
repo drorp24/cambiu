@@ -29,7 +29,7 @@
     </div>
 
     <div class="md-form">
-      <input type="tel" name="user[phone]" id="user_phone" class="form-control" required/>
+      <input type="tel" name="user[phone]" id="user_phone" class="form-control" required pattern=".{9,10}"/>
       <label for="user_phone" class="control-label text-right"><%= t 'user.phone' %></label>
     </div>
 
