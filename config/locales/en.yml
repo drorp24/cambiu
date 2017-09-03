@@ -132,5 +132,5 @@ en:
     error: 'Something went wrong'
     cancel: 'Cancelled'
     bestDelivery: 'No nearby pick-up offer, would you like a delivery?'
-    bestPickup: 'View the best pick-up offer'
+    bestPickup: 'This is the best pick-up offer we could find'
     noDelivery: 'No delivery in this area. '
