@@ -31,6 +31,7 @@ class Exchange < ActiveRecord::Base
   has_one     :chf_rate,    -> {where(currency: 'CHF')}       ,class_name: "Rate",  as: :ratable
   has_one     :thb_rate,    -> {where(currency: 'THB')}       ,class_name: "Rate",  as: :ratable
   has_one     :php_rate,    -> {where(currency: 'PHP')}       ,class_name: "Rate",  as: :ratable
+  has_one     :inr_rate,    -> {where(currency: 'INR')}       ,class_name: "Rate",  as: :ratable
 
 
 

@@ -150,4 +150,15 @@ Money::Currency.register({
     :thousands_separator => ",",
     :decimal_mark        => ".",
 })
+Money::Currency.register({
+   :priority            => 1,
+   :iso_code            => "INR",
+   :name                => "Indian Rupee",
+   :symbol              => "₹",
+   :symbol_first        => true,
+   :subunit             => "Paisa",
+   :subunit_to_unit     => 100,
+   :thousands_separator => ",",
+   :decimal_mark        => ".",
+})
 
