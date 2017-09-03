@@ -348,7 +348,7 @@ populateLocalOffers = function(rates) {
 
   if (rates.message) {
 
-    if (rates.message == 'nearestPickup') {
+    if (rates.message == 'bestPickup') {
       if (value_of('service_type') == 'delivery') {
         tMessage = t('noDelivery') + '<br>' + t(rates.message);
         setServiceTypeTo('pickup');
@@ -356,10 +356,10 @@ populateLocalOffers = function(rates) {
       } else {
         tMessage = t(rates.message);
       }
-      snack(tMessage, {timeout: 2000})
+      snack(tMessage, {timeout: 3500})
     }
 
-    else if (rates.message == 'nearestDelivery') {
+    else if (rates.message == 'bestDelivery') {
 
       setServiceTypeTo('delivery');
       setPaymentMethodTo('credit');

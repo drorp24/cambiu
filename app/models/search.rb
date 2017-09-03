@@ -68,9 +68,11 @@ class Search < ActiveRecord::Base
     credit            = payment_method == 'credit'
     center            = [location_lat, location_lng]
     pickup_radius     = 2.5
+    extended_radius   = 50
     delivery_radius   = 100
     pickup_box        = Geocoder::Calculations.bounding_box(center, pickup_radius)
     delivery_box      = Geocoder::Calculations.bounding_box(center, delivery_radius)
+    extended_box      = Geocoder::Calculations.bounding_box(center, extended_radius)
     box               = delivery ? delivery_box : pickup_box
 
     pay               = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)   # works whether pay_amount comes with currency symbol or not
@@ -90,31 +92,40 @@ class Search < ActiveRecord::Base
 
     if exchanges.count == 0
 
-       # 1st attempt - Try looking for delivery offers first (can be skipped if delivery)
+       # 1st attempt - Unless you've tried delivery already, try looking for delivery offers first
+       # (the '!delivery' is meant to skip this trial in case delivery was just tried (the if structure would be herendous otherwise ))
 
-      exchange = Exchange.active.delivery.geocoded.
+      exchanges = !delivery &&
+          Exchange.active.delivery.geocoded.
           within_bounding_box(delivery_box).
           covering(center).
-          includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate]).
-          first
+          includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
-      if exchange
-        exchanges = Array(exchange)
-        message = 'nearestDelivery'
+      if exchanges && exchanges.any?
+        message = 'bestDelivery'
       else
 
-        # 2 - If no delivery offer exists either, return the closest pick-up offer in a sane radius
-        # The 'near' instead of 'within_bounding_box' makes the list be ordered by distance, closest first
+        # 2 - If no delivery offer exists either, look for the best pick-up offer in the pickup radius
 
-        exchange = Exchange.active.geocoded.
-            near(center, 50, :units => :km).
-            includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate]).
-            first
+        exchanges = Exchange.active.geocoded.
+            within_bounding_box(pickup_box).
+            includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
 
-        if exchange
-          exchanges = Array(exchange)
-          message = 'nearestPickup'
+        if exchanges && exchanges.any?
+          message = 'bestPickup'
+
+        else
+          # 3 - If no pickup offer within pickup radius, look for the best pick-up offer in an extended radius
+            exchanges = Exchange.active.geocoded.
+                within_bounding_box(extended_box).
+                includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+
+
+            if exchanges && exchanges.any?
+              message = 'bestPickup'
+            end
+
         end
       end
 

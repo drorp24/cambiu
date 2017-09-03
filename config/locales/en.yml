@@ -131,6 +131,6 @@ en:
     noOffer: 'No offer for these criteria.<br/> Try changing them.'
     error: 'Something went wrong'
     cancel: 'Cancelled'
-    nearestDelivery: 'No nearby pick-up offer, would you like a delivery?'
-    nearestPickup: 'View the nearest pick-up offer'
+    bestDelivery: 'No nearby pick-up offer, would you like a delivery?'
+    bestPickup: 'View the best pick-up offer'
     noDelivery: 'No delivery in this area. '
