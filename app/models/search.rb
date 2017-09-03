@@ -167,11 +167,13 @@ class Search < ActiveRecord::Base
           puts "exchange_id is not in exchanges_offers. No swap."
         end
         e_0 = exchanges_offers[0]
-        if e_best && (e_best[:grade] <= e_0[:grade])
-          puts "Swapped exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
-          e_0, e_best = e_best, e_0
-        else
-          puts "Didnt swap exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
+        if e_best
+          if (e_best[:grade] <= e_0[:grade])
+            puts "Swapped exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
+            e_0, e_best = e_best, e_0
+          else
+            puts "Didnt swap exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
+          end
         end
         puts ""
         puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
