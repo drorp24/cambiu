@@ -383,6 +383,7 @@ populateLocalOffers = function(rates) {
   var best_rate = rates['best'][transaction][transaction];
   var best_rated_currency = rates['best'][transaction]['rated_currency'];
   var best_exchange_id = rates['best'][transaction]['exchange_id'];
+  console.log('best_exchange_id: ', best_exchange_id);
   var worst_rate = rates['worst'][transaction];
   var worst_rated_currency = rates['worst']['rated_currency'];
   var bank_fee = rates['worst']['bank_fee'];
@@ -428,7 +429,9 @@ populateLocalOffers = function(rates) {
   }
 
   // Bias the next search to come to prefer this exchange_id over another with the same grade
+  console.log('am going to update the form with best_exchange_id: ', best_exchange_id);
   $('form.selection [data-model=search][data-field=exchange_id]').val(best_exchange_id);
+  console.log('the value after updating best_exchange_id: ', $('form.selection [data-model=search][data-field=exchange_id]').val());
 
   return(best_value);
 
