@@ -433,8 +433,6 @@ populateLocalOffers = function(rates) {
   $('form.selection [data-model=search][data-field=exchange_id]').val(best_exchange_id);
   console.log('the value after updating best_exchange_id: ', $('form.selection [data-model=search][data-field=exchange_id]').val());
 
-  map.panTo({lat: rates['best'][transaction]['latitude'], lng: rates['best'][transaction]['longitude']});
-
   return(best_value);
 
 };

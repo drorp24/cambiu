@@ -203,13 +203,11 @@ class Search < ActiveRecord::Base
 
     if mode == 'best'
 
-      offer = best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade], latitude: best_offer[:latitude], longitude: best_offer[:longitude]) : nil
-
       return {
           best: {
-              buy:   offer,    # this structure was left for backward-compatibility with fe only
-              sell:  offer,
-              mixed: offer
+              buy:   best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,    # this structure was left for backward-compatibility with fe only
+              sell:  best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,
+              mixed: best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil
           },
           worst:
               Exchange.bad_rate(country, buy_currency, pay_currency, trans, pay_currency),
