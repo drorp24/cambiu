@@ -4,7 +4,6 @@
 // Files for triggers and user interaction are last
 //
 
-//= require npo
 //= require jquery
 //= require tether.min
 //= require bootstrap.min
