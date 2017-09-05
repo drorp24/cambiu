@@ -51,7 +51,7 @@ slidePrev = function() {
 };
 
 addSlide = function(index) {
-    if (!slidesAdded.includes(index)) {
+    if (!slidesAdded.indexOf(index) > -1) {
         var offer = offers[index].properties;
         addOffer({offer: offer, index: index, page: null, list: false, cards: true});
     } else {
