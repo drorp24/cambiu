@@ -8,7 +8,7 @@
       return;
     <% end %>
 
-    if (location.pathname.includes('/admin/')) {
+    if (location.pathname.indexOf('/admin/') > -1) {
       console.log('admin - not registering any serivceworker');
       return;
     }
