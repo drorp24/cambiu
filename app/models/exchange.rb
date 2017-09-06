@@ -380,7 +380,7 @@ class Exchange < ActiveRecord::Base
       result[:quote_currency]                               = get_currency
 
       get_amount                                            = result[:quote]
-      result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format(:disambiguate => true)
+      result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format
 
       bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency, trans, pay_currency)
       if bad_rates[:error]
@@ -434,7 +434,7 @@ class Exchange < ActiveRecord::Base
       result[:quote_currency]                               = pay_currency
 
       pay_amount                                            = result[:quote]
-      result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format(:disambiguate => true)
+      result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format
 
       bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency, trans, pay_currency)
       if bad_rates[:error]
@@ -457,7 +457,7 @@ class Exchange < ActiveRecord::Base
       result[:gain_currency]                                = pay_currency
       result[:gain_type]                                    = result[:gain] < 0 ? 'you save' : 'you save'
       result[:gain_short]                                    = result[:gain] < 0 ? 'save' : 'save'
-      result[:get_amount]                                   = get_amount.to_money(get_currency).format(:disambiguate => true)
+      result[:get_amount]                                   = get_amount.to_money(get_currency).format
 
       if get_currency == currency and pay_currency != currency and (pay_subtract = pay_amount.modulo(1)) > 0
         result[:rounded]                                    = true
@@ -649,6 +649,20 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:delivery_charge] = delivery_charge.to_money(pay.currency.iso_code).format
 
     cc_fee = credit ? self.cc_fee || 0 : 0
+
+    # TODO: Remove!
+=begin
+    puts ""
+    puts ""
+    puts ">>>>>>>>>>>>>>"
+    puts ""
+    puts quotes.inspect
+    puts ""
+    puts "<<<<<<<<<<<<<<"
+    puts ""
+    puts ""
+=end
+
     pay_amount = Monetize.parse(quotes[:pay_amount]).amount
     credit_charge = (pay_amount + delivery_charge) * cc_fee / 100
     exchange_hash[:credit_charge_raw] = credit_charge
