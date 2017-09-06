@@ -7,8 +7,6 @@ gem 'rails', '~> 5.0.0'
 # Support ES6: The *NON* commented lines are the only ones working together
 #gem 'sprockets', '~> 4.0.0.beta4'
 #gem 'sprockets', github: "rails/sprockets"
-#gem 'sprockets-rails'
-#gem 'sprockets'
 gem 'babel-transpiler'
 gem "sprockets", "~> 4.x"
 #gem "babel-schmooze-sprockets"
