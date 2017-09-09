@@ -524,6 +524,7 @@ $(document).ready(function() {
             sessionStorage.service_type = 'pickup';
 
             $('form.selection #delivery_ind').prop('checked',false);
+            if (value_of('payment_method') == 'credit') setPaymentMethodTo('cash');
         }
 
     };
