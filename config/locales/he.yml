@@ -110,6 +110,7 @@ he:
     noOffer: 'לא נמצאה הצעה תואמת לנתונים שהזנתם. נסו לשנותם.'
     error: 'משהו לא טוב קרה'
     cancel: 'בוטל!'
-    bestDelivery: 'לא קיימת הצעת איסוף באזור זה. תרצו משלוח?'
+    noPickupCashWouldYouLikeDelivery: 'לא קיימת הצעת איסוף למזומן. תרצו משלוח?'
+    noPickupCreditWouldYouLikeDelivery: 'לא קיימת הצעת איסוף לאשראי. תרצו משלוח?'
     bestPickup: 'זוהי ההצעה הטובה ביותר שיכולנו למצוא'
     noDelivery: 'אין משלוחים באזור זה. '

@@ -102,7 +102,7 @@ class Search < ActiveRecord::Base
           includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
       if exchanges && exchanges.any?
-        message = 'bestDelivery'
+        message = credit ? 'noPickupCreditWouldYouLikeDelivery' : 'noPickupCashWouldYouLikeDelivery'
       else
 
         # 2 - If no delivery offer exists either, look for the best pick-up offer in the pickup radius

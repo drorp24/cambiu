@@ -4,7 +4,8 @@ t = function(expression) {
 
     en: {
       noDelivery: '<%= I18n.t 'app.noDelivery', locale: :en %>',
-      bestDelivery: '<%= I18n.t 'app.bestDelivery', locale: :en %>',
+      noPickupCashWouldYouLikeDelivery: '<%= I18n.t 'app.noPickupCashWouldYouLikeDelivery', locale: :en %>',
+      noPickupCreditWouldYouLikeDelivery: '<%= I18n.t 'app.noPickupCreditWouldYouLikeDelivery', locale: :en %>',
       bestPickup: '<%= I18n.t 'app.bestPickup', locale: :en %>',
       mayTake24Hours: '<%= I18n.t 'app.mayTake24Hours', locale: :en %>',
       yes: '<%= I18n.t 'app.yes1',locale: :en %>',
@@ -14,7 +15,8 @@ t = function(expression) {
     },
     he: {
       noDelivery: '<%= I18n.t 'app.noDelivery', locale: :he %>',
-      bestDelivery: '<%= I18n.t 'app.bestDelivery', locale: :he %>',
+      noPickupCashWouldYouLikeDelivery: '<%= I18n.t 'app.noPickupCashWouldYouLikeDelivery', locale: :he %>',
+      noPickupCreditWouldYouLikeDelivery: '<%= I18n.t 'app.noPickupCreditWouldYouLikeDelivery', locale: :he %>',
       bestPickup: '<%= I18n.t 'app.bestPickup', locale: :he %>',
       mayTake24Hours: '<%= I18n.t 'app.mayTake24Hours', locale: :he %>',
       yes: '<%= I18n.t 'app.yes1',locale: :he %>',
@@ -25,4 +27,4 @@ t = function(expression) {
 
   return translation[locale][expression] || '<%= I18n.t 'app.missing' %>'
 };
-var variation = 10;
+var variation = 11;

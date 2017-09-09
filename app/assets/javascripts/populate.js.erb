@@ -359,7 +359,7 @@ populateLocalOffers = function(rates) {
       snack(tMessage, {timeout: 3500})
     }
 
-    else if (rates.message == 'bestDelivery') {
+    else if (rates.message == 'noPickupCashWouldYouLikeDelivery' || rates.message == 'noPickupCreditWouldYouLikeDelivery') {
 
       setServiceTypeTo('delivery');
       setPaymentMethodTo('credit');
