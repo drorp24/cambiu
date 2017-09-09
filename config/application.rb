@@ -34,5 +34,6 @@ module CurrencyNetMvp
     config.filter_parameters += [:photo]
     config.action_view.logger = nil
     OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:ciphers] += ':DES-CBC3-SHA'
+    config.export_concurrent = false
   end
 end
