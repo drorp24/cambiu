@@ -385,22 +385,14 @@ class Exchange < ActiveRecord::Base
 
       bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency, trans, pay_currency)
       if bad_rates[:error]
-        result[:errors]               <<   bad_rates[:error]
         Error.report(message: bad_rates[:error], text: "", search_id: params[:search_id])
-        return result
       end
-      bank_fee                                              = bad_rates[:bank_fee]
-      bad_amount_before_fees                                = (pay_amount * bad_rates[trans.to_sym])
+      bank_fee                                              = bad_rates[:bank_fee] || 0
+      bad_amount_before_fees                                = (pay_amount * (bad_rates[trans.to_sym] || 0))
       bad_amount                                            = bad_amount_before_fees * (100 - bank_fee) / 100.0
-
-      if bad_amount == 0
-        result[:errors]               <<   "no bad rate - indicates a problem"
-        return result
-      end
 
       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
       result[:gain]                                         = result[:quote] - bad_amount                 # gain always calculated against the quote, ignoring the extra charges
-      result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
       result[:gain_amount]                                  = result[:gain].to_money(get_currency).format
       result[:gain_type]                                    = result[:gain] < 0 ? 'your gain' : 'your gain'
       result[:gain_short]                                    = result[:gain] < 0 ? 'gain' : 'gain'
@@ -440,21 +432,14 @@ class Exchange < ActiveRecord::Base
 
       bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency, trans, pay_currency)
       if bad_rates[:error]
-        result[:errors]               <<   bad_rates[:error]
         Error.report(message: bad_rates[:error], text: "", search_id: params[:search_id])
-        return result
       end
 
-      bank_fee                                              = bad_rates[:bank_fee]
-      bad_amount_before_fees                                = (get_amount * bad_rates[trans.to_sym])
+      bank_fee                                              = bad_rates[:bank_fee] || 0
+      bad_amount_before_fees                                = (get_amount * (bad_rates[trans.to_sym] || 0))
       bad_amount                                            = bad_amount_before_fees * (100 + bank_fee) / 100.0
-      if bad_amount == 0
-        result[:errors]               <<   "no bad rate - indicates a problem"
-        return result
-      end
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
       result[:gain]                                         = bad_amount - result[:quote]           # gain always calculated against the quote, ignoring the extra charges
-      result[:gain_percent]                                 = ((result[:gain].abs / bad_amount) * 100).round
       result[:gain_amount]                                  = result[:gain].to_money(pay_currency).format
 
       result[:gain_currency]                                = pay_currency
