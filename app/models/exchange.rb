@@ -321,6 +321,7 @@ class Exchange < ActiveRecord::Base
   def quote(params)
 
     result = {
+        search_id:        params[:search_id],
         pay_amount:       pay_amount    = Monetize.parse(params[:pay_amount]).amount,
         pay_currency:     pay_currency  = params[:pay_currency],
         get_amount:       get_amount    = Monetize.parse(params[:get_amount]).amount,
@@ -385,6 +386,7 @@ class Exchange < ActiveRecord::Base
       bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency, trans, pay_currency)
       if bad_rates[:error]
         result[:errors]               <<   bad_rates[:error]
+        Error.report(message: bad_rates[:error], text: "", search_id: params[:search_id])
         return result
       end
       bank_fee                                              = bad_rates[:bank_fee]
@@ -439,6 +441,7 @@ class Exchange < ActiveRecord::Base
       bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency, trans, pay_currency)
       if bad_rates[:error]
         result[:errors]               <<   bad_rates[:error]
+        Error.report(message: bad_rates[:error], text: "", search_id: params[:search_id])
         return result
       end
 
@@ -599,7 +602,7 @@ class Exchange < ActiveRecord::Base
       end
 
     else
-      result[:error] = 'Sorry, no offers for ' + currency + ' currently'
+      result[:error] = "#{self.name} (#{self.id}) - No offers for currency: #{currency}"
       return result
     end
 
@@ -617,7 +620,7 @@ class Exchange < ActiveRecord::Base
     'system'
   end
 
-  def offer(center, pay, buy, trans, calculated, delivery, credit)
+  def offer(center, pay, buy, trans, calculated, delivery, credit, search_id)
 
     exchange_hash = {}
 
@@ -641,7 +644,7 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:photo] = photo_url
 
     quotes = quote(pay_amount: pay.amount, pay_currency: pay.currency.iso_code, get_amount: buy.amount, get_currency: buy.currency.iso_code, calculated: calculated,
-                   trans: trans, delivery: delivery, credit: credit)
+                   trans: trans, delivery: delivery, credit: credit, search_id: search_id)
     exchange_hash = quotes.merge(exchange_hash)
 
     delivery_charge = delivery ? self.delivery_charge || 0 : 0

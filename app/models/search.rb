@@ -138,7 +138,7 @@ class Search < ActiveRecord::Base
 
     exchanges.each do |exchange|
 
-      offer = exchange.offer(center, pay, buy, trans, calculated, delivery, credit)
+      offer = exchange.offer(center, pay, buy, trans, calculated, delivery, credit, self.id)
       if mode == 'best'
         if offer[:grade] < best_grade
           best_offer = offer
