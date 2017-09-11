@@ -21,6 +21,8 @@ class Chain < ActiveRecord::Base
   has_one     :php_rate,    -> {where(currency: 'PHP')}       ,class_name: "Rate",  as: :ratable
   has_one     :inr_rate,    -> {where(currency: 'INR')}       ,class_name: "Rate",  as: :ratable
 
+
+
   enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping, :api ]
   validates :name, uniqueness: true, on: :create
   validates :currency, presence: true, on: :create
@@ -29,6 +31,7 @@ class Chain < ActiveRecord::Base
     self.rates_source = 'no_rates'
   end
 
+  scope :with_real_rates, -> {where("rates_source > 1") }
   scope :with_no_real_rates, -> { where("rates_source < 2") }
 
   def xmlable?
