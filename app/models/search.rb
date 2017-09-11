@@ -132,7 +132,7 @@ class Search < ActiveRecord::Base
     end
 
 
-    best_grade = 1000
+    best_grade = 1000000000
     best_offer = nil
     exchanges_offers = []
 

@@ -392,7 +392,7 @@ class Exchange < ActiveRecord::Base
       bad_amount                                            = bad_amount_before_fees * (100 - bank_fee) / 100.0
 
       result[:bad_amount]                                   = bad_amount.to_money(get_currency).format
-      result[:gain]                                         = result[:quote] - bad_amount                 # gain always calculated against the quote, ignoring the extra charges
+      result[:gain]                                         = bad_amount != 0 ? result[:quote] - bad_amount : result[:quote]   # the latter is to enable just grade sorting when bad rate isn't there
       result[:gain_amount]                                  = result[:gain].to_money(get_currency).format
       result[:gain_type]                                    = result[:gain] < 0 ? 'your gain' : 'your gain'
       result[:gain_short]                                    = result[:gain] < 0 ? 'gain' : 'gain'
@@ -439,7 +439,7 @@ class Exchange < ActiveRecord::Base
       bad_amount_before_fees                                = (get_amount * (bad_rates[trans.to_sym] || 0))
       bad_amount                                            = bad_amount_before_fees * (100 + bank_fee) / 100.0
       result[:bad_amount]                                   = bad_amount.to_money(pay_currency).format
-      result[:gain]                                         = bad_amount - result[:quote]           # gain always calculated against the quote, ignoring the extra charges
+      result[:gain]                                         = bad_amount != 0 ? bad_amount - result[:quote] : result[:quote] * -1 # the latter is to enable just grade sorting when bad rate isn't there
       result[:gain_amount]                                  = result[:gain].to_money(pay_currency).format
 
       result[:gain_currency]                                = pay_currency
@@ -482,21 +482,19 @@ class Exchange < ActiveRecord::Base
         bank_fee: nil
     }
 
-    rated_rates = find_rate(rated_currency)
+    rated_rates = find_rate(rated_currency, trans)
     if rated_rates[:error]
       result[:error] = rated_rates[:error]
-      return result
     end
 
-    base_rates = find_rate(base_currency)
+    base_rates = find_rate(base_currency, trans)
     if base_rates[:error]
       result[:error] = base_rates[:error]
-      return result
     end
 
 
-    result[:buy]  = base_rates[:buy]  == 0 ? 0 :  (rated_rates[:buy]  / base_rates[:buy])
-    result[:sell] = base_rates[:sell] == 0 ? 0 :  (rated_rates[:sell] / base_rates[:sell])
+    result[:buy]  = !base_rates[:buy] || base_rates[:buy]  == 0 || !rated_rates[:buy] ?   nil :  (rated_rates[:buy]  / base_rates[:buy])
+    result[:sell] = !base_rates[:sell] || base_rates[:sell] == 0 || !rated_rates[:sell] ? nil :  (rated_rates[:sell] / base_rates[:sell])
     if trans == 'mixed'
       if rated_currency == pay_currency
         result[:mixed] = rated_rates[:buy] / base_rates[:sell]
@@ -508,16 +506,13 @@ class Exchange < ActiveRecord::Base
     end
     result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
     result[:source] = rated_rates[:source] || base_rates[:source]
-    if (Date.today - result[:updated].to_date).to_i > 1 and base_rates[:method] != 'reference' and rated_rates[:method] != 'reference'
-      result[:error] = "Stale rates"
-    end
     result[:bank_fee] = self.bank? ? (self.bank_fee || 0) : nil
 
     return result
 
   end
 
-  def find_rate(currency)
+  def find_rate(currency, trans)
 
     result = {
         buy: nil,
@@ -541,7 +536,7 @@ class Exchange < ActiveRecord::Base
 
     if chain?
       if chain_id.blank?
-        result[:error] = 'rates_policy is chain but no chain defined'
+        result[:error] = "#{self.name} (#{self.id}) - Rates policy is chain but no chain was defined"
         return result
       end
       chain = self.chain
@@ -574,20 +569,25 @@ class Exchange < ActiveRecord::Base
         return result
       end
 
-      if rec.buy == 0 and rec.sell == 0
-        result[:error] = currency + ' both buy and sell rates are missing'
+      if (!rec.buy || rec.buy == 0) and (!rec.sell || rec.sell == 0)
+        result[:error] = "#{self.name} (#{self.id}) - No buy and sell rates for currency: #{currency}"
+        return result
+      elsif rec.absolute? and (Date.today - rec.updated_at.to_date).to_i > 1
+        result[:error] = "#{self.name} (#{self.id}) - Stale rates for currency: #{rec.currency}"
         return result
       end
 
       ['buy', 'sell'].each do |kind|
-          value = rec.send(kind) || 0     # missing buy or sell rate is no longer an error, unless both of them are 0
+          value = rec.send(kind)
+          result[:error] = "#{self.name} (#{self.id}) - Missing #{trans} rate for currency: #{currency}" if !value and kind == trans
           result[kind.to_sym] = value
           result[:updated] ||= rec.updated_at
           result[:source] ||= rec.source
       end
 
+
     else
-      result[:error] = "#{self.name} (#{self.id}) - No offers for currency: #{currency}"
+      result[:error] = "#{self.name} (#{self.id}) - Neither buy nor sell rates for currency: #{currency}"
       return result
     end
 
@@ -637,19 +637,6 @@ class Exchange < ActiveRecord::Base
     exchange_hash[:delivery_charge] = delivery_charge.to_money(pay.currency.iso_code).format
 
     cc_fee = credit ? self.cc_fee || 0 : 0
-
-    # TODO: Remove!
-=begin
-    puts ""
-    puts ""
-    puts ">>>>>>>>>>>>>>"
-    puts ""
-    puts quotes.inspect
-    puts ""
-    puts "<<<<<<<<<<<<<<"
-    puts ""
-    puts ""
-=end
 
     pay_amount = Monetize.parse(quotes[:pay_amount]).amount
     credit_charge = (pay_amount + delivery_charge) * cc_fee / 100
