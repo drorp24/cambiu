@@ -487,14 +487,16 @@ class Exchange < ActiveRecord::Base
     rated_rates = find_rate(rated_currency, trans)
     if rated_rates[:error]
       result[:error] = rated_rates[:error]
+      return result
     end
 
     base_rates = find_rate(base_currency, trans)
     if base_rates[:error]
       result[:error] = base_rates[:error]
+      return result
     end
 
-
+    
     result[:buy]  = !base_rates[:buy] || base_rates[:buy]  == 0 || !rated_rates[:buy] ?   0 :  (rated_rates[:buy]  / base_rates[:buy])
     result[:sell] = !base_rates[:sell] || base_rates[:sell] == 0 || !rated_rates[:sell] ? 0 :  (rated_rates[:sell] / base_rates[:sell])
     if trans == 'mixed'
