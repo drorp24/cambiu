@@ -56,8 +56,8 @@ class Rate < ActiveRecord::Base
       self.sell_markup = nil
       self.buy_markup  = nil
 
-      sell             = !Currency.inverse?(base_currency) ? sell_param : (sell_param.to_i > 0 ? (1.0 / sell_param) : 0)
-      buy              = !Currency.inverse?(base_currency) ? buy_param : (buy_param.to_i > 0 ? (1.0 / buy_param) : 0)
+      sell             = !Currency.inverse?(base_currency) ? sell_param : (sell_param && sell_param > 0 ? (1.0 / sell_param) : 0)
+      buy              = !Currency.inverse?(base_currency) ? buy_param  : (buy_param  && buy_param  > 0 ? (1.0 / buy_param)  : 0)
 
     end
 
