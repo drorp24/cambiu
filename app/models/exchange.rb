@@ -367,6 +367,7 @@ class Exchange < ActiveRecord::Base
 
       if rates[:error]
         result[:errors]           <<   rates[:error]
+        Error.report(message: rates[:error], text: "", search_id: params[:search_id])
         return result
       end
 
@@ -415,6 +416,7 @@ class Exchange < ActiveRecord::Base
       rates = result[:rates]          = rate(pay_currency, get_currency, trans, pay_currency)
       if rates[:error]
         result[:errors]               <<   rates[:error]
+        Error.report(message: rates[:error], text: "", search_id: params[:search_id])
         return result
       end
       if rates[trans.to_sym] == 0
@@ -493,8 +495,8 @@ class Exchange < ActiveRecord::Base
     end
 
 
-    result[:buy]  = !base_rates[:buy] || base_rates[:buy]  == 0 || !rated_rates[:buy] ?   nil :  (rated_rates[:buy]  / base_rates[:buy])
-    result[:sell] = !base_rates[:sell] || base_rates[:sell] == 0 || !rated_rates[:sell] ? nil :  (rated_rates[:sell] / base_rates[:sell])
+    result[:buy]  = !base_rates[:buy] || base_rates[:buy]  == 0 || !rated_rates[:buy] ?   0 :  (rated_rates[:buy]  / base_rates[:buy])
+    result[:sell] = !base_rates[:sell] || base_rates[:sell] == 0 || !rated_rates[:sell] ? 0 :  (rated_rates[:sell] / base_rates[:sell])
     if trans == 'mixed'
       if rated_currency == pay_currency
         result[:mixed] = rated_rates[:buy] / base_rates[:sell]
@@ -579,7 +581,7 @@ class Exchange < ActiveRecord::Base
 
       ['buy', 'sell'].each do |kind|
           value = rec.send(kind)
-          result[:error] = "#{self.name} (#{self.id}) - Missing #{trans} rate for currency: #{currency}" if !value and kind == trans
+          result[:error] = "#{self.name} (#{self.id}) - Missing #{trans} rate for currency: #{currency}" if (!value || value == 0) and kind == trans
           result[kind.to_sym] = value
           result[:updated] ||= rec.updated_at
           result[:source] ||= rec.source
