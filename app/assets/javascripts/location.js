@@ -214,7 +214,8 @@ function searchbox_addListener(searchBox) {
         }
         locationDirty = false;
         place = places[0];
-        set('location',             search.location.name = place.formatted_address);
+        console.log(place.address_components[0].long_name);
+        set('location',             search.location.name = place.name);
         set('location_short',       search.location.short = place.name);
         set('location_lat',         search.location.lat = place.geometry.location.lat());
         set('location_lng',         search.location.lng = place.geometry.location.lng());
