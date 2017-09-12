@@ -22,7 +22,7 @@ class Currency
 
 
   def self.inverse?(iso)
-    ['ILS'].include? iso
+    ['ILS', 'ZAR'].include? iso
   end
 
   def self.markup
