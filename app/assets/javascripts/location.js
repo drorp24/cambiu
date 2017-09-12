@@ -227,6 +227,7 @@ function searchbox_addListener(searchBox) {
         $('[data-model=user][data-field=city]').val(place.address_components[2].short_name).siblings('label').addClass('active');
 
         setLocale(search.location);
+        populateTransaction();
         fetchAndPopulateLocaloffers();
 
         console.log('Location changed by user to: ', search.location);
