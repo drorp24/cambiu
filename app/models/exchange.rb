@@ -496,7 +496,7 @@ class Exchange < ActiveRecord::Base
       return result
     end
 
-    
+
     result[:buy]  = !base_rates[:buy] || base_rates[:buy]  == 0 || !rated_rates[:buy] ?   0 :  (rated_rates[:buy]  / base_rates[:buy])
     result[:sell] = !base_rates[:sell] || base_rates[:sell] == 0 || !rated_rates[:sell] ? 0 :  (rated_rates[:sell] / base_rates[:sell])
     if trans == 'mixed'
@@ -583,7 +583,7 @@ class Exchange < ActiveRecord::Base
 
       ['buy', 'sell'].each do |kind|
           value = rec.send(kind)
-          result[:error] = "#{self.name} (#{self.id}) - Missing #{trans} rate for currency: #{currency}" if (!value || value == 0) and kind == trans
+          result[:error] = "#{self.name} (#{self.id}) - Missing #{trans} rate for currency: #{currency}" if (!value || value == 0) and (kind == trans || trans == 'mixed')
           result[kind.to_sym] = value
           result[:updated] ||= rec.updated_at
           result[:source] ||= rec.source
