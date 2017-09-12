@@ -140,7 +140,7 @@ class Search < ActiveRecord::Base
 
       offer = exchange.offer(center, pay, buy, trans, calculated, delivery, credit, self.id)
       if mode == 'best'
-        if offer[:grade] < best_grade
+        if offer[:grade] < best_grade and offer[:errors].empty?
           best_offer = offer
           best_grade = offer[:grade]
         end
