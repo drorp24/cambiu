@@ -155,7 +155,7 @@ class Search < ActiveRecord::Base
       exchanges_offers = exchanges_offers.sort_by{|e| e[:grade]}
 
       # Swap will be done when the best offer is different than the one already shown in previous localRates call (can happen if both have the same grade)
-      if exchange_id and (exchanges_offers[0][:id] != exchange_id)
+      if exchanges_offers.any? and exchange_id and (exchanges_offers[0][:id] != exchange_id)
         puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
         puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
         puts ""
