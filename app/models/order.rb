@@ -60,7 +60,7 @@ class Order < ActiveRecord::Base
   end
 
   def requires_notification?
-    !self.registered?
+    true
   end
 
   def notification
