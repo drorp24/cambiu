@@ -864,6 +864,13 @@ html, body {
   color: brown;
 }
 
+.bg-brand-a {
+  background-color: $brand-color-a !important;
+}
+
+.bg-brand-b {
+  background-color: $brand-color-b !important;
+}
 
 
 body#cambiu {
@@ -970,11 +977,12 @@ body#cambiu {
     }
     .intro-slide .message {
       .title {
-        font-size: 5vh !important;
         font-weight: 300;
+        line-height: 2;
       }
       .getOffer {
-        font-size: 5vh !important;
+        @include vfont-size(10vw);
+        font-weight: 500;
       }
     }
     .ecard .order_ind {
@@ -1964,20 +1972,22 @@ body#cambiu {
 
   .intro-slide {
     > div {
+      /*
       @include flexbox();
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      */
     }
     padding: $pane-padding * 2;
     .illustration {
-      height: 40%;
+      height: 35%;
     }
     .message {
       height:40%;
       .title {
-        font-weight: 500;
-        font-size: 3vh !important;
+        font-weight: 300;
+        @include vfont-size(7.3vw);
       }
       .text {
         height: 50%;
@@ -1987,16 +1997,18 @@ body#cambiu {
         text-transform: uppercase;
       }
       .getOffer {
-        height: 75%;
-        font-size: 3.5vh !important;
+        height: 30%;
         text-transform: uppercase;
+        @include vfont-size(7vw);
+        font-weight: 700;
+        border-radius: 4px;
       }
     }
     .version {
       display: none;
     }
     &:nth-child(1) {
-      background-color: $brand-color-c;
+      background-color: rgba(0, 0, 0, 0.45);
       color: #fff;
       .version {
         display: block;
