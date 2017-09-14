@@ -120,7 +120,7 @@ class Rate < ActiveRecord::Base
         elsif Rate.find_by(ratable_type: 'Chain', ratable_id: chain.id)
           return Rate.new(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
         else
-          return with 'chain', 'no rates defined for that chain'
+          return Rate.new(ratable_type: 'Chain', ratable_id: chain.id, currency: params[:currency])
         end
 
       elsif exchange = Exchange.find_by(id: params[:id])
@@ -130,7 +130,7 @@ class Rate < ActiveRecord::Base
         elsif Rate.find_by(ratable_type: 'Exchange', ratable_id: exchange.id)
           return Rate.new(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
         else
-          return with 'exchange', 'no rates defined for that exchange'
+          return Rate.new(ratable_type: 'Exchange', ratable_id: exchange.id, currency: params[:currency])
         end
 
       else
