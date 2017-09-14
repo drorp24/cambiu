@@ -11,11 +11,13 @@
     <% end %>
   </div>
 
-  <div class="message">
+  <div class="message flex_center column">
     <% if title %>
       <p class="title"><%= title %></p>
     <% end %>
-    <p class="text flex_center"><%= text %></p>
+    <% if text %>
+      <p class="text flex_center"><%= text %></p>
+    <% end %>
     <% if getOffer %>
         <button class="getOffer btn-flat waves-effect" data-href-page="exchanges" data-href-pane="search"><%= t 'intro.getOffer'  %></button>
     <% end %>
