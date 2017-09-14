@@ -56,11 +56,11 @@ $('body').on('click tap', 'a[data-action=showCards]', function() {
     report('Tap', 'Other offers');
 });
 
-$('.swiper-slide.a .getOffer.btn').on('click tap', function() {
+$('.swiper-slide.a .getOffer').on('click tap', function() {
     report('Tap', 'Get an offer (1)')
 });
 
-$('.swiper-slide.d .getOffer.btn').on('click tap', function() {
+$('.swiper-slide.d .getOffer').on('click tap', function() {
     report('Tap', 'Get an offer (4)')
 });
 
@@ -68,6 +68,9 @@ $('.swiper-slide.b .slide_line .left').on('click tap', function() {
     report('Tap', 'Skip (2)')
 });
 
+$('.swiper-slide.c .slide_line .left').on('click tap', function() {
+    report('Tap', 'Skip (3)')
+});
 $('body').on('click tap', '.help.icon', function() {
     report('Tap', 'Help');
 });
