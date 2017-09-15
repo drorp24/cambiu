@@ -114,3 +114,4 @@ he:
     noPickupCreditWouldYouLikeDelivery: 'לא קיימת הצעת איסוף לאשראי. תרצו משלוח?'
     bestPickup: 'זוהי ההצעה הטובה ביותר שיכולנו למצוא'
     noDelivery: 'אין משלוחים באזור זה. '
+    noCredit: 'אין אפשרות לשלם באשראי באזור זה.'

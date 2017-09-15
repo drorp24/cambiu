@@ -353,10 +353,15 @@ populateLocalOffers = function(rates) {
         tMessage = t('noDelivery') + '<br>' + t(rates.message);
         setServiceTypeTo('pickup');
         setPaymentMethodTo('cash');
-      } else {
+      } else
+      if (value_of('payment_method') == 'credit') {
+        tMessage = t('noCredit') + '<br>' + t(rates.message);
+        setPaymentMethodTo('cash');
+      } else
+      {
         tMessage = t(rates.message);
       }
-      snack(tMessage, {timeout: 3500})
+      snack(tMessage, {timeout: 3500});
     }
 
     else if (rates.message == 'noPickupCashWouldYouLikeDelivery' || rates.message == 'noPickupCreditWouldYouLikeDelivery') {

@@ -135,3 +135,4 @@ en:
     noPickupCreditWouldYouLikeDelivery: 'No credit card pick-up, would you like a delivery?'
     bestPickup: 'This is the best pick-up offer we could find'
     noDelivery: 'No delivery in this area. '
+    noDelivery: 'No credit card accepted in this area. '
