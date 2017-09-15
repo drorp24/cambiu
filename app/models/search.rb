@@ -11,6 +11,7 @@ class Search < ActiveRecord::Base
   enum service_type: [ :pickup, :delivery, :all_serivce_types]
   enum payment_method: [ :cash, :credit, :all_payment_methods]
   enum mode: [ :best, :full ]
+  enum values: [ :default, :user ]
 
 #  scope :negate, ->(scope) { where(scope.where_values.reduce(:and).not) }
 

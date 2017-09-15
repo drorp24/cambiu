@@ -133,6 +133,6 @@ en:
     cancel: 'Cancelled'
     noPickupCashWouldYouLikeDelivery: 'No cash pick-up offer, would you like a delivery?'
     noPickupCreditWouldYouLikeDelivery: 'No credit card pick-up, would you like a delivery?'
-    bestPickup: 'This is the best pick-up offer we could find'
+    bestPickup: 'This is the best offer in the area'
     noDelivery: 'No delivery in this area. '
-    noDelivery: 'No credit card accepted in this area. '
+    noCredit: 'No credit card accepted in this area. '

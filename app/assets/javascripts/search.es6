@@ -496,6 +496,7 @@ $(document).ready(function() {
         }
 
         report('Set', 'Service type', null, service_type);
+        set('values', 'user');
     });
 
     $('.close_inline_params').on('click tap', function(e) {
@@ -555,6 +556,7 @@ $(document).ready(function() {
         }
 
         report('Set', 'Payment method', null, new_payment_method);
+        set('values', 'user');
     });
 
     setPaymentMethodTo = function(payment_method) {

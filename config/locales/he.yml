@@ -112,6 +112,6 @@ he:
     cancel: 'בוטל!'
     noPickupCashWouldYouLikeDelivery: 'לא קיימת הצעת איסוף למזומן. תרצו משלוח?'
     noPickupCreditWouldYouLikeDelivery: 'לא קיימת הצעת איסוף לאשראי. תרצו משלוח?'
-    bestPickup: 'זוהי ההצעה הטובה ביותר שיכולנו למצוא'
+    bestPickup: 'זוהי ההצעה הטובה ביותר באזור.'
     noDelivery: 'אין משלוחים באזור זה. '
     noCredit: 'אין אפשרות לשלם באשראי באזור זה.'
