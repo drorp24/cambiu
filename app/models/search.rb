@@ -106,7 +106,9 @@ class Search < ActiveRecord::Base
               includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
       if exchanges && exchanges.any?
-        message = credit ? 'noPickupCreditWouldYouLikeDelivery' : 'noPickupCashWouldYouLikeDelivery'
+        message   = credit ? 'noPickupCreditWouldYouLikeDelivery' : 'noPickupCashWouldYouLikeDelivery'
+        delivery  = true
+        credit    = true
       else
 
         # 2 - If no delivery offer exists either, look for the best pick-up offer in the pickup radius
@@ -117,7 +119,9 @@ class Search < ActiveRecord::Base
 
 
         if exchanges && exchanges.any?
-          message = 'bestPickup'
+          message   = 'bestPickup'
+          delivery  = false
+          credit    = false
 
         else
           # 3 - If no pickup offer within pickup radius, look for the best pick-up offer in an extended radius
@@ -127,7 +131,9 @@ class Search < ActiveRecord::Base
 
 
           if exchanges && exchanges.any?
-            message = 'bestPickup'
+            message   = 'bestPickup'
+            delivery  = false
+            credit    = false
           end
 
         end
