@@ -91,16 +91,19 @@ class Search < ActiveRecord::Base
     exchanges            = exchanges.delivery.covering(center) if delivery
     exchanges            = exchanges.credit if credit
 
-    if exchanges.count == 0
 
-       # 1st attempt - Unless you've tried delivery already, try looking for delivery offers first
-       # (the '!delivery' is meant to skip this trial in case delivery was just tried (the if structure would be herendous otherwise ))
+    offers = make_offers(exchanges, center, pay, buy, trans, calculated, delivery, credit)
+
+    if offers[:count] == 0
+
+      # 1st attempt - Unless you've tried delivery already, try looking for delivery offers first
+      # (the '!delivery' is meant to skip this trial in case delivery was just tried (the if structure would be herendous otherwise ))
 
       exchanges = !delivery &&
           Exchange.active.delivery.geocoded.
-          within_bounding_box(delivery_box).
-          covering(center).
-          includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+              within_bounding_box(delivery_box).
+              covering(center).
+              includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
       if exchanges && exchanges.any?
         message = credit ? 'noPickupCreditWouldYouLikeDelivery' : 'noPickupCashWouldYouLikeDelivery'
@@ -118,83 +121,27 @@ class Search < ActiveRecord::Base
 
         else
           # 3 - If no pickup offer within pickup radius, look for the best pick-up offer in an extended radius
-            exchanges = Exchange.active.geocoded.
-                within_bounding_box(extended_box).
-                includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+          exchanges = Exchange.active.geocoded.
+              within_bounding_box(extended_box).
+              includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
 
 
-            if exchanges && exchanges.any?
-              message = 'bestPickup'
-            end
-
-        end
-      end
-
-    end
-
-
-    best_grade = 1000000000
-    best_offer = nil
-    exchanges_offers = []
-
-    exchanges.each do |exchange|
-
-      offer = exchange.offer(center, pay, buy, trans, calculated, delivery, credit, self.id)
-      if mode == 'best'
-        if offer[:grade] < best_grade and offer[:errors].empty?
-          best_offer = offer
-          best_grade = offer[:grade]
-        end
-      else
-        exchanges_offers << offer #unless (offer[:errors].any?
-      end
-
-    end
-
-    if mode == 'full'
-
-      exchanges_offers = exchanges_offers.sort_by{|e| e[:grade]}
-
-      # Swap will be done when the best offer is different than the one already shown in previous localRates call (can happen if both have the same grade)
-      if exchanges_offers.any? and exchange_id and (exchanges_offers[0][:id] != exchange_id)
-        puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-        puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
-        puts ""
-        puts "exchange_id: " + exchange_id.to_s
-        puts ""
-        puts "exchanges_offers[0][:id]: " + exchanges_offers[0][:id].to_s
-        puts ""
-        puts "exchanges_offers,count: " + exchanges_offers.count.to_s
-        puts ""
-        puts "exchanges_offers[0].inspect:"
-        puts exchanges_offers[0].inspect
-        puts ""
-        puts ""
-        exchange_id_index = exchanges_offers.each_index.find{|i| exchanges_offers[i][:id] == exchange_id}
-        puts "exchange_id_index: " + exchange_id_index.to_s
-        puts ""
-        if exchange_id_index
-          e_best = exchanges_offers[exchange_id_index]
-        else
-          puts "exchange_id is not in exchanges_offers. No swap."
-        end
-        e_0 = exchanges_offers[0]
-        if e_best
-          if (e_best[:grade] <= e_0[:grade])
-            puts "Swapped exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
-            e_0, e_best = e_best, e_0
-          else
-            puts "Didnt swap exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
+          if exchanges && exchanges.any?
+            message = 'bestPickup'
           end
+
         end
-        puts ""
-        puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
-        puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
       end
 
-      best_offer = exchanges_offers[0]
+      offers = make_offers(exchanges, center, pay, buy, trans, calculated, delivery, credit)
 
     end
+
+
+    count             = offers[:count]
+    exchanges_offers  = offers[:exchanges_offers]
+    best_offer        = offers[:best_offer]
+
 
     if best_offer
       self.exchange_id  = best_offer[:id]
@@ -202,9 +149,10 @@ class Search < ActiveRecord::Base
       self.save
     end
 
+
     if mode == 'best'
 
-      return {
+       {
           best: {
               buy:   best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,    # this structure was left for backward-compatibility with fe only
               sell:  best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,
@@ -212,15 +160,108 @@ class Search < ActiveRecord::Base
           },
           worst:
               Exchange.bad_rate(country, buy_currency, pay_currency, trans, pay_currency),
-          count: exchanges.count,
+          count: count,
           error: error,
           message: message
       }
     else
-      return geoJsonize(exchanges_offers, error, message)
+       geoJsonize(exchanges_offers, error, message)
     end
 
   end
+
+
+  def make_offers(exchanges, center, pay, buy, trans, calculated, delivery, credit)
+
+    best_grade = 1000000000
+    best_offer = nil
+    exchanges_offers = []
+    count = 0
+
+    exchanges.each do |exchange|
+
+      offer = exchange.offer(center, pay, buy, trans, calculated, delivery, credit, self.id)
+
+      unless offer[:errors].any?
+
+        count  += 1          # counts the error-less offers, thus serving as a common way to check if there are any offers regardless of method
+
+        if mode == 'best'
+          if offer[:grade] < best_grade
+            best_offer = offer
+            best_grade = offer[:grade]
+          end
+        else
+          exchanges_offers << offer
+        end
+
+      end
+
+    end
+
+    if mode == 'full' and count > 0
+      exchanges_offers = exchanges_offers.sort_by{|e| e[:grade]}
+      exchanges_offers = bias(exchanges_offers, exchange_id)
+      best_offer = exchanges_offers[0]
+    end
+
+   {
+    exchanges_offers: exchanges_offers,
+    best_offer:       best_offer,
+    count:            count
+  }
+
+  end
+
+
+
+  def bias(exchanges_offers, exchange_id)
+
+    # Swap will be done when the best offer is different than the one already shown in previous localRates call (can happen if both have the same grade)
+    if exchanges_offers.any? and exchange_id and (exchanges_offers[0][:id] != exchange_id)
+      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+      puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
+      puts ""
+      puts "exchange_id: " + exchange_id.to_s
+      puts ""
+      puts "exchanges_offers[0][:id]: " + exchanges_offers[0][:id].to_s
+      puts ""
+      puts "exchanges_offers,count: " + exchanges_offers.count.to_s
+      puts ""
+      puts "exchanges_offers[0].inspect:"
+      puts exchanges_offers[0].inspect
+      puts ""
+      puts ""
+      exchange_id_index = exchanges_offers.each_index.find{|i| exchanges_offers[i][:id] == exchange_id}
+      puts "exchange_id_index: " + exchange_id_index.to_s
+      puts ""
+      if exchange_id_index
+        e_best = exchanges_offers[exchange_id_index]
+      else
+        puts "exchange_id is not in exchanges_offers. No swap."
+      end
+      e_0 = exchanges_offers[0]
+      if e_best
+        if (e_best[:grade] <= e_0[:grade])
+          puts "Swapped exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
+          e_0, e_best = e_best, e_0
+        else
+          puts "Didnt swap exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
+        end
+      end
+      puts ""
+      puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
+      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    end
+
+    exchanges_offers
+  end
+
+
+
+
+
+
 
   def geoJsonize(exchanges_offers, error, message = nil)
 
