@@ -309,19 +309,19 @@ class Exchange < ActiveRecord::Base
     @inter ||= self.inter.first
   end
 
-  def self.bad_rate(country, rated_currency, base_currency, trans, pay_currency)
+  def self.bad_rate(country, rated_currency, base_currency, trans, pay_currency, search_id = nil)
 #    puts "self.bad_rate called with: " + country + ', ' + rated_currency + ', ' + base_currency
     return @bad_rate if @bad_rate && @bad_rate_country == country && @bad_rate[:rated_currency] == rated_currency && @bad_rate[:base_currency] == base_currency
 #    puts "self.bad_rate did not return but went to calculate it"
     @bad_rate_country = country
-    @bad_rate = Exchange.bad(country).rate(rated_currency, base_currency, trans, pay_currency)
+    @bad_rate = Exchange.bad(country).rate(rated_currency, base_currency, trans, pay_currency, search_id)
   end
 
   # quote and calculate gain, focusing on exchange rates and ignoring added charges
   def quote(params)
 
     result = {
-        search_id:        params[:search_id],
+        search_id:        search_id = params[:search_id],
         pay_amount:       pay_amount    = Monetize.parse(params[:pay_amount]).amount,
         pay_currency:     pay_currency  = params[:pay_currency],
         get_amount:       get_amount    = Monetize.parse(params[:get_amount]).amount,
@@ -363,11 +363,10 @@ class Exchange < ActiveRecord::Base
 
     if calculated == 'buy_amount'
 
-      rates = result[:rates]          = rate(get_currency, pay_currency, trans, pay_currency)
+      rates = result[:rates]          = rate(get_currency, pay_currency, trans, pay_currency, search_id)
 
       if rates[:error]
         result[:errors]           <<   rates[:error]
-        Error.report(message: rates[:error], text: "", search_id: params[:search_id])
         return result
       end
 
@@ -384,10 +383,7 @@ class Exchange < ActiveRecord::Base
       get_amount                                            = result[:quote]
       result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format
 
-      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency, trans, pay_currency)
-      if bad_rates[:error]
-        Error.report(message: bad_rates[:error], text: "", search_id: params[:search_id])
-      end
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency, trans, pay_currency, search_id)
       bank_fee                                              = bad_rates[:bank_fee] || 0
       bad_amount_before_fees                                = (pay_amount * (bad_rates[trans.to_sym] || 0))
       bad_amount                                            = bad_amount_before_fees * (100 - bank_fee) / 100.0
@@ -413,10 +409,9 @@ class Exchange < ActiveRecord::Base
 
     else
 
-      rates = result[:rates]          = rate(pay_currency, get_currency, trans, pay_currency)
+      rates = result[:rates]          = rate(pay_currency, get_currency, trans, pay_currency, search_id)
       if rates[:error]
         result[:errors]               <<   rates[:error]
-        Error.report(message: rates[:error], text: "", search_id: params[:search_id])
         return result
       end
       if rates[trans.to_sym] == 0
@@ -432,11 +427,7 @@ class Exchange < ActiveRecord::Base
       pay_amount                                            = result[:quote]
       result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format
 
-      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency, trans, pay_currency)
-      if bad_rates[:error]
-        Error.report(message: bad_rates[:error], text: "", search_id: params[:search_id])
-      end
-
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency, trans, pay_currency, search_id)
       bank_fee                                              = bad_rates[:bank_fee] || 0
       bad_amount_before_fees                                = (get_amount * (bad_rates[trans.to_sym] || 0))
       bad_amount                                            = bad_amount_before_fees * (100 + bank_fee) / 100.0
@@ -466,7 +457,7 @@ class Exchange < ActiveRecord::Base
   end
 
   # TODO: Important: This is where the cross-rates will take effect. 'quote' method would not be affected
-  def rate(rated_currency, base_currency, trans, pay_currency)
+  def rate(rated_currency, base_currency, trans, pay_currency, search_id = nil)
 
     result = {
         rated_currency: rated_currency,
@@ -484,13 +475,13 @@ class Exchange < ActiveRecord::Base
         bank_fee: nil
     }
 
-    rated_rates = find_rate(rated_currency, trans)
+    rated_rates = find_rate(rated_currency, trans, search_id)
     if rated_rates[:error]
       result[:error] = rated_rates[:error]
       return result
     end
 
-    base_rates = find_rate(base_currency, trans)
+    base_rates = find_rate(base_currency, trans, search_id)
     if base_rates[:error]
       result[:error] = base_rates[:error]
       return result
@@ -516,7 +507,7 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  def find_rate(currency, trans)
+  def find_rate(currency, trans, search_id)
 
     result = {
         buy: nil,
@@ -541,6 +532,7 @@ class Exchange < ActiveRecord::Base
     if chain?
       if chain_id.blank?
         result[:error] = "#{self.name} (#{self.id}) - Rates policy is chain but no chain was defined"
+        Error.report(message: result[:error], text: "", search_id: search_id)
         return result
       end
       chain = self.chain
@@ -575,9 +567,11 @@ class Exchange < ActiveRecord::Base
 
       if (!rec.buy || rec.buy == 0) and (!rec.sell || rec.sell == 0)
         result[:error] = "#{self.name} (#{self.id}) - No buy and sell rates for currency: #{currency}"
+        Error.report(message: result[:error], text: "", search_id: search_id)
         return result
       elsif rec.absolute? and (Date.today - rec.updated_at.to_date).to_i > 1
         result[:error] = "#{self.name} (#{self.id}) - Stale rates for currency: #{rec.currency}"
+        Error.report(message: result[:error], text: "", search_id: search_id)
         return result
       end
 
@@ -592,6 +586,7 @@ class Exchange < ActiveRecord::Base
 
     else
       result[:error] = "#{self.name} (#{self.id}) - Neither buy nor sell rates for currency: #{currency}"
+      Error.report(message: result[:error], text: "", search_id: search_id)
       return result
     end
 
