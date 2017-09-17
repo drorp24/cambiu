@@ -56,7 +56,7 @@ class Exchange < ActiveRecord::Base
 #  validates :delivery_tracking, allow_blank: true, :format => {:with => URI.regexp}
   validates :rates_url, allow_blank: true, :format => {:with => URI.regexp}
 
-  after_validation :do_geocoding, if: ->(exchange){ (exchange.latitude.blank? or exchange.address_changed?) and exchange.address.present? }
+  after_validation :do_geocoding, if: ->(exchange){ (exchange.latitude.blank? or exchange.address_changed?) and exchange.address.present? }, on: [:create]
   after_validation :remove, if: ->(exchange){ exchange.remove? }
 
   before_create do
