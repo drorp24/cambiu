@@ -248,10 +248,6 @@ pip-log.txt
 
 
 *.rdb
-/public/*
-!/public/sw.js.erb
-/public/assets/*
-
 node_modules/
 
 app/assets/javascripts/EXAMPLE_serviceworker.js.erb
