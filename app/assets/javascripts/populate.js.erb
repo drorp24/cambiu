@@ -361,7 +361,8 @@ populateLocalOffers = function(rates) {
       {
         tMessage = t(rates.message);
       }
-      snack(tMessage, {timeout: 3500});
+      var snackTiming = (value_of('values') == 'user') ? 'now' : 'later';
+      snack(tMessage, {timing: snackTiming, timeout: 3500});
     }
 
     else if (rates.message == 'noPickupCashWouldYouLikeDelivery' || rates.message == 'noPickupCreditWouldYouLikeDelivery') {

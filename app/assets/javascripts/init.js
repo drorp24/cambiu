@@ -151,6 +151,7 @@ var verifyMapIsShown;
 var inIframe = false;
 var locale;
 var activeSnackbars = 0;
+var pendingSnack = {};
 
 
 
@@ -529,6 +530,11 @@ $(document).ready(function() {
     };
 
     snack = function(message, options) {
+
+        if (options && options.timing == 'later') {
+            pendingSnack = {message: message, options: options};
+            return;
+        }
 
         console.log('snack called with message: ' + message);
 

@@ -110,6 +110,12 @@ refresh = function(pane, $pane, exchange) {
         map_refreshed = true; // do once only
     }
 */
+    if (pendingSnack.message && pendingSnack.options) {
+        delete pendingSnack.options.timing;
+        snack(pendingSnack.message, pendingSnack.options);
+        pendingSnack = {};
+    }
+
     if (/*!cards_refreshed &&*/ pane == 'cards' && swiperH) {
         console.log('Entering pane: cards - refresh swiperH');
         swiperH.update(false);
