@@ -409,7 +409,8 @@ setLocale = function(location) {
     set('city', nearest_center.city);
 
     // update local for potential amount changes
-    Object.assign(local, nearest_center);
+//    Object.assign(local, nearest_center);
+    for (var attrname in nearest_center) { local[attrname] = nearest_center[attrname]; } // For Androids...
     local.rates = null;
 
     // required for the initial call
