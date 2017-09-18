@@ -982,7 +982,7 @@ body#cambiu {
       }
       .getOffer {
         @include vfont-size(10vw);
-        font-weight: 500;
+        font-weight: 400;
       }
     }
     .ecard .order_ind {
@@ -2000,15 +2000,16 @@ body#cambiu {
         height: 30%;
         text-transform: uppercase;
         @include vfont-size(7vw);
-        font-weight: 700;
+        font-weight: 500;
         border-radius: 4px;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26), 0 2px 10px 0 rgba(0, 0, 0, 0.22);
       }
     }
     .version {
       display: none;
     }
     &:nth-child(1) {
-      background-color: rgba(0, 0, 0, 0.45);
+      background-color: rgba(0, 0, 0, 0.55);
       color: #fff;
       .version {
         display: block;
