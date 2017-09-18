@@ -51,7 +51,6 @@ gem 'money-rails'
 #gem 'autonumeric-rails'
 gem 'font_assets'
 gem 'newrelic_rpm'
-#gem 'actionpack-page_caching'
 gem 'omniauth-facebook'
 gem 'best_in_place', github: 'bernat/best_in_place'
 group :test, :staging, :production do

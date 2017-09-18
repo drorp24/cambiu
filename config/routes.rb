@@ -5,9 +5,8 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  get 'homepage',                     to: 'home#index'
-  get 'exchanges/*pane',              to: 'home#app'
-  get 'exchanges/:id/*pane',          to: 'home#app'
+  get 'exchanges/*pane',              to: 'home#index'
+  get 'exchanges/:id/*pane',          to: 'home#index'
 
   get 'admin/searches/:id/issues',          to: 'admin/issues#index', as: 'admin_search_issues'
 

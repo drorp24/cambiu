@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   respond_to :html
 
+  before_action :set_release
+
   before_action :set_locale
 
   before_action :set_http_cache_headers
@@ -20,6 +22,10 @@ class ApplicationController < ActionController::Base
 
 #  before_action :detect_browser
 
+  def set_release
+    @release = '0.9.8'
+    @release_date = Date.new(2016, 1, 1)
+  end
 
   def set_locale
     @locale = I18n.locale = params[:locale] || I18n.default_locale
@@ -78,7 +84,7 @@ class ApplicationController < ActionController::Base
   
   def set_http_cache_headers
     expires_in 1.month, public: true
-    fresh_when last_modified: Date.new(2016, 1, 1), public: true
+    fresh_when last_modified: @release_date, public: true
   end
 
   def find_guest_user

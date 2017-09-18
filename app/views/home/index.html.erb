@@ -1,3 +1,5 @@
 <div id="exchanges" class="page" data-page="exchanges">
-	<%= render 'exchanges/index'%>
+  <% cache "#{@release}-#{@locale}" do %>
+	  <%= render 'exchanges/index'%>
+  <% end %>
 </div>
