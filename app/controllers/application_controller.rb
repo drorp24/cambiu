@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
-  before_action :show_request_headers
+#  before_action :show_request_headers
 #  before_action :require_authentication,:if => Proc.new { |c| c.request.path.include? "/api/"}
 
   protect_from_forgery with: :exception
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 
   before_action :pass_request
 
-  before_action :detect_browser
+#  before_action :detect_browser
 
 
   def set_locale
