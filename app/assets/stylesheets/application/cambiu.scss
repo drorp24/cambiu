@@ -1,11 +1,15 @@
 // Imports
 
+/*
 @font-face {
-  font-family: "typoRound";
-  font-weight: bold;
+  font-family: "Rubik";
+  font-weight: normal;
   font-style: normal;
-  src: font-url('typo_round_bold_demo.otf') format('opentype');
+  src: font-url('https://fonts.googleapis.com/css?family=Rubik');
 }
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Rubik');
 
 // Variables
 
@@ -29,6 +33,9 @@ $mapPaneWidth: (1 - $paneRatio) * 100%;
   }
 }
 */
+
+@import "font-awesome-sprockets";
+@import "font-awesome";
 
 
 @mixin iframe {
@@ -303,7 +310,6 @@ $darkengreen: darken($green, 10%);
 $green: #27AE60;
 $bg_green: #6db61e;
 $progress-color: #fff;
-$font-family: 'Roboto', sans-serif;
 $white: #fff;
 $black: #000;
 $brand-color: #FF6E3A;
@@ -2036,7 +2042,6 @@ body#cambiu {
       color: inherit !important;
     }
     .intro_title {
-      font-family: typoRound;
       @include vfont-size(10vw);
       margin-top: 1vh;
     }
@@ -4415,7 +4420,6 @@ body#cambiu {
     margin-top: -30px;
   }
 //  padding-top: $navbar-height;
-  font-family: $font-family;
   color: $color;
  /* a:not(.carousel-control) {
     color: $grey73;
