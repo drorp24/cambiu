@@ -55,8 +55,6 @@ Rails.application.configure do
 
   config.distance_factor = 10
 
-  config.action_controller.asset_host = ENV["CLOUDFRONT_DIST"]
-
 
 
 end
