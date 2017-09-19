@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 #  before_action :detect_browser
 
   def set_release
-    @release = '0.9.8'
+    @release = '0.9.8.8'
     @release_date = Date.new(2016, 1, 1)
   end
 
