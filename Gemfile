@@ -56,7 +56,7 @@ gem 'best_in_place', github: 'bernat/best_in_place'
 group :test, :staging, :production do
   gem 'le'
 end
-#gem 'actionpack-action_caching'
+gem 'actionpack-action_caching'
 gem 'dalli'
 gem 'memcachier'
 gem 'responders', '~> 2.1.0'

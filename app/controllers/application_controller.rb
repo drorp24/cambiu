@@ -8,8 +8,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
-  before_action :set_http_cache_headers
-
 #  before_action :show_request_headers
 #  before_action :require_authentication,:if => Proc.new { |c| c.request.path.include? "/api/"}
 
@@ -82,10 +80,6 @@ class ApplicationController < ActionController::Base
 
   protected
   
-  def set_http_cache_headers
-    expires_in 1.month, public: true
-    fresh_when last_modified: @release_date, public: true
-  end
 
   def find_guest_user
     @guest_user = User.find(session[:user_id]) if session[:user_id]
