@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
 
-  caches_action :index, cache_path: :action_cache_key               # quicker first rendering (pick-up ready page from cache) - Dramatic effect.
-  before_action :set_http_cache_headers, only: [:index]             # quicker next rendering  (if challenged by browser with "If...", it quickly responds with 304 rather than generate a page)
+  caches_action :index, cache_path: :action_cache_key, unless: -> {Rails.env.development?}     # quicker first rendering (pick-up ready page from cache) - Dramatic effect.
+  before_action :set_http_cache_headers, only: [:index]                                         # quicker next rendering  (if challenged by browser with "If...", it quickly responds with 304 rather than generate a page)
 
   def index
   end
