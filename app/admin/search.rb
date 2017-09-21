@@ -8,7 +8,7 @@ ActiveAdmin.register Search do
   scope 'Tel Aviv', :telaviv
   scope :other
   scope :empty
-  
+
   config.batch_actions = true
 
   index do

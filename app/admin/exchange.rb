@@ -167,7 +167,7 @@ ActiveAdmin.register Exchange do
 
 #    actions
   end
-  
+
 =begin
   show do
     attributes_table do
@@ -403,7 +403,7 @@ form do |f|
       end
       column :currency           do |rate|
         best_in_place rate, :currency #, as: :select, collection: Currency.select
-      end 
+      end
       column :buy           do |rate|
         best_in_place rate, :buy_s, :as => :input
       end
@@ -442,7 +442,7 @@ form do |f|
       end
       f.actions
     end
-    
+
     controller do
 
       def scoped_collection
