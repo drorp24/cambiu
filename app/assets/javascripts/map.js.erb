@@ -507,3 +507,20 @@
   };
 
 
+   // Put here any code that must run after gm finished loading, but that doesn't require user's location to be found
+   // Most of my 'google.maps.x' code does await location to be found, which finishes long after gm loads, therefore doesn't need to be included here
+   // The typical example Google put here is the initMap, but that too needs to await user's location to be found hence is not included here either
+   gmLoaded = function() {
+
+     // Turn location fields into google searchBox's
+     $('input[data-field=location]').each(function() {
+       input = $(this).get(0);
+       searchBox = new google.maps.places.SearchBox(input, {
+         types: ['regions']
+       });
+       searchbox_addListener(searchBox);
+     });
+
+   };
+
+

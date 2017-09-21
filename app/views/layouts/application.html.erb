@@ -38,7 +38,7 @@
 
 	<%= yield %>
 
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application", async: false %>  <!-- had it have async, it would be scheduled after the intro's 5 png downloads -->
   <%= render 'google_maps' %>
   <%= render 'google_analytics' %>
 
