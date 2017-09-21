@@ -85,7 +85,7 @@ populateExchange = function(exchange, $scope, index, page) {
 
     if (exchange.base_rate) {    // TODO: get ranks from the server and populate as any other field returned. Chane markup from '.ranking' to [data-demo=exchange][data-field=...]
       if (index == 0) {
-        var src = '<%= asset_path 'circle_crown.png' %>';
+        var src = '<%= asset_path 'circle_crown_c.png' %>';
         var html = '<img src=' + src + '>';
         $scope.find('.ranking').html(html);
       } else {
