@@ -87,6 +87,9 @@ gem 'money-open-exchange-rates'
 gem 'pry'
 #gem "active_admin_import" , '3.0.0'
 gem 'httparty'
+group :staging, :production do
+  gem 'heroku-deflater'
+end
 
 
 group :development, :test do
