@@ -68,12 +68,15 @@
 
               if (rank) {
                 switch(rank) {
-                  case 1:  eIcon =  '<%= Rails.application.config.action_controller.asset_host + asset_path('circle_crown_c.png') %>'; break;
-                  case 2:  eIcon =  '<%= Rails.application.config.action_controller.asset_host + asset_path('rank2_c.png') %>'; break;
-                  case 3:  eIcon =  '<%= Rails.application.config.action_controller.asset_host + asset_path('rank3_c.png') %>'; break;
-                  case 4:  eIcon =  '<%= Rails.application.config.action_controller.asset_host + asset_path('rank4_c.png') %>'; break;
-                  case 5:  eIcon =  '<%= Rails.application.config.action_controller.asset_host + asset_path('rank5_c.png') %>'; break;
-                  default: eIcon =  '<%= Rails.application.config.action_controller.asset_host + asset_path('norank_c.png') %>'; break;
+                  <%# The need to 'help' asset_path out with the location is due to the asset compilation taking place locally, where the values of Heroku env variable isn't known #%>
+                  <%# If/when Heroku returns to precompile on its environment, a simple asset_path should suffice #%>
+                  <% asset_location = Rails.application.config.asset_location[Rails.env.to_sym] %>
+                  case 1:  eIcon =  '<%= asset_location + asset_path('circle_crown_c.png') %>'; break;
+                  case 2:  eIcon =  '<%= asset_location + asset_path('rank2_c.png') %>'; break;
+                  case 3:  eIcon =  '<%= asset_location + asset_path('rank3_c.png') %>'; break;
+                  case 4:  eIcon =  '<%= asset_location + asset_path('rank4_c.png') %>'; break;
+                  case 5:  eIcon =  '<%= asset_location + asset_path('rank5_c.png') %>'; break;
+                  default: eIcon =  '<%= asset_location + asset_path('norank_c.png') %>'; break;
                 }
               } else {
                 if (errors.length) {
