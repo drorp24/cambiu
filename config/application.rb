@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module CurrencyNetMvp
   class Application < Rails::Application
     config.font_assets.origin = '*' 
-    config.middleware.use Rack::Deflater
+#    config.middleware.use Rack::Deflater
     config.middleware.insert_before ActionDispatch::Static, Rack::Deflater
 #    config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public/deploy"
     # Settings in config/environments/* take precedence over those specified here.
