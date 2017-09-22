@@ -26,12 +26,12 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
 
 function doStuffThatRequiresLocation(location) {
 
-    verifyMapIsShown = showMap(location);
-    geocode(location);
     setLocale(location);
     populateLocalCurrency();
     populateTransaction();
     fetchAndPopulateLocaloffers();
+    verifyMapIsShown = showMap(location);
+    geocode(location);
     search_and_show();
 }
 
