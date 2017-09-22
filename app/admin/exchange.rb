@@ -233,7 +233,7 @@ ActiveAdmin.register Exchange do
 
   controller do
 
-    before_filter :only => :index do
+    before_action :only => :index do
       @per_page = 30
     end
 

@@ -30,7 +30,7 @@ group :test, :staging, :production do
   gem "rails_12factor"
 end
 
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin'
 #gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'devise'
 gem 'activerecord-postgis-adapter'
