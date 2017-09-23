@@ -466,51 +466,59 @@ class Exchange < ActiveRecord::Base
   # TODO: Important: This is where the cross-rates will take effect. 'quote' method would not be affected
   def rate(rated_currency, base_currency, trans, pay_currency, search_id = nil)
 
-    result = {
-        rated_currency: rated_currency,
-        base_currency: base_currency,
-        buy: nil,
-        sell: nil,
-        cc_fee: self.cc_fee,
-        delivery_charge: self.delivery_charge,
-        transaction: trans,
-        pay_currency: pay_currency,
-        error: nil,
-        updated: nil,
-        source: nil,
-        exchange_id: self.id,
-        bank_fee: nil
-    }
+    Rails.cache.fetch("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
 
-    rated_rates = find_rate(rated_currency, trans, search_id)
-    if rated_rates[:error]
-      result[:error] = rated_rates[:error]
-      return result
-    end
+      puts "Not cached yet: inside rate(#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency})"
 
-    base_rates = find_rate(base_currency, trans, search_id)
-    if base_rates[:error]
-      result[:error] = base_rates[:error]
-      return result
-    end
+      result = {
+          rated_currency: rated_currency,
+          base_currency: base_currency,
+          buy: nil,
+          sell: nil,
+          cc_fee: self.cc_fee,
+          delivery_charge: self.delivery_charge,
+          transaction: trans,
+          pay_currency: pay_currency,
+          error: nil,
+          updated: nil,
+          source: nil,
+          exchange_id: self.id,
+          bank_fee: nil
+      }
 
-
-    result[:buy]  = !base_rates[:buy] || base_rates[:buy]  == 0 || !rated_rates[:buy] ?   0 :  (rated_rates[:buy]  / base_rates[:buy])
-    result[:sell] = !base_rates[:sell] || base_rates[:sell] == 0 || !rated_rates[:sell] ? 0 :  (rated_rates[:sell] / base_rates[:sell])
-    if trans == 'mixed'
-      if rated_currency == pay_currency
-        result[:mixed] = rated_rates[:buy] / base_rates[:sell]
-      else
-        result[:mixed] = rated_rates[:sell] / base_rates[:buy]
+      rated_rates = find_rate(rated_currency, trans, search_id)
+      if rated_rates[:error]
+        result[:error] = rated_rates[:error]
+        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result)
+        return result
       end
-    else
-      result[:mixed] = nil
-    end
-    result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
-    result[:source] = rated_rates[:source] || base_rates[:source]
-    result[:bank_fee] = self.bank? ? (self.bank_fee || 0) : nil
 
-    return result
+      base_rates = find_rate(base_currency, trans, search_id)
+      if base_rates[:error]
+        result[:error] = base_rates[:error]
+        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result)
+        return result
+      end
+
+
+      result[:buy]  = !base_rates[:buy] || base_rates[:buy]  == 0 || !rated_rates[:buy] ?   0 :  (rated_rates[:buy]  / base_rates[:buy])
+      result[:sell] = !base_rates[:sell] || base_rates[:sell] == 0 || !rated_rates[:sell] ? 0 :  (rated_rates[:sell] / base_rates[:sell])
+      if trans == 'mixed'
+        if rated_currency == pay_currency
+          result[:mixed] = rated_rates[:buy] / base_rates[:sell]
+        else
+          result[:mixed] = rated_rates[:sell] / base_rates[:buy]
+        end
+      else
+        result[:mixed] = nil
+      end
+      result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
+      result[:source] = rated_rates[:source] || base_rates[:source]
+      result[:bank_fee] = self.bank? ? (self.bank_fee || 0) : nil
+
+      result
+
+    end
 
   end
 
@@ -523,7 +531,7 @@ class Exchange < ActiveRecord::Base
 
     Rails.cache.fetch("#{self.id}-#{currency}-#{trans}", expires_in: 0.5.hour) do
 
-      puts "inside cache.fetch for #{self.id}-#{currency}-#{trans}"
+      puts "Not cached yet: inside find_rate(#{self.id}-#{currency}-#{trans})"
 
       result = {
           buy: nil,
