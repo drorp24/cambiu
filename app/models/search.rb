@@ -42,7 +42,11 @@ class Search < ActiveRecord::Base
           calculated.blank? or trans.blank?
 
 
-      exchange_offers
+
+      Rails.cache.fetch("#{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id.to_s}", expires_in: 0.5.hour) do
+        puts "Not cached yet: inside exchanges for #{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id.to_s}"
+        exchange_offers
+      end
 
     rescue => e
 
