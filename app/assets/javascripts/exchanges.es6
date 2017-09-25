@@ -66,7 +66,6 @@
 
         pageNum = 1;
         populatePage({page: pageNum, list: true, cards: true});
-        restoreOrder();
         $('.pagination').addClass('active');
 
     };

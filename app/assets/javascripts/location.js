@@ -14,8 +14,8 @@ getUserLocation = function() {
 
         var options = {
             enableHighAccuracy: true,
-            timeout: 30000,
-            maximumAge: 30000
+            timeout: 60000,
+            maximumAge: 60000
         };
 
         navigator.geolocation.getCurrentPosition(
@@ -409,7 +409,8 @@ setLocale = function(location) {
     set('city', nearest_center.city);
 
     // update local for potential amount changes
-    Object.assign(local, nearest_center);
+//    Object.assign(local, nearest_center);
+    for (var attrname in nearest_center) { local[attrname] = nearest_center[attrname]; } // For Androids...
     local.rates = null;
 
     // required for the initial call

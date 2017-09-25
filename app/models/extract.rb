@@ -81,8 +81,12 @@ class Extract
         end
 
       next unless Currency.updatable.include? currency
-      sell = 1 / tr.css('td')[0].text.strip.to_f
-      buy = 1 / tr.css('td')[1].text.strip.to_f
+      sell_written = tr.css('td')[0].text.strip.to_f
+      buy_written = tr.css('td')[1].text.strip.to_f
+      inv_sell = currency == 'JPY' ? sell_written / 100.0 : sell_written
+      inv_buy = currency == 'JPY' ? buy_written / 100.0 : buy_written
+      sell = 1 / inv_sell
+      buy = 1 / inv_buy
 
       rate_update(currency, buy, sell, chain, exchange, rates_source)
     end

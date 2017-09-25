@@ -12,17 +12,12 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
   
-  # Enable/disable caching. By default caching is disabled.
-  if Rails.root.join('tmp/caching-dev.txt').exist?
-    config.action_controller.perform_caching = true
-    config.cache_store = :memory_store
-    config.public_file_server.headers = {
-        'Cache-Control' => 'public, max-age=172800'
-    }
-  else
-    config.action_controller.perform_caching = false
-    config.cache_store = :null_store
-  end
+  # Enable caching
+  config.action_controller.perform_caching = true
+  config.cache_store = :memory_store
+  config.public_file_server.headers = {
+      'Cache-Control' => 'public, max-age=172800'
+  }
 
   # Don't care if the mailer can't confirm.
   config.action_mailer.raise_delivery_errors = false
@@ -59,6 +54,10 @@ Rails.application.configure do
   config.inspectlet_wid = ''
 
   config.distance_factor = 10
+
+  # Horrible hard-coded string due to Heroku forcing me to precompile assets locally
+  config.asset_location = {development: "", staging: "https://d368eop2iyjvb5.cloudfront.net", production: "https://d29wr857bsaesb.cloudfront.net"}
+
 
 
 end

@@ -4,5 +4,5 @@
 //= link manifest.json
 //= link_tree ../images
 //= link_tree ../fonts
-//= link cambiu_vertical_white.png
+//= link cambiu_vertical_white_c.png
 

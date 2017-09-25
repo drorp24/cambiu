@@ -255,3 +255,7 @@ app/assets/javascripts/EXAMPLE_serviceworker.js.erb
 *.dump*.*
 oxr_cache.json
 app/assets/javascripts/embed.es6
+
+Gemfile.lock_keep22SEP2017
+
+Gemfile.lock_keepNEW

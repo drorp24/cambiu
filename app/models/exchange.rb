@@ -297,11 +297,18 @@ class Exchange < ActiveRecord::Base
   end
 
   def self.bad(country)
-    if bad_exchange = self.bank.where(country: country).first
-      return bad_exchange
-    else
-      Error.report(message: 'No bad source defined for country: ' + country, text: 'UK bank used instead', search_id: nil)
-      return self.bank.where(country: 'UK').first
+
+    Rails.cache.fetch("bad_exchange-#{country}", expires_in: 1.month) do
+
+      if bad_exchange = self.bank.where(country: country).first
+        result = bad_exchange
+      else
+        Error.report(message: 'No bad source defined for country: ' + country, text: 'UK bank used instead', search_id: nil)
+        result = self.bank.where(country: 'UK').first
+      end
+
+      result
+
     end
   end
 
@@ -309,19 +316,19 @@ class Exchange < ActiveRecord::Base
     @inter ||= self.inter.first
   end
 
-  def self.bad_rate(country, rated_currency, base_currency, trans, pay_currency)
-#    puts "self.bad_rate called with: " + country + ', ' + rated_currency + ', ' + base_currency
-    return @bad_rate if @bad_rate && @bad_rate_country == country && @bad_rate[:rated_currency] == rated_currency && @bad_rate[:base_currency] == base_currency
-#    puts "self.bad_rate did not return but went to calculate it"
-    @bad_rate_country = country
-    @bad_rate = Exchange.bad(country).rate(rated_currency, base_currency, trans, pay_currency)
+  def self.bad_rate(country, rated_currency, base_currency, trans, pay_currency, search_id = nil)
+
+    Rails.cache.fetch("bad_rate-#{country}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
+      Exchange.bad(country).rate(rated_currency, base_currency, trans, pay_currency, search_id)
+    end
+
   end
 
   # quote and calculate gain, focusing on exchange rates and ignoring added charges
   def quote(params)
 
     result = {
-        search_id:        params[:search_id],
+        search_id:        search_id = params[:search_id],
         pay_amount:       pay_amount    = Monetize.parse(params[:pay_amount]).amount,
         pay_currency:     pay_currency  = params[:pay_currency],
         get_amount:       get_amount    = Monetize.parse(params[:get_amount]).amount,
@@ -363,11 +370,10 @@ class Exchange < ActiveRecord::Base
 
     if calculated == 'buy_amount'
 
-      rates = result[:rates]          = rate(get_currency, pay_currency, trans, pay_currency)
+      rates = result[:rates]          = rate(get_currency, pay_currency, trans, pay_currency, search_id)
 
       if rates[:error]
         result[:errors]           <<   rates[:error]
-        Error.report(message: rates[:error], text: "", search_id: params[:search_id])
         return result
       end
 
@@ -384,10 +390,7 @@ class Exchange < ActiveRecord::Base
       get_amount                                            = result[:quote]
       result[:get_amount] = result[:get_rounded]            = get_amount.to_money(get_currency).format
 
-      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency, trans, pay_currency)
-      if bad_rates[:error]
-        Error.report(message: bad_rates[:error], text: "", search_id: params[:search_id])
-      end
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country,get_currency, pay_currency, trans, pay_currency, search_id)
       bank_fee                                              = bad_rates[:bank_fee] || 0
       bad_amount_before_fees                                = (pay_amount * (bad_rates[trans.to_sym] || 0))
       bad_amount                                            = bad_amount_before_fees * (100 - bank_fee) / 100.0
@@ -413,10 +416,9 @@ class Exchange < ActiveRecord::Base
 
     else
 
-      rates = result[:rates]          = rate(pay_currency, get_currency, trans, pay_currency)
+      rates = result[:rates]          = rate(pay_currency, get_currency, trans, pay_currency, search_id)
       if rates[:error]
         result[:errors]               <<   rates[:error]
-        Error.report(message: rates[:error], text: "", search_id: params[:search_id])
         return result
       end
       if rates[trans.to_sym] == 0
@@ -432,11 +434,7 @@ class Exchange < ActiveRecord::Base
       pay_amount                                            = result[:quote]
       result[:pay_amount] = result[:pay_rounded]            = pay_amount.to_money(pay_currency).format
 
-      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency, trans, pay_currency)
-      if bad_rates[:error]
-        Error.report(message: bad_rates[:error], text: "", search_id: params[:search_id])
-      end
-
+      bad_rates = result[:bad_rates]  = Exchange.bad_rate(country, pay_currency, get_currency, trans, pay_currency, search_id)
       bank_fee                                              = bad_rates[:bank_fee] || 0
       bad_amount_before_fees                                = (get_amount * (bad_rates[trans.to_sym] || 0))
       bad_amount                                            = bad_amount_before_fees * (100 + bank_fee) / 100.0
@@ -466,136 +464,166 @@ class Exchange < ActiveRecord::Base
   end
 
   # TODO: Important: This is where the cross-rates will take effect. 'quote' method would not be affected
-  def rate(rated_currency, base_currency, trans, pay_currency)
+  def rate(rated_currency, base_currency, trans, pay_currency, search_id = nil)
 
-    result = {
-        rated_currency: rated_currency,
-        base_currency: base_currency,
-        buy: nil,
-        sell: nil,
-        cc_fee: self.cc_fee,
-        delivery_charge: self.delivery_charge,
-        transaction: trans,
-        pay_currency: pay_currency,
-        error: nil,
-        updated: nil,
-        source: nil,
-        exchange_id: self.id,
-        bank_fee: nil
-    }
+    Rails.cache.fetch("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
 
-    rated_rates = find_rate(rated_currency, trans)
-    if rated_rates[:error]
-      result[:error] = rated_rates[:error]
-      return result
-    end
+      puts "Not cached yet: inside rate(#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency})"
 
-    base_rates = find_rate(base_currency, trans)
-    if base_rates[:error]
-      result[:error] = base_rates[:error]
-      return result
-    end
+      result = {
+          rated_currency: rated_currency,
+          base_currency: base_currency,
+          buy: nil,
+          sell: nil,
+          cc_fee: self.cc_fee,
+          delivery_charge: self.delivery_charge,
+          transaction: trans,
+          pay_currency: pay_currency,
+          error: nil,
+          rates_update: nil,
+          source: nil,
+          exchange_id: self.id,
+          bank_fee: nil,
+          offer_update: Time.now
+      }
 
-
-    result[:buy]  = !base_rates[:buy] || base_rates[:buy]  == 0 || !rated_rates[:buy] ?   0 :  (rated_rates[:buy]  / base_rates[:buy])
-    result[:sell] = !base_rates[:sell] || base_rates[:sell] == 0 || !rated_rates[:sell] ? 0 :  (rated_rates[:sell] / base_rates[:sell])
-    if trans == 'mixed'
-      if rated_currency == pay_currency
-        result[:mixed] = rated_rates[:buy] / base_rates[:sell]
-      else
-        result[:mixed] = rated_rates[:sell] / base_rates[:buy]
+      rated_rates = find_rate(rated_currency, trans, search_id)
+      if rated_rates[:error]
+        result[:error] = rated_rates[:error]
+        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result)
+        return result
       end
-    else
-      result[:mixed] = nil
-    end
-    result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
-    result[:source] = rated_rates[:source] || base_rates[:source]
-    result[:bank_fee] = self.bank? ? (self.bank_fee || 0) : nil
 
-    return result
+      base_rates = find_rate(base_currency, trans, search_id)
+      if base_rates[:error]
+        result[:error] = base_rates[:error]
+        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result)
+        return result
+      end
+
+
+      result[:buy]  = !base_rates[:buy] || base_rates[:buy]  == 0 || !rated_rates[:buy] ?   0 :  (rated_rates[:buy]  / base_rates[:buy])
+      result[:sell] = !base_rates[:sell] || base_rates[:sell] == 0 || !rated_rates[:sell] ? 0 :  (rated_rates[:sell] / base_rates[:sell])
+      if trans == 'mixed'
+        if rated_currency == pay_currency
+          result[:mixed] = rated_rates[:buy] / base_rates[:sell]
+        else
+          result[:mixed] = rated_rates[:sell] / base_rates[:buy]
+        end
+      else
+        result[:mixed] = nil
+      end
+      result[:rates_update] =  [base_rates[:rate_update], rated_rates[:rate_update]].min
+      result[:source] = rated_rates[:source] || base_rates[:source]
+      result[:bank_fee] = self.bank? ? (self.bank_fee || 0) : nil
+
+      result
+
+    end
 
   end
 
-  def find_rate(currency, trans)
+  def find_rate(currency, trans, search_id)
 
-    result = {
-        buy: nil,
-        sell: nil,
-        error: nil,
-        updated: nil,
-        source: nil,
-        method: 'absolute'
-    }
+=begin
+    puts "Outside cache.fetch. This is what the cache has currently for #{self.id}-#{currency}-#{trans}:"
+    puts Rails.cache.read("#{self.id}-#{currency}-#{trans}").to_s
+=end
 
-    if currency == self.currency
-      result[:buy]  = 1
-      result[:sell] = 1
-      result[:updated] = Time.zone.now
-      return result
-    end
+    Rails.cache.fetch("#{self.id}-#{currency}-#{trans}", expires_in: 0.5.hour) do
 
-#    rec = chain? ? self.chain.send(currency.downcase + '_rate') : self.send(currency.downcase + '_rate')
+      puts "Not cached yet: inside find_rate(#{self.id}-#{currency}-#{trans})"
 
-    currency_method = currency.downcase + '_rate'
+      result = {
+          buy: nil,
+          sell: nil,
+          error: nil,
+          rate_update: nil,
+          source: nil,
+          method: 'absolute'
+      }
 
-    if chain?
-      if chain_id.blank?
-        result[:error] = "#{self.name} (#{self.id}) - Rates policy is chain but no chain was defined"
+      if currency == self.currency
+        result[:buy]  = 1
+        result[:sell] = 1
+        result[:rate_update] = Time.zone.now
+        Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
         return result
       end
-      chain = self.chain
-      if chain.respond_to? currency_method
-        rec = self.chain.send(currency_method)
+
+  #    rec = chain? ? self.chain.send(currency.downcase + '_rate') : self.send(currency.downcase + '_rate')
+
+      currency_method = currency.downcase + '_rate'
+
+      if chain?
+        if chain_id.blank?
+          result[:error] = "#{self.name} (#{self.id}) - Rates policy is chain but no chain was defined"
+          Error.report(message: result[:error], text: "", search_id: search_id)
+          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+          return result
+        end
+        chain = self.chain
+        if chain.respond_to? currency_method
+          rec = self.chain.send(currency_method)
+        else
+          rec = chain.rates.where(currency: currency).first
+        end
       else
-        rec = chain.rates.where(currency: currency).first
-      end
-    else
-      if self.respond_to? currency_method
-        rec = self.send(currency_method)
-      else
-        rec = self.rates.where(currency: currency).first
-      end
-    end
-
-    if rec
-
-      if rec.reference?
-        reference_rate    = Money.default_bank.get_rate(self.currency, currency)
-        sell_markup       = rec.sell_markup || 0
-        buy_markup        = rec.buy_markup || 0
-        sell_factor       = 1 - (sell_markup / 100)
-        buy_factor        = 1 + (buy_markup / 100)
-        result[:sell]     = reference_rate * sell_factor
-        result[:buy]      = reference_rate * buy_factor
-        result[:method]   = 'reference'
-        result[:updated] ||= rec.updated_at
-        result[:source] ||= rec.source
-        return result
+        if self.respond_to? currency_method
+          rec = self.send(currency_method)
+        else
+          rec = self.rates.where(currency: currency).first
+        end
       end
 
-      if (!rec.buy || rec.buy == 0) and (!rec.sell || rec.sell == 0)
-        result[:error] = "#{self.name} (#{self.id}) - No buy and sell rates for currency: #{currency}"
-        return result
-      elsif rec.absolute? and (Date.today - rec.updated_at.to_date).to_i > 1
-        result[:error] = "#{self.name} (#{self.id}) - Stale rates for currency: #{rec.currency}"
-        return result
-      end
+      if rec
 
-      ['buy', 'sell'].each do |kind|
-          value = rec.send(kind)
-          result[:error] = "#{self.name} (#{self.id}) - Missing #{trans} rate for currency: #{currency}" if (!value || value == 0) and (kind == trans || trans == 'mixed')
-          result[kind.to_sym] = value
-          result[:updated] ||= rec.updated_at
+        if rec.reference?
+          reference_rate    = Money.default_bank.get_rate(self.currency, currency)
+          sell_markup       = rec.sell_markup || 0
+          buy_markup        = rec.buy_markup || 0
+          sell_factor       = 1 - (sell_markup / 100)
+          buy_factor        = 1 + (buy_markup / 100)
+          result[:sell]     = reference_rate * sell_factor
+          result[:buy]      = reference_rate * buy_factor
+          result[:method]   = 'reference'
+          result[:rate_update] ||= rec.updated_at
           result[:source] ||= rec.source
+          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+          return result
+        end
+
+        if (!rec.buy || rec.buy == 0) and (!rec.sell || rec.sell == 0)
+          result[:error] = "#{self.name} (#{self.id}) - No buy and sell rates for currency: #{currency}"
+          Error.report(message: result[:error], text: "", search_id: search_id)
+          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+          return result
+        elsif rec.absolute? and (Date.today - rec.updated_at.to_date).to_i > 1
+          result[:error] = "#{self.name} (#{self.id}) - Stale rates for currency: #{rec.currency}"
+          Error.report(message: result[:error], text: "", search_id: search_id)
+          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+          return result
+        end
+
+        ['buy', 'sell'].each do |kind|
+            value = rec.send(kind)
+            result[:error] = "#{self.name} (#{self.id}) - Missing #{trans} rate for currency: #{currency}" if (!value || value == 0) and (kind == trans || trans == 'mixed')
+            result[kind.to_sym] = value
+            result[:rate_update] ||= rec.updated_at
+            result[:source] ||= rec.source
+        end
+
+
+      else
+        result[:error] = "#{self.name} (#{self.id}) - Neither buy nor sell rates for currency: #{currency}"
+        Error.report(message: result[:error], text: "", search_id: search_id)
+        Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+        return result
       end
 
+      result
 
-    else
-      result[:error] = "#{self.name} (#{self.id}) - Neither buy nor sell rates for currency: #{currency}"
-      return result
     end
-
-    return result
 
   end
 
@@ -874,6 +902,10 @@ class Exchange < ActiveRecord::Base
 
   def either_name
     name_he.present? ? name_he : name
+  end
+
+  def self.cache_clear
+    Rails.cache.clear
   end
 
   protected

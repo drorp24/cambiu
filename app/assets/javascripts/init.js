@@ -151,6 +151,7 @@ var verifyMapIsShown;
 var inIframe = false;
 var locale;
 var activeSnackbars = 0;
+var pendingSnack = {};
 
 
 
@@ -162,12 +163,13 @@ def_vals = function() {
     def['pay_currency']     = 'ILS';
     def['buy_amount']       = 1000;
     def['buy_currency']     = 'USD';
-    def['service_type']     = 'pickup';
-    def['payment_method']   = 'cash';
+    def['service_type']     = 'delivery';
+    def['payment_method']   = 'credit';
     def['user_lat']         = dfault.lat;
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
     def['radius']           = '1';
+    def['values']           = 'default';
 
     return def;
 
@@ -192,7 +194,8 @@ var searchParams = [
     'location_reason',
     'location_lat',
     'location_lng',
-    'radius'
+    'radius',
+    'values'
 ];
 
 searchable = function(field) {
@@ -527,6 +530,11 @@ $(document).ready(function() {
     };
 
     snack = function(message, options) {
+
+        if (options && options.timing == 'later') {
+            pendingSnack = {message: message, options: options};
+            return;
+        }
 
         console.log('snack called with message: ' + message);
 

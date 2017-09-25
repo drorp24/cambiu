@@ -4,9 +4,11 @@ class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   respond_to :html
 
+  before_action :set_release
+
   before_action :set_locale
 
-  before_action :show_request_headers
+#  before_action :show_request_headers
 #  before_action :require_authentication,:if => Proc.new { |c| c.request.path.include? "/api/"}
 
   protect_from_forgery with: :exception
@@ -16,15 +18,19 @@ class ApplicationController < ActionController::Base
 
   before_action :pass_request
 
-  before_action :detect_browser
+#  before_action :detect_browser
 
+  def set_release
+    @release = '0.9.8'
+    @release_date = Date.new(2016, 1, 1)
+  end
 
   def set_locale
     @locale = I18n.locale = params[:locale] || I18n.default_locale
   end
 
   def default_url_options(options={})
-    { :locale => I18n.locale }
+#    { :locale => I18n.locale }
   end
 
 
@@ -74,12 +80,6 @@ class ApplicationController < ActionController::Base
 
   protected
   
-=begin
-  def set_http_cache_headers
-    expires_in 1.month, public: true
-    fresh_when last_modified: Date.new(2015, 1, 1), public: true
-  end
-=end
 
   def find_guest_user
     @guest_user = User.find(session[:user_id]) if session[:user_id]

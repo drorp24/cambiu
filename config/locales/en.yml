@@ -22,7 +22,7 @@
 en:
   intro:
     slide1:
-      title: 'Worlds first <br> currency marketplace.'
+      title: 'Travel money delivered <br>to your doorstep. <br>Best prices. Guaranteed.'
     slide2:
       title: 'You have something to offer'
       text: 'The currency you pay may be worth a lot to some merchants'
@@ -133,5 +133,6 @@ en:
     cancel: 'Cancelled'
     noPickupCashWouldYouLikeDelivery: 'No cash pick-up offer, would you like a delivery?'
     noPickupCreditWouldYouLikeDelivery: 'No credit card pick-up, would you like a delivery?'
-    bestPickup: 'This is the best pick-up offer we could find'
-    noDelivery: 'No delivery in this area. '
+    bestPickup: 'Click for the best offer around'
+    noDelivery: 'No delivery in the vicinity. '
+    noCredit: 'No credit card accepted in the vicinity. '

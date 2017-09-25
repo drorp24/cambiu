@@ -30,7 +30,7 @@ group :test, :staging, :production do
   gem "rails_12factor"
 end
 
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin'
 #gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'devise'
 gem 'activerecord-postgis-adapter'
@@ -51,13 +51,12 @@ gem 'money-rails'
 #gem 'autonumeric-rails'
 gem 'font_assets'
 gem 'newrelic_rpm'
-#gem 'actionpack-page_caching'
 gem 'omniauth-facebook'
 gem 'best_in_place', github: 'bernat/best_in_place'
 group :test, :staging, :production do
   gem 'le'
 end
-#gem 'actionpack-action_caching'
+gem 'actionpack-action_caching'
 gem 'dalli'
 gem 'memcachier'
 gem 'responders', '~> 2.1.0'
@@ -68,7 +67,7 @@ gem 'monetize'
 #gem 'sass', '~> 3.4', '>= 3.4.22'
 gem 'sass-rails', '~> 5.0', '>= 5.0.6'
 #gem 'font-awesome-rails'
-#gem 'font-awesome-sass', '~> 4.7.0' # that's the official fontawesome ruby gem
+gem 'font-awesome-sass' # that's the official fontawesome ruby gem
 #gem "rack-timeout"
 gem 'google_currency'
 #gem 'google_currency_rails_cache', '~> 1.2' # TODO: How to install
@@ -88,7 +87,10 @@ gem 'money-open-exchange-rates'
 gem 'pry'
 #gem "active_admin_import" , '3.0.0'
 gem 'httparty'
-
+group :staging, :production do
+  gem 'heroku-deflater'
+end
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

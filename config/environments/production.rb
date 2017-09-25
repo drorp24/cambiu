@@ -90,5 +90,9 @@ Rails.application.configure do
 
   config.distance_factor = 10
 
+  # Horrible hard-coded string due to Heroku forcing me to precompile assets locally
+  config.asset_location = {development: "", staging: "https://d368eop2iyjvb5.cloudfront.net", production: "https://d29wr857bsaesb.cloudfront.net"}
+
+
 end
 Rails.application.routes.default_url_options[:host] = 'www.cambiu.com'

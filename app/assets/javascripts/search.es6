@@ -80,15 +80,6 @@ $(document).ready(function() {
 
 
 
-    // Turn location fields into google searchBox's
-    $('input[data-field=location]').each(function() {
-        input = $(this).get(0);
-        searchBox = new google.maps.places.SearchBox(input, {
-            types: ['regions']
-        });
-        searchbox_addListener(searchBox);
-    });
-
      // fix their z-index dynamically
     $('input[data-field=location]').click(function() {
         if (!pacContainerInitialized) {
@@ -496,6 +487,7 @@ $(document).ready(function() {
         }
 
         report('Set', 'Service type', null, service_type);
+        set('values', 'user');
     });
 
     $('.close_inline_params').on('click tap', function(e) {
@@ -555,6 +547,7 @@ $(document).ready(function() {
         }
 
         report('Set', 'Payment method', null, new_payment_method);
+        set('values', 'user');
     });
 
     setPaymentMethodTo = function(payment_method) {

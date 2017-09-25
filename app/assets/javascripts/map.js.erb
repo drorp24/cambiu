@@ -68,18 +68,21 @@
 
               if (rank) {
                 switch(rank) {
-                  case 1:  eIcon =  '<%= asset_path 'circle_crown.png' %>'; break;
-                  case 2:  eIcon =  '<%= asset_path 'rank2.png' %>'; break;
-                  case 3:  eIcon =  '<%= asset_path 'rank3.png' %>'; break;
-                  case 4:  eIcon =  '<%= asset_path 'rank4.png' %>'; break;
-                  case 5:  eIcon =  '<%= asset_path 'rank5.png' %>'; break;
-                  default: eIcon =  '<%= asset_path 'norank.png' %>'; break;
+                  <%# The need to 'help' asset_path out with the location is due to the asset compilation taking place locally, where the values of Heroku env variable isn't known #%>
+                  <%# If/when Heroku returns to precompile on its environment, a simple asset_path should suffice #%>
+                  <% asset_location = Rails.application.config.asset_location[Rails.env.to_sym] %>
+                  case 1:  eIcon =  '<%= asset_location + asset_path('circle_crown_c.png') %>'; break;
+                  case 2:  eIcon =  '<%= asset_location + asset_path('rank2_c.png') %>'; break;
+                  case 3:  eIcon =  '<%= asset_location + asset_path('rank3_c.png') %>'; break;
+                  case 4:  eIcon =  '<%= asset_location + asset_path('rank4_c.png') %>'; break;
+                  case 5:  eIcon =  '<%= asset_location + asset_path('rank5_c.png') %>'; break;
+                  default: eIcon =  '<%= asset_location + asset_path('norank_c.png') %>'; break;
                 }
               } else {
                 if (errors.length) {
-                  eIcon = '<%= asset_path 'lightgrey.png' %>';
+                  eIcon = '<%= asset_location + asset_path('lightgrey.png') %>';
                 } else {
-                  eIcon = '<%= asset_path 'grey.png' %>'
+                  eIcon = '<%= asset_location + asset_path('grey.png') %>'
                 }
               }
 
@@ -505,5 +508,22 @@
     markerLayerAddClass(currId, 'current');
 
   };
+
+
+   // Put here any code that must run after gm finished loading, but that doesn't require user's location to be found
+   // Most of my 'google.maps.x' code does await location to be found, which finishes long after gm loads, therefore doesn't need to be included here
+   // The typical example Google put here is the initMap, but that too needs to await user's location to be found hence is not included here either
+   gmLoaded = function() {
+
+     // Turn location fields into google searchBox's
+     $('input[data-field=location]').each(function() {
+       input = $(this).get(0);
+       searchBox = new google.maps.places.SearchBox(input, {
+         types: ['regions']
+       });
+       searchbox_addListener(searchBox);
+     });
+
+   };
 
 
