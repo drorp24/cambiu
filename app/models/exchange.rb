@@ -480,10 +480,11 @@ class Exchange < ActiveRecord::Base
           transaction: trans,
           pay_currency: pay_currency,
           error: nil,
-          updated: nil,
+          rates_update: nil,
           source: nil,
           exchange_id: self.id,
-          bank_fee: nil
+          bank_fee: nil,
+          offer_update: Time.now
       }
 
       rated_rates = find_rate(rated_currency, trans, search_id)
@@ -512,7 +513,7 @@ class Exchange < ActiveRecord::Base
       else
         result[:mixed] = nil
       end
-      result[:updated] =  [base_rates[:updated], rated_rates[:updated]].min
+      result[:rates_update] =  [base_rates[:rate_update], rated_rates[:rate_update]].min
       result[:source] = rated_rates[:source] || base_rates[:source]
       result[:bank_fee] = self.bank? ? (self.bank_fee || 0) : nil
 
@@ -537,7 +538,7 @@ class Exchange < ActiveRecord::Base
           buy: nil,
           sell: nil,
           error: nil,
-          updated: nil,
+          rate_update: nil,
           source: nil,
           method: 'absolute'
       }
@@ -545,7 +546,7 @@ class Exchange < ActiveRecord::Base
       if currency == self.currency
         result[:buy]  = 1
         result[:sell] = 1
-        result[:updated] = Time.zone.now
+        result[:rate_update] = Time.zone.now
         Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
         return result
       end
@@ -586,7 +587,7 @@ class Exchange < ActiveRecord::Base
           result[:sell]     = reference_rate * sell_factor
           result[:buy]      = reference_rate * buy_factor
           result[:method]   = 'reference'
-          result[:updated] ||= rec.updated_at
+          result[:rate_update] ||= rec.updated_at
           result[:source] ||= rec.source
           Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
           return result
@@ -608,7 +609,7 @@ class Exchange < ActiveRecord::Base
             value = rec.send(kind)
             result[:error] = "#{self.name} (#{self.id}) - Missing #{trans} rate for currency: #{currency}" if (!value || value == 0) and (kind == trans || trans == 'mixed')
             result[kind.to_sym] = value
-            result[:updated] ||= rec.updated_at
+            result[:rate_update] ||= rec.updated_at
             result[:source] ||= rec.source
         end
 
@@ -901,6 +902,10 @@ class Exchange < ActiveRecord::Base
 
   def either_name
     name_he.present? ? name_he : name
+  end
+
+  def self.cache_clear
+    Rails.cache.clear
   end
 
   protected
