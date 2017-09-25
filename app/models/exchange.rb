@@ -468,7 +468,7 @@ class Exchange < ActiveRecord::Base
 
     Rails.cache.fetch("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
 
-      puts "Not cached yet: inside rate(#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency})"
+      puts "Not cached yet: inside rate(#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency})" unless Rails.env.production?
 
       result = {
           rated_currency: rated_currency,
@@ -532,7 +532,7 @@ class Exchange < ActiveRecord::Base
 
     Rails.cache.fetch("#{self.id}-#{currency}-#{trans}", expires_in: 0.5.hour) do
 
-      puts "Not cached yet: inside find_rate(#{self.id}-#{currency}-#{trans})"
+      puts "Not cached yet: inside find_rate(#{self.id}-#{currency}-#{trans})" unless Rails.env.production?
 
       result = {
           buy: nil,
