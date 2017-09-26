@@ -5,6 +5,17 @@ class HomeController < ApplicationController
   before_action :set_http_cache_headers, only: [:index]       # quicker next rendering  (if challenged by browser with "If...", it quickly responds with 304 rather than generate a page)
 
   def index
+    puts ""
+    puts ""
+    puts "user-agent: ", request.user_agent
+    puts @browser.device.mobile?
+    puts ""
+    puts ""
+    redirect_to ENV['LANDING_URL'] || 'http://join.cambiu.com' #unless Rails.env.development?
+  end
+
+  def app
+    render :index
   end
 
   def action_cache_key
