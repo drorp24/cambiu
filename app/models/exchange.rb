@@ -761,7 +761,7 @@ class Exchange < ActiveRecord::Base
   def effective_rates
     rates.any? ? rates : (chain ? chain.rates : nil)
   end
-
+  
 
   def todays_hours
     t = Time.now
@@ -776,7 +776,7 @@ class Exchange < ActiveRecord::Base
     close = self.send(day + '_close')
     open.strftime("%H:%M") + ' - ' + close.strftime("%H:%M") if open and close
   end
-
+  
   def make_hour(int)
     hour = int.to_s + ":00"
     hour = "0" + hour if int < 10
@@ -801,7 +801,7 @@ class Exchange < ActiveRecord::Base
         hours2 = hours[2].partition("-")
         bh.open2 =  Tod::TimeOfDay(hours2[0])
         bh.close2 = Tod::TimeOfDay(hours2[2])
-      end
+      end      
     end
 
     bh.save
@@ -818,9 +818,9 @@ class Exchange < ActiveRecord::Base
       define_method "#{day_name}_#{col}=" do |tod|
         b = BusinessHour.find_or_initialize_by(exchange_id: self.id, day: day)
         b.send "#{col}=", Tod::TimeOfDay.parse(tod)
-        b.save
+        b.save  
       end
-    end
+    end     
   end
 
 
@@ -830,16 +830,16 @@ class Exchange < ActiveRecord::Base
             timeout:       900,
              element_limit: 1073741824,
              json:          true}
-
+    
     overpass = Overpass.new(options)
     list = overpass.query
   end
-
+  
 =begin
   def self.import(amenity="bdc", area="London")
     return unless list = self.list(amenity, area)
-
-    list.each do |osm_rec|
+    
+    list.each do |osm_rec| 
       Exchange.find_or_create_by(osm_id: osm_rec[:id].to_s) do |exchange|
         exchange.latitude           = osm_rec[:lat]
         exchange.longitude          = osm_rec[:lon]
@@ -859,7 +859,7 @@ class Exchange < ActiveRecord::Base
         exchange.addr_unit          = osm_rec[:tags][:"addr:unit"]
         exchange.atm                = osm_rec[:tags][:atm]
         exchange.source             = osm_rec[:source]
-      end
+      end 
     end
   end
 =end
