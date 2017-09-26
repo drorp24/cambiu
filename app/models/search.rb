@@ -43,10 +43,10 @@ class Search < ActiveRecord::Base
 
 
 
-      Rails.cache.fetch("#{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id || 'no_exchange'}", expires_in: 0.5.hour) do
-        puts "Not cached yet: inside exchanges for #{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id || 'no_exchange'}" unless Rails.env.production?
+#      Rails.cache.fetch("#{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id || 'no_exchange'}", expires_in: 0.5.hour) do
+#        puts "Not cached yet: inside exchanges for #{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id || 'no_exchange'}" unless Rails.env.production?
         exchange_offers
-      end
+#      end
 
     rescue => e
 
