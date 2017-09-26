@@ -1,5 +1,6 @@
 class Chain < ActiveRecord::Base
   has_many :exchanges, :dependent => :destroy
+  has_many :orders, through: :exchanges
   has_many :rates, as: :ratable, dependent: :destroy
 
   has_one     :gbp_rate,    -> {where(currency: 'GBP')}       ,class_name: "Rate", as: :ratable
