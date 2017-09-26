@@ -3,7 +3,7 @@ class NotifyJob < ActiveJob::Base
 
   def perform(order, photo)
 
-#    return if Rails.env.development?
+    return unless Rails.env.production?
 
     response = {}
     error = nil
