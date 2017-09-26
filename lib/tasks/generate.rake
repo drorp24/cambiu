@@ -31,10 +31,10 @@ namespace :rates do
 
         currency = currency.to_s
         next unless (currency_updatable.include? currency) && rate.present?
-        sell_markup = markup[:sell_markup] + markup[:sell_spread] * rand(-1.0..1.0)
+        sell_markup = markup[Currency.category(currency).to_sym][:sell_markup] + markup[Currency.category(currency).to_sym][:sell_spread] * rand(-1.0..1.0)
         sell_factor = 1 - (sell_markup / 100)
         sell = rate * sell_factor
-        buy_markup = markup[:buy_markup] + markup[:buy_spread] * rand(-1.0..1.0)
+        buy_markup = markup[Currency.category(currency).to_sym][:buy_markup] + markup[Currency.category(currency).to_sym][:buy_spread] * rand(-1.0..1.0)
         buy_factor = 1 + (buy_markup / 100)
         buy = rate * buy_factor
         exchange.rates.create(source: 'test', currency: currency, buy: buy, sell: sell, last_update: Time.now, last_process: 'rates:generate')
@@ -46,6 +46,7 @@ namespace :rates do
 
     Chain.with_no_real_rates.find_each do |chain|
 
+#      puts chain.name
       unless chain.currency.present?
         Rails.logger.info "Chain #{chain.id.to_s} has no currency - no rates generated"
         next
@@ -61,15 +62,17 @@ namespace :rates do
 
       rates = currency_updatable.include?(chain.currency) ? current_rates[chain.currency.to_sym] : Currency.rates(chain.currency)[chain.currency.to_sym]
       markup = Currency.markup_policy(chain.exchanges.first.country)
+#      puts markup.inspect
 
       rates.each do |currency, rate|
 
         currency = currency.to_s
+#        puts currency
         next unless (currency_updatable.include? currency) && rate.present?
-        sell_markup = markup[:sell_markup] + markup[:sell_spread] * rand(-1.0..1.0)
+        sell_markup = markup[Currency.category(currency).to_sym][:sell_markup] + markup[Currency.category(currency).to_sym][:sell_spread] * rand(-1.0..1.0)
         sell_factor = 1 - (sell_markup / 100)
         sell = rate * sell_factor
-        buy_markup = markup[:buy_markup] + markup[:buy_spread] * rand(-1.0..1.0)
+        buy_markup = markup[Currency.category(currency).to_sym][:buy_markup] + markup[Currency.category(currency).to_sym][:buy_spread] * rand(-1.0..1.0)
         buy_factor = 1 + (buy_markup / 100)
         buy = rate * buy_factor
         chain.rates.create(source: 'test', currency: currency, buy: buy, sell: sell, last_update: Time.now, last_process: 'rates:generate')

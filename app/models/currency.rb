@@ -7,6 +7,14 @@ class Currency
   #     -  Whenever such rates should be presented
 
 
+  def self.category(currency)
+    ['USD', 'GBP', 'EUR'].include?(currency) ? 'major' : 'exotic'
+  end
+
+  def self.exotic?(currency)
+    Currency.category(currency) == 'exotic'
+  end
+
   def self.list(priority=10)
     unless @currency_list and @priority == priority
       @currency_list = []
@@ -30,24 +38,48 @@ class Currency
     {
         ISR:
             {
-                sell_markup:  2,
-                buy_markup:   2,
-                sell_spread:  1,
-                buy_spread:   1
+                major: {
+                    sell_markup:  2,
+                    buy_markup:   2,
+                    sell_spread:  1,
+                    buy_spread:   1
+                },
+                exotic: {
+                    sell_markup:  6,
+                    buy_markup:   6,
+                    sell_spread:  1.5,
+                    buy_spread:   1.5
+                }
             },
         UK:
             {
-                sell_markup:  4,
-                buy_markup:   4,
-                sell_spread:  1.5,
-                buy_spread:   1.5
+                major: {
+                    sell_markup:  4,
+                    buy_markup:   4,
+                    sell_spread:  1.5,
+                    buy_spread:   1.5
+                },
+                exotic: {
+                    sell_markup:  4,
+                    buy_markup:   4,
+                    sell_spread:  1.5,
+                    buy_spread:   1.5
+                }
             },
          default:
             {
-                sell_markup:  3.5,
-                buy_markup:   3.5,
-                sell_spread:  1.5,
-                buy_spread:   1.5
+                major: {
+                    sell_markup:  3.5,
+                    buy_markup:   3.5,
+                    sell_spread:  1.5,
+                    buy_spread:   1.5
+                },
+                exotic: {
+                    sell_markup:  3.5,
+                    buy_markup:   3.5,
+                    sell_spread:  1.5,
+                    buy_spread:   1.5
+                }
             }
     }
 
