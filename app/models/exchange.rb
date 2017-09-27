@@ -490,14 +490,14 @@ class Exchange < ActiveRecord::Base
       rated_rates = find_rate(rated_currency, trans, search_id)
       if rated_rates[:error]
         result[:error] = rated_rates[:error]
-        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result)
+        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result, expires_in: 0.5.hour)
         return result
       end
 
       base_rates = find_rate(base_currency, trans, search_id)
       if base_rates[:error]
         result[:error] = base_rates[:error]
-        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result)
+        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result, expires_in: 0.5.hour)
         return result
       end
 
@@ -547,7 +547,7 @@ class Exchange < ActiveRecord::Base
         result[:buy]  = 1
         result[:sell] = 1
         result[:rate_update] = Time.zone.now
-        Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+        Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
         return result
       end
 
@@ -559,7 +559,7 @@ class Exchange < ActiveRecord::Base
         if chain_id.blank?
           result[:error] = "#{self.name} (#{self.id}) - Rates policy is chain but no chain was defined"
           Error.report(message: result[:error], text: "", search_id: search_id)
-          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
           return result
         end
         chain = self.chain
@@ -589,19 +589,19 @@ class Exchange < ActiveRecord::Base
           result[:method]   = 'reference'
           result[:rate_update] ||= rec.updated_at
           result[:source] ||= rec.source
-          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
           return result
         end
 
         if (!rec.buy || rec.buy == 0) and (!rec.sell || rec.sell == 0)
           result[:error] = "#{self.name} (#{self.id}) - No buy and sell rates for currency: #{currency}"
           Error.report(message: result[:error], text: "", search_id: search_id)
-          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
           return result
         elsif rec.absolute? and (Date.today - rec.updated_at.to_date).to_i > 1
           result[:error] = "#{self.name} (#{self.id}) - Stale rates for currency: #{rec.currency}"
           Error.report(message: result[:error], text: "", search_id: search_id)
-          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
           return result
         end
 
@@ -617,7 +617,7 @@ class Exchange < ActiveRecord::Base
       else
         result[:error] = "#{self.name} (#{self.id}) - Neither buy nor sell rates for currency: #{currency}"
         Error.report(message: result[:error], text: "", search_id: search_id)
-        Rails.cache.write("#{self.id}-#{currency}-#{trans}", result)
+        Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
         return result
       end
 

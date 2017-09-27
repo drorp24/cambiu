@@ -6,7 +6,7 @@ module ActiveSupport
 
       # silences "Cache read ..." etc debug lines for assets, but allows all others
       def log(operation, key, options=nil)
-        return if options.key?(:expires_in)
+        return if options && options.key?(:expires_in)
       end
 
     end
