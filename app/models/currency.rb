@@ -30,7 +30,7 @@ class Currency
 
 
   def self.inverse?(iso)
-    ['ILS', 'ZAR', 'HUF', 'CZK','PHP', 'JPY', 'RON', 'SGD', 'MXN'].include? iso
+    ['ILS', 'ZAR', 'HUF', 'CZK','PHP', 'JPY', 'RON', 'SGD', 'MXN', 'USD', ].include? iso
   end
 
   def self.markup
