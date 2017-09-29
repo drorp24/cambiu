@@ -143,7 +143,6 @@ var exchangeHash = {};
 var pageNum;
 var resultsPerPage = 5;
 
-var cardXoffset;
 var findUserLocation;
 var local = {};
 var calculated = null;
@@ -726,17 +725,6 @@ $(document).ready(function() {
 
     }
 
-    var bodyWidth = $('body').width();
-    if (bodyWidth > 650 && bodyWidth < 1024) {  // Follows CSS media queries. Change if needed
-        bodyWidth *=  0.45;
-    }  else
-    if (bodyWidth > 1024) {
-        bodyWidth *= 0.27;
-    }
-    var cardWidth = bodyWidth / slidesPerView - 2.3;
-    var offset = (bodyWidth - cardWidth) / -2;
-    cardXoffset = String(offset) + 'px';
-    console.log('cardXoffset: ', cardXoffset);
 
     $('#input_starttime').pickatime({
         twelvehour: true
