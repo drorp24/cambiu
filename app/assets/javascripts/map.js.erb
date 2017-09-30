@@ -510,20 +510,30 @@
   };
 
 
-   // Put here any code that must run after gm finished loading, but that doesn't require user's location to be found
-   // Most of my 'google.maps.x' code does await location to be found, which finishes long after gm loads, therefore doesn't need to be included here
-   // The typical example Google put here is the initMap, but that too needs to await user's location to be found hence is not included here either
-   gmLoaded = function() {
+     // Put here any code that depends on gm finishing loading, but that doesn't require user's location to be found (the latter will be include in doStuffThatRequiresLocation)
+     // Most of my 'google.maps.x' code does await location to be found, os is included in doStuffThatRequiresLocation
+     // The typical example Google put here is the initMap, but that too needs to await user's location to be found hence is not included here either
+     gmLoaded = function() {
 
-     // Turn location fields into google searchBox's
-     $('input[data-field=location]').each(function() {
-       input = $(this).get(0);
-       searchBox = new google.maps.places.SearchBox(input, {
-         types: ['regions']
+
+       console.log('gmLoaded (maps.googleapis.com callback): map code loaded');
+       console.log('Only now can google.map code be run, such as in location.js and map.js.erb');
+
+// externally resolve the gmPromise, releasing doSuffThatRequiresLocation which calls google.maps api's
+       gmPromiseResolve();
+
+// Turn location fields into google searchBox's
+       $('input[data-field=location]').each(function() {
+         input = $(this).get(0);
+         searchBox = new google.maps.places.SearchBox(input, {
+           types: ['regions']
+         });
+         searchbox_addListener(searchBox);
        });
-       searchbox_addListener(searchBox);
-     });
 
-   };
+     };
+
+
+
 
 
