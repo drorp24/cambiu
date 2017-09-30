@@ -21,7 +21,8 @@ class ApplicationController < ActionController::Base
 #  before_action :detect_browser
 
   def set_release
-    @release = '0.9.8'
+    # Important: advance release for *any* deployment to www, or else the old JS/HTML/CSS will be served!
+    @release = '0.9.8.1'
     @release_date = Date.new(2016, 1, 1)
   end
 
