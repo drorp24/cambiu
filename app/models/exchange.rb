@@ -298,7 +298,7 @@ class Exchange < ActiveRecord::Base
 
   def self.bad(country)
 
-    Rails.cache.fetch("bad_exchange-#{country}", expires_in: 1.month) do
+#    Rails.cache.fetch("bad_exchange-#{country}", expires_in: 1.month) do
 
       if bad_exchange = self.bank.where(country: country).first
         result = bad_exchange
@@ -309,7 +309,7 @@ class Exchange < ActiveRecord::Base
 
       result
 
-    end
+ #   end
   end
 
   def self.interbank
@@ -318,9 +318,9 @@ class Exchange < ActiveRecord::Base
 
   def self.bad_rate(country, rated_currency, base_currency, trans, pay_currency, search_id = nil)
 
-    Rails.cache.fetch("bad_rate-#{country}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
+#    Rails.cache.fetch("bad_rate-#{country}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
       Exchange.bad(country).rate(rated_currency, base_currency, trans, pay_currency, search_id)
-    end
+#    end
 
   end
 
@@ -466,9 +466,9 @@ class Exchange < ActiveRecord::Base
   # TODO: Important: This is where the cross-rates will take effect. 'quote' method would not be affected
   def rate(rated_currency, base_currency, trans, pay_currency, search_id = nil)
 
-    Rails.cache.fetch("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
+#    Rails.cache.fetch("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
 
-      puts "Not cached yet: inside rate(#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency})" unless Rails.env.production?
+#      puts "Not cached yet: inside rate(#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency})" unless Rails.env.production?
 
       result = {
           rated_currency: rated_currency,
@@ -490,14 +490,14 @@ class Exchange < ActiveRecord::Base
       rated_rates = find_rate(rated_currency, trans, search_id)
       if rated_rates[:error]
         result[:error] = rated_rates[:error]
-        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result, expires_in: 0.5.hour)
+#        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result, expires_in: 0.5.hour)
         return result
       end
 
       base_rates = find_rate(base_currency, trans, search_id)
       if base_rates[:error]
         result[:error] = base_rates[:error]
-        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result, expires_in: 0.5.hour)
+#        Rails.cache.write("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", result, expires_in: 0.5.hour)
         return result
       end
 
@@ -519,7 +519,7 @@ class Exchange < ActiveRecord::Base
 
       result
 
-    end
+#    end
 
   end
 
@@ -530,9 +530,9 @@ class Exchange < ActiveRecord::Base
     puts Rails.cache.read("#{self.id}-#{currency}-#{trans}").to_s
 =end
 
-    Rails.cache.fetch("#{self.id}-#{currency}-#{trans}", expires_in: 0.5.hour) do
+#    Rails.cache.fetch("#{self.id}-#{currency}-#{trans}", expires_in: 0.5.hour) do
 
-      puts "Not cached yet: inside find_rate(#{self.id}-#{currency}-#{trans})" unless Rails.env.production?
+#      puts "Not cached yet: inside find_rate(#{self.id}-#{currency}-#{trans})" unless Rails.env.production?
 
       result = {
           buy: nil,
@@ -547,7 +547,7 @@ class Exchange < ActiveRecord::Base
         result[:buy]  = 1
         result[:sell] = 1
         result[:rate_update] = Time.zone.now
-        Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
+#        Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
         return result
       end
 
@@ -559,7 +559,7 @@ class Exchange < ActiveRecord::Base
         if chain_id.blank?
           result[:error] = "#{self.name} (#{self.id}) - Rates policy is chain but no chain was defined"
           Error.report(message: result[:error], text: "", search_id: search_id)
-          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
+#          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
           return result
         end
         chain = self.chain
@@ -589,19 +589,19 @@ class Exchange < ActiveRecord::Base
           result[:method]   = 'reference'
           result[:rate_update] ||= rec.updated_at
           result[:source] ||= rec.source
-          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
+#          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
           return result
         end
 
         if (!rec.buy || rec.buy == 0) and (!rec.sell || rec.sell == 0)
           result[:error] = "#{self.name} (#{self.id}) - No buy and sell rates for currency: #{currency}"
           Error.report(message: result[:error], text: "", search_id: search_id)
-          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
+#          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
           return result
         elsif rec.absolute? and (Date.today - rec.updated_at.to_date).to_i > 1
           result[:error] = "#{self.name} (#{self.id}) - Stale rates for currency: #{rec.currency}"
           Error.report(message: result[:error], text: "", search_id: search_id)
-          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
+#          Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
           return result
         end
 
@@ -617,13 +617,13 @@ class Exchange < ActiveRecord::Base
       else
         result[:error] = "#{self.name} (#{self.id}) - Neither buy nor sell rates for currency: #{currency}"
         Error.report(message: result[:error], text: "", search_id: search_id)
-        Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
+#        Rails.cache.write("#{self.id}-#{currency}-#{trans}", result, expires_in: 0.5.hour)
         return result
       end
 
       result
 
-    end
+#    end
 
   end
 
