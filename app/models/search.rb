@@ -291,7 +291,7 @@ class Search < ActiveRecord::Base
   def geoJsonize(exchanges_offers, error, message = nil)
 
     features = []
-    exchanges_offers.each do |exchange_offer|
+    exchanges_offers.first(10).each do |exchange_offer|
       features << to_geo(exchange_offer)
     end
     return {search: id, error: error, message: message, exchanges: {type: 'FeatureCollection', features: features}}.to_json
