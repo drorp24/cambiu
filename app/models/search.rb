@@ -41,7 +41,7 @@ class Search < ActiveRecord::Base
           location_lat.blank? or location_lng.blank? or
           calculated.blank? or trans.blank?
 
-
+#      Exchange.cache_clear
 
       if location.present?
         Rails.cache.fetch("#{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id || 'no_exchange'}", expires_in: 0.5.hour) do

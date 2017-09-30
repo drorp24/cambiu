@@ -563,6 +563,7 @@ $(document).ready(function() {
     revertToPickupCash = function() {
         setServiceTypeTo('pickup');
         setPaymentMethodTo('cash');
+        fetchAndPopulateLocaloffers();
     };
 
 
