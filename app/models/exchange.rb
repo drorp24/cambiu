@@ -298,7 +298,7 @@ class Exchange < ActiveRecord::Base
 
   def self.bad(country)
 
-#    Rails.cache.fetch("bad_exchange-#{country}", expires_in: 1.month) do
+    Rails.cache.fetch("bad_exchange-#{country}", expires_in: 1.month) do
 
       if bad_exchange = self.bank.where(country: country).first
         result = bad_exchange
@@ -309,7 +309,7 @@ class Exchange < ActiveRecord::Base
 
       result
 
- #   end
+    end
   end
 
   def self.interbank
@@ -318,9 +318,9 @@ class Exchange < ActiveRecord::Base
 
   def self.bad_rate(country, rated_currency, base_currency, trans, pay_currency, search_id = nil)
 
-#    Rails.cache.fetch("bad_rate-#{country}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
+    Rails.cache.fetch("bad_rate-#{country}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
       Exchange.bad(country).rate(rated_currency, base_currency, trans, pay_currency, search_id)
-#    end
+    end
 
   end
 
