@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   def set_release
     # Important: advance release for *any* deployment to www, or else the old JS/HTML/CSS will be served!
-    @release = '0.9.8.1'
+    @release = '0.9.8.2'
     @release_date = Date.new(2016, 1, 1)
   end
 
