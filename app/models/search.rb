@@ -1,4 +1,8 @@
+require 'new_relic/agent/method_tracer'
+
 class Search < ActiveRecord::Base
+
+  include ::NewRelic::Agent::MethodTracer
 
   belongs_to :user
   belongs_to :exchange
@@ -44,12 +48,9 @@ class Search < ActiveRecord::Base
 #      Exchange.cache_clear
 
       if location.present?
-        Rails.cache.fetch("#{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id || 'no_exchange'}", expires_in: 0.5.hour) do
-          puts "Not cached yet: inside exchanges for #{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id || 'no_exchange'}" unless Rails.env.production?
-          exchange_offers
-        end
+        cached_offers
       else
-        exchange_offers
+        uncached_offers
       end
 
     rescue => e
@@ -68,7 +69,16 @@ class Search < ActiveRecord::Base
 
   end
 
-  def exchange_offers
+  def cached_offers
+    Rails.cache.fetch("#{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id || 'no_exchange'}", expires_in: 0.5.hour) do
+      puts "Not cached yet: inside exchanges for #{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{exchange_id || 'no_exchange'}"
+      uncached_offers
+    end
+  end
+
+  add_method_tracer :cached_offers, 'Custom/cached_offers'
+
+  def uncached_offers
 
     error             = nil
     message           = nil
@@ -184,6 +194,7 @@ class Search < ActiveRecord::Base
 
   end
 
+  add_method_tracer :uncached_offers, 'Custom/uncached_offers'
 
   def make_offers(exchanges, center, pay, buy, trans, calculated, delivery, credit)
 
