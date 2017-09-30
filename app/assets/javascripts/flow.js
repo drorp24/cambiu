@@ -12,10 +12,10 @@
 
 $(document).ready(function() {  // TODO: only populate Params needs to wait to document. For the other (userLocation) it's just unneeded latency
 
-    console.log('flow started');
+    console.log('flow');
 
     populateParams();
-    Promise.all([getUserLocation(), gmPromise()])// doStuffThatRequiresLocation is dependent on gm to load too as it includes a lot of calls to  google.maps.
+    getUserLocation()
         .then(doStuffThatRequiresLocation)
         .catch(showError);
     setProperPage();
@@ -25,9 +25,6 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
 });
 
 function doStuffThatRequiresLocation(location) {
-
-    console.log(">>>>>>");
-    console.log(location[0]);
 
     setLocale(location);
     populateLocalCurrency();

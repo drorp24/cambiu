@@ -1,16 +1,1 @@
-<script>
-
-  var gmPromiseResolve;
-
-
-
-  // gmPromise, a promise to load gm code (a dependency for all google.map code appearing in flow.js), will resolve externally in the gmLoaded callback
-  var gmPromise = new Promise(function(resolve, reject){
-    gmPromiseResolve = resolve;
-  });
-
-
-
-
-</script>
 <script async src="https://maps.googleapis.com/maps/api/js?callback=gmLoaded&language=<%= @locale %>&key=AIzaSyBjqKHd8skkCMWYd_uG7QMEmCGunJ2Q3Us&libraries=geometry,places"></script>
