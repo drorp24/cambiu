@@ -1,8 +1,12 @@
 # encoding: UTF-8
 
 require 'tod'
+require 'new_relic/agent/method_tracer'
 
 class Exchange < ActiveRecord::Base
+
+  include ::NewRelic::Agent::MethodTracer
+
   has_many :searches
   has_many :orders
 #  has_many :rates, through: :chain, as: :ratable
@@ -312,6 +316,7 @@ class Exchange < ActiveRecord::Base
     end
   end
 
+
   def self.interbank
     @inter ||= self.inter.first
   end
@@ -324,7 +329,15 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  # quote and calculate gain, focusing on exchange rates and ignoring added charges
+  class << self
+    include ::NewRelic::Agent::MethodTracer
+
+    add_method_tracer :bad, 'Custom/bad'
+    add_method_tracer :bad_rate, 'Custom/bad_rate'
+  end
+
+
+# quote and calculate gain, focusing on exchange rates and ignoring added charges
   def quote(params)
 
     result = {
@@ -463,7 +476,10 @@ class Exchange < ActiveRecord::Base
 
   end
 
-  # TODO: Important: This is where the cross-rates will take effect. 'quote' method would not be affected
+  add_method_tracer :quote, 'Custom/quote'
+
+
+# TODO: Important: This is where the cross-rates will take effect. 'quote' method would not be affected
   def rate(rated_currency, base_currency, trans, pay_currency, search_id = nil)
 
 #    Rails.cache.fetch("#{self.id}-#{rated_currency}-#{base_currency}-#{trans}-#{pay_currency}", expires_in: 0.5.hour) do
@@ -522,6 +538,9 @@ class Exchange < ActiveRecord::Base
 #    end
 
   end
+
+  add_method_tracer :rate, 'Custom/rate'
+
 
   def find_rate(currency, trans, search_id)
 
@@ -626,6 +645,9 @@ class Exchange < ActiveRecord::Base
 #    end
 
   end
+
+  add_method_tracer :find_rate, 'Custom/find_rate'
+
 
   def self.edit_base_rate(rates, trans)
 #working    1.to_money(rates[:base_currency]).format(:disambiguate => true) + ' = ' + rates[trans.to_sym].to_money(rates[:rated_currency]).format(:disambiguate => true)
