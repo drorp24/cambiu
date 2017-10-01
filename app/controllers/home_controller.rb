@@ -9,7 +9,7 @@ class HomeController < ApplicationController
   end
 
   def app
-#    expires_in 1.day, :public => true
+    expires_in 1.day, :public => true
     render :index
   end
 

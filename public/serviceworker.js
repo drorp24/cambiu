@@ -8,7 +8,7 @@
 console.log('[Serviceworker] here');
 
 //var version;
-var version = '0.9.8';
+var version = '0.9.8.5';
 
 function onInstall(event) {
     console.log('[Serviceworker]', version, "Installing: populating cache with files...");
