@@ -1,14 +1,15 @@
 class HomeController < ApplicationController
 
-  caches_action :index, cache_path: :action_cache_key,
+  caches_action :app, cache_path: :action_cache_key,
                 unless: -> {Rails.env.development?}           # quicker first rendering (pick-up ready page from cache) - Dramatic effect. Must be skipped in development
-  before_action :set_http_cache_headers, only: [:index]       # quicker next rendering  (if challenged by browser with "If...", it quickly responds with 304 rather than generate a page)
+#  before_action :set_http_cache_headers, only: [:app]       # quicker next rendering  (if challenged by browser with "If...", it quickly responds with 304 rather than generate a page)
 
   def index
     redirect_to ENV['LANDING_URL'] || 'http://join.cambiu.com' #unless Rails.env.development?
   end
 
   def app
+#    expires_in 1.day, :public => true
     render :index
   end
 
