@@ -122,7 +122,8 @@ refresh = function(pane, $pane, exchange) {
         cards_refreshed = true; // do once only
     }
 
-    if (pane == 'list') {
+    if (pane == 'isearch') {
+        swiperI.update(false);
     }
 
 

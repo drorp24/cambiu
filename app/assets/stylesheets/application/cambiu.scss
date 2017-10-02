@@ -14,6 +14,7 @@
 // Variables
 
 $formBlue: #4285F4;
+$formBluePale: rgba(66, 133, 244, 0.5);
 $minicard_height: 33vw;
 $minicard_img_height: 27vw;
 $offer-padding: 5vw;
@@ -216,6 +217,16 @@ p {
   }
   @include desktop {
     margin-left: $size * $paneRatio;
+  }
+}
+
+@mixin vmargin($size) {
+  margin: $size;
+  @include iframe {
+    margin: $size * $iframePaneRatio;
+  }
+  @include desktop {
+    margin: $size * $paneRatio;
   }
 }
 
@@ -889,6 +900,88 @@ body#cambiu {
 
   }
   */
+
+
+  .iform {
+    .swiper-container-vertical>.swiper-pagination-bullets {
+      position: absolute;
+      z-index: 4;
+      .swiper-pagination-bullet {
+        margin: 2vh 1vw;
+        &.swiper-pagination-bullet-active {
+          background-color: $formBlue;
+        }
+      }
+    }
+  }
+
+  .questions {
+    height: 80vh;
+  }
+
+  .question {
+    border-bottom: 3px solid #ccc;
+    &.swiper-slide-active {
+    font-weight: bold;
+      background: white;
+    }
+  }
+  .swiper-container-i {
+    background: #ccc;
+    width: 100%;
+    border: 1px solid #eee;
+  }
+
+  .swiper-wrapper-i {
+    background: #eee;
+  }
+
+  .iformsprogressbar {
+    height: 10vh;
+    .bestOffer {
+      height: 100%;
+      @include vmargin-left(5vw);
+      @include vmargin-right(3vw);
+      color: #000;
+      font-weight: 300;
+      @include vfont-size(6.5vw);
+      & > div {
+        @include vmargin-left(1vw);
+      }
+      .bestOffer_save {
+        font-weight: 900;
+      }
+    }
+    .navigation {
+      height: 100%;
+      @include vfont-size(13vw);
+      @include vmargin-right(5vw);
+      .prev, .next {
+        background: $formBlue;
+        color: #fff;
+        @include vmargin(2vw);
+        border-radius: 3px;
+        box-shadow: 0 1px 10px rgba(0,0,0,0.5);
+      }
+      .next {
+        @include vmargin-right(-1vw);
+      }
+      &.beginning {
+        .prev {
+          background: $formBluePale;
+        }
+      }
+      &.end {
+        .next {
+          background: $formBluePale;
+        }
+      }
+    }
+  }
+
+
+
+
 
 
   .icon.edit.right_icon {

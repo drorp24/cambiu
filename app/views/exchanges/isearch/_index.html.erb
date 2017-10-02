@@ -1,0 +1,24 @@
+<div class="pane iform" data-pane="isearch">
+
+  <%= render partial: 'navbar', locals: {left_pane: 'none', left_icon: '', center: 'search_params', right_pane: 'none', right_icon: ''} %>
+
+  <div class="questions swiper-container swiper-container-i">
+    <div class="swiper-wrapper swiper-wrapper-i">
+      <!-- interactive questions go here -->
+
+      <div class="swiper-slide question flex_center">Question 1</div>
+      <div class="swiper-slide question flex_center">Question 2</div>
+      <div class="swiper-slide question flex_center">Question 3</div>
+      <div class="swiper-slide question flex_center">Question 4</div>
+      <div class="swiper-slide question flex_center">Question 5</div>
+      <div class="swiper-slide question flex_center">Question 6</div>
+      <div class="swiper-slide question flex_center">Question 7</div>
+
+
+    </div>
+    <div class="swiper-pagination-i flex_center column"></div>
+  </div>
+
+  <%= render 'exchanges/templates/iformsprogressbar' %>
+
+</div>

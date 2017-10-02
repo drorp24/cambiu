@@ -14,6 +14,17 @@ initSwipers = function() {
         pagination: '.swiper-pagination-intro'
     });
 
+    swiperI = new Swiper ('.swiper-container-i', {
+        direction: 'vertical',
+        pagination: '.swiper-pagination-i',
+        paginationClickable: true,
+        slidesPerView: 1,
+        onSlideChangeEnd: swiperISlideChange
+
+    });
+
+
+
 /*
     swiperSearch = new Swiper ('.swiper-container-search', {
         centeredSlides: true,
@@ -27,6 +38,20 @@ initSwipers = function() {
 
 
 };
+
+swiperISlideChange = function() {
+    if (swiperI.isBeginning) {
+        $('.iformsprogressbar .navigation').addClass('beginning');
+    } else
+    if (swiperI.isEnd) {
+        $('.iformsprogressbar .navigation').addClass('end');
+    } else {
+        $('.iformsprogressbar .navigation').removeClass('beginning end');
+    }
+
+
+};
+
 
 
 slideChange = function() {

@@ -602,7 +602,15 @@ $(document).ready(function() {
         let field = $this.attr('data-field');
         let value = $this.val();
         report('Set', field, null, value);
-    })
+    });
 
+
+    $('.iformsprogressbar .navigation .next').on('click tap', function() {
+        swiperI.slideNext();
+    });
+
+    $('.iformsprogressbar .navigation .prev').on('click tap', function() {
+        swiperI.slidePrev();
+    })
 
 });
