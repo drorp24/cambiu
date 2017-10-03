@@ -220,6 +220,26 @@ p {
   }
 }
 
+@mixin vpadding-top($size) {
+  padding-top: $size;
+  @include iframe {
+    padding-top: $size * $iframePaneRatio;
+  }
+  @include desktop {
+    padding-top: $size * $paneRatio;
+  }
+}
+
+@mixin vpadding-bottom($size) {
+  padding-bottom: $size;
+  @include iframe {
+    padding-bottom: $size * $iframePaneRatio;
+  }
+  @include desktop {
+    padding-bottom: $size * $paneRatio;
+  }
+}
+
 @mixin vmargin($size) {
   margin: $size;
   @include iframe {
@@ -903,8 +923,35 @@ body#cambiu {
 
 
   .iform {
+    .swiper-slide {
+      @include vpadding-right(10vw);
+      @include vpadding-left(10vw);
+      border-bottom: 2px solid #ccc;
+      &.swiper-slide-active {
+        background: white;
+      }
+      .ok.btn {
+        position: absolute;
+        bottom: 8%;
+        border-radius: 3px;
+        font-weight: 700;
+        @include vpadding-top(1vw);
+        @include vpadding-bottom(1vw);
+        @include vpadding-left(3vw);
+        @include vpadding-right(3vw);
+        .ok_text {
+          @include vfont-size(4vw);
+        }
+        .ok_icon {
+          @include vfont-size(7vw);
+          @include vmargin-left(2vw);
+        }
+      }
+    }
     .swiper-container-vertical>.swiper-pagination-bullets {
       position: absolute;
+      top: 96%;
+      width: 100%;
       z-index: 4;
       .swiper-pagination-bullet {
         margin: 2vh 1vw;
@@ -920,12 +967,17 @@ body#cambiu {
   }
 
   .question {
-    border-bottom: 3px solid #ccc;
-    &.swiper-slide-active {
-    font-weight: bold;
-      background: white;
-    }
+    @include vfont-size(6vw);
+    font-weight: 300;
+    color: #000;
   }
+
+  .hint {
+    @include vfont-size(4vw);
+    font-weight: 300;
+    margin-bottom: 15vh;
+  }
+
   .swiper-container-i {
     background: #ccc;
     width: 100%;
@@ -934,6 +986,28 @@ body#cambiu {
 
   .swiper-wrapper-i {
     background: #eee;
+  }
+
+  .isearch_icon img {
+    width: 128px;
+  }
+
+  .binary.alternative {
+    border: 1px solid #ccc;
+    width: 100%;
+    height: 38%;
+    border-radius: 3px;
+    background: rgba(0,0,0,0.015);
+    &:nth-of-type(1) {
+      margin-top: 10%;
+    }
+    &:nth-of-type(2) {
+      margin-bottom: 10%;
+    }
+    .text {
+      @include vfont-size(5vw);
+      color: #000;
+    }
   }
 
   .iformsprogressbar {

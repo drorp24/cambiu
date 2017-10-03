@@ -6,17 +6,125 @@
     <div class="swiper-wrapper swiper-wrapper-i">
       <!-- interactive questions go here -->
 
-      <div class="swiper-slide question flex_center">Question 1</div>
-      <div class="swiper-slide question flex_center">Question 2</div>
-      <div class="swiper-slide question flex_center">Question 3</div>
-      <div class="swiper-slide question flex_center">Question 4</div>
-      <div class="swiper-slide question flex_center">Question 5</div>
-      <div class="swiper-slide question flex_center">Question 6</div>
-      <div class="swiper-slide question flex_center">Question 7</div>
+
+
+        <div class="swiper-slide flex_center column">
+
+          <div class="isearch_icon"><%= image_tag 'money.png' %></div>
+          <div class="question">What do you need?</div>
+          <div class="hint">How much, in which currency</div>
+
+          <div class="wide search_line buy flex_center">
+
+            <div class="md-form buy_currency select currency_fields">
+              <select id="buy_currency" data-model="search" data-field="buy_currency" data-symboltarget="buy_amount" name="search[buy_currency]"
+                      class="currency_select select optional text-center mdb-select">
+                <option data-symbol="$ "  value="USD">USD</option>
+                <option data-symbol="€ "  value="EUR">EUR</option>
+                <option data-symbol="￡ " value="GBP">GBP</option>
+                <option data-symbol="$ "  value="CAD">CAD</option>
+                <option data-symbol="$ "  value="AUD">AUD</option>
+                <option data-symbol="$ " value="HKD">HKD</option>
+                <option data-symbol="¥ " value="CNY">CNY</option>
+                <option data-symbol="kr " value="NOK">NOK</option>
+                <option data-symbol="￥ " value="JPY">JPY</option>
+                <option data-symbol="Kč " value="CZK">CZK</option>
+                <option data-symbol="Lei " value="RON">RON</option>
+                <option data-symbol="zł " value="PLN">PLN</option>
+                <option data-symbol="CHF " value="CHF">CHF</option>
+                <option data-symbol="฿ " value="THB">THB</option>
+                <option data-symbol="₱ " value="PHP">PHP</option>
+                <option data-symbol="₪ " value="ILS">ILS</option>
+                <option data-symbol="₹ " value="INR">INR</option>
+              </select>
+              <label for="buy_currency"><%= t 'search.get' %></label>
+            </div>
+
+            <div class="md-form buy_amount amount_fields">
+              <input type="tel" pattern="\d*" id="buy_amount"
+                     data-model="search" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control text-right amount_fields">
+              <label for="buy_amount" class="control-label text-right"  data-t-amount="<%= t 'search.amount' %>" data-t-best="<%= t 'search.best' %>"></label>
+              <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
+            </div>
+
+          </div>
+
+          <button class="ok blue primary btn waves-effect flex_center">
+            <span class="ok_text">OK</span>
+            <span class="ok_icon"><i class="material-icons">done</i></span>
+          </button>
+
+
+        </div>
+
+
+      <div class="swiper-slide flex_center column">
+
+        <div class="isearch_icon"><%= image_tag 'wallet.png' %></div>
+        <div class="question">Paying with?</div>
+        <div class="hint">Your own currency</div>
+
+        <div class="wide search_line pay flex_center">
+
+          <div class="md-form pay_currency select currency_fields">
+            <select id="pay_currency" data-model="search" data-field="pay_currency" data-symboltarget="pay_amount" name="search[pay_currency]"
+                    class="currency_select select optional text-center mdb-select">
+              <option data-symbol="$ "  value="USD">USD</option>
+              <option data-symbol="€ "  value="EUR">EUR</option>
+              <option data-symbol="￡ " value="GBP">GBP</option>
+              <option data-symbol="$ "  value="CAD">CAD</option>
+              <option data-symbol="$ "  value="AUD">AUD</option>
+              <option data-symbol="$ " value="HKD">HKD</option>
+              <option data-symbol="¥ " value="CNY">CNY</option>
+              <option data-symbol="kr " value="NOK">NOK</option>
+              <option data-symbol="￥ " value="JPY">JPY</option>
+              <option data-symbol="Kč " value="CZK">CZK</option>
+              <option data-symbol="Lei " value="RON">RON</option>
+              <option data-symbol="zł " value="PLN">PLN</option>
+              <option data-symbol="CHF " value="CHF">CHF</option>
+              <option data-symbol="฿ " value="THB">THB</option>
+              <option data-symbol="₱ " value="PHP">PHP</option>
+              <option data-symbol="₪ " value="ILS">ILS</option>
+              <option data-symbol="₹ " value="INR">INR</option>
+            </select>
+            <label for="pay_currency"><%= t 'search.pay' %></label>
+          </div>
+
+          <div class="md-form pay_amount amount_fields">
+            <input type="tel" pattern="\d*" id="pay_amount"
+                   data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control text-right amount_fields">
+            <label for="pay_amount" class="control-label text-right" data-t-amount="<%= t 'search.amount' %>" data-t-best="<%= t 'search.best' %>"></label>
+            <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
+          </div>
+
+        </div>
+
+        </div>
+
+      <div class="swiper-slide flex_around column">
+
+        <div class="binary alternative flex_center column">
+          <div class="isearch_icon"><%= image_tag 'delivery.png' %></div>
+          <div class="text">Deliver it</div>
+        </div>
+
+        <div class="binary alternative flex_center column">
+          <div class="isearch_icon"><%= image_tag 'walk.png' %></div>
+          <div class="text">I'll pick it up myself</div>
+        </div>
+      </div>
+
+
+
+        <%= render 'exchanges/templates/question', question: 'Question 4' %>
+        <%= render 'exchanges/templates/question', question: 'Question 5' %>
+        <%= render 'exchanges/templates/question', question: 'Question 6' %>
+        <%= render 'exchanges/templates/question', question: 'Question 7' %>
+        <%= render 'exchanges/templates/question', question: 'Question 8' %>
 
 
     </div>
-    <div class="swiper-pagination-i flex_center column"></div>
+    <div class="swiper-pagination-i flex_center"></div>
   </div>
 
   <%= render 'exchanges/templates/iformsprogressbar' %>
