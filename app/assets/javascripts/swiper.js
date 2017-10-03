@@ -31,7 +31,7 @@ initSwipers = function() {
 
     });
 
-    
+
 };
 
 navigationArrows = function() {
@@ -46,7 +46,7 @@ navigationArrows = function() {
 };
 
 hashReport = function() {
-    var $current_slide = $('.swiper-wrapper-i .swiper-slide-active');
+    var $current_slide = $('.swiper-container-i .swiper-slide-active');
     if ($current_slide) {
         var hash = $current_slide.data('hash');
         if (hash) pageReport('/exchanges/isearch#' + hash);
@@ -96,3 +96,4 @@ disableSwiping = function() {
 enableSwiping = function() {
     $('.swiper-container-h').removeClass('swiper-no-swiping');
 };
+
