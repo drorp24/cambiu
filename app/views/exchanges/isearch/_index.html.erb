@@ -8,7 +8,7 @@
 
 
 
-        <div class="swiper-slide flex_center column">
+        <div class="swiper-slide flex_center column" data-hash="get">
 
           <div class="isearch_icon"><%= image_tag 'money.png' %></div>
           <div class="question">What do you need?</div>
@@ -58,7 +58,7 @@
         </div>
 
 
-      <div class="swiper-slide flex_center column">
+      <div class="swiper-slide flex_center column" data-hash="pay">
 
         <div class="isearch_icon"><%= image_tag 'wallet.png' %></div>
         <div class="question">Paying with?</div>
@@ -101,7 +101,7 @@
 
         </div>
 
-      <div class="swiper-slide flex_around column">
+      <div class="swiper-slide flex_around column" data-hash="service">
 
         <div class="binary alternative flex_center column">
           <div class="isearch_icon"><%= image_tag 'delivery.png' %></div>
@@ -109,14 +109,27 @@
         </div>
 
         <div class="binary alternative flex_center column">
-          <div class="isearch_icon"><%= image_tag 'walk.png' %></div>
+          <div class="isearch_icon"><%= image_tag 'pickup.png' %></div>
           <div class="text">I'll pick it up myself</div>
         </div>
       </div>
 
 
+      <div class="swiper-slide flex_around column" data-hash="travelMode">
 
-        <%= render 'exchanges/templates/question', question: 'Question 4' %>
+        <div class="binary alternative flex_center column">
+          <div class="isearch_icon"><%= image_tag 'walk.png' %></div>
+          <div class="text">I'll walk</div>
+        </div>
+
+        <div class="binary alternative flex_center column">
+          <div class="isearch_icon"><%= image_tag 'drive.png' %></div>
+          <div class="text">I'll drive</div>
+        </div>
+      </div>
+
+
+      <%= render 'exchanges/templates/question', question: 'Delivery page' %>
         <%= render 'exchanges/templates/question', question: 'Question 5' %>
         <%= render 'exchanges/templates/question', question: 'Question 6' %>
         <%= render 'exchanges/templates/question', question: 'Question 7' %>

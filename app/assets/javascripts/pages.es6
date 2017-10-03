@@ -21,8 +21,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     pane = determinePane(pane, exchange);
 
     // Declare a new page to GA and report a pageview
-    ga('set', 'page', url || make_url(page, id, pane));
-    ga('send', 'pageview');
+    pageReport(url || make_url(page, id, pane));
 
     var $page = $('.page[data-page=' + page + ']');
     var $pane = $('.pane[data-pane=' + active(pane) + ']');

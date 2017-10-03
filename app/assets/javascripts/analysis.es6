@@ -41,8 +41,12 @@ report = function(category, action, exchange, value) {
         var id = null;
     }
     ga('send', 'event', category, action, label, {id: id});
+};
 
-
+pageReport = function(url) {
+//    console.log('pageReport url: ' + url);
+    ga('set', 'page', url);
+    ga('send', 'pageview');
 };
 
 $('body').on('click tap', '.phone_icon', function() {

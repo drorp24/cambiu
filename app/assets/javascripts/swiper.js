@@ -19,27 +19,22 @@ initSwipers = function() {
         pagination: '.swiper-pagination-i',
         paginationClickable: true,
         slidesPerView: 1,
-        onSlideChangeEnd: swiperISlideChange
+        hashnav: true,
+        hashnavWatchState: true
 
     });
 
+    swiperI.on('SlideChangeEnd', function() {
 
+        navigationArrows();
+        hashReport();
 
-/*
-    swiperSearch = new Swiper ('.swiper-container-search', {
-        centeredSlides: true,
-        slidesPerView: 1,
-        pagination: '.swiper-pagination-search'
     });
-*/
 
-    swiperTry = new Swiper ('.swiper-container-try', {
-     });
-
-
+    
 };
 
-swiperISlideChange = function() {
+navigationArrows = function() {
     if (swiperI.isBeginning) {
         $('.iformsprogressbar .navigation').addClass('beginning');
     } else
@@ -48,11 +43,15 @@ swiperISlideChange = function() {
     } else {
         $('.iformsprogressbar .navigation').removeClass('beginning end');
     }
-
-
 };
 
-
+hashReport = function() {
+    var $current_slide = $('.swiper-wrapper-i .swiper-slide-active');
+    if ($current_slide) {
+        var hash = $current_slide.data('hash');
+        if (hash) pageReport('/exchanges/isearch#' + hash);
+    }
+};
 
 slideChange = function() {
 
