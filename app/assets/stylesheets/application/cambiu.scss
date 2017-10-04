@@ -994,7 +994,15 @@ body#cambiu {
       }
     }
 
-
+    input {
+      text-align: right;
+    }
+    .caret {
+      display: none;
+    }
+    .calculated_icon {
+      left: 0;
+    }
 
 
   }

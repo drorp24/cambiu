@@ -621,4 +621,11 @@ $(document).ready(function() {
         swiperI.slideTo(index);
     });
 
+
+
+    setTimeout(function() {
+        $('input.select-dropdown').css('text-align', 'end');
+    }, 2000);
+
+
 });

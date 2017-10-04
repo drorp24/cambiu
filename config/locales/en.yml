@@ -38,6 +38,7 @@ en:
     heading1: 'What would you like to order'
     get: 'Get'
     amount: 'Amount'
+    currency: 'Currency'
     pay: 'Pay'
     best: 'Best offer'
     bad: 'High-street price'
