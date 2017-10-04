@@ -16,22 +16,26 @@ initSwipers = function() {
 
     swiperI = new Swiper ('.swiper-container-i', {
         direction: 'vertical',
-        pagination: '.swiper-pagination-i',
-        paginationClickable: true,
         slidesPerView: 1,
         hashnav: true,
         hashnavWatchState: true
-
     });
 
     swiperI.on('SlideChangeEnd', function() {
 
+        progressBar();
         navigationArrows();
         hashReport();
 
     });
 
 
+};
+
+progressBar = function() {
+    var currIndex = swiperI.activeIndex;
+    var fraction = currIndex / 8;
+    $('.iformsprogressbar .iprogress .iprogressbar').css('transform', 'scaleX(' + fraction + ')');
 };
 
 navigationArrows = function() {
