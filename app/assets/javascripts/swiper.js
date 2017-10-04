@@ -21,6 +21,10 @@ initSwipers = function() {
         hashnavWatchState: true
     });
 
+    swiperI.on('slideNextStart', function() {
+//       swiperI.lockSwipeToNext()
+    });
+
     swiperI.on('SlideChangeEnd', function() {
 
         progressBar();

@@ -1,0 +1,28 @@
+<div class="swiper-slide flex_center column" data-hash="pay" data-index="1">
+
+  <div class="iform_icon"><%= image_tag 'wallet.png' %></div>
+  <div class="iform_title">Paying with?</div>
+  <div class="iform_subtitle">Your own currency</div>
+
+  <div class="iform_content">
+
+    <div class="md-form pay_currency select currency_fields">
+      <select id="pay_currency" data-model="search" data-field="pay_currency" data-symboltarget="pay_amount" name="search[pay_currency]"
+              class="currency_select select optional text-center mdb-select">
+        <%= render '/exchanges/isearch/currencyOptions' %>
+      </select>
+      <label for="pay_currency"><%= t 'search.pay' %></label>
+    </div>
+
+    <div class="md-form pay_amount amount_fields">
+      <input type="tel" pattern="\d*" id="pay_amount"
+             data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control text-right amount_fields">
+      <label for="pay_amount" class="control-label text-right" data-t-amount="<%= t 'search.amount' %>" data-t-best="<%= t 'search.best' %>"></label>
+      <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
+    </div>
+
+  </div>
+
+  <%= render '/exchanges/isearch/okButton' %>
+
+</div>

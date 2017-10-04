@@ -2,143 +2,128 @@
 
   <%= render partial: 'navbar', locals: {left_pane: 'none', left_icon: '', center: 'search_params', right_pane: 'none', right_icon: ''} %>
 
-  <div class="questions swiper-container swiper-container-i">
-    <div class="swiper-wrapper swiper-wrapper-i">
-      <!-- interactive questions go here -->
+  <form class="search_form">
 
+    <div class="questions swiper-container swiper-container-i">
 
+      <div class="swiper-wrapper swiper-wrapper-i">
 
-        <div class="swiper-slide flex_center column" data-hash="get" data-index="0">
-
-          <div class="isearch_icon"><%= image_tag 'money.png' %></div>
-          <div class="question">What do you need?</div>
-          <div class="hint">How much, in which currency</div>
-
-          <div class="wide search_line buy flex_center">
-
-            <div class="md-form buy_currency select currency_fields">
-              <select id="buy_currency" data-model="search" data-field="buy_currency" data-symboltarget="buy_amount" name="search[buy_currency]"
-                      class="currency_select select optional text-center mdb-select">
-                <option data-symbol="$ "  value="USD">USD</option>
-                <option data-symbol="€ "  value="EUR">EUR</option>
-                <option data-symbol="￡ " value="GBP">GBP</option>
-                <option data-symbol="$ "  value="CAD">CAD</option>
-                <option data-symbol="$ "  value="AUD">AUD</option>
-                <option data-symbol="$ " value="HKD">HKD</option>
-                <option data-symbol="¥ " value="CNY">CNY</option>
-                <option data-symbol="kr " value="NOK">NOK</option>
-                <option data-symbol="￥ " value="JPY">JPY</option>
-                <option data-symbol="Kč " value="CZK">CZK</option>
-                <option data-symbol="Lei " value="RON">RON</option>
-                <option data-symbol="zł " value="PLN">PLN</option>
-                <option data-symbol="CHF " value="CHF">CHF</option>
-                <option data-symbol="฿ " value="THB">THB</option>
-                <option data-symbol="₱ " value="PHP">PHP</option>
-                <option data-symbol="₪ " value="ILS">ILS</option>
-                <option data-symbol="₹ " value="INR">INR</option>
-              </select>
-              <label for="buy_currency"><%= t 'search.get' %></label>
-            </div>
-
-            <div class="md-form buy_amount amount_fields">
-              <input type="tel" pattern="\d*" id="buy_amount"
-                     data-model="search" data-field="buy_amount" data-autonumeric="true" data-symbolsource="buy_currency" name="search[buy_amount]" class="form-control text-right amount_fields">
-              <label for="buy_amount" class="control-label text-right"  data-t-amount="<%= t 'search.amount' %>" data-t-best="<%= t 'search.best' %>"></label>
-              <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
-            </div>
-
-          </div>
-
-          <button class="ok blue primary btn waves-effect flex_center">
-            <span class="ok_text">OK</span>
-            <span class="ok_icon"><i class="material-icons">done</i></span>
-          </button>
-
-
-        </div>
-
-
-      <div class="swiper-slide flex_center column" data-hash="pay" data-index="1">
-
-        <div class="isearch_icon"><%= image_tag 'wallet.png' %></div>
-        <div class="question">Paying with?</div>
-        <div class="hint">Your own currency</div>
-
-        <div class="wide search_line pay flex_center">
-
-          <div class="md-form pay_currency select currency_fields">
-            <select id="pay_currency" data-model="search" data-field="pay_currency" data-symboltarget="pay_amount" name="search[pay_currency]"
-                    class="currency_select select optional text-center mdb-select">
-              <option data-symbol="$ "  value="USD">USD</option>
-              <option data-symbol="€ "  value="EUR">EUR</option>
-              <option data-symbol="￡ " value="GBP">GBP</option>
-              <option data-symbol="$ "  value="CAD">CAD</option>
-              <option data-symbol="$ "  value="AUD">AUD</option>
-              <option data-symbol="$ " value="HKD">HKD</option>
-              <option data-symbol="¥ " value="CNY">CNY</option>
-              <option data-symbol="kr " value="NOK">NOK</option>
-              <option data-symbol="￥ " value="JPY">JPY</option>
-              <option data-symbol="Kč " value="CZK">CZK</option>
-              <option data-symbol="Lei " value="RON">RON</option>
-              <option data-symbol="zł " value="PLN">PLN</option>
-              <option data-symbol="CHF " value="CHF">CHF</option>
-              <option data-symbol="฿ " value="THB">THB</option>
-              <option data-symbol="₱ " value="PHP">PHP</option>
-              <option data-symbol="₪ " value="ILS">ILS</option>
-              <option data-symbol="₹ " value="INR">INR</option>
-            </select>
-            <label for="pay_currency"><%= t 'search.pay' %></label>
-          </div>
-
-          <div class="md-form pay_amount amount_fields">
-            <input type="tel" pattern="\d*" id="pay_amount"
-                   data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control text-right amount_fields">
-            <label for="pay_amount" class="control-label text-right" data-t-amount="<%= t 'search.amount' %>" data-t-best="<%= t 'search.best' %>"></label>
-            <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>
-          </div>
-
-        </div>
-
-        </div>
-
-      <div class="swiper-slide flex_around column" data-hash="service" data-index="2">
-
-        <div class="binary alternative flex_center column">
-          <div class="isearch_icon"><%= image_tag 'delivery.png' %></div>
-          <div class="text">Deliver it</div>
-        </div>
-
-        <div class="binary alternative flex_center column" data-slideto="travelMode">
-          <div class="isearch_icon"><%= image_tag 'pickup.png' %></div>
-          <div class="text">I'll pick it up myself</div>
-        </div>
-      </div>
-
-
-      <div class="swiper-slide flex_around column" data-hash="travelMode" data-index="3">
-
-        <div class="binary alternative flex_center column">
-          <div class="isearch_icon"><%= image_tag 'walk.png' %></div>
-          <div class="text">I'll walk</div>
-        </div>
-
-        <div class="binary alternative flex_center column">
-          <div class="isearch_icon"><%= image_tag 'drive.png' %></div>
-          <div class="text">I'll drive</div>
-        </div>
-      </div>
-
-
-      <%= render 'exchanges/templates/question', question: 'Delivery page' %>
+        <%= render '/exchanges/isearch/get' %>
+        <%= render '/exchanges/isearch/pay' %>
+        <%= render '/exchanges/isearch/service' %>
+        <%= render '/exchanges/isearch/travelMode' %>
+        <%= render 'exchanges/templates/question', question: 'Delivery page' %>
         <%= render 'exchanges/templates/question', question: 'Question 5' %>
         <%= render 'exchanges/templates/question', question: 'Question 6' %>
         <%= render 'exchanges/templates/question', question: 'Question 7' %>
         <%= render 'exchanges/templates/question', question: 'Question 8' %>
 
 
+
+
+
+
+
+        <div class="search_section fulfillment">
+          <div class="narrow search_line flex_center">
+
+            <div class="md-form delivery full_width">
+              <div class="switch full_width flex_between">
+                <label for="delivery_ind"><%= t 'search.deliveryTitle' %></label>
+                <label class="switch_form">
+                  <input id="delivery_ind" class="service_type" name="search[service_type]" type="checkbox"  value="delivery" checked="checked">
+                  <span class="lever"></span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="narrow search_line">
+            <div class="flex_center form-group location">
+              <label for="location" class="form-control control-label location_label" data-location-pickup="<%= t 'search.location.pickup' %>"  data-location-delivery="<%= t 'search.location.delivery' %>"></label>
+              <input type="text" id="location" data-model="search" data-field="location" data-searchbox="true" name="search[location]" class="text-center location form-control">
+              <span class="clear label form-control"><i class=material-icons>cancel</i></span>
+            </div>
+          </div>
+
+
+
+          <div class="hidden">
+
+            <input type="hidden" name="search[location_lat]"    id="location_lat"     data-model="search" data-field="location_lat">
+            <input type="hidden" name="search[location_lng]"    id="location_lng"     data-model="search" data-field="location_lng">
+            <input type="hidden" name="search[location_type]"   id="location_type"    data-model="search" data-field="location_type">
+            <input type="hidden" name="search[location_reason]" id="location_reason"  data-model="search" data-field="location_reason">
+            <input type="hidden" name="search[user_lat]"        id="user_lat"         data-model="search" data-field="user_lat">
+            <input type="hidden" name="search[user_lng]"        id="user_lng"         data-model="search" data-field="user_lng">
+            <input type="hidden" name="search[user_location]"   id="user_location"    data-model="search" data-field="user_location">
+            <input type="hidden" name="search[country]"         id="country"          data-model="search" data-field="country">
+            <input type="hidden" name="search[city]"            id="city"             data-model="search" data-field="city">
+            <input type="hidden" name="search[trans]"           id="transaction"      data-model="search" data-field="transaction">
+            <input type="hidden" name="search[calculated]"      id="calculated"       data-model="search" data-field="calculated">
+            <input type="hidden" name="search[exchange_id]"     id="exchange_id"      data-model="search" data-field="exchange_id">
+            <input type="hidden" name="search[values]"          id="values"           data-model="search" data-field="values">
+
+            <input type="hidden" id="credit_charge" data-autonumeric="true" data-symbolsource="pay_currency" data-model="search" data-field="credit_charge">
+            <input type="hidden" id="delivery_charge" data-autonumeric="true" data-symbolsource="pay_currency" data-model="search" data-field="delivery_charge">
+
+          </div>
+
+        </div>
+
+
+        <ul class="stepper stepper-horizontal">
+          <li class="completed">
+            <a href="#!">
+              <span class="circle">3</span>
+              <span class="label"><%= t 'search.heading3' %></span>
+            </a>
+          </li>
+        </ul>
+
+
+        <div class="search_section payment">
+
+          <div class="search_line form-inline payment_method_selection flex_between">
+
+            <label class="form-group"><%= t 'search.method' %></label>
+
+            <fieldset class="form-group flex_center">
+              <input class="payment_method" name="search[payment_method]" type="radio" id="payment_method_cash" checked="checked" value="cash">
+              <label for="payment_method_cash"><%= t 'search.cash' %></label>
+            </fieldset>
+
+            <fieldset class="form-group flex_center">
+              <input class="payment_method" name="search[payment_method]" type="radio" id="payment_method_credit" value="credit">
+              <label for="payment_method_credit"><%= t 'search.credit' %></label>
+            </fieldset>
+
+          </div>
+
+
+        </div>
+
+
+        <div class="narrow search_line invoke flex_center">
+
+              <button type="submit" class="blue primary btn waves-effect" data-ajax="searches"
+                      data-t-pickup="<%= t 'search.button.pickup' %>"
+                      data-t-delivery="<%= t 'search.button.delivery' %>"
+                      data-t-toOrder="<%= t 'search.button.toOrder' %>"
+              >
+              </button>
+
+        </div>
+
+
+      </div>
+
+      <div class="swiper-pagination-i flex_center"></div>
+
     </div>
-    <div class="swiper-pagination-i flex_center"></div>
-  </div>
+
+  </form>
 
   <%= render 'exchanges/templates/iformsprogressbar' %>
 

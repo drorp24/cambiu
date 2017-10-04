@@ -119,7 +119,6 @@ $(document).ready(function() {
 
     clear = function($e) {
         var field = $e.data('field');
-//        console.log('clear ' + field + '. val():' + $e.val(), $e[0]);
         if ($e.val()) set(field, '');
     };
 
@@ -149,8 +148,6 @@ $(document).ready(function() {
 
     $('form [data-model=search][data-field]').on('click tap', function() {
 
-//        console.log('moving to a new field');
-//        if ($('#search_form .location').hasClass('is-focused')) console.log('focus!');
         var $this = $(this);
         var field = $this.data('field');
         if (amount(field)) clear($this);
@@ -174,7 +171,7 @@ $(document).ready(function() {
         }
 
         if (prev_calculated !== calculated) {
-            console.log('calculated has just changed. Fetching local offers')
+            console.log('calculated has just changed. Fetching local offers');
             fetchAndPopulateLocaloffers();
         }
 
@@ -186,19 +183,8 @@ $(document).ready(function() {
             $('.worst input').each(function() {update_currency_symbol($(this))});
         }
 
-        if ($('body').attr('data-pane') == 'search') {
-            populateLocalOffers(local.rates);
-        } else if ($('body').attr('data-pane') == 'update') {
-            var id = urlId();
-            if (!id) {console.error('search.es6 keyup event, url has no id') ; return}
-            var exchange = exchangeHash[id];
-            if (!exchange) {console.error('search.es6 keyup event, no exchange with id ', id) ; return}
-            updateExchangeOffer(exchange.rates);
-        } else {
-            console.error('search.es6 keyup event - form not recognized'); return;
-        }
+        populateLocalOffers(local.rates);
 
-//        console.log('calculated field: ', calculated);
     });
 
 
@@ -272,7 +258,7 @@ $(document).ready(function() {
             function fetchData() {
                 return fetch('/searches?', {
                     method: 'post',
-                    body: new URLSearchParams($( "#search_form input, #search_form select" ).serialize())
+                    body: new URLSearchParams($( ".search_form input, .search_form select" ).serialize())
                 })
             }
 
@@ -317,7 +303,7 @@ $(document).ready(function() {
         return new Promise(function(resolve, reject) {
 
             function fetchRates() {
-                return fetch('/searches/localRates?' + $( "#search_form input, #search_form select" ).serialize(), {
+                return fetch('/searches/localRates?' + $( ".search_form input, .search_form select" ).serialize(), {
                     method: 'get'
                 })
             }
@@ -597,7 +583,7 @@ $(document).ready(function() {
         report('Set', 'Language', null, new_locale);
     });
 
-    $('#search_form .amount_fields [data-model]').change(function() {
+    $('.search_form .amount_fields [data-model]').change(function() {
         let $this = $(this);
         let field = $this.attr('data-field');
         let value = $this.val();

@@ -930,9 +930,10 @@ body#cambiu {
       &.swiper-slide-active {
         background: white;
       }
+      .iform_content {
+        width: 100%;
+      }
       .ok.btn {
-        position: absolute;
-        bottom: 8%;
         border-radius: 3px;
         font-weight: 700;
         @include vpadding-top(1vw);
@@ -975,6 +976,27 @@ body#cambiu {
         transform-origin: left;
       }
     }
+
+
+    [data-field=pay_amount], [data-field=buy_amount] {
+      position: relative;
+      ~ label:before {
+        content: attr(data-t-amount);
+      }
+      &.calculated {
+        position: relative;
+        ~ label:before {
+          content: attr(data-t-best);
+        }
+        ~ .calculated_icon {
+          display: block;
+        }
+      }
+    }
+
+
+
+
   }
 
 
@@ -983,16 +1005,16 @@ body#cambiu {
     height: 80vh;
   }
 
-  .question {
+  .iform_title {
     @include vfont-size(6vw);
     font-weight: 300;
     color: #000;
   }
 
-  .hint {
+  .iform_subtitle {
     @include vfont-size(4vw);
     font-weight: 300;
-    margin-bottom: 15vh;
+    margin-bottom: 7vh;
   }
 
   .swiper-container-i {
@@ -1005,7 +1027,7 @@ body#cambiu {
     background: #eee;
   }
 
-  .isearch_icon img {
+  .iform_icon img {
     width: 128px;
   }
 
@@ -1485,14 +1507,14 @@ body#cambiu {
     margin-bottom: 3vh;
   }
 
-  #search_form.pickup button[type=submit]:after {
+  .search_form.pickup button[type=submit]:after {
     content: attr(data-t-pickup);
   }
 
-  #search_form button[type=submit].to_order:after {
+  .search_form button[type=submit].to_order:after {
     content: attr(data-t-toOrder);
   }
-  #search_form.delivery button[type=submit]:after {
+  .search_form.delivery button[type=submit]:after {
     content: attr(data-t-delivery);
   }
 
