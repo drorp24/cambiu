@@ -14,7 +14,9 @@
 // Variables
 
 $formBlue: #4285F4;
+$formBlue: #2196F3;
 $formBluePale: rgba(66, 133, 244, 0.5);
+$formBluePale: rgba(1, 1, 1, 0.2);
 $minicard_height: 33vw;
 $minicard_img_height: 27vw;
 $offer-padding: 5vw;
@@ -1049,7 +1051,6 @@ body#cambiu {
       margin-top: 10%;
     }
     &:nth-of-type(2) {
-      margin-bottom: 10%;
     }
     .text {
       @include vfont-size(5vw);
@@ -1076,7 +1077,7 @@ body#cambiu {
     }
     .navigation {
       height: 100%;
-      @include vfont-size(13vw);
+      @include vfont-size(10vw);
       @include vmargin-right(5vw);
       .prev, .next {
         background: $formBlue;

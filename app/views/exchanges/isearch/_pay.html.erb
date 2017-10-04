@@ -1,8 +1,8 @@
 <div class="swiper-slide flex_center column" data-hash="pay" data-index="1">
 
   <div class="iform_icon"><%= image_tag 'wallet.png' %></div>
-  <div class="iform_title">Paying with?</div>
-  <div class="iform_subtitle">Your own currency</div>
+  <div class="iform_title"><%= t 'isearch.pay.title' %></div>
+  <div class="iform_subtitle"><%= t 'isearch.pay.subtitle' %></div>
 
   <div class="iform_content">
 
@@ -15,7 +15,7 @@
     </div>
 
     <div class="md-form pay_amount amount_fields">
-      <input type="tel" pattern="\d*" id="pay_amount"
+      <input dir="ltr" type="tel" pattern="\d*" id="pay_amount"
              data-model="search" data-field="pay_amount" data-autonumeric="true" data-symbolsource="pay_currency" name="search[pay_amount]" class="form-control text-right amount_fields">
       <label for="pay_amount" class="control-label" data-t-amount="<%= t 'search.amount' %>" data-t-best="<%= t 'search.best' %>"></label>
       <div class="calculated_icon"><i class="fa fa-hand-o-right"></i></div>

@@ -16,7 +16,7 @@ he:
   search:
     heading1: 'מה תרצו להזמין'
     get: 'לקבל'
-    amount: 'סכום'
+    amount: 'כמה'
     currency: 'מטבע'
     pay: 'לתת'
     best: 'ההצעה הטובה ביותר'
@@ -116,3 +116,27 @@ he:
     bestPickup: 'לחצו להצעה הטובה ביותר בסביבה'
     noDelivery: 'אין משלוחים באזור זה. '
     noCredit: 'אין אפשרות לשלם באשראי באזור זה.'
+  isearch:
+    get:
+      title: 'מה אתם צריכים?'
+      subtitle: 'איזו מטבע וכמה'
+    pay:
+      title: 'עם מה משלמים?'
+      subtitle: 'המטבע שאתם מחזיקים'
+    service:
+      title: 'איך תרצו לקבל את הכסף?'
+      delivery: 'שלחו אותו אליי'
+      pickup: 'אאסוף אותו בעצמי'
+    travelMode:
+      title: 'איך תגיעו?'
+      walk: 'ברגל'
+      drive: 'ברכב'
+    delivery:
+      title: 'לאן לשלוח את הכסף?'
+      subtitle: 'הקלידו כתובת'
+    payment:
+      title: 'איך אתם משלמים?'
+      credit: 'כרטיס אשראי'
+      cash: 'מזומן'
+    bar:
+      gain: 'הרווח שלכם:'

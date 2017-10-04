@@ -603,12 +603,17 @@ $(document).ready(function() {
     });
 
     $('.iformsprogressbar .navigation .prev').on('click tap', function() {
-        swiperI.slidePrev();
+        if (recentSlideIndex) {
+            swiperI.slideTo(recentSlideIndex);
+        } else {
+            swiperI.slidePrev();
+        }
     });
 
     $('[data-slideto]').on('click tap', function() {
-        let $this = $(this);
-        let hash = $this.data('slideto');
+        var $this = $(this);
+        var hash = $this.data('slideto');
+        recentSlideIndex =  $this.closest('.swiper-slide').data('index');
         console.log('target hash:', hash);
         let $target = $(`.swiper-container-i [data-hash=${hash}]`);
         if ($target.length) {

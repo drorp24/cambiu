@@ -9,7 +9,9 @@ class HomeController < ApplicationController
   end
 
   def app
-    expires_in 1.day, :public => true
+    unless Rails.env.development?
+      expires_in 1.day, :public => true
+    end
     render :index
   end
 

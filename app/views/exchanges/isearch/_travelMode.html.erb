@@ -1,12 +1,15 @@
 <div class="swiper-slide flex_around column" data-hash="travelMode" data-index="3">
 
-  <div class="binary alternative flex_center column">
-    <div class="isearch_icon"><%= image_tag 'walk.png' %></div>
-    <div class="text">I'll walk</div>
-  </div>
+  <div class="iform_title"><%= t 'isearch.travelMode.title' %></div>
 
   <div class="binary alternative flex_center column">
     <div class="isearch_icon"><%= image_tag 'drive.png' %></div>
-    <div class="text">I'll drive</div>
+    <div class="text"><%= t 'isearch.travelMode.drive' %></div>
   </div>
+
+  <div class="binary alternative flex_center column">
+    <div class="isearch_icon"><%= image_tag 'walk.png' %></div>
+    <div class="text"><%= t 'isearch.travelMode.walk' %></div>
+  </div>
+
 </div>

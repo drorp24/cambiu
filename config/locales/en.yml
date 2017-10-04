@@ -137,3 +137,27 @@ en:
     bestPickup: 'Click for the best offer around'
     noDelivery: 'No delivery in the vicinity. '
     noCredit: 'No credit card accepted in the vicinity. '
+  isearch:
+    get:
+      title: 'What do you need?'
+      subtitle: 'How much, which currency'
+    pay:
+      title: 'Paying with?'
+      subtitle: 'Your own currency'
+    service:
+      title: 'How would you get it?'
+      delivery: "I'd like a delivery"
+      pickup: "I'll pick it up"
+    travelMode:
+      title: 'How will you arrive?'
+      walk: "I'll walk"
+      drive: "I'll drive"
+    delivery:
+      title: 'Where to deliver it?'
+      subtitle: 'Your delivery address'
+    payment:
+      title: 'How will you pay?'
+      credit: 'Credit card'
+      cash: 'Cash'
+    bar:
+      gain: 'Your gain:'
