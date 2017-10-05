@@ -1016,6 +1016,11 @@ body#cambiu {
     height: 80vh;
   }
 
+  .iform_title_subtitle {
+    width: 100%;
+    text-align: center;
+  }
+
   .iform_title {
     @include vfont-size(6vw);
     font-weight: 300;
@@ -1025,7 +1030,6 @@ body#cambiu {
   .iform_subtitle {
     @include vfont-size(4vw);
     font-weight: 300;
-    margin-bottom: 7vh;
   }
 
   .swiper-container-i {

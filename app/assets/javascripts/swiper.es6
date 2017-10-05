@@ -131,6 +131,7 @@ $(document).ready(function() {
     });
 
     $('[data-slideto]').on('click tap', function() {
+        swiperI.unlockSwipeToNext();
         var $this = $(this);
         var hash = $this.data('slideto');
         console.log('target hash:', hash);

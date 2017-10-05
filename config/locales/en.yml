@@ -146,6 +146,7 @@ en:
       subtitle: 'Your own currency'
     service:
       title: 'How would you get it?'
+      subtitle: 'Click the desired option'
       delivery: "I'd like a delivery"
       pickup: "I'll pick it up"
     travelMode:
