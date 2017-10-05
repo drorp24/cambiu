@@ -1427,7 +1427,7 @@ body#cambiu {
   }
 
   &[locale=he] .calculated_icon {
-    @include vright(10vw);
+    right: 0;
   }
 
   .switch_form {

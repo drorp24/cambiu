@@ -21,9 +21,9 @@ initSwipers = function() {
         hashnavWatchState: true
     });
 
-    swiperI.on('slideNextStart', function() {
-//       swiperI.lockSwipeToNext()
+    swiperI.on('slideNextStart', function(s) {
     });
+
 
     swiperI.on('SlideChangeStart', function() {
 
@@ -32,6 +32,13 @@ initSwipers = function() {
         hashReport();
 
     });
+
+    swiperI.on('SlideChangeEnd', function() {
+        swiperIactiveSlide().hasClass('branch') ? swiperI.lockSwipeToNext() : swiperI.unlockSwipeToNext();
+    });
+
+
+
 
 
 };
@@ -53,8 +60,11 @@ navigationArrows = function() {
     }
 };
 
+swiperIactiveSlide = () => $('.swiper-container-i .swiper-slide-active');
+
+
 hashReport = function() {
-    var $current_slide = $('.swiper-container-i .swiper-slide-active');
+    var $current_slide = swiperIactiveSlide();
     if ($current_slide) {
         var hash = $current_slide.data('hash');
         if (hash) pageReport('/exchanges/isearch#' + hash);
@@ -117,7 +127,7 @@ $(document).ready(function() {
     });
 
     $('.iformsprogressbar .navigation .prev').on('click tap', function() {
-        window.history.back();
+        if (!swiperI.isBeginning) window.history.back();
     });
 
     $('[data-slideto]').on('click tap', function() {
