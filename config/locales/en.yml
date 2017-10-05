@@ -164,4 +164,4 @@ en:
       gain: 'Your gain:'
       specifyValue: 'Please specify value'
       select: 'Please select'
-      okayRequired: 'Please okay the values'
+      okayRequired: 'Really need xxx? <br>Please OK'

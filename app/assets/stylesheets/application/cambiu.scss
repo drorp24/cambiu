@@ -955,6 +955,11 @@ body#cambiu {
           background-color: $formBluePale !important;
         }
       }
+      &.okayed {
+        .ok.btn {
+          visibility: hidden
+        }
+      }
     }
     .swiper-container-vertical>.swiper-pagination-bullets {
       position: absolute;

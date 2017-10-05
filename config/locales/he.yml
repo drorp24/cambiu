@@ -16,7 +16,7 @@ he:
   search:
     heading1: 'מה תרצו להזמין'
     get: 'לקבל'
-    amount: 'כמה'
+    amount: 'כמות'
     currency: 'מטבע'
     pay: 'לתת'
     best: 'ההצעה הטובה ביותר'
@@ -119,7 +119,7 @@ he:
   isearch:
     get:
       title: 'מה אתם צריכים?'
-      subtitle: 'איזו מטבע וכמה'
+      subtitle: 'הזינו מטבע וכמות'
     pay:
       title: 'עם מה משלמים?'
       subtitle: 'המטבע שאתם מחזיקים'
@@ -143,4 +143,4 @@ he:
       gain: 'הרווח שלכם:'
       specifyValue: 'אנא מלאו ערך'
       select: 'לחצו על הבחירה שלכם'
-      okayRequired: 'לחצו על OK כדי לאשר'
+      okayRequired: 'צריכים באמת xxx? <br> תקנו אם צריך ולחצו OK'

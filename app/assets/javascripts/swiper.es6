@@ -173,7 +173,9 @@ $(document).ready(function() {
     $('.iformsprogressbar .navigation .next').on('click tap', function() {
 
         let can = swiperIgatekeeper();
-        (can.pass) ? swiperI.slideNext() : snack(t(can.reason), {klass: 'oops', timeout: 1500})
+        let index = swiperI.activeIndex;
+        let value = index == 0 ?  $('#buy_amount').val() : $('#pay_currency').val();
+        (can.pass) ? swiperI.slideNext() : snack(t(can.reason, value), {klass: 'oops', timeout: 2000})
 
     });
 
