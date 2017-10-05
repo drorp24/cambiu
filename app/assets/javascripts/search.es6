@@ -151,7 +151,7 @@ $(document).ready(function() {
         var $this = $(this);
         var field = $this.data('field');
         if (amount(field)) clear($this);
-        $this.closest('.swiper-slide').addClass('missing');
+ //       $this.closest('.swiper-slide').addClass('missing');
     });
 
     $('form [data-model=search][data-field]').keyup(function() {
@@ -167,7 +167,13 @@ $(document).ready(function() {
         var value = $this.val();
         if (amount_field) {
             let $slide = $this.closest('.swiper-slide');
-            clean(value) == 0 ? $slide.addClass('missing') : $slide.removeClass('missing');
+            if (clean(value) == 0) {
+                $slide.addClass('missing');
+                swiperI.lockSwipeToNext();
+             } else {
+                $slide.removeClass('missing');
+                swiperI.unlockSwipeToNext();
+            }
         }
 
         set(field, value);

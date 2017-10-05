@@ -146,4 +146,8 @@ $(document).ready(function() {
         swiperI.slideTo(index);
     });
 
+    $('.swiper-container-i .ok.btn').on('tap click', function(e) {
+        e.preventDefault();
+    })
+
 });
