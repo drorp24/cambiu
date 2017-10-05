@@ -257,6 +257,8 @@ populateParams = function() {
 
     var value_of_pay_amount = value_of('pay_amount');
     var value_of_buy_amount = value_of('buy_amount');
+    value_of_pay_amount = (clean(value_of_pay_amount) == 0) ? null : value_of_pay_amount;
+    value_of_buy_amount = (clean(value_of_buy_amount) == 0) ? null : value_of_buy_amount;
     var def = def_vals();
 
     searchParams.forEach(function(key) {

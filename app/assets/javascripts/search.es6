@@ -151,17 +151,24 @@ $(document).ready(function() {
         var $this = $(this);
         var field = $this.data('field');
         if (amount(field)) clear($this);
+        $this.closest('.swiper-slide').addClass('missing');
     });
 
     $('form [data-model=search][data-field]').keyup(function() {
 
         var $this = $(this);
         var field = $this.data('field');
+        var amount_field = amount(field);
+        var currency_field = currency(field);
 
-        if (!(amount(field) && !currency(field))) return;
+        if (!amount_field && !currency_field) return;
         console.log('keying a character');
 
         var value = $this.val();
+        if (amount_field) {
+            let $slide = $this.closest('.swiper-slide');
+            clean(value) == 0 ? $slide.addClass('missing') : $slide.removeClass('missing');
+        }
 
         set(field, value);
         var prev_calculated = calculated;

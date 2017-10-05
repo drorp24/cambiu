@@ -950,6 +950,11 @@ body#cambiu {
           @include vmargin-left(2vw);
         }
       }
+      &.missing {
+        .ok.btn {
+          background-color: $formBluePale !important;
+        }
+      }
     }
     .swiper-container-vertical>.swiper-pagination-bullets {
       position: absolute;
