@@ -105,3 +105,34 @@ enableSwiping = function() {
     $('.swiper-container-h').removeClass('swiper-no-swiping');
 };
 
+$(document).ready(function() {
+
+
+    //
+    // iSearch navigation
+    //
+
+    $('.iformsprogressbar .navigation .next').on('click tap', function() {
+        swiperI.slideNext();
+    });
+
+    $('.iformsprogressbar .navigation .prev').on('click tap', function() {
+        window.history.back();
+    });
+
+    $('[data-slideto]').on('click tap', function() {
+        var $this = $(this);
+        var hash = $this.data('slideto');
+        console.log('target hash:', hash);
+        let $target = $(`.swiper-container-i [data-hash=${hash}]`);
+        if ($target.length) {
+            console.log('$target: ', $target[0]);
+        } else {
+            console.error('Error: target not found!');
+            return;
+        }
+        let index = $target.data('index');
+        swiperI.slideTo(index);
+    });
+
+});

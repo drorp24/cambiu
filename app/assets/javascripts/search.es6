@@ -594,37 +594,6 @@ $(document).ready(function() {
 
 
 
-    //
-    // iSearch slider
-    //
-
-    $('.iformsprogressbar .navigation .next').on('click tap', function() {
-        swiperI.slideNext();
-    });
-
-    $('.iformsprogressbar .navigation .prev').on('click tap', function() {
-        if (recentSlideIndex) {
-            swiperI.slideTo(recentSlideIndex);
-        } else {
-            swiperI.slidePrev();
-        }
-    });
-
-    $('[data-slideto]').on('click tap', function() {
-        var $this = $(this);
-        var hash = $this.data('slideto');
-        recentSlideIndex =  $this.closest('.swiper-slide').data('index');
-        console.log('target hash:', hash);
-        let $target = $(`.swiper-container-i [data-hash=${hash}]`);
-        if ($target.length) {
-            console.log('$target: ', $target[0]);
-        } else {
-            console.error('Error: target not found!');
-            return;
-        }
-        let index = $target.data('index');
-        swiperI.slideTo(index);
-    });
 
 
 

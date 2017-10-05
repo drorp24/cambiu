@@ -151,8 +151,6 @@ var inIframe = false;
 var locale;
 var activeSnackbars = 0;
 var pendingSnack = {};
-var recentSlideIndex = null;
-
 
 
 def_vals = function() {
