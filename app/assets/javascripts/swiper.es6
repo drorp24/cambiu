@@ -21,6 +21,13 @@ initSwipers = function() {
         hashnavWatchState: true
     });
 
+
+     swiperI.on('SlideNextStart', function() {
+        let can = swiperIgatekeeper();
+        can.pass ? swiperI.unlockSwipeToNext() : swiperI.lockSwipeToNext();
+
+    });
+
     swiperI.on('SlideChangeStart', function() {
 
         progressBar();
@@ -30,12 +37,35 @@ initSwipers = function() {
     });
 
     swiperI.on('SlideChangeEnd', function() {
-        swiperIactiveSlide().hasClass('branch') ? swiperI.lockSwipeToNext() : swiperI.unlockSwipeToNext();
+        let can = swiperIgatekeeper();
+        can.pass ? swiperI.unlockSwipeToNext() : swiperI.lockSwipeToNext();
     });
 
+};
 
 
+swiperIgatekeeper = function() {
 
+    let $slide = swiperIactiveSlide();
+    let pass = false;
+    let reason = null;
+
+    if ($slide.hasClass('missing')) {
+        reason = 'specifyValue'
+    } else
+    if ($slide.hasClass('okay_required') && !$slide.hasClass('okayed')) {
+        reason = 'okayRequired'
+    } else
+    if ($slide.hasClass('branch')) {
+        reason = 'select'
+    } else {
+        pass = true
+    }
+
+    return {
+        pass: pass,
+        reason: reason
+    }
 
 };
 
@@ -118,23 +148,8 @@ $(document).ready(function() {
     // iSearch navigation
     //
 
-    $('.iformsprogressbar .navigation .next').on('click tap', function() {
-        let $slide = swiperIactiveSlide();
-        if ($slide.hasClass('missing')) {
-            snack(t('specifyValue'), {klass: 'oops', timeout: 1500})
-        } else
-        if ($slide.hasClass('branch')) {
-            snack(t('select'), {klass: 'oops', timeout: 1500});
-        } else {
-            swiperI.slideNext();
-        }
-    });
-
-    $('.iformsprogressbar .navigation .prev').on('click tap', function() {
-        if (!swiperI.isBeginning) window.history.back();
-    });
-
     $('[data-slideto]').on('click tap', function() {
+
         swiperI.unlockSwipeToNext();
         var $this = $(this);
         var hash = $this.data('slideto');
@@ -148,11 +163,31 @@ $(document).ready(function() {
         }
         let index = $target.data('index');
         swiperI.slideTo(index);
+
     });
 
+    $('.iformsprogressbar .navigation .prev').on('click tap', function() {
+        if (!swiperI.isBeginning) window.history.back();
+    });
+
+    $('.iformsprogressbar .navigation .next').on('click tap', function() {
+
+        let can = swiperIgatekeeper();
+        (can.pass) ? swiperI.slideNext() : snack(t(can.reason), {klass: 'oops', timeout: 1500})
+
+    });
+
+
     $('.swiper-container-i .ok.btn').on('tap click', function(e) {
+
         e.preventDefault();
-        if (!$(this).closest('.swiper-slide').hasClass('missing')) swiperI.slideNext();
+        let $slide = $(this).closest('.swiper-slide');
+        if (!$slide.hasClass('missing')) {
+            swiperI.unlockSwipeToNext();
+            $slide.addClass('okayed');
+            swiperI.slideNext();
+        }
+
     })
 
 });

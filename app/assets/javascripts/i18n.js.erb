@@ -3,6 +3,7 @@ t = function(expression) {
   var translation = {
 
     en: {
+      okayRequired: '<%= I18n.t 'isearch.bar.okayRequired', locale: :en %>',
       specifyValue: '<%= I18n.t 'isearch.bar.specifyValue', locale: :en %>',
       select: '<%= I18n.t 'isearch.bar.select', locale: :en %>',
       noCredit: '<%= I18n.t 'app.noCredit', locale: :en %>',
@@ -17,6 +18,7 @@ t = function(expression) {
 
     },
     he: {
+      okayRequired: '<%= I18n.t 'isearch.bar.okayRequired', locale: :he %>',
       specifyValue: '<%= I18n.t 'isearch.bar.specifyValue', locale: :he %>',
       select: '<%= I18n.t 'isearch.bar.select', locale: :he %>',
       noCredit: '<%= I18n.t 'app.noCredit', locale: :he %>',
@@ -33,4 +35,4 @@ t = function(expression) {
 
   return translation[locale][expression] || '<%= I18n.t 'app.missing' %>'
 };
-var variation = 20;
+var variation = 21;
