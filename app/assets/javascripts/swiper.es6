@@ -21,10 +21,6 @@ initSwipers = function() {
         hashnavWatchState: true
     });
 
-    swiperI.on('slideNextStart', function(s) {
-    });
-
-
     swiperI.on('SlideChangeStart', function() {
 
         progressBar();
@@ -148,6 +144,7 @@ $(document).ready(function() {
 
     $('.swiper-container-i .ok.btn').on('tap click', function(e) {
         e.preventDefault();
+        if (!$(this).closest('.swiper-slide').hasClass('missing')) swiperI.slideNext();
     })
 
 });
