@@ -255,14 +255,17 @@ populateReviews = function(exchange, $scope) {
 // part of what used to be restore()
 populateParams = function() {
 
+/*
     var value_of_pay_amount = value_of('pay_amount');
     var value_of_buy_amount = value_of('buy_amount');
     value_of_pay_amount = (clean(value_of_pay_amount) == 0) ? null : value_of_pay_amount;
     value_of_buy_amount = (clean(value_of_buy_amount) == 0) ? null : value_of_buy_amount;
+*/
     var def = def_vals();
 
     searchParams.forEach(function(key) {
 
+/*
         if (key == 'buy_amount') {
             set('buy_amount',   value_of_buy_amount || (value_of_pay_amount ? null : def['buy_amount']))
         } else
@@ -271,7 +274,9 @@ populateParams = function() {
         } else {
             set(key,            value_of(key)       || def[key])
         }
+*/
 
+      set(key, def[key])
     });
 
     bind_currency_to_autonumeric();
