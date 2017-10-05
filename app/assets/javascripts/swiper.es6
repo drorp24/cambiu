@@ -119,7 +119,15 @@ $(document).ready(function() {
     //
 
     $('.iformsprogressbar .navigation .next').on('click tap', function() {
-        swiperI.slideNext();
+        let $slide = swiperIactiveSlide();
+        if ($slide.hasClass('missing')) {
+            snack(t('specifyValue'), {klass: 'oops', timeout: 1500})
+        } else
+        if ($slide.hasClass('branch')) {
+            snack(t('select'), {klass: 'oops', timeout: 1500});
+        } else {
+            swiperI.slideNext();
+        }
     });
 
     $('.iformsprogressbar .navigation .prev').on('click tap', function() {

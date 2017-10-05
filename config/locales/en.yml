@@ -162,3 +162,5 @@ en:
       cash: 'Cash'
     bar:
       gain: 'Your gain:'
+      specifyValue: 'Please specify value'
+      select: 'Please select'
