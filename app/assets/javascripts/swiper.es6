@@ -25,7 +25,7 @@ initSwipers = function() {
 //       swiperI.lockSwipeToNext()
     });
 
-    swiperI.on('SlideChangeEnd', function() {
+    swiperI.on('SlideChangeStart', function() {
 
         progressBar();
         navigationArrows();
