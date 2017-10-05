@@ -125,7 +125,7 @@ he:
       subtitle: 'המטבע שאתם מחזיקים'
     service:
       title: 'איך תרצו לקבל את הכסף?'
-      subtitle: 'לחצו על הבחירה המועדפת'
+      subtitle: 'לחצו על הבחירה שלכם'
       delivery: 'משלוח'
       pickup: 'איסוף עצמי'
     travelMode:

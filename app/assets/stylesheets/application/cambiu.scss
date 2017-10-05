@@ -1030,6 +1030,11 @@ body#cambiu {
   .iform_subtitle {
     @include vfont-size(4vw);
     font-weight: 300;
+    margin-bottom: 8vh;
+  }
+
+  .swiper-slide.branch .iform_subtitle {
+    margin-bottom: 0;
   }
 
   .swiper-container-i {
@@ -1424,6 +1429,7 @@ body#cambiu {
 
   .calculated_icon {
     position: absolute;
+    width: 1em;
     top: 1vh;
     @include vleft(10vw);
     font-size: 1.5rem;
