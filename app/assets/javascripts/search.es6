@@ -592,7 +592,7 @@ $(document).ready(function() {
     $('.language_select').on('click tap', function() {
         console.log('language select');
         let new_locale = $('body').attr('locale') == 'en' ? 'he' : 'en';
-        window.location.href = "/exchanges/search?" + $.param({'locale': new_locale});
+        window.location.href = "/exchanges/isearch?" + $.param({'locale': new_locale});
         report('Set', 'Language', null, new_locale);
     });
 
@@ -602,17 +602,6 @@ $(document).ready(function() {
         let value = $this.val();
         report('Set', field, null, value);
     });
-
-
-
-
-
-
-
-
-    setTimeout(function() {
-        $('input.select-dropdown').css('text-align', 'end');
-    }, 2000);
 
 
 });

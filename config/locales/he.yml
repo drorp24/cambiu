@@ -143,4 +143,4 @@ he:
       gain: 'הרווח שלכם:'
       specifyValue: 'אנא מלאו ערך'
       select: 'לחצו על הבחירה שלכם'
-      okayRequired: 'צריכים באמת xxx? <br> תקנו אם צריך ולחצו OK'
+      okayRequired: 'צריכים בדיוק xxx? <br> תקנו אם צריך ולחצו OK כדי להמשיך'
