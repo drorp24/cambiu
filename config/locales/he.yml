@@ -140,7 +140,7 @@ he:
       credit: 'כרטיס אשראי'
       cash: 'מזומן'
     bar:
-      gain: 'הרווח שלכם:'
+      gain: 'חסכו:'
       specifyValue: 'אנא מלאו ערך'
       select: 'לחצו על הבחירה שלכם'
       okayRequired: 'צריכים בדיוק xxx? <br> תקנו אם צריך ולחצו OK כדי להמשיך'

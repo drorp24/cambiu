@@ -161,7 +161,7 @@ en:
       credit: 'Credit card'
       cash: 'Cash'
     bar:
-      gain: 'Your gain:'
+      gain: 'Save:'
       specifyValue: 'Please specify value'
       select: 'Please select'
       okayRequired: 'Really need xxx? <br>Please OK'

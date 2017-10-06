@@ -1020,6 +1020,9 @@ body#cambiu {
 
   }
 
+  .text-end {
+    text-align: end;
+  }
 
 
   .questions {
@@ -1083,16 +1086,22 @@ body#cambiu {
     height: 10vh;
     .bestOffer {
       height: 100%;
-      @include vmargin-left(5vw);
-      @include vmargin-right(3vw);
+      width: 70%;
+      padding-left: 1em;
       color: #000;
       font-weight: 300;
       @include vfont-size(6.5vw);
       & > div {
         @include vmargin-left(1vw);
       }
+      .bestOffer_text {
+        margin-right: 0.5em;
+        margin-left: 0.5em;
+      }
       .bestOffer_save {
-        font-weight: 900;
+        font-weight: 500;
+        @include threedots(85%);
+        direction: ltr;
       }
     }
     .navigation {
@@ -1122,7 +1131,14 @@ body#cambiu {
     }
   }
 
-
+  &[locale=en] {
+    .flex_end {
+      justify-content: flex-start;
+    }
+    .iformsprogressbar .bestOffer_save {
+      font-weight: 900;
+    }
+  }
 
 
 
@@ -2049,14 +2065,20 @@ body#cambiu {
 
   .flex_around {
     @include flexbox();
-    justify-content: space-around;
     align-items: center;
+    justify-content: space-around;
   }
 
   .flex_center {
     @include flexbox();
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+  }
+
+  .flex_end {
+    @include flexbox();
+    align-items: center;
+    justify-content: flex-end;
   }
 
   .column {

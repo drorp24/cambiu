@@ -413,7 +413,7 @@ populateLocalOffers = function(rates) {
   $('[data-model=local][data-field=count]').html(rates['count']);
 
   if (rates.worst.error) {
-    $('.search_line.worst').css('visibility', 'hidden');
+    $('.worst').css('visibility', 'hidden');
   } else {
     var worst_rate = rates['worst'][transaction];
     var worst_rated_currency = rates['worst']['rated_currency'];
@@ -421,11 +421,11 @@ populateLocalOffers = function(rates) {
     var worst_value = worst_value_before_fee * bank_factor;
     var gain_value = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
     if (gain_value > 0) {
-      $('.search_line.worst').css('visibility', 'visible');
+      $('.worst').css('visibility', 'visible');
       $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
       $('[data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
     } else {
-      $('.search_line.worst').css('visibility', 'hidden');
+      $('.worst').css('visibility', 'hidden');
     }
   }
 
