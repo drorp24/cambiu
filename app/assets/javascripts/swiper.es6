@@ -162,7 +162,7 @@ $(document).ready(function() {
             return;
         }
         let index = $target.data('index');
-        swiperI.slideTo(index);
+        wait(300).then(()=> {swiperI.slideTo(index)});
 
     });
 
@@ -186,7 +186,7 @@ $(document).ready(function() {
         let $slide = $(this).closest('.swiper-slide');
         if (!$slide.hasClass('missing')) {
             swiperI.unlockSwipeToNext();
-            wait(500).then(() => {
+            wait(200).then(() => {
                 swiperI.slideNext();
                 $slide.addClass('okayed');
             });

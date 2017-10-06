@@ -5,13 +5,16 @@
     <div class="iform_subtitle"><%= t 'isearch.service.subtitle' %></div>
   </div>
 
-  <div class="binary alternative flex_center column" data-slideto="delivery">
-    <div class="isearch_icon"><%= image_tag 'delivery.png' %></div>
+  <div class="binary alternative flex_center column view overlay hm-white-slight" data-slideto="delivery">
+     <%= image_tag 'delivery.png' %>
     <div class="text"><%= t 'isearch.service.delivery' %></div>
+    <a><div class="mask waves-effect"></div></a>
   </div>
 
-  <div class="binary alternative flex_center column" data-slideto="travelMode">
-    <div class="isearch_icon"><%= image_tag 'pickup.png' %></div>
+  <div class="binary alternative flex_center column view overlay hm-white-slight" data-slideto="travelMode">
+    <%= image_tag 'pickup.png' %>
     <div class="text"><%= t 'isearch.service.pickup' %></div>
+    <a><div class="mask waves-effect"></div></a>
   </div>
+
 </div>
