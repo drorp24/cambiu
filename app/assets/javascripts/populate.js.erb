@@ -334,14 +334,25 @@ fetchAndPopulateLocaloffers = function() {
 
   return new Promise(function(resolve, reject) {
 
+    function startFetchingRates() {
+      $('.preloader-wrapper').addClass('active');
+      $('.bestOffer_save').css('visibility', 'hidden');
+    }
+
+    function finishFetchingRates() {
+      $('.preloader-wrapper').removeClass('active');
+      $('.bestOffer_save').css('visibility', 'visible');
+    }
     function tell(error) {
       console.log('catch during fetchAndPopulateLocaloffers!');
       reject(error)
     }
 
+    startFetchingRates();
     fetchLocalRates()
         .then(populateLocalOffers)
-        .then(function(best_value) {resolve(best_value)})
+        .then(finishFetchingRates)
+        .then(resolve)
         .catch(tell)
 
   })

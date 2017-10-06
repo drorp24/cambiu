@@ -4,19 +4,33 @@
     <span class="iprogressbar"></span>
   </div>
 
-  <div class="bestOffer pull-left flex_end">
-    <span class="bestOffer_text"><%= t 'isearch.bar.gain' %></span>
-    <span class="bestOffer_save worst" id="worst_saving"
-          data-model="local" data-field="worst_saving" data-autonumeric="true" data-symbolsource="pay_currency" class="bestOffer_save text-end">
-      something
-    </span>
+
+
+  <div class="bestOffer worst pull-left flex_end">
+
+    <div class="preloader-wrapper small active" dir="ltr">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+      </div>
+    </div>
+
+    <div class="bestOffer_text"><%= t 'isearch.bar.gain' %></div>
+
+    <div class="bestOffer_save text-end" id="worst_saving" data-model="local" data-field="worst_saving" data-autonumeric="true" data-symbolsource="pay_currency">99.99</div>
+
   </div>
 
   <div dir="ltr" class="navigation pull-right flex_center beginning">
-    <div class="prev flex_center column">
+    <div class="prev waves-effect flex_center column">
       <i class="material-icons">expand_less</i>
     </div>
-    <div class="next flex_center column">
+    <div class="next waves-effect flex_center column">
       <i class="material-icons">expand_more</i>
     </div>
   </div>

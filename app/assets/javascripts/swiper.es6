@@ -186,8 +186,10 @@ $(document).ready(function() {
         let $slide = $(this).closest('.swiper-slide');
         if (!$slide.hasClass('missing')) {
             swiperI.unlockSwipeToNext();
-            $slide.addClass('okayed');
-            swiperI.slideNext();
+            wait(500).then(() => {
+                swiperI.slideNext();
+                $slide.addClass('okayed');
+            });
         }
 
     })

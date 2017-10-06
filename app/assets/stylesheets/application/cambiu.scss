@@ -412,6 +412,10 @@ $exchange_summary_bg_img_height_mobile: 75px;
   */
 }
 
+@mixin boxShadow_ex {
+  box-shadow: 0 3px 10px rgba(0,0,0,0.7);
+}
+
 @mixin boxShadow {
   box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.7);
 }
@@ -936,7 +940,10 @@ body#cambiu {
         width: 100%;
       }
       .ok.btn {
-        border-radius: 3px;
+        @include vborder-radius(7.5vw);
+        @include vheight(15vw);
+        @include vwidth(15vw);
+        @include boxShadow_ex;
         font-weight: 700;
         @include vpadding-top(1vw);
         @include vpadding-bottom(1vw);
@@ -1086,7 +1093,7 @@ body#cambiu {
     height: 10vh;
     .bestOffer {
       height: 100%;
-      width: 70%;
+      width: 65%;
       padding-left: 1em;
       color: #000;
       font-weight: 300;
@@ -1112,8 +1119,10 @@ body#cambiu {
         background: $formBlue;
         color: #fff;
         @include vmargin(2vw);
-        border-radius: 3px;
-        box-shadow: 0 1px 10px rgba(0,0,0,0.5);
+        @include vborder-radius(6vw);
+        @include vheight(12vw);
+        @include vwidth(12vw);
+        box-shadow: 0 1px 8px rgba(0,0,0,0.7);
       }
       .next {
         @include vmargin-right(-1vw);
@@ -1127,6 +1136,20 @@ body#cambiu {
         .next {
           background: $formBluePale;
         }
+      }
+    }
+    .bestOffer_save {
+      visibility: hidden;
+    }
+    .preloader-wrapper {
+      position: absolute;
+      display: none;
+      &.active {
+        display: block;
+      }
+      &.small {
+        @include vheight(11vw);
+        @include vwidth(11vw);
       }
     }
   }
@@ -1636,6 +1659,7 @@ body#cambiu {
 
   .snackbar {
     background-color: #323232;
+    background-color: $formBlue;
     color: rgba(255,255,255, 0.84);
     font-size: 14px;
     border-radius: 2px;
