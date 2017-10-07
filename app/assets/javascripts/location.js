@@ -136,8 +136,9 @@ geocode = function(locationArg) {
         geocoder.geocode({'latLng': location_latlng}, function (results, status) {
 
             if (status == google.maps.GeocoderStatus.OK) {
-                if (results[1]) {
-                    geocodeFound(results[1]);
+//                console.log('GeocodeStatus.OK. results: (going to use results[0])', results);
+                if (results[0]) {
+                    geocodeFound(results[0]);
                 } else {
                     geocodeError('no results');
                 }
@@ -149,7 +150,7 @@ geocode = function(locationArg) {
 
         function geocodeFound(result) {
 
-            console.log('geocode found');
+//            console.log('geocodeFound. result: (going to use formatted_address)', result);
 
             var location_name = result.formatted_address,
                 location_short = result.address_components[1].short_name;
@@ -160,6 +161,10 @@ geocode = function(locationArg) {
             if (sessionStorage.location_type == 'user') {
                 set('user_location', location_name);
             }
+
+            $('[data-model=user][data-field=house]').val(result.address_components[0].short_name).siblings('label').addClass('active');
+            $('[data-model=user][data-field=street]').val(result.address_components[1].short_name).siblings('label').addClass('active');
+            $('[data-model=user][data-field=city]').val(result.address_components[2].short_name).siblings('label').addClass('active');
 
             resolve(search.location);
 
