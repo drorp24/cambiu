@@ -604,4 +604,15 @@ $(document).ready(function() {
     });
 
 
+    // Update user form with updates made in isearch form
+
+    $('[data-update=user]').change(function() {
+        let $this = $(this);
+        let id = $this.attr('id');
+        let field = id.split('_')[1];
+        let value = $this.val();
+        $(`[data-model=user][data-field=${field}]`).val(value);
+    });
+
+
 });
