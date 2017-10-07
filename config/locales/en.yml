@@ -153,9 +153,12 @@ en:
       title: 'How will you arrive?'
       walk: "I'll walk"
       drive: "I'll drive"
-    delivery:
+    delivery_location:
       title: 'Where to deliver it?'
       subtitle: 'Your delivery address'
+    pickup_location:
+      title: 'Where are you now?'
+      subtitle: 'Your current address'
     payment:
       title: 'How will you pay?'
       credit: 'Credit card'

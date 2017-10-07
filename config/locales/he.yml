@@ -132,9 +132,12 @@ he:
       title: 'איך תגיעו?'
       walk: 'ברגל'
       drive: 'ברכב'
-    delivery:
+    delivery_location:
       title: 'לאן לשלוח את הכסף?'
       subtitle: 'הקלידו כתובת'
+    pickup_location:
+      title: 'מאיפה יוצאים?'
+      subtitle: 'איפה אתם עכשיו'
     payment:
       title: 'איך אתם משלמים?'
       credit: 'כרטיס אשראי'
