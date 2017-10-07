@@ -928,6 +928,14 @@ body#cambiu {
   */
 
 
+  input:focus ~ label {
+    color: $formBlue;
+  }
+
+  input[type=text]:focus:not([readonly]) {
+    border-color: $formBlue;
+  }
+
   .iform {
     .swiper-slide {
       @include vpadding-right(10vw);
