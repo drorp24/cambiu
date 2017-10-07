@@ -1051,6 +1051,12 @@ body#cambiu {
     @include vfont-size(4vw);
     font-weight: 300;
     margin-bottom: 8vh;
+    text-align: center;
+    width: 75%;
+  }
+
+  [data-hash=delivery_location] .iform_subtitle {
+    width: 58%;
   }
 
   .swiper-slide.branch .iform_subtitle {

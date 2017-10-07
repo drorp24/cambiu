@@ -119,10 +119,10 @@ he:
   isearch:
     get:
       title: 'מה אתם צריכים?'
-      subtitle: 'הזינו מטבע וכמות'
+      subtitle: 'איזה מטבע וכמה'
     pay:
-      title: 'עם מה משלמים?'
-      subtitle: 'המטבע שאתם מחזיקים'
+      title: 'מה מחליפים?'
+      subtitle: 'המטבע שאיתו תשלמו'
     service:
       title: 'איך תרצו לקבל את הכסף?'
       subtitle: 'לחצו על הבחירה שלכם'
@@ -134,10 +134,10 @@ he:
       drive: 'ברכב'
     delivery_location:
       title: 'לאן לשלוח את הכסף?'
-      subtitle: 'הקלידו כתובת'
+      subtitle: 'אשרו או תקנו את הכתובת ואנו נשלח לשם את הכסף'
     pickup_location:
-      title: 'מאיפה יוצאים?'
-      subtitle: 'איפה אתם עכשיו'
+      title: 'איפה אתם?'
+      subtitle: 'אשרו את מיקומכם, כדי שנמצא את ההצעה הטובה ביותר בקירבתכם!'
     payment:
       title: 'איך אתם משלמים?'
       credit: 'כרטיס אשראי'

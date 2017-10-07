@@ -155,10 +155,10 @@ en:
       drive: "I'll drive"
     delivery_location:
       title: 'Where to deliver it?'
-      subtitle: 'Your delivery address'
+      subtitle: 'Confirm or correct your delivery address'
     pickup_location:
-      title: 'Where are you now?'
-      subtitle: 'Your current address'
+      title: 'Where are you?'
+      subtitle: 'Confirm location, so we can find the best offer around you!'
     payment:
       title: 'How will you pay?'
       credit: 'Credit card'
