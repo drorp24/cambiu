@@ -611,7 +611,7 @@ $(document).ready(function() {
         let id = $this.attr('id');
         let field = id.split('_')[1];
         let value = $this.val();
-        $(`[data-model=user][data-field=${field}]`).val(value);
+        $(`[data-model=user][data-field=${field}]`).val(value).siblings('label').addClass('active');
     });
 
 
