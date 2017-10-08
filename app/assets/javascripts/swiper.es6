@@ -136,7 +136,9 @@ $(document).ready(function() {
     };
 
     $('.swiper-slide.branch [data-slideto]').on('click tap', function() {
-        swiperIslideForward($(this))
+        let $this = $(this);
+        set($this.data('property'), $this.data('value'), 'manual');
+        swiperIslideForward($this)
     });
 
     $('.iformsprogressbar .navigation .next').on('click tap', function() {

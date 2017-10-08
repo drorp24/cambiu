@@ -502,10 +502,13 @@ $(document).ready(function() {
             $('body').removeClass('pickup').addClass('delivery');
             $('form.selection .inline_params_delivery').addClass('open');
             sessionStorage.service_type = 'delivery';
+            $('[data-model=search][data-field=service_type]').val('delivery');
 
             $('form.selection #delivery_ind').prop('checked',true);
             $('#payment_method_credit').prop("checked", true);
             setPaymentMethodTo('credit');
+
+            set('radius', 100);
 
         } else if (service_type == 'pickup') {
 
@@ -513,10 +516,11 @@ $(document).ready(function() {
             $('body').removeClass('delivery').addClass('pickup');
             $('.inline_params_delivery').removeClass('open');
             sessionStorage.service_type = 'pickup';
+            $('[data-model=search][data-field=service_type]').val('pickup');
 
             $('form.selection #delivery_ind').prop('checked',false);
             if (value_of('payment_method') == 'credit') setPaymentMethodTo('cash');
-        }
+            }
 
     };
 
@@ -553,6 +557,7 @@ $(document).ready(function() {
 
         $(`form.selection .payment_method[value=${payment_method}]`).prop('checked', true);
         sessionStorage.payment_method = payment_method;
+        $('[data-model=search][data-field=payment_method]').val(payment_method);
         if (payment_method == 'cash') setServiceTypeTo('pickup');
         $('form.selection').removeClass(otherPaymentMethod(payment_method)).addClass(payment_method);
         $('body').removeClass(otherPaymentMethod(payment_method)).addClass(payment_method);

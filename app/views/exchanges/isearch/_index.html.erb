@@ -19,101 +19,32 @@
         <%= render '/exchanges/isearch/delivery_offer' %>
         <%= render '/exchanges/isearch/pickup_offer' %>
 
+        <div class="hidden">
 
+          <input type="hidden" name="search[service_type]"    id="service_type"     data-model="search" data-field="service_type">
+          <input type="hidden" name="search[payment_method]"  id="payment_method"   data-model="search" data-field="payment_method">
+          <input type="hidden" name="search[radius]"          id="radius"           data-model="search" data-field="radius">
 
-
-
-
-
-        <div class="search_section fulfillment">
-          <div class="narrow search_line flex_center">
-
-            <div class="md-form delivery full_width">
-              <div class="switch full_width flex_between">
-                <label for="delivery_ind"><%= t 'search.deliveryTitle' %></label>
-                <label class="switch_form">
-                  <input id="delivery_ind" class="service_type" name="search[service_type]" type="checkbox"  value="delivery" checked="checked">
-                  <span class="lever"></span>
-                </label>
-              </div>
-            </div>
-
-          </div>
-
-
-
-
-          <div class="hidden">
-
-            <input type="hidden" name="search[location_lat]"    id="location_lat"     data-model="search" data-field="location_lat">
-            <input type="hidden" name="search[location_lng]"    id="location_lng"     data-model="search" data-field="location_lng">
-            <input type="hidden" name="search[location_type]"   id="location_type"    data-model="search" data-field="location_type">
-            <input type="hidden" name="search[location_reason]" id="location_reason"  data-model="search" data-field="location_reason">
-            <input type="hidden" name="search[user_lat]"        id="user_lat"         data-model="search" data-field="user_lat">
-            <input type="hidden" name="search[user_lng]"        id="user_lng"         data-model="search" data-field="user_lng">
-            <input type="hidden" name="search[user_location]"   id="user_location"    data-model="search" data-field="user_location">
-            <input type="hidden" name="search[country]"         id="country"          data-model="search" data-field="country">
-            <input type="hidden" name="search[city]"            id="city"             data-model="search" data-field="city">
-            <input type="hidden" name="search[trans]"           id="transaction"      data-model="search" data-field="transaction">
-            <input type="hidden" name="search[calculated]"      id="calculated"       data-model="search" data-field="calculated">
-            <input type="hidden" name="search[exchange_id]"     id="exchange_id"      data-model="search" data-field="exchange_id">
-            <input type="hidden" name="search[values]"          id="values"           data-model="search" data-field="values">
-
-            <input type="hidden" id="credit_charge" data-autonumeric="true" data-symbolsource="pay_currency" data-model="search" data-field="credit_charge">
-            <input type="hidden" id="delivery_charge" data-autonumeric="true" data-symbolsource="pay_currency" data-model="search" data-field="delivery_charge">
-
-          </div>
-
+          <input type="hidden" name="search[location_lat]"    id="location_lat"     data-model="search" data-field="location_lat">
+          <input type="hidden" name="search[location_lng]"    id="location_lng"     data-model="search" data-field="location_lng">
+          <input type="hidden" name="search[location_type]"   id="location_type"    data-model="search" data-field="location_type">
+          <input type="hidden" name="search[location_reason]" id="location_reason"  data-model="search" data-field="location_reason">
+          <input type="hidden" name="search[user_lat]"        id="user_lat"         data-model="search" data-field="user_lat">
+          <input type="hidden" name="search[user_lng]"        id="user_lng"         data-model="search" data-field="user_lng">
+          <input type="hidden" name="search[user_location]"   id="user_location"    data-model="search" data-field="user_location">
+          <input type="hidden" name="search[country]"         id="country"          data-model="search" data-field="country">
+          <input type="hidden" name="search[city]"            id="city"             data-model="search" data-field="city">
+          <input type="hidden" name="search[trans]"           id="transaction"      data-model="search" data-field="transaction">
+          <input type="hidden" name="search[calculated]"      id="calculated"       data-model="search" data-field="calculated">
+          <input type="hidden" name="search[exchange_id]"     id="exchange_id"      data-model="search" data-field="exchange_id">
+          <input type="hidden" name="search[values]"          id="values"           data-model="search" data-field="values">
+<!--
+          <input type="hidden" id="credit_charge" data-autonumeric="true" data-symbolsource="pay_currency" data-model="search" data-field="credit_charge">
+          <input type="hidden" id="delivery_charge" data-autonumeric="true" data-symbolsource="pay_currency" data-model="search" data-field="delivery_charge">
+-->
         </div>
-
-
-        <ul class="stepper stepper-horizontal">
-          <li class="completed">
-            <a href="#!">
-              <span class="circle">3</span>
-              <span class="label"><%= t 'search.heading3' %></span>
-            </a>
-          </li>
-        </ul>
-
-
-        <div class="search_section payment">
-
-          <div class="search_line form-inline payment_method_selection flex_between">
-
-            <label class="form-group"><%= t 'search.method' %></label>
-
-            <fieldset class="form-group flex_center">
-              <input class="payment_method" name="search[payment_method]" type="radio" id="payment_method_cash" checked="checked" value="cash">
-              <label for="payment_method_cash"><%= t 'search.cash' %></label>
-            </fieldset>
-
-            <fieldset class="form-group flex_center">
-              <input class="payment_method" name="search[payment_method]" type="radio" id="payment_method_credit" value="credit">
-              <label for="payment_method_credit"><%= t 'search.credit' %></label>
-            </fieldset>
-
-          </div>
-
-
-        </div>
-
-
-        <div class="narrow search_line invoke flex_center">
-
-              <button type="submit" class="blue primary btn waves-effect" data-ajax="searches"
-                      data-t-pickup="<%= t 'search.button.pickup' %>"
-                      data-t-delivery="<%= t 'search.button.delivery' %>"
-                      data-t-toOrder="<%= t 'search.button.toOrder' %>"
-              >
-              </button>
-
-        </div>
-
 
       </div>
-
-      <div class="swiper-pagination-i flex_center"></div>
 
     </div>
 

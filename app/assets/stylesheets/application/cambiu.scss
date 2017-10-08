@@ -1102,6 +1102,10 @@ body#cambiu {
     }
   }
 
+  .swiper-slide[data-hash=delivery_payment] .binary.alternative {
+    height: 35vh;
+  }
+
   .iformsprogressbar {
     height: 10vh;
     .bestOffer {
