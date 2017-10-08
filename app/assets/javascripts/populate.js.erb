@@ -425,6 +425,7 @@ populateLocalOffers = function(rates) {
 
   if (rates.worst.error) {
     $('.worst').css('visibility', 'hidden');
+    $('.bestOffer_save').empty();
   } else {
     var worst_rate = rates['worst'][transaction];
     var worst_rated_currency = rates['worst']['rated_currency'];
@@ -437,6 +438,7 @@ populateLocalOffers = function(rates) {
       $('[data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
     } else {
       $('.worst').css('visibility', 'hidden');
+      $('.bestOffer_save').empty();
     }
   }
 
