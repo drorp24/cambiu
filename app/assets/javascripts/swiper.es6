@@ -135,7 +135,7 @@ $(document).ready(function() {
 
     };
 
-    $('[data-slideto]').on('click tap', function() {
+    $('.swiper-slide.branch [data-slideto]').on('click tap', function() {
         swiperIslideForward($(this))
     });
 
@@ -150,7 +150,7 @@ $(document).ready(function() {
         e.preventDefault();
         let $slide = $(this).closest('.swiper-slide');
         if (!$slide.hasClass('missing')) {
-            swiperIslideForward(swiperIactiveSlide());
+            swiperIslideForward($slide);
             wait(200).then(() => {$slide.addClass('okayed');});
         }
 
