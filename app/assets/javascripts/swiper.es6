@@ -153,15 +153,12 @@ $(document).ready(function() {
         swiperI.unlockSwipeToNext();
         var $this = $(this);
         var hash = $this.data('slideto');
-        console.log('target hash:', hash);
         let $target = $(`.swiper-container-i [data-hash=${hash}]`);
-        if ($target.length) {
-            console.log('$target: ', $target[0]);
-        } else {
+        if (!$target.length)  {
             console.error('Error: target not found!');
             return;
         }
-        let index = $target.data('index');
+        let index = $('[data-hash]').index($(`[data-hash=${hash}]`));
         wait(300).then(()=> {swiperI.slideTo(index)});
 
     });
