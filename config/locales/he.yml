@@ -122,7 +122,7 @@ he:
       subtitle: 'איזה מטבע וכמה'
     pay:
       title: 'מה מחליפים?'
-      subtitle: 'המטבע שאיתו תשלמו'
+      subtitle: 'המטבע איתו תשלמו'
     service:
       title: 'איך תרצו לקבל את הכסף?'
       subtitle: 'לחצו על הבחירה שלכם'
@@ -138,12 +138,23 @@ he:
     pickup_location:
       title: 'איפה אתם?'
       subtitle: 'אשרו את מיקומכם, כדי שנמצא את ההצעה הטובה ביותר בקירבתכם!'
-    payment:
+    delivery_payment:
+      title: 'התשלום בכרטיס אשראי'
+      subtitle: 'לחצו כדי לאשר'
+    pickup_payment:
       title: 'איך אתם משלמים?'
+      subtitle: 'בחרו שיטת תשלום'
+    payment:
       credit: 'כרטיס אשראי'
       cash: 'מזומן'
+    delivery_offer:
+      title: 'יש לנו הצעה בשבילכם...'
+      subtitle: ''
+    pickup_offer:
+      title: 'יש לנו הצעה בשבילכם...'
+      subtitle: ''
     bar:
       gain: 'חסכו:'
       specifyValue: 'אנא מלאו ערך'
       select: 'לחצו על הבחירה שלכם'
-      okayRequired: 'צריכים בדיוק xxx? <br> תקנו אם צריך ולחצו OK כדי להמשיך'
+      okayRequired: 'תקנו אם צריך ואשרו ב-OK'

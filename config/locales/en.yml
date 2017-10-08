@@ -159,12 +159,23 @@ en:
     pickup_location:
       title: 'Where are you?'
       subtitle: 'Confirm location, so we can find the best offer around you!'
-    payment:
+    delivery_payment:
+      title: 'Card payment assumed'
+      subtitle: 'Click to confirm'
+    pickup_payment:
       title: 'How will you pay?'
+      subtitle: 'Pick payment method'
+    payment:
       credit: 'Credit card'
       cash: 'Cash'
+    delivery_offer:
+      title: 'We have an offer for you'
+      subtitle: ''
+    pickup_offer:
+      title: 'We have an offer for you'
+      subtitle: ''
     bar:
       gain: 'Save:'
       specifyValue: 'Please specify value'
       select: 'Please select'
-      okayRequired: 'Really need xxx? <br>Please OK'
+      okayRequired: 'Please correct and click OK'

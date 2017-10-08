@@ -18,7 +18,8 @@ initSwipers = function() {
         direction: 'vertical',
         slidesPerView: 1,
         hashnav: true,
-        hashnavWatchState: true
+        hashnavWatchState: true,
+        onlyExternal: true
     });
 
 
@@ -43,32 +44,6 @@ initSwipers = function() {
 
 };
 
-
-swiperIgatekeeper = function() {
-
-    let $slide = swiperIactiveSlide();
-    let pass = false;
-    let reason = null;
-
-    if ($slide.hasClass('missing')) {
-        reason = 'specifyValue'
-    } else
-    if ($slide.hasClass('okay_required') && !$slide.hasClass('okayed')) {
-        reason = 'okayRequired'
-    } else
-    if ($slide.hasClass('branch')) {
-        reason = 'select'
-    } else {
-        pass = true
-    }
-
-    return {
-        pass: pass,
-        reason: reason
-    }
-
-};
-
 progressBar = function() {
     var currIndex = swiperI.activeIndex;
     var fraction = currIndex / 8;
@@ -86,7 +61,6 @@ navigationArrows = function() {
     }
 };
 
-swiperIactiveSlide = () => $('.swiper-container-i .swiper-slide-active');
 
 
 hashReport = function() {
@@ -148,32 +122,26 @@ $(document).ready(function() {
     // iSearch navigation
     //
 
-    $('[data-slideto]').on('click tap', function() {
+    swiperIactiveSlide = () => $('.swiper-container-i .swiper-slide-active');
+
+
+    swiperIslideForward = ($e, timing=null) => {
 
         swiperI.unlockSwipeToNext();
-        var $this = $(this);
-        var hash = $this.data('slideto');
-        let $target = $(`.swiper-container-i [data-hash=${hash}]`);
-        if (!$target.length)  {
-            console.error('Error: target not found!');
-            return;
-        }
+        var hash = $e.data('slideto');
+        if (!hash) {console.error('swiperIslideForward: no data-slideto found on element'); return}
         let index = $('[data-hash]').index($(`[data-hash=${hash}]`));
-        wait(300).then(()=> {swiperI.slideTo(index)});
+        timing == 'instant' ? swiperI.slideTo(index) : wait(300).then(()=> {swiperI.slideTo(index)});
 
-    });
+    };
 
-    $('.iformsprogressbar .navigation .prev').on('click tap', function() {
-        if (!swiperI.isBeginning) window.history.back();
+    $('[data-slideto]').on('click tap', function() {
+        swiperIslideForward($(this))
     });
 
     $('.iformsprogressbar .navigation .next').on('click tap', function() {
-
         let can = swiperIgatekeeper();
-        let index = swiperI.activeIndex;
-        let value = index == 0 ?  $('#buy_amount').val() : $('#pay_currency').val();
-        (can.pass) ? swiperI.slideNext() : snack(t(can.reason, value), {klass: 'oops', timeout: 2000})
-
+        (can.pass) ? swiperIslideForward(swiperIactiveSlide(), 'instant') : snack(t(can.reason), {klass: 'oops', timeout: 1500})
     });
 
 
@@ -182,13 +150,40 @@ $(document).ready(function() {
         e.preventDefault();
         let $slide = $(this).closest('.swiper-slide');
         if (!$slide.hasClass('missing')) {
-            swiperI.unlockSwipeToNext();
-            wait(200).then(() => {
-                swiperI.slideNext();
-                $slide.addClass('okayed');
-            });
+            swiperIslideForward(swiperIactiveSlide());
+            wait(200).then(() => {$slide.addClass('okayed');});
         }
 
-    })
+    });
+
+    $('.iformsprogressbar .navigation .prev').on('click tap', function() {
+        if (!swiperI.isBeginning) window.history.back();
+    });
+
+    swiperIgatekeeper = function() {
+
+        let $slide = swiperIactiveSlide();
+        let pass = false;
+        let reason = null;
+
+        if ($slide.hasClass('missing')) {
+            reason = 'specifyValue'
+        } else
+        if ($slide.hasClass('okay_required') && !$slide.hasClass('okayed')) {
+            reason = 'okayRequired'
+        } else
+        if ($slide.hasClass('branch')) {
+            reason = 'select'
+        } else {
+            pass = true
+        }
+
+        return {
+            pass: pass,
+            reason: reason
+        }
+
+    };
+
 
 });

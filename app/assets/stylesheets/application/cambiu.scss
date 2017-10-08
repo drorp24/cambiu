@@ -1071,7 +1071,7 @@ body#cambiu {
     width: 58%;
   }
 
-  .swiper-slide.branch .iform_subtitle {
+  .swiper-slide.branch:not([data-hash=delivery_payment]) .iform_subtitle {
     margin-bottom: 0;
   }
 
