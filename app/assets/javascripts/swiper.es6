@@ -138,6 +138,7 @@ $(document).ready(function() {
     $('.swiper-slide.branch [data-slideto]').on('click tap', function() {
         let $this = $(this);
         set($this.data('property'), $this.data('value'), 'manual');
+        fetchAndPopulateLocaloffers();
         swiperIslideForward($this)
     });
 

@@ -522,6 +522,7 @@ $(document).ready(function() {
             if (value_of('payment_method') == 'credit') setPaymentMethodTo('cash');
             }
 
+            set('radius', 1.5);    // if user changes from delivery to pickup, the radius would remain 100 if not for this line. A fetchAndPopulate is instantly triggered, before the user has the chance to define the radius.
     };
 
 
