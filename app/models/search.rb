@@ -71,8 +71,8 @@ class Search < ActiveRecord::Base
   end
 
   def cached_offers
-    Rails.cache.fetch("#{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{bias_exchange_id || 'no_exchange'}", expires_in: 0.5.hour) do
-      puts "Not cached yet: inside exchanges for #{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type || 'pickup'}-#{payment_method}-#{bias_exchange_id || 'no_exchange'}"
+    Rails.cache.fetch("#{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type}-#{payment_method}-#{radius}-#{bias_exchange_id || 'no_bias'}", expires_in: 0.5.hour) do
+      puts "Not cached yet: inside exchanges for #{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type}-#{payment_method}-#{radius}-#{bias_exchange_id || 'no_bias'}"
       uncached_offers
     end
   end
@@ -100,8 +100,8 @@ class Search < ActiveRecord::Base
     pay_rate          = (pay.currency.iso_code.downcase + '_rate').to_sym
     buy_rate          = (buy.currency.iso_code.downcase + '_rate').to_sym
 
-    result_service_type   = service_type.capitalize
-    result_payment_method = payment_method.capitalize
+    self.result_service_type   = service_type.capitalize
+    self.result_payment_method = payment_method.capitalize
 
 
     exchanges = Exchange.active.geocoded.
@@ -186,12 +186,14 @@ class Search < ActiveRecord::Base
 
        {
           request: {
-              service_type: service_type,
-              payment_method: payment_method
+              service_type: service_type.capitalize,
+              payment_method: payment_method.capitalize,
+              radius: radius
           },
           result: {
               service_type: self.result_service_type,
-              payment_method: self.result_payment_method
+              payment_method: self.result_payment_method,
+              distance: best_offer[:distance]
           },
            best: {
               buy:   best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,    # this structure was left for backward-compatibility with fe only
