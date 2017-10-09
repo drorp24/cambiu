@@ -443,7 +443,7 @@ populateLocalOffers = function(rates) {
   }
 
   // Bias the next search to come to prefer this exchange_id over another with the same grade
-  $('form.selection [data-model=search][data-field=exchange_id]').val(best_exchange_id);
+  $('form.selection [data-model=search][data-field=bias_exchange_id]').val(best_exchange_id);
 
   return(best_value);
 

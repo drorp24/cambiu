@@ -7,7 +7,8 @@ class Exchange < ActiveRecord::Base
 
   include ::NewRelic::Agent::MethodTracer
 
-  has_many :searches
+  has_many :search_biases, class_name: "Search", foreign_key: "bias_exchange_id"
+  has_many :search_results, class_name: "Search", foreign_key: "result_exchange_id"
   has_many :orders
 #  has_many :rates, through: :chain, as: :ratable
 

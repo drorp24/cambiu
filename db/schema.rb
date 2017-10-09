@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170915184226) do
+ActiveRecord::Schema.define(version: 20171008224926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -245,29 +245,21 @@ ActiveRecord::Schema.define(version: 20170915184226) do
   end
 
   create_table "searches", force: :cascade do |t|
-    t.string   "pay_currency",    limit: 255
-    t.string   "buy_currency",    limit: 255
-    t.string   "pay_amount",      limit: 255
-    t.string   "buy_amount",      limit: 255
-    t.string   "location",        limit: 255
-    t.string   "user_lat",        limit: 255
-    t.string   "user_lng",        limit: 255
-    t.string   "user_location",   limit: 255
-    t.decimal  "distance"
-    t.string   "distance_unit",   limit: 255
-    t.string   "sort",            limit: 255
+    t.string   "pay_currency",          limit: 255
+    t.string   "buy_currency",          limit: 255
+    t.string   "pay_amount",            limit: 255
+    t.string   "buy_amount",            limit: 255
+    t.string   "location",              limit: 255
+    t.string   "user_lat",              limit: 255
+    t.string   "user_lng",              limit: 255
+    t.string   "user_location",         limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "page",            limit: 255
-    t.string   "rest",            limit: 255
-    t.string   "location_short",  limit: 255
-    t.string   "email",           limit: 255
-    t.string   "host",            limit: 255
-    t.integer  "exchange_id"
+    t.string   "location_short",        limit: 255
     t.float    "location_lat"
     t.float    "location_lng"
-    t.string   "location_type",   limit: 255
-    t.integer  "service_type",                default: 0
+    t.string   "location_type",         limit: 255
+    t.integer  "service_type",                      default: 0
     t.string   "location_reason"
     t.string   "city"
     t.string   "country"
@@ -275,10 +267,16 @@ ActiveRecord::Schema.define(version: 20170915184226) do
     t.integer  "payment_method"
     t.string   "trans"
     t.integer  "user_id"
-    t.float    "best_grade"
     t.integer  "mode"
     t.integer  "values"
-    t.index ["exchange_id"], name: "index_searches_on_exchange_id", using: :btree
+    t.float    "radius"
+    t.integer  "bias_exchange_id"
+    t.integer  "result_exchange_id"
+    t.float    "result_grade"
+    t.integer  "result_service_type"
+    t.integer  "result_payment_method"
+    t.index ["bias_exchange_id"], name: "index_searches_on_bias_exchange_id", using: :btree
+    t.index ["result_exchange_id"], name: "index_searches_on_result_exchange_id", using: :btree
     t.index ["user_id"], name: "index_searches_on_user_id", using: :btree
   end
 

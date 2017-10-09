@@ -27,6 +27,7 @@ ActiveAdmin.register Search do
     column :pay_currency
     column :buy_amount
     column :buy_currency
+    column :user_location
     column 'Search Location', :location
     column :location_type
     column :location_reason
@@ -36,7 +37,7 @@ ActiveAdmin.register Search do
       link_to status_tag(count.to_s + ' issue'.pluralize(count), class: :red), admin_search_issues_path(search) if count > 0
     end
     column 'Best' do |search|
-      link_to search.exchange.name, edit_admin_exchange_path(search.exchange_id) if search.exchange_id
+      link_to search.result_exchange.name, edit_admin_exchange_path(search.result_exchange_id) if search.result_exchange_id
     end
     column 'Created' do |search|
       search.created_at.in_time_zone("Jerusalem")

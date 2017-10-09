@@ -161,12 +161,12 @@ def_vals = function() {
     def['pay_currency']     = 'ILS';
     def['buy_amount']       = 1000;
     def['buy_currency']     = 'USD';
-//    def['service_type']     = 'delivery';
-//    def['payment_method']   = 'credit';
+    def['service_type']     = 'delivery';
+    def['payment_method']   = 'credit';
     def['user_lat']         = dfault.lat;
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
-//    def['radius']           = '1';
+    def['radius']           = '100';
     def['values']           = 'default';
 
     return def;
