@@ -184,6 +184,7 @@ class Search < ActiveRecord::Base
 
     if mode == 'best'
 
+
        {
           request: {
               service_type: service_type.capitalize,
@@ -195,11 +196,8 @@ class Search < ActiveRecord::Base
               payment_method: self.result_payment_method,
               distance: best_offer[:distance]
           },
-           best: {
-              buy:   best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,    # this structure was left for backward-compatibility with fe only
-              sell:  best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,
-              mixed: best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil
-          },
+          best:
+              best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,
           worst:
               Exchange.bad_rate(country, buy_currency, pay_currency, trans, pay_currency),
           count: count,

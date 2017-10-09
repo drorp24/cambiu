@@ -362,9 +362,8 @@ fetchAndPopulateLocaloffers = function() {
 // Called after the initial fetchLocalRates and then after every changing key stroke
 populateLocalOffers = function(rates) {
 
-  if (!rates || rates.error || $.isEmptyObject(rates.best.buy) || $.isEmptyObject(rates.best.sell) || rates.best.buy.error || rates.best.sell.error) {
+  if (!rates || rates.error || rates.best.error) {
     clearLocalOffers();
-    if (rates.error) console.error(rates.error);
     snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'search'}});
     return(null);
   }
@@ -408,28 +407,27 @@ populateLocalOffers = function(rates) {
 
   var transaction = value_of('transaction');
 
-  var best_rate = rates['best'][transaction][transaction];
-  var best_rated_currency = rates['best'][transaction]['rated_currency'];
-  var best_exchange_id = rates['best'][transaction]['exchange_id'];
-  console.log('best_exchange_id: ', best_exchange_id);
+  var best = rates.best;
+  var best_rate = best[transaction];
 
-  var bank_fee = rates['worst']['bank_fee'] || 0;
+  var worst = rates.worst;
+  var worst_rate = worst[transaction];
+  var bank_fee = worst.bank_fee || 0;
+
   var populated_value = clean(value_of(other(calculated)));
   var calculated_currency = value_of(twin(calculated));
-  var best_value = best_rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
+  var best_value = best.rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
   var bank_factor = calculated == 'buy_amount' ? (100 - bank_fee)/100 : (100 + bank_fee)/100;
 
 
   formElement(calculated).autoNumeric('set', best_value);
   $('[data-model=local][data-field=count]').html(rates['count']);
 
-  if (rates.worst.error) {
+  if (worst.error) {
     $('.worst').css('visibility', 'hidden');
     $('.bestOffer_save').empty();
   } else {
-    var worst_rate = rates['worst'][transaction];
-    var worst_rated_currency = rates['worst']['rated_currency'];
-    var worst_value_before_fee = worst_rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
+    var worst_value_before_fee = worst.rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
     var worst_value = worst_value_before_fee * bank_factor;
     var gain_value = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
     if (gain_value > 0) {
@@ -442,26 +440,10 @@ populateLocalOffers = function(rates) {
     }
   }
 
-  // Bias the next search to come to prefer this exchange_id over another with the same grade
-  $('form.selection [data-model=search][data-field=bias_exchange_id]').val(best_exchange_id);
+  // Bias upcoming search towards this exchange_id over another with the same grade
+  $('form.selection [data-model=search][data-field=bias_exchange_id]').val(best.exchange_id);
 
   return(best_value);
-
-
-  /*
-   // If I ever want to show the extra charges somewhere then this is the calculation
-   // For comparison with bad rate, however, charges must be shown net of charges, as banks have no delivery charges
-   var pay_amount = clean($('form.selection [data-model=search][data-field=pay_amount]').val());
-   console.log('pay_amount: ' + pay_amount);
-   var delivery_charge = rates['best'][transaction]['delivery_charge'] || 0;
-   console.log('delivery charge: ' + delivery_charge);
-   var cc_fee = rates['best'][transaction]['cc_fee'] || 0;
-   var credit_charge = (pay_amount + delivery_charge)* cc_fee / 100.0;
-   console.log('credit charge: ' + credit_charge);
-   var total_amount = pay_amount + delivery_charge + credit_charge;  // Assumption: the pay_currency is the local.currency (open issue)
-   console.log('about to update pay_amount with ' + total_amount);
-   */
-
 
 };
 
@@ -472,6 +454,7 @@ clearLocalOffers = function() {
   $('[data-model=local][data-field=worst_saving]').autoNumeric('set', 0);
 };
 
+/*
 updateExchangeOffer = function(rates) {
 
   var transaction = value_of('transaction');
@@ -501,6 +484,7 @@ updateExchangeOffer = function(rates) {
   if (gain_value < 0) $('.search_line .worst').css('visibility', 'hidden');
 
 };
+*/
 
 
 
