@@ -23,14 +23,16 @@ ActiveAdmin.register Search do
     end
     column :user_location
 =end
-    column :pay_amount
-    column :pay_currency
-    column :buy_amount
-    column :buy_currency
     column :user_location
     column 'Search Location', :location
-    column :location_type
-    column :location_reason
+    column 'Service Type' do |search|
+      search.service_type.capitalize
+    end
+    column 'Payment Method' do |search|
+      search.payment_method.capitalize
+    end
+    column :result_service_type
+    column :result_payment_method
     column 'Issues' do |search|
       count = search.issues.count
 #      status_tag(count, :red) if count > 0
