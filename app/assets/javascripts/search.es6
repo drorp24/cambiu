@@ -236,10 +236,11 @@ $(document).ready(function() {
     };
 
     $('[data-ajax=searches]').click(function(e) {
+        let $this = $(this);
         e.preventDefault();
-        if (!$(this).is('[data-ajax=searches]')) return;   // absurd but required: button changed attributes but unneeded event still bound
-        if (inputValid()) {
-            report('Click', 'Get offer', bestOffer());
+        if (!$this.is('[data-ajax=searches]')) return;   // absurd but required: button changed attributes but unneeded event still bound
+        if (inputValid() || $this.is('[data-validate=false]')) {
+            report('Click', $this.html(), bestOffer());
             search_and_show_and_render()
         }
     });
@@ -342,36 +343,6 @@ $(document).ready(function() {
 
 
 
-    // Radius slider interaction
-
-/*
-    function updateRadius ( values, handle, unencoded, tap, positions ) {
-        // values: Current slider values;
-        // handle: Handle that caused the event;
-        // unencoded: Slider values without formatting;
-        // tap: Event was caused by the user tapping the slider (boolean);
-        // positions: Left offset of the handles in relation to the slider
-        radius.value = unencoded[0].toFixed(3);
-        set('radius', radius.value);
-    }
-
-
-    slider.noUiSlider.on('update', updateRadius);
-
-    slider.noUiSlider.on('end', function() {
-        report('Tap', 'Radius');
-    });
-
-    slider.noUiSlider.on('change', function ( values, handle, unencoded ) {
-        if ( unencoded[0] < 0.1 ) {
-            slider.noUiSlider.set(0.1);
-        } else if ( unencoded[0] > 5 ) {
-            slider.noUiSlider.set(5);
-        }
-    });
-*/
-
-
     $('form .location .clear').click(function() {
         if (!$(this).parent().find('input#location').prop('disabled')) {
             set('location', '')
@@ -469,6 +440,7 @@ $(document).ready(function() {
     });
 
 
+/*
     $('form .service_type').change(function() {
         var $this = $(this);
         snackHide();
@@ -487,13 +459,9 @@ $(document).ready(function() {
 
         report('Set', 'Service type', null, service_type);
         set('values', 'user');
-    });
 
-    $('.close_inline_params').on('click tap', function(e) {
-        e.preventDefault();
-        $(this).closest('.inline_params_delivery').removeClass('open')
     });
-
+ */
 
     setServiceTypeTo = function(service_type) {
         if (service_type == 'delivery') {
@@ -520,9 +488,9 @@ $(document).ready(function() {
 
             $('form.selection #delivery_ind').prop('checked',false);
             if (value_of('payment_method') == 'credit') setPaymentMethodTo('cash');
+            if (value_of('radius') == 100) set('radius', 1.5);    // if user changes from delivery to pickup, the radius would remain 100 if not for this line. A fetchAndPopulate is instantly triggered, before the user has the chance to define the radius.
             }
 
-            set('radius', 1.5);    // if user changes from delivery to pickup, the radius would remain 100 if not for this line. A fetchAndPopulate is instantly triggered, before the user has the chance to define the radius.
     };
 
 
@@ -530,6 +498,7 @@ $(document).ready(function() {
         return method == 'cash' ? 'credit' : 'cash'
     }
 
+/*
     $('form .payment_method').change(function() {
         snackHide();
         var new_payment_method = $('form.selection .payment_method:checked').val();
@@ -553,6 +522,7 @@ $(document).ready(function() {
         report('Set', 'Payment method', null, new_payment_method);
         set('values', 'user');
     });
+*/
 
     setPaymentMethodTo = function(payment_method) {
 
@@ -572,6 +542,7 @@ $(document).ready(function() {
     };
 
 
+/*
     $('[data-action=updateOrder]').click(function(e) {
 
         e.preventDefault();
@@ -594,6 +565,7 @@ $(document).ready(function() {
 
 
     });
+*/
 
     $('.language_select').on('click tap', function() {
         console.log('language select');
