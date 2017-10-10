@@ -450,8 +450,8 @@ bestOffer = () => {
     };
     let transaction = value_of('transaction');
     if (!transaction) return result;
-    if (!local || objEmpty(local) || !local.rates || !local.rates.best || !local.rates.best[transaction]) return result;
-    let best = local.rates.best[transaction];
+    if (!local || objEmpty(local) || !local.rates || !local.rates.best ) return result;
+    let best = local.rates.best;
     return {
         id: best.exchange_id,
         name: best.name
