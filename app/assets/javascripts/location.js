@@ -37,6 +37,8 @@ getUserLocation = function() {
 
         function positionError(error) {
 
+            $('.bestOffer').css('visibility', 'hidden');
+
             var message = error.message ? error.message : error;
             console.log('user position error:', message);
 
