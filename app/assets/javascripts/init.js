@@ -151,6 +151,7 @@ var inIframe = false;
 var locale;
 var activeSnackbars = 0;
 var pendingSnack = {};
+var radius = {delivery: 100, pickup: {drive: 10, walk: 0.75}};
 
 
 def_vals = function() {
