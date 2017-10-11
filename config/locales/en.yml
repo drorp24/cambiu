@@ -168,12 +168,11 @@ en:
     payment:
       credit: 'Credit card'
       cash: 'Cash'
-    delivery_offer:
-      title: 'We have an offer for you'
+    offer:
+      title: 'We have an offer...'
       subtitle: ''
-    pickup_offer:
-      title: 'We have an offer for you'
-      subtitle: ''
+    button:
+      text: 'Details'
     bar:
       gain: 'Save:'
       specifyValue: 'Please specify value'

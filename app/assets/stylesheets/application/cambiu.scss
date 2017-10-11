@@ -412,8 +412,13 @@ $exchange_summary_bg_img_height_mobile: 75px;
   */
 }
 
+@mixin mdb_boxShadow {
+  box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+}
+
+
 @mixin boxShadow_ex {
-  box-shadow: 0 3px 10px rgba(0,0,0,0.7);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.65);
 }
 
 @mixin boxShadow {
@@ -1104,6 +1109,11 @@ body#cambiu {
 
   .swiper-slide[data-hash=delivery_payment] .binary.alternative {
     height: 35vh;
+  }
+
+
+  .button_to_offer .btn {
+    @include vfont-size(5vw);
   }
 
   .iformsprogressbar {

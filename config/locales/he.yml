@@ -147,12 +147,11 @@ he:
     payment:
       credit: 'כרטיס אשראי'
       cash: 'מזומן'
-    delivery_offer:
+    offer:
       title: 'יש לנו הצעה בשבילכם...'
       subtitle: ''
-    pickup_offer:
-      title: 'יש לנו הצעה בשבילכם...'
-      subtitle: ''
+    button:
+      text: 'לפרטים'
     bar:
       gain: 'חסכו:'
       specifyValue: 'אנא מלאו ערך'
