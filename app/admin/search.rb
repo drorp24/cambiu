@@ -9,13 +9,13 @@ ActiveAdmin.register Search do
   scope :other
   scope :empty
 
-  config.batch_actions = true
+  config.batch_actions = false
 
   index do
-    selectable_column
+#    selectable_column
     id_column
-    column 'Mode' do |search|
-      search.mode.capitalize if search.mode
+    column 'Reason' do |search|
+      "#{search.change_field} set to #{search.change_to}" if search.change_field.present? and search.change_to.present?
     end
 =begin
     column 'User' do |search|
@@ -42,7 +42,7 @@ ActiveAdmin.register Search do
       link_to search.result_exchange.name, edit_admin_exchange_path(search.result_exchange_id) if search.result_exchange_id
     end
     column 'Created' do |search|
-      search.created_at.in_time_zone("Jerusalem")
+      search.created_at.in_time_zone("Jerusalem").strftime("%-d %b %k:%M")
     end
   end
 
