@@ -137,6 +137,8 @@ $(document).ready(function() {
 
     $('.swiper-slide.branch [data-slideto]').on('click tap', function() {
         let $this = $(this);
+//        console.log(`changed ${$this.data('property')} from ${value_of($this.data('property'))} to ${$this.data('value')}`);
+        set_change($this.data('property'), value_of($this.data('property')), $this.data('value'));
         set($this.data('property'), $this.data('value'), 'manual');
         fetchAndPopulateLocaloffers();
         swiperIslideForward($this)

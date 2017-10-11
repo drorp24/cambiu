@@ -168,7 +168,6 @@ def_vals = function() {
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
     def['radius']           = '100';
-    def['values']           = 'default';
 
     return def;
 
@@ -193,8 +192,7 @@ var searchParams = [
     'location_reason',
     'location_lat',
     'location_lng',
-    'radius',
-    'values'
+    'radius'
 ];
 
 searchable = function(field) {
@@ -450,38 +448,6 @@ $(document).ready(function() {
     streetviewWidth       = mobile ? $('body').width().toFixed() : ($('body').width() / 3).toFixed();
     streetviewHeight      = mobile ? (window.innerHeight / 2).toFixed() : (streetviewWidth / 2).toFixed();
 
-/*
-    var slider = document.getElementById('slider');
-    var radius = document.getElementById('radius');
-
-    noUiSlider.create(slider, {
-        connect: [true, false],
-        start: Number(def('radius')),
-        range: {
-            min: 0,
-            max: 5
-        },
-        pips: {
-            mode: 'values',
-            values: [0, 1, 2, 3, 4, 5],
-            density: 10
-        },
-        tooltips: [true],
-        format: {
-            to: function ( value ) {
-//                if (value < 1) {
-                    return (value * 1000).toFixed() + ' m';
-//                } else {
-//                    return value.toFixed() + ' Km';
-//                }
-            },
-            from: function ( value ) {
-                return value.replace(' Km', '');
-            }
-        }
-
-    });
-*/
 
     initSwipers();
 

@@ -46,7 +46,10 @@ $(document).ready(function() {
                 return;
             }
 
+//            console.log(`changed currency from ${value_of(field)} to ${value}`);
+            set_change(field, value_of(field), value);
             set(field, value, 'manual');
+
             populateTransaction();
             fetchAndPopulateLocaloffers();
 
@@ -185,6 +188,7 @@ $(document).ready(function() {
 
         if (prev_calculated !== calculated) {
             console.log('calculated has just changed. Fetching local offers');
+            set_change('calculated', prev_calculated, calculated);
             fetchAndPopulateLocaloffers();
         }
 
@@ -345,7 +349,8 @@ $(document).ready(function() {
 
     $('form .location .clear').click(function() {
         if (!$(this).parent().find('input#location').prop('disabled')) {
-            set('location', '')
+//            set('location', '')    only form gets cleared as we need to remember the location to report its previous value when location change is reported (location.js)
+            $('[data-model=search][data-field=location]').val("");
         }
     });
 
@@ -489,7 +494,7 @@ $(document).ready(function() {
             $('form.selection #delivery_ind').prop('checked',false);
             if (value_of('payment_method') == 'credit') setPaymentMethodTo('cash');
             if (value_of('radius') == radius.delivery) set('radius', radius.pickup.walk);    // if user changes from delivery to pickup, the radius would remain 100 if not for this line. A fetchAndPopulate is instantly triggered, before the user has the chance to define the radius.
-        ]}
+        }
 
     };
 
@@ -538,6 +543,7 @@ $(document).ready(function() {
     revertToPickupCash = function() {
         setServiceTypeTo('pickup');
         setPaymentMethodTo('cash');
+        set_change('service_type_payment_method', 'derlivery_credit', 'pickup_cash');
         fetchAndPopulateLocaloffers();
     };
 
