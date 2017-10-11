@@ -185,6 +185,7 @@ class Search < ActiveRecord::Base
 
 
        {
+          search: self.id,
           request: {
               service_type: service_type.capitalize,
               payment_method: payment_method.capitalize,

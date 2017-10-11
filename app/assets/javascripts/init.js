@@ -168,6 +168,8 @@ def_vals = function() {
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
     def['radius']           = '100';
+    def['change_field']     = 'fields';
+    def['change_to']        = 'default values';
 
     return def;
 
@@ -192,7 +194,9 @@ var searchParams = [
     'location_reason',
     'location_lat',
     'location_lng',
-    'radius'
+    'radius',
+    'change_field',
+    'change_to'
 ];
 
 searchable = function(field) {
