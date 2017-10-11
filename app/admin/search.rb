@@ -36,6 +36,9 @@ ActiveAdmin.register Search do
     column 'Result Exchange' do |search|
       link_to search.result_exchange.name, edit_admin_exchange_path(search.result_exchange_id) if search.result_exchange_id
     end
+    column(:cached) do |search|
+      search.result_cached ? "yes" : ""
+    end
     column 'Issues' do |search|
       count = search.issues.count
 #      status_tag(count, :red) if count > 0

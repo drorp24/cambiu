@@ -47,11 +47,31 @@ class Search < ActiveRecord::Base
 
 #      Exchange.cache_clear
 
+      response = {}
       if location.present?
-        cached_offers
+        response = cached_offers
       else
-        uncached_offers
+        response = uncached_offers
       end
+
+      if mode == 'best'
+        puts 'response[:search]: ' + response[:search].to_s
+      end
+
+      if mode == 'best' && response && response[:result]
+        self.result_service_type     = response[:result][:service_type]
+        self.result_payment_method   = response[:result][:payment_method]
+        self.result_exchange_id      = response[:result][:exchange_id]
+        self.result_name             = response[:result][:name]
+        self.result_grade            = response[:result][:grade]
+        self.result_distance         = response[:result][:distance]
+        if response[:search] && response[:search] < self.id
+          self.result_cached = true
+        end
+        self.save
+      end
+
+      response
 
     rescue => e
 
@@ -99,8 +119,8 @@ class Search < ActiveRecord::Base
     pay_rate          = (pay.currency.iso_code.downcase + '_rate').to_sym
     buy_rate          = (buy.currency.iso_code.downcase + '_rate').to_sym
 
-    self.result_service_type   = service_type.capitalize
-    self.result_payment_method = payment_method.capitalize
+    result_service_type   = service_type.capitalize
+    result_payment_method = payment_method.capitalize
 
 
     exchanges = Exchange.active.geocoded.
@@ -125,8 +145,8 @@ class Search < ActiveRecord::Base
 
       if exchanges && exchanges.any?
         message   = payment_method == 'credit' ? 'noPickupCreditWouldYouLikeDelivery' : 'noPickupCashWouldYouLikeDelivery'
-        self.result_service_type = 'Delivery'
-        self.result_payment_method = 'Credit'
+        result_service_type = 'Delivery'
+        result_payment_method = 'Credit'
         puts "1!"
       else
 
@@ -140,8 +160,8 @@ class Search < ActiveRecord::Base
 
         if exchanges && exchanges.any?
           message   = 'bestPickup'
-          self.result_service_type = 'Pickup'
-          self.result_payment_method = 'Cash'
+          result_service_type = 'Pickup'
+          result_payment_method = 'Cash'
           puts "2!"
         else
 
@@ -154,15 +174,15 @@ class Search < ActiveRecord::Base
 
           if exchanges && exchanges.any?
             message   = 'bestPickup'
-            self.result_service_type = 'Pickup'
-            self.result_payment_method = 'Cash'
+            result_service_type = 'Pickup'
+            result_payment_method = 'Cash'
             puts "3!"
           end
 
         end
       end
 
-      offers = make_offers(exchanges, center, pay, buy, trans, calculated, self.result_service_type.downcase, self.result_payment_method.downcase)
+      offers = make_offers(exchanges, center, pay, buy, trans, calculated, result_service_type.downcase, result_payment_method.downcase)
 
     end
 
@@ -173,11 +193,12 @@ class Search < ActiveRecord::Base
 
 
     if best_offer
-      puts self.result_service_type
-      puts self.result_payment_method
-      self.result_exchange_id     = best_offer[:id]
-      self.result_grade           = best_offer[:grade]
-      self.save
+      puts result_service_type
+      puts result_payment_method
+      result_exchange_id     = best_offer[:id]
+      result_name            = best_offer[:name]
+      result_grade           = best_offer[:grade]
+      result_distance        = best_offer[:distance]
     end
 
 
@@ -185,19 +206,22 @@ class Search < ActiveRecord::Base
 
 
        {
-          search: self.id,
+          search: id,
           request: {
-              service_type: service_type.capitalize,
+              service_type:   service_type.capitalize,
               payment_method: payment_method.capitalize,
-              radius: radius
+              radius:         radius
           },
           result: {
-              service_type: self.result_service_type,
-              payment_method: self.result_payment_method,
-              distance: best_offer[:distance]
+              service_type:   result_service_type,
+              payment_method: result_payment_method,
+              exchange_id:    result_exchange_id,
+              name:           result_name,
+              grade:          result_grade,
+              distance:       result_distance
           },
           best:
-              best_offer ? best_offer[:rates].merge(name: best_offer[:name], grade: best_offer[:grade]) : nil,
+              best_offer ? best_offer[:rates] : nil,
           worst:
               Exchange.bad_rate(country, buy_currency, pay_currency, trans, pay_currency),
           count: count,
