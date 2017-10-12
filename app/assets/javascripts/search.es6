@@ -39,11 +39,9 @@ $(document).ready(function() {
             var target  = $this.data('symboltarget');
             var symbol  = $this.find('option:selected').attr('data-symbol');
 
-            if (value_of('payment_method') == 'credit' && field == 'pay_currency' && value != local.currency && positionFound()) {
-                snack(`To pay with credit, payment currency must remain ${local.currency}`, {klass: 'oops', timeout: 3000});
-                set('pay_currency', local.currency);
-                $('form select').material_select();
-                return;
+            if (!conveyed.localCurrency && value_of('payment_method') == 'credit' && field == 'pay_currency' && value != local.currency && positionFound()) {
+                snack(t('localCurrency'), {klass: 'oops', timeout: 2000});
+                conveyed.localCurrency = true;
             }
 
 //            console.log(`changed currency from ${value_of(field)} to ${value}`);
