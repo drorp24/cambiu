@@ -319,8 +319,10 @@ populateLocalCurrency = function() {
 
   set('pay_currency', local.currency);  // locals
   set('buy_currency', (local.currency == 'USD') ? 'EUR' : 'USD');
-
   $('form select').material_select();
+  block('pay_currency', value_of('buy_currency'));
+  block('buy_currency', value_of('pay_currency'));
+
   bind_currency_to_autonumeric();
 
 };

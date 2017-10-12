@@ -51,7 +51,8 @@ $(document).ready(function() {
             populateTransaction();
             fetchAndPopulateLocaloffers();
 
-            disable($('.md-form.select.' + other(field)), value);
+            unblock(other(field));
+            block(other(field), value);
 
             $('[data-autonumeric][data-field=' + target + ']').each(function() {
                 update_currency_symbol($(this), symbol);
@@ -61,18 +62,15 @@ $(document).ready(function() {
 
         });
 
+    };
 
-        function disable($e, value) {
-            $e.find('ul.dropdown-content li').each(function() {
-                var $this = $(this);
-                if ($this.find('span').html() == value) {
-                    $this.addClass('disabled')
-                } else {
-                    $this.removeClass('disabled')
-                }
-            })
-        }
 
+    block = (currency_field, value) => {
+      $(`.${currency_field} .select-wrapper.currency_select ul.dropdown-content li:contains('${value}')`).addClass('disabled')
+    };
+
+    unblock = (currency_field) => {
+        $(`.${currency_field} .select-wrapper.currency_select ul.dropdown-content li`).removeClass('disabled')
     };
 
     $('.camera').on('click tap', (function() {
