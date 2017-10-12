@@ -151,6 +151,7 @@ he:
     offer:
       title: 'יש לנו הצעה בשבילכם...'
       subtitle: ''
+      different: 'לא נמצאה הצעה עבור xxx אלא עבור yyy, אבל זוהי הצעה משתלמת במיוחד!'
     button:
       text: 'לפרטים'
     bar:

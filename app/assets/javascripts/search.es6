@@ -100,7 +100,25 @@ $(document).ready(function() {
     };
 
     other = function(field) {
-        return field.includes('pay') ? 'buy' + field.split('pay')[1] : 'pay' + field.split('buy')[1]
+//        return field.includes('pay') ? 'buy' + field.split('pay')[1] : 'pay' + field.split('buy')[1]
+        switch(field) {
+            case 'pay_amount':
+                return 'buy_amount';
+            case 'buy_amount':
+                return 'pay_amount';
+            case 'pay_currency':
+                return 'buy_currency';
+            case 'buy_currency':
+                return 'pay_currency';
+            case 'delivery':
+                return 'pickup';
+            case 'pickup':
+                return 'delivery';
+            case 'cash':
+                return 'credit';
+            case 'credit':
+                return 'cash'
+        }
     };
 
     twin = function(field) {

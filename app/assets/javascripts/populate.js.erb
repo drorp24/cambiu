@@ -409,6 +409,13 @@ populateLocalOffers = function(rates) {
   }
 */
 
+  if (rates.request.service_type !== rates.result.service_type) {
+    setServiceTypeTo(rates.result.service_type);
+  }
+  if (rates.request.payment_metod !== rates.result.payment_method) {
+    setServiceTypeTo(rates.result.payment_method);
+  }
+
   $('form.selection input').removeClass('invalid');
 
   var transaction = value_of('transaction');
@@ -425,9 +432,10 @@ populateLocalOffers = function(rates) {
   var best_value = best.rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
   var bank_factor = calculated == 'buy_amount' ? (100 - bank_fee)/100 : (100 + bank_fee)/100;
 
-
   formElement(calculated).autoNumeric('set', best_value);
   $('[data-model=local][data-field=count]').html(rates['count']);
+
+  sessionStorage.setItem(calculated, best_value);  // Now I can ask about value_of('pay_amount')
 
   if (worst.error) {
     $('.worst').css('visibility', 'hidden');
@@ -447,6 +455,18 @@ populateLocalOffers = function(rates) {
       $('.bestOffer_save').empty();
     }
   }
+
+
+  var pay_amount = numeric_value_of('pay_amount');
+  var delivery_charge = value_of('service_type') == 'delivery' ? best.delivery_charge : 0;
+  var cc_fee = value_of('payment_method') == 'credit' ? best.cc_fee : 0;
+  var credit_charge = (pay_amount + delivery_charge) * cc_fee / 100;
+  var total_amount = pay_amount + delivery_charge + credit_charge;
+
+  $('[data-model=search][data-field=delivery_charge]').autoNumeric('set', delivery_charge);
+  $('[data-model=search][data-field=credit_charge]').autoNumeric('set', credit_charge);
+  $('[data-model=search][data-field=total_amount]').autoNumeric('set', total_amount);
+
 
   // Bias upcoming search towards this exchange_id over another with the same grade
   $('form.selection [data-model=search][data-field=bias_exchange_id]').val(best.exchange_id);
@@ -515,7 +535,7 @@ set = function(field, value, trigger) {
 
     $('input[data-model=search][data-field=' + field + ']').val(cleanValue);
     $('select[data-model=search][data-field=' + field + ']').val(cleanValue);
-    $('.params [data-model=search][data-field=' + field + ']').html(value);
+    $(':not(input, select)[data-model=search][data-field=' + field + ']').html(value);
 
     sessionStorage.setItem(field, value);
 

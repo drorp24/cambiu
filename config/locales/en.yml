@@ -172,6 +172,7 @@ en:
     offer:
       title: 'We have an offer...'
       subtitle: ''
+      different: 'No offer available for xxx but this offer for yyy is a hell of an offer!'
     button:
       text: 'Details'
     bar:

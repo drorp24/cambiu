@@ -1112,6 +1112,11 @@ body#cambiu {
   }
 
 
+  .different {
+    background-color: rgba(34, 150, 243, 0.18);
+    padding: 3vh;
+  }
+
   .button_to_offer .btn {
     @include vfont-size(5vw);
   }
@@ -3033,8 +3038,7 @@ body#cambiu {
 //      display: inline-block;
     }
     .figure {
-      display: flex;
-      align-items: center;
+      direction: ltr;
       > div {
         line-height: 1;
       }
@@ -3046,7 +3050,7 @@ body#cambiu {
     .offer_line {
       color: #000;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       @include vfont-size(4.5vw);
       &.saving {
