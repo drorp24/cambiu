@@ -7,6 +7,8 @@ class Search < ActiveRecord::Base
   belongs_to :user
   belongs_to :bias_exchange,    class_name: "Exchange"
   belongs_to :result_exchange,  class_name: "Exchange"
+  belongs_to :cached_search, class_name: "Search", foreign_key: :result_cached_search_id
+  has_many :fetched_searches, class_name: "Search", foreign_key: :result_cached_search_id
   has_many  :orders
   has_many :issues, foreign_key: "search_id", class_name: "Error"
 
@@ -59,14 +61,15 @@ class Search < ActiveRecord::Base
       end
 
       if mode == 'best' && response && response[:result]
-        self.result_service_type     = response[:result][:service_type]
-        self.result_payment_method   = response[:result][:payment_method]
-        self.result_exchange_id      = response[:result][:exchange_id]
-        self.result_name             = response[:result][:name]
-        self.result_grade            = response[:result][:grade]
-        self.result_distance         = response[:result][:distance]
+        self.result_service_type        = response[:result][:service_type]
+        self.result_payment_method      = response[:result][:payment_method]
+        self.result_exchange_id         = response[:result][:exchange_id]
+        self.result_name                = response[:result][:name]
+        self.result_grade               = response[:result][:grade]
+        self.result_distance            = response[:result][:distance]
         if response[:search] && response[:search] < self.id
-          self.result_cached = true
+          self.result_cached            = true
+          self.result_cached_search_id  = response[:search]
         end
         self.save
       end
