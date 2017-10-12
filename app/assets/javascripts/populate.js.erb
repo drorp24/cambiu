@@ -362,8 +362,10 @@ fetchAndPopulateLocaloffers = function() {
 // Called after the initial fetchLocalRates and then after every changing key stroke
 populateLocalOffers = function(rates) {
 
-  if (!rates || rates.error || rates.best.error) {
-    clearLocalOffers();
+  if (!rates || rates.error || !rates.best || rates.best.error) {
+    $('.worst').css('visibility', 'hidden');
+    $('.bestOffer_save').empty();
+//    clearLocalOffers();
     snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'search'}});
     return(null);
   }

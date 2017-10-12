@@ -15,8 +15,8 @@ class Search < ActiveRecord::Base
   validate :valid_input, on: :create
   enum service_type: [ :pickup, :delivery ]
   enum payment_method: [ :cash, :credit ]
-  enum result_service_type: [ :Pickup, :Delivery ]
-  enum result_payment_method: [ :Cash, :Credit ]
+  enum result_service_type: [ :Pickup, :Delivery, :noServiceType ]
+  enum result_payment_method: [ :Cash, :Credit, :noPaymentMethod ]
   enum mode: [ :best, :full ]
 
 #  scope :negate, ->(scope) { where(scope.where_values.reduce(:and).not) }
@@ -186,6 +186,12 @@ class Search < ActiveRecord::Base
       end
 
       offers = make_offers(exchanges, center, pay, buy, trans, calculated, result_service_type.downcase, result_payment_method.downcase)
+
+      if offers[:count] == 0
+        message = 'No result found'
+        result_service_type = 'noServiceType'
+        result_payment_method = 'noPaymentMethod'
+      end
 
     end
 
