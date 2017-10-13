@@ -152,6 +152,10 @@ he:
       title: 'יש לנו הצעה בשבילכם...'
       subtitle: ''
       different: 'לא נמצאה הצעה עבור xxx אלא עבור yyy, אבל זוהי הצעה משתלמת במיוחד!'
+      pickup: 'איסוף'
+      delivery: 'משלוח'
+      credit: 'אשראי'
+      cash: 'מזומן'
     button:
       text: 'לפרטים'
     bar:

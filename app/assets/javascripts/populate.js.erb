@@ -372,51 +372,7 @@ populateLocalOffers = function(rates) {
     return(null);
   }
 
-/*
-  if (rates.message) {
-
-    if (rates.message == 'bestPickup') {
-      if (value_of('service_type') == 'delivery') {
-        tMessage = t('noDelivery') + '<br>' + t(rates.message);
-        setServiceTypeTo('pickup');
-        setPaymentMethodTo('cash');
-      } else
-      if (value_of('payment_method') == 'credit') {
-        tMessage = t('noCredit') + '<br>' + t(rates.message);
-        setPaymentMethodTo('cash');
-      } else
-      {
-        tMessage = t(rates.message);
-      }
-      var snackTiming = (value_of('values') == 'user') ? 'now' : 'later';
-      snack(tMessage, {timing: snackTiming, timeout: 3500});
-    }
-
-    else if (rates.message == 'noPickupCashWouldYouLikeDelivery' || rates.message == 'noPickupCreditWouldYouLikeDelivery') {
-
-      setServiceTypeTo('delivery');
-      setPaymentMethodTo('credit');
-
-      snack(t(rates.message), {
-        timeout: 100000,
-        button: t('yes'),
-        button_action: "snackHide()",
-        cancel_button: t('no'),
-        cancel_button_action: 'revertToPickupCash()'
-      })
-    }
-
-  }
-*/
-
-  if (rates.request.service_type !== rates.result.service_type) {
-    setServiceTypeTo(rates.result.service_type);
-  }
-  if (rates.request.payment_metod !== rates.result.payment_method) {
-    setServiceTypeTo(rates.result.payment_method);
-  }
-
-  $('form.selection input').removeClass('invalid');
+  handle_different_offer();
 
   var transaction = value_of('transaction');
 
@@ -456,7 +412,6 @@ populateLocalOffers = function(rates) {
     }
   }
 
-
   var pay_amount = numeric_value_of('pay_amount');
   var delivery_charge = value_of('service_type') == 'delivery' ? best.delivery_charge : 0;
   var cc_fee = value_of('payment_method') == 'credit' ? best.cc_fee : 0;
@@ -472,6 +427,29 @@ populateLocalOffers = function(rates) {
   $('form.selection [data-model=search][data-field=bias_exchange_id]').val(best.exchange_id);
 
   return(best_value);
+
+  function handle_different_offer() {
+
+    var var1, var2;
+
+    if (rates.request.service_type != rates.result.service_type) {
+      setServiceTypeTo(rates.result.service_type);
+      var1 = t(rates.request.service_type);
+      var2 = t(rates.result.service_type);
+    }
+    if (rates.request.payment_method != rates.result.payment_method) {
+      setServiceTypeTo(rates.result.payment_method);
+      var1 = var1 ? var1 + "/" + t(rates.request.payment_method) : t(rates.request.payment_method);
+      var2 = var2 ? var2 + "/" + t(rates.result.payment_method) : t(rates.result.payment_method);
+    }
+
+    if (var1) {
+      $('.different').html(t('different', var1, var2)).addClass('active');
+    } else {
+      $('.different').removeClass('active');
+    }
+
+  }
 
 };
 

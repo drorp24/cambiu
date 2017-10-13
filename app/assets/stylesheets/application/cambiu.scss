@@ -1113,6 +1113,10 @@ body#cambiu {
 
 
   .different {
+    display: none;
+    &.active {
+      display: block;
+    }
     background-color: rgba(34, 150, 243, 0.18);
     padding: 3vh;
   }

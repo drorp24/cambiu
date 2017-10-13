@@ -172,7 +172,11 @@ en:
     offer:
       title: 'We have an offer...'
       subtitle: ''
-      different: 'No offer available for xxx but this offer for yyy is a hell of an offer!'
+      different: 'No offer available for xxx but this offer for yyy is an incredible offer!'
+      pickup: 'pick-up'
+      delivery: 'delivery'
+      credit: 'credit'
+      cash: 'cash'
     button:
       text: 'Details'
     bar:

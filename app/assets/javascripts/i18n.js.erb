@@ -1,8 +1,13 @@
-t = function(expression) {
+t = function(expression, var1, var2) {
 
   var translation = {
 
     en: {
+      Cash: '<%= I18n.t 'isearch.offer.cash', locale: :en %>',
+      Credit: '<%= I18n.t 'isearch.offer.credit', locale: :en %>',
+      Delivery: '<%= I18n.t 'isearch.offer.delivery', locale: :en %>',
+      Pickup: '<%= I18n.t 'isearch.offer.pickup', locale: :en %>',
+      different: '<%= I18n.t 'isearch.offer.different', locale: :en %>'.replace('xxx', var1).replace('yyy', var2),
       localCurrency: '<%= I18n.t 'app.localCurrency', locale: :en %>',
       okayRequired: '<%= I18n.t 'isearch.bar.okayRequired', locale: :en %>',
       specifyValue: '<%= I18n.t 'isearch.bar.specifyValue', locale: :en %>',
@@ -19,6 +24,11 @@ t = function(expression) {
 
     },
     he: {
+      Cash: '<%= I18n.t 'isearch.offer.cash', locale: :he %>',
+      Credit: '<%= I18n.t 'isearch.offer.credit', locale: :he %>',
+      Delivery: '<%= I18n.t 'isearch.offer.delivery', locale: :he %>',
+      Pickup: '<%= I18n.t 'isearch.offer.pickup', locale: :he %>',
+      different: '<%= I18n.t 'isearch.offer.different', locale: :he %>'.replace('xxx', var1).replace('yyy', var2),
       localCurrency: '<%= I18n.t 'app.localCurrency', locale: :he %>',
       okayRequired: '<%= I18n.t 'isearch.bar.okayRequired', locale: :he %>',
       specifyValue: '<%= I18n.t 'isearch.bar.specifyValue', locale: :he %>',
@@ -37,4 +47,4 @@ t = function(expression) {
 
   return translation[locale][expression] || '<%= I18n.t 'app.missing' %>'
 };
-var variation = 27;
+var variation = 29;
