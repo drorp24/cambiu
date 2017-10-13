@@ -373,8 +373,10 @@ populateLocalOffers = function(rates) {
   }
 
   handle_different_offer();
+  update_result_on_body();
 
   var transaction = value_of('transaction');
+  var result = rates.result;
 
   var best = rates.best;
   var best_rate = best[transaction];
@@ -413,8 +415,8 @@ populateLocalOffers = function(rates) {
   }
 
   var pay_amount = numeric_value_of('pay_amount');
-  var delivery_charge = value_of('service_type') == 'delivery' ? best.delivery_charge : 0;
-  var cc_fee = value_of('payment_method') == 'credit' ? best.cc_fee : 0;
+  var delivery_charge = result.service_type == 'delivery' ? best.delivery_charge : 0;
+  var cc_fee = result.payment_method == 'credit' ? best.cc_fee : 0;
   var credit_charge = (pay_amount + delivery_charge) * cc_fee / 100;
   var total_amount = pay_amount + delivery_charge + credit_charge;
 
@@ -429,25 +431,23 @@ populateLocalOffers = function(rates) {
   return(best_value);
 
 
+  function update_result_on_body() {
+    var result_service_type = rates.result.service_type;
+    var result_payment_method = rates.result.payment_method;
+    $('body').removeClass(other(result_service_type)).addClass(result_service_type).removeClass(other(result_payment_method)).addClass(result_payment_method);
+  }
+
   function handle_different_offer() {
 
     var var1, var2;
-    var user_requested_service_type   = value_of('user_service_type');
-    var user_requested_payment_method = value_of('user_payment_method');
 
     if (rates.request.service_type !== rates.result.service_type) {
-      setServiceTypeTo(rates.result.service_type)
-    }
-    if (user_requested_service_type && (user_requested_service_type !== rates.result.service_type)) {
-      var1 = t(user_requested_service_type);
+      var1 = t(rates.request.service_type);
       var2 = t(rates.result.service_type);
     }
 
     if (rates.request.payment_method !== rates.result.payment_method) {
-      setPaymentMethodTo(rates.result.payment_method);
-    }
-    if (user_requested_payment_method && (user_requested_payment_method !== rates.result.payment_method)) {
-      var1 = var1 ? var1 + "/" + t(user_requested_payment_method) : t(user_requested_payment_method);
+      var1 = var1 ? var1 + "/" + t(rates.request.payment_method) : t(rates.request.payment_method);
       var2 = var2 ? var2 + "/" + t(rates.result.payment_method) : t(rates.result.payment_method);
     }
 

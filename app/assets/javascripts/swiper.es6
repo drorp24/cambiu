@@ -149,7 +149,6 @@ $(document).ready(function() {
         // in fact the property parameter may already not represent what the user requested:
         // e.g., user asks for delivery, systems returns pickup; the next search will get 'pickup' as service_type param though the user requested differently (and it's ok)
         set_change(property, old_value, value);
-        set(`user_${property}`, value);
         set(property, value, 'manual');
         fetchAndPopulateLocaloffers();
         swiperIslideForward($this)

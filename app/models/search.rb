@@ -63,10 +63,12 @@ class Search < ActiveRecord::Base
       if mode == 'best' && response && response[:result]
         self.result_service_type        = response[:result][:service_type].capitalize
         self.result_payment_method      = response[:result][:payment_method].capitalize
+        self.result_radius              = response[:result][:radius]
         self.result_exchange_id         = response[:result][:exchange_id]
-        self.result_name                = response[:result][:name]
+        self.result_exchange_name       = response[:result][:exchange_name]
         self.result_grade               = response[:result][:grade]
         self.result_distance            = response[:result][:distance]
+        self.result_count               = response[:count]
         if response[:search] && response[:search] < self.id
           self.result_cached            = true
           self.result_cached_search_id  = response[:search]
@@ -107,8 +109,8 @@ class Search < ActiveRecord::Base
     message           = nil
 
     center            = [location_lat, location_lng]
-    pickup_radius     = 2.5
-    extended_radius   = 50
+    pickup_radius     = 0.75
+    extended_radius   = 10
     delivery_radius   = 100
 
     box               = Geocoder::Calculations.bounding_box(center, radius)               # the original request
@@ -124,6 +126,7 @@ class Search < ActiveRecord::Base
 
     result_service_type   = service_type.capitalize
     result_payment_method = payment_method.capitalize
+    result_radius         = radius
 
 
     exchanges = Exchange.active.geocoded.
@@ -150,6 +153,7 @@ class Search < ActiveRecord::Base
         message   = payment_method == 'credit' ? 'noPickupCreditWouldYouLikeDelivery' : 'noPickupCashWouldYouLikeDelivery'
         result_service_type = 'Delivery'
         result_payment_method = 'Credit'
+        result_radius = delivery_radius
         puts "1!"
       else
 
@@ -165,6 +169,7 @@ class Search < ActiveRecord::Base
           message   = 'bestPickup'
           result_service_type = 'Pickup'
           result_payment_method = 'Cash'
+          result_radius = pickup_radius
           puts "2!"
         else
 
@@ -179,6 +184,7 @@ class Search < ActiveRecord::Base
             message   = 'bestPickup'
             result_service_type = 'Pickup'
             result_payment_method = 'Cash'
+            result_radius = extended_radius
             puts "3!"
           end
 
@@ -191,6 +197,7 @@ class Search < ActiveRecord::Base
         message = 'No result found'
         result_service_type = 'noServiceType'
         result_payment_method = 'noPaymentMethod'
+        result_radius = 0
       end
 
     end
@@ -205,7 +212,7 @@ class Search < ActiveRecord::Base
       puts result_service_type
       puts result_payment_method
       result_exchange_id     = best_offer[:id]
-      result_name            = best_offer[:name]
+      result_exchange_name   = best_offer[:name]
       result_grade           = best_offer[:grade]
       result_distance        = best_offer[:distance]
     end
@@ -224,8 +231,9 @@ class Search < ActiveRecord::Base
           result: {
               service_type:   result_service_type.downcase,
               payment_method: result_payment_method.downcase,
+              radius:         result_radius,
               exchange_id:    result_exchange_id,
-              name:           result_name,
+              exchange_name:  result_exchange_name,
               grade:          result_grade,
               distance:       result_distance
           },

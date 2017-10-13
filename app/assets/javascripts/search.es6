@@ -507,7 +507,8 @@ $(document).ready(function() {
 
             $('form.selection #delivery_ind').prop('checked',false);
 //            if (value_of('payment_method') == 'credit') setPaymentMethodTo('cash');
-            if (value_of('radius') == radius.delivery) set('radius', radius.pickup.drive);    // if user changes from delivery to pickup, the radius would remain 100 if not for this line. A fetchAndPopulate is instantly triggered, before the user has the chance to define the radius.
+
+             if (value_of('radius') == radius.delivery) set('radius', radius.pickup.drive);
         }
 
     };
