@@ -432,15 +432,22 @@ populateLocalOffers = function(rates) {
   function handle_different_offer() {
 
     var var1, var2;
+    var user_requested_service_type   = value_of('user_service_type');
+    var user_requested_payment_method = value_of('user_payment_method');
 
-    if (rates.request.service_type != rates.result.service_type) {
-      setServiceTypeTo(rates.result.service_type);
-      var1 = t(rates.request.service_type);
+    if (rates.request.service_type !== rates.result.service_type) {
+      setServiceTypeTo(rates.result.service_type)
+    }
+    if (user_requested_service_type && (user_requested_service_type !== rates.result.service_type)) {
+      var1 = t(user_requested_service_type);
       var2 = t(rates.result.service_type);
     }
-    if (rates.request.payment_method != rates.result.payment_method) {
+
+    if (rates.request.payment_method !== rates.result.payment_method) {
       setPaymentMethodTo(rates.result.payment_method);
-      var1 = var1 ? var1 + "/" + t(rates.request.payment_method) : t(rates.request.payment_method);
+    }
+    if (user_requested_payment_method && (user_requested_payment_method !== rates.result.payment_method)) {
+      var1 = var1 ? var1 + "/" + t(user_requested_payment_method) : t(user_requested_payment_method);
       var2 = var2 ? var2 + "/" + t(rates.result.payment_method) : t(rates.result.payment_method);
     }
 

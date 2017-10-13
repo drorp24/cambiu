@@ -136,12 +136,24 @@ $(document).ready(function() {
     };
 
     $('.swiper-slide.branch [data-slideto]').on('click tap', function() {
-        let $this = $(this);
-//        console.log(`changed ${$this.data('property')} from ${value_of($this.data('property'))} to ${$this.data('value')}`);
-        set_change($this.data('property'), value_of($this.data('property')), $this.data('value'));
-        set($this.data('property'), $this.data('value'), 'manual');
+
+        let $this       = $(this);
+        let property    = $this.data('property');
+        let old_value   = value_of(property);
+        let value       = $this.data('value');
+//      console.log(`changed ${property} from ${old_value} to ${value}`);
+
+
+        // set(property...) prepares it for the 'fetchAnd...'' call that follows; But an instant later, its value may be overridden if the result is different than user requested
+        // that's why the only way to remember what user originally requested is with the 'user_' fields
+        // in fact the property parameter may already not represent what the user requested:
+        // e.g., user asks for delivery, systems returns pickup; the next search will get 'pickup' as service_type param though the user requested differently (and it's ok)
+        set_change(property, old_value, value);
+        set(`user_${property}`, value);
+        set(property, value, 'manual');
         fetchAndPopulateLocaloffers();
         swiperIslideForward($this)
+
     });
 
     $('.iformsprogressbar .navigation .next').on('click tap', function() {
