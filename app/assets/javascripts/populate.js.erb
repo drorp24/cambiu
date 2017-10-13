@@ -428,6 +428,7 @@ populateLocalOffers = function(rates) {
 
   return(best_value);
 
+
   function handle_different_offer() {
 
     var var1, var2;
@@ -438,7 +439,7 @@ populateLocalOffers = function(rates) {
       var2 = t(rates.result.service_type);
     }
     if (rates.request.payment_method != rates.result.payment_method) {
-      setServiceTypeTo(rates.result.payment_method);
+      setPaymentMethodTo(rates.result.payment_method);
       var1 = var1 ? var1 + "/" + t(rates.request.payment_method) : t(rates.request.payment_method);
       var2 = var2 ? var2 + "/" + t(rates.result.payment_method) : t(rates.result.payment_method);
     }

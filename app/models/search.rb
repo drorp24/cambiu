@@ -61,8 +61,8 @@ class Search < ActiveRecord::Base
       end
 
       if mode == 'best' && response && response[:result]
-        self.result_service_type        = response[:result][:service_type]
-        self.result_payment_method      = response[:result][:payment_method]
+        self.result_service_type        = response[:result][:service_type].capitalize
+        self.result_payment_method      = response[:result][:payment_method].capitalize
         self.result_exchange_id         = response[:result][:exchange_id]
         self.result_name                = response[:result][:name]
         self.result_grade               = response[:result][:grade]
@@ -217,13 +217,13 @@ class Search < ActiveRecord::Base
        {
           search: id,
           request: {
-              service_type:   service_type.capitalize,
-              payment_method: payment_method.capitalize,
+              service_type:   service_type,
+              payment_method: payment_method,
               radius:         radius
           },
           result: {
-              service_type:   result_service_type,
-              payment_method: result_payment_method,
+              service_type:   result_service_type.downcase,
+              payment_method: result_payment_method.downcase,
               exchange_id:    result_exchange_id,
               name:           result_name,
               grade:          result_grade,
