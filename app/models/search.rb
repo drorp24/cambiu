@@ -56,6 +56,8 @@ class Search < ActiveRecord::Base
         response = uncached_offers
       end
 
+      response[:search][:id] = id if mode == 'best'
+
       if mode == 'best'
         puts 'response[:search]: ' + response[:search].to_s
       end
@@ -69,9 +71,9 @@ class Search < ActiveRecord::Base
         self.result_grade               = response[:result][:grade]
         self.result_distance            = response[:result][:distance]
         self.result_count               = response[:count]
-        if response[:search] && response[:search] < self.id
+        if response[:search][:cached] && response[:search][:cached] < id
           self.result_cached            = true
-          self.result_cached_search_id  = response[:search]
+          self.result_cached_search_id  = response[:search][:cached]
         end
         self.save
       end
@@ -222,7 +224,9 @@ class Search < ActiveRecord::Base
 
 
        {
-          search: id,
+          search: {
+              cached: id
+          },
           request: {
               service_type:   service_type,
               payment_method: payment_method,
