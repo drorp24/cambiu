@@ -18,7 +18,6 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
 
     id = determineId(id);
     var exchange = exchangeHash && exchangeHash[id] ? exchangeHash[id] : currentExchange();
-    pane = determinePane(pane, exchange);
 
     // Declare a new page to GA and report a pageview
     pageReport(url || make_url(page, id, pane));
