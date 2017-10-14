@@ -2,10 +2,10 @@
 
   <%= render partial: 'navbar', locals: {left_pane: 'none', left_icon: '', center: 'search_params', right_pane: 'none', right_icon: ''} %>
 
-  <div class="pane_content">
+  <div class="pane_content flex_around column">
 
     <div class="section">
-      <div class="iform_title_subtitle">
+      <div class="iform_title_subtitle order_num">
         <div class="iform_title"><%= t 'order.title' %></div>
         <div class="iform_subtitle">
           <span data-model="order" data-field="exchange_id"></span>

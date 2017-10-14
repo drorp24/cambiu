@@ -11,7 +11,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     // Parse parameters
     if (url) {
         var ppart = break_url(url);
-         [page, id, pane] = [ppart.page || 'homepage', ppart.id, ppart.pane]
+         [page, id, pane, hash] = [ppart.page || 'homepage', ppart.id, ppart.pane, ppart.hash]
     } else {
          [page, id, pane] = [page1, id1, pane1];
     }
@@ -20,19 +20,10 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     var exchange = exchangeHash && exchangeHash[id] ? exchangeHash[id] : currentExchange();
 
     // Declare a new page to GA and report a pageview
-    pageReport(url || make_url(page, id, pane));
+    pageReport(url || make_url(page, id, pane, hash));
 
     var $page = $('.page[data-page=' + page + ']');
     var $pane = $('.pane[data-pane=' + pane + ']');
-
-    if (help_topic) {
-        populateHelp({topic: help_topic, content: help_content}, $pane);
-    }
-
-
-    if (populating && pane == 'reviews') {
-        populateReviews(exchange, $pane);
-    }
 
 
     $('body').addClass(page);
@@ -40,14 +31,15 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     $('.page').removeClass('active');
     $page.addClass('active');
 
-    if (different(pane)) $('.pane').removeClass('active');
+    $('.pane').removeClass('active');
     if (pane) {
         $pane.addClass('active');
         $('body').attr('data-pane', pane);
         refresh(pane, $pane, exchange);
     }
 
-    if (hash) document.getElementsByName(hash)[0].scrollIntoView(true);
+//    if (hash) document.getElementsByName(hash)[0].scrollIntoView(true);
+    if (hash) swiperIslideTo(hash);
 
 
     // POPULATE (unless triggered by popstate event)
@@ -58,95 +50,109 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
         populate(exchange, [$pane], null, null);
     }
 */
+/*
     if ((pane == 'cards' || pane == 'list') && id) {
         console.log('pane is list or cards and id exists: showing card');
         $(`.ecard[data-exchange-id=${id}]`).css('visibility', 'visible');
 //        enableSwiping();
         swiperH.slideTo(exchangeHash[id].rank - 1);
     }
+*/
 
 
     // PUSH state (unless triggered by popstate or page reloads)
     if (pushState) {
-        var newState = url ? url : make_url(page, id, pane);
+        var newState = url ? url : make_url(page, id, pane, hash);
+        console.log(`push ${newState}`);
         history.pushState(newState, 'cambiu', newState);
     }
-
-    // Update ga of the new page url
-    ga('set', {page: url || make_url(page, id, pane)});
 
 
     function determineId(id) {
        return (id == 'curr') ? currentExchange().id : id;
     }
 
+
+    // Some parts, like map and swipers, need to be re-rendered once the pane is visible
+    function refresh(pane, $pane, exchange) {
+        // perhaps no refresh of map is needed: since it's not part of a specific pane ('map') as it used to be, it now never disappears.
+        /*
+         if (!map_refreshed && pane == 'cards' && map) {
+         console.log('Entering pane: map - re-render map & refresh swiperH');
+         renderMap(); // Consider generating the map, if this still insists on locating me in Savyon
+         if (swiperH) swiperH.update(false);
+         map_refreshed = true; // do once only
+         }
+         */
+        if (pendingSnack.message && pendingSnack.options) {
+            delete pendingSnack.options.timing;
+            snack(pendingSnack.message, pendingSnack.options);
+            pendingSnack = {};
+        }
+
+        if (/*!cards_refreshed &&*/ pane == 'cards' && swiperH) {
+            console.log('Entering pane: cards - refresh swiperH');
+            swiperH.update(false);
+            cards_refreshed = true; // do once only
+        }
+
+        if (pane == 'isearch') {
+            swiperI.update(false);
+        }
+
+        if (populating && pane == 'reviews') {
+            populateReviews(exchange, $pane);
+        }
+
+        if (help_topic) {
+            populateHelp({topic: help_topic, content: help_content}, $pane);
+        }
+
+
+        /* // TODO: Cleanup
+         if (pane == 'offer') {
+         selectExchange($(`.pane[data-pane=${value_of('recent_set') || default_set}] .ecard[data-exchange-id=${exchange.id}]`), false);
+         }
+
+         if (pane == 'order') {
+         selectExchange($(`.pane[data-pane=${value_of('recent_set') || default_set}] .ecard[data-exchange-id=${exchange.id}]`), false);
+         $pane.find('.selected.ecard').addClass('order');
+         } else {
+         $pane.find('.selected.ecard').removeClass('order');
+         $pane.find('.ordered.ecard').removeClass('order');
+         }
+         */
+
+        /*
+         if (['list', 'cards', 'offers'].includes(pane)) unselectExchange();
+
+         if (!intro_refreshed && pane == 'intro' && swiperIntro) {
+         console.log('Entering pane: intro - refresh swiperIntro');
+         swiperIntro.update(false);
+         intro_refreshed = true; // do once only
+         $('.swiper-container-intro .swiper-pagination-bullet.swiper-pagination-bullet-active').removeClass('swiper-pagination-bullet-active');
+         $('.swiper-container-intro .swiper-pagination-bullet:first-child').addClass('swiper-pagination-bullet-active');
+         }
+         */
+        /*
+         if (!search_refreshed && pane == 'search' && swiperSearch) {
+         console.log('Entering pane: search - refresh swiperSearch');
+         swiperSearch.update(false);
+         search_refreshed = true; // do once only
+         }
+         */
+        if (currentSnack()) snackHide();
+        /*
+         if (pane == 'cards') {
+         $('.exchanges #exchanges').css('z-index', '2')
+         } else {
+         $('.exchanges #exchanges').css('z-index', '3')
+         }
+         */
+    }
+
 };
 
-// Some parts, like map and swipers, need to be re-rendered once the pane is visible
-refresh = function(pane, $pane, exchange) {
-    // perhaps no refresh of map is needed: since it's not part of a specific pane ('map') as it used to be, it now never disappears.
-    /*
-    if (!map_refreshed && pane == 'cards' && map) {
-        console.log('Entering pane: map - re-render map & refresh swiperH');
-        renderMap(); // Consider generating the map, if this still insists on locating me in Savyon
-        if (swiperH) swiperH.update(false);
-        map_refreshed = true; // do once only
-    }
-*/
-    if (pendingSnack.message && pendingSnack.options) {
-        delete pendingSnack.options.timing;
-        snack(pendingSnack.message, pendingSnack.options);
-        pendingSnack = {};
-    }
-
-    if (/*!cards_refreshed &&*/ pane == 'cards' && swiperH) {
-        console.log('Entering pane: cards - refresh swiperH');
-        swiperH.update(false);
-        cards_refreshed = true; // do once only
-    }
-
-    if (pane == 'isearch') {
-        swiperI.update(false);
-    }
-
-
-    if (pane == 'offer') {
-        selectExchange($(`.pane[data-pane=${value_of('recent_set') || default_set}] .ecard[data-exchange-id=${exchange.id}]`), false);
-    }
-
-    if (pane == 'order') {
-        selectExchange($(`.pane[data-pane=${value_of('recent_set') || default_set}] .ecard[data-exchange-id=${exchange.id}]`), false);
-        $pane.find('.selected.ecard').addClass('order');
-    } else {
-        $pane.find('.selected.ecard').removeClass('order');
-        $pane.find('.ordered.ecard').removeClass('order');
-    }
-
-    if (['list', 'cards', 'offers'].includes(pane)) unselectExchange();
-
-    if (!intro_refreshed && pane == 'intro' && swiperIntro) {
-        console.log('Entering pane: intro - refresh swiperIntro');
-        swiperIntro.update(false);
-        intro_refreshed = true; // do once only
-        $('.swiper-container-intro .swiper-pagination-bullet.swiper-pagination-bullet-active').removeClass('swiper-pagination-bullet-active');
-        $('.swiper-container-intro .swiper-pagination-bullet:first-child').addClass('swiper-pagination-bullet-active');
-    }
-/*
-    if (!search_refreshed && pane == 'search' && swiperSearch) {
-        console.log('Entering pane: search - refresh swiperSearch');
-        swiperSearch.update(false);
-        search_refreshed = true; // do once only
-    }
-*/
-    if (currentSnack()) snackHide();
-/*
-    if (pane == 'cards') {
-        $('.exchanges #exchanges').css('z-index', '2')
-    } else {
-        $('.exchanges #exchanges').css('z-index', '3')
-    }
-*/
-};
 
  $('body').on('click tap', '[data-href-pane]', (function (e) {
 
@@ -199,11 +205,14 @@ refresh = function(pane, $pane, exchange) {
 
 window.addEventListener("popstate", function (e) {
 
-    console.log('pop. e.state: ' + e.state);
+    console.log('pop. e.state: ' + JSON.stringify(e.state));
     if (e.state && e.state.length > 0) setPage({url: e.state, pushState: false});
 
 });
 
+
+
+/*  TODO: Cleanup
 
 stopVideo = function() {
 
@@ -211,7 +220,6 @@ stopVideo = function() {
         replaceVideoWithBackground()
     }
 };
-
 
 function actual(pane) {
     return (['offer', 'order','offers', 'list', 'cards'].includes(pane)) ? 'offers' : pane;
@@ -230,7 +238,7 @@ function different(pane) {
     return !same_pane(activePane, pane);
 }
 
-/*
+
 function active(pane) {
     var recentSet = value_of('recent_set');
     return (['offer', 'order'].includes(pane) && actual(recentSet) == 'offers') ? recentSet : pane;

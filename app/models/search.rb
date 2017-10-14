@@ -58,10 +58,6 @@ class Search < ActiveRecord::Base
 
       response[:search][:id] = id if mode == 'best'
 
-      if mode == 'best'
-        puts 'response[:search]: ' + response[:search].to_s
-      end
-
       if mode == 'best' && response && response[:result]
         self.result_service_type        = response[:result][:service_type].capitalize
         self.result_payment_method      = response[:result][:payment_method].capitalize

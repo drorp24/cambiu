@@ -18,12 +18,13 @@ initSwipers = function() {
         direction: 'vertical',
         slidesPerView: 1,
         hashnav: true,
-        hashnavWatchState: true,
         onlyExternal: true
     });
 
 
      swiperI.on('SlideNextStart', function() {
+
+        setPage({pane1: 'isearch', hash: swiperIactiveSlide().data('hash')});
         let can = swiperIgatekeeper();
         can.pass ? swiperI.unlockSwipeToNext() : swiperI.lockSwipeToNext();
 
@@ -33,7 +34,6 @@ initSwipers = function() {
 
         progressBar();
         navigationArrows();
-        hashReport();
 
     });
 
@@ -61,15 +61,6 @@ navigationArrows = function() {
     }
 };
 
-
-
-hashReport = function() {
-    var $current_slide = swiperIactiveSlide();
-    if ($current_slide) {
-        var hash = $current_slide.data('hash');
-        if (hash) pageReport('/exchanges/isearch#' + hash);
-    }
-};
 
 slideChange = function() {
 
@@ -125,14 +116,15 @@ $(document).ready(function() {
     swiperIactiveSlide = () => $('.swiper-container-i .swiper-slide-active');
 
 
-    swiperIslideForward = ($e, timing=null) => {
+    swiperIslideTo = (hash, timing=null) => {
+        let index = $('[data-hash]').index($(`[data-hash=${hash}]`));
+        timing == 'delay' ? wait(250).then(()=> {swiperI.slideTo(index)}) : swiperI.slideTo(index);
+    };
 
+    swiperIslideForward = ($e, timing=null) => {
         swiperI.unlockSwipeToNext();
         var hash = $e.data('slideto');
-        if (!hash) {console.error('swiperIslideForward: no data-slideto found on element'); return}
-        let index = $('[data-hash]').index($(`[data-hash=${hash}]`));
-        timing == 'instant' ? swiperI.slideTo(index) : wait(300).then(()=> {swiperI.slideTo(index)});
-
+        swiperIslideTo(hash, timing);
     };
 
     $('.swiper-slide.branch [data-slideto]').on('click tap', function() {
@@ -141,17 +133,12 @@ $(document).ready(function() {
         let property    = $this.data('property');
         let old_value   = value_of(property);
         let value       = $this.data('value');
+
 //      console.log(`changed ${property} from ${old_value} to ${value}`);
-
-
-        // set(property...) prepares it for the 'fetchAnd...'' call that follows; But an instant later, its value may be overridden if the result is different than user requested
-        // that's why the only way to remember what user originally requested is with the 'user_' fields
-        // in fact the property parameter may already not represent what the user requested:
-        // e.g., user asks for delivery, systems returns pickup; the next search will get 'pickup' as service_type param though the user requested differently (and it's ok)
         set_change(property, old_value, value);
         set(property, value, 'manual');
         fetchAndPopulateLocaloffers();
-        swiperIslideForward($this)
+        swiperIslideForward($this, 'delay')
 
     });
 

@@ -351,6 +351,8 @@ $(document).ready(function() {
 
             function returnResults(data) {
                 Object.assign(local, {rates: data});
+                set('id', data.search.id);
+                tagSession({search: data.search.id});
                 resolve(data)
             }
 

@@ -948,9 +948,9 @@ body#cambiu {
   }
 
   .pane_content {
-    @include vpadding-top(10vw);
     @include vpadding-left(10vw);
     @include vpadding-right(10vw);
+    height: 80vh;
   }
 
 
@@ -1096,6 +1096,9 @@ body#cambiu {
     margin-bottom: 8vh;
     text-align: center;
     width: 75%;
+    &.order_num {
+      direction: ltr;
+    }
   }
 
   &.delivery {

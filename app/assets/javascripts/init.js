@@ -238,16 +238,22 @@ best = function(exchanges) {
 
 
 
-make_url = function(page, id, pane) {
-  var url = '/' + page;
-  if (id) {url += ('/' + id)}
-  if (pane) {url += ('/' + pane)}
-  return url;
+make_url = function(page, id, pane, hash) {
+
+    if (typeof hash === 'undefined') hash = null;
+    var url = '/' + page;
+    if (id) {url += ('/' + id)}
+    if (pane) {url += ('/' + pane)}
+    if(hash) {url = url + '#' + hash}
+    return url;
 };
 
 break_url = function(url) {
 
     if (url[url.length - 1] == '/') url = url.substring(0, url.length - 1);
+    var hash_split = url.split('#');
+    url = hash_split[0];
+    var hash = hash_split[1] ? hash_split[1] : null;
     var split_url = url.split('/');
     var page = split_url[1];
     if (split_url.length == 4) {
@@ -264,9 +270,10 @@ break_url = function(url) {
     }
 
     return {
-        'page'  : page,
-        'id'    : id,
-        'pane'  : pane
+        page  : page,
+        id    : id,
+        pane  : pane,
+        hash  : hash
     }
 };
 
@@ -506,17 +513,17 @@ $(document).ready(function() {
             return;
         }
 
-        console.log('snack called with message: ' + message);
+//        console.log('snack called with message: ' + message);
 
         activeSnackbars += 1;
-        console.log('activeSnackbars now equals: ' + activeSnackbars);
+//        console.log('activeSnackbars now equals: ' + activeSnackbars);
         if (typeof options === 'undefined') options = {};
 
         if (activeSnackbars > 1 || currentSnack()) {
-            console.log('There are ' + activeSnackbars + ' active snacks including this one. Gonna wait ' + String(2000 * activeSnackbars / 1000));
+//            console.log('There are ' + activeSnackbars + ' active snacks including this one. Gonna wait ' + String(2000 * activeSnackbars / 1000));
             wait(2000 * activeSnackbars).then(goOn);
         } else {
-            console.log('There is no current snack. Displaying snack' );
+//            console.log('There is no current snack. Displaying snack' );
             goOn();
         }
 
@@ -550,7 +557,7 @@ $(document).ready(function() {
 
     snackHide = function($downEl) {
 
-        console.log('snackHide');
+//        console.log('snackHide');
 
         if (typeof $downEl === 'undefined') $downEl = null;
 
@@ -560,7 +567,7 @@ $(document).ready(function() {
     };
 
     $('body#cambiu').on('click tap', '.snackbar', function() {
-        console.log('snack clicked');
+//        console.log('snack clicked');
         snackHide()
     });
 
@@ -584,7 +591,7 @@ $(document).ready(function() {
     };
 
     showError = function(error) {
-        console.log('showError');
+//        console.log('showError');
         logError(error);
         snack(error);
     };
@@ -601,10 +608,10 @@ $(document).ready(function() {
             data: {'error[message]': message, 'error[text]': text, 'error[search_id]': searchId},
             dataType: 'JSON',
             success: function (data) {
-                console.log('Error successfully updated');
+//                console.log('Error successfully updated');
             },
             error: function (data) {
-                console.log('There was an error updating the error');
+                console.error('There was an error updating the error');
             }
         });
 
@@ -628,8 +635,8 @@ $(document).ready(function() {
     // It gets the entire 'e'vent rather than only the Error object (as in the case of Promise's catch)
     // Since log/showError serve both types of catches, it is passed here only the error object part
     window.addEventListener('error', function (e) {
-        console.log('addEventListener. e:');
-        console.log(e);
+//        console.log('addEventListener. e:');
+        console.error(e);
          showError(e.error);
          snack(e.error);
     });

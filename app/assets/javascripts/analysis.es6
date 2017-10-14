@@ -29,7 +29,7 @@ report = function(category, action, exchange, value) {
     if (typeof exchange === 'undefined') exchange = null;
     if (typeof value === 'undefined') value = null;
 
-    console.log(`report category: ${category} action: ${action} exchange: ${exchange && exchange.id ? exchange.id : 'null'} value: ${value}`);
+    console.log(`report ${category} ${action} ${exchange && exchange.id ? exchange.id : ''} ${value}`);
     var exchangeWorthy = function(category) {return category != 'Set'};
 
     if (exchangeWorthy(category)) {
@@ -44,7 +44,7 @@ report = function(category, action, exchange, value) {
 };
 
 pageReport = function(url) {
-//    console.log('pageReport url: ' + url);
+    console.log('pageReport url: ' + url);
     ga('set', 'page', url);
     ga('send', 'pageview');
 };
