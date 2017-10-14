@@ -2,6 +2,8 @@
     // if map exists already then it will only pan to given location
     showMap = function (location) {
 
+        if (mobile) return;
+
         var latitude = location.lat,
             longitude = location.lng;
 
