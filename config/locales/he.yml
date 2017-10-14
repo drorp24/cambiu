@@ -164,3 +164,4 @@ he:
       specifyValue: 'אנא מלאו ערך'
       select: 'לחצו על הבחירה שלכם'
       okayRequired: 'תקנו אם צריך ואשרו ב-OK'
+      end: 'אין יותר שאלות'

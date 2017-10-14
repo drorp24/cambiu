@@ -185,3 +185,4 @@ en:
       specifyValue: 'Please specify value'
       select: 'Please select'
       okayRequired: 'Please correct and click OK'
+      end: 'No more questions'

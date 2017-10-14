@@ -54,7 +54,7 @@ navigationArrows = function() {
     if (swiperI.isBeginning) {
         $('.iformsprogressbar .navigation').addClass('beginning');
     } else
-    if (swiperI.isEnd) {
+    if (swiperI.isEnd || swiperIactiveSlide().data('slideto') == 'end') {
         $('.iformsprogressbar .navigation').addClass('end');
     } else {
         $('.iformsprogressbar .navigation').removeClass('beginning end');
@@ -144,7 +144,7 @@ $(document).ready(function() {
 
     $('.iformsprogressbar .navigation .next').on('click tap', function() {
         let can = swiperIgatekeeper();
-        (can.pass) ? swiperIslideForward(swiperIactiveSlide(), 'instant') : snack(t(can.reason), {klass: 'oops', timeout: 1500})
+        (can.pass) ? swiperIslideForward(swiperIactiveSlide()) : snack(t(can.reason), {klass: 'oops', timeout: 1500})
     });
 
 
@@ -177,7 +177,11 @@ $(document).ready(function() {
         } else
         if ($slide.hasClass('branch')) {
             reason = 'select'
-        } else {
+        } else
+        if ($slide.data('slideto') && $slide.data('slideto') == 'end') {
+            reason = 'end'
+        }
+        else {
             pass = true
         }
 
