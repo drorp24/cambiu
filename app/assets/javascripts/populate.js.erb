@@ -406,10 +406,12 @@ populateLocalOffers = function(rates) {
     var gain_value = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
     if (gain_value > 0) {
       $('.worst').css('visibility', 'visible');
+      $('.offer_line.saving').css('display', 'flex');
       $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
       $('[data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
     } else {
       $('.worst').css('visibility', 'hidden');
+      $('.offer_line.saving').css('display', 'none');
       console.warn('hiding bestOffer: gain is negative');
       $('.bestOffer_save').empty();
     }
