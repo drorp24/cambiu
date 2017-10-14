@@ -3079,8 +3079,8 @@ body#cambiu {
         }
       }
       .right_icon {
-        width: 10%;
-        text-align: right;
+        position: absolute;
+        right: 10%;
         justify-content: flex-end;
         @include vfont-size(5vw);
       }
@@ -3106,6 +3106,9 @@ body#cambiu {
     }
   }
 
+  &[locale=he] .offer .offer_line .right_icon {
+    left: 10%;
+  }
 
 
   .list-group {
