@@ -932,6 +932,23 @@ body#cambiu {
   }
   */
 
+  .section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    .offer {
+      margin-bottom: 10%;
+    }
+  }
+
+  .reserved_to_button {
+    height: 12%;
+  }
+
+
+
 
   input:focus ~ label {
     color: $formBlue;
@@ -1072,6 +1089,17 @@ body#cambiu {
     width: 75%;
   }
 
+  &.delivery {
+    .iform_subtitle.pickup {
+      display: none;
+    }
+  }
+
+  &.pickup {
+    .iform_subtitle.delivery {
+      display: none;
+    }
+  }
   [data-hash=delivery_location] .iform_subtitle {
     width: 58%;
   }
@@ -1368,10 +1396,6 @@ body#cambiu {
     line-height: initial;
   }
 
-
-  .section {
-    margin-bottom: 0;
-  }
 
   .form-group {
     margin-bottom: initial;
@@ -4784,7 +4808,7 @@ body#cambiu {
     z-index: 3;
     padding: 5px;
     border: none;
-    background-color: rgba(1, 1, 1, 0.25);
+    background-color: rgba(1, 1, 1, 0.35);
     font-weight: 400;
     @include vfont-size($form-font-size);
     height: $navbar_height;

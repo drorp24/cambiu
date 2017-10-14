@@ -1,13 +1,16 @@
 <div class="swiper-slide flex_around column" data-hash="delivery_offer" data-slideto="end">
 
-  <div class="iform_title_subtitle flex_center column">
-    <div class="iform_title"><%= t 'isearch.offer.title' %></div>
-    <div class="iform_subtitle"><%= t 'isearch.offer.subtitle' %></div>
+  <div class="section">
+    <%= render 'exchanges/isearch/title' %>
   </div>
 
-  <%= render 'exchanges/isearch/offer' %>
-  <%= render 'exchanges/isearch/different' %>
+  <div class="section">
+    <%= render 'exchanges/templates/offer' %>
+    <%= render 'exchanges/isearch/different' %>
+  </div>
 
-  <%= render '/exchanges/isearch/order_button' %>
+  <div class="section reserved_to_button">
+    <%= render 'exchanges/isearch/order_button' %>
+  </div>
 
 </div>

@@ -150,7 +150,8 @@ he:
       cash: 'מזומן'
     offer:
       title: 'יש לנו הצעה בשבילכם...'
-      subtitle: ''
+      subtitle_pickup: 'לחצו וההזמנה תמתין לכם בחנות'
+      subtitle_delivery: 'לחצו ונתקשר לתאם משלוח'
       different: 'לא נמצאה הצעה עבור xxx אלא עבור yyy, אבל זוהי הצעה משתלמת במיוחד!'
       pickup: 'איסוף'
       delivery: 'משלוח'
