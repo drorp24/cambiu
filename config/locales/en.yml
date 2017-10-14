@@ -178,7 +178,7 @@ en:
       credit: 'credit'
       cash: 'cash'
     button:
-      text: 'Details'
+      text: 'Order it'
     bar:
       gain: 'Save:'
       specifyValue: 'Please specify value'

@@ -1,4 +1,6 @@
-<div class="orderPane">
+<div class="pane" data-pane="order">
+
+  <%= render partial: 'navbar', locals: {left_pane: 'none', left_icon: '', center: 'search_params', right_pane: 'none', right_icon: ''} %>
 
   <div class="order_title flex_center"><%= t 'order.title' %></div>
   <div class="order_number flex_center">
@@ -7,8 +9,6 @@
     <span data-model="order" data-field="voucher"></span>
   </div>
 
-  <%= render 'exchanges/templates/deal' %>
-
-  <%= render 'exchanges/templates/pickup' %>
+  <%= render 'exchanges/isearch/offer' %>
 
 </div>

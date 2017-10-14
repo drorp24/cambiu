@@ -8,7 +8,7 @@ $('[data-action=paymentFlow]').click(function(e) {
     orderUpdateUserDelivery()
         .then(fetchPaymentUrl)
         .then((data) => window.location = data.url)
-        .catch((error) => {console.log('Not redirecting to payment page due to above error')})
+        .catch((error) => {console.error(error)})
 
 });
 

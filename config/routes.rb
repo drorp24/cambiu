@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'homepage',                     to: 'home#index'
   get 'exchanges/*pane',              to: 'home#app'
   get 'exchanges/:id/*pane',          to: 'home#app'
+  get 'exchange/:id',                 to: 'exchanges#show'
 
   get 'admin/searches/:id/issues',          to: 'admin/issues#index', as: 'admin_search_issues'
 

@@ -32,7 +32,7 @@ function doStuffThatRequiresLocation(location) {
     fetchAndPopulateLocaloffers();
     verifyMapIsShown = showMap(location);
     geocode(location);
-    search_and_show();
+//    search_and_show();
 }
 
 search_and_show = function() {

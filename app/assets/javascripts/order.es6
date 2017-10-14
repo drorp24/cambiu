@@ -4,16 +4,92 @@
 
 
 $('body').on('click tap','[data-action=order]', (function (e)  {  // Warning: not to use arrow function: it changes $this
+
+    order();
+    /*
     let $this = $(this);
     if (value_of('service_type') == 'delivery') {
         verifyUserWantsDelivery()
     } else {
         orderThis();
     }
+*/
 }));
 
+order = function() {
 
-order = function($scope, exchange) {
+    var search  = local.rates.search;
+    var best    = local.rates.best;
+    var result  = local.rates.result;
+    var exchange = {id: best.exchange_id, name: best.exchange_name};
+
+    fetch('/orders', {
+        method: 'POST',
+        headers: new Headers({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(
+            {
+                order: {
+                    search_id:          search.id,
+                    pay_amount:         sessionStorage.pay_amount,
+                    pay_currency:       sessionStorage.pay_currency,
+                    get_amount:         sessionStorage.buy_amount,
+                    get_currency:       sessionStorage.buy_currency,
+                    credit_charge:      sessionStorage.credit_charge,
+                    delivery_charge:    sessionStorage.delivery_charge,
+                    exchange_id:        best.exchange_id,
+                    base_currency:      best.base_currency,
+                    rated_currency:     best.rated_currency,
+                    buy_rate:           best.buy,
+                    sell_rate:          best.sell,
+                    cc_fee:             best.cc_fee,
+                    service_type:       result.service_type,
+                    payment_method:     result.payment_method
+                }
+            }
+        )
+    })
+        .then(checkStatus)
+        .then(response => response.json())
+        .then((order) => {
+
+
+// TODO Tomorrow: ask here (and remove from pages): if pickup then override page's title with order number and remove button (with nice transition),
+// TODO cont: if delivery, move to register page and continue flow, then link back to this page which is the order
+
+            populateOrder(null, order);
+//            setPage({pane1:"order", id1:"curr"});
+            report('Click', 'Order', exchange);
+
+            if (order.service_type == 'pickup') snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'});
+
+            sessionStorage.order_exchange_id = order.exchange_id;
+            sessionStorage.order_id = order.id;
+            sessionStorage.order_voucher = order.voucher;
+            sessionStorage.order_status = order.status;
+
+// TODO: Cleanup
+/*
+            if (orderConfirmationRequired() && !orderConfirmationRequested()) requestOrderConfirmation();
+
+            $('.ecard[data-exchange-id=' + exchange.id + ']').addClass('ordered');
+            if (value_of('service_type') != 'delivery') {
+                $('.selection button[data-ajax=searches]').removeAttr('data-ajax').addClass('to_order').attr({'data-href-pane': 'order', 'data-href-id': value_of('order_exchange_id')});
+            }
+
+            hideCards(exchange.id);
+            disableSwiping();
+  */
+        })
+        .catch((error) => {console.log('Error creating order:', error)});
+
+};
+
+
+
+old_order = function($scope, exchange) {
 
     if (!noOtherOrderExists()) return;
 
@@ -142,7 +218,7 @@ orderUpdateUserDelivery = function() {
         function postData() {
             let order_id = value_of('order_id');
             if (!order_id) {
-                reject('orderUser: No order id');
+                reject('orderUpdateUserDelivery: No order id');
                 return;
             }
             return fetch('/orders/' + order_id + '/user', {

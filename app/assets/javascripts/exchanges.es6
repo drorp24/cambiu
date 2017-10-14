@@ -113,6 +113,12 @@
     // Utility functions
 
     currentExchange = function() {
+        if (!local || !local.rates) return null;
+        return {id: local.rates.result.exchange_id, name: local.rates.result.exchange_name}
+    };
+
+/*
+    currentExchange = function() {
 
         var offersLength = offers.length;
 
@@ -136,6 +142,7 @@
 
         }
     };
+*/
 
 /*  Retired: exchangeHash replaces it
     findExchange = function(id) {
@@ -462,3 +469,19 @@ bestOffer = () => {
 
 const objEmpty = obj => Object.keys(obj).every(key => obj[key] === undefined);
 
+getExchange = (id) => {
+
+    return new Promise(function(resolve, reject) {
+
+        fetch('/exchange/' + id)
+            .then(checkStatus)
+            .then(response => response.json())
+            .then((exchange) => {
+                resolve(exchange)
+            })
+            .catch((error) => {
+                console.error('Error fetching exchange:', error)
+            })
+    })
+
+};

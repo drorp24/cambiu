@@ -1121,7 +1121,7 @@ body#cambiu {
     padding: 3vh;
   }
 
-  .button_to_offer .btn {
+  button[data-action=order] {
     @include vfont-size(5vw);
   }
 

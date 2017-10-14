@@ -393,7 +393,7 @@ populateLocalOffers = function(rates) {
   formElement(calculated).autoNumeric('set', best_value);
   $('[data-model=local][data-field=count]').html(rates['count']);
 
-  sessionStorage.setItem(calculated, best_value);  // Now I can ask about value_of('pay_amount')
+  sessionStorage.setItem(calculated, best_value);  // Now I can ask about value_of('pay_amount'), and have all 4 amounts for offer
 
   if (worst.error) {
     $('.worst').css('visibility', 'hidden');
@@ -423,6 +423,8 @@ populateLocalOffers = function(rates) {
   $('[data-model=search][data-field=delivery_charge]').autoNumeric('set', delivery_charge);
   $('[data-model=search][data-field=credit_charge]').autoNumeric('set', credit_charge);
   $('[data-model=search][data-field=total_amount]').autoNumeric('set', total_amount);
+  sessionStorage.delivery_charge = delivery_charge;
+  sessionStorage.credit_charge = credit_charge;
 
 
   // Bias upcoming search towards this exchange_id over another with the same grade

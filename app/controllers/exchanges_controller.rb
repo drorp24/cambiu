@@ -1,6 +1,10 @@
 class ExchangesController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
+  def show
+    render json: Exchange.find_by(id: params[:id])
+  end
+
   def get
     result = {}
     exchange = Exchange.find(params[:id])

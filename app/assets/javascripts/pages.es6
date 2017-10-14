@@ -24,7 +24,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     pageReport(url || make_url(page, id, pane));
 
     var $page = $('.page[data-page=' + page + ']');
-    var $pane = $('.pane[data-pane=' + active(pane) + ']');
+    var $pane = $('.pane[data-pane=' + pane + ']');
 
     if (help_topic) {
         populateHelp({topic: help_topic, content: help_content}, $pane);
@@ -76,13 +76,17 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     // Update ga of the new page url
     ga('set', {page: url || make_url(page, id, pane)});
 
-    function determinePane(pane, exchange) {
+
+    // TODO: Remove
+    /*    function determinePane(pane, exchange) {
+
 
         if (pane == 'list' || pane == 'cards') sessionStorage.recent_set = pane;
         if (pane == 'offers') {
             pane = value_of('recent_set') || default_set;
             sessionStorage.recent_set = pane;
         }
+
         if (pane == 'order' && !orderExists() && $('body').hasClass('delivery')) {
             pane = 'register'
         }
@@ -91,7 +95,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
         return pane;
 
     }
-
+     */
     function determineId(id) {
        return (id == 'curr') ? currentExchange().id : id;
     }
@@ -252,6 +256,3 @@ function active(pane) {
     return (['offer', 'order'].includes(pane) && actual(recentSet) == 'offers') ? recentSet : pane;
 }
 */
-function active(pane) {
-    return ['offer', 'order'].includes(pane) ? value_of('recent_set') || default_set : pane;
-}
