@@ -130,6 +130,10 @@ $(document).ready(function() {
       return $('form [data-model=search][data-field=' + field + ']')
     };
 
+    autonumericElements = function(field) {
+        return $('[data-autonumeric=true][data-model=search][data-field=' + field + ']')
+    };
+
     clean = function(value) {
         return Number(String(value).replace(/[^0-9\.]+/g,""))
     };

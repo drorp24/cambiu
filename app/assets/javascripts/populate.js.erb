@@ -390,10 +390,11 @@ populateLocalOffers = function(rates) {
   var best_value = best.rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
   var bank_factor = calculated == 'buy_amount' ? (100 - bank_fee)/100 : (100 + bank_fee)/100;
 
-  formElement(calculated).autoNumeric('set', best_value);
-  $('[data-model=local][data-field=count]').html(rates['count']);
+  // TODO: teach 'set' to do all three:
+  autonumericElements(calculated).autoNumeric('set', best_value);
+  sessionStorage.setItem(calculated, best_value);
+//  $(':not(input):not([data-autonumeric=true])[data-model=search][data-field=' + calculated + ']').val(best_value);
 
-  sessionStorage.setItem(calculated, best_value);  // Now I can ask about value_of('pay_amount'), and have all 4 amounts for offer
 
   if (worst.error) {
     $('.worst').css('visibility', 'hidden');

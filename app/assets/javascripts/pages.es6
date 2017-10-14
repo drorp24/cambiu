@@ -76,25 +76,6 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     ga('set', {page: url || make_url(page, id, pane)});
 
 
-    // TODO: Remove
-    /*    function determinePane(pane, exchange) {
-
-
-        if (pane == 'list' || pane == 'cards') sessionStorage.recent_set = pane;
-        if (pane == 'offers') {
-            pane = value_of('recent_set') || default_set;
-            sessionStorage.recent_set = pane;
-        }
-
-        if (pane == 'order' && !orderExists() && $('body').hasClass('delivery')) {
-            pane = 'register'
-        }
-
-
-        return pane;
-
-    }
-     */
     function determineId(id) {
        return (id == 'curr') ? currentExchange().id : id;
     }

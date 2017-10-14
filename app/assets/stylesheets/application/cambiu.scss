@@ -947,6 +947,12 @@ body#cambiu {
     height: 12%;
   }
 
+  .pane_content {
+    @include vpadding-top(10vw);
+    @include vpadding-left(10vw);
+    @include vpadding-right(10vw);
+  }
+
 
 
 
@@ -1072,7 +1078,10 @@ body#cambiu {
 
   .iform_title_subtitle {
     width: 100%;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 
   .iform_title {

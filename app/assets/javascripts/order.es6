@@ -56,19 +56,16 @@ order = function() {
         .then((order) => {
 
 
-// TODO Tomorrow: ask here (and remove from pages): if pickup then override page's title with order number and remove button (with nice transition),
-// TODO cont: if delivery, move to register page and continue flow, then link back to this page which is the order
-
             populateOrder(null, order);
-//            setPage({pane1:"order", id1:"curr"});
             report('Click', 'Order', exchange);
-
-            if (order.service_type == 'pickup') snack('Exchange notified and waiting', {timeout: 3000, icon: 'notifications_active'});
 
             sessionStorage.order_exchange_id = order.exchange_id;
             sessionStorage.order_id = order.id;
             sessionStorage.order_voucher = order.voucher;
             sessionStorage.order_status = order.status;
+
+            setPage({pane1: order.service_type == 'pickup' ? 'order' : 'register'});
+
 
 // TODO: Cleanup
 /*
