@@ -44,6 +44,12 @@ $(document).ready(function() {
             var target  = $this.data('symboltarget');
             var symbol  = $this.find('option:selected').attr('data-symbol');
 
+            $('[data-autonumeric][data-field=' + target + ']').each(function() {
+                update_currency_symbol($(this), symbol);
+            });
+
+            matchWorstFieldsSymbolToCalculated();
+
             if (!conveyed.localCurrency && value_of('payment_method') == 'credit' && field == 'pay_currency' && value != local.currency && positionFound()) {
                 snack(t('localCurrency'), {klass: 'oops', timeout: 2000});
                 conveyed.localCurrency = true;
@@ -59,11 +65,6 @@ $(document).ready(function() {
             unblock(other(field));
             block(other(field), value);
 
-            $('[data-autonumeric][data-field=' + target + ']').each(function() {
-                update_currency_symbol($(this), symbol);
-            });
-
-            matchWorstFieldsSymbolToCalculated();
 
         });
 
@@ -135,12 +136,9 @@ $(document).ready(function() {
       return $('form [data-model=search][data-field=' + field + ']')
     };
 
-    autonumericElements = function(field) {
-        return $('[data-autonumeric=true][data-model=search][data-field=' + field + ']')
-    };
-
     clean = function(value) {
-        return Number(String(value).replace(/[^0-9\.]+/g,""))
+        let result =  Number(String(value).replace(/[^0-9\.]+/g,""));
+        return result == 0 ? "" : result;
     };
 
     clear = function($e) {
@@ -212,6 +210,7 @@ $(document).ready(function() {
         if (prev_calculated !== calculated) {
             console.log('calculated has just changed. Fetching local offers');
             set_change('calculated', prev_calculated, calculated);
+            $('body').attr('data-calculated', calculated);
             fetchAndPopulateLocaloffers();
         }
 
@@ -625,4 +624,15 @@ $(document).ready(function() {
     });
 
 
+ /*   $('.yourSelector').keydown(function(e) {
+        console.log('keyup called');
+        var code = e.keyCode || e.which;
+        if (code == '9') {
+            alert('Tab pressed');
+
+            return false;
+        }
+
+    });
+*/
 });

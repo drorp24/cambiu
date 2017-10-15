@@ -970,7 +970,9 @@ body#cambiu {
     }
   }
 
-
+  &[data-calculated=pay_amount] .navbar .params [data-model=search][data-field=pay_amount], &[data-calculated=buy_amount] .navbar .params [data-model=search][data-field=buy_amount] {
+    display: none;
+  }
 
 
   input:focus ~ label {

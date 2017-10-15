@@ -288,6 +288,7 @@ populateParams = function() {
 
     set('calculated', calculated = !def['pay_amount'] ? 'pay_amount' : 'buy_amount');
     formElement(calculated).addClass('calculated');
+    $('body').attr('data-calculated', calculated);
     populateTransaction();
 
   paramsPopulated = true;
@@ -390,11 +391,7 @@ populateLocalOffers = function(rates) {
   var best_value = best.rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
   var bank_factor = calculated == 'buy_amount' ? (100 - bank_fee)/100 : (100 + bank_fee)/100;
 
-  // TODO: teach 'set' to do all three:
-  autonumericElements(calculated).autoNumeric('set', best_value);
-  sessionStorage.setItem(calculated, best_value);
-//  $(':not(input):not([data-autonumeric=true])[data-model=search][data-field=' + calculated + ']').val(best_value);
-
+  updateCalculated(calculated, best_value);
 
   if (worst.error) {
     $('.worst').css('visibility', 'hidden');
@@ -435,6 +432,12 @@ populateLocalOffers = function(rates) {
 
   return(best_value);
 
+
+  function updateCalculated(calculated, value) {
+    // TODO: 'set' function should do the autonumeric('set') thing too
+    $('[data-autonumeric=true][data-model=search][data-field=' + calculated + ']').autoNumeric('set', best_value);
+    sessionStorage.setItem(calculated, clean(value));
+  }
 
   function update_result_on_body() {
     var result_service_type = rates.result.service_type;
@@ -513,31 +516,6 @@ value_of = function(key) {
     return (a && a != "null") ? a : null;
 };
 
-// Populate search params in search form, search bar and ss for persistency (page reloads)
-set = function(field, value, trigger) {
-
-  if (typeof trigger === 'undefined') trigger = null;
-
-//  console.log('set. field: ', field, ' value: ', value);
-  var cleanValue = (amount(field)) ? clean(value) : value;
-
-    if (field =='service_type') setServiceTypeTo(value);
-    if (field =='payment_method') setPaymentMethodTo(value);
-
-    $('input[data-model=search][data-field=' + field + ']').val(cleanValue);
-    $('select[data-model=search][data-field=' + field + ']').val(cleanValue);
-    $(':not(input, select)[data-model=search][data-field=' + field + ']').html(value);
-
-    sessionStorage.setItem(field, value);
-
-    if (trigger == 'manual') report('Set', field, null, value);
-
-   function amount(field) {
-    return field.indexOf('amount') > -1
-   }
-
-
-};
 
 // set_change must always be called *before* set is called (i.e., before value gets changed to new value)
 set_change = function(field, from, to) {
@@ -623,4 +601,25 @@ populateStaticStreeview = function(exchange, pano, $scope) {
 
       }
  };
+
+// Populate search params in search form, search bar and ss for persistency (page reloads)
+set = function(field, value, trigger) {
+
+  if (typeof trigger === 'undefined') trigger = null;
+
+//  console.log('set. field: ', field, ' value: ', value);
+  var cleanValue = (amount(field)) ? clean(value) : value;
+
+  if (field =='service_type') setServiceTypeTo(value);
+  if (field =='payment_method') setPaymentMethodTo(value);
+
+  $('input[data-model=search][data-field=' + field + ']').val(cleanValue);
+  $('select[data-model=search][data-field=' + field + ']').val(cleanValue);
+  $(':not(input, select)[data-model=search][data-field=' + field + ']').html(value);
+
+  sessionStorage.setItem(field, cleanValue);
+
+  if (trigger == 'manual') report('Set', field, null, value);
+
+};
 
