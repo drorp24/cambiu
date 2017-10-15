@@ -374,7 +374,7 @@ populateLocalOffers = function(rates) {
   }
 
   handle_different_offer();
-  update_result_on_body();
+  populateResult();
 
   var transaction = value_of('transaction');
   var result = rates.result;
@@ -439,10 +439,16 @@ populateLocalOffers = function(rates) {
     sessionStorage.setItem(calculated, clean(value));
   }
 
-  function update_result_on_body() {
-    var result_service_type = rates.result.service_type;
-    var result_payment_method = rates.result.payment_method;
-    $('body').removeClass(other(result_service_type)).addClass(result_service_type).removeClass(other(result_payment_method)).addClass(result_payment_method);
+  function populateResult() {
+    var result = rates.result;
+    var service_type = result.service_type;
+    var payment_method = result.payment_method;
+    var exchange_name = local.language == 'he' ? result.exchange_name_he : result.name;
+    var exchange_address = local.language == 'he' ? result.exchange_address_he : result.address;
+
+    $('body').removeClass(other(service_type)).addClass(service_type).removeClass(other(payment_method)).addClass(payment_method);
+    $('[data-model=local][data-field=exchange_name]').html(exchange_name);
+    $('[data-model=local][data-field=exchange_address]').html(exchange_address);
   }
 
   function handle_different_offer() {

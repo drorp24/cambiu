@@ -209,10 +209,13 @@ class Search < ActiveRecord::Base
     if best_offer
       puts result_service_type
       puts result_payment_method
-      result_exchange_id     = best_offer[:id]
-      result_exchange_name   = best_offer[:name]
-      result_grade           = best_offer[:grade]
-      result_distance        = best_offer[:distance]
+      result_exchange_id     =      best_offer[:id]
+      result_exchange_name    =     best_offer[:name]
+      result_exchange_name_he =     best_offer[:name_he]
+      result_exchange_address =     best_offer[:address]
+      result_exchange_address_he =  best_offer[:address_he]
+      result_grade           =      best_offer[:grade]
+      result_distance        =      best_offer[:distance]
     end
 
 
@@ -224,18 +227,21 @@ class Search < ActiveRecord::Base
               cached: id
           },
           request: {
-              service_type:   service_type,
-              payment_method: payment_method,
-              radius:         radius
+              service_type:         service_type,
+              payment_method:       payment_method,
+              radius:               radius
           },
           result: {
-              service_type:   result_service_type.downcase,
-              payment_method: result_payment_method.downcase,
-              radius:         result_radius,
-              exchange_id:    result_exchange_id,
-              exchange_name:  result_exchange_name,
-              grade:          result_grade,
-              distance:       result_distance
+              service_type:         result_service_type.downcase,
+              payment_method:       result_payment_method.downcase,
+              radius:               result_radius,
+              exchange_id:          result_exchange_id,
+              exchange_name:        result_exchange_name,
+              exchange_name_he:     result_exchange_name_he,
+              exchange_address:     result_exchange_address,
+              exchange_address_he:  result_exchange_address_he,
+              grade:                result_grade,
+              distance:             result_distance
           },
           best:
               best_offer ? best_offer[:rates] : nil,

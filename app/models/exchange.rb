@@ -666,9 +666,10 @@ class Exchange < ActiveRecord::Base
 
     exchange_hash[:distance] = self.distance_from(center)
     exchange_hash[:id] = self.id
-    exchange_hash[:name] = self.fullname
-    exchange_hash[:name_s] = self.name_s
+    exchange_hash[:name] = self.name
+    exchange_hash[:name_he] = self.name_he
     exchange_hash[:address] = self.address
+    exchange_hash[:address_he] = self.address_he
     exchange_hash[:phone] = self.phone
     exchange_hash[:website] = self.website
     exchange_hash[:latitude] = self.latitude

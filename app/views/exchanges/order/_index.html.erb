@@ -6,12 +6,16 @@
 
     <div class="section">
       <div class="iform_title_subtitle">
-        <div class="iform_title"><%= t 'order.title' %></div>
+        <div class="iform_title order_title"><%= t 'order.title' %></div>
         <div class="iform_subtitle order_num">
           <span data-model="order" data-field="exchange_id"></span>
           <span>-</span>
           <span data-model="order" data-field="voucher"></span>
         </div>
+      </div>
+      <div class="nameAndAddress flex_center column">
+        <div class="na_name" data-model="local" data-field="exchange_name"></div>
+        <div class="na_address" data-model="local" data-field="exchange_address"></div>
       </div>
     </div>
 

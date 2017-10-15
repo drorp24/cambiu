@@ -421,6 +421,8 @@ setLocale = function(location) {
 //    Object.assign(local, nearest_center);
     for (var attrname in nearest_center) { local[attrname] = nearest_center[attrname]; } // For Androids...
     local.rates = null;
+    var locale = $('body').attr('locale');
+    local.language = locale ? locale : 'en';
 
     // required for the initial call
     return nearest_center;
