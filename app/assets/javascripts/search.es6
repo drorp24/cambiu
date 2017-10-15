@@ -7,16 +7,13 @@
 $(document).ready(function() {
 
     update_currency_symbol = function(el, symbol) {
-//console.log('>> 4.3 ', $('[data-hash=delivery_offer] [data-model=search][data-field=buy_amount]').html(), el.parent().parent().parent().parent().parent()[0] );
         if (symbol === undefined) {
             currency_select_el = $('#' + el.attr('data-symbolsource'));
             symbol = currency_select_el.find('option:selected').attr('data-symbol');
         }
         el.attr('data-a-sign', symbol);
-//console.log('>> 4.4 ', $('[data-hash=delivery_offer] [data-model=search][data-field=buy_amount]').html() );
         el.autoNumeric('update', {aSign: symbol});
         el.autoNumeric('set', clean(value_of(el.data('field'))));
-//console.log('>> 4.5 ', $('[data-hash=delivery_offer] [data-model=search][data-field=buy_amount]').html() );
 
     };
 
@@ -228,113 +225,6 @@ $(document).ready(function() {
 
 
 
-    // User manual search: form validation & submit
-
-    inputValid = function() {
-
-        $('.search .amount_fields').removeClass('invalid');
-
-        var $buy_amount = $('#buy_amount');
-        var buyAmountValid = clean($buy_amount.val());
-        if (!buyAmountValid) error($buy_amount, calculated == 'buy_amount' ? 'No offer, sorry' : 'Cannot be blank');
-
-        var $pay_amount = $('#pay_amount');
-        var payAmountValid = clean($pay_amount.val());
-        if (!payAmountValid) error($pay_amount, calculated == 'pay_amount' ? 'No offer, sorry' : 'Cannot be blank');
-
-
-        var $location = $('#location');
-        var locationValid = $location.val() && !locationDirty;
-        if (!locationValid) error($location, 'Cannot be blank');
-
-        var $pay_currency = $('#pay_currency');
-        var $buy_currency = $('#buy_currency');
-        var currencyValid = $pay_currency.val() != $buy_currency.val();
-        if (!currencyValid) error($pay_currency, 'Choose different currencies');
-
-        valid = !!(payAmountValid && buyAmountValid && locationValid && currencyValid);
-        return valid;
-
-        function error($e, msg) {
-            $e.siblings('label').attr('data-error', msg);
-            $e.addClass('invalid');
-        }
-    };
-
-    $('[data-ajax=searches]').click(function(e) {
-        let $this = $(this);
-        e.preventDefault();
-        if (!$this.is('[data-ajax=searches]')) return;   // absurd but required: button changed attributes but unneeded event still bound
-        if (inputValid() || $this.is('[data-validate=false]')) {
-            report('Click', $this.html(), bestOffer());
-            search_and_show_and_render()
-        }
-    });
-
-
-
-    search = function() {
-
-        return new Promise(function(resolve, reject) {
-
-            function startSearch() {
-//                start_show();
-            }
-
-            function checkStatus(response) {
-                if (response.status >= 200 && response.status < 300) {
-                    return response
-                } else {
-                    var error = new Error(response.statusText);
-                    error.response = response;
-                    throw error
-                }
-            }
-
-            function parseJson(response) {
-                return response.json()
-            }
-
-            function fetchData() {
-                return fetch('/searches?', {
-                    method: 'post',
-                    body: new URLSearchParams($( ".search_form input, .search_form select" ).serialize())
-                })
-            }
-
-            function finishSearch (data) {
-                if (data.error) {
-                    console.error('search failed:', data.error)
-                } else {
-                    console.log('search completed succesfully');
-                }
-                searchData = data;
-                set('search_id', searchId = data.search);
-                $('[data-model=search][data-field=id]').val(searchId);
-                tagSession({search: searchId});
-                exchanges = data.exchanges.features;
-                exchangeHash = {};
-                for (var exchange of exchanges) {exchangeHash[exchange.properties.id] = exchange.properties}
-                resolve(exchanges);
-//                wait(750).then(stop_show);
-            }
-
-            function tell(error) {
-                console.log('catch during search!');
-                reject(error)
-            }
-
-
-            startSearch();
-            fetchData()
-            .then(checkStatus)
-            .then(parseJson)
-            .then(finishSearch)
-            .catch(tell);
-
-        })
-
-    };
 
     fetchLocalRates = function() {
 
@@ -377,39 +267,6 @@ $(document).ready(function() {
             $('[data-model=search][data-field=location]').val("");
         }
     });
-
-    $(".search_section.where input[type=checkbox]").change(function() {
-        var $locationInput = $('.search_section.where input#location');
-        locationDirty = false;
-        if(this.checked) {
-            var user_location_name = (search.location.type == 'user' && search.location.name) ? search.location.name : null;
-            var user_location_short = (search.location.type == 'user' && search.location.short) ? search.location.short : null;
-            if (user.lat && user.lng) {
-                set('location_lat',     search.location.lat = user.lat);
-                set('location_lng',     search.location.lng = user.lng);
-                set('location_type',    search.location.type = 'user');
-                set('location_reason',  search.location.reason = "where i'm at");
-                set('location',         search.location.name = user_location_name);
-                set('location_short',  search.location.short = user_location_short);
-                if (user_location_name) {
-                    set('location',  user_location_name);
-                } else {
-                    geocode(search.location);
-                }
-            } else {
-                getUserLocation().then(geocode);
-            }
-            $locationInput.prop("disabled", true);
-            $locationInput.removeClass('active');
-            $('.search_section.where').addClass('on');
-        } else {
-            $locationInput.prop("disabled", false);
-            $locationInput.addClass('active');
-            set('location', '');
-            $('.search_section.where').removeClass('on');
-        }
-    });
-
 
 
     function supported(feature) {
@@ -469,28 +326,6 @@ $(document).ready(function() {
     });
 
 
-/*
-    $('form .service_type').change(function() {
-        var $this = $(this);
-        snackHide();
-        var service_type = $this.is(':checked') ? 'delivery' : 'pickup';
-
-        if (supported('service_type')) {
-            setServiceTypeTo(service_type);
-            if ($('body').attr('data-pane') == 'search') fetchAndPopulateLocaloffers();
-            if ($('body').attr('data-pane') == 'update') {
-                $(`.ecard[data-exchange-id=${urlId()}] .offer_line.delivery.charge`).css('visibility', value_of('service_type') == 'delivery' ? 'visible' : 'hidden');
-            }
-        } else {
-            $('form.selection #delivery_ind').prop('checked', service_type == 'pickup');
-            unsupported('service_type');
-        }
-
-        report('Set', 'Service type', null, service_type);
-        set('values', 'user');
-
-    });
- */
 
     setServiceTypeTo = function(service_type) {
         if (service_type == 'delivery') {
@@ -524,79 +359,15 @@ $(document).ready(function() {
     };
 
 
-    function otherPaymentMethod(method) {
-        return method == 'cash' ? 'credit' : 'cash'
-    }
-
-/*
-    $('form .payment_method').change(function() {
-        snackHide();
-        var new_payment_method = $('form.selection .payment_method:checked').val();
-
-        if (supported('payment_method')) {
-            if (new_payment_method == 'credit' && value_of('pay_currency') != local.currency) {
-                snack(`To pay with credit, please change payment currency to ${local.currency}`, {klass: 'oops', timeout: 3000});
-                setPaymentMethodTo('cash');
-                return;
-            }
-            setPaymentMethodTo(new_payment_method);
-            if ($('body').attr('data-pane') == 'search') fetchAndPopulateLocaloffers();
-            if ($('body').attr('data-pane') == 'update') {
-                $(`.ecard[data-exchange-id=${urlId()}] .offer_line.cc.charge`).css('visibility', value_of('payment_method') == 'credit' ? 'visible' : 'hidden');
-            }
-        } else {
-            $(`form.selection .payment_method[value=${otherPaymentMethod(new_payment_method)}]`).prop('checked', true);
-            unsupported('payment_method')
-        }
-
-        report('Set', 'Payment method', null, new_payment_method);
-        set('values', 'user');
-    });
-*/
-
     setPaymentMethodTo = function(payment_method) {
 
-        $(`form.selection .payment_method[value=${payment_method}]`).prop('checked', true);
         sessionStorage.payment_method = payment_method;
         $('[data-model=search][data-field=payment_method]').val(payment_method);
+        $('body').removeClass(other(payment_method)).addClass(payment_method);
         if (payment_method == 'cash') setServiceTypeTo('pickup');
-        $('form.selection').removeClass(otherPaymentMethod(payment_method)).addClass(payment_method);
-        $('body').removeClass(otherPaymentMethod(payment_method)).addClass(payment_method);
 
     };
 
-    revertToPickupCash = function() {
-        setServiceTypeTo('pickup');
-        setPaymentMethodTo('cash');
-        set_change('service_type_payment_method', 'derlivery_credit', 'pickup_cash');
-        fetchAndPopulateLocaloffers();
-    };
-
-
-/*
-    $('[data-action=updateOrder]').click(function(e) {
-
-        e.preventDefault();
-
-        let exchange_id = urlId();
-        if (!exchange_id) {console.error('updateOrder: no id in url'); return}
-
-        for (let field of ['buy_currency', 'buy_amount', 'pay_currency', 'pay_amount']) {updateOrderWith(field)}
-        $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=gain_amount]`).html($('form.update [data-field=worst_saving]').val());
-        $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=edited_quote]`).html($(`form.update [data-field=${value_of('calculated')}]`).val());
-
-        $(`.ecard[data-exchange-id=${exchange_id}] .offer_line.cc.charge`).css('visibility', value_of('payment_method') == 'credit' ? 'visible' : 'hidden');
-        $(`.ecard[data-exchange-id=${exchange_id}] .offer_line.deliver.charge`).css('visibility', value_of('service_type') == 'delivery' ? 'visible' : 'hidden');
-
-
-        function updateOrderWith(field) {
-            $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=${field}]`).html($(`form.update [data-field=${field}]`).val());
-        }
-        $(`.ecard[data-exchange-id=${exchange_id}] [data-model=exchange][data-field=get_amount]`).html($('form.update [data-field=buy_amount]').val());   // yachh
-
-
-    });
-*/
 
     $('.language_select').on('click tap', function() {
         console.log('language select');
