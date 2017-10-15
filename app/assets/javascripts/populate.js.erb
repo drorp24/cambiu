@@ -284,7 +284,7 @@ populateParams = function() {
     });
 
     bind_currency_to_autonumeric();
-    $('.version').html(version);
+    $('.version').html('0.9.9');
 
     set('calculated', calculated = !def['pay_amount'] ? 'pay_amount' : 'buy_amount');
     formElement(calculated).addClass('calculated');
