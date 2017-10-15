@@ -1199,7 +1199,10 @@ body#cambiu {
       display: block;
     }
     background-color: rgba(34, 150, 243, 0.18);
-    padding: 3vh;
+    padding-top: 1.5vh;
+    padding-bottom: 1.5vh;
+    @include vpadding-right(1.5vw);
+    @include vpadding-left(1.5vw);
   }
 
   button[data-action=order] {
