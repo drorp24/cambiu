@@ -173,7 +173,7 @@ en:
       title: 'We have an offer...'
       subtitle_pickup: 'Click to order it'
       subtitle_delivery: 'Click and we will call to deliver'
-      different: 'No offer available for xxx but this offer for yyy is an incredible offer!'
+      different: 'No offer available for xxx but this offer for yyy is an incredible one!'
       pickup: 'pick-up'
       delivery: 'delivery'
       credit: 'credit'

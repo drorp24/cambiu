@@ -151,7 +151,7 @@ var inIframe = false;
 var locale;
 var activeSnackbars = 0;
 var pendingSnack = {};
-var radius = {delivery: 100, pickup: {drive: 10, walk: 0.75}};
+var radius = {delivery: 100, pickup: {drive: 10, walk: 0.75, default: 0.75}};
 var conveyed = {localCurrency: false};
 
 

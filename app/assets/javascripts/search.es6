@@ -353,7 +353,7 @@ $(document).ready(function() {
             $('form.selection #delivery_ind').prop('checked',false);
 //            if (value_of('payment_method') == 'credit') setPaymentMethodTo('cash');
 
-             if (value_of('radius') == radius.delivery) set('radius', radius.pickup.drive);
+             if (value_of('radius') == radius.delivery) set('radius', radius.pickup.default); // if it's not delivery then don't change it: it means the user has set his preference some time ago
         }
 
     };
