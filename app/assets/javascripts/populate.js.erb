@@ -443,8 +443,8 @@ populateLocalOffers = function(rates) {
     var result = rates.result;
     var service_type = result.service_type;
     var payment_method = result.payment_method;
-    var exchange_name = local.language == 'he' ? result.exchange_name_he : result.name;
-    var exchange_address = local.language == 'he' ? result.exchange_address_he : result.address;
+    var exchange_name = local.language == 'he' ? result.exchange_name_he : result.exchange_name;
+    var exchange_address = local.language == 'he' ? result.exchange_address_he : result.exchange_address;
 
     $('body').removeClass(other(service_type)).addClass(service_type).removeClass(other(payment_method)).addClass(payment_method);
     $('[data-model=local][data-field=exchange_name]').html(exchange_name);
