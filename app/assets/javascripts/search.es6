@@ -624,15 +624,11 @@ $(document).ready(function() {
     });
 
 
- /*   $('.yourSelector').keydown(function(e) {
-        console.log('keyup called');
+    $('body').keydown(function(e) {
         var code = e.keyCode || e.which;
         if (code == '9') {
-            alert('Tab pressed');
-
-            return false;
+            e.preventDefault();
         }
 
     });
-*/
 });
