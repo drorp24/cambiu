@@ -7,12 +7,17 @@
 $(document).ready(function() {
 
     update_currency_symbol = function(el, symbol) {
+//console.log('>> 4.3 ', $('[data-hash=delivery_offer] [data-model=search][data-field=buy_amount]').html(), el.parent().parent().parent().parent().parent()[0] );
         if (symbol === undefined) {
             currency_select_el = $('#' + el.attr('data-symbolsource'));
             symbol = currency_select_el.find('option:selected').attr('data-symbol');
         }
         el.attr('data-a-sign', symbol);
+//console.log('>> 4.4 ', $('[data-hash=delivery_offer] [data-model=search][data-field=buy_amount]').html() );
         el.autoNumeric('update', {aSign: symbol});
+        el.autoNumeric('set', clean(value_of(el.data('field'))));
+//console.log('>> 4.5 ', $('[data-hash=delivery_offer] [data-model=search][data-field=buy_amount]').html() );
+
     };
 
     matchWorstFieldsSymbolToCalculated = function() {
