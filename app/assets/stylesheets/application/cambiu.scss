@@ -1006,6 +1006,8 @@ body#cambiu {
         @include vpadding-right(3vw);
         .ok_text {
           @include vfont-size(4vw);
+          width: 100%;
+          text-align: center;
         }
         .ok_icon {
           @include vfont-size(7vw);
