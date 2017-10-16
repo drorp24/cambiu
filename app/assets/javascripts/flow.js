@@ -67,12 +67,6 @@ search_and_show_and_render = function() {
 };
 
 function setProperPage() {
-     if (mobile && window.location.pathname == '/') {
-        setPage({page1: 'exchanges', pane1: 'intro', search: location.search});
-    } else {
-        setPage({url: window.location.pathname});
-    }
-    // tag the entire session, with ref parameter or without it
-    tagSession();
+        setPage({url: window.location.pathname + window.location.hash});
 }
 
