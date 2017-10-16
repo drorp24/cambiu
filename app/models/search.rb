@@ -86,7 +86,9 @@ class Search < ActiveRecord::Base
       puts "Backtrace:\n\t#{e.backtrace[0..6].join("\n\t")}"
       puts ""
       Error.report({message: error_message, text: error_text, search_id: self.id})
-      geoJsonize([], error_message)
+      response[:error] = e.to_s
+
+      response
 
     end
 
