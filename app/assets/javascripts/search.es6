@@ -233,7 +233,7 @@ $(document).ready(function() {
         return new Promise(function(resolve, reject) {
 
             function fetchRates() {
-                return fetch('/searches/localRates?' + $( ".search_form input, .search_form select" ).serialize(), {
+                return fetch('/searches/localRates?' + $( ".search_form input[data-model=search], .search_form select[data-model=search]" ).serialize(), {
                     method: 'get'
                 })
             }
