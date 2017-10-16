@@ -347,7 +347,9 @@ fetchAndPopulateLocaloffers = function() {
       $('.bestOffer_save').css('visibility', 'visible');
     }
     function tell(error) {
-      console.log('catch during fetchAndPopulateLocaloffers!');
+      console.error('catch during fetchAndPopulateLocaloffers - ' + error);
+      clearBestOffer();
+      snack(t('error'), {klass: 'oops', timeout: 3500});
       reject(error)
     }
 
@@ -366,9 +368,7 @@ fetchAndPopulateLocaloffers = function() {
 populateLocalOffers = function(rates) {
 
   if (!rates || rates.error || !rates.best || rates.best.error) {
-    $('.worst').css('visibility', 'hidden');
-    $('.bestOffer_save').empty();
-//    clearLocalOffers();
+    clearBestOffer();
     snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'search'}});
     return(null);
   }
@@ -394,8 +394,7 @@ populateLocalOffers = function(rates) {
   updateCalculated(calculated, best_value);
 
   if (worst.error) {
-    $('.worst').css('visibility', 'hidden');
-    $('.bestOffer_save').empty();
+    clearBestOffer();
     console.warn('hiding bestOffer: ' + worst.error);
   } else {
     var worst_value_before_fee = worst.rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
@@ -407,8 +406,7 @@ populateLocalOffers = function(rates) {
       $('[data-model=local][data-field=worst_amount]').autoNumeric('set', worst_value);
       $('[data-model=local][data-field=worst_saving]').autoNumeric('set', gain_value);
     } else {
-      $('.worst').css('visibility', 'hidden');
-      $('.offer_line.saving').css('display', 'none');
+      clearBestOffer();
       console.warn('hiding bestOffer: gain is negative');
       $('.bestOffer_save').empty();
     }
@@ -475,9 +473,13 @@ populateLocalOffers = function(rates) {
 
 };
 
+clearBestOffer = function() {
+  $('.worst').css('visibility', 'hidden');
+  $('.bestOffer_save').empty();
+};
+
 clearLocalOffers = function() {
   formElement(calculated).autoNumeric('set', 0);
-  $('[data-model=local][data-field=count]').html("");
   $('[data-model=local][data-field=worst_amount]').autoNumeric('set', 0);
   $('[data-model=local][data-field=worst_saving]').autoNumeric('set', 0);
 };

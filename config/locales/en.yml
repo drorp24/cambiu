@@ -130,7 +130,7 @@ en:
     yes1: 'Yes'
     no1: 'No'
     noOffer: 'No offer for these criteria.<br/> Try changing them.'
-    error: 'Something went wrong'
+    error: 'Something went wrong. Please try again in a few moments.'
     cancel: 'Cancelled'
     noPickupCashWouldYouLikeDelivery: 'No cash pick-up offer, would you like a delivery?'
     noPickupCreditWouldYouLikeDelivery: 'No credit card pick-up, would you like a delivery?'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171013193551) do
+ActiveRecord::Schema.define(version: 20171016182408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -272,8 +272,6 @@ ActiveRecord::Schema.define(version: 20171013193551) do
     t.integer  "bias_exchange_id"
     t.integer  "result_exchange_id"
     t.float    "result_grade"
-    t.integer  "result_service_type"
-    t.integer  "result_payment_method"
     t.string   "change_field"
     t.string   "change_from"
     t.string   "change_to"
@@ -283,6 +281,8 @@ ActiveRecord::Schema.define(version: 20171013193551) do
     t.integer  "result_count"
     t.string   "result_exchange_name"
     t.float    "result_radius"
+    t.string   "result_service_type"
+    t.string   "result_payment_method"
     t.index ["bias_exchange_id"], name: "index_searches_on_bias_exchange_id", using: :btree
     t.index ["result_exchange_id"], name: "index_searches_on_result_exchange_id", using: :btree
     t.index ["user_id"], name: "index_searches_on_user_id", using: :btree

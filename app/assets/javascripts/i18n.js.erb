@@ -3,6 +3,7 @@ t = function(expression, var1, var2) {
   var translation = {
 
     en: {
+      error: '<%= I18n.t 'app.error', locale: :en %>',
       cash: '<%= I18n.t 'isearch.offer.cash', locale: :en %>',
       credit: '<%= I18n.t 'isearch.offer.credit', locale: :en %>',
       delivery: '<%= I18n.t 'isearch.offer.delivery', locale: :en %>',
@@ -25,6 +26,7 @@ t = function(expression, var1, var2) {
 
     },
     he: {
+      error: '<%= I18n.t 'app.error', locale: :he %>',
       cash: '<%= I18n.t 'isearch.offer.cash', locale: :he %>',
       credit: '<%= I18n.t 'isearch.offer.credit', locale: :he %>',
       delivery: '<%= I18n.t 'isearch.offer.delivery', locale: :he %>',
@@ -49,4 +51,4 @@ t = function(expression, var1, var2) {
 
   return translation[locale][expression] || '<%= I18n.t 'app.missing' %>'
 };
-var variation = 30;
+var variation = 32;

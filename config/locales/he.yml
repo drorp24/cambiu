@@ -109,7 +109,7 @@ he:
     yes1: 'כן'
     no1: 'לא'
     noOffer: 'לא נמצאה הצעה תואמת לנתונים שהזנתם. נסו לשנותם.'
-    error: 'משהו לא טוב קרה'
+    error: 'סליחה, יש לנו עומס רגעי. אנא נסו שנית בעוד מספר דקות.'
     cancel: 'בוטל!'
     noPickupCashWouldYouLikeDelivery: 'לא קיימת הצעת איסוף למזומן. תרצו משלוח?'
     noPickupCreditWouldYouLikeDelivery: 'לא קיימת הצעת איסוף לאשראי. תרצו משלוח?'

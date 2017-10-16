@@ -31,9 +31,13 @@ ActiveAdmin.register Search do
     column 'Payment Method' do |search|
       search.payment_method.capitalize
     end
-    column :result_service_type
-    column :result_payment_method
-    column 'Result Exchange' do |search|
+    column 'Result Service Type' do |search|
+      search.result_service_type.to_s.capitalize
+    end
+    column 'Result Payment Method' do |search|
+      search.result_payment_method.to_s.capitalize
+    end
+     column 'Result Exchange' do |search|
       link_to search.result_exchange.name, edit_admin_exchange_path(search.result_exchange_id) if search.result_exchange_id
     end
 =begin

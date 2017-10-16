@@ -94,6 +94,18 @@ class Exchange < ActiveRecord::Base
   scope :fix_address, -> {where(business_type: 'exchange', latitude: nil, status: nil)}
 
 
+
+
+
+  def self.retrieve(attempt)
+    box         = Geocoder::Calculations.bounding_box(attempt[:center], attempt[:radius])
+    exchanges   = Exchange.active.geocoded.within_bounding_box(box)
+    exchanges   = exchanges.delivery.covering(attempt[:center]) if attempt[:service_type] == 'delivery'
+    exchanges   = exchanges.credit if attempt[:payment_method] == 'credit'
+    exchanges
+  end
+
+
   def self.covering(location)
     lat = location[0]
     lng = location[1]
@@ -665,11 +677,11 @@ class Exchange < ActiveRecord::Base
     exchange_hash = {}
 
     exchange_hash[:distance] = self.distance_from(center)
-    exchange_hash[:id] = self.id
-    exchange_hash[:name] = self.name
-    exchange_hash[:name_he] = self.name_he
-    exchange_hash[:address] = self.address
-    exchange_hash[:address_he] = self.address_he
+    exchange_hash[:exchange_id] = self.id
+    exchange_hash[:exchange_name] = self.name
+    exchange_hash[:exchange_name_he] = self.name_he
+    exchange_hash[:exchange_address] = self.address
+    exchange_hash[:exchange_address_he] = self.address_he
     exchange_hash[:phone] = self.phone
     exchange_hash[:website] = self.website
     exchange_hash[:latitude] = self.latitude

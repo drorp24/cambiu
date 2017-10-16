@@ -15,8 +15,6 @@ class Search < ActiveRecord::Base
   validate :valid_input, on: :create
   enum service_type: [ :pickup, :delivery ]
   enum payment_method: [ :cash, :credit ]
-  enum result_service_type: [ :Pickup, :Delivery, :Noservicetype ]
-  enum result_payment_method: [ :Cash, :Credit, :Nopaymentmethod ]
   enum mode: [ :best, :full ]
 
 #  scope :negate, ->(scope) { where(scope.where_values.reduce(:and).not) }
@@ -50,23 +48,23 @@ class Search < ActiveRecord::Base
 #      Exchange.cache_clear
 
       response = {}
+
       if location.present?
         response = cached_offers
       else
         response = uncached_offers
       end
 
-      response[:search][:id] = id if mode == 'best'
+      response[:search][:id] = id
 
-      if mode == 'best' && response && response[:result]
-        self.result_service_type        = response[:result][:service_type].capitalize
-        self.result_payment_method      = response[:result][:payment_method].capitalize
+      if response[:result]
+        self.result_service_type        = response[:result][:service_type]
+        self.result_payment_method      = response[:result][:payment_method]
         self.result_radius              = response[:result][:radius]
         self.result_exchange_id         = response[:result][:exchange_id]
         self.result_exchange_name       = response[:result][:exchange_name]
         self.result_grade               = response[:result][:grade]
         self.result_distance            = response[:result][:distance]
-        self.result_count               = response[:count]
         if response[:search][:cached] && response[:search][:cached] < id
           self.result_cached            = true
           self.result_cached_search_id  = response[:search][:cached]
@@ -105,285 +103,151 @@ class Search < ActiveRecord::Base
 
   def uncached_offers
 
-    error             = nil
-    message           = nil
+    best_offer              = nil
+    error                   = nil
+    attempt                 = {}
+    request = {
+        service_type:         service_type,
+        payment_method:       payment_method,
+        radius:               radius
+    }
+    result = {
+        service_type:         nil,
+        payment_method:       nil,
+        radius:               nil,
+        exchange_id:          nil,
+        exchange_name:        nil,
+        exchange_name_he:     nil,
+        exchange_address:     nil,
+        exchange_address_he:  nil,
+        grade:                nil,
+        distance:             nil
+    }
 
-    center            = [location_lat, location_lng]
-    pickup_radius     = 0.75
-    extended_radius   = 10
-    delivery_radius   = 100
+    center                  = [location_lat, location_lng]
 
-    box               = Geocoder::Calculations.bounding_box(center, radius)               # the original request
-    pickup_box        = Geocoder::Calculations.bounding_box(center, pickup_radius)
-    delivery_box      = Geocoder::Calculations.bounding_box(center, delivery_radius)
-    extended_box      = Geocoder::Calculations.bounding_box(center, extended_radius)
+    pay                     = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)    # works whether pay_amount comes with currency symbol or not
+    buy                     = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)
 
-    pay               = Money.new(Monetize.parse(pay_amount).fractional, pay_currency)    # works whether pay_amount comes with currency symbol or not
-    buy               = Money.new(Monetize.parse(buy_amount).fractional, buy_currency)
-
-    pay_rate          = (pay.currency.iso_code.downcase + '_rate').to_sym
-    buy_rate          = (buy.currency.iso_code.downcase + '_rate').to_sym
-
-    result_service_type   = service_type.capitalize
-    result_payment_method = payment_method.capitalize
-    result_radius         = radius
-
-
-    exchanges = Exchange.active.geocoded.
-        within_bounding_box(box).
-        includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
-
-    exchanges            = exchanges.delivery.covering(center) if service_type == 'delivery'
-    exchanges            = exchanges.credit if payment_method == 'credit'
+    pay_rate                = (pay.currency.iso_code.downcase + '_rate').to_sym
+    buy_rate                = (buy.currency.iso_code.downcase + '_rate').to_sym
 
 
-    offers = make_offers(exchanges, center, pay, buy, trans, calculated, service_type, payment_method)
+    # 0 - original user request
 
-    if offers[:count] == 0
+    attempt[:center]          = center
+
+    attempt.merge!(request)
+
+    exchanges   = Exchange.retrieve(attempt)
+    exchanges   = exchanges.includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate]) if exchanges.any?
+    best_offer  = find_best_offer(exchanges, center, pay, buy, trans, calculated, attempt[:service_type], attempt[:payment_method]) if exchanges.any?
+
+    if best_offer
+      result.merge!(attempt)
+    else
 
       # 1st proactive attempt - Unless we've just tried delivery, try looking for delivery offers now
 
-      exchanges = service_type != 'delivery' &&
-          Exchange.active.delivery.geocoded.
-              within_bounding_box(delivery_box).
-              covering(center).
-              includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+      attempt[:service_type]    = 'delivery'
+      attempt[:payment_method]  = 'credit'
+      attempt[:radius]          = 100
 
-      if exchanges && exchanges.any?
-        message   = payment_method == 'credit' ? 'noPickupCreditWouldYouLikeDelivery' : 'noPickupCashWouldYouLikeDelivery'
-        result_service_type = 'Delivery'
-        result_payment_method = 'Credit'
-        result_radius = delivery_radius
-        puts "1!"
+      exchanges   = service_type != 'delivery' && Exchange.retrieve(attempt)
+      exchanges   = exchanges.includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate]) if exchanges && exchanges.any?
+      best_offer  = find_best_offer(exchanges, center, pay, buy, trans, calculated, attempt[:service_type], attempt[:payment_method]) if exchanges && exchanges.any?
+
+      if best_offer
+        result.merge!(attempt)
       else
 
         # 2 attempt - If no delivery offer exists either, and unless we've just tried normal radius pickup, we'll attempt for pick-up now
 
-        exchanges = service_type != 'pickup' &&
-            Exchange.active.geocoded.
-            within_bounding_box(pickup_box).
-            includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+        attempt[:service_type]    = 'pickup'
+        attempt[:payment_method]  = 'cash'
+        attempt[:radius]          = 0.75
 
+        exchanges   = service_type != 'pickup' && Exchange.retrieve(attempt)
+        exchanges   = exchanges.includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate]) if exchanges && exchanges.any?
+        best_offer  = find_best_offer(exchanges, center, pay, buy, trans, calculated, attempt[:service_type], attempt[:payment_method]) if exchanges && exchanges.any?
 
-        if exchanges && exchanges.any?
-          message   = 'bestPickup'
-          result_service_type = 'Pickup'
-          result_payment_method = 'Cash'
-          result_radius = pickup_radius
-          puts "2!"
+        if best_offer
+          result.merge!(attempt)
         else
 
           # 3 - If no pickup offer found either, try looking for a pick-up offer in an extended radius
 
-          exchanges = Exchange.active.geocoded.
-              within_bounding_box(extended_box).
-              includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate])
+          attempt[:service_type]    = 'pickup'
+          attempt[:payment_method]  = 'cash'
+          attempt[:radius]          = 10
 
+          exchanges   = Exchange.retrieve(attempt)
+          exchanges   = exchanges.includes(pay_rate, buy_rate).includes(chain: [pay_rate, buy_rate]) if exchanges && exchanges.any?
+          best_offer  = find_best_offer(exchanges, center, pay, buy, trans, calculated, attempt[:service_type], attempt[:payment_method]) if exchanges && exchanges.any?
 
-          if exchanges && exchanges.any?
-            message   = 'bestPickup'
-            result_service_type = 'Pickup'
-            result_payment_method = 'Cash'
-            result_radius = extended_radius
-            puts "3!"
+          if best_offer
+            result.merge!(attempt)
+          else
+
+            # 4 - No hope
+
+            result = {
+                service_type:   nil,
+                payment_method: nil,
+                radius:         nil
+            }
           end
 
         end
-      end
 
-      offers = make_offers(exchanges, center, pay, buy, trans, calculated, result_service_type.downcase, result_payment_method.downcase)
-
-      if offers[:count] == 0
-        message = 'No result found'
-        result_service_type = 'Noservicetype'
-        result_payment_method = 'Nopaymentmethod'
-        result_radius = 0
       end
 
     end
 
 
-    count             = offers[:count]
-    exchanges_offers  = offers[:exchanges_offers]
-    best_offer        = offers[:best_offer]
+    result.merge!(best_offer.slice(:exchange_id, :exchange_name, :exchange_name_he, :exchange_address, :exchange_address_he, :grade, :distance)) if best_offer
+    best = best_offer ? best_offer[:rates] : nil
+    worst = Exchange.bad_rate(country, buy_currency, pay_currency, trans, pay_currency)
 
 
-    if best_offer
-      puts result_service_type
-      puts result_payment_method
-      result_exchange_id     =      best_offer[:id]
-      result_exchange_name    =     best_offer[:name]
-      result_exchange_name_he =     best_offer[:name_he]
-      result_exchange_address =     best_offer[:address]
-      result_exchange_address_he =  best_offer[:address_he]
-      result_grade           =      best_offer[:grade]
-      result_distance        =      best_offer[:distance]
-    end
-
-
-    if mode == 'best'
-
-
-       {
-          search: {
-              cached: id
-          },
-          request: {
-              service_type:         service_type,
-              payment_method:       payment_method,
-              radius:               radius
-          },
-          result: {
-              service_type:         result_service_type.downcase,
-              payment_method:       result_payment_method.downcase,
-              radius:               result_radius,
-              exchange_id:          result_exchange_id,
-              exchange_name:        result_exchange_name,
-              exchange_name_he:     result_exchange_name_he,
-              exchange_address:     result_exchange_address,
-              exchange_address_he:  result_exchange_address_he,
-              grade:                result_grade,
-              distance:             result_distance
-          },
-          best:
-              best_offer ? best_offer[:rates] : nil,
-          worst:
-              Exchange.bad_rate(country, buy_currency, pay_currency, trans, pay_currency),
-          count: count,
-          error: error,
-          message: message
-      }
-    else
-       geoJsonize(exchanges_offers, error, message)
-    end
+    {
+      search:   {cached: id},
+      request:  request,
+      result:   result,
+      best:     best,
+      worst:    worst,
+      error:    error
+    }
 
   end
 
   add_method_tracer :uncached_offers, 'Custom/uncached_offers'
 
-  def make_offers(exchanges, center, pay, buy, trans, calculated, service_type, payment_method)
+  def find_best_offer(exchanges, center, pay, buy, trans, calculated, service_type, payment_method)
 
-    best_grade = 1000000000
-    best_offer = nil
-    exchanges_offers = []
-    count = 0
-    delivery = service_type == 'delivery'
-    credit = payment_method == 'credit'
+    best_offer    = nil
+    best_grade    = 1000000000
+    delivery      = service_type == 'delivery'
+    credit        = payment_method == 'credit'
 
     exchanges.each do |exchange|
 
+      # TODO: Change to array map/reduce
       offer = exchange.offer(center, pay, buy, trans, calculated, delivery, credit, self.id)
 
       unless offer[:errors].any?
 
-        count  += 1          # counts the error-less offers, thus serving as a common way to check if there are any offers regardless of method
-
-        if mode == 'best'
-          if offer[:grade] < best_grade
-            best_offer = offer
-            best_grade = offer[:grade]
-          end
-        else
-          exchanges_offers << offer
+        if offer[:grade] < best_grade
+          best_offer = offer
+          best_grade = offer[:grade]
         end
 
       end
 
     end
 
-    if mode == 'full' and count > 0
-      exchanges_offers = exchanges_offers.sort_by{|e| e[:grade]}
-      exchanges_offers = bias(exchanges_offers, bias_exchange_id)
-      best_offer = exchanges_offers[0]
-    end
+    best_offer
 
-   {
-    exchanges_offers: exchanges_offers.first(10),
-    best_offer:       best_offer,
-    count:            [count, 10].min
-  }
-
-  end
-
-
-
-  def bias(exchanges_offers, exchange_id)
-
-    # Swap will be done when the best offer is different than the one already shown in previous localRates call (can happen if both have the same grade)
-    if exchanges_offers.any? and exchange_id and (exchanges_offers[0][:id] != exchange_id)
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-      puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
-      puts ""
-      puts "exchange_id: " + exchange_id.to_s
-      puts ""
-      puts "exchanges_offers[0][:id]: " + exchanges_offers[0][:id].to_s
-      puts ""
-      puts "exchanges_offers,count: " + exchanges_offers.count.to_s
-      puts ""
-      puts "exchanges_offers[0].inspect:"
-      puts exchanges_offers[0].inspect
-      puts ""
-      puts ""
-      exchange_id_index = exchanges_offers.each_index.find{|i| exchanges_offers[i][:id] == exchange_id}
-      puts "exchange_id_index: " + exchange_id_index.to_s
-      puts ""
-      if exchange_id_index
-        e_best = exchanges_offers[exchange_id_index]
-      else
-        puts "exchange_id is not in exchanges_offers. No swap."
-      end
-      e_0 = exchanges_offers[0]
-      if e_best
-        if (e_best[:grade] <= e_0[:grade])
-          puts "Swapped exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
-          e_0, e_best = e_best, e_0
-        else
-          puts "Didnt swap exchange_id #{e_0[:id]} whose grade is #{e_0[:grade]} with #{e_best[:id]} whose grade is #{e_best[:grade]}"
-        end
-      end
-      puts ""
-      puts ">>>>>>>>>> S W A P >>>>>>>>>>>>>>>>>"
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-    end
-
-    exchanges_offers
-  end
-
-
-
-
-
-
-
-  def geoJsonize(exchanges_offers, error, message = nil)
-
-    features = []
-    exchanges_offers.each do |exchange_offer|
-      features << to_geo(exchange_offer)
-    end
-    return {search: id, error: error, message: message, exchanges: {type: 'FeatureCollection', features: features}}.to_json
-
-  end
-
-  def to_geo(exchange_offer)
-    { type: 'Feature',
-      properties: exchange_offer,
-      geometry: {
-          type: 'Point',
-          coordinates: [exchange_offer[:longitude], exchange_offer[:latitude]]
-      },
-      id: exchange_offer[:id]
-    }
-  end
-
-
-  def pane=(pane)
-    @rest=pane
-  end
-
-
-  def delivery_ind=(ind)
-    self.service_type = 'delivery' if ind == 'on'
   end
 
 
