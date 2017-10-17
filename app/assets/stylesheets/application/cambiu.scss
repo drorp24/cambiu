@@ -965,7 +965,7 @@ body#cambiu {
     height: $isearch_content;
   }
 
-  &[data-mobileSafari] {
+  &[data-mobileSafari] .pane_content {
     height: $isearch_content_mobileSafari;
   }
 
@@ -1112,7 +1112,7 @@ body#cambiu {
     height: $isearch_content;
   }
 
-  &[data-mobileSafari] {
+  &[data-mobileSafari] .questions {
     height: $isearch_content_mobileSafari;
   }
 
