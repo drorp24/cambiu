@@ -13,6 +13,8 @@
 
 // Variables
 
+$isearch_content: 68vh;
+
 $formBlue: #4285F4;
 $formBlue: #2196F3;
 $formBluePale: rgba(66, 133, 244, 0.5);
@@ -932,6 +934,12 @@ body#cambiu {
   }
   */
 
+
+
+  .select-wrapper+label {
+    top: -6px;
+  }
+
   .section {
     display: flex;
     flex-direction: column;
@@ -951,7 +959,7 @@ body#cambiu {
   .pane_content {
     @include vpadding-left(10vw);
     @include vpadding-right(10vw);
-    height: 80vh;
+    height: $isearch_content;
   }
 
 
@@ -1094,10 +1102,11 @@ body#cambiu {
 
 
   .questions {
-    height: 65vh;
+    height: $isearch_content;
   }
 
   .iform_title_subtitle {
+    margin-top: -2vh;
     width: 100%;
     display: flex;
     align-items: center;
@@ -1174,7 +1183,7 @@ body#cambiu {
   }
 
   .iform_icon img {
-    width: 128px;
+    width: 96px;
   }
 
   .binary.alternative {
@@ -1187,6 +1196,10 @@ body#cambiu {
       @include vfont-size(5vw);
       color: #000;
       font-weight: 300;
+      margin-top: -2vh;
+    }
+    img {
+      height: 96px;
     }
   }
 
@@ -1208,7 +1221,7 @@ body#cambiu {
   }
 
   button[data-action=order] {
-    @include vfont-size(5vw);
+    @include vfont-size(4vw);
   }
 
   .iformsprogressbar {
