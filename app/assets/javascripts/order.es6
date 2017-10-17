@@ -5,7 +5,7 @@
 
 $('body').on('click tap','[data-action=order]', (function (e)  {  // Warning: not to use arrow function: it changes $this
 
-//    order();
+    order();
     /*
     let $this = $(this);
     if (value_of('service_type') == 'delivery') {
