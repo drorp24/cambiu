@@ -400,7 +400,7 @@ parseJson = function(response) {
 
 $(document).ready(function() {
 
-    if (navigator && navigator.userAgent && navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("iPhone") > -1) $('body').attr('data-mobileSafari', 'true');
+    if (navigator && navigator.userAgent && navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("iPhone") > -1) $('body').attr('data-mobilesafari', 'true');
 
     locale = $('body').attr('locale');
     if (search) utm_source = new URLSearchParams(search).get('utm_source');

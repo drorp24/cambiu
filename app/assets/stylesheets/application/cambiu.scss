@@ -13,8 +13,8 @@
 
 // Variables
 
-$isearch_content_mobileSafari: 68vh;
-$isearch_content: 75vh;
+$isearch_content_mobilesafari: 68vh;
+$isearch_content: 80vh;
 
 $formBlue: #4285F4;
 $formBlue: #2196F3;
@@ -965,8 +965,8 @@ body#cambiu {
     height: $isearch_content;
   }
 
-  &[data-mobileSafari] .pane_content {
-    height: $isearch_content_mobileSafari;
+  &[data-mobilesafari] .pane_content {
+    height: $isearch_content_mobilesafari;
   }
 
 
@@ -1112,8 +1112,8 @@ body#cambiu {
     height: $isearch_content;
   }
 
-  &[data-mobileSafari] .questions {
-    height: $isearch_content_mobileSafari;
+  &[data-mobilesafari] .questions {
+    height: $isearch_content_mobilesafari;
   }
 
   .iform_title_subtitle {
