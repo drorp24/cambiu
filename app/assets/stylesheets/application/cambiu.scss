@@ -13,7 +13,8 @@
 
 // Variables
 
-$isearch_content: 68vh;
+$isearch_content_mobileSafari: 68vh;
+$isearch_content: 75vh;
 
 $formBlue: #4285F4;
 $formBlue: #2196F3;
@@ -934,7 +935,9 @@ body#cambiu {
   }
   */
 
-
+  #user_house {
+  @include threedots(100%);
+}
 
   .select-wrapper+label {
     top: -6px;
@@ -960,6 +963,10 @@ body#cambiu {
     @include vpadding-left(10vw);
     @include vpadding-right(10vw);
     height: $isearch_content;
+  }
+
+  &[data-mobileSafari] {
+    height: $isearch_content_mobileSafari;
   }
 
 
@@ -1105,8 +1112,11 @@ body#cambiu {
     height: $isearch_content;
   }
 
+  &[data-mobileSafari] {
+    height: $isearch_content_mobileSafari;
+  }
+
   .iform_title_subtitle {
-    margin-top: -2vh;
     width: 100%;
     display: flex;
     align-items: center;
