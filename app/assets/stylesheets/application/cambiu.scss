@@ -20,6 +20,7 @@ $formBlue: #4285F4;
 $formBlue: #2196F3;
 $formBluePale: rgba(66, 133, 244, 0.5);
 $formBluePale: rgba(1, 1, 1, 0.2);
+$formRed: #F44336;
 $minicard_height: 33vw;
 $minicard_img_height: 27vw;
 $offer-padding: 5vw;
@@ -994,6 +995,9 @@ body#cambiu {
     color: $formBlue;
   }
 
+  input.invalid:focus ~ label {
+    color: $formRed;
+  }
   input[type=text]:focus:not([readonly]) {
     border-color: $formBlue;
   }

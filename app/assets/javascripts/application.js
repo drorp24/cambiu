@@ -29,7 +29,7 @@
 //= require upload
 //= require pages
 //= require flow
-//= require user
+//= require validations
 //= require pay
 //= require i18n
 

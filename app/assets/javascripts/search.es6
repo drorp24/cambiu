@@ -169,10 +169,16 @@ $(document).ready(function() {
 
     $('form [data-model=search][data-field]').on('click tap', function() {
 
-        var $this = $(this);
-        var field = $this.data('field');
+        let $this = $(this);
+        let field = $this.data('field');
+        let $slide = $this.closest('.swiper-slide');
         if (amount(field)) clear($this);
- //       $this.closest('.swiper-slide').addClass('missing');
+
+        $slide.addClass('missing');
+        swiperI.lockSwipeToNext();
+        invalid($this);
+        mdbBlock(twin(field), true);
+
     });
 
     $('form [data-model=search][data-field]').keyup(function() {
@@ -191,9 +197,13 @@ $(document).ready(function() {
             if (clean(value) == 0) {
                 $slide.addClass('missing');
                 swiperI.lockSwipeToNext();
+                invalid($this);
+                mdbBlock(twin(field), true);
              } else {
                 $slide.removeClass('missing');
                 swiperI.unlockSwipeToNext();
+                valid($this);
+                mdbBlock(twin(field), false);
             }
         }
 
@@ -399,6 +409,12 @@ $(document).ready(function() {
         if (code == '9') {
             e.preventDefault();
         }
-
     });
+
+    mdbBlock = (field, blocked) => {
+        $(`.md-form.${field}.select.currency_fields .select-wrapper > input`).prop('disabled', blocked);
+    };
+
+
+
 });

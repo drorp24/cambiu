@@ -40,12 +40,7 @@ class Search < ActiveRecord::Base
 
     begin
 
-      return geoJsonize([], 'missing params') if
-          pay_currency.blank? or buy_currency.blank? or (pay_amount.blank? and buy_amount.blank?) or
-          location_lat.blank? or location_lng.blank? or
-          calculated.blank? or trans.blank?
-
-#      Exchange.cache_clear
+#     Exchange.cache_clear
 
       response = {}
 
