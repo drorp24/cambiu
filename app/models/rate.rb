@@ -29,6 +29,24 @@ class Rate < ActiveRecord::Base
     :orange if self.reference?
   end
 
+
+  def api_update_by(params)
+
+    return with 'ratable', 'not found' unless ratable = Rate.find_by(ratable_type: params[:ratable_type], ratable_id: params[:ratable_id])
+
+    params[:currencies].each do |currency|
+      if params[:buy].present? or params[:sell].present?
+
+      else
+
+      end
+    end
+
+    ratable.update(source: params[:source])
+
+
+  end
+
   def update_by_params(params)
 
     return false unless self.ratable && (params[:buy] || params[:sell])
@@ -102,6 +120,8 @@ class Rate < ActiveRecord::Base
     rate.errors.add(property, error)
     return rate
   end
+
+
 
   # If the referred chain/exchange doesnt already have a rate for the referred currency, it will be accepted iff there are other currencies with rates in our system
   def self.identify_by_either(params)
