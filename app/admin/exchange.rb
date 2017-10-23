@@ -306,6 +306,7 @@ form do |f|
       f.input     :city
       f.input     :address
       f.input     :address_he, label: 'Address in Hebrew'
+      f.input     :default
       f.input     :rates_policy, as: :select, collection: {:"Individual"=>"individual", :"Chain"=>"chain"}, include_blank: false
       f.input     :rates_source, as: :select, collection: {:"No rates"=>"no_rates", :"Test"=>"test", :"Manual"=>"manual", :"XML"=>"xml", :"Scraping"=>"scraping", :"API"=>"api"}, include_blank: false
       f.input     :rates_url, as: :url

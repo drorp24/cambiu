@@ -530,6 +530,7 @@ set_change = function(field, from, to) {
   set('change_field', field);
   set('change_from', from);
   set('change_to', to);
+  if (field == 'radius') set('bias', '');
 };
 
 getPano = function(exchange) {
