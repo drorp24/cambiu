@@ -255,12 +255,8 @@ $(document).ready(function() {
 
             function returnResults(data) {
                 Object.assign(local, {rates: data});
-                if (data.error) {
-                    reject(data.error)
-                } else {
-                    if (data.search) set('id', data.search.id);
-                    resolve(data)
-                }
+                set('id', data.search.id);
+                resolve(data)
             }
 
             fetchRates()

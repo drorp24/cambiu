@@ -137,9 +137,8 @@ $(document).ready(function() {
 //      console.log(`changed ${property} from ${old_value} to ${value}`);
         set_change(property, old_value, value);
         set(property, value, 'manual');
-        fetchAndPopulateLocaloffers()
-            .then(() => {swiperIslideForward($this, 'delay')})
-            .catch((error) => {console.error(error)})
+        fetchAndPopulateLocaloffers();
+        swiperIslideForward($this, 'delay')
 
     });
 
