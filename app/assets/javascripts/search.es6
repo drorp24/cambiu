@@ -239,6 +239,7 @@ $(document).ready(function() {
     fetchLocalRates = function() {
 
         console.log('fetchLocalRates...');
+        recordTime('offer', 'fetch');
 
         return new Promise(function(resolve, reject) {
 
@@ -256,9 +257,11 @@ $(document).ready(function() {
             function returnResults(data) {
                 Object.assign(local, {rates: data});
                 if (data.error) {
+                    recordTime('offer', 'error', 'fetch');
                     reject(data.error)
                 } else {
                     if (data.search) set('id', data.search.id);
+                    recordTime('offer', 'result', 'fetch');
                     resolve(data)
                 }
             }

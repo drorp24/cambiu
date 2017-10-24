@@ -35,6 +35,7 @@ function doStuffThatRequiresLocation(location) {
 //    search_and_show();
 }
 
+/*
 search_and_show = function() {
     return search()
         .then(selectOffers)
@@ -65,6 +66,7 @@ search_and_show_and_render = function() {
         .then(checkUserPosition)
         .catch(showError);
 };
+*/
 
 function setProperPage() {
         setPage({url: window.location.pathname + window.location.hash});

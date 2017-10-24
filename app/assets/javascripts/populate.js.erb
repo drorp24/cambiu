@@ -343,11 +343,13 @@ fetchAndPopulateLocaloffers = function() {
     }
 
     function finishFetchingRates() {
+      recordTime('offer', 'populated', 'result');
       $('.preloader-wrapper').removeClass('active');
       $('.bestOffer_save').css('visibility', 'visible');
     }
     function tell(error) {
       console.error('catch during fetchAndPopulateLocaloffers - ' + error);
+      recordTime('offer', 'not_populated', 'result');
       clearBestOffer();
       snack(t('error'), {klass: 'oops', timeout: 3500});
       reject(error)

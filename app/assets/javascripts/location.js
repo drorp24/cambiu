@@ -7,6 +7,8 @@ getUserLocation = function() {
 
         console.log('getUserLocation');
 
+        recordTime('location', 'get');
+
         if (!navigator.geolocation) {
             positionError('unsupported');
             return
@@ -26,6 +28,8 @@ getUserLocation = function() {
 
         function positionFound(position) {
 
+            recordTime('location', 'found', 'get');
+
             user.lat = position.coords.latitude;
             user.lng = position.coords.longitude;
 
@@ -36,6 +40,8 @@ getUserLocation = function() {
         }
 
         function positionError(error) {
+
+            recordTime('location', 'error', 'get');
 
             $('.bestOffer').css('visibility', 'hidden');
 
@@ -168,6 +174,7 @@ geocode = function(locationArg) {
             $('[data-model=user][data-field=street]').val(result.address_components[1].short_name).siblings('label').addClass('active');
             $('[data-model=user][data-field=city]').val(result.address_components[2].short_name).siblings('label').addClass('active');
 
+            recordTime('location', 'geocoded', 'found');
             resolve(search.location);
 
         }
@@ -186,6 +193,7 @@ geocode = function(locationArg) {
             }
 
             // reject would halt the execution flow!
+            recordTime('location', 'not_geocoded', 'found');
             resolve(message);
         }
     })
