@@ -60,6 +60,7 @@ class Search < ActiveRecord::Base
         self.result_exchange_name       = response[:result][:exchange_name]
         self.result_grade               = response[:result][:grade]
         self.result_distance            = response[:result][:distance]
+        self.result_bias                = response[:result][:bias]
         if response[:search][:cached] && response[:search][:cached] < id
           self.result_cached            = true
           self.result_cached_search_id  = response[:search][:cached]
@@ -104,7 +105,8 @@ class Search < ActiveRecord::Base
     request = {
         service_type:         service_type,
         payment_method:       payment_method,
-        radius:               radius
+        radius:               radius,
+        bias:                 bias
     }
     result = {
         service_type:         nil,
@@ -116,7 +118,8 @@ class Search < ActiveRecord::Base
         exchange_address:     nil,
         exchange_address_he:  nil,
         grade:                nil,
-        distance:             nil
+        distance:             nil,
+        bias:                 nil
     }
 
     center                  = [location_lat, location_lng]
