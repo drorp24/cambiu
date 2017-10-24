@@ -20,8 +20,6 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
         .catch(showError);
     setProperPage();
 
-    //    if (value_of('search_id')) verifyUserLocation.then(search_and_show);
-
 });
 
 function doStuffThatRequiresLocation(location) {
@@ -35,38 +33,6 @@ function doStuffThatRequiresLocation(location) {
 //    search_and_show();
 }
 
-/*
-search_and_show = function() {
-    return search()
-        .then(selectOffers)
-        .then(populateOffers)
-        .then(verifyMapIsShown)
-        .then(placeGoogleMarkers)
-        .then(showSearchLocation)
-        .then(revealCards)
-        .then(zoomIn2)
-        .then(postAnimations)
-        .then(followUser)
-        .then(checkUserPosition)
-        .catch(showError);
-};
-
-search_and_show_and_render = function() {
-    return search()
-        .then(selectOffers)
-        .then(populateOffers)
-        .then(renderProperPage)
-        .then(verifyMapIsShown)
-        .then(placeGoogleMarkers)
-        .then(showSearchLocation)
-        .then(revealCards)
-        .then(zoomIn2)
-        .then(postAnimations)
-        .then(followUser)
-        .then(checkUserPosition)
-        .catch(showError);
-};
-*/
 
 function setProperPage() {
         setPage({url: window.location.pathname + window.location.hash});
