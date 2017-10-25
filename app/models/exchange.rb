@@ -684,7 +684,7 @@ class Exchange < ActiveRecord::Base
 
     exchange_hash = {}
 
-    exchange_hash[:distance] = self.distance_from(center)
+    exchange_hash[:distance] = center == [0, 0] ? 0 : self.distance_from(center)
     exchange_hash[:exchange_id] = self.id
     exchange_hash[:exchange_name] = self.name
     exchange_hash[:exchange_name_he] = self.name_he

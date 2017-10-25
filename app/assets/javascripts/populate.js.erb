@@ -351,7 +351,7 @@ fetchAndPopulateLocaloffers = function() {
       console.error('catch during fetchAndPopulateLocaloffers - ' + error);
       recordTime('offer', 'not_populated');
       clearBestOffer();
-      snack(t('error'), {klass: 'oops', timeout: 3500});
+      snack(error, {klass: 'oops', timeout: 3500});
       reject(error)
     }
 
