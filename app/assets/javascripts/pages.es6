@@ -16,9 +16,6 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
          [page, id, pane] = [page1, id1, pane1];
     }
 
-    id = determineId(id);
-    var exchange = exchangeHash && exchangeHash[id] ? exchangeHash[id] : currentExchange();
-
     // Declare a new page to GA and report a pageview
     pageReport(url || make_url(page, id, pane, hash));
 
@@ -35,7 +32,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
     if (pane) {
         $pane.addClass('active');
         $('body').attr('data-pane', pane);
-        refresh(pane, $pane, exchange);
+        refresh(pane, $pane);
     }
 
 //    if (hash) document.getElementsByName(hash)[0].scrollIntoView(true);
@@ -74,7 +71,7 @@ setPage = function ({url, page1 = 'exchanges', id1, pane1, hash, search, pushSta
 
 
     // Some parts, like map and swipers, need to be re-rendered once the pane is visible
-    function refresh(pane, $pane, exchange) {
+    function refresh(pane, $pane) {
         // perhaps no refresh of map is needed: since it's not part of a specific pane ('map') as it used to be, it now never disappears.
         /*
          if (!map_refreshed && pane == 'cards' && map) {

@@ -320,11 +320,11 @@ populateLocalCurrency = function() {
 
   set('pay_currency', local.currency);  // locals
   set('buy_currency', (local.currency == 'USD') ? 'EUR' : 'USD');
-  $('form select').material_select();
+//  $('form select').material_select();
   block('pay_currency', value_of('buy_currency'));
   block('buy_currency', value_of('pay_currency'));
 
-  bind_currency_to_autonumeric();
+  setTimeout(bind_currency_to_autonumeric, 1000);   // allow enough time for mdb to change the DOM whose mdb structure is assumed by bind
 
 };
 
@@ -349,7 +349,7 @@ fetchAndPopulateLocaloffers = function() {
     }
     function tell(error) {
       console.error('catch during fetchAndPopulateLocaloffers - ' + error);
-      recordTime('offer', 'not_populated', 'result');
+      recordTime('offer', 'not_populated');
       clearBestOffer();
       snack(t('error'), {klass: 'oops', timeout: 3500});
       reject(error)

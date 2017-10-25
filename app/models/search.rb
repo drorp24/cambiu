@@ -12,7 +12,7 @@ class Search < ActiveRecord::Base
   has_many  :orders
   has_many :issues, foreign_key: "search_id", class_name: "Error"
 
-  validate :valid_input, on: :create
+#  validate :valid_input, on: :create
   enum service_type: [ :pickup, :delivery ]
   enum payment_method: [ :cash, :credit ]
   enum mode: [ :best, :full ]
@@ -25,16 +25,33 @@ class Search < ActiveRecord::Base
   scope :empty, -> {where(location: nil) }
 
 
+  def is_valid?
+
+    valid =  !(pay_currency.blank? or
+      buy_currency.blank? or
+      (pay_amount.blank? and buy_amount.blank?) or
+      location_lat.blank? or location_lng.blank? or
+      country.blank?)
+
+    Error.report({message: 'Missing params', text: 'Missing params', search_id: self.id}) unless valid
+
+    valid
+
+  end
+
+=begin
   def valid_input
      if
         pay_currency.blank? or
         buy_currency.blank? or
         (pay_amount.blank? and buy_amount.blank?) or
-        location_lat.blank? or location_lng.blank?
+        location_lat.blank? or location_lng.blank? or
+        country.blank?
 
        errors[:base] << "Missing search parameters"
      end
   end
+=end
 
   def exchanges
 
@@ -81,6 +98,7 @@ class Search < ActiveRecord::Base
       puts ""
       Error.report({message: error_message, text: error_text, search_id: self.id})
       response[:error] = e.to_s
+      response[:search] = {id: self.id}
 
       response
 
@@ -147,6 +165,7 @@ class Search < ActiveRecord::Base
 
       # 1st proactive attempt - Unless we've just tried delivery, try looking for delivery offers now
 
+      attempt[:bias]            = nil
       attempt[:service_type]    = 'delivery'
       attempt[:payment_method]  = 'credit'
       attempt[:radius]          = 100

@@ -193,7 +193,7 @@ geocode = function(locationArg) {
             }
 
             // reject would halt the execution flow!
-            recordTime('location', 'not_geocoded', 'found');
+            recordTime('location', 'not_geocoded');
             resolve(message);
         }
     })
@@ -386,6 +386,8 @@ setLocale = function(location) {
     // TODO: Fetch this data from the server
 
     console.log('setLocale setting a new locale to match location: ', location);
+
+    if (location == 'default') return local = def('locale');
 
     var centers = {
         ISR: {

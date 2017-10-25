@@ -1,4 +1,7 @@
 he:
+  time:
+   formats:
+     long: "%Y-%m-%d %H:%M:%S"
   intro:
     slide1:
       title: 'הזמינו מט״ח עד הבית.<br>המחירים הכי זולים. באחריות.'

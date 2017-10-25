@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  time:
+   formats:
+     long: "%Y-%m-%d %H:%M:%S"
   intro:
     slide1:
       title: 'Travel money delivered <br>to your doorstep. <br>Best prices. Guaranteed.'

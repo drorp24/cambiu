@@ -15,22 +15,36 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
     console.log('flow');
 
     populateParams();
-    getUserLocation()
-        .then(doStuffThatRequiresLocation)
-        .catch(showError);
+
+    if (value_of('bias') == 'default') {
+        fetchOffer('default');
+        getUserLocation()
+            .then((location) => {
+                doStuffThatRequiresLocation(location)
+            })
+    } else {
+        getUserLocation()
+            .then((location) => {
+                fetchOffer(location);
+                doStuffThatRequiresLocation(location)
+            })
+    }
+
     setProperPage();
 
 });
 
-function doStuffThatRequiresLocation(location) {
-
+function fetchOffer(location) {
     setLocale(location);
     populateLocalCurrency();
     populateTransaction();
     fetchAndPopulateLocaloffers();
+}
+
+function doStuffThatRequiresLocation(location) {
     verifyMapIsShown = showMap(location);
-    geocode(location);
-//    search_and_show();
+    geocode(location)
+        .catch(showError);
 }
 
 

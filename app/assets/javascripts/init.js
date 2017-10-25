@@ -172,6 +172,12 @@ def_vals = function() {
     def['change_field']     = 'fields';
     def['change_to']        = 'default values';
     def['bias']             = 'default';
+    def['locale']           = {lat: 32.0853, lng: 34.7818, country: "ISR", city: "Tel Aviv", currency: "ILS", language: "he", rates: null};
+    def['location']         = 'default';
+    def['location_lat']     = 'default';
+    def['location_lng']     = 'default';
+    def['country']          = 'ISR';
+    def['city']             = 'Tel Aviv';
 
     return def;
 
@@ -199,7 +205,9 @@ var searchParams = [
     'radius',
     'change_field',
     'change_to',
-    'bias'
+    'bias',
+    'country',
+    'city'
 ];
 
 searchable = function(field) {
