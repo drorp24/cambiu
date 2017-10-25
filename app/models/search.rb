@@ -107,8 +107,8 @@ class Search < ActiveRecord::Base
   end
 
   def cached_offers
-    Rails.cache.fetch("#{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type}-#{payment_method}-#{radius}-#{bias_exchange_id || 'no_bias'}", expires_in: 0.5.hour) do
-      puts "Not cached yet: inside exchanges for #{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type}-#{payment_method}-#{radius}-#{bias_exchange_id || 'no_bias'}"
+    Rails.cache.fetch("#{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type}-#{payment_method}-#{radius}-#{bias}", expires_in: 0.5.hour) do
+      puts "Not cached yet: inside exchanges for #{mode}-#{location}-#{pay_amount}-#{pay_currency}-#{buy_amount}-#{buy_currency}-#{trans}-#{calculated}-#{service_type}-#{payment_method}-#{radius}-#{bias}"
       uncached_offers
     end
   end
