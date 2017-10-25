@@ -435,7 +435,9 @@ populateLocalOffers = function(rates) {
 
   function updateCalculated(calculated, value) {
     // TODO: 'set' function should do the autonumeric('set') thing too
-    $('[data-autonumeric=true][data-model=search][data-field=' + calculated + ']').autoNumeric('set', best_value);
+    $calculated = $('[data-autonumeric=true][data-model=search][data-field=' + calculated + ']');
+    $calculated.autoNumeric('set', best_value);
+    $calculated.siblings('label').addClass('active');
     sessionStorage.setItem(calculated, clean(value));
   }
 

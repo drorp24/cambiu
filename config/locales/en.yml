@@ -38,12 +38,15 @@ en:
     getOffer: 'Get an offer'
     skip: 'Skip'
   search:
+    empty:
+      pay: 'How much would you pay?'
+      get: 'How much do you need?'
     heading1: 'What would you like to order'
     get: 'Get'
     amount: 'Amount'
     currency: 'Currency'
     pay: 'Pay'
-    best: 'Best offer'
+    best: 'Our offer'
     bad: 'High-street price'
     gain: 'Your gain'
     heading2: 'How do you wish to get it'

@@ -1088,6 +1088,15 @@ body#cambiu {
           display: block;
         }
       }
+      &.empty {
+        ~ label:before {
+          content: attr(data-t-empty);
+        }
+      }
+    }
+
+    label:not(.active)::after {
+      display: none;
     }
 
     input {
@@ -1147,6 +1156,11 @@ body#cambiu {
     &.order_num {
       direction: ltr;
     }
+  }
+
+
+  [data-hash=get] .iform_subtitle {
+    display: none;
   }
 
   [data-hash=pickup_offer], [data-hash=delivery_offer] {

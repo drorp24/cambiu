@@ -172,9 +172,11 @@ $(document).ready(function() {
         let $this = $(this);
         let field = $this.data('field');
         let $slide = $this.closest('.swiper-slide');
+        if ($slide.hasClass('missing')) return;
         if (amount(field)) clear($this);
 
         $slide.addClass('missing');
+        $this.addClass('empty');
         swiperI.lockSwipeToNext();
         invalid($this);
         mdbBlock(twin(field), true);
@@ -196,11 +198,13 @@ $(document).ready(function() {
             let $slide = $this.closest('.swiper-slide');
             if (clean(value) == 0) {
                 $slide.addClass('missing');
+                $this.addClass('empty');
                 swiperI.lockSwipeToNext();
                 invalid($this);
                 mdbBlock(twin(field), true);
              } else {
                 $slide.removeClass('missing');
+                $this.removeClass('empty');
                 swiperI.unlockSwipeToNext();
                 valid($this);
                 mdbBlock(twin(field), false);
