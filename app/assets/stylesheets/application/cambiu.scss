@@ -1099,7 +1099,7 @@ body#cambiu {
       display: none;
     }
 
-    input {
+    input:not([data-model=user]) {
       text-align: end;
     }
     .caret {

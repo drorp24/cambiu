@@ -242,6 +242,7 @@ function searchbox_addListener(searchBox) {
         $('[data-model=user][data-field=house]').val(place.address_components[0].short_name).siblings('label').addClass('active');
         $('[data-model=user][data-field=street]').val(place.address_components[1].short_name).siblings('label').addClass('active');
         $('[data-model=user][data-field=city]').val(place.address_components[2].short_name).siblings('label').addClass('active');
+        swiperIactiveSlide().removeClass('missing');
 
         setLocale(search.location);
         populateTransaction();
@@ -430,7 +431,6 @@ setLocale = function(location) {
     // update local for potential amount changes
 //    Object.assign(local, nearest_center);
     for (var attrname in nearest_center) { local[attrname] = nearest_center[attrname]; } // For Androids...
-    local.rates = null;
     var locale = $('body').attr('locale');
     local.language = locale ? locale : 'en';
 

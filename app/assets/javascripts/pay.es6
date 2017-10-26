@@ -3,7 +3,7 @@ $('[data-action=paymentFlow]').click(function(e) {
     e.preventDefault();
 
     // Create user
-    if (!userCheckValidity()) return;
+//    if (!userCheckValidity()) return;
 
     orderUpdateUserDelivery()
         .then(fetchPaymentUrl)

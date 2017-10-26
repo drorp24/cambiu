@@ -167,7 +167,7 @@ $(document).ready(function() {
 
 
 
-    $('form [data-model=search][data-field]').on('click tap', function() {
+    $('form [data-field]').on('click tap', function() {
 
         let $this = $(this);
         let field = $this.data('field');
@@ -183,37 +183,31 @@ $(document).ready(function() {
 
     });
 
-    $('form [data-model=search][data-field]').keyup(function() {
+    $('form [data-field]').keyup(function() {
 
-        var $this = $(this);
-        var field = $this.data('field');
-        var amount_field = amount(field);
-        var currency_field = currency(field);
+        let $this = $(this);
+        let field = $this.data('field');
+        let amount_field = amount(field);
+        let value = amount_field ? clean($this.val()) : $this.val();
+        let $slide = $this.closest('.swiper-slide');
 
-        if (!amount_field && !currency_field) return;
-        console.log('keying a character');
-
-        var value = $this.val();
-        if (amount_field) {
-            let $slide = $this.closest('.swiper-slide');
-            if (clean(value) == 0) {
-                $slide.addClass('missing');
-                $this.addClass('empty');
-                swiperI.lockSwipeToNext();
-                invalid($this);
-                mdbBlock(twin(field), true);
-             } else {
-                $slide.removeClass('missing');
-                $this.removeClass('empty');
-                swiperI.unlockSwipeToNext();
-                valid($this);
-                mdbBlock(twin(field), false);
-            }
+        if (!value) {
+            $this.addClass('empty');
+            invalid($this);
+            $slide.addClass('missing');
+            swiperI.lockSwipeToNext();
+            if (amount_field) mdbBlock(twin(field), true);
+         } else {
+            $this.removeClass('empty');
+            valid($this);
+            if (!$slide.find('.invalid').length && !$slide.find('.empty').length) $slide.removeClass('missing');
+            swiperI.unlockSwipeToNext();
+            if (amount_field) mdbBlock(twin(field), false);
         }
 
         set(field, value);
-        var prev_calculated = calculated;
-        if (amount(field) && value) {
+        let prev_calculated = calculated;
+        if (amount_field && value) {
             clear(brother($this));
             set('calculated', calculated = other(field));
         }
@@ -225,12 +219,12 @@ $(document).ready(function() {
             fetchAndPopulateLocaloffers();
         }
 
-        var $field = formElement(field);
+        let $field = formElement(field);
         if ($field.hasClass('calculated')) {
             $field.removeClass('calculated');
             formElement(calculated).addClass('calculated');
             $('.worst input').attr('data-symbolsource', twin(calculated));
-            $('.worst input').each(function() {update_currency_symbol($(this))});
+            $('.worst input').each(() => {update_currency_symbol($(this))});
         }
 
         populateLocalOffers(local.rates);
@@ -290,7 +284,7 @@ $(document).ready(function() {
     $('form .location .clear').click(function() {
         if (!$(this).parent().find('input#location').prop('disabled')) {
 //            set('location', '')    only form gets cleared as we need to remember the location to report its previous value when location change is reported (location.js)
-            $('[data-model=search][data-field=location]').val("");
+            $('[data-model=search][data-field=location]').val("").addClass('invalid');
         }
     });
 

@@ -1,14 +1,14 @@
 <div class="md-form">
-  <input type="text" name="user[name]" id="user_name" class="form-control" required/>
+  <input type="text" data-model="user" data-field="name" name="user[name]" id="user_name" class="form-control empty" required/>
   <label for="user_name" class="control-label text-right"><%= t 'user.name' %></label>
 </div>
 
 <div class="md-form">
-  <input type="tel" name="user[phone]" id="user_phone" class="form-control" required pattern=".{9,10}"/>
+  <input type="tel" data-model="user" data-field="phone" name="user[phone]" id="user_phone" class="form-control empty" required pattern=".{9,10}"/>
   <label for="user_phone" class="control-label text-right"><%= t 'user.phone' %></label>
 </div>
 
 <div class="md-form">
-  <input type="email" name="user[email]" id="user_email" class="form-control" required/>
+  <input type="email" data-model="user" data-field="email" name="user[email]" id="user_email" class="form-control empty" required/>
   <label for="user_email" class="control-label text-right" data-error="<%= t 'user.email_error' %>"><%= t 'user.email' %></label>
 </div>
