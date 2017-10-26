@@ -247,6 +247,11 @@ $(document).ready(function() {
 
         return new Promise(function(resolve, reject) {
 
+            function checkLocation() {
+                return new Promise((resolve, reject) =>
+                    value_of('bias') == 'default' ? resolve() : findLocation.then(resolve)
+                )}
+
             function fetchRates() {
                 return fetch('/searches/localRates?' + $( ".search_form input[data-model=search], .search_form select[data-model=search]" ).serialize(), {
                     method: 'get'
@@ -270,7 +275,8 @@ $(document).ready(function() {
                 }
             }
 
-            fetchRates()
+            checkLocation()
+                .then(fetchRates)
                 .then(checkStatus)
                 .then(parseJson)
                 .then(returnResults)

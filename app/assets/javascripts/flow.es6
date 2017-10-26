@@ -18,10 +18,8 @@ $(document).ready(function() {  // TODO: only populate Params needs to wait to d
 
     if (value_of('bias') == 'default') {
         fetchOffer('default');
-        getUserLocation()
-            .then((location) => {
-                doStuffThatRequiresLocation(location)
-            })
+        findLocation = getUserLocation();
+        findLocation.then(doStuffThatRequiresLocation)
     } else {
         getUserLocation()
             .then((location) => {
