@@ -17,7 +17,6 @@ $('body').on('click tap','[data-action=order]', (function (e)  {  // Warning: no
 }));
 
 order = function() {
-    console.log('>> 0 - ', $(':focus').length, $(':focus')[0]);
 
     var search  = local.rates.search;
     var best    = local.rates.best;
@@ -56,21 +55,8 @@ order = function() {
         .then(response => response.json())
         .then((order) => {
 
-            console.log('>> 1 - ', $(':focus').length, $(':focus')[0]);
-
             populateOrder(null, order);
-            console.log('>> 2 - ', $(':focus').length, $(':focus')[0]);
             report('Click', 'Order', exchange);
-            console.log('>> 3 - ', $(':focus').length, $(':focus')[0]);
-
-            sessionStorage.order_exchange_id = order.exchange_id;
-            sessionStorage.order_id = order.id;
-            sessionStorage.order_voucher = order.voucher;
-            sessionStorage.order_status = order.status;
-            console.log('>> 4 - ', $(':focus').length, $(':focus')[0]);
-
-            setPage({pane1: order.service_type == 'pickup' ? 'order' : 'register'});
-            console.log('>> 5 - ', $(':focus').length, $(':focus')[0]);
 
 
 // TODO: Cleanup

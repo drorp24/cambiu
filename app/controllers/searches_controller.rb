@@ -21,7 +21,7 @@ class SearchesController < ApplicationController
 
 
   def search_params
-    params.require(:search).permit!
+    params.require(:search).except(:id).permit!
   end
       
 end

@@ -51,6 +51,12 @@ class User < ActiveRecord::Base
     self.first_name + ' ' + self.last_name if self.first_name and self.last_name
   end
 
+  def name=(fullname)
+    split = fullname.split(" ")
+    self.first_name = split[0]
+    self.last_name = split[1] if split[1]
+  end
+
   def delivery_address
     return nil unless self.house && self.street && self.city
     "#{self.street} #{self.house}, #{self.city}"

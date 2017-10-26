@@ -8,18 +8,67 @@
 
       <div class="swiper-wrapper swiper-wrapper-i">
 
+
         <%= render '/exchanges/isearch/get' %>
         <%= render '/exchanges/isearch/pay' %>
         <%= render '/exchanges/isearch/service' %>
         <%= render '/exchanges/isearch/travelMode' %>
         <%= render '/exchanges/isearch/delivery_location' %>
         <%= render '/exchanges/isearch/pickup_location' %>
-        <%= render '/exchanges/isearch/delivery_payment' %>
         <%= render '/exchanges/isearch/delivery_offer' %>
         <%= render '/exchanges/isearch/pickup_offer' %>
         <%= render '/exchanges/isearch/no_delivery_offer' %>
         <%= render '/exchanges/isearch/no_pickup_offer' %>
+        <%= render '/exchanges/isearch/pickup_order' %>
+        <%= render '/exchanges/isearch/delivery_order' %>
         <%= render '/exchanges/isearch/hidden' %>
+
+
+
+        <form class="registration" id="registration_form" data-t-empty="<%= t 'user.empty' %>">
+
+          <%= render '/exchanges/isearch/pickup_details' %>
+          <%= render '/exchanges/isearch/delivery_details' %>
+
+          <div class="hidden">
+
+            <div class="md-form">
+              <input type="hidden" name="user[city]" id="user_city" class="form-control"  data-model="user" data-field="city"/>
+              <label for="user_city" class="control-label text-right"><%= t 'user.city' %></label>
+            </div>
+
+            <div class="md-form">
+              <input type="hidden" name="user[street]" id="user_street" class="form-control"  data-model="user" data-field="street"/>
+              <label for="user_street" class="control-label text-right"><%= t 'user.street' %></label>
+            </div>
+
+            <div class="md-form">
+              <input type="hidden" name="user[house]" id="user_house" class="form-control"  data-model="user" data-field="house"/>
+              <label for="user_house" class="control-label"><%= t 'user.house' %></label>
+            </div>
+
+            <div class="md-form">
+              <input type="text" name="user[entry]" id="user_entry" class="form-control" data-model="user" data-field="entry" />
+              <label for="user_entry" class="control-label"><%= t 'user.entry' %></label>
+            </div>
+
+            <div class="md-form">
+              <input type="text" name="user[floor]" id="user_floor" class="form-control" data-model="user" data-field="floor" />
+              <label for="user_floor" class="control-label"><%= t 'user.floor' %></label>
+            </div>
+
+            <div class="md-form">
+              <input type="text" name="user[apartment]" id="user_apartment" class="form-control" data-model="user" data-field="apartment" />
+              <label for="user_apartment" class="control-label"><%= t 'user.apartment' %></label>
+            </div>
+
+            <input type="hidden" name="search[id]" data-model="search" data-field="id">
+
+
+          </div>
+
+        </form>
+
 
       </div>
 

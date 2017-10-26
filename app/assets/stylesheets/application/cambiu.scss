@@ -1013,7 +1013,7 @@ body#cambiu {
       .iform_content {
         width: 100%;
       }
-      .ok.btn {
+      .ok.btn:not(.order) {
         @include vborder-radius(7.5vw);
         @include vheight(15vw);
         @include vwidth(15vw);

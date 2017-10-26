@@ -101,6 +101,7 @@ he:
     next: 'המשך'
     first_name: 'שם פרטי'
     last_name: 'שם משפחה'
+    name: 'שם מלא'
     phone: 'טלפון'
     company: 'שם חברה'
     city: 'עיר'
@@ -166,6 +167,9 @@ he:
     no_offer:
       title: 'אנא שנו בחירתכם'
       subtitle: 'כדי שנוכל למצוא לכם הצעה'
+    details:
+      title: 'אנא מלאו'
+      subtitle: 'לצורך ביצוע הזמנה'
     button:
       text: 'הזמינו'
     bar:
