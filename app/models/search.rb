@@ -209,6 +209,7 @@ class Search < ActiveRecord::Base
             # 4 - No hope
 
             result = {
+                bias:           nil,
                 service_type:   nil,
                 payment_method: nil,
                 radius:         nil

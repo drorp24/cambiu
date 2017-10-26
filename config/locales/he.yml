@@ -163,6 +163,9 @@ he:
       delivery: 'משלוח'
       credit: 'אשראי'
       cash: 'מזומן'
+    no_offer:
+      title: 'אנא שנו בחירתכם'
+      subtitle: 'כדי שנוכל למצוא לכם הצעה'
     button:
       text: 'הזמינו'
     bar:

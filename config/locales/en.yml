@@ -184,6 +184,9 @@ en:
       delivery: 'delivery'
       credit: 'credit'
       cash: 'cash'
+    no_offer:
+      title: 'Please change criteria'
+      subtitle: 'So we can find you an offer'
     button:
       text: 'Order it'
     bar:

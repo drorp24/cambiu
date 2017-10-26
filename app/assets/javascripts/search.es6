@@ -426,6 +426,8 @@ $(document).ready(function() {
         $(`.md-form.${field}.select.currency_fields .select-wrapper > input`).prop('disabled', blocked);
     };
 
+    noOffer = () => !local.rates.best;
+
 
 
 });

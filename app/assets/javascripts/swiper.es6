@@ -123,7 +123,7 @@ $(document).ready(function() {
 
     swiperIslideForward = ($e, timing=null) => {
         swiperI.unlockSwipeToNext();
-        var hash = $e.data('slideto');
+        var hash = noOffer() ? $e.data('nooffer') : $e.data('slideto');
         swiperIslideTo(hash, timing);
     };
 

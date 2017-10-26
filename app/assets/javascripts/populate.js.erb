@@ -371,7 +371,7 @@ populateLocalOffers = function(rates) {
 
   if (!rates || rates.error || !rates.best || rates.best.error) {
     clearBestOffer();
-    snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'search'}});
+//    snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'search'}});
     return(null);
   }
 
