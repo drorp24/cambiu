@@ -1,5 +1,9 @@
 ActiveAdmin.register Search do
 
+  includes :issues
+  includes :result_exchange
+
+
   config.filters = false
   config.clear_action_items!
 
