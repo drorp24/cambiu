@@ -16,6 +16,16 @@ $('body').on('click tap','[data-action=order]', (function (e)  {  // Warning: no
 */
 }));
 
+
+$('body').on('click tap','[data-action=register]', (function (e) {  // Warning: not to use arrow function: it changes $this
+
+    orderUpdateUserDelivery()
+        .catch((error) => {
+            console.error(error)
+        });
+
+}));
+
 order = function() {
 
     var search  = local.rates.search;
@@ -220,11 +230,12 @@ orderUpdateUserDelivery = function() {
             if (data.errors) {
                 let length = data.errors.length;
                 snack(`${data.errors[0]} (1/${length})`, {klass: 'oops', timeout: 7000});
+                reject(data.errors[0])
             } else {
                 if (data.message) snack(data.message, {timeout: 3000});
                 updateGa(data);
                 console.log('Successfully updated order with user data: ', data);
-                return(data)
+                resolve(data)
             }
         }
 
@@ -232,7 +243,6 @@ orderUpdateUserDelivery = function() {
             ga('set', 'userId', data.user_id); // Set the user ID using signed-in user_id.
             report('Click', 'Register');
             console.log(`ga - userId set to ${data.user_id}`);
-            resolve(data);
         }
 
         function tell(error) {

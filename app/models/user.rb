@@ -48,7 +48,9 @@ class User < ActiveRecord::Base
   end
 
   def name
-    self.first_name + ' ' + self.last_name if self.first_name and self.last_name
+    @name = self.first_name
+    @name += (' ' + self.last_name) if self.last_name
+    @name
   end
 
   def name=(fullname)
