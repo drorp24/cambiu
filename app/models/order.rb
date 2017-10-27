@@ -32,24 +32,21 @@ class Order < ActiveRecord::Base
   def attributes
 
     super.merge(total_cents: self.total_cents, total_amount: self.total_amount, pay_amount: self.pay_amount, get_amount: self.get_amount, credit_charge_amount: self.credit_charge_amount, delivery_charge_amount: self.delivery_charge_amount,
-                expiry_t: self.expiry_t, expiry_s: self.expiry_s, voucher: self.voucher, mandrill_status: self.mandrill_status, mandrill_reject_reason: self.mandrill_reject_reason).
+                expiry_t: self.expiry_t, expiry_s: self.expiry_s, voucher: self.voucher).
         except('created_at', 'updated_at', 'expiry', 'buy_cents', 'get_cents', 'credit_charge_cents', 'delivery_charge_cents')
   end
 
-  def with_user(detailsChanged = false)
+  def with_user()
 
     return {error: 'No user for order'} unless user = User.find(self.user_id)
 
-    result = self.attributes.
+    self.attributes.
         merge(delivery_address: user.delivery_address, name: user.name).
         merge(user.attributes.except(
             'id', 'created_at', 'updated_at', 'current_sign_in_at', 'current_sign_in_ip', 'encrypted_password', 'last_sign_in_at', 'last_sign_in_ip',
             'remember_created_at', 'reset_password_sent_at', 'reset_password_token', 'sign_in_count', 'first_name', 'last_name')
         )
 
-    result.merge!({message: 'We have noted your change of details!'}) if detailsChanged
-
-    result
   end
 
 
@@ -70,13 +67,9 @@ class Order < ActiveRecord::Base
   end
 
   def mandrill_status
-    @last_email ||= emails.last
-    @last_email.status if @last_email
   end
 
   def mandrill_reject_reason
-    @last_email ||= emails.last
-    @last_email.reject_reason if @last_email
   end
 
   def buy=(edited)

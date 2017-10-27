@@ -212,7 +212,7 @@ orderUpdateUserDelivery = function() {
             }
             return fetch('/orders/' + order_id + '/user', {
                 method: 'post',
-                body: new URLSearchParams($('form.registration').serialize())
+                body: new URLSearchParams($('.search_form [data-model=user]').filter(function() {return !!this.value}).add('.search_form #search_id').serialize())
             })
         }
 
@@ -222,6 +222,7 @@ orderUpdateUserDelivery = function() {
                 snack(`${data.errors[0]} (1/${length})`, {klass: 'oops', timeout: 7000});
             } else {
                 if (data.message) snack(data.message, {timeout: 3000});
+                updateGa(data);
                 console.log('Successfully updated order with user data: ', data);
                 return(data)
             }
@@ -235,14 +236,13 @@ orderUpdateUserDelivery = function() {
         }
 
         function tell(error) {
-            snack(`Server says: ${error}`, {klass: 'oops', timeout: 7000});
+            snack(error, {klass: 'oops', timeout: 7000});
         }
 
         postData()
             .then(checkStatus)
             .then(parseJson)
             .then(checkData)
-            .then (updateGa)
             .catch((error) => {tell(error)})
 
     })

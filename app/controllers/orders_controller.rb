@@ -31,18 +31,10 @@ class OrdersController < ApplicationController
 
   def user
 
-    unless user = User.find_by(email: user_params[:email])
-      user = User.create(
-          email:                  user_params[:email],
-          first_name:             user_params[:first_name],
-          last_name:              user_params[:last_name],
-          password:               user_params[:password],
-          password_confirmation:  user_params[:password_confirmation])
-    end
+    user = User.find_or_create_by(email: user_params[:email])
 
     if user and user.errors.empty?
 
-      detailsChanged = user.detailsChanged?(user_params)
       user.update(user_params)
 
       search = Search.find(search_params[:id])
@@ -52,7 +44,7 @@ class OrdersController < ApplicationController
       if order
         order.update(user_id: user.id, status: 'registered')
         order.notification
-        render json: order.with_user(detailsChanged)
+        render json: order.with_user
       else
         render json: {errors: 'No order id'}, status: :unprocessable_entity
       end

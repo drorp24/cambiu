@@ -36,15 +36,16 @@ populateOrder = function($scope, order) {
     $scope.find('[data-model=order][data-field=exchange_id]').html(value_of('order_exchange_id'));
     $scope.find('[data-model=order][data-field=voucher]').html(value_of('order_voucher'));
     // TODO: Who needs all these?
-    sessionStorage.order_exchange_id = order.exchange_id;
-    sessionStorage.order_id = order.id;
-    sessionStorage.order_voucher = order.voucher;
-    sessionStorage.order_status = order.status;
 
     return
   }
 
   if ($scope == null) $scope = $('body');
+
+  sessionStorage.order_exchange_id = order.exchange_id;
+  sessionStorage.order_id = order.id;
+  sessionStorage.order_voucher = order.voucher;
+  sessionStorage.order_status = order.status;
 
   $scope.find('[data-model=order][data-field]').each(function() {
     var $this = $(this);

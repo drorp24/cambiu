@@ -10,9 +10,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:facebook]
 
-  validates_presence_of     :email, :password, :first_name, :last_name
+  validates_presence_of     :email
   validates                 :email, uniqueness: true
-  validates_confirmation_of :password
+#  validates_confirmation_of :password
 
   def detailsChanged?(user_params)
     self.first_name != user_params[:first_name] ||
