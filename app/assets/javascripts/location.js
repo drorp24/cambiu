@@ -243,6 +243,8 @@ function searchbox_addListener(searchBox) {
         $('[data-model=user][data-field=house]').val(place.address_components[0].short_name).siblings('label').addClass('active');
         $('[data-model=user][data-field=street]').val(place.address_components[1].short_name).siblings('label').addClass('active');
         $('[data-model=user][data-field=city]').val(place.address_components[2].short_name).siblings('label').addClass('active');
+
+        $('input[data-field=location]').removeClass('empty invalid');
         swiperIactiveSlide().removeClass('missing');
 
         setLocale(search.location);
