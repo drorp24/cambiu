@@ -164,6 +164,16 @@ $(document).ready(function() {
         if (!swiperI.isBeginning) window.history.back();
     });
 
+    lock = ($slide) => {
+        $slide.addClass('missing');
+        $slide.find('.ok.btn').prop('disabled', true);
+    };
+
+    unlock = ($slide) => {
+        $slide.removeClass('missing');
+        $slide.find('.ok.btn').prop('disabled', false);
+    };
+
     swiperIgatekeeper = function() {
 
         let $slide = swiperIactiveSlide();

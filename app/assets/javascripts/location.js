@@ -170,7 +170,7 @@ geocode = function(locationArg) {
                 set('user_location', location_name);
             }
 
-            $('input[data-field=location]').closest('.swiper-slide:not([data-hash=delivery_location])').removeClass('missing');
+            unlock($('input[data-field=location]').closest('.swiper-slide:not([data-hash=delivery_location])'));
             $('[data-model=user][data-field=location]').val(location_name).addClass('active');
             // TODO: I may not need location broken down anymore - and it's not accurate anyway (used to imitate ChangeMe's form)
             $('[data-model=user][data-field=house]').val(result.address_components[0].short_name).siblings('label').addClass('active');
@@ -249,7 +249,7 @@ function searchbox_addListener(searchBox) {
         $('[data-model=user][data-field=city]').val(place.address_components[2].short_name).siblings('label').addClass('active');
 
         $('input[data-field=location]').removeClass('empty invalid');
-        swiperIactiveSlide().removeClass('missing');
+        unlock(swiperIactiveSlide());
 
         setLocale(search.location);
         populateTransaction();

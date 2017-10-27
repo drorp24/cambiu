@@ -175,7 +175,7 @@ $(document).ready(function() {
         if ($slide.hasClass('missing')) return;
         if (amount(field)) clear($this);
 
-        $slide.addClass('missing');
+        lock($slide);
         $this.addClass('empty');
         swiperI.lockSwipeToNext();
         invalid($this);
@@ -195,13 +195,13 @@ $(document).ready(function() {
         if (!value) {
             $this.addClass('empty');
             invalid($this);
-            $slide.addClass('missing');
+            lock($slide);
             swiperI.lockSwipeToNext();
             if (amount_field) mdbBlock(twin(field), true);
          } else {
             $this.removeClass('empty');
             valid($this);
-            if (!$slide.find('.invalid').length && !$slide.find('.empty').length) $slide.removeClass('missing');
+            if (!$slide.find('.invalid').length && !$slide.find('.empty').length) unlock($slide);
             swiperI.unlockSwipeToNext();
             if (amount_field) mdbBlock(twin(field), false);
         }
@@ -283,7 +283,7 @@ $(document).ready(function() {
 
 
     $('form .location .clear').click(function() {
-        $('input[data-field=location]').closest('.swiper-slide').addClass('missing');
+        lock($('input[data-field=location]').closest('.swiper-slide'));
         if (!$(this).parent().find('input#location').prop('disabled')) {
 //            set('location', '')    only form gets cleared as we need to remember the location to report its previous value when location change is reported (location.js)
             $('[data-model=search][data-field=location]').val("").addClass('invalid');
