@@ -37,6 +37,7 @@ getUserLocation = function() {
 
             setSearchLocation(user.lat, user.lng, 'user', 'positionFound');
             setUserLocation(user);
+            $('input[data-field=location]').closest('.swiper-slide').removeClass('missing');
         }
 
         function positionError(error) {

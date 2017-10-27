@@ -187,6 +187,7 @@ $(document).ready(function() {
 
         let $this = $(this);
         let field = $this.data('field');
+        if (field == 'location') return; // handled separately in the clear button and in the change location
         let amount_field = amount(field);
         let value = amount_field ? clean($this.val()) : $this.val();
         let $slide = $this.closest('.swiper-slide');
@@ -282,6 +283,7 @@ $(document).ready(function() {
 
 
     $('form .location .clear').click(function() {
+        $('input[data-field=location]').closest('.swiper-slide').addClass('missing');
         if (!$(this).parent().find('input#location').prop('disabled')) {
 //            set('location', '')    only form gets cleared as we need to remember the location to report its previous value when location change is reported (location.js)
             $('[data-model=search][data-field=location]').val("").addClass('invalid');
