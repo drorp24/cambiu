@@ -160,11 +160,9 @@ geocode = function(locationArg) {
 
 //            console.log('geocodeFound. result: (going to use formatted_address)', result);
 
-            var location_name = result.formatted_address,
-                location_short = result.address_components[1].short_name;
+            var location_name = result.formatted_address;
 
             set('location',         search.location.name = location_name);
-            set('location_short',   search.location.short = location_short);
 
             if (sessionStorage.location_type == 'user') {
                 set('user_location', location_name);
@@ -172,10 +170,6 @@ geocode = function(locationArg) {
 
             unlock($('input[data-field=location]').closest('.swiper-slide:not([data-hash=delivery_location])'));
             $('[data-model=user][data-field=location]').val(location_name).addClass('active');
-            // TODO: I may not need location broken down anymore - and it's not accurate anyway (used to imitate ChangeMe's form)
-            $('[data-model=user][data-field=house]').val(result.address_components[0].short_name).siblings('label').addClass('active');
-            $('[data-model=user][data-field=street]').val(result.address_components[1].short_name).siblings('label').addClass('active');
-            $('[data-model=user][data-field=city]').val(result.address_components[2].short_name).siblings('label').addClass('active');
 
             recordTime('location', 'geocoded', 'found');
             resolve(search.location);
@@ -189,7 +183,6 @@ geocode = function(locationArg) {
             console.log('message');
 
             set('location',         search.location.name = message);
-            set('location_short',   search.location.short = message);
 
             if (sessionStorage.location.type == 'user') {
                 set('user_location', search.user.location = message);
@@ -236,20 +229,16 @@ function searchbox_addListener(searchBox) {
         set_change('location', value_of('location'), place.formatted_address);
 //        console.log(place, place.formatted_address);
         set('location',             search.location.name = place.formatted_address);
-        set('location_short',       search.location.short = place.name);
         set('location_lat',         search.location.lat = place.geometry.location.lat());
         set('location_lng',         search.location.lng = place.geometry.location.lng());
         set('location_type',        search.location.type = 'selected');
         set('location_reason',      search.location.reason = 'changed by user');
 
         $('[data-model=user][data-field=location]').val(place.formatted_address).addClass('active');
-        // TODO: I may not need location broken down anymore - and it's not accurate anyway (used to imitate ChangeMe's form)
-        $('[data-model=user][data-field=house]').val(place.address_components[0].short_name).siblings('label').addClass('active');
-        $('[data-model=user][data-field=street]').val(place.address_components[1].short_name).siblings('label').addClass('active');
-        $('[data-model=user][data-field=city]').val(place.address_components[2].short_name).siblings('label').addClass('active');
 
         $('input[data-field=location]').removeClass('empty invalid');
-        unlock(swiperIactiveSlide());
+        var $slide = swiperIactiveSlide();
+        if (isFilled($slide)) unlock($slide);
 
         setLocale(search.location);
         populateTransaction();

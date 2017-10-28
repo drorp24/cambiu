@@ -198,7 +198,6 @@ var searchParams = [
     'service_type',
     'payment_method',
     'location',
-    'location_short',
     'location_type',
     'location_reason',
     'location_lat',

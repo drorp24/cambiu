@@ -164,14 +164,18 @@ $(document).ready(function() {
         if (!swiperI.isBeginning) window.history.back();
     });
 
+    isFilled = ($slide) => !$slide.find('.invalid, .empty').length;
+
     lock = ($slide) => {
         $slide.addClass('missing');
         $slide.find('.ok.btn').prop('disabled', true);
+        swiperI.lockSwipeToNext();
     };
 
     unlock = ($slide) => {
         $slide.removeClass('missing');
         $slide.find('.ok.btn').prop('disabled', false);
+        swiperI.unlockSwipeToNext();
     };
 
     swiperIgatekeeper = function() {

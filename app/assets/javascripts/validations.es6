@@ -10,17 +10,17 @@ function valid($e) {
 
 function invalid($e, msg=null) {
 
-    let error = msg || $e.attr('data-t-error') || $('form.registration').attr('data-t-empty');
+    let error = msg || $e.attr('data-t-error');
 
     $e.removeClass('valid').addClass('invalid');
     $e.siblings('label').attr('data-error', error);
-    console.warn(`invalid field (${String(msg)})`, $e[0]);
+//    console.warn(`invalid field (${String(msg)})`, $e[0]);
 
 }
 
 iSlideValid = ($slide) => !$slide.find('.missing');
 
-// Not used. Checking per slide, and according to existence of 'missing' class
+// Not used. Checking per keystroke: as soon as there are no .empty/.invalid fields, slide is unlocked
 isearchValid = () => {
     let $buy_amount = $('#buy_amount');
     let buy_amount_valid = clean($buy_amount.val());
@@ -81,3 +81,5 @@ userCheckValidity = function() {
 
     return formValid;
 };
+
+fullName = ($e) => $e.val().includes(' ');

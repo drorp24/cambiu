@@ -936,6 +936,19 @@ body#cambiu {
   }
   */
 
+  .md-form input.invalid:focus ~ label::after {
+    display: none;
+  }
+  .md-form input.invalid:not(:focus) ~ label::after {
+    content: attr(data-error);
+    width: 100%;
+    text-align: end;
+  }
+
+  .md-form label {
+    width: 100%;
+  }
+
   #user_house {
   @include threedots(100%);
 }

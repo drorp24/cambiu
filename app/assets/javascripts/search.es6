@@ -172,16 +172,20 @@ $(document).ready(function() {
         let $this = $(this);
         let field = $this.data('field');
         let $slide = $this.closest('.swiper-slide');
+
         if ($slide.hasClass('missing')) return;
+
         if (amount(field)) clear($this);
 
         lock($slide);
         $this.addClass('empty');
-        swiperI.lockSwipeToNext();
         invalid($this);
         mdbBlock(twin(field), true);
 
     });
+
+    // This is the way to go as far as validations: keystroke-level check, color indication while keying, error message when blurring
+    // Utilizing both html5 pattern matching and self validations
 
     $('form [data-field]').keyup(function() {
 
@@ -189,6 +193,8 @@ $(document).ready(function() {
         let field = $this.data('field');
         if (field == 'location') return; // handled separately in the clear button and in the change location
         let amount_field = amount(field);
+        let selfValidate = $this.is('[data-validate]');
+        let selfValid = !selfValidate || selfValidate && window[$this.data('validate')]($this);
         let value = amount_field ? clean($this.val()) : $this.val();
         let $slide = $this.closest('.swiper-slide');
 
@@ -196,13 +202,11 @@ $(document).ready(function() {
             $this.addClass('empty');
             invalid($this);
             lock($slide);
-            swiperI.lockSwipeToNext();
             if (amount_field) mdbBlock(twin(field), true);
          } else {
             $this.removeClass('empty');
-            valid($this);
-            if (!$slide.find('.invalid').length && !$slide.find('.empty').length) unlock($slide);
-            swiperI.unlockSwipeToNext();
+            $this[0].validity.valid && selfValid ? valid($this) : invalid($this);
+            if (isFilled($slide)) unlock($slide);
             if (amount_field) mdbBlock(twin(field), false);
         }
 

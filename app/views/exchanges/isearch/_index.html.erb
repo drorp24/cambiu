@@ -2,7 +2,7 @@
 
   <%= render partial: 'navbar', locals: {left_pane: 'none', left_icon: '', center: 'search_params', right_pane: 'none', right_icon: ''} %>
 
-  <form class="search_form">
+  <form class="search_form" data-t-empty="<%= t 'user.empty' %>">
 
     <div class="questions swiper-container swiper-container-i">
 
