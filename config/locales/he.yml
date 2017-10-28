@@ -169,6 +169,16 @@ he:
     no_offer:
       title: 'אנא שנו בחירתכם'
       subtitle: 'כדי שנוכל למצוא לכם הצעה'
+      delivery:
+        get: 'קבלו'
+        offer: 'הצעת משלוח'
+      pickup:
+        get: 'קבלו'
+        offer: 'הצעת איסוף'
+      location:
+        or: 'או'
+        pickup: 'שנו את מקום האיסוף'
+        delivery: 'שנו את מקום המשלוח'
     details:
       title: 'אנא מלאו'
       subtitle: 'לצורך ביצוע הזמנה'

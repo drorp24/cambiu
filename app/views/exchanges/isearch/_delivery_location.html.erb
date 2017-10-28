@@ -1,4 +1,4 @@
-<div class="swiper-slide okay_required missing flex_around column" data-hash="delivery_location" data-slideto="end" data-nooffer="no_delivery_offer">
+<div class="swiper-slide okay_required missing flex_around column" data-hash="delivery_location" data-slideto="paymentFlow" data-nooffer="no_delivery_offer">
 
   <div class="iform_icon"><%= image_tag 'building.png' %></div>
   <div class="iform_title_subtitle flex_center column">
@@ -10,7 +10,7 @@
 
     <%= render '/exchanges/isearch/location' %>
     <%= render '/exchanges/isearch/location_details' %>
-    <%= render '/exchanges/isearch/okButton', action: 'paymentFlow', disabled: true %>
+    <%= render '/exchanges/isearch/okButton', disabled: true %>
 
   </div>
 

@@ -1,16 +1,11 @@
-$('[data-action=paymentFlow]').click(function(e) {
-
-    e.preventDefault();
-
-    // Create user
-//    if (!userCheckValidity()) return;
+paymentFlow = () => {
 
     orderUpdateUserDelivery()
         .then(fetchPaymentUrl)
         .then((data) => window.location = data.url)
         .catch((error) => {console.error(error)})
 
-});
+};
 
 fetchPaymentUrl = function(order) {
 

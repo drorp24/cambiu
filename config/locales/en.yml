@@ -190,6 +190,16 @@ en:
     no_offer:
       title: 'Please change criteria'
       subtitle: 'So we can find you an offer'
+      delivery:
+       get: 'Get'
+       offer: 'a delivery offer'
+      pickup:
+       get: 'Get'
+       offer: 'a pick-up offer'
+      location:
+       or: 'Or'
+       pickup: 'change pick-up location'
+       delivery: 'change delivery location'
     details:
       title: 'A few details'
       subtitle: 'So we can make the order'

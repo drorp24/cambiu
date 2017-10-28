@@ -124,13 +124,19 @@ $(document).ready(function() {
     swiperIslideForward = ($e, timing=null) => {
         swiperI.unlockSwipeToNext();
         var hash = noOffer() ? $e.data('nooffer') : $e.data('slideto');
-        swiperIslideTo(hash, timing);
+        console.log('>>>>>>>>>>>>>>>>>>>>> has: ', hash)
+        if (hash == 'paymentFlow') {
+            paymentFlow();
+        } else if (hash !== 'end') {
+            swiperIslideTo(hash, timing);
+        }
     };
 
     $('.swiper-slide.branch [data-slideto]').on('click tap', function() {
 
         let $this       = $(this);
         let property    = $this.data('property');
+        if (property == 'none') {swiperIslideForward($this); return}
         let old_value   = value_of(property);
         let value       = $this.data('value');
 
@@ -155,7 +161,7 @@ $(document).ready(function() {
         let $slide = $(this).closest('.swiper-slide');
         if (!$slide.hasClass('missing')) {
             swiperIslideForward($slide);
-            wait(200).then(() => {$slide.addClass('okayed');});
+            if ($slide.hasClass('okay_required')) wait(200).then(() => {$slide.addClass('okayed');});
         }
 
     });

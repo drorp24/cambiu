@@ -936,6 +936,18 @@ body#cambiu {
   }
   */
 
+
+  .no_offer_suggestion {
+    @include vfont-size(5.5vw);
+    color: #000;
+    font-weight: 300;
+    .no_offer_link {
+      color: $formBlue;
+    }
+  }
+
+
+
   .md-form input.invalid:focus ~ label::after {
     display: none;
   }
@@ -966,6 +978,9 @@ body#cambiu {
     margin-bottom: 0;
     .offer {
       margin-bottom: 10%;
+    }
+    img {
+      box-shadow: none;
     }
   }
 
