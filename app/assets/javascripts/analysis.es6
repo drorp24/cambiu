@@ -1,6 +1,6 @@
 recordTime = (property, current_state, from_state=null) => {
     from_state = from_state || 'navigationStart';
-    window.performance.mark(current_state);
+    if (!safari) window.performance.mark(current_state);
     window.performance.measure(`${property}:${from_state}:${current_state}`, from_state, current_state);
 };
 
