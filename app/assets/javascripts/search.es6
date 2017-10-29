@@ -211,6 +211,7 @@ $(document).ready(function() {
         }
 
         set(field, value);
+//        $(`[data-model=search][data-field=${field}][data-autonumeric=true]`).autoNumeric('set', value);
         let prev_calculated = calculated;
         if (amount_field && value) {
             clear(brother($this));
