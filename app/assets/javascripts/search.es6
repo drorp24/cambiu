@@ -244,7 +244,7 @@ $(document).ready(function() {
         let $this = $(this);
         let field = $this.data('field');
         set(field, $this.val());
-        $this.autoNumeric('set', $this.val());
+        $(`[data-model=search][data-field=${field}][data-autonumeric]`).autoNumeric('set', $this.val());
     });
 
     fetchLocalRates = function() {
