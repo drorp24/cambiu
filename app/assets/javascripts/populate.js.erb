@@ -443,13 +443,14 @@ populateLocalOffers = function(rates) {
   var payment_method              = result.payment_method;
   var delivery_charge             = service_type == 'delivery' ? best.delivery_charge : 0;
   var cc_fee                      = payment_method == 'credit' ? best.cc_fee : 0;
-
   var pay_amount                  = numeric_value_of('pay_amount');
   var credit_charge               = (pay_amount + delivery_charge) * cc_fee / 100;
   var total_amount                = pay_amount + delivery_charge + credit_charge;
 
-  delivery_charge !== 0 ? $('[data-model=search][data-field=delivery_charge]').autoNumeric('set', delivery_charge)  : $('.offer_line.deliver.charge').css('display', 'none');
-  credit_charge !== 0 ? $('[data-model=search][data-field=credit_charge]').autoNumeric('set', credit_charge)        : $('.offer_line.cc.charge').css('display', 'none');
+  $('[data-model=search][data-field=delivery_charge]').autoNumeric('set', delivery_charge);
+  $('.offer_line.deliver.charge').css('display', delivery_charge !== 0 ? 'flex' : 'none');
+  $('[data-model=search][data-field=credit_charge]').autoNumeric('set', credit_charge);
+  $('.offer_line.cc.charge').css('display', credit_charge !== 0 ? 'flex' : 'none');
   $('[data-model=search][data-field=total_amount]').autoNumeric('set', total_amount);
   sessionStorage.delivery_charge  = delivery_charge;
   sessionStorage.credit_charge    = credit_charge;

@@ -128,7 +128,7 @@ $(document).ready(function() {
 
     swiperIslideForward = ($e, timing=null) => {
         swiperI.unlockSwipeToNext();
-        var hash = $e.data('nooffer') && noOffer() ? $e.data('nooffer') : $e.data('slideto');
+        var hash = $e.data('nooffer') && noOffer() ? $e.data('nooffer') : alternative && $e.data('slideto-alternative') ? $e.data('slideto-alternative') : $e.data('slideto');
         if (hash == 'paymentFlow') {
             paymentFlow();
         } else if (hash !== 'end') {
@@ -147,12 +147,13 @@ $(document).ready(function() {
 //      console.log(`changed ${property} from ${old_value} to ${value}`);
         set_change(property, old_value, value);
         set(property, value, 'manual');
-        if (!($this.is('[data-offer]') && $this.data('offer') == 'none')) {
+        if ($this.data('alternative')) {
+            alternative = true;
+            swiperIslideForward($this)
+        } else {
             fetchAndPopulateLocaloffers()
                 .then(() => {swiperIslideForward($this, 'delay')})
                 .catch((error) => {console.error(error)})
-        } else {
-            swiperIslideForward($this)
         }
 
     });
