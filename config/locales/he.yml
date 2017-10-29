@@ -168,11 +168,12 @@ he:
       cash: 'מזומן'
     no_offer:
       title: 'אנא שנו בחירתכם'
-      subtitle: 'כדי שנוכל למצוא לכם הצעה'
       delivery:
+        subtitle: 'אין הצעת משלוח באזור זה'
         get: 'קבלו'
         offer: 'הצעת משלוח'
       pickup:
+        subtitle: 'אין הצעת איסוף באזור זה'
         get: 'קבלו'
         offer: 'הצעת איסוף'
       location:

@@ -436,9 +436,9 @@ $(document).ready(function() {
         $(`.md-form.${field}.select.currency_fields .select-wrapper > input`).prop('disabled', blocked);
     };
 
-    alternativeOffer = () => (local.request.service_type !== local.result.service_type) || (local.request.payment_method !== local.result.payment_method);
+    alternativeOffer = () => (local.rates.request.service_type !== local.rates.result.service_type) || (local.rates.request.payment_method !== local.rates.result.payment_method);
 
-    noOffer = () => !local || !local.rates || !local.rates.best || !local.request || !local.result || alternativeOffer();
+    noOffer = () => !local || !local.rates || !local.rates.best || !local.rates.request || !local.rates.result || alternativeOffer();
 
 
 

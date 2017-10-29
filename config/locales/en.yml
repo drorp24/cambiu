@@ -189,11 +189,12 @@ en:
       cash: 'cash'
     no_offer:
       title: 'Please change criteria'
-      subtitle: 'So we can find you an offer'
       delivery:
+       subtitle: 'No delivery offer in that area'
        get: 'Get'
        offer: 'a delivery offer'
       pickup:
+       subtitle: 'No pick-up offer in that area'
        get: 'Get'
        offer: 'a pick-up offer'
       location:

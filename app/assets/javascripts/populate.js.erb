@@ -391,6 +391,8 @@ populateLocalOffers = function(rates) {
     clearBestOffer();
     if (!!rates.best) snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'isearch', hash: 'get'}});  // show only if error, not if no offer
     return(null);
+  } else {
+    unclearBestOffer();
   }
 
   // Whether result matches user request or is an 'alternative offer'* - go on calculating & populating offer and order slides according to the resulting offer;
@@ -502,11 +504,19 @@ clearBestOffer = function() {
   $('body').addClass('noOffer');
 };
 
+unclearBestOffer = function() {
+  $('.worst').css('visibility', 'visible');
+  $('.offer_line.saving').css('visibility', 'visible');
+  $('body').removeClass('noOffer');
+};
+
+/*
 clearLocalOffers = function() {
   formElement(calculated).autoNumeric('set', 0);
   $('[data-model=local][data-field=worst_amount]').autoNumeric('set', 0);
   $('[data-model=local][data-field=worst_saving]').autoNumeric('set', 0);
 };
+*/
 
 /*
 updateExchangeOffer = function(rates) {

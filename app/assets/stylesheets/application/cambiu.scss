@@ -939,7 +939,7 @@ body#cambiu {
 
   &.noOffer {
     [data-hash=no_pickup_offer], [data-hash=no_delivery_offer] {
-      .section.alternative {
+      .section.alternative, .no_offer_text.or {
         display: none;
       }
     }
@@ -955,6 +955,9 @@ body#cambiu {
   }
 
 
+  [data-hash=pickup_details] .md-form label {
+    top: 0.4rem;
+  }
 
   .md-form input.invalid:focus ~ label::after {
     display: none;
