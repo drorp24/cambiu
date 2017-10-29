@@ -210,7 +210,7 @@ $(document).ready(function() {
             if (amount_field) mdbBlock(twin(field), false);
         }
 
-        set(field, value);
+        set(field, $this.val());
 //        $(`[data-model=search][data-field=${field}][data-autonumeric=true]`).autoNumeric('set', value);
         let prev_calculated = calculated;
         if (amount_field && value) {
@@ -238,7 +238,14 @@ $(document).ready(function() {
     });
 
 
+    $('form [data-field][data-autonumeric]').change(function() {
+//        $(this).autoNumeric('set', );
 
+        let $this = $(this);
+        let field = $this.data('field');
+        set(field, $this.val());
+        $this.autoNumeric('set', $this.val());
+    });
 
     fetchLocalRates = function() {
 
