@@ -937,6 +937,14 @@ body#cambiu {
   */
 
 
+  &.noOffer {
+    [data-hash=no_pickup_offer], [data-hash=no_delivery_offer] {
+      .section.alternative {
+        display: none;
+      }
+    }
+  }
+
   .no_offer_suggestion {
     @include vfont-size(5.5vw);
     color: #000;

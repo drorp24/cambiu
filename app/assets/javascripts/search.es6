@@ -370,6 +370,8 @@ $(document).ready(function() {
 
         } else if (service_type == 'pickup') {
 
+            if (value_of('service_type') == 'pickup') return;    // Prevent endless loop if sent from setPaymentMethodTo('cash')
+
             $('form.selection').removeClass('delivery').addClass('pickup');
             $('body').removeClass('delivery').addClass('pickup');
             $('.inline_params_delivery').removeClass('open');
@@ -377,15 +379,17 @@ $(document).ready(function() {
             $('[data-model=search][data-field=service_type]').val('pickup');
 
             $('form.selection #delivery_ind').prop('checked',false);
-//            if (value_of('payment_method') == 'credit') setPaymentMethodTo('cash');
+            setPaymentMethodTo('cash');
 
-             if (value_of('radius') == radius.delivery) set('radius', radius.pickup.default); // if it's not delivery then don't change it: it means the user has set his preference some time ago
+            if (value_of('radius') == radius.delivery) set('radius', radius.pickup.default); // if it's not delivery then don't change it: it means the user has set his preference some time ago
         }
 
     };
 
 
     setPaymentMethodTo = function(payment_method) {
+
+        if (payment_method == 'cash' && value_of('payment_method' == 'cash')) return;  // avoiding endless loop b/w this and setServiceTypeTo('pickup')
 
         sessionStorage.payment_method = payment_method;
         $('[data-model=search][data-field=payment_method]').val(payment_method);
@@ -432,7 +436,9 @@ $(document).ready(function() {
         $(`.md-form.${field}.select.currency_fields .select-wrapper > input`).prop('disabled', blocked);
     };
 
-    noOffer = () => !local.rates.best;
+    alternativeOffer = () => (local.request.service_type !== local.result.service_type) || (local.request.payment_method !== local.result.payment_method);
+
+    noOffer = () => !local || !local.rates || !local.rates.best || !local.request || !local.result || alternativeOffer();
 
 
 

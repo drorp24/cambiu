@@ -34,6 +34,11 @@ initSwipers = function() {
 
         progressBar();
         navigationArrows();
+        if (swiperIactiveSlide().data('offer') == 'real') {
+            set('bias', '');
+            set_change('bias', 'default', '');
+            fetchAndPopulateLocaloffers();
+        }
 
     });
 
@@ -123,8 +128,7 @@ $(document).ready(function() {
 
     swiperIslideForward = ($e, timing=null) => {
         swiperI.unlockSwipeToNext();
-        var hash = noOffer() ? $e.data('nooffer') : $e.data('slideto');
-        console.log('>>>>>>>>>>>>>>>>>>>>> has: ', hash)
+        var hash = $e.data('nooffer') && noOffer() ? $e.data('nooffer') : $e.data('slideto');
         if (hash == 'paymentFlow') {
             paymentFlow();
         } else if (hash !== 'end') {
@@ -143,9 +147,13 @@ $(document).ready(function() {
 //      console.log(`changed ${property} from ${old_value} to ${value}`);
         set_change(property, old_value, value);
         set(property, value, 'manual');
-        fetchAndPopulateLocaloffers()
-            .then(() => {swiperIslideForward($this, 'delay')})
-            .catch((error) => {console.error(error)})
+        if (!($this.is('[data-offer]') && $this.data('offer') == 'none')) {
+            fetchAndPopulateLocaloffers()
+                .then(() => {swiperIslideForward($this, 'delay')})
+                .catch((error) => {console.error(error)})
+        } else {
+            swiperIslideForward($this)
+        }
 
     });
 

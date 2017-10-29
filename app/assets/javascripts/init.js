@@ -499,7 +499,7 @@ $(document).ready(function() {
         if (cancel_button) $e.find('.cancel_button').html(cancel_button);
 
         if (button && link) {
-            $e.find('.button.ok_button').attr({'data-href-page': link.page, 'data-href-pane': link.pane, 'data-help-topic': help_topic, 'data-help-content': help_content});
+            $e.find('.button.ok_button').attr({'data-href-page': link.page, 'data-href-pane': link.pane, 'data-href-hash': link.hash, 'data-help-topic': help_topic, 'data-help-content': help_content});
         }
         if (button && button_action) {
             $e.find('.button').attr('onclick', button_action)
