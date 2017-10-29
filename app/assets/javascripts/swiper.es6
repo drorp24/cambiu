@@ -51,7 +51,7 @@ initSwipers = function() {
 
 progressBar = function() {
     var currIndex = swiperI.activeIndex;
-    var fraction = currIndex / 8;
+    var fraction = currIndex / 12;
     $('.iformsprogressbar .iprogress .iprogressbar').css('transform', 'scaleX(' + fraction + ')');
 };
 
