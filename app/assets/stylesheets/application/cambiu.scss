@@ -14,7 +14,7 @@
 // Variables
 
 $isearch_content_mobilesafari: 68vh;
-$isearch_content: 80vh;
+$isearch_content: 88vh;
 
 $formBlue: #4285F4;
 $formBlue: #2196F3;
@@ -1250,7 +1250,7 @@ body#cambiu {
   }
 
   .iform_icon img {
-    width: 96px;
+    height: 13vh;
   }
 
   .binary.alternative {
@@ -3232,7 +3232,7 @@ body#cambiu {
       .figure {
         width: 50%;
         .amount {
-          width: 70%;
+          width: 100%;
         }
         .currency {
           width: 20%;
