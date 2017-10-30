@@ -433,12 +433,6 @@ $(document).ready(function() {
     });
 
 
-    $('body').keydown(function(e) {
-        var code = e.keyCode || e.which;
-        if (code == '9') {
-            e.preventDefault();
-        }
-    });
 
     mdbBlock = (field, blocked) => {
         $(`.md-form.${field}.select.currency_fields .select-wrapper > input`).prop('disabled', blocked);
@@ -449,5 +443,37 @@ $(document).ready(function() {
     noOffer = () => !local || !local.rates || !local.rates.best || !local.rates.request || !local.rates.result || alternativeOffer();
 
 
+    // KEYBOARD hacks
+
+
+    // Disable tabbing in desktop
+    $('body').keydown(function(e) {
+        var code = e.keyCode || e.which;
+        if (code == '9') {
+            e.preventDefault();
+        }
+    });
+
+    // Disable tabbing in mobile
+    $('input').on('focus', function() {
+        $('input').not(this).attr("readonly", "readonly");
+    });
+    $('input').on('blur', function() {
+        $('input').removeAttr("readonly");
+    });
+
+    // Disable tabbing to select box's
+    $('select').attr('tabindex', '-1');
+
+
+    // Disable the Return key on mobile virtual keyboards
+    $('input').keypress(function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if ( (code==13) || (code==10))
+        {
+            $(this).blur();
+            return false;
+        }
+    });
 
 });
