@@ -184,8 +184,9 @@ $(document).ready(function() {
 
     });
 
-    // This is the way to go as far as validations: keystroke-level check, color indication while keying, error message when blurring
-    // Utilizing both html5 pattern matching and self validations
+    // This is the way to go as far as validations: keystroke-level check, color indication while keying, error message (only) when blurring
+    // Leaving all pattern-matching to html5 and self validating when not pattern-based (self-validating function names placed on proper fields as with html5 validations)
+    // Then a page-level validation (validations.js) for the fields that were autofilled rather than manually filled (this code below only knows about manually populated fields)
 
     $('form [data-field]').keyup(function() {
 
@@ -206,7 +207,7 @@ $(document).ready(function() {
          } else {
             $this.removeClass('empty');
             $this[0].validity.valid && selfValid ? valid($this) : invalid($this);
-            if (isFilled($slide)) unlock($slide);
+            if (iSlideValid($slide)) unlock($slide);
             if (amount_field) mdbBlock(twin(field), false);
         }
 

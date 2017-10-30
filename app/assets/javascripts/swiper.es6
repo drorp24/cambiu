@@ -168,7 +168,7 @@ $(document).ready(function() {
 
         e.preventDefault();
         let $slide = $(this).closest('.swiper-slide');
-        if (!$slide.hasClass('missing')) {
+        if (iSlideValid($slide)) {
             swiperIslideForward($slide);
             if ($slide.hasClass('okay_required')) wait(200).then(() => {$slide.addClass('okayed');});
         }
@@ -178,8 +178,6 @@ $(document).ready(function() {
     $('.iformsprogressbar .navigation .prev').on('click tap', function() {
         if (!swiperI.isBeginning) window.history.back();
     });
-
-    isFilled = ($slide) => !$slide.find('.invalid, .empty').length;
 
     lock = ($slide) => {
         $slide.addClass('missing');

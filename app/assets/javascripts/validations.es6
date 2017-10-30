@@ -18,7 +18,37 @@ function invalid($e, msg=null) {
 
 }
 
-iSlideValid = ($slide) => !$slide.find('.missing');
+// $slide-level validation + class updating. Used to clear-out a page partly/fully filled by autocomplete rather than manual keying
+// Unlike keyup (search.es6), autocomplete doesn't clear-out the 'empty'/'invalid'/'missing' classes
+iSlideValid = ($slide) => {
+
+    if (!$slide.hasClass('missing')) return true;
+    var answer = true;
+
+    $slide.find('input').each(function() {
+
+        let $this = $(this);
+        console.log('$this: ', $this[0]);
+        if (!$this.is('.empty, .invalid')) {console.log('$this is not empty nor invalid'); return true;}
+
+        let selfValidate = $this.is('[data-validate]');
+        let selfValid = !selfValidate || window[$this.data('validate')]($this);
+        let fieldIsValid = $this[0].validity.valid && selfValid;
+        if (fieldIsValid) {
+            console.log('fieldIsValid');
+            valid($this)
+        } else {
+            console.log('fieldIs not Valid');
+            invalid($this);
+            answer = false;
+            return false;
+        }
+    });
+
+    answer ? $slide.removeClass('missing') : $slide.addClass('missing');
+    return answer;
+
+};
 
 // Not used. Checking per keystroke: as soon as there are no .empty/.invalid fields, slide is unlocked
 isearchValid = () => {

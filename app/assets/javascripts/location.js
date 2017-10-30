@@ -238,7 +238,7 @@ function searchbox_addListener(searchBox) {
 
         $('input[data-field=location]').removeClass('empty invalid');
         var $slide = swiperIactiveSlide();
-        if (isFilled($slide)) unlock($slide);
+        if (iSlideValid($slide)) unlock($slide);
 
         setLocale(search.location);
         populateTransaction();
