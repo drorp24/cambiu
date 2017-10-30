@@ -239,7 +239,7 @@ $(document).ready(function() {
     });
 
     $('form [data-field]').change(function() {
-       iSlideValid()
+       iSlideValid($(this).closest('.swiper-slide'))
     });
 
 
