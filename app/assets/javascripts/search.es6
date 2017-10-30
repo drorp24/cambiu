@@ -238,6 +238,10 @@ $(document).ready(function() {
 
     });
 
+    $('form [data-field]').change(function() {
+       iSlideValid()
+    });
+
 
     $('form [data-field][data-autonumeric]').change(function() {
 //        $(this).autoNumeric('set', );
