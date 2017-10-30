@@ -171,12 +171,12 @@ $(document).ready(function() {
 
         let $this = $(this);
         let field = $this.data('field');
-        let $slide = $this.closest('.swiper-slide');
+        if (!amount(field)) return
 
+        let $slide = $this.closest('.swiper-slide');
         if ($slide.hasClass('missing')) return;
 
-        if (amount(field)) clear($this);
-
+        clear($this);
         lock($slide);
         $this.addClass('empty');
         invalid($this);
