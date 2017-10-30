@@ -238,7 +238,7 @@ $(document).ready(function() {
 
     });
 
-    $('form [data-field]').change(function() {
+    $('form [data-field]').blur(function() {
        iSlideValid($(this).closest('.swiper-slide'))
     });
 
