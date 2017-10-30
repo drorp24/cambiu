@@ -5,7 +5,7 @@
 
 
 function valid($e) {
-    $e.removeClass('invalid');
+    $e.removeClass('invalid empty');
 }
 
 function invalid($e, msg=null) {
