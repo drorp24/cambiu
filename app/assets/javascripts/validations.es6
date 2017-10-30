@@ -18,8 +18,10 @@ function invalid($e, msg=null) {
 
 }
 
-// $slide-level validation + class updating. Used to clear-out a page partly/fully filled by autocomplete rather than manual keying
-// Unlike keyup (search.es6), autocomplete doesn't clear-out the 'empty'/'invalid'/'missing' classes
+// Used to check and clear a slide whose fields have potentially been populated by autocomplete rather than manual keying
+// In such case, keyup (search.es6) won't clear the'empty'/'invalid'/'missing' classes, but this one will
+// Notice the 'readonly' hack: serves to block mobile tabbing, but gets in the way when validity state is queried
+
 iSlideValid = ($slide) => {
 
     if (!$slide.hasClass('missing')) return true;
@@ -33,7 +35,12 @@ iSlideValid = ($slide) => {
 
         let selfValidate = $this.is('[data-validate]');
         let selfValid = !selfValidate || window[$this.data('validate')]($this);
+
+        let readonly = $this.prop('readonly');
+        $this.prop('readonly', false);   // just for the sake of validity evaluation (readonly makes even invalid fields considered valid)
         let fieldIsValid = $this[0].validity.valid && selfValid;
+        $this.prop('readonly', readonly);
+
         if (fieldIsValid) {
             console.log('fieldIsValid');
             valid($this)
