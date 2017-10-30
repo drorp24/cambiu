@@ -399,7 +399,7 @@ populateLocalOffers = function(rates) {
   // If result is alternative, user will be routed to no_x_offer slide that has a link to the offer slide, instead of getting routed directy to the offer slide otherwise
   //  (*new approach attempts seeking for alternative offer (= bias = '') only once location was selected)
 
-  //  handle_different_offer();   // generate discrepancy message on offer page (proactive approach)
+    handle_alternative_offer();   // generate discrepancy message on offer page (proactive approach)
 
   var transaction = value_of('transaction');
   var result = rates.result;
@@ -471,8 +471,7 @@ populateLocalOffers = function(rates) {
 
 
   // TODO: Keep code!
-/*
-  function handle_different_offer() {
+  function handle_alternative_offer() {
 
     var var1, var2;
 
@@ -493,7 +492,6 @@ populateLocalOffers = function(rates) {
     }
 
   }
-*/
 
 };
 
