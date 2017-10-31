@@ -937,6 +937,16 @@ body#cambiu {
   */
 
 
+  .iphone_padding {
+    display: none;
+  }
+
+  [data-mobilesafari=true] .iphone_padding {
+    display: block;
+    height: 60px;
+  }
+
+
   &.noOffer {
     [data-hash=no_pickup_offer], [data-hash=no_delivery_offer] {
       .section.alternative, .no_offer_text.or {
