@@ -46,7 +46,9 @@ en:
     amount: 'The amount you need'
     currency: 'Currency'
     pay: 'Pay'
-    best: 'You will pay'
+    best:
+      pay: 'You will pay'
+      get: 'You will get'
     bad: 'High-street price'
     gain: 'Your gain'
     heading2: 'How do you wish to get it'
