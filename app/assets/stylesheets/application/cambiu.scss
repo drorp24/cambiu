@@ -1091,7 +1091,7 @@ body#cambiu {
         @include vpadding-left(3vw);
         @include vpadding-right(3vw);
         .ok_text {
-          @include vfont-size(4vw);
+          @include vfont-size(3.9vw);
           width: 100%;
           text-align: center;
         }
@@ -1184,7 +1184,7 @@ body#cambiu {
 
   }
 
-  &[locale=en] .ok.btn:not(.order) {
+  &[locale=en] .ok.btn:not(.order) .ok_text{
     @include vfont-size(3vw);
   }
 

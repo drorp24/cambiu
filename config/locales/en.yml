@@ -167,7 +167,7 @@ en:
       drive: "I'll drive"
     delivery_location:
       title: 'Where to deliver it?'
-      subtitle: 'Confirm or correct your delivery address'
+      subtitle: 'Confirm your delivery address'
     pickup_location:
       title: 'Where are you?'
       subtitle: 'To send the money to'
