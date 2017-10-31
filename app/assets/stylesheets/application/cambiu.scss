@@ -941,7 +941,7 @@ body#cambiu {
     display: none;
   }
 
-  [data-mobilesafari=true] .iphone_padding {
+  &[data-mobilesafari=true] .iphone_padding {
     display: block;
     height: 60px;
   }
