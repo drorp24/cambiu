@@ -1184,11 +1184,11 @@ body#cambiu {
 
   }
 
-  &[locale=en] .ok.btn:not(.order) .ok_text{
+  &[locale=en] .iform .swiper-slide .ok.btn:not(.order) .ok_text{
     @include vfont-size(3vw);
   }
 
-  &[locale=en] .ok.btn.order {
+  &[locale=en] .iform .swiper-slide .ok.btn.order {
     @include vfont-size(5vw);
   }
 
