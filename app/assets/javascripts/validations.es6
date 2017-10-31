@@ -52,7 +52,7 @@ iSlideValid = ($slide) => {
         }
     });
 
-    answer ? $slide.removeClass('missing') : $slide.addClass('missing');
+    answer ? unlock($slide) : lock($slide);
     return answer;
 
 };

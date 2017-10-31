@@ -168,7 +168,7 @@ geocode = function(locationArg) {
                 set('user_location', location_name);
             }
 
-            unlock($('input[data-field=location]').closest('.swiper-slide:not([data-hash=delivery_location])'));
+            unlock($('[data-hash=delivery_location], [data-hash=pickup_location]'));
             $('[data-model=user][data-field=location]').val(location_name).addClass('active');
 
             recordTime('location', 'geocoded', 'found');
