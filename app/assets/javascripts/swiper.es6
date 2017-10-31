@@ -171,7 +171,7 @@ $(document).ready(function() {
         e.preventDefault();
         let $slide = $(this).closest('.swiper-slide');
         if (iSlideValid($slide)) {
-            swiperIslideForward($slide);
+            swiperIslideForward($slide, 'delay');
             if ($slide.hasClass('okay_required')) wait(200).then(() => {$slide.addClass('okayed');});
         }
 

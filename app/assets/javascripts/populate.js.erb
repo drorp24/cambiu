@@ -457,10 +457,11 @@ populateLocalOffers = function(rates) {
   sessionStorage.delivery_charge  = delivery_charge;
   sessionStorage.credit_charge    = credit_charge;
 
-  var exchange_name               = local.language == 'he' && result.exchange_name_he ? result.exchange_name_he : result.exchange_name;
-  var exchange_address            = local.language == 'he' && result.exchange_address_he ? result.exchange_address_he : result.exchange_address;
+  var exchange_name               = $('body').attr('locale') == 'he' && result.exchange_name_he ? result.exchange_name_he : result.exchange_name;
+  var exchange_address            = $('body').attr('locale') == 'he' && result.exchange_address_he ? result.exchange_address_he : result.exchange_address;
   $('[data-model=local][data-field=exchange_name]').html(exchange_name);
   $('[data-model=local][data-field=exchange_address]').html(exchange_address);
+  $('[data-model=local][data-field=distance]').html((result.distance * 1000).toFixed());
 
   // 'noOffer' removed so that no_x_offer slides will display the link to the existing, alternative offer
   // the other two classes are to govern if delivery/credit charges should be displayed or not

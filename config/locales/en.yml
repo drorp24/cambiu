@@ -42,11 +42,11 @@ en:
       pay: 'How much would you pay?'
       get: 'How much do you need?'
     heading1: 'What would you like to order'
-    get: 'Get'
-    amount: 'Amount'
+    get: 'The currency you need'
+    amount: 'The amount you need'
     currency: 'Currency'
     pay: 'Pay'
-    best: 'Our offer'
+    best: 'You will pay'
     bad: 'High-street price'
     gain: 'Your gain'
     heading2: 'How do you wish to get it'
@@ -149,9 +149,11 @@ en:
     localCurrency: 'If you want to pay with credit then use local currency'
   isearch:
     get:
-      title: 'What do you need?'
-      subtitle: 'How much, which currency'
+      title: 'What currency do you need?'
+    ok:
+      btn: 'Next'
     pay:
+      btn: 'Pay'
       title: 'Paying with?'
       subtitle: 'Your own currency'
     service:
@@ -168,7 +170,7 @@ en:
       subtitle: 'Confirm or correct your delivery address'
     pickup_location:
       title: 'Where are you?'
-      subtitle: 'Confirm location, so we can find the best offer around you!'
+      subtitle: 'To send the money to'
     delivery_payment:
       title: 'Card payment assumed'
       subtitle: 'Click to confirm'
@@ -179,8 +181,10 @@ en:
       credit: 'Credit card'
       cash: 'Cash'
     offer:
-      title: 'We have an offer...'
-      subtitle_pickup: 'Click to order it'
+      title: 'This is the best offer for you'
+      subtitle_pickup:
+        prefix: 'And it is  '
+        suffix: ' m away'
       subtitle_delivery: 'Click and we will call to deliver'
       different: 'No offer available for xxx but this offer for yyy is an incredible one!'
       pickup: 'pick-up'
@@ -202,12 +206,12 @@ en:
        pickup: 'change pick-up location'
        delivery: 'change delivery location'
     details:
-      title: 'A few details'
-      subtitle: 'So we can make the order'
+      title: 'Who is the order for?'
+      subtitle: 'We will call shortly to arrange'
     button:
       text: 'Order it'
     bar:
-      gain: 'Save:'
+      gain: 'Gain:'
       specifyValue: 'Please specify value'
       select: 'Please select'
       okayRequired: 'Please correct and click OK'

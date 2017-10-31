@@ -9,7 +9,7 @@
 }
 */
 
-@import url('https://fonts.googleapis.com/css?family=Rubik');
+@import url('https://fonts.googleapis.com/css?family=Rubik:400,500');
 
 // Variables
 
@@ -936,6 +936,20 @@ body#cambiu {
   }
   */
 
+  input.calculated[type=tel][readonly="readonly"] {
+    color: #000;
+  }
+
+
+  input.calculated {
+    border: none;
+    @include vfont-size-important(6.5vw);
+    font-weight: 500;
+  }
+
+  &[locale=en] input.calculated {
+    font-weight: 900;
+  }
 
   .iphone_padding {
     display: none;
@@ -1055,8 +1069,10 @@ body#cambiu {
 
   .iform {
     .swiper-slide {
+      line-height: 1;
       @include vpadding-right(10vw);
       @include vpadding-left(10vw);
+      padding-top: 2vh;
       border-bottom: 2px solid #ccc;
       &.swiper-slide-active {
         background: white;
@@ -1065,9 +1081,9 @@ body#cambiu {
         width: 100%;
       }
       .ok.btn:not(.order) {
-        @include vborder-radius(7.5vw);
-        @include vheight(15vw);
-        @include vwidth(15vw);
+        @include vborder-radius(9vw);
+        @include vheight(18vw);
+        @include vwidth(18vw);
         @include boxShadow_ex;
         font-weight: 700;
         @include vpadding-top(1vw);
@@ -1083,6 +1099,11 @@ body#cambiu {
           @include vfont-size(7vw);
           @include vmargin-left(2vw);
         }
+      }
+      .ok.btn.order {
+        @include boxShadow_ex;
+        @include vfont-size(7vw);
+        border-radius: 2px;
       }
       &.missing {
         .ok.btn {
@@ -1181,6 +1202,8 @@ body#cambiu {
   }
 
   .iform_title_subtitle {
+    margin-top: 4vh;
+    margin-bottom: 5vh;
     width: 100%;
     display: flex;
     align-items: center;
@@ -1189,6 +1212,7 @@ body#cambiu {
   }
 
   .iform_title {
+    text-align: center;
     @include vfont-size(6vw);
     font-weight: 300;
     &.order_title {
@@ -1199,11 +1223,12 @@ body#cambiu {
   }
 
   .iform_subtitle {
-    @include vfont-size(4vw);
+    text-align: center;
+    @include vfont-size(5vw);
     font-weight: 300;
     text-align: center;
     color: #000;
-    width: 75%;
+//    width: 75%;
     &.order_num {
       direction: ltr;
     }
@@ -1216,10 +1241,11 @@ body#cambiu {
 
   [data-hash=pickup_offer], [data-hash=delivery_offer] {
     .iform_title {
-      @include vfont-size(8vw);
+      @include vfont-size(10vw);
+
     }
     .nameAndAddress {
-      visibility: hidden;
+      display: none;
     }
   }
 
@@ -1244,7 +1270,7 @@ body#cambiu {
     }
   }
   [data-hash=delivery_location] .iform_subtitle {
-    width: 58%;
+//    width: 58%;
   }
 
   .swiper-slide.branch:not([data-hash=delivery_payment]) .iform_subtitle {
@@ -1311,7 +1337,7 @@ body#cambiu {
     .bestOffer {
       height: 100%;
       width: 65%;
-      padding-left: 1em;
+      @include vpadding-left(10vw);
       color: #000;
       font-weight: 300;
       @include vfont-size(6.5vw);
@@ -1637,7 +1663,7 @@ body#cambiu {
 
   .md-form {
     margin-bottom: 0;
-    label, input[type=tel]:disabled {
+    input[type=tel]:disabled {
       color: #000;
     }
   }
@@ -1691,11 +1717,13 @@ body#cambiu {
 
   .calculated_icon {
     position: absolute;
-    width: 1em;
+    width: 50%;
+    text-align: end;
     top: 1vh;
     @include vleft(10vw);
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     display: none;
+    color: #000;
   }
 
   &[locale=he] .calculated_icon {
