@@ -1263,7 +1263,7 @@ body#cambiu {
     height: 13vh;
   }
 
-  .binary.alternative {
+  .binary.option {
     border: 1px solid #ccc;
     width: 100%;
     height: 35%;
@@ -1280,12 +1280,15 @@ body#cambiu {
     }
   }
 
-  .swiper-slide[data-hash=delivery_payment] .binary.alternative {
+  .swiper-slide[data-hash=delivery_payment] .binary.option {
     height: 35vh;
   }
 
+ &.alternative .alternative_box.active {   // do not show alternative box since user has picked it himself
+   display: none !important;
+ }
 
-  .different {
+  .alternative_box {
     display: none;
     &.active {
       display: block;

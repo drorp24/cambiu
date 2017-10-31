@@ -149,8 +149,10 @@ $(document).ready(function() {
         set(property, value, 'manual');
         if ($this.data('alternative')) {
             alternative = true;
+            $('body').addClass('alternative');
             swiperIslideForward($this)
         } else {
+            $('body').removeClass('alternative');
             fetchAndPopulateLocaloffers()
                 .then(() => {swiperIslideForward($this, 'delay')})
                 .catch((error) => {console.error(error)})
