@@ -28,6 +28,19 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     @locale = I18n.locale = Rails.env.development? && params[:controller] == 'home' && !(params[:controller] =~ /^admin\//i) ? 'he' : params[:locale] || I18n.default_locale
+    puts ""
+    puts ""
+    puts ">>>>>>>"
+    puts ""
+    puts "@locale: " + @locale
+    puts ""
+    puts "params[:locale]: " + params[:locale].to_s
+    puts ""
+    puts "I18n.default_locale: " + I18n.default_locale.to_s
+    puts ""
+    puts ">>>>>>>"
+    puts ""
+    puts ""
   end
 
   def default_url_options(options={})
