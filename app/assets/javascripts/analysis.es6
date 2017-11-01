@@ -113,6 +113,10 @@ $('body').on('click tap', '.navbar_right', function() {
 $('body').on('click tap', "[onclick='orderThis()']", function() {
     report('Click', 'Confirm delivery', bestOffer(), null);
 });
+
+$('body').on('click tap', '[data-event]', function() {
+    report('Click', $(this).data('event'))
+});
 /* Doesn't work. Reported from revertDelivery
  $('body').on('click tap', "[onclick='revertDelivery()']", function() {
  report('Click', 'Cancel delivery');

@@ -241,7 +241,6 @@ orderUpdateUserDelivery = function() {
 
         function updateGa(data) {
             ga('set', 'userId', data.user_id); // Set the user ID using signed-in user_id.
-            report('Click', 'Register');
             console.log(`ga - userId set to ${data.user_id}`);
         }
 
