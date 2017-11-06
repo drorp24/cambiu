@@ -6,6 +6,17 @@ module Api
 
       def create
 
+        puts ""
+        puts ""
+        puts ">>>>"
+        puts ""
+        puts api_params.inspect
+        puts ""
+        puts ">>>>"
+        puts ""
+        puts ""
+
+
         if Rate.valid_params?(api_params)
 
           ratable = api_params[:ratable_type] == 'Chain' ? Chain.find_by(id: api_params[:ratable_id]) : Exchange.find_by(id: api_params[:ratable_id])

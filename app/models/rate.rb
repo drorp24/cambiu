@@ -27,7 +27,7 @@ class Rate < ActiveRecord::Base
     ['Chain', 'Exchange'].include?(api_params[:ratable_type]) &&
     api_params[:ratable_id].present? &&
     ['indirect', 'direct'].include?(api_params[:quote]) &&
-    api_params[:currencies].present? && api_params[:currencies].any?
+    api_params[:currencies].present? && api_params[:currencies].is_a?(Array) && api_params[:currencies].any?
   end
 
   def update_by_api(source, quote, currency)
