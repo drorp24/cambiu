@@ -37,8 +37,8 @@ class Rate < ActiveRecord::Base
     if (currency[:buy_rate].present? or currency[:sell_rate].present?) && (currency[:buy_markup].nil? && currency[:sell_markup].nil?)
 
       self.method = 'absolute'
-      self.buy = (quote == 'direct' ? 1.0 / currency[:buy] : currency[:buy])    if currency[:buy_rate].present?
-      self.sell = (quote == 'direct' ? 1.0 / currency[:sell] : currency[:sell]) if currency[:sell_rate].present?
+      self.buy = (quote == 'direct' ? 1.0 / currency[:buy_rate] : currency[:buy_rate])    if currency[:buy_rate].present?
+      self.sell = (quote == 'direct' ? 1.0 / currency[:sell_rate] : currency[:sell_rate]) if currency[:sell_rate].present?
       self.buy_markup = nil
       self.sell_markup = nil
 
