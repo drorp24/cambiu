@@ -34,17 +34,21 @@ class Rate < ActiveRecord::Base
 
     return false unless currency[:buy] != 0 && currency[:sell] != 0 && currency[:buy_markup] != 0 && currency[:sell_markup] != 0 # prevent division by 0 and confusion: 'no value' should be represented by null
 
-    if currency[:buy].present? or currency[:sell].present?
+    if currency[:buy_rate].present? or currency[:sell_rate].present?
 
       self.method = 'absolute'
       self.buy = (quote == 'direct' ? 1.0 / currency[:buy] : currency[:buy])    if currency[:buy].present?
       self.sell = (quote == 'direct' ? 1.0 / currency[:sell] : currency[:sell]) if currency[:sell].present?
+      self.buy_markup = nil
+      self.sell_markup = nil
 
     elsif currency[:buy_markup].present? or currency[:sell_markup].present?
 
       self.method = 'reference'
       self.buy_markup = currency[:buy_markup]                                   if currency[:buy_markup].present?
       self.sell_markup = currency[:sell_markup]                                 if currency[:sell_markup].present?
+      self.buy = nil
+      self.sell = nil
 
     else
       return false

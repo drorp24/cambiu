@@ -27,10 +27,10 @@ module Api
 
             api_params[:currencies].each do |currency|
 
-              rate = Rate.find_or_create_by(ratable_type: api_params[:ratable_type], ratable_id: api_params[:ratable_id], currency: api_params[:currency])
+              rate = Rate.find_or_create_by(ratable_type: api_params[:ratable_type], ratable_id: api_params[:ratable_id], currency: currency[:currency])
 
               unless rate.update_by_api(api_params[:source], api_params[:quote], currency)
-                render json: {status: 'cannot update currency ' + currency}
+                render json: {status: 'cannot update currency ' + currency[:currency]}
                 return
               end
 
