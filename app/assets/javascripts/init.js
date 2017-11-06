@@ -2,6 +2,7 @@ var media = window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'deskto
 var development = location.hostname == 'localhost';
 var mobile = media == 'mobile';
 var desktop = media == 'desktop';
+var safari = navigator && navigator.userAgent && navigator.userAgent.indexOf("Safari") > -1;
 //var mode = development ? 'both' : (mobile ? 'mobile' : 'desktop');
 var mode = 'both'; // let's see if it causes problems. The menus allow both modes currently
 // if (mobile) - single-pane; true in mobile devices and iFrames narrower than 767px.  EXAMPLE: if (mobile) close pane when showing directions.   If (desktop) - side by side panes.
@@ -153,6 +154,8 @@ var activeSnackbars = 0;
 var pendingSnack = {};
 var radius = {delivery: 100, pickup: {drive: 10, walk: 0.75, default: 0.75}};
 var conveyed = {localCurrency: false};
+var findLocation;
+var alternative = false;
 
 
 def_vals = function() {
@@ -163,14 +166,21 @@ def_vals = function() {
     def['pay_currency']     = 'ILS';
     def['buy_amount']       = 1000;
     def['buy_currency']     = 'USD';
-    def['service_type']     = 'delivery';
-    def['payment_method']   = 'credit';
+    def['service_type']     = 'pickup';
+    def['payment_method']   = 'cash';
     def['user_lat']         = dfault.lat;
     def['user_lng']         = dfault.lng;
     def['location_type']    = 'default';
-    def['radius']           = '100';
+    def['radius']           = '0.75';
     def['change_field']     = 'fields';
     def['change_to']        = 'default values';
+    def['bias']             = 'default';
+    def['locale']           = {lat: 32.0853, lng: 34.7818, country: "ISR", city: "Tel Aviv", currency: "ILS", language: "he", rates: null};
+    def['location']         = 'default';
+    def['location_lat']     = 'default';
+    def['location_lng']     = 'default';
+    def['country']          = 'ISR';
+    def['city']             = 'Tel Aviv';
 
     return def;
 
@@ -190,14 +200,16 @@ var searchParams = [
     'service_type',
     'payment_method',
     'location',
-    'location_short',
     'location_type',
     'location_reason',
     'location_lat',
     'location_lng',
     'radius',
     'change_field',
-    'change_to'
+    'change_to',
+    'bias',
+    'country',
+    'city'
 ];
 
 searchable = function(field) {
@@ -489,7 +501,7 @@ $(document).ready(function() {
         if (cancel_button) $e.find('.cancel_button').html(cancel_button);
 
         if (button && link) {
-            $e.find('.button.ok_button').attr({'data-href-page': link.page, 'data-href-pane': link.pane, 'data-help-topic': help_topic, 'data-help-content': help_content});
+            $e.find('.button.ok_button').attr({'data-href-page': link.page, 'data-href-pane': link.pane, 'data-href-hash': link.hash, 'data-help-topic': help_topic, 'data-help-content': help_content});
         }
         if (button && button_action) {
             $e.find('.button').attr('onclick', button_action)

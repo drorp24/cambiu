@@ -10,9 +10,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:facebook]
 
-  validates_presence_of     :email, :password, :first_name, :last_name
+  validates_presence_of     :email
   validates                 :email, uniqueness: true
-  validates_confirmation_of :password
+#  validates_confirmation_of :password
 
   def detailsChanged?(user_params)
     self.first_name != user_params[:first_name] ||
@@ -48,7 +48,15 @@ class User < ActiveRecord::Base
   end
 
   def name
-    self.first_name + ' ' + self.last_name if self.first_name and self.last_name
+    @name = self.first_name
+    @name += (' ' + self.last_name) if self.last_name
+    @name
+  end
+
+  def name=(fullname)
+    split = fullname.split(" ")
+    self.first_name = split[0]
+    self.last_name = split[1] if split[1]
   end
 
   def delivery_address

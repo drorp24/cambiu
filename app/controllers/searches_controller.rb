@@ -3,10 +3,10 @@ class SearchesController < ApplicationController
 
   def localRates
     search = Search.create(search_params.merge(mode: 'best'))
-    if search.errors.any?
-      render json: {errors: search.errors.full_messages}, status: 422
-    else
+    if search.is_valid?
       render json: search.exchanges
+    else
+      render json: {search: {id: search.id}, error: 'Missing params'}
     end
   end
 
@@ -21,7 +21,7 @@ class SearchesController < ApplicationController
 
 
   def search_params
-    params.require(:search).permit!
+    params.require(:search).except(:id).permit!
   end
       
 end

@@ -1,0 +1,26 @@
+<div class="swiper-slide branch flex_around column" data-hash="no_delivery_offer">
+
+  <div class="section">
+    <div class="iform_icon"><%= image_tag 'question.png' %></div>
+    <div class="iform_title_subtitle flex_center column">
+      <div class="iform_title"><%= t 'isearch.no_offer.title' %></div>
+      <div class="iform_subtitle"><%= t 'isearch.no_offer.delivery.subtitle' %></div>
+    </div>
+  </div>
+
+  <div class="section alternative">
+    <div class="no_offer_suggestion">
+      <span class="no_offer_text"><%= t 'isearch.no_offer.pickup.get' %></span>
+      <span class="no_offer_link" data-property="service_type" data-value="pickup" data-slideto="pickup_offer" data-nooffer="pickup_offer" data-alternative="true"><%= t 'isearch.no_offer.pickup.offer' %></span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="no_offer_suggestion">
+      <span class="no_offer_text or"><%= t 'isearch.no_offer.location.or' %></span>
+      <span class="no_offer_link" data-property="none" data-slideto="delivery_location" data-nooffer="delivery_location"><%= t 'isearch.no_offer.location.delivery' %></span>
+    </div>
+  </div>
+
+
+</div>

@@ -113,7 +113,7 @@
     // Utility functions
 
     currentExchange = function() {
-        if (!local || !local.rates) return null;
+        if (!local || !local.rates || !local.rates.result) return null;
         return {id: local.rates.result.exchange_id, name: local.rates.result.exchange_name}
     };
 

@@ -35,10 +35,17 @@ populateOrder = function($scope, order) {
   if (order == null) {
     $scope.find('[data-model=order][data-field=exchange_id]').html(value_of('order_exchange_id'));
     $scope.find('[data-model=order][data-field=voucher]').html(value_of('order_voucher'));
+    // TODO: Who needs all these?
+
     return
   }
 
   if ($scope == null) $scope = $('body');
+
+  sessionStorage.order_exchange_id = order.exchange_id;
+  sessionStorage.order_id = order.id;
+  sessionStorage.order_voucher = order.voucher;
+  sessionStorage.order_status = order.status;
 
   $scope.find('[data-model=order][data-field]').each(function() {
     var $this = $(this);
@@ -284,12 +291,21 @@ populateParams = function() {
     });
 
     bind_currency_to_autonumeric();
-    $('.version').html('0.9.9');
+    $('.version').html('0.9.9.1');
 
     set('calculated', calculated = !def['pay_amount'] ? 'pay_amount' : 'buy_amount');
     formElement(calculated).addClass('calculated');
     $('body').attr('data-calculated', calculated);
     populateTransaction();
+
+  // Turn location fields into google searchBox's
+  $('input[data-field=location]').each(function() {
+    input = $(this).get(0);
+    searchBox = new google.maps.places.SearchBox(input, {
+      types: ['regions']
+    });
+    searchbox_addListener(searchBox);
+  });
 
   paramsPopulated = true;
 
@@ -320,11 +336,11 @@ populateLocalCurrency = function() {
 
   set('pay_currency', local.currency);  // locals
   set('buy_currency', (local.currency == 'USD') ? 'EUR' : 'USD');
-  $('form select').material_select();
+//  $('form select').material_select();
   block('pay_currency', value_of('buy_currency'));
   block('buy_currency', value_of('pay_currency'));
 
-  bind_currency_to_autonumeric();
+  setTimeout(bind_currency_to_autonumeric, 1000);   // allow enough time for mdb to change the DOM whose mdb structure is assumed by bind
 
 };
 
@@ -343,13 +359,15 @@ fetchAndPopulateLocaloffers = function() {
     }
 
     function finishFetchingRates() {
+      recordTime('offer', 'populated', 'result');
       $('.preloader-wrapper').removeClass('active');
       $('.bestOffer_save').css('visibility', 'visible');
     }
     function tell(error) {
       console.error('catch during fetchAndPopulateLocaloffers - ' + error);
+      recordTime('offer', 'not_populated');
       clearBestOffer();
-      snack(t('error'), {klass: 'oops', timeout: 3500});
+      snack(error, {klass: 'oops', timeout: 3500});
       reject(error)
     }
 
@@ -367,14 +385,21 @@ fetchAndPopulateLocaloffers = function() {
 // Called after the initial fetchLocalRates and then after every changing key stroke
 populateLocalOffers = function(rates) {
 
+
+  // Error or no offer - return
   if (!rates || rates.error || !rates.best || rates.best.error) {
     clearBestOffer();
-    snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'search'}});
+    if (!!rates.best) snack(t('noOffer'), {button: 'ok', klass: 'oops', timeout: 5000, link: {page: 'exchanges', pane: 'isearch', hash: 'get'}});  // show only if error, not if no offer
     return(null);
+  } else {
+    unclearBestOffer();
   }
 
-  handle_different_offer();
-  populateResult();
+  // Whether result matches user request or is an 'alternative offer'* - go on calculating & populating offer and order slides according to the resulting offer;
+  // If result is alternative, user will be routed to no_x_offer slide that has a link to the offer slide, instead of getting routed directy to the offer slide otherwise
+  //  (*new approach attempts seeking for alternative offer (= bias = '') only once location was selected)
+
+    handle_alternative_offer();   // generate discrepancy message on offer page (proactive approach)
 
   var transaction = value_of('transaction');
   var result = rates.result;
@@ -391,15 +416,19 @@ populateLocalOffers = function(rates) {
   var best_value = best.rated_currency == calculated_currency ? populated_value * best_rate : populated_value / best_rate;
   var bank_factor = calculated == 'buy_amount' ? (100 - bank_fee)/100 : (100 + bank_fee)/100;
 
-  updateCalculated(calculated, best_value);
+  // TODO: 'set' function should do the autonumeric('set') thing too
+  $calculated = $('[data-autonumeric=true][data-model=search][data-field=' + calculated + ']');
+  $calculated.autoNumeric('set', best_value);
+  $calculated.siblings('label').addClass('active');
+  sessionStorage.setItem(calculated, clean(best_value));
 
   if (worst.error) {
     clearBestOffer();
     console.warn('hiding bestOffer: ' + worst.error);
   } else {
-    var worst_value_before_fee = worst.rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
-    var worst_value = worst_value_before_fee * bank_factor;
-    var gain_value = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
+    var worst_value_before_fee    = worst.rated_currency == calculated_currency ? populated_value * worst_rate : populated_value / worst_rate;
+    var worst_value               = worst_value_before_fee * bank_factor;
+    var gain_value                = (worst_value - best_value) * (calculated == 'buy_amount' ? -1 : 1);
     if (gain_value > 0) {
       $('.worst').css('visibility', 'visible');
       $('.offer_line.saving').css('display', 'flex');
@@ -412,44 +441,38 @@ populateLocalOffers = function(rates) {
     }
   }
 
-  var pay_amount = numeric_value_of('pay_amount');
-  var delivery_charge = result.service_type == 'delivery' ? best.delivery_charge : 0;
-  var cc_fee = result.payment_method == 'credit' ? best.cc_fee : 0;
-  var credit_charge = (pay_amount + delivery_charge) * cc_fee / 100;
-  var total_amount = pay_amount + delivery_charge + credit_charge;
+  var service_type                = result.service_type;
+  var payment_method              = result.payment_method;
+  var delivery_charge             = service_type == 'delivery' ? best.delivery_charge : 0;
+  var cc_fee                      = payment_method == 'credit' ? best.cc_fee : 0;
+  var pay_amount                  = numeric_value_of('pay_amount');
+  var credit_charge               = (pay_amount + delivery_charge) * cc_fee / 100;
+  var total_amount                = pay_amount + delivery_charge + credit_charge;
 
   $('[data-model=search][data-field=delivery_charge]').autoNumeric('set', delivery_charge);
+  $('.offer_line.deliver.charge').css('display', delivery_charge !== 0 ? 'flex' : 'none');
   $('[data-model=search][data-field=credit_charge]').autoNumeric('set', credit_charge);
+  $('.offer_line.cc.charge').css('display', credit_charge !== 0 ? 'flex' : 'none');
   $('[data-model=search][data-field=total_amount]').autoNumeric('set', total_amount);
-  sessionStorage.delivery_charge = delivery_charge;
-  sessionStorage.credit_charge = credit_charge;
+  sessionStorage.delivery_charge  = delivery_charge;
+  sessionStorage.credit_charge    = credit_charge;
 
+  var exchange_name               = $('body').attr('locale') == 'he' && result.exchange_name_he ? result.exchange_name_he : result.exchange_name;
+  var exchange_address            = $('body').attr('locale') == 'he' && result.exchange_address_he ? result.exchange_address_he : result.exchange_address;
+  $('[data-model=local][data-field=exchange_name]').html(exchange_name);
+  $('[data-model=local][data-field=exchange_address]').html(exchange_address);
+  $('[data-model=local][data-field=distance]').html((result.distance * 1000).toFixed());
 
-  // Bias upcoming search towards this exchange_id over another with the same grade
-  $('form.selection [data-model=search][data-field=bias_exchange_id]').val(best.exchange_id);
+  // 'noOffer' removed so that no_x_offer slides will display the link to the existing, alternative offer
+  // the other two classes are to govern if delivery/credit charges should be displayed or not
+  // note while the body classes reflect the possibly alternative result, SS still maintains the user's original request
+  $('body').removeClass('noOffer').removeClass(other(service_type)).addClass(service_type).removeClass(other(payment_method)).addClass(payment_method);
 
   return(best_value);
 
 
-  function updateCalculated(calculated, value) {
-    // TODO: 'set' function should do the autonumeric('set') thing too
-    $('[data-autonumeric=true][data-model=search][data-field=' + calculated + ']').autoNumeric('set', best_value);
-    sessionStorage.setItem(calculated, clean(value));
-  }
-
-  function populateResult() {
-    var result = rates.result;
-    var service_type = result.service_type;
-    var payment_method = result.payment_method;
-    var exchange_name = local.language == 'he' ? result.exchange_name_he : result.exchange_name;
-    var exchange_address = local.language == 'he' ? result.exchange_address_he : result.exchange_address;
-
-    $('body').removeClass(other(service_type)).addClass(service_type).removeClass(other(payment_method)).addClass(payment_method);
-    $('[data-model=local][data-field=exchange_name]').html(exchange_name);
-    $('[data-model=local][data-field=exchange_address]').html(exchange_address);
-  }
-
-  function handle_different_offer() {
+  // TODO: Keep code!
+  function handle_alternative_offer() {
 
     var var1, var2;
 
@@ -464,9 +487,9 @@ populateLocalOffers = function(rates) {
     }
 
     if (var1) {
-      $('.different').html(t('different', var1, var2)).addClass('active');
+      $('.alternative_box').html(t('different', var1, var2)).addClass('active');
     } else {
-      $('.different').removeClass('active').empty();
+      $('.alternative_box').removeClass('active').empty();
     }
 
   }
@@ -476,13 +499,23 @@ populateLocalOffers = function(rates) {
 clearBestOffer = function() {
   $('.worst').css('visibility', 'hidden');
   $('.bestOffer_save').empty();
+  $('.offer_line.saving').css('visibility', 'hidden');
+  $('body').addClass('noOffer');
 };
 
+unclearBestOffer = function() {
+  $('.worst').css('visibility', 'visible');
+  $('.offer_line.saving').css('visibility', 'visible');
+  $('body').removeClass('noOffer');
+};
+
+/*
 clearLocalOffers = function() {
   formElement(calculated).autoNumeric('set', 0);
   $('[data-model=local][data-field=worst_amount]').autoNumeric('set', 0);
   $('[data-model=local][data-field=worst_saving]').autoNumeric('set', 0);
 };
+*/
 
 /*
 updateExchangeOffer = function(rates) {

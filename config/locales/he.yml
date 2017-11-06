@@ -1,4 +1,7 @@
 he:
+  time:
+   formats:
+     long: "%Y-%m-%d %H:%M:%S"
   intro:
     slide1:
       title: 'הזמינו מט״ח עד הבית.<br>המחירים הכי זולים. באחריות.'
@@ -14,12 +17,17 @@ he:
     getOffer: 'קבלו הצעה'
     skip: 'דלג'
   search:
+    empty:
+      get: 'כמה תרצו לקנות?'
+      pay: 'כמה תרצו לשלם?'
     heading1: 'מה תרצו להזמין'
-    get: 'לקבל'
-    amount: 'כמות'
+    get: 'איזה מטבע אתם רוצים לקבל'
+    amount: 'כמה אתם רוצים לקבל'
     currency: 'מטבע'
-    pay: 'לתת'
-    best: 'ההצעה הטובה ביותר'
+    pay: 'לשלם'
+    best:
+      pay: 'זה מה שתשלמו'
+      get: 'זה מה שתקבלו'
     bad: 'מחיר הבנק'
     gain: 'הרווח שלכם'
     heading2: 'איך תרצו לקבל את ההזמנה'
@@ -89,13 +97,16 @@ he:
   user:
     empty: 'אנא מלאו'
     email: 'דוא״ל'
-    email_error: 'אנא בדקו'
+    email_error: 'אנא תקנו את האימייל'
     password: 'בחרו סיסמה'
     password_confirmation: 'חזרו על הסיסמה'
     next: 'המשך'
     first_name: 'שם פרטי'
     last_name: 'שם משפחה'
+    name: 'שם מלא'
+    name_error: 'אנא ציינו שם פרטי ושם משפחה'
     phone: 'טלפון'
+    phone_error: 'אנא השלימו את מספר הטלפון'
     company: 'שם חברה'
     city: 'עיר'
     street: 'רחוב'
@@ -119,9 +130,11 @@ he:
     localCurrency: 'אם ברצונכם לשלם באשראי בחרו במטבע המקומית'
   isearch:
     get:
-      title: 'מה אתם צריכים?'
-      subtitle: 'איזה מטבע וכמה'
+      title: 'איזה מטבע אתם צריכים?'
+    ok:
+      btn: 'הבא'
     pay:
+      btn: 'שלמו'
       title: 'מה מחליפים?'
       subtitle: 'המטבע איתו תשלמו'
     service:
@@ -135,7 +148,7 @@ he:
       drive: 'ברכב'
     delivery_location:
       title: 'לאן לשלוח?'
-      subtitle: 'השלימו את הכתובת ואנו נשלח לשם את הכסף'
+      subtitle: 'לאן תרצו שנשלח את הכסף'
     pickup_location:
       title: 'איפה אתם?'
       subtitle: 'אשרו את מיקומכם, כדי שנמצא את ההצעה הטובה ביותר בקירבתכם!'
@@ -149,19 +162,38 @@ he:
       credit: 'כרטיס אשראי'
       cash: 'מזומן'
     offer:
-      title: 'יש לנו הצעה בשבילכם...'
-      subtitle_pickup: 'לחצו וההזמנה תמתין לכם בחנות'
+      title: 'זו ההצעה הטובה ביותר עבורכם'
+      subtitle_pickup:
+        prefix: 'והיא נמצאת '
+        suffix: ' מ׳ מכם'
       subtitle_delivery: 'לחצו ונתקשר לתאם משלוח'
       different: 'לא נמצאה הצעה עבור xxx אלא עבור yyy, אבל זוהי הצעה משתלמת במיוחד!'
       pickup: 'איסוף'
       delivery: 'משלוח'
       credit: 'אשראי'
       cash: 'מזומן'
+    no_offer:
+      title: 'אנא שנו בחירתכם'
+      delivery:
+        subtitle: 'אין הצעת משלוח באזור זה'
+        get: 'קבלו'
+        offer: 'הצעת משלוח'
+      pickup:
+        subtitle: 'אין הצעת איסוף באזור זה'
+        get: 'קבלו'
+        offer: 'הצעת איסוף'
+      location:
+        or: 'או'
+        pickup: 'שנו את מקום האיסוף'
+        delivery: 'שנו את מקום המשלוח'
+    details:
+      title: 'על מי לרשום את ההזמנה?'
+      subtitle: 'מיד נתקשר לתאם אותה'
     button:
       text: 'הזמינו'
     bar:
-      gain: 'חסכו:'
-      specifyValue: 'אנא מלאו ערך'
+      gain: 'הרוויחו:'
+      specifyValue: 'על מי לרשום את ההזמנה? ערך'
       select: 'לחצו על הבחירה שלכם'
       okayRequired: 'תקנו אם צריך ואשרו ב-OK'
       end: 'אין יותר שאלות'

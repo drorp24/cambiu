@@ -1,11 +1,11 @@
 <!-- Google Analytics -->
 <script>
   window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-  console.log('ga starts loading');
+//  console.log('ga starts loading');
   ga('create', '<%= Rails.application.config.ga_tracking_code %>', 'auto');
   ga('send', 'pageview');
   ga(function(tracker) {
-    console.log('ga is now loaded and tracker was created');
+//    console.log('ga is now loaded and tracker was created');
   });
 </script>
 <script defer src='https://www.google-analytics.com/analytics.js'></script>

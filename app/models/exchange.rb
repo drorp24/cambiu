@@ -98,11 +98,19 @@ class Exchange < ActiveRecord::Base
 
 
   def self.retrieve(attempt)
+
+    if attempt[:bias] == 'default'
+      default_exchanges = Exchange.where(delivery: attempt[:service_type] == 'delivery', default: true)
+      raise 'No default exchange defined' unless default_exchanges.any?
+      return default_exchanges
+    end
+
     box         = Geocoder::Calculations.bounding_box(attempt[:center], attempt[:radius])
     exchanges   = Exchange.active.geocoded.within_bounding_box(box)
     exchanges   = exchanges.delivery.covering(attempt[:center]) if attempt[:service_type] == 'delivery'
     exchanges   = exchanges.credit if attempt[:payment_method] == 'credit'
     exchanges
+
   end
 
 
@@ -676,7 +684,7 @@ class Exchange < ActiveRecord::Base
 
     exchange_hash = {}
 
-    exchange_hash[:distance] = self.distance_from(center)
+    exchange_hash[:distance] = center == [0, 0] ? 0 : self.distance_from(center)
     exchange_hash[:exchange_id] = self.id
     exchange_hash[:exchange_name] = self.name
     exchange_hash[:exchange_name_he] = self.name_he

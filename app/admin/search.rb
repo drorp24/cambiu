@@ -1,5 +1,9 @@
 ActiveAdmin.register Search do
 
+  includes :issues
+  includes :result_exchange
+
+
   config.filters = false
   config.clear_action_items!
 
@@ -26,16 +30,16 @@ ActiveAdmin.register Search do
       "#{search.change_field} set to #{search.change_to}" if search.change_field.present? and search.change_to.present?
     end
     column 'Service Type' do |search|
-      search.service_type.capitalize
+      search.service_type.capitalize if search.service_type
     end
     column 'Payment Method' do |search|
-      search.payment_method.capitalize
+      search.payment_method.capitalize if search.payment_method
     end
     column 'Result Service Type' do |search|
-      search.result_service_type.to_s.capitalize
+      search.result_service_type.to_s.capitalize if search.result_service_type
     end
     column 'Result Payment Method' do |search|
-      search.result_payment_method.to_s.capitalize
+      search.result_payment_method.to_s.capitalize if search.result_payment_method
     end
      column 'Result Exchange' do |search|
       link_to search.result_exchange.name, edit_admin_exchange_path(search.result_exchange_id) if search.result_exchange_id

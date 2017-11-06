@@ -5,22 +5,59 @@
 
 
 function valid($e) {
-    $e.removeClass('invalid');
+    $e.removeClass('invalid empty');
 }
 
 function invalid($e, msg=null) {
 
-    let error = msg || $e.attr('data-t-error') || $('form.registration').attr('data-t-empty');
+    let error = msg || $e.attr('data-t-error');
 
     $e.removeClass('valid').addClass('invalid');
     $e.siblings('label').attr('data-error', error);
-    console.warn(`invalid field (${String(msg)})`, $e[0]);
+//    console.warn(`invalid field (${String(msg)})`, $e[0]);
 
 }
 
-iSlideValid = ($slide) => !$slide.find('.missing');
+// Used to check and clear a slide whose fields have potentially been populated by autocomplete rather than manual keying
+// In such case, keyup (search.es6) won't clear the'empty'/'invalid'/'missing' classes, but this one will
+// Notice the 'readonly' hack: serves to block mobile tabbing, but gets in the way when validity state is queried
 
-// Not used. Checking per slide, and according to existence of 'missing' class
+iSlideValid = ($slide) => {
+
+    if (!$slide.hasClass('missing')) return true;
+    var answer = true;
+
+    $slide.find('input').each(function() {
+
+        let $this = $(this);
+        console.log('$this: ', $this[0]);
+        if (!$this.is('.empty, .invalid')) {console.log('$this is not empty nor invalid'); return true;}
+
+        let selfValidate = $this.is('[data-validate]');
+        let selfValid = !selfValidate || window[$this.data('validate')]($this);
+
+        let readonly = $this.prop('readonly');
+        $this.prop('readonly', false);   // just for the sake of validity evaluation (readonly makes even invalid fields considered valid)
+        let fieldIsValid = $this[0].validity.valid && selfValid;
+        $this.prop('readonly', readonly);
+
+        if (fieldIsValid) {
+            console.log('fieldIsValid');
+            valid($this)
+        } else {
+            console.log('fieldIs not Valid');
+            invalid($this);
+            answer = false;
+            return false;
+        }
+    });
+
+    answer ? unlock($slide) : lock($slide);
+    return answer;
+
+};
+
+// Not used. Checking per keystroke: as soon as there are no .empty/.invalid fields, slide is unlocked
 isearchValid = () => {
     let $buy_amount = $('#buy_amount');
     let buy_amount_valid = clean($buy_amount.val());
@@ -81,3 +118,5 @@ userCheckValidity = function() {
 
     return formValid;
 };
+
+fullName = ($e) => $e.val().includes(' ');

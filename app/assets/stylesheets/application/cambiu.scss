@@ -9,7 +9,7 @@
 }
 */
 
-@import url('https://fonts.googleapis.com/css?family=Rubik');
+@import url('https://fonts.googleapis.com/css?family=Rubik:400,500');
 
 // Variables
 
@@ -936,6 +936,68 @@ body#cambiu {
   }
   */
 
+  input.calculated[type=tel][readonly="readonly"] {
+    color: #000;
+  }
+
+
+  input.calculated {
+    border: none;
+    @include vfont-size-important(6.5vw);
+    font-weight: 500;
+  }
+
+  &[locale=en] input.calculated {
+    font-weight: 900;
+  }
+
+  .iphone_padding {
+    display: none;
+  }
+
+  /*
+  &[data-mobilesafari=true] .iphone_padding {
+    display: block;
+    height: 60px;
+  }
+  */
+
+
+  &.noOffer {
+    [data-hash=no_pickup_offer], [data-hash=no_delivery_offer] {
+      .section.alternative, .no_offer_text.or {
+        display: none;
+      }
+    }
+  }
+
+  .no_offer_suggestion {
+    @include vfont-size(5.5vw);
+    color: #000;
+    font-weight: 300;
+    .no_offer_link {
+      color: $formBlue;
+    }
+  }
+
+
+  [data-hash=pickup_details] .md-form label {
+    top: 0.4rem;
+  }
+
+  .md-form input.invalid:focus ~ label::after {
+    display: none;
+  }
+  .md-form input.invalid:not(:focus) ~ label::after {
+    content: attr(data-error);
+    width: 100%;
+    text-align: end;
+  }
+
+  .md-form label {
+    width: 100%;
+  }
+
   #user_house {
   @include threedots(100%);
 }
@@ -953,6 +1015,9 @@ body#cambiu {
     margin-bottom: 0;
     .offer {
       margin-bottom: 10%;
+    }
+    img {
+      box-shadow: none;
     }
   }
 
@@ -1004,8 +1069,10 @@ body#cambiu {
 
   .iform {
     .swiper-slide {
+      line-height: 1;
       @include vpadding-right(10vw);
       @include vpadding-left(10vw);
+      padding-top: 2vh;
       border-bottom: 2px solid #ccc;
       &.swiper-slide-active {
         background: white;
@@ -1013,10 +1080,10 @@ body#cambiu {
       .iform_content {
         width: 100%;
       }
-      .ok.btn {
-        @include vborder-radius(7.5vw);
-        @include vheight(15vw);
-        @include vwidth(15vw);
+      .ok.btn:not(.order) {
+        @include vborder-radius(8vw);
+        @include vheight(16vw);
+        @include vwidth(16vw);
         @include boxShadow_ex;
         font-weight: 700;
         @include vpadding-top(1vw);
@@ -1024,7 +1091,7 @@ body#cambiu {
         @include vpadding-left(3vw);
         @include vpadding-right(3vw);
         .ok_text {
-          @include vfont-size(4vw);
+          @include vfont-size(3.9vw);
           width: 100%;
           text-align: center;
         }
@@ -1033,6 +1100,11 @@ body#cambiu {
           @include vmargin-left(2vw);
         }
       }
+      .ok.btn.order {
+        @include boxShadow_ex;
+        @include vfont-size(7vw);
+        border-radius: 2px;
+      }
       &.missing {
         .ok.btn {
           background-color: $formBluePale !important;
@@ -1040,7 +1112,7 @@ body#cambiu {
       }
       &.okayed {
         .ok.btn {
-          visibility: hidden
+//          visibility: hidden
         }
       }
     }
@@ -1088,9 +1160,18 @@ body#cambiu {
           display: block;
         }
       }
+      &.empty {
+        ~ label:before {
+          content: attr(data-t-empty);
+        }
+      }
     }
 
-    input {
+    label:not(.active)::after {
+      display: none;
+    }
+
+    input:not([data-model=user]) {
       text-align: end;
     }
     .caret {
@@ -1101,6 +1182,14 @@ body#cambiu {
     }
 
 
+  }
+
+  &[locale=en] .iform .swiper-slide .ok.btn:not(.order) .ok_text{
+    @include vfont-size(3vw);
+  }
+
+  &[locale=en] .iform .swiper-slide .ok.btn.order {
+    @include vfont-size(5vw);
   }
 
   .text-start {
@@ -1129,6 +1218,7 @@ body#cambiu {
   }
 
   .iform_title {
+    text-align: center;
     @include vfont-size(6vw);
     font-weight: 300;
     &.order_title {
@@ -1139,22 +1229,35 @@ body#cambiu {
   }
 
   .iform_subtitle {
-    @include vfont-size(4vw);
+    text-align: center;
+    @include vfont-size(5vw);
     font-weight: 300;
     text-align: center;
     color: #000;
-    width: 75%;
+//    width: 75%;
     &.order_num {
       direction: ltr;
     }
   }
 
+
+
+  [data-hash=get] {
+    .iform_content {
+      margin-top: 10vh;
+    }
+    .iform_subtitle {
+      display: none;
+    }
+  }
+
   [data-hash=pickup_offer], [data-hash=delivery_offer] {
     .iform_title {
-      @include vfont-size(8vw);
+      @include vfont-size(10vw);
+
     }
     .nameAndAddress {
-      visibility: hidden;
+      display: none;
     }
   }
 
@@ -1179,7 +1282,7 @@ body#cambiu {
     }
   }
   [data-hash=delivery_location] .iform_subtitle {
-    width: 58%;
+//    width: 58%;
   }
 
   .swiper-slide.branch:not([data-hash=delivery_payment]) .iform_subtitle {
@@ -1197,10 +1300,10 @@ body#cambiu {
   }
 
   .iform_icon img {
-    width: 96px;
+    height: 12vh;
   }
 
-  .binary.alternative {
+  .binary.option {
     border: 1px solid #ccc;
     width: 100%;
     height: 35%;
@@ -1210,19 +1313,21 @@ body#cambiu {
       @include vfont-size(5vw);
       color: #000;
       font-weight: 300;
-      margin-top: -2vh;
     }
     img {
       height: 96px;
     }
   }
 
-  .swiper-slide[data-hash=delivery_payment] .binary.alternative {
+  .swiper-slide[data-hash=delivery_payment] .binary.option {
     height: 35vh;
   }
 
+ &.alternative .alternative_box.active {   // do not show alternative box since user has picked it himself
+   display: none !important;
+ }
 
-  .different {
+  .alternative_box {
     display: none;
     &.active {
       display: block;
@@ -1243,7 +1348,7 @@ body#cambiu {
     .bestOffer {
       height: 100%;
       width: 65%;
-      padding-left: 1em;
+      @include vpadding-left(10vw);
       color: #000;
       font-weight: 300;
       @include vfont-size(6.5vw);
@@ -1569,7 +1674,7 @@ body#cambiu {
 
   .md-form {
     margin-bottom: 0;
-    label, input[type=tel]:disabled {
+    input[type=tel]:disabled {
       color: #000;
     }
   }
@@ -1623,11 +1728,13 @@ body#cambiu {
 
   .calculated_icon {
     position: absolute;
-    width: 1em;
+    width: 50%;
+    text-align: end;
     top: 1vh;
     @include vleft(10vw);
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     display: none;
+    color: #000;
   }
 
   &[locale=he] .calculated_icon {
@@ -3179,7 +3286,7 @@ body#cambiu {
       .figure {
         width: 50%;
         .amount {
-          width: 70%;
+          width: 80%;
         }
         .currency {
           width: 20%;

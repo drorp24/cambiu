@@ -1,13 +1,26 @@
+recordTime = (property, current_state, from_state=null) => {
+    from_state = from_state || 'navigationStart';
+    if (window.performance && window.performance.mark) window.performance.mark(current_state);
+    if (window.performance && window.performance.measure && window.performance.getEntriesByType('mark').find((mark) => mark.name == from_state)) {
+        window.performance.measure(`${property}:${from_state}:${current_state}`, from_state, current_state);
+    }
+};
+
+reportTime = () => {
+    let marks = window.performance.getEntriesByType('mark');
+    let measures = window.performance.getEntriesByType('measure');
+    console.table(marks);
+    console.table(measures);
+};
+
 gaTiming = function(category, variable, value) {
     ga('send', 'timing', category,  variable, value);
 };
 
 
 (function onLoad() {
-    var now = new Date().getTime();
-    var page_load_time = now - performance.timing.navigationStart;
-    console.log("User-perceived page load time: " + page_load_time);
-    gaTiming('User-perceived', 'page load time', page_load_time);
+    recordTime('page', 'load');
+//    gaTiming('User-perceived', 'page load time', page_load_time);
 })();
 
 
@@ -99,6 +112,10 @@ $('body').on('click tap', '.navbar_right', function() {
 });
 $('body').on('click tap', "[onclick='orderThis()']", function() {
     report('Click', 'Confirm delivery', bestOffer(), null);
+});
+
+$('body').on('click tap', '[data-event]', function() {
+    report('Click', $(this).data('event'))
 });
 /* Doesn't work. Reported from revertDelivery
  $('body').on('click tap', "[onclick='revertDelivery()']", function() {

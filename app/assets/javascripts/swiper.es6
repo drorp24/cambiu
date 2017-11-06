@@ -34,6 +34,11 @@ initSwipers = function() {
 
         progressBar();
         navigationArrows();
+        if (swiperIactiveSlide().data('offer') == 'real') {
+            set('bias', '');
+            set_change('bias', 'default', '');
+            fetchAndPopulateLocaloffers();
+        }
 
     });
 
@@ -46,7 +51,7 @@ initSwipers = function() {
 
 progressBar = function() {
     var currIndex = swiperI.activeIndex;
-    var fraction = currIndex / 8;
+    var fraction = currIndex / 12;
     $('.iformsprogressbar .iprogress .iprogressbar').css('transform', 'scaleX(' + fraction + ')');
 };
 
@@ -123,22 +128,35 @@ $(document).ready(function() {
 
     swiperIslideForward = ($e, timing=null) => {
         swiperI.unlockSwipeToNext();
-        var hash = $e.data('slideto');
-        swiperIslideTo(hash, timing);
+        var hash = $e.data('nooffer') && noOffer() ? $e.data('nooffer') : alternative && $e.data('slideto-alternative') ? $e.data('slideto-alternative') : $e.data('slideto');
+        if (hash == 'paymentFlow') {
+            paymentFlow();
+        } else if (hash !== 'end') {
+            swiperIslideTo(hash, timing);
+        }
     };
 
     $('.swiper-slide.branch [data-slideto]').on('click tap', function() {
 
         let $this       = $(this);
         let property    = $this.data('property');
+        if (property == 'none') {swiperIslideForward($this); return}
         let old_value   = value_of(property);
         let value       = $this.data('value');
 
 //      console.log(`changed ${property} from ${old_value} to ${value}`);
         set_change(property, old_value, value);
         set(property, value, 'manual');
-        fetchAndPopulateLocaloffers();
-        swiperIslideForward($this, 'delay')
+        if ($this.data('alternative')) {
+            alternative = true;
+            $('body').addClass('alternative');
+            swiperIslideForward($this)
+        } else {
+            $('body').removeClass('alternative');
+            fetchAndPopulateLocaloffers()
+                .then(() => {swiperIslideForward($this, 'delay')})
+                .catch((error) => {console.error(error)})
+        }
 
     });
 
@@ -152,9 +170,9 @@ $(document).ready(function() {
 
         e.preventDefault();
         let $slide = $(this).closest('.swiper-slide');
-        if (!$slide.hasClass('missing')) {
-            swiperIslideForward($slide);
-            wait(200).then(() => {$slide.addClass('okayed');});
+        if (iSlideValid($slide)) {
+            swiperIslideForward($slide, 'delay');
+            if ($slide.hasClass('okay_required')) wait(200).then(() => {$slide.addClass('okayed');});
         }
 
     });
@@ -162,6 +180,18 @@ $(document).ready(function() {
     $('.iformsprogressbar .navigation .prev').on('click tap', function() {
         if (!swiperI.isBeginning) window.history.back();
     });
+
+    lock = ($slide) => {
+        $slide.addClass('missing');
+        $slide.find('.ok.btn').prop('disabled', true);
+        swiperI.lockSwipeToNext();
+    };
+
+    unlock = ($slide) => {
+        $slide.removeClass('missing');
+        $slide.find('.ok.btn').prop('disabled', false);
+        swiperI.unlockSwipeToNext();
+    };
 
     swiperIgatekeeper = function() {
 

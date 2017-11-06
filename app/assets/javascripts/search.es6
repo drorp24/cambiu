@@ -167,49 +167,54 @@ $(document).ready(function() {
 
 
 
-    $('form [data-model=search][data-field]').on('click tap', function() {
+    $('form [data-field]').on('click tap', function() {
 
         let $this = $(this);
         let field = $this.data('field');
-        let $slide = $this.closest('.swiper-slide');
-        if (amount(field)) clear($this);
+        if (!amount(field)) return
 
-        $slide.addClass('missing');
-        swiperI.lockSwipeToNext();
+        let $slide = $this.closest('.swiper-slide');
+        if ($slide.hasClass('missing')) return;
+
+        clear($this);
+        lock($slide);
+        $this.addClass('empty');
         invalid($this);
         mdbBlock(twin(field), true);
 
     });
 
-    $('form [data-model=search][data-field]').keyup(function() {
+    // This is the way to go as far as validations: keystroke-level check, color indication while keying, error message (only) when blurring
+    // Leaving all pattern-matching to html5 and self validating when not pattern-based (self-validating function names placed on proper fields as with html5 validations)
+    // Then a page-level validation (validations.js) for the fields that were autofilled rather than manually filled (this code below only knows about manually populated fields)
 
-        var $this = $(this);
-        var field = $this.data('field');
-        var amount_field = amount(field);
-        var currency_field = currency(field);
+    $('form [data-field]').keyup(function() {
 
-        if (!amount_field && !currency_field) return;
-        console.log('keying a character');
+        let $this = $(this);
+        let field = $this.data('field');
+        if (field == 'location') return; // handled separately in the clear button and in the change location
+        let amount_field = amount(field);
+        let selfValidate = $this.is('[data-validate]');
+        let selfValid = !selfValidate || selfValidate && window[$this.data('validate')]($this);
+        let value = amount_field ? clean($this.val()) : $this.val();
+        let $slide = $this.closest('.swiper-slide');
 
-        var value = $this.val();
-        if (amount_field) {
-            let $slide = $this.closest('.swiper-slide');
-            if (clean(value) == 0) {
-                $slide.addClass('missing');
-                swiperI.lockSwipeToNext();
-                invalid($this);
-                mdbBlock(twin(field), true);
-             } else {
-                $slide.removeClass('missing');
-                swiperI.unlockSwipeToNext();
-                valid($this);
-                mdbBlock(twin(field), false);
-            }
+        if (!value) {
+            $this.addClass('empty');
+            invalid($this);
+            lock($slide);
+            if (amount_field) mdbBlock(twin(field), true);
+         } else {
+            $this.removeClass('empty');
+            $this[0].validity.valid && selfValid ? valid($this) : invalid($this);
+            if (iSlideValid($slide)) unlock($slide);
+            if (amount_field) mdbBlock(twin(field), false);
         }
 
-        set(field, value);
-        var prev_calculated = calculated;
-        if (amount(field) && value) {
+        set(field, $this.val());
+//        $(`[data-model=search][data-field=${field}][data-autonumeric=true]`).autoNumeric('set', value);
+        let prev_calculated = calculated;
+        if (amount_field && value) {
             clear(brother($this));
             set('calculated', calculated = other(field));
         }
@@ -221,26 +226,43 @@ $(document).ready(function() {
             fetchAndPopulateLocaloffers();
         }
 
-        var $field = formElement(field);
+        let $field = formElement(field);
         if ($field.hasClass('calculated')) {
             $field.removeClass('calculated');
             formElement(calculated).addClass('calculated');
             $('.worst input').attr('data-symbolsource', twin(calculated));
-            $('.worst input').each(function() {update_currency_symbol($(this))});
+            $('.worst input').each(() => {update_currency_symbol($(this))});
         }
 
         populateLocalOffers(local.rates);
 
     });
 
+    $('form [data-field]').blur(function() {
+       iSlideValid($(this).closest('.swiper-slide'))
+    });
 
 
+    $('form [data-field][data-autonumeric]').change(function() {
+//        $(this).autoNumeric('set', );
+
+        let $this = $(this);
+        let field = $this.data('field');
+        set(field, $this.val());
+        $(`[data-model=search][data-field=${field}][data-autonumeric]`).autoNumeric('set', $this.val());
+    });
 
     fetchLocalRates = function() {
 
         console.log('fetchLocalRates...');
+        recordTime('offer', 'fetch');
 
         return new Promise(function(resolve, reject) {
+
+            function checkLocation() {
+                return new Promise((resolve, reject) =>
+                    value_of('bias') == 'default' ? resolve() : findLocation.then(resolve)
+                )}
 
             function fetchRates() {
                 return fetch('/searches/localRates?' + $( ".search_form input[data-model=search], .search_form select[data-model=search]" ).serialize(), {
@@ -255,11 +277,18 @@ $(document).ready(function() {
 
             function returnResults(data) {
                 Object.assign(local, {rates: data});
-                set('id', data.search.id);
-                resolve(data)
+                if (data.error) {
+                    recordTime('offer', 'error', 'fetch');
+                    reject(data.error)
+                } else {
+                    if (data.search) set('id', data.search.id);
+                    recordTime('offer', 'result', 'fetch');
+                    resolve(data)
+                }
             }
 
-            fetchRates()
+            checkLocation()
+                .then(fetchRates)
                 .then(checkStatus)
                 .then(parseJson)
                 .then(returnResults)
@@ -271,9 +300,10 @@ $(document).ready(function() {
 
 
     $('form .location .clear').click(function() {
+        lock($('input[data-field=location]').closest('.swiper-slide'));
         if (!$(this).parent().find('input#location').prop('disabled')) {
 //            set('location', '')    only form gets cleared as we need to remember the location to report its previous value when location change is reported (location.js)
-            $('[data-model=search][data-field=location]').val("");
+            $('[data-model=search][data-field=location]').val("").addClass('invalid');
         }
     });
 
@@ -353,6 +383,8 @@ $(document).ready(function() {
 
         } else if (service_type == 'pickup') {
 
+            if (value_of('service_type') == 'pickup') return;    // Prevent endless loop if sent from setPaymentMethodTo('cash')
+
             $('form.selection').removeClass('delivery').addClass('pickup');
             $('body').removeClass('delivery').addClass('pickup');
             $('.inline_params_delivery').removeClass('open');
@@ -360,15 +392,17 @@ $(document).ready(function() {
             $('[data-model=search][data-field=service_type]').val('pickup');
 
             $('form.selection #delivery_ind').prop('checked',false);
-//            if (value_of('payment_method') == 'credit') setPaymentMethodTo('cash');
+            setPaymentMethodTo('cash');
 
-             if (value_of('radius') == radius.delivery) set('radius', radius.pickup.default); // if it's not delivery then don't change it: it means the user has set his preference some time ago
+            if (value_of('radius') == radius.delivery) set('radius', radius.pickup.default); // if it's not delivery then don't change it: it means the user has set his preference some time ago
         }
 
     };
 
 
     setPaymentMethodTo = function(payment_method) {
+
+        if (payment_method == 'cash' && value_of('payment_method' == 'cash')) return;  // avoiding endless loop b/w this and setServiceTypeTo('pickup')
 
         sessionStorage.payment_method = payment_method;
         $('[data-model=search][data-field=payment_method]').val(payment_method);
@@ -404,6 +438,20 @@ $(document).ready(function() {
     });
 
 
+
+    mdbBlock = (field, blocked) => {
+        $(`.md-form.${field}.select.currency_fields .select-wrapper > input`).prop('disabled', blocked);
+    };
+
+    alternativeOffer = () => (local.rates.request.service_type !== local.rates.result.service_type) || (local.rates.request.payment_method !== local.rates.result.payment_method);
+
+    noOffer = () => !local || !local.rates || !local.rates.best || !local.rates.request || !local.rates.result || alternativeOffer();
+
+
+    // KEYBOARD hacks
+
+
+    // Disable tabbing in desktop
     $('body').keydown(function(e) {
         var code = e.keyCode || e.which;
         if (code == '9') {
@@ -411,10 +459,26 @@ $(document).ready(function() {
         }
     });
 
-    mdbBlock = (field, blocked) => {
-        $(`.md-form.${field}.select.currency_fields .select-wrapper > input`).prop('disabled', blocked);
-    };
+    // Disable tabbing in mobile
+    $('input').on('focus', function() {
+        $('input').not(this).attr("readonly", "readonly");
+    });
+    $('input').on('blur', function() {
+        $('input').removeAttr("readonly");
+    });
+
+    // Disable tabbing to select box's
+    $('select').attr('tabindex', '-1');
 
 
+    // Disable the Return key on mobile virtual keyboards
+    $('input').keypress(function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if ( (code==13) || (code==10))
+        {
+            $(this).blur();
+            return false;
+        }
+    });
 
 });

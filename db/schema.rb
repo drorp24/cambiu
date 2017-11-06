@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171016182408) do
+ActiveRecord::Schema.define(version: 20171027122822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,7 +149,9 @@ ActiveRecord::Schema.define(version: 20171016182408) do
     t.float    "delivery_se_lng"
     t.string   "locale"
     t.float    "bank_fee"
+    t.boolean  "default"
     t.index ["chain_id"], name: "index_exchanges_on_chain_id", using: :btree
+    t.index ["default"], name: "index_exchanges_on_default", using: :btree
     t.index ["delivery_nw_lat"], name: "index_exchanges_on_delivery_nw_lat", using: :btree
     t.index ["delivery_nw_lng"], name: "index_exchanges_on_delivery_nw_lng", using: :btree
     t.index ["delivery_se_lat"], name: "index_exchanges_on_delivery_se_lat", using: :btree
@@ -283,6 +285,8 @@ ActiveRecord::Schema.define(version: 20171016182408) do
     t.float    "result_radius"
     t.string   "result_service_type"
     t.string   "result_payment_method"
+    t.string   "bias"
+    t.string   "result_bias"
     t.index ["bias_exchange_id"], name: "index_searches_on_bias_exchange_id", using: :btree
     t.index ["result_exchange_id"], name: "index_searches_on_result_exchange_id", using: :btree
     t.index ["user_id"], name: "index_searches_on_user_id", using: :btree
@@ -333,6 +337,7 @@ ActiveRecord::Schema.define(version: 20171016182408) do
     t.string   "entry"
     t.string   "floor"
     t.string   "apartment"
+    t.string   "location"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end

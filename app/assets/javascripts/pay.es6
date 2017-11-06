@@ -1,16 +1,11 @@
-$('[data-action=paymentFlow]').click(function(e) {
-
-    e.preventDefault();
-
-    // Create user
-    if (!userCheckValidity()) return;
+paymentFlow = () => {
 
     orderUpdateUserDelivery()
         .then(fetchPaymentUrl)
         .then((data) => window.location = data.url)
         .catch((error) => {console.error(error)})
 
-});
+};
 
 fetchPaymentUrl = function(order) {
 
@@ -40,7 +35,7 @@ fetchPaymentUrl = function(order) {
             } else {
                 let cg_error = `${data.message} - ${data.additionInfo}`;
                 console.error(cg_error);
-                snack(`Payment server says ${data.message} - call for assistance`, {klass: 'oops', timeout: 7000});
+                snack(`${data.message} - call for assistance`, {klass: 'oops', timeout: 7000});
                 reject(cg_error)
             }
         }

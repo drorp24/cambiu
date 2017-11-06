@@ -1,5 +1,5 @@
 <div class="flex_center">
-  <button dir="ltr" class="ok blue primary btn waves-effect flex_center">
-    <div class="ok_text">OK</div>
+  <button dir="ltr" class="ok blue primary btn waves-effect flex_center" <%= local_assigns[:disabled] ? 'disabled' : '' %> <%= local_assigns[:action] ? 'data-action=' + action : ''  %> <%= local_assigns[:event] ? 'data-event=' + event : ''  %>>
+    <div class="ok_text"><%= local_assigns[:text] ? text : t('isearch.ok.btn') %></div>
   </button>
 </div>

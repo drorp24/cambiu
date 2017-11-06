@@ -16,8 +16,17 @@ $('body').on('click tap','[data-action=order]', (function (e)  {  // Warning: no
 */
 }));
 
+
+$('body').on('click tap','[data-action=register]', (function (e) {  // Warning: not to use arrow function: it changes $this
+
+    orderUpdateUserDelivery()
+        .catch((error) => {
+            console.error(error)
+        });
+
+}));
+
 order = function() {
-    console.log('>> 0 - ', $(':focus').length, $(':focus')[0]);
 
     var search  = local.rates.search;
     var best    = local.rates.best;
@@ -56,21 +65,8 @@ order = function() {
         .then(response => response.json())
         .then((order) => {
 
-            console.log('>> 1 - ', $(':focus').length, $(':focus')[0]);
-
             populateOrder(null, order);
-            console.log('>> 2 - ', $(':focus').length, $(':focus')[0]);
             report('Click', 'Order', exchange);
-            console.log('>> 3 - ', $(':focus').length, $(':focus')[0]);
-
-            sessionStorage.order_exchange_id = order.exchange_id;
-            sessionStorage.order_id = order.id;
-            sessionStorage.order_voucher = order.voucher;
-            sessionStorage.order_status = order.status;
-            console.log('>> 4 - ', $(':focus').length, $(':focus')[0]);
-
-            setPage({pane1: order.service_type == 'pickup' ? 'order' : 'register'});
-            console.log('>> 5 - ', $(':focus').length, $(':focus')[0]);
 
 
 // TODO: Cleanup
@@ -226,7 +222,7 @@ orderUpdateUserDelivery = function() {
             }
             return fetch('/orders/' + order_id + '/user', {
                 method: 'post',
-                body: new URLSearchParams($('form.registration').serialize())
+                body: new URLSearchParams($('.search_form [data-model=user]').filter(function() {return !!this.value}).add('.search_form #search_id').serialize())
             })
         }
 
@@ -234,29 +230,28 @@ orderUpdateUserDelivery = function() {
             if (data.errors) {
                 let length = data.errors.length;
                 snack(`${data.errors[0]} (1/${length})`, {klass: 'oops', timeout: 7000});
+                reject(data.errors[0])
             } else {
                 if (data.message) snack(data.message, {timeout: 3000});
+                updateGa(data);
                 console.log('Successfully updated order with user data: ', data);
-                return(data)
+                resolve(data)
             }
         }
 
         function updateGa(data) {
             ga('set', 'userId', data.user_id); // Set the user ID using signed-in user_id.
-            report('Click', 'Register');
             console.log(`ga - userId set to ${data.user_id}`);
-            resolve(data);
         }
 
         function tell(error) {
-            snack(`Server says: ${error}`, {klass: 'oops', timeout: 7000});
+            snack(error, {klass: 'oops', timeout: 7000});
         }
 
         postData()
             .then(checkStatus)
             .then(parseJson)
             .then(checkData)
-            .then (updateGa)
             .catch((error) => {tell(error)})
 
     })
