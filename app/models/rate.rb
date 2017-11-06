@@ -21,7 +21,7 @@ class Rate < ActiveRecord::Base
 
 
 
-  def valid?(api_params)
+  def self.valid_params?(api_params)
     ['scraping', 'api'].include?(api_params[:source]) &&
     api_params[:country].present? &&
     ['Chain', 'Exchange'].include?(api_params[:ratable_type]) &&
