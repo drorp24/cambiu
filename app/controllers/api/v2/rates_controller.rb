@@ -5,13 +5,36 @@ module Api
       skip_before_action :verify_authenticity_token # TODO: Replace with verify_API_key
 
       def create
-        puts api_params.inspect
-        ratable = Rate.api_update_by(api_params)
-        if ratable and ratable.errors.empty?
-          render json: {status: 'ok'}
+
+        if Rate.valid?(api_params)
+
+          ratable = api_params[:ratable_type] == 'Chain' ? Chain.find_by(id: api_params[:ratable_id]) : Exchange.find_by(id: api_params[:ratable_id])
+
+          if ratable
+
+            ratable.update(rates_source: api_params[:source])
+
+            api_params[:currencies].each do |currency|
+
+              rate = Rate.find_or_create_by(ratable_type: api_params[:ratable_type], ratable_id: api_params[:ratable_id], currency: api_params[:currency])
+
+              unless rate.update_by_api(api_params[:source], api_params[:quote], currency)
+                render json: {status: 'cannot update currency ' + currency}
+                return
+              end
+
+            end
+
+            render json: {status: 'ok'}
+
+          else
+            render json: {errors: 'ratable not found'}
+          end
+
         else
-          render json: {errors: ratable && ratable.errors.any? ? ratable.errors : 'ratable was not updated'}
+          render json: {errors: 'invalid params'}
         end
+
       end
 
       def api_params

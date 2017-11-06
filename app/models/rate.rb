@@ -19,31 +19,40 @@ class Rate < ActiveRecord::Base
   before_update :change_to_reference_if_needed, if: ->(rate){ (rate.buy_markup_changed? && buy_markup.present?) or (rate.sell_markup_changed? && sell_markup.present?)  }
 #  before_create :initialize_default_values
 
-  def change_to_reference_if_needed
-    if (self.buy_markup.present? and self.buy_markup > 0) or (self.sell_markup.present? and self.sell_markup > 0)
+
+
+  def valid?(api_params)
+    ['scraping', 'api'].include?(api_params[:source]) &&
+    api_params[:country].present? &&
+    ['Chain', 'Exchange'].include?(api_params[:ratable_type]) &&
+    api_params[:ratable_id].present? &&
+    ['indirect', 'direct'].include?(api_params[:quote]) &&
+    api_params[:currencies].present? && api_params[:currencies].any?
+  end
+
+  def update_by_api(source, quote, currency)
+
+    return false unless currency[:buy] != 0 && currency[:sell] != 0 && currency[:buy_markup] != 0 && currency[:sell_markup] != 0 # prevent division by 0 and confusion: 'no value' should be represented by null
+
+    if currency[:buy].present? or currency[:sell].present?
+
+      self.method = 'absolute'
+      self.buy = (quote == 'direct' ? 1.0 / currency[:buy] : currency[:buy])    if currency[:buy].present?
+      self.sell = (quote == 'direct' ? 1.0 / currency[:sell] : currency[:sell]) if currency[:sell].present?
+
+    elsif currency[:buy_markup].present? or currency[:sell_markup].present?
+
       self.method = 'reference'
-    end
-  end
+      self.buy_markup = currency[:buy_markup]                                   if currency[:buy_markup].present?
+      self.sell_markup = currency[:sell_markup]                                 if currency[:sell_markup].present?
 
-  def method_color
-    :orange if self.reference?
-  end
-
-
-  def api_update_by(params)
-
-    return with 'ratable', 'not found' unless ratable = Rate.find_by(ratable_type: params[:ratable_type], ratable_id: params[:ratable_id])
-
-    params[:currencies].each do |currency|
-      if params[:buy].present? or params[:sell].present?
-
-      else
-
-      end
+    else
+      return false
     end
 
-    ratable.update(source: params[:source])
-
+    self.source = source
+    self.save
+    true
 
   end
 
@@ -192,6 +201,17 @@ class Rate < ActiveRecord::Base
     end
 
   end
+
+  def change_to_reference_if_needed
+    if (self.buy_markup.present? and self.buy_markup > 0) or (self.sell_markup.present? and self.sell_markup > 0)
+      self.method = 'reference'
+    end
+  end
+
+  def method_color
+    :orange if self.reference?
+  end
+
 
   def display_name
     split = $request.path.split('/')
