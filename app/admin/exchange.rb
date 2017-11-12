@@ -425,7 +425,7 @@ form do |f|
       end
       column :last_update do |rate|
 #        update = rate.last_update || rate.updated_at
-        update.in_time_zone('Jerusalem') if rate.updated_at
+        rate.updated_at.in_time_zone('Jerusalem') if rate.updated_at
       end
       column "By", :admin_user_s
       column (:method) {|rate| status_tag(rate.method, class: rate.method_color) if rate.reference? }
