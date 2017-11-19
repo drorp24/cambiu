@@ -400,7 +400,7 @@ form do |f|
       selectable_column
       id_column
       column :source        do |rate|
-        best_in_place rate, :source, as: :select, collection: {:"manual"=>"Manual", :"xml"=>"XML", :"scraping"=>"Scraping", :"test"=>"Test", :"api"=>"API"}
+        best_in_place rate, :source, as: :select, collection: {:"manual"=>"Manual", :"xml"=>"XML", :"scraping"=>"Scraping", :"test"=>"Test", :"api"=>"API", :"ratefeed"=>"Ratefeed"}
       end
       column :currency           do |rate|
         best_in_place rate, :currency #, as: :select, collection: Currency.select
