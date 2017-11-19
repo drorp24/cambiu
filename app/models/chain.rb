@@ -24,7 +24,7 @@ class Chain < ActiveRecord::Base
 
 
 
-  enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping, :api ]
+  enum rates_source: [ :no_rates, :test, :manual, :xml, :scraping, :api, :ratefeed ]
   validates :name, uniqueness: true, on: :create
   validates :currency, presence: true, on: :create
 
