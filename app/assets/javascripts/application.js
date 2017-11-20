@@ -32,6 +32,7 @@
 //= require validations
 //= require pay
 //= require i18n
+//= require react
 
 //= require star-rating
 //= require swiper.jquery.min
