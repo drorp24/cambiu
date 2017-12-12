@@ -27,22 +27,10 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts "set_locale"
-    puts ""
-    puts "params[:locale]: " + params[:locale].to_s
-    puts ""
-    puts "params[:controller]: " + params[:controller].to_s
-    puts ""
-    puts "params[:controller] =~ /^admin\//i: " + (params[:controller] =~ /^admin\//i).to_s
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    @locale = I18n.locale = Rails.env.development? && params[:controller] == 'home' && !(params[:controller] =~ /^admin\//i) ? 'he' : params[:locale] || (params[:controller] =~ /^admin\//i) ? 'en' : I18n.default_locale
+    # It turns out that admin doesn't even go thru application_controller so it doesn't see this code below.
+    # What I did was making config.i18n.default_locale = :en (application.rb) which admin controller does see, and here using 'he' as the default controller
+    # Could have just define here @local = 'he' but left the old code below just in case the above assumption is wrong.
+    @locale = I18n.locale = Rails.env.development? && params[:controller] == 'home' && !(params[:controller] =~ /^admin\//i) ? 'he' : params[:locale] || (params[:controller] =~ /^admin\//i) ? 'en' : 'he'
   end
 
   def default_url_options(options={})
