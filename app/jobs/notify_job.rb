@@ -60,10 +60,6 @@ class NotifyJob < ActiveJob::Base
             type:   'bcc'
         },
         {
-            email:  'yonatan@cambiu.com',
-            type:   'bcc'
-        },
-        {
             email:  'support@cambiu.com',
             type:   'bcc'
         }
