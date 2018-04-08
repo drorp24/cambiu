@@ -5,6 +5,7 @@ class HomeController < ApplicationController
   before_action :set_http_cache_headers, only: [:app], if: "Rails.env.production?"       # quicker next rendering  (if challenged by browser with "If...", it quickly responds with 304 rather than generate a page)
 
   def index
+    expires_in 1.day, :public => true
   end
 
   def app
