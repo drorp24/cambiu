@@ -1,5 +1,5 @@
 class SearchesController < ApplicationController 
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token, raise: false
 
   def localRates
     search = Search.create(search_params.merge(mode: 'best'))

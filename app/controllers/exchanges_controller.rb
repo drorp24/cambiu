@@ -1,5 +1,5 @@
 class ExchangesController < ApplicationController
-  skip_before_filter :verify_authenticity_token
+  skip_before_filter :verify_authenticity_token, raise: false
 
   def show
     render json: Exchange.find_by(id: params[:id])
