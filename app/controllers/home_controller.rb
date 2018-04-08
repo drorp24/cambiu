@@ -11,7 +11,7 @@ class HomeController < ApplicationController
     unless Rails.env.development?
       expires_in 1.day, :public => true
     end
-    render :index
+    render layout: "application"
   end
 
   def action_cache_key
