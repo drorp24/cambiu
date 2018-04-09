@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   def set_release
     # Important: advance release for *any* deployment to www, or else the old JS/HTML/CSS will be served!
     @release = '0.9.9.2'
-    @release_date = Date.new(2018, 4, 8)
+    @release_date = Date.new(2018, 4, 9)
   end
 
   def set_locale
