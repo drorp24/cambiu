@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 #  before_action :require_authentication,:if => Proc.new { |c| c.request.path.include? "/api/"}
 
   protect_from_forgery with: :exception
-  
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 #  before_action :authenticate_user!
 
@@ -22,8 +22,8 @@ class ApplicationController < ActionController::Base
 
   def set_release
     # Important: advance release for *any* deployment to www, or else the old JS/HTML/CSS will be served!
-    @release = '0.9.9.2'
-    @release_date = Date.new(2018, 4, 9)
+    @release = '0.9.9.3'
+    @release_date = Date.new(2018, 10, 15)
   end
 
   def set_locale
@@ -83,12 +83,12 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-  
+
 
   def find_guest_user
     @guest_user = User.find(session[:user_id]) if session[:user_id]
   end
-  
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:guest, :username, :email, :password, :password_confirmation, :remember_me, :buy_amount, :pay_amount, :buy_currency, :pay_currency, :latitude, :longitude, :location, :bbox, :landing, :geocoded_location, :location_search) }
     devise_parameter_sanitizer.permit(:sign_in) { |u| u.permit(:buy, :buy_currency, :pay, :pay_currency, :login, :username, :email, :password, :password_confirmation, :buy_cents, :pay_cents, :remember_me) }

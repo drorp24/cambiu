@@ -3,7 +3,8 @@
   "short_name": "cambiu",
   "icons": [
     {
-      "src": "https://d29wr857bsaesb.cloudfront.net/assets/cambiu_vertical_white_c-f583c87970540327b4883cb905dd1c6240a8483e5f93e1090dcf233bf7339e6d.png",
+      "src":
+        "https://d29wr857bsaesb.cloudfront.net/assets/cambiu_vertical_white_c-f583c87970540327b4883cb905dd1c6240a8483e5f93e1090dcf233bf7339e6d.png",
       "sizes": "72x72 96x96 144x144 128x128 256x256",
       "type": "image/png"
     }
@@ -11,7 +12,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/exchanges/intro",
   "theme_color": "#FF175F",
   "background_color": "#FF175F"
 }
