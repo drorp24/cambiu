@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"migration.merchants"},{"v":2,"key":{"location":"2dsphere"},"name":"location_2dsphere","ns":"migration.merchants","2dsphereIndexVersion":3}],"uuid":"2fb60bb3186a40a187a24d4770cb4de1"}
